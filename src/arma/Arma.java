@@ -1,5 +1,17 @@
 package arma;
 
+/**
+ * Arma includes methods and function calls similar to the Armadillo C++ Algebra
+ * Library by Conrad Sanderson et al., but is based on DenseMatrix64F from Peter
+ * Abeles’ Efficient Java Matrix Library (EJML).
+ * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @version 0.9
+ * 
+ * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
+ * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient
+ *      Java Matrix Library</a>
+ */
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;

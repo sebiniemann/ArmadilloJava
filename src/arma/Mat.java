@@ -12,7 +12,7 @@ import org.ejml.ops.RandomMatrices;
  * Abeles’ Efficient Java Matrix Library (EJML).
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
- * @version 1.0
+ * @version 0.9
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient
@@ -91,23 +91,66 @@ public class Mat {
 		this(new DenseMatrix64F(matrix.memptr()));
 	}
 
+	/**
+	 * Returns a value identified for a flattened view of the matrix.
+	 * 
+	 * @param index The index of the value to be returned. Note: at(row, column) at(row + column * {@link #n_cols}).
+	 * @return The value identified by the provided index.
+	 * 
+	 * @see #at(int, int)
+	 */
 	public double at(int index) {
 		return _matrix.get(index);
 	}
 
+	/**
+	 * Returns a value identified by its row and column.
+	 * 
+	 * @param row The row of the value to be returned.
+	 * @param column The column of the value to be returned.
+	 * @return The value identified by the provided row and column.
+	 * 
+	 * @see #at(int)
+	 */
 	public double at(int row, int column) {
 		return _matrix.get(row, column);
 	}
 
-	public void at(int index, Op operation, double value) {
-		_matrix.set(index, getResult(_matrix.get(index), operation, value));
+	/**
+	 * Performs an operation on a value identified for a flattened view of the matrix.
+	 * 
+	 * @param index The index of the value to be adjusted. Note: at(<code>row</code>, <code>column</code>) = at(<code>row</code> * {@link #n_rows} + <code>column</code>).
+	 * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #at(int, int, Op, double)
+	 * @see #getResult(double, Op, double)
+	 */
+	public void at(int index, Op operation, double operand) {
+		_matrix.set(index, getResult(_matrix.get(index), operation, operand));
 	}
 
-	public void at(int row, int column, Op operation, double value) {
-		_matrix.set(row, column,
-				getResult(_matrix.get(row, column), operation, value));
+	/**
+	 * Performs an operation on a value identified by its row and column.
+	 * 
+	 * @param row The row of the value to be adjusted.
+	 * @param column The column of the value to be adjusted.
+	 * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #at(int, Op, double)
+	 * @see #getResult(double, Op, double)
+	 */
+	public void at(int row, int column, Op operation, double operand) {
+		_matrix.set(row, column, getResult(_matrix.get(row, column), operation, operand));
 	}
 
+	/**
+	 * Return a copy of the requested column as a ({@link #n_rows}, 1) matrix.
+	 * 
+	 * @param column The column to be returned.
+	 * @return The requested column vector.
+	 */
 	public Mat col(int column) {
 		DenseMatrix64F result = new DenseMatrix64F(n_rows, 1);
 
@@ -118,12 +161,42 @@ public class Mat {
 		return new Mat(result);
 	}
 
-	public void col(int column, Op operation, Mat columnVector) {
+	/**
+	 * Performs an operation on a all elements of the requested column.
+	 * 
+	 * @param column The column to be adjusted.
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #getResult(double, Op, double)
+	 */
+	public void col(int column, Op operation, Mat operand) {
 		for (int i = 0; i < n_rows; i++) {
-			at(i, column, operation, columnVector.at(i));
+			at(i, column, operation, operand.at(i));
 		}
 	}
 
+	/**
+	 * Performs an operation on a all elements of the requested column.
+	 * 
+	 * @param column The column to be adjusted.
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #getResult(double, Op, double)
+	 */
+	public void col(int column, Op operation, double operand) {
+		for (int i = 0; i < n_rows; i++) {
+			at(i, column, operation, operand);
+		}
+	}
+
+	/**
+	 * Return a copy of the requested row as a (1, {@link #n_cols}) matrix.
+	 * 
+	 * @param row The row to be returned.
+	 * @return The requested row vector.
+	 */
 	public Mat row(int row) {
 		DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
 
@@ -134,40 +207,93 @@ public class Mat {
 		return new Mat(result);
 	}
 
-	public void row(int row, Op operation, Mat rowVector) {
+	/**
+	 * Performs an operation on a all elements of the requested row.
+	 * 
+	 * @param row The row to be adjusted.
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #getResult(double, Op, double)
+	 */
+	public void row(int row, Op operation, Mat operand) {
 		for (int i = 0; i < n_cols; i++) {
-			at(row, i, operation, rowVector.at(i));
+			at(row, i, operation, operand.at(i));
 		}
 	}
 
+	/**
+	 * Performs an operation on a all elements of the requested row.
+	 * 
+	 * @param row The row to be adjusted.
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 * 
+	 * @see #getResult(double, Op, double)
+	 */
+	public void row(int row, Op operation, double operand) {
+		for (int i = 0; i < n_cols; i++) {
+			at(row, i, operation, operand);
+		}
+	}
+
+	/**
+	 * Return a copy of all diagonal entries as a (<code>minimum</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.
+	 * 
+	 * @return A vector consisting of all diagonal entries.
+	 */
 	public Mat diag() {
-		DenseMatrix64F result = new DenseMatrix64F(1, Math.min(n_rows, n_cols));
+		DenseMatrix64F result = new DenseMatrix64F(Math.min(n_rows, n_cols), 1);
 		CommonOps.extractDiag(_matrix, result);
 		return new Mat(result);
 	}
 
-	public void diag(Op operation, double value) {
+	/**
+	 * Performs an operation on all diagonal entries.
+	 * 
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 */
+	public void diag(Op operation, double operand) {
 		int length = Math.min(n_cols, n_rows);
 		for (int i = 0; i < length; i++) {
-			at(i, i, operation, value);
+			at(i, i, operation, operand);
 		}
 	}
 
-	public void diag(Op operation, Mat diagonal) {
-		for (int i = 0; i < diagonal.n_elem; i++) {
-			at(i, i, operation, diagonal.at(i));
+	/**
+	 * Performs an operation on all diagonal entries.
+	 * 
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 */
+	public void diag(Op operation, Mat operand) {
+		for (int i = 0; i < operand.n_elem; i++) {
+			at(i, i, operation, operand.at(i));
 		}
 	}
 
-	public void each_col(Op operation, Mat columnVector) {
+	/**
+	 * Performs the same operation on all columns.
+	 * 
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 */
+	public void each_col(Op operation, Mat operand) {
 		for (int i = 0; i < n_cols; i++) {
-			col(i, operation, columnVector);
+			col(i, operation, operand);
 		}
 	}
 
-	public void each_row(Op operation, Mat rowVector) {
+	/**
+	 * Performs the same operation on all rows.
+	 * 
+	 * @param operation The element-wise operation to be performed. See {@link #getResult(double, Op, double)} for details.
+	 * @param operand The right side operand of the operation to be performed.
+	 */
+	public void each_row(Op operation, Mat operand) {
 		for (int i = 0; i < n_rows; i++) {
-			row(i, operation, rowVector);
+			row(i, operation, operand);
 		}
 	}
 
@@ -192,11 +318,11 @@ public class Mat {
 		return new Mat(result);
 	}
 
-	public void elem(Mat selection, Op operation, Mat otherMatrix) {
+	public void elem(Mat selection, Op operation, Mat operand) {
 		int index = 0;
 		for (int i = 0; i < selection.n_elem; i++) {
 			if (selection.at(i) > 0) {
-				at(i, operation, otherMatrix.at(index));
+				at(i, operation, operand.at(index));
 				index++;
 			}
 		}
