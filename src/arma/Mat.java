@@ -95,8 +95,8 @@ public class Mat {
   }
 
   /**
-   * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix. <b>Note:</b>
-   * {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
+   * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
+   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
    * 
    * @param n The position of the element.
    * @return The value of the <i>n</i>th element.
@@ -811,7 +811,7 @@ public class Mat {
    * 
    * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
    *           requested.
-   *           
+   * 
    * @see Op
    */
   private static double getResult(double a, Op operation, double b) throws UnsupportedOperationException {
