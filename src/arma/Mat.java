@@ -9,8 +9,8 @@ import org.ejml.ops.RandomMatrices;
 /**
  * Mat is a dense matrix with interfaces similar to the Armadillo C++ Algebra Library by Conrad Sanderson et al., based
  * on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23 - 21.06.2013.
- * 
- * Note: Armadillo's Mat is stored by <a
+ * <p>
+ * <b>Note:</b> Armadillo's Mat is stored by <a
  * href="https://en.wikipedia.org/wiki/Column_major#Column-major_order">column-major-ordering</a>, while EJML's
  * DenseMatrix64F is stored by <a href="http://en.wikipedia.org/wiki/Row-major_order">row-major ordering</a>. In order
  * to be similar to Armadillo, all interfaces work as if column-major-ordering were used and internally convert to
@@ -69,7 +69,7 @@ public class Mat {
    * @param matrix The two-dimensional array to be converted into a matrix.
    */
   public Mat(double[][] matrix) {
-    // Error-handling should be done in DenseMatrix64F
+    // Error-checking should be done in DenseMatrix64F
     this(new DenseMatrix64F(matrix));
   }
 
@@ -81,7 +81,7 @@ public class Mat {
    * @param numberOfColumns The number of columns of the matrix to be created.
    */
   public Mat(int numberOfRows, int numberOfColumns) {
-    // Error-handling should be done in DenseMatrix64F
+    // Error-checking should be done in DenseMatrix64F
     this(new DenseMatrix64F(numberOfRows, numberOfColumns));
   }
 
@@ -95,7 +95,7 @@ public class Mat {
   }
 
   /**
-   * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix. Note:
+   * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix. <b>Note:</b>
    * {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
    * 
    * @param n The position of the element.
@@ -123,7 +123,7 @@ public class Mat {
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
    * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
-   * operation. Note: {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
+   * operation. <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
    * 
    * @param n The position of the left-hand side operand.
    * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
@@ -319,7 +319,7 @@ public class Mat {
    * @see #col(int, Op, Mat)
    */
   public void each_col(Op operation, Mat operand) {
-    // Error-checking should be done in col
+    // Error-checking should be done in col(int, Op, Mat)
     for (int j = 0; j < n_cols; j++) {
       col(j, operation, operand);
     }
@@ -335,7 +335,7 @@ public class Mat {
    * @see #col(int, Op, double)
    */
   public void each_col(Op operation, double operand) {
-    // Error-checking should be done in col
+    // Error-checking should be done in col(int, Op, double)
     for (int j = 0; j < n_cols; j++) {
       col(j, operation, operand);
     }
@@ -350,7 +350,7 @@ public class Mat {
    * @see #row(int, Op, Mat)
    */
   public void each_row(Op operation, Mat operand) {
-    // Error-checking should be done in row
+    // Error-checking should be done in row(int, Op, Mat)
     for (int i = 0; i < n_rows; i++) {
       row(i, operation, operand);
     }
@@ -366,7 +366,7 @@ public class Mat {
    * @see #row(int, Op, double)
    */
   public void each_row(Op operation, double operand) {
-    // Error-checking should be done in row
+    // Error-checking should be done in row(int, Op, double)
     for (int i = 0; i < n_rows; i++) {
       row(i, operation, operand);
     }
@@ -465,13 +465,13 @@ public class Mat {
   }
 
   /**
-   * Returns the inverse of the matrix.
+   * Returns the inverse matrix. Fails if the provided matrix is not invertible.
    * 
    * @return The inverse.
    */
   public Mat i() {
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    // Error-handling should be done in CommonOps
+    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
     CommonOps.invert(_matrix, result);
     return new Mat(result);
   }
@@ -637,7 +637,8 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand.
+   * The single provided right-hand side value is used for all operations.
    * 
    * @param operand The right-hand side operand.
    * @return The created matrix.
@@ -649,7 +650,8 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided right-hand side addend.
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided
+   * right-hand side addend.
    * 
    * @param operand The right-hand side addend.
    * @return The created matrix.
@@ -661,7 +663,8 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided subtrahend. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
+   * subtrahend. The single provided right-hand side value is used for all operations.
    * 
    * @param operand The subtrahend.
    * @return The created matrix.
@@ -674,7 +677,8 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided subtrahend.
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
+   * subtrahend.
    * 
    * @param operand The subtrahend.
    * @return The created matrix.
@@ -686,9 +690,10 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier. The single provided right-hand side value is used for all operations.
    * 
-   * @param operand The subtrahend.
+   * @param operand The multiplier.
    * @return The created matrix.
    * 
    * @see #elemTimes(double)
@@ -700,7 +705,7 @@ public class Mat {
   /**
    * Creates a new matrix being the product of a right-hand side matrix multiplication with the provided multiplier.
    * 
-   * @param operand The subtrahend.
+   * @param operand The multiplier.
    * @return The created matrix.
    */
   public Mat times(Mat operand) {
@@ -710,9 +715,10 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier. The single provided right-hand side value is used for all operations.
    * 
-   * @param operand The subtrahend.
+   * @param operand The multiplier.
    * @return The created matrix.
    * 
    * @see #times(double)
@@ -724,9 +730,10 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier.
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier.
    * 
-   * @param operand The subtrahend.
+   * @param operand The multiplier.
    * @return The created matrix.
    */
   public Mat elemTimes(Mat operand) {
@@ -736,9 +743,10 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
+   * single provided right-hand side value is used for all operations.
    * 
-   * @param operand The subtrahend.
+   * @param operand The divisor.
    * @return The created matrix.
    * 
    * @see #elemDivide(double)
@@ -748,16 +756,17 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the quotient of a right-hand side matrix division with the provided divisor. Fails if the provided divisor is not an invertible matrix.
+   * Creates a new matrix being the quotient of a right-hand side matrix division with the provided divisor. Fails if
+   * the provided divisor is not invertible.
    * 
-   * @param operand The subtrahend.
+   * @param operand The divisor.
    * @return The created matrix.
    */
   public Mat divide(Mat operand) {
     DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
     DenseMatrix64F inverse = new DenseMatrix64F(operand.n_rows, operand.n_cols);
 
-    // Error-handling should be done in CommonOps 
+    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
     CommonOps.invert(operand.memptr(), inverse);
     CommonOps.mult(_matrix, inverse, result);
 
@@ -765,9 +774,10 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The single provided right-hand side value is used for all operations.
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
+   * single provided right-hand side value is used for all operations.
    * 
-   * @param operand The subtrahend.
+   * @param operand The divisor.
    * @return The created matrix.
    * 
    * @see #divide(double)
@@ -781,7 +791,7 @@ public class Mat {
   /**
    * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor.
    * 
-   * @param operand The subtrahend.
+   * @param operand The divisor.
    * @return The created matrix.
    */
   public Mat elemDivide(Mat operand) {
@@ -790,7 +800,21 @@ public class Mat {
     return new Mat(result);
   }
 
-  private static double getResult(double a, Op operation, double b) {
+  /**
+   * Performs the requested binary arithmetic operation on <code>a</code> and <code>b</code> or sets <code>a</code> to
+   * the value of <code>b</code> if <code>operation = {@link Op#EQUAL}</code>.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed. Only arithmetic operators and equality are supported.
+   * @param b The right-hand side operand.
+   * @return The result.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   *           
+   * @see Op
+   */
+  private static double getResult(double a, Op operation, double b) throws UnsupportedOperationException {
     double result = 0;
 
     switch (operation) {
@@ -812,7 +836,7 @@ public class Mat {
         result = a / b;
         break;
       default:
-        throw new UnsupportedOperationException("Only arithmetic operators and equallity are supported.");
+        throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
     }
 
     return result;
@@ -835,16 +859,20 @@ public class Mat {
    * 
    * @param n The position based on column-major-ordering.
    * @return The position based on row-major-ordering.
+   * 
+   * @throws IllegalArgumentException Thrown if a negative value is provided for the position.
    */
-  private int convertMajorOrdering(int n) {
+  private int convertMajorOrdering(int n) throws IllegalArgumentException {
+    if (n < 0) {
+      throw new IllegalArgumentException("The value of the provided position must be non-negative.");
+    }
+
     /*
      * n = i + j * n_cols, i < n_cols
      * 
-     * j = (n - i) / n_cols
-     * j = Math.floor(n / n_cols)
+     * j = (n - i) / n_cols j = Math.floor(n / n_cols)
      * 
-     * i = n - j * n_cols
-     * i = n % n_cols
+     * i = n - j * n_cols i = n % n_cols
      */
     return (n / n_cols) * n_rows + n % n_cols;
   }
