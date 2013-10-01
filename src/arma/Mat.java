@@ -421,7 +421,7 @@ public class Mat {
 
   /**
    * Performs the provided right-hand side element-wise operation on all elements for which selection.at(n) > 0 holds.
-   * The single provided right-hand side operand is used for all operations.
+   * The single provided right-hand side value is used for all operations.
    * 
    * @param selection The selection to be used.
    * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
@@ -586,9 +586,9 @@ public class Mat {
    * @return The created matrix.
    */
   public static Mat ones(int numberOfRows, int numberOfColumns) {
-    Mat matrix = Mat.zeros(numberOfRows, numberOfColumns);
-    matrix.fill(1);
-    return matrix;
+    DenseMatrix64F result = new DenseMatrix64F(numberOfRows, numberOfColumns);
+    CommonOps.fill(result, 1);
+    return new Mat(result);
   }
 
   /**
@@ -603,10 +603,19 @@ public class Mat {
     return new Mat(CommonOps.identity(numberOfRows, numberOfColumns));
   }
 
+  /**
+   * Creates a new matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
+   * <code>numberOfColumns</code> and normally distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows of the matrix to be created.
+   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param rng The pseudorandom generator to be used.
+   * @return The created matrix.
+   */
   public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
     DenseMatrix64F result = new DenseMatrix64F(numberOfRows, numberOfColumns);
 
-    int numberOfElements = numberOfRows * numberOfColumns;
+    int numberOfElements = result.getNumElements();
     for (int i = 0; i < numberOfElements; i++) {
       result.set(i, rng.nextGaussian());
     }
@@ -614,79 +623,170 @@ public class Mat {
     return new Mat(result);
   }
 
+  /**
+   * Creates a new matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
+   * <code>numberOfColumns</code> and uniformly distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows of the matrix to be created.
+   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param rng The pseudorandom generator to be used.
+   * @return The created matrix.
+   */
   public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
     return new Mat(RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng));
   }
 
-  public Mat plus(double value) {
+  /**
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The right-hand side operand.
+   * @return The created matrix.
+   */
+  public Mat plus(double operand) {
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.add(_matrix, value, result);
+    CommonOps.add(_matrix, operand, result);
     return new Mat(result);
   }
 
-  public Mat plus(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    CommonOps.add(_matrix, otherMatrix.memptr(), result);
+  /**
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided right-hand side addend.
+   * 
+   * @param operand The right-hand side addend.
+   * @return The created matrix.
+   */
+  public Mat plus(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.add(_matrix, operand.memptr(), result);
     return new Mat(result);
   }
 
-  public Mat minus(double value) {
+  /**
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided subtrahend. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat minus(double operand) {
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.add(_matrix, -value, result);
+    // Applies subtraction by addition with the additive inverse value.
+    CommonOps.add(_matrix, -operand, result);
     return new Mat(result);
   }
 
-  public Mat minus(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    CommonOps.sub(_matrix, otherMatrix.memptr(), result);
+  /**
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided subtrahend.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat minus(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.sub(_matrix, operand.memptr(), result);
     return new Mat(result);
   }
 
-  public Mat times(double value) {
-    return elemTimes(value);
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   * 
+   * @see #elemTimes(double)
+   */
+  public Mat times(double operand) {
+    return elemTimes(operand);
   }
 
-  public Mat times(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    CommonOps.mult(_matrix, otherMatrix.memptr(), result);
+  /**
+   * Creates a new matrix being the product of a right-hand side matrix multiplication with the provided multiplier.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat times(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.mult(_matrix, operand.memptr(), result);
     return new Mat(result);
   }
 
-  public Mat elemTimes(double value) {
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   * 
+   * @see #times(double)
+   */
+  public Mat elemTimes(double operand) {
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.scale(value, _matrix, result);
+    CommonOps.scale(operand, _matrix, result);
     return new Mat(result);
   }
 
-  public Mat elemTimes(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    CommonOps.elementMult(_matrix, otherMatrix.memptr(), result);
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided multiplier.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat elemTimes(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.elementMult(_matrix, operand.memptr(), result);
     return new Mat(result);
   }
 
-  public Mat divide(double value) {
-    return elemDivide(value);
+  /**
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   * 
+   * @see #elemDivide(double)
+   */
+  public Mat divide(double operand) {
+    return elemDivide(operand);
   }
 
-  public Mat divide(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    DenseMatrix64F inverse = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
+  /**
+   * Creates a new matrix being the quotient of a right-hand side matrix division with the provided divisor. Fails if the provided divisor is not an invertible matrix.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat divide(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    DenseMatrix64F inverse = new DenseMatrix64F(operand.n_rows, operand.n_cols);
 
-    CommonOps.invert(otherMatrix.memptr(), inverse);
+    // Error-handling should be done in CommonOps 
+    CommonOps.invert(operand.memptr(), inverse);
     CommonOps.mult(_matrix, inverse, result);
 
     return new Mat(result);
   }
 
-  public Mat elemDivide(double value) {
+  /**
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   * 
+   * @see #divide(double)
+   */
+  public Mat elemDivide(double operand) {
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.divide(value, _matrix, result);
+    CommonOps.divide(operand, _matrix, result);
     return new Mat(result);
   }
 
-  public Mat elemDivide(Mat otherMatrix) {
-    DenseMatrix64F result = new DenseMatrix64F(otherMatrix.n_rows, otherMatrix.n_cols);
-    CommonOps.elementDiv(_matrix, otherMatrix.memptr(), result);
+  /**
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat elemDivide(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.elementDiv(_matrix, operand.memptr(), result);
     return new Mat(result);
   }
 
@@ -718,6 +818,10 @@ public class Mat {
     return result;
   }
 
+  /**
+   * Updates the attributes {@link #n_rows}, {@link #n_cols} and {@link #n_elem} of the matrix. Should be called right
+   * after the shape of the matrix is changed.
+   */
   private void updateAttributes() {
     n_rows = _matrix.numRows;
     n_cols = _matrix.numCols;
@@ -725,21 +829,23 @@ public class Mat {
   }
 
   /**
-   * Column-major-ordering an element at the <i>n</i>th row and <i>j</i>th column:
+   * Converts the position of an element based on a column-major-ordered one-dimensional view of the matrix into a
+   * row-major-ordered based one, in order to provide interfaces similar to Armadillo's Mat while using EJML's
+   * DenseMatrix64F.
    * 
-   * <code>
-   *  n = i + j * n_cols, i < n_cols
-   *  j = (n - i) / n_cols
-   *  j = Math.floor(n / n_cols)
-   *  
-   *  i = n - j * n_cols
-   *  i = n % n_cols
-   * </code>
-   * 
-   * @param n
-   * @return
+   * @param n The position based on column-major-ordering.
+   * @return The position based on row-major-ordering.
    */
   private int convertMajorOrdering(int n) {
-    return (n * n_rows) / n_cols + n % n_cols;
+    /*
+     * n = i + j * n_cols, i < n_cols
+     * 
+     * j = (n - i) / n_cols
+     * j = Math.floor(n / n_cols)
+     * 
+     * i = n - j * n_cols
+     * i = n % n_cols
+     */
+    return (n / n_cols) * n_rows + n % n_cols;
   }
 }
