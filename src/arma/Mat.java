@@ -183,8 +183,7 @@ public class Mat {
    */
   public void row(int i, Op operation, Mat operand) throws IllegalArgumentException {
     if (operand.n_cols != n_cols) {
-      throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols
-                                         + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
+      throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -239,8 +238,7 @@ public class Mat {
    */
   public void col(int j, Op operation, Mat operand) throws IllegalArgumentException {
     if (operand.n_rows != n_rows) {
-      throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows
-                                         + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
+      throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
 
     for (int i = 0; i < n_rows; i++) {
@@ -287,8 +285,7 @@ public class Mat {
   public void diag(Op operation, Mat operand) throws IllegalArgumentException {
     int length = Math.min(n_cols, n_rows);
     if (operand.n_elem != length) {
-      throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length
-                                         + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
+      throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
     }
 
     for (int i = 0; i < length; i++) {
@@ -384,8 +381,7 @@ public class Mat {
    */
   public Mat elem(Mat selection) throws IllegalArgumentException {
     if (selection.n_elem != n_elem) {
-      throw new IllegalArgumentException("The number of elements of the matrix (n_elem = " + n_elem
-                                         + ") does not match with the provided selection (n_elem = " + selection.n_elem + ").");
+      throw new IllegalArgumentException("The number of elements of the matrix (n_elem = " + n_elem + ") does not match with the provided selection (n_elem = " + selection.n_elem + ").");
     }
 
     DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
