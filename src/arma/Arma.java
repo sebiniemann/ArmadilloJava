@@ -17,8 +17,9 @@ import org.ejml.ops.NormOps;
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>
  */
 public class Arma {
+
   /**
-   * Return the determinant of the provided matrix. Fails if the matrix is not square.
+   * Returns the determinant of the provided matrix. Fails if the matrix is not square.
    * 
    * @param matrix The provided matrix.
    * @return The determinant.
@@ -28,10 +29,10 @@ public class Arma {
   }
 
   /**
-   * Creates a new matrix with 
+   * Creates a new matrix with the absolute value for all elements of the provides matrix.
    * 
-   * @param matrix
-   * @return
+   * @param matrix The provided matrix.
+   * @return The created matrix.
    */
   public static Mat abs(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.memptr());
@@ -47,6 +48,14 @@ public class Arma {
     return new Mat(result);
   }
 
+  /**
+   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> of the provided matrix
+   * <code>X</code> into the product <code>QR</code>.
+   * 
+   * @param Q An orthogonal matrix.
+   * @param R An upper triangular matrix.
+   * @param X The matrix to be decomposed.
+   */
   public static void qr(Mat Q, Mat R, Mat X) {
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
     qr.decompose(X.memptr());
@@ -60,6 +69,12 @@ public class Arma {
     R.memptr().set(Rqr);
   }
 
+  /**
+   * Creates a new matrix with all elements of the provides matrix element-wise floored.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
   public static Mat floor(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
 
@@ -70,15 +85,39 @@ public class Arma {
     return new Mat(result);
   }
 
-  public static double sum(Mat element) {
-    return CommonOps.elementSum(element.memptr());
+  /**
+   * Returns the sum of all elements of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The sum.
+   */
+  public static double accu(Mat matrix) {
+    return CommonOps.elementSum(matrix.memptr());
   }
 
-  public static Mat square(Mat element) {
-    return parameter.elemTimes(element);
+  /**
+   * Creates a new matrix with all elements of the provides matrix element-wise squared.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat square(Mat matrix) {
+    return matrix.elemTimes(matrix);
   }
 
-  public static Mat find(Mat a, Op operation, double b) {
+  /**
+   * Creates a new matrix with its values set to <code>1</code> for each element where <code>a operation b</code> holds
+   * and <code>0</code> otherwise. The single provided right-hand side value is used for all operations. Only relational
+   * operators are supported.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed.
+   * @param b The right-hand side operand.
+   * @return The created matrix.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
+   */
+  public static Mat find(Mat a, Op operation, double b) throws UnsupportedOperationException {
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
 
     for (int i = 0; i < a.n_elem; i++) {
@@ -114,14 +153,26 @@ public class Arma {
           }
           break;
         default:
-          throw new UnsupportedOperationException("Only comparison operators are supported.");
+          throw new UnsupportedOperationException("Only relational operators are supported.");
       }
     }
 
     return new Mat(result);
   }
 
-  public static Mat find(double a, Op operation, Mat b) {
+  /**
+   * Creates a new matrix with its values set to <code>1</code> for each element where <code>a operation b</code> holds
+   * and <code>0</code> otherwise. The single provided left-hand side value is used for all operations. Only relational
+   * operators are supported.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed.
+   * @param b The right-hand side operand.
+   * @return The created matrix.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
+   */
+  public static Mat find(double a, Op operation, Mat b) throws UnsupportedOperationException {
     switch (operation) {
       case STRICT_LESS:
         return find(b, Op.STRICT_GREATER, a);
@@ -131,15 +182,26 @@ public class Arma {
         return find(b, Op.STRICT_LESS, a);
       case STRICT_GREATER:
         return find(b, Op.STRICT_LESS, a);
-      default:
-        // Catches Op.EQUAL and Op.NOT_EQUAL
-        // Error-checking should be done in find
+      case EQUAL:
+      case NOT_EQUAL:
         return find(b, operation, a);
+      default:
+        throw new UnsupportedOperationException("Only relational operators are supported.");
     }
-
   }
 
-  public static Mat find(Mat a, Op operation, Mat b) {
+  /**
+   * Creates a new matrix with its values set to 1 for each element where <code>a operation b</code> holds and 0
+   * otherwise. Only relational operators are supported.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed.
+   * @param b The right-hand side operand.
+   * @return The created matrix.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
+   */
+  public static Mat find(Mat a, Op operation, Mat b) throws UnsupportedOperationException {
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
 
     for (int i = 0; i < a.n_elem; i++) {
@@ -175,16 +237,22 @@ public class Arma {
           }
           break;
         default:
-          throw new UnsupportedOperationException("Only comparision operators are supported.");
+          throw new UnsupportedOperationException("Only relational operators are supported.");
       }
     }
 
     return new Mat(result);
   }
 
-  public static boolean any(Mat element) {
-    for (int i = 0; i < element.n_elem; i++) {
-      if (element.at(i) != 0) {
+  /**
+   * Returns <code>true</code> is any element of the provided matrix is non-zero and <code>false</code> otherwise.
+   * 
+   * @param matrix The provided matrix.
+   * @return The truth value.
+   */
+  public static boolean any(Mat matrix) {
+    for (int i = 0; i < matrix.n_elem; i++) {
+      if (matrix.at(i) != 0) {
         return true;
       }
     }
@@ -192,7 +260,16 @@ public class Arma {
     return false;
   }
 
-  public static double norm(Mat element, int p) {
-    return NormOps.normP(element.memptr(), p);
+  /**
+   * Returns the (induced) <code>p</code>-norm of the provided matrix. If <code>matrix</code> is actually a vector,
+   * <code>p</code> must be an integer greater than 0. Otherwise, <code>p</code> must be one of 1, 2.
+   * 
+   * @param matrix The provided matrix.
+   * @param p The type of the norm.
+   * @return The norm.
+   */
+  public static double norm(Mat matrix, int p) {
+    // Error-checking should be done in NormOps.normP(DenseMatrix64F A, double p)
+    return NormOps.normP(matrix.memptr(), p);
   }
 }

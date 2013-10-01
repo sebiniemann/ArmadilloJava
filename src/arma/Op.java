@@ -8,7 +8,7 @@ package arma;
  * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES}, {@link #DIVIDE},
  * {@link #ELEMDIVIDE}
  * <p>
- * Comparison operators: <br>
+ * Relational operators: <br>
  * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER}
  * , {@link #GREATER}
  * 
@@ -41,27 +41,27 @@ public enum Op {
    */
   ELEMDIVIDE,
   /**
-   * Equality (comparison operator)
+   * Equality (relational operator)
    */
   EQUAL,
   /**
-   * Inequality (comparison operator)
+   * Inequality (relational operator)
    */
   NOT_EQUAL,
   /**
-   * Strict less than (comparison operator)
+   * Strict less than (relational operator)
    */
   STRICT_LESS,
   /**
-   * Non-strict less than (comparison operator)
+   * Non-strict less than (relational operator)
    */
   LESS,
   /**
-   * Strict greater than (comparison operator)
+   * Strict greater than (relational operator)
    */
   STRICT_GREATER,
   /**
-   * Non-strict greater than (comparison operator)
+   * Non-strict greater than (relational operator)
    */
   GREATER
 }

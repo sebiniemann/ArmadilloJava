@@ -373,7 +373,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of all elements for which selection.at(n) > 0 holds as a ({@link Arma#sum(Mat) Arma.sum}(
+   * Returns a copy of all elements for which selection.at(n) > 0 holds as a ({@link Arma#accu(Mat) Arma.accu}(
    * {@link Arma#find(Mat, Op, double) Arma.find(selection, Op.STRICT_GREATER, 0)}), 1) matrix.
    * 
    * @param selection The selection to be used.
