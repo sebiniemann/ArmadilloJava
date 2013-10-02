@@ -1,5 +1,5 @@
 package arma;
 
 public class Datum {
-  public static double pi = Math.PI;
+  public static final double pi = Math.PI;
 }
