@@ -96,7 +96,7 @@ public class Mat {
 
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
-   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
+   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
    * 
    * @param n The position of the element.
    * @return The value of the <i>n</i>th element.
@@ -123,7 +123,7 @@ public class Mat {
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
    * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
-   * operation. <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_cols)}.
+   * operation. <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
    * 
    * @param n The position of the left-hand side operand.
    * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
@@ -240,7 +240,6 @@ public class Mat {
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-
     for (int i = 0; i < n_rows; i++) {
       at(i, j, operation, operand.at(i));
     }
@@ -864,12 +863,14 @@ public class Mat {
     }
 
     /*
-     * n = i + j * n_cols, i < n_cols
+     * n = i + j * n_rows, i < n_cols
      * 
-     * j = (n - i) / n_cols j = Math.floor(n / n_cols)
+     * j = (n - i) / n_rows
+     * j = Math.floor(n / n_rows)
      * 
-     * i = n - j * n_cols i = n % n_cols
+     * i = n - j * n_rows
+     * i = n % n_rows
      */
-    return (n / n_cols) * n_rows + n % n_cols;
+    return (n / n_rows) * n_cols + n % n_rows;
   }
 }
