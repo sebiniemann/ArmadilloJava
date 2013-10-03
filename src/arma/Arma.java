@@ -23,14 +23,8 @@ public class Arma {
    * 
    * @param matrix The provided matrix.
    * @return The determinant.
-   * 
-   * @throws Thrown if the dimension is larger than 10 to ensure accuracy despite a <a href="https://code.google.com/p/efficient-java-matrix-library/issues/detail?id=38">reported bug</a> in EJML's det implementation.
    */
   public static double det(Mat matrix) {
-    if(matrix.n_cols > 10) {
-      throw new ArithmeticException("Accuracy cannot be guaranteed for dimensionen larger than 10.");
-    }
-    
     return CommonOps.det(matrix.memptr());
   }
 
