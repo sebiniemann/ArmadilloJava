@@ -44,12 +44,12 @@ public class Mat {
   public int             n_elem;
 
   /**
-   * Creates a new matrix by copying the provided one.
+   * Creates a new matrix by referencing to the provided one.
    * 
-   * @param matrix The matrix to be copied.
+   * @param matrix The matrix to be referenced.
    */
   Mat(DenseMatrix64F matrix) {
-    _matrix = new DenseMatrix64F(matrix);
+    _matrix = matrix;
 
     updateAttributes();
   }
@@ -484,7 +484,13 @@ public class Mat {
    * @see #resize
    */
   public void set_size(int numberOfRows, int numberOfColumns) {
-    _matrix.reshape(numberOfRows, numberOfColumns);
+    // EJML fails if DenseMatrix64F was not properly initialised.
+    if(n_rows == 0 && n_cols == 0) {
+      _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+    } else {
+      _matrix.reshape(numberOfRows, numberOfColumns);
+    }
+    
     updateAttributes();
   }
 
