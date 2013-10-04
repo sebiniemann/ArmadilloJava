@@ -11,7 +11,6 @@ package arma;
  * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER} , {@link #GREATER}
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
- * @version 0.9
  */
 public enum Op {
   /**

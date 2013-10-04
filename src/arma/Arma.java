@@ -11,7 +11,6 @@ import org.ejml.ops.NormOps;
  * on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23 - 21.06.2013.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
- * @version 0.9
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>

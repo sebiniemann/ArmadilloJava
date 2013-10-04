@@ -17,7 +17,6 @@ import org.ejml.ops.RandomMatrices;
  * row-major ordering.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
- * @version 0.9
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>
