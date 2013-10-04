@@ -36,9 +36,10 @@ public class Arma {
    */
   public static Mat abs(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.memptr());
-
+    DenseMatrix64F memptr = matrix.memptr();
+    
     for (int i = 0; i < matrix.n_elem; i++) {
-      double element = matrix.at(i);
+      double element = memptr.get(i);
 
       if (element < 0) {
         result.set(i, -element);
@@ -77,9 +78,10 @@ public class Arma {
    */
   public static Mat floor(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
 
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.floor(matrix.at(i)));
+      result.set(i, Math.floor(memptr.get(i)));
     }
 
     return new Mat(result);
@@ -119,41 +121,11 @@ public class Arma {
    */
   public static Mat find(Mat a, Op operation, double b) throws UnsupportedOperationException {
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
+    DenseMatrix64F memptrA = a.memptr();
 
     for (int i = 0; i < a.n_elem; i++) {
-      switch (operation) {
-        case STRICT_LESS:
-          if (a.at(i) < b) {
-            result.set(i, 1);
-          }
-          break;
-        case LESS:
-          if (a.at(i) <= b) {
-            result.set(i, 1);
-          }
-          break;
-        case EQUAL:
-          if (a.at(i) == b) {
-            result.set(i, 1);
-          }
-          break;
-        case NOT_EQUAL:
-          if (a.at(i) != b) {
-            result.set(i, 1);
-          }
-          break;
-        case GREATER:
-          if (a.at(i) >= b) {
-            result.set(i, 1);
-          }
-          break;
-        case STRICT_GREATER:
-          if (a.at(i) > b) {
-            result.set(i, 1);
-          }
-          break;
-        default:
-          throw new UnsupportedOperationException("Only relational operators are supported.");
+      if (find(memptrA.get(i), operation, b)) {
+        result.set(i, 1);
       }
     }
 
@@ -198,50 +170,69 @@ public class Arma {
    * @param operation The operation to be performed.
    * @param b The right-hand side operand.
    * @return The created matrix.
-   * 
-   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
    */
-  public static Mat find(Mat a, Op operation, Mat b) throws UnsupportedOperationException {
+  public static Mat find(Mat a, Op operation, Mat b) {
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
+    DenseMatrix64F memptrA = a.memptr();
+    DenseMatrix64F memptrB = a.memptr();
 
     for (int i = 0; i < a.n_elem; i++) {
-      switch (operation) {
-        case STRICT_LESS:
-          if (a.at(i) < b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        case LESS:
-          if (a.at(i) <= b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        case EQUAL:
-          if (a.at(i) == b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        case NOT_EQUAL:
-          if (a.at(i) != b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        case GREATER:
-          if (a.at(i) >= b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        case STRICT_GREATER:
-          if (a.at(i) > b.at(i)) {
-            result.set(i, 1);
-          }
-          break;
-        default:
-          throw new UnsupportedOperationException("Only relational operators are supported.");
+      if (find(memptrA.get(i), operation, memptrB.get(i))) {
+        result.set(i, 1);
       }
     }
 
     return new Mat(result);
+  }
+  
+  /**
+   * Returns true if <code>a operation b</code> holds and 0
+   * otherwise. Only relational operators are supported.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed.
+   * @param b The right-hand side operand.
+   * @return The boolean.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
+   */
+  private static boolean find(double a, Op operation, double b) throws UnsupportedOperationException {
+    switch (operation) {
+      case STRICT_LESS:
+        if (a < b) {
+          return true;
+        }
+        break;
+      case LESS:
+        if (a <= b) {
+          return true;
+        }
+        break;
+      case EQUAL:
+        if (a == b) {
+          return true;
+        }
+        break;
+      case NOT_EQUAL:
+        if (a != b) {
+          return true;
+        }
+        break;
+      case GREATER:
+        if (a >= b) {
+          return true;
+        }
+        break;
+      case STRICT_GREATER:
+        if (a > b) {
+          return true;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Only relational operators are supported.");
+    }
+
+    return false;
   }
 
   /**
@@ -251,8 +242,9 @@ public class Arma {
    * @return The truth value.
    */
   public static boolean any(Mat matrix) {
+    DenseMatrix64F memptr = matrix.memptr();
     for (int i = 0; i < matrix.n_elem; i++) {
-      if (matrix.at(i) != 0) {
+      if (memptr.get(i) != 0) {
         return true;
       }
     }

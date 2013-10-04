@@ -240,6 +240,7 @@ public class Mat {
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
+    
     for (int i = 0; i < n_rows; i++) {
       at(i, j, operation, operand.at(i));
     }
@@ -383,10 +384,12 @@ public class Mat {
       throw new IllegalArgumentException("The number of elements of the matrix (n_elem = " + n_elem + ") does not match with the provided selection (n_elem = " + selection.n_elem + ").");
     }
 
+    DenseMatrix64F memptrSelection = selection.memptr();
+
     DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
     int length = 0;
     for (int i = 0; i < n_elem; i++) {
-      if (selection.at(i) > 0) {
+      if (memptrSelection.get(i) > 0) {
         result.set(length, _matrix.get(i));
         length++;
       }
@@ -863,14 +866,14 @@ public class Mat {
     }
 
     /*
-     * n = i + j * n_rows, i < n_cols
-     * 
-     * j = (n - i) / n_rows
-     * j = Math.floor(n / n_rows)
+     * n = i + j * n_rows, i < n_rows
      * 
      * i = n - j * n_rows
-     * i = n % n_rows
+     * i = Math.floor(n / n_rows)
+     * 
+     * j = (n - i) / n_rows
+     * j = n % n_rows
      */
-    return (n / n_rows) * n_cols + n % n_rows;
+    return (n / n_rows) + (n % n_rows) * n_cols;
   }
 }
