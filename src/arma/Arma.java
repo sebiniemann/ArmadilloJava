@@ -7,8 +7,13 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.NormOps;
 
 /**
- * Arma includes stand-alone interfaces similar to the Armadillo C++ Algebra Library by Conrad Sanderson et al., based
- * on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23 - 21.06.2013.
+ * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
+ * Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23
+ * from 21.06.2013.
+ * <p>
+ * If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g.
+ * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
+ * solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  * 
@@ -18,17 +23,26 @@ import org.ejml.ops.NormOps;
 public class Arma {
 
   /**
-   * Returns the determinant of the provided matrix. Fails if the matrix is not square.
+   * Computes the determinant of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if
+   * the provided matrix is not square.
    * 
    * @param matrix The provided matrix.
    * @return The determinant.
+   * 
+   * @throws IllegalArgumentException Thrown if the provided matrix is not square.
    */
-  public static double det(Mat matrix) {
+  public static double det(Mat matrix) throws IllegalArgumentException {
+    if (!matrix.is_square()) {
+      throw new IllegalArgumentException("The provided matrix needs to be square .");
+    }
+
     return CommonOps.det(matrix.memptr());
   }
 
   /**
-   * Creates a new matrix with the absolute value for all elements of the provides matrix.
+   * Creates an element-wise absolute valued matrix based on the provided one.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -36,7 +50,7 @@ public class Arma {
   public static Mat abs(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.memptr());
     DenseMatrix64F memptr = matrix.memptr();
-    
+
     for (int i = 0; i < matrix.n_elem; i++) {
       double element = memptr.get(i);
 
@@ -49,28 +63,42 @@ public class Arma {
   }
 
   /**
-   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> of the provided matrix
-   * <code>X</code> into the product <code>QR</code>.
+   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code X}.
+   * <p>
+   * The matrix {@code X} is decomposed into a orthogonal matrix {@code Q} and upper triangular matrix {@code R}, such
+   * that {@code X = QR}.
+   * <p>
+   * The provided matrices {@code Q} and {@code R} are not touched if the decomposition fails.
    * 
    * @param Q An orthogonal matrix.
    * @param R An upper triangular matrix.
    * @param X The matrix to be decomposed.
+   * @return False if the decomposition fails and true otherwise.
    */
-  public static void qr(Mat Q, Mat R, Mat X) {
+  public static boolean qr(Mat Q, Mat R, Mat X) {
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
     qr.decompose(X.memptr());
 
-    DenseMatrix64F Qqr = qr.getQ(null, false);
-    Q.set_size(Qqr.numRows, Qqr.numCols);
-    Q.memptr().set(Qqr);
+    DenseMatrix64F tempQ;
+    DenseMatrix64F tempR;
+    try {
+      tempQ = qr.getQ(null, false);
+      tempR = qr.getR(null, false);
+    } catch(IllegalArgumentException exception) {
+      return false;
+    }
 
-    DenseMatrix64F Rqr = qr.getR(null, false);
-    R.set_size(Rqr.numRows, Rqr.numCols);
-    R.memptr().set(Rqr);
+    Q.set_size(tempQ.numRows, tempQ.numCols);
+    Q.memptr().set(tempQ);
+
+    R.set_size(tempR.numRows, tempR.numCols);
+    R.memptr().set(tempR);
+
+    return true;
   }
 
   /**
-   * Creates a new matrix with all elements of the provides matrix element-wise floored.
+   * Creates an element-wise floored matrix based on the provided one.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -87,7 +115,7 @@ public class Arma {
   }
 
   /**
-   * Returns the sum of all elements of the provided matrix.
+   * Computes the sum of all elements of the provided matrix.
    * 
    * @param matrix The provided matrix.
    * @return The sum.
@@ -97,7 +125,7 @@ public class Arma {
   }
 
   /**
-   * Creates a new matrix with all elements of the provides matrix element-wise squared.
+   * Creates an element-wise squared matrix based on the provided one.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -107,143 +135,132 @@ public class Arma {
   }
 
   /**
-   * Creates a new matrix with its values set to <code>1</code> for each element where <code>a operation b</code> holds
-   * and <code>0</code> otherwise. The single provided right-hand side value is used for all operations. Only relational
-   * operators are supported.
-   * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed.
-   * @param b The right-hand side operand.
-   * @return The created matrix.
-   * 
-   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
-   */
-  public static Mat find(Mat a, Op operation, double b) throws UnsupportedOperationException {
-    DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
-    DenseMatrix64F memptrA = a.memptr();
-
-    for (int i = 0; i < a.n_elem; i++) {
-      if (find(memptrA.get(i), operation, b)) {
-        result.set(i, 1);
-      }
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix with its values set to <code>1</code> for each element where <code>a operation b</code> holds
-   * and <code>0</code> otherwise. The single provided left-hand side value is used for all operations. Only relational
-   * operators are supported.
-   * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed.
-   * @param b The right-hand side operand.
-   * @return The created matrix.
-   * 
-   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
-   */
-  public static Mat find(double a, Op operation, Mat b) throws UnsupportedOperationException {
-    switch (operation) {
-      case STRICT_LESS:
-        return find(b, Op.STRICT_GREATER, a);
-      case LESS:
-        return find(b, Op.GREATER, a);
-      case GREATER:
-        return find(b, Op.STRICT_LESS, a);
-      case STRICT_GREATER:
-        return find(b, Op.STRICT_LESS, a);
-      case EQUAL:
-      case NOT_EQUAL:
-        return find(b, operation, a);
-      default:
-        throw new UnsupportedOperationException("Only relational operators are supported.");
-    }
-  }
-
-  /**
-   * Creates a new matrix with its values set to 1 for each element where <code>a operation b</code> holds and 0
-   * otherwise. Only relational operators are supported.
-   * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed.
-   * @param b The right-hand side operand.
-   * @return The created matrix.
-   */
-  public static Mat find(Mat a, Op operation, Mat b) {
-    DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
-    DenseMatrix64F memptrA = a.memptr();
-    DenseMatrix64F memptrB = a.memptr();
-
-    for (int i = 0; i < a.n_elem; i++) {
-      if (find(memptrA.get(i), operation, memptrB.get(i))) {
-        result.set(i, 1);
-      }
-    }
-
-    return new Mat(result);
-  }
-  
-  /**
-   * Returns true if <code>a operation b</code> holds and 0
-   * otherwise. Only relational operators are supported.
-   * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed.
-   * @param b The right-hand side operand.
-   * @return The boolean.
-   * 
-   * @throws UnsupportedOperationException Thrown if another operation besides relational operators is requested.
-   */
-  private static boolean find(double a, Op operation, double b) throws UnsupportedOperationException {
-    switch (operation) {
-      case STRICT_LESS:
-        if (a < b) {
-          return true;
-        }
-        break;
-      case LESS:
-        if (a <= b) {
-          return true;
-        }
-        break;
-      case EQUAL:
-        if (a == b) {
-          return true;
-        }
-        break;
-      case NOT_EQUAL:
-        if (a != b) {
-          return true;
-        }
-        break;
-      case GREATER:
-        if (a >= b) {
-          return true;
-        }
-        break;
-      case STRICT_GREATER:
-        if (a > b) {
-          return true;
-        }
-        break;
-      default:
-        throw new UnsupportedOperationException("Only relational operators are supported.");
-    }
-
-    return false;
-  }
-
-  /**
-   * Returns <code>true</code> is any element of the provided matrix is non-zero and <code>false</code> otherwise.
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * <p>
+   * Contains all {@code k = 0} or the first ({@code s = "first"}) respectively last ({@code s = "last"}) {@code k}
+   * indices at most.
+   * <p>
+   * Only relational operators are supported.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>The stored indices are of type double.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code k} is negative or strict greater then
+   * {@code a.}{@link Mat#n_elem n_elem}.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code s} is neither 'first' nor 'last'.
+   * </ul>
    * 
    * @param matrix The provided matrix.
-   * @return The truth value.
+   * @param k The number of elements to be evaluated.
+   * @param s The element to to begin with.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   */
+  public static Mat find(Mat matrix, int k, String s) throws IllegalArgumentException {
+    if (k < 0 || k > matrix.n_elem) {
+      throw new IllegalArgumentException("The parameter k must be non-negative and (non-strict) lower than n_elem = " + matrix.n_elem + ".");
+    }
+
+    if (!s.equals("first") && !s.equals("last")) {
+      throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last'.");
+    }
+
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_elem, 1);
+
+    int length;
+    if (k > 0) {
+      length = k;
+    } else {
+      length = matrix.n_elem;
+    }
+
+    int index = 0;
+    if (s.equals("first")) {
+      for (int i = 0; i < length; i++) {
+        if (matrix.at(i) != 0) {
+          result.set(index, i);
+          index++;
+        }
+      }
+    } else {
+      for (int i = length - 1; i > -1; i--) {
+        if (matrix.at(i) != 0) {
+          result.set(index, i);
+          index++;
+        }
+      }
+    }
+
+    // Saves current values of the elements since length <= n_elem
+    result.reshape(index, 1);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @param k The number of elements to be evaluated.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * 
+   * @see #find(Mat, int, String)
+   */
+  public static Mat find(Mat matrix, int k) throws IllegalArgumentException {
+    return find(matrix, k, "first");
+  }
+
+  /**
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @param s The element to to begin with.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * 
+   * @see #find(Mat, int, String)
+   */
+  public static Mat find(Mat matrix, String s) throws IllegalArgumentException {
+    return find(matrix, 0, s);
+  }
+
+  /**
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * 
+   * @see #find(Mat, int, String)
+   */
+  public static Mat find(Mat matrix) throws IllegalArgumentException {
+    return find(matrix, 0, "first");
+  }
+
+  /**
+   * Returns true if any element of the provided matrix is non-zero or if an operation is satisfy if used
+   * together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @return The boolean result.
    */
   public static boolean any(Mat matrix) {
-    DenseMatrix64F memptr = matrix.memptr();
+    DenseMatrix64F memptrA = matrix.memptr();
+
     for (int i = 0; i < matrix.n_elem; i++) {
-      if (memptr.get(i) != 0) {
+      if (memptrA.get(i) != 0) {
         return true;
       }
     }
@@ -252,15 +269,84 @@ public class Arma {
   }
 
   /**
-   * Returns the (induced) <code>p</code>-norm of the provided matrix. If <code>matrix</code> is actually a vector,
-   * <code>p</code> must be an integer greater than 0. Otherwise, <code>p</code> must be one of 1, 2.
+   * Computes the {@code p}-norm of the provided matrix.
+   * <p>
+   * If {@code matrix} is not a vector, an induced norm is computed.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} not strict
+   * greater than 0.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} not one
+   * of 1, 2.
+   * </ul>
    * 
    * @param matrix The provided matrix.
    * @param p The type of the norm.
    * @return The norm.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} not
+   *           strict greater than 0or if {@code matrix} is not a vector and {@code p} not one of 1, 2.
    */
-  public static double norm(Mat matrix, int p) {
-    // Error-checking should be done in NormOps.normP(DenseMatrix64F A, double p)
+  public static double norm(Mat matrix, int p) throws IllegalArgumentException {
+    if (matrix.is_vec()) {
+      if (p < 0) {
+        throw new IllegalArgumentException("For vectors, p must be strict greater than 0 but was " + p);
+      }
+    } else {
+      if (p != 1 && p != 2) {
+        throw new IllegalArgumentException("For non-vector matrices, p must be one of 1 or 2 but was" + p);
+      }
+    }
+
     return NormOps.normP(matrix.memptr(), p);
+  }
+
+  /**
+   * Computes the {@code p}-norm of the provided matrix.
+   * <p>
+   * If {@code matrix} is not a vector, an induced norm is computed.
+   * <p>
+   * "-inf" stand for the minimum norm, "inf" for the maximum norm and "fro" for the Frobenius norm.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} not one of
+   * '-inf', 'inf' or 'fro'.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} not one
+   * of 'inf' or 'fro'.
+   * </ul>
+   * 
+   * @param matrix The provided matrix.
+   * @param p The type of the norm.
+   * @return The norm.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} not one
+   *           of '-inf', 'inf' or 'fro' or if {@code matrix} is not a vector and {@code p} not one of 'inf' or 'fro'.
+   * 
+   * @see #norm(Mat, int)
+   */
+  public static double norm(Mat matrix, String p) throws IllegalArgumentException {
+    if (matrix.is_vec()) {
+      switch (p) {
+        case "-inf":
+          return CommonOps.elementMinAbs(matrix.memptr());
+        case "inf":
+          return CommonOps.elementMaxAbs(matrix.memptr());
+        case "fro":
+          return NormOps.normF(matrix.memptr());
+        default:
+          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro' but was " + p);
+      }
+    } else {
+      switch (p) {
+        case "inf":
+          return NormOps.inducedPInf(matrix.memptr());
+        case "fro":
+          return NormOps.normF(matrix.memptr());
+        default:
+          throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro' but was" + p);
+      }
+    }
   }
 }
