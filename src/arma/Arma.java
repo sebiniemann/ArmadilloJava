@@ -146,6 +146,8 @@ public class Arma {
    * <b>Non-canonical:</b>
    * <ul>
    * <li>The stored indices are of type double.
+   * <li>The contained indices are either ordered from smallest to largest ({@code s = "first"}) or vice versa (
+   * {@code s = "last"}).
    * <li>An {@code IllegalArgumentException} exception is thrown if {@code k} is negative or strict greater then
    * {@code a.}{@link Mat#n_elem n_elem}.
    * <li>An {@code IllegalArgumentException} exception is thrown if {@code s} is neither 'first' nor 'last'.
@@ -170,23 +172,30 @@ public class Arma {
 
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_elem, 1);
 
-    int length;
-    if (k > 0) {
-      length = k;
-    } else {
-      length = matrix.n_elem;
-    }
-
     int index = 0;
     if (s.equals("first")) {
-      for (int i = 0; i < length; i++) {
+      int limit;
+      if (k > 0) {
+        limit = k;
+      } else {
+        limit = matrix.n_elem;
+      }
+
+      for (int i = 0; i < limit; i++) {
         if (matrix.at(i) != 0) {
           result.set(index, i);
           index++;
         }
       }
     } else {
-      for (int i = length - 1; i > -1; i--) {
+      int limit;
+      if (k > 0) {
+        limit = matrix.n_elem - 1 - k;
+      } else {
+        limit = -1;
+      }
+
+      for (int i = matrix.n_elem - 1; i > limit; i--) {
         if (matrix.at(i) != 0) {
           result.set(index, i);
           index++;
@@ -194,8 +203,12 @@ public class Arma {
       }
     }
 
-    // Saves current values of the elements since length <= n_elem
-    result.reshape(index, 1);
+    if (index > 0) {
+      // Saves current values of the elements since length <= n_elem
+      result.reshape(index, 1);
+    } else {
+      result = new DenseMatrix64F();
+    }
     return new Mat(result);
   }
 
