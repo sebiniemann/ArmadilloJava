@@ -42,7 +42,7 @@ public class Arma {
   }
 
   /**
-   * Creates an element-wise absolute valued matrix based on the provided one.
+   * Creates a matrix with element-wise computed absolute values of the provided matrix.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -98,7 +98,7 @@ public class Arma {
   }
 
   /**
-   * Creates an element-wise floored matrix based on the provided one.
+   * Creates a matrix with element-wise floored values of the provided matrix.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -125,7 +125,7 @@ public class Arma {
   }
 
   /**
-   * Creates an element-wise squared matrix based on the provided one.
+   * Creates a matrix with element-wise squared values of the provided matrix.
    * 
    * @param matrix The provided matrix.
    * @return The created matrix.
@@ -361,5 +361,212 @@ public class Arma {
           throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro' but was" + p);
       }
     }
+  }
+
+  /**
+   * Creates a matrix with element-wise computed cosine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat cos(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.cos(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse cosine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat acos(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.acos(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic cosine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat cosh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.cosh(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic cosine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat acosh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      double value = memptr.get(i);
+      result.set(i, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed sine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat sin(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.sin(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse sine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat asin(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.asin(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic sine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat sinh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.sinh(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic sine of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat asinh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      double value = memptr.get(i);
+      result.set(i, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed tangent of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat tan(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.tan(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse tangent of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat atan(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.atan(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic tangent of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat tanh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.tanh(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic tangent of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat atanh(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      double value = memptr.get(i);
+      result.set(i, 0.5 * Math.log((1 + value) / (1 - value)));
+    }
+
+    return new Mat(result);
   }
 }
