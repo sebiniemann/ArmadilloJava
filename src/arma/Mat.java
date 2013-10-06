@@ -7,14 +7,18 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.RandomMatrices;
 
 /**
- * Mat is a dense matrix with interfaces similar to the Armadillo C++ Algebra Library by Conrad Sanderson et al., based
- * on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23 - 21.06.2013.
+ * Provides a real-valued dense matrix with member functions and attributes that are similar to the Armadillo C++
+ * Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles’ Efficient Java
+ * Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
- * <b>Note:</b> Armadillo's Mat is stored by <a
- * href="https://en.wikipedia.org/wiki/Column_major#Column-major_order">column-major-ordering</a>, while EJML's
- * DenseMatrix64F is stored by <a href="http://en.wikipedia.org/wiki/Row-major_order">row-major ordering</a>. In order
- * to be similar to Armadillo, all interfaces work as if column-major-ordering were used and internally convert to
- * row-major ordering.
+ * If not stated otherwise, the provided interfaces should be identical to Armadillo (e.g. same ordering of arguments,
+ * accepted values, ...). However, this project is based on EJML to provide a pure Java solution, which is why numeric
+ * results may slightly differ from the Armadillo C++ Algebra Library.
+ * <p>
+ * <b>Note:</b> Armadillo stores values by
+ * <ahref="https://en.wikipedia.org/wiki/Column_major#Column-major_order">column-major-ordering</a>, while EJML stores
+ * them by <a href="http://en.wikipedia.org/wiki/Row-major_order">row-major ordering</a>. In order to be similar to
+ * Armadillo, all interfaces work as if column-major-ordering is used while converting to row-major ordering internally.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  * 
@@ -239,7 +243,7 @@ public class Mat {
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-    
+
     for (int i = 0; i < n_rows; i++) {
       at(i, j, operation, operand.at(i));
     }
@@ -369,8 +373,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of all elements for which selection.at(n) > 0 holds as a ({@link Arma#accu(Mat) Arma.accu}(
-   * {@link Arma#find(Mat, Op, double) Arma.find(selection, Op.STRICT_GREATER, 0)}), 1) matrix.
+   * Returns a column vector containing all elements for which selection.at(n) > 0 holds.
    * 
    * @param selection The selection to be used.
    * @return The copy of the selected elements.
@@ -386,16 +389,20 @@ public class Mat {
     DenseMatrix64F memptrSelection = selection.memptr();
 
     DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
-    int length = 0;
+    int index = 0;
     for (int i = 0; i < n_elem; i++) {
       if (memptrSelection.get(i) > 0) {
-        result.set(length, _matrix.get(i));
-        length++;
+        result.set(index, _matrix.get(i));
+        index++;
       }
     }
 
-    // Saves current values of the elements because length <= n_elem
-    result.reshape(length, 1);
+    if(index > 0) {
+      // Saves current values of the elements since length <= n_elem
+      result.reshape(index, 1);
+    } else {
+      result = new DenseMatrix64F();
+    }
     return new Mat(result);
   }
 
@@ -456,7 +463,7 @@ public class Mat {
    * @return The transpose.
    */
   public Mat t() {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    DenseMatrix64F result = new DenseMatrix64F(n_cols, n_rows);
     CommonOps.transpose(_matrix, result);
     return new Mat(result);
   }
@@ -485,12 +492,12 @@ public class Mat {
    */
   public void set_size(int numberOfRows, int numberOfColumns) {
     // EJML fails if DenseMatrix64F was not properly initialised.
-    if(n_rows == 0 && n_cols == 0) {
+    if (n_rows == 0 && n_cols == 0) {
       _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
     } else {
       _matrix.reshape(numberOfRows, numberOfColumns);
     }
-    
+
     updateAttributes();
   }
 
@@ -733,6 +740,30 @@ public class Mat {
   }
 
   /**
+   * Returns true if the matrix is square and false otherwise.
+   * 
+   * @return The boolean value.
+   */
+  public boolean is_square() {
+    if (n_rows != n_cols) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Returns true if the matrix is a vector and false otherwise.
+   * 
+   * @return The boolean value.
+   */
+  public boolean is_vec() {
+    if (n_rows == 1 || n_cols == 1) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
    * multiplier.
    * 
@@ -865,7 +896,7 @@ public class Mat {
    * 
    * @throws IllegalArgumentException Thrown if a negative value is provided for the position.
    */
-  private int convertMajorOrdering(int n) throws IllegalArgumentException {
+  int convertMajorOrdering(int n) throws IllegalArgumentException {
     if (n < 0) {
       throw new IllegalArgumentException("The value of the provided position must be non-negative.");
     }
