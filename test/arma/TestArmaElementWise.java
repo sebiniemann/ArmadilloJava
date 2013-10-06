@@ -42,7 +42,7 @@ public class TestArmaElementWise {
     
     for(int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.abs(_testElements.at(n));
-      assertEquals(expected, actual.at(n), TestData.MAX_NUMERIC_TOLERANCE);
+      assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }
   }
 
@@ -55,7 +55,7 @@ public class TestArmaElementWise {
     
     for(int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.floor(_testElements.at(n));
-      assertEquals(expected, actual.at(n), TestData.MAX_NUMERIC_TOLERANCE);
+      assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }
   }
 
@@ -68,7 +68,7 @@ public class TestArmaElementWise {
     
     for(int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.pow(_testElements.at(n), 2);
-      assertEquals(expected, actual.at(n), TestData.MAX_NUMERIC_TOLERANCE);
+      assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }
   }
 }

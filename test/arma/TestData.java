@@ -16,7 +16,7 @@ public class TestData {
   /**
    * The maximal allowed numeric tolerances.
    */
-  public static final double MAX_NUMERIC_TOLERANCE = 1e+15;
+  public static final double NUMERIC_TOLERANCE = 1e+15;
 
   /**
    * Returns a set of simple test matrices for parametrised interface tests with dimensions 1x1, 10x10 and 100x100
@@ -46,19 +46,19 @@ public class TestData {
     Collection<Object[]> matrices = new ArrayList<Object[]>();
 
     // Zero matrix
-    matrices.add(new Object[]{Mat.zeros(1, 1), 0.0, 0.0, new double[]{0.0, 0.0}});
-    matrices.add(new Object[]{Mat.zeros(10, 10), 0.0, 0.0, new double[]{0.0, 0.0}});
-    matrices.add(new Object[]{Mat.zeros(100, 100), 0.0, 0.0, new double[]{0.0, 0.0}});
+    matrices.add(new Object[]{Mat.zeros(1, 1), 0.0, 0.0, new double[]{0.0, 0.0, 0.0, 0.0}});
+    matrices.add(new Object[]{Mat.zeros(10, 10), 0.0, 0.0, new double[]{0.0, 0.0, 0.0, 0.0}});
+    matrices.add(new Object[]{Mat.zeros(100, 100), 0.0, 0.0, new double[]{0.0, 0.0, 0.0, 0.0}});
 
     // Matrix of ones
-    matrices.add(new Object[]{Mat.ones(1, 1), 1.0, 1.0, new double[]{0.0, 0.0}});
-    matrices.add(new Object[]{Mat.ones(10, 10), 0.0, 100.0, new double[]{10.0, 10.0}});
-    matrices.add(new Object[]{Mat.ones(100, 100), 0.0, 10000.0, new double[]{100.0, 100.0}});
+    matrices.add(new Object[]{Mat.ones(1, 1), 1.0, 1.0, new double[]{0.0, 0.0, 1.0, 1.0}});
+    matrices.add(new Object[]{Mat.ones(10, 10), 0.0, 100.0, new double[]{10.0, 10.0, 10.0, 10.0}});
+    matrices.add(new Object[]{Mat.ones(100, 100), 0.0, 10000.0, new double[]{100.0, 100.0, 100.0, 100.0}});
 
     // Identity matrix
     // Mat.eye(1, 1) is the same as Mat.ones(1, 1)
-    matrices.add(new Object[]{Mat.eye(10, 10), 1.0, 10.0, new double[]{1.0, 1.0}});
-    matrices.add(new Object[]{Mat.eye(100, 100), 1.0, 100.0, new double[]{1.0, 1.0}});
+    matrices.add(new Object[]{Mat.eye(10, 10), 1.0, 10.0, new double[]{1.0, 1.0, 1.0, 1.0}});
+    matrices.add(new Object[]{Mat.eye(100, 100), 1.0, 100.0, new double[]{1.0, 1.0, 1.0, 1.0}});
 
     return matrices;
   }
