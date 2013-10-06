@@ -264,6 +264,40 @@ public class Mat {
       at(n, j, operation, operand);
     }
   }
+  
+  /**
+   * @param first
+   * @param last
+   * @param operation
+   * @param operand
+   */
+  public void cols(int first, int last, Op operation, Mat operand) {
+    if (operand.n_rows != n_rows) {
+      throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
+    }
+
+    int operandJ = 0;
+    for(int j = first; j <= last; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        at(i, j, operation, operand.at(i, operandJ));
+      }
+      operandJ++;
+    }
+  }
+  
+  /**
+   * @param first
+   * @param last
+   * @param operation
+   * @param operand
+   */
+  public void cols(int first, int last, Op operation, double operand) {
+    for(int j = first; j <= last; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        at(i, j, operation, operand);
+      }
+    }
+  }
 
   /**
    * Returns a copy of the main diagonal as a (<code>Math.min</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.

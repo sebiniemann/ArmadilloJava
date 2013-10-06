@@ -3,6 +3,7 @@ package arma;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
+import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.NormOps;
 
@@ -63,21 +64,21 @@ public class Arma {
   }
 
   /**
-   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code X}.
+   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code x}.
    * <p>
-   * The matrix {@code X} is decomposed into a orthogonal matrix {@code Q} and upper triangular matrix {@code R}, such
-   * that {@code X = QR}.
+   * The matrix {@code x} is decomposed into a orthogonal matrix {@code q} and upper triangular matrix {@code r}, such
+   * that {@code x = qr}.
    * <p>
-   * The provided matrices {@code Q} and {@code R} are not touched if the decomposition fails.
+   * The provided matrices {@code q} and {@code r} are not touched if the decomposition fails.
    * 
-   * @param Q An orthogonal matrix.
-   * @param R An upper triangular matrix.
-   * @param X The matrix to be decomposed.
+   * @param q An orthogonal matrix.
+   * @param r An upper triangular matrix.
+   * @param x The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean qr(Mat Q, Mat R, Mat X) {
-    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
-    qr.decompose(X.memptr());
+  public static boolean qr(Mat q, Mat r, Mat x) {
+    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
+    qr.decompose(x.memptr());
 
     DenseMatrix64F tempQ;
     DenseMatrix64F tempR;
@@ -88,11 +89,11 @@ public class Arma {
       return false;
     }
 
-    Q.set_size(tempQ.numRows, tempQ.numCols);
-    Q.memptr().set(tempQ);
+    q.set_size(tempQ.numRows, tempQ.numCols);
+    q.memptr().set(tempQ);
 
-    R.set_size(tempR.numRows, tempR.numCols);
-    R.memptr().set(tempR);
+    r.set_size(tempR.numRows, tempR.numCols);
+    r.memptr().set(tempR);
 
     return true;
   }
@@ -134,6 +135,23 @@ public class Arma {
     return matrix.elemTimes(matrix);
   }
 
+  /**
+   * Creates a matrix with element-wise computed square root of the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created matrix.
+   */
+  public static Mat sqrt(Mat matrix) {
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.sqrt(memptr.get(i)));
+    }
+
+    return new Mat(result);
+  }
+  
   /**
    * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
    * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
@@ -568,5 +586,337 @@ public class Arma {
     }
 
     return new Mat(result);
+  }
+  
+  /**
+   * @param matrix
+   * @param dimension
+   * @return
+   * 
+   * @throws IllegalArgumentException
+   */
+  public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
+    if(dimension == 0) {
+      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+      CommonOps.sumCols(matrix.memptr(), result);
+      return new Mat(result);
+    } else if(dimension == 1) {
+      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+      CommonOps.sumRows(matrix.memptr(), result);
+      return new Mat(result);
+    } else {
+      throw new IllegalArgumentException(); 
+    }
+  }
+  
+  /**
+   * @param matrix
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat sum(Mat matrix) throws IllegalArgumentException {
+    return sum(matrix, 0);
+  }
+  
+  /**
+   * @param matrix
+   * @param dimension
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat mean(Mat matrix, int dimension) throws IllegalArgumentException {
+    if(dimension == 0) {
+      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
+      DenseMatrix64F memptr = matrix.memptr();
+      
+      for(int j = 0; j < matrix.n_cols; j++) {
+        double total = 0;
+        for(int i = 0; i < matrix.n_rows; i++) {
+          total += memptr.get(i, j);
+        }
+        
+        result.set(j, total / matrix.n_rows);
+      }
+      
+      return new Mat(result);
+    } else if(dimension == 1) {
+      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
+      DenseMatrix64F memptr = matrix.memptr();
+      
+      for(int i = 0; i < matrix.n_rows; i++) {
+        double total = 0;
+        for(int j = 0; j < matrix.n_cols; j++) {
+          total += memptr.get(i, j);
+        }
+        
+        result.set(i, total / matrix.n_cols);
+      }
+      
+      return new Mat(result);
+    } else {
+      throw new IllegalArgumentException(); 
+    }
+  }
+  
+  /**
+   * @param matrix
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat mean(Mat matrix) throws IllegalArgumentException {
+    return mean(matrix, 0);
+  }
+  
+//  public static Mat median(Mat matrix, int dimension) {
+//    
+//  }
+//  
+//  public static Mat median(Mat matrix) {
+//    return median(matrix, 0);
+//  }
+//  
+//  public static Mat stddev(Mat matrix, int normType, int dimension) {
+//    
+//  }
+//  
+//  public static Mat stddev(Mat matrix, int normType) {
+//    return stddev(matrix, normType, 0);
+//  }
+//  
+//  public static Mat stddev(Mat matrix, int dimension) {
+//    return stddev(matrix, 0, dimension);
+//  }
+//  
+//  public static Mat stddev(Mat matrix) {
+//    return stddev(matrix, 0, 0);
+//  }
+//  
+//  public static Mat var(Mat matrix, int normType, int dimension) {
+//    
+//  }
+//  
+//  public static Mat var(Mat matrix, int normType) {
+//    return var(matrix, normType, 0);
+//  }
+//  
+//  public static Mat var(Mat matrix, int dimension) {
+//    return var(matrix, 0, dimension);
+//  }
+//  
+//  public static Mat var(Mat matrix) {
+//    return var(matrix, 0, 0);
+//  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat join_rows(Mat a, Mat b) throws IllegalArgumentException {
+    if(a.n_rows != b.n_rows) {
+      throw new IllegalArgumentException();
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(a.n_rows, a.n_cols + b.n_cols);
+    
+    // Add matrix a
+    DenseMatrix64F memptrA = a.memptr();
+    for (int i = 0; i < a.n_rows; i++) {
+      for (int j = 0; j < a.n_cols; j++) {
+        result.set(i, j, memptrA.get(i, j));
+      }
+    }
+  
+    // Add matrix b
+    DenseMatrix64F memptrB = b.memptr();
+    for (int i = 0; i < b.n_rows; i++) {
+      for (int j = 0; j < b.n_cols; j++) {
+        result.set(i, j + a.n_cols, memptrB.get(i, j));
+      }
+    }
+    
+    return new Mat(result);
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat join_cols(Mat a, Mat b) throws IllegalArgumentException {
+    if(a.n_cols != b.n_cols) {
+      throw new IllegalArgumentException();
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(a.n_rows + b.n_rows, a.n_cols);
+    
+    // Add matrix a
+    DenseMatrix64F memptrA = a.memptr();
+    for (int i = 0; i < a.n_rows; i++) {
+      for (int j = 0; j < a.n_cols; j++) {
+        result.set(i, j, memptrA.get(i, j));
+      }
+    }
+  
+    // Add matrix b
+    DenseMatrix64F memptrB = b.memptr();
+    for (int i = 0; i < b.n_rows; i++) {
+      for (int j = 0; j < b.n_cols; j++) {
+        result.set(i + a.n_rows, j, memptrB.get(i, j));
+      }
+    }
+    
+    return new Mat(result);
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat join_horiz(Mat a, Mat b) throws IllegalArgumentException {
+    return join_rows(a, b);
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   * 
+   * @throws IllegalArgumentException 
+   */
+  public static Mat join_vert(Mat a, Mat b) throws IllegalArgumentException {
+    return join_cols(a, b);
+  }
+  
+  /**
+   * @param matrix
+   * @return
+   * @throws IllegalArgumentException
+   */
+  public static double as_scalar(Mat matrix) throws IllegalArgumentException {
+    if(matrix.n_rows != 1 || matrix.n_cols != 1) {
+      throw new IllegalArgumentException();
+    }
+    
+    return matrix.memptr().get(0);
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   */
+  public static Mat solve(Mat a, Mat b) {
+    DenseMatrix64F x = new DenseMatrix64F();
+    
+    // add try catch
+    CommonOps.solve(a.memptr(), b.memptr(), x);
+
+    return new Mat(x);
+  }
+  
+  /**
+   * @param x
+   * @param a
+   * @param b
+   * @return
+   */
+  public static boolean solve(Mat x, Mat a, Mat b) {
+    DenseMatrix64F tempX = new DenseMatrix64F();
+    
+    // add try catch
+    CommonOps.solve(a.memptr(), b.memptr(), tempX);
+
+    x.set_size(tempX.numRows, tempX.numCols);
+    x.memptr().set(tempX);
+
+    return true;
+  }
+  
+  /**
+   * @param x
+   * @return
+   */
+  public static Mat svd(Mat x) {
+    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
+    svd.decompose(x.memptr());
+
+    DenseMatrix64F s;
+    try {
+      s = svd.getW(null);
+      // check catch
+    } catch(IllegalArgumentException exception) {
+      throw new IllegalArgumentException();
+    }
+
+    return new Mat(s);
+  }
+  
+  /**
+   * @param s
+   * @param x
+   * @return
+   */
+  public static boolean svd(Mat s, Mat x) {
+    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
+    svd.decompose(x.memptr());
+
+    DenseMatrix64F tempS;
+    try {
+      tempS = svd.getW(null);
+      // check catch
+    } catch(IllegalArgumentException exception) {
+      return false;
+    }
+
+    s.set_size(tempS.numRows, tempS.numCols);
+    s.memptr().set(tempS);
+
+    return true;
+  }
+  
+  /**
+   * @param u
+   * @param s
+   * @param v
+   * @param x
+   * @return
+   */
+  public static boolean svd(Mat u, Mat s, Mat v, Mat x) {
+    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, true, true, false);
+    svd.decompose(x.memptr());
+
+    DenseMatrix64F tempU;
+    DenseMatrix64F tempS;
+    DenseMatrix64F tempV;
+    try {
+      tempU = svd.getU(null, false);
+      tempS = svd.getW(null);
+      tempV = svd.getV(null, false);
+      // check catch
+    } catch(IllegalArgumentException exception) {
+      return false;
+    }
+
+    u.set_size(tempU.numRows, tempU.numCols);
+    u.memptr().set(tempU);
+
+    s.set_size(tempS.numRows, tempS.numCols);
+    s.memptr().set(tempS);
+
+    v.set_size(tempV.numRows, tempV.numCols);
+    v.memptr().set(tempV);
+
+    return true;
   }
 }
