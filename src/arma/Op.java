@@ -80,7 +80,7 @@ public enum Op {
    */
   public static Mat evaluate(Mat a, Op operator, Mat b) throws UnsupportedOperationException, IllegalArgumentException {
     if (a.n_elem != b.n_elem) {
-      throw new IllegalArgumentException("The provided matrices have an unequal number of elements (" + a.n_elem + " != " + b.n_elem + ").");
+      throw new IllegalArgumentException("The provided matrices must have the same number of elements (" + a.n_elem + " != " + b.n_elem + ").");
     }
     
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
