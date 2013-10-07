@@ -744,7 +744,7 @@ public class Arma {
    * @param b Second matrix.
    * @return The concatenated matrix.
    * 
-   * @throws IllegalArgumentException Thrown if {@code a.n_rows != b.n_rows}.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
    * 
    * @see #join_horiz(Mat, Mat)
    */
@@ -785,7 +785,7 @@ public class Arma {
    * @param b Second matrix.
    * @return The concatenated matrix.
    * 
-   * @throws IllegalArgumentException Thrown if {@code a.n_cols != b.n_cols}.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
    * 
    * @see #join_vert(Mat, Mat)
    */
@@ -826,7 +826,7 @@ public class Arma {
    * @param b Second matrix.
    * @return The concatenated matrix.
    * 
-   * @throws IllegalArgumentException Thrown if {@code a.n_rows != b.n_rows}.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
    * 
    * @see #join_rows(Mat, Mat)
    */
@@ -845,7 +845,7 @@ public class Arma {
    * @param b Second matrix.
    * @return The concatenated matrix.
    * 
-   * @throws IllegalArgumentException Thrown if {@code a.n_cols != b.n_cols}.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
    * 
    * @see #join_cols(Mat, Mat)
    */
@@ -862,8 +862,8 @@ public class Arma {
    * @param matrix The provided matrix.
    * @return The scalar.
    * 
-   * @throws IllegalArgumentException Thrown if {@code matrix.}{@link Mat#n_rows n_rows}{@code  > 1 || matrix.}
-   *           {@link Mat#n_cols n_cols}{@code  > 1}.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix.}{@link Mat#n_rows n_rows}
+   *           {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
    */
   public static double as_scalar(Mat matrix) throws IllegalArgumentException {
     if (matrix.n_rows != 1 || matrix.n_cols != 1) {
@@ -876,19 +876,16 @@ public class Arma {
   /**
    * Solves a system of linear equations {@code ax = b} with unknown {@code x}.
    * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>A {@code RuntimeException} exception is thrown if the algorithm was unable to solve the provided matrix.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and {@code b} are
-   * unequal.
-   * </ul>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and
+   * {@code b} are unequal.
    * 
-   * @param a The provided matrix {@code a}.
-   * @param b The provided matrix {@code a}.
+   * @param a The matrix {@code a}.
+   * @param b The matrix {@code b}.
    * @return The matrix {@code x}.
    * 
    * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
-   * @throws IllegalArgumentException Thrown if the number of rows in {@code a} and {@code b} are unequal.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the number of rows in {@code a} and {@code b} are
+   *           unequal.
    */
   public static Mat solve(Mat a, Mat b) throws RuntimeException, IllegalArgumentException {
     if (a.n_rows != b.n_rows) {
@@ -910,16 +907,16 @@ public class Arma {
    * Return false if no solution was found and true otherwise. The provided matrices {@code x} is not touched if the
    * decomposition fails.
    * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and {@code b} are
-   * unequal.
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and
+   * {@code b} are unequal.
    * 
-   * @param a The provided matrix {@code a}.
-   * @param b The provided matrix {@code a}.
-   * @param x The provided matrix {@code x}.
+   * @param a The matrix {@code a}.
+   * @param b The matrix {@code b}.
+   * @param x The matrix {@code x}.
    * @return The boolean value.
    * 
-   * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
-   * @throws IllegalArgumentException Thrown if the number of rows in {@code a} and {@code b} are unequal.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the number of rows in {@code a} and {@code b} are
+   *           unequal.
    */
   public static boolean solve(Mat x, Mat a, Mat b) throws IllegalArgumentException {
     try {
@@ -931,12 +928,18 @@ public class Arma {
   }
 
   /**
-   * @param x
-   * @return
+   * Performs a <a href="http://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> on
+   * the matrix {@code x}.
+   * <p>
+   * The matrix {@code x} is decomposed into vector {@code s} such that {@code x = u * diagmat(s) * v'}. The matrices
+   * {@code u} and {@code v} are not returned.
    * 
-   * @throws IllegalArgumentException
+   * @param x The matrix to be decomposed.
+   * @return The matrix {@code s}.
+   * 
+   * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
    */
-  public static Mat svd(Mat x) throws IllegalArgumentException {
+  public static Mat svd(Mat x) throws RuntimeException {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
     svd.decompose(x.memptr());
 
@@ -945,41 +948,48 @@ public class Arma {
       s = svd.getW(null);
       // check catch
     } catch(IllegalArgumentException exception) {
-      throw new IllegalArgumentException();
+      throw new RuntimeException("The algorithm was unable to decompose the matrix.");
     }
 
     return new Mat(s);
   }
 
   /**
-   * @param s
-   * @param x
-   * @return
+   * Performs a <a href="http://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> on
+   * the matrix {@code x}.
+   * <p>
+   * The matrix {@code x} is decomposed into vector {@code s} such that {@code x = u * diagmat(s) * v'}. The matrices
+   * {@code u} and {@code v} are not returned.
+   * <p>
+   * The provided matrix {@code s} is not touched if the decomposition fails.
+   * 
+   * @param s The matrix {@code s}.
+   * @param x The matrix to be decomposed.
+   * @return False if the decomposition fails and true otherwise.
    */
   public static boolean svd(Mat s, Mat x) {
-    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
-    svd.decompose(x.memptr());
-
-    DenseMatrix64F tempS;
     try {
-      tempS = svd.getW(null);
-      // check catch
-    } catch(IllegalArgumentException exception) {
+      s = svd(x);
+    } catch(RuntimeException exception) {
       return false;
     }
-
-    s.set_size(tempS.numRows, tempS.numCols);
-    s.memptr().set(tempS);
-
     return true;
   }
 
   /**
-   * @param u
-   * @param s
-   * @param v
-   * @param x
-   * @return
+   * Performs a <a href="http://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> on
+   * the matrix {@code x}.
+   * <p>
+   * The matrix {@code x} is decomposed into matrix {@code u}, {@code v} and a vector {@code s} such that
+   * {@code x = u * diagmat(s) * v'}.
+   * <p>
+   * The provided matrices {@code u}, {@code s} and {@code v} are not touched if the decomposition fails.
+   * 
+   * @param u The matrix {@code u}.
+   * @param s The matrix {@code s}.
+   * @param v The matrix {@code v}.
+   * @param x The matrix to be decomposed.
+   * @return False if the decomposition fails and true otherwise.
    */
   public static boolean svd(Mat u, Mat s, Mat v, Mat x) {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, true, true, false);
@@ -992,7 +1002,6 @@ public class Arma {
       tempU = svd.getU(null, false);
       tempS = svd.getW(null);
       tempV = svd.getV(null, false);
-      // check catch
     } catch(IllegalArgumentException exception) {
       return false;
     }
