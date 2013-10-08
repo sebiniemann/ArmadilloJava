@@ -26,7 +26,7 @@
   <!-- Create the ${classes.dir} directory -->
   <mkdir dir="${classes.dir}"/>
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
   </target>
 
   <target name="test" depends="clean,compile">
