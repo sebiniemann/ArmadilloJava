@@ -9,7 +9,7 @@ import org.ejml.ops.NormOps;
 
 /**
  * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
- * Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles’ Efficient Java Matrix Library (EJML) Version 0.23
+ * Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java Matrix Library (EJML) Version 0.23
  * from 21.06.2013.
  * <p>
  * If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g.

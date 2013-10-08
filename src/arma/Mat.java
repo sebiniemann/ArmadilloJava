@@ -8,7 +8,7 @@ import org.ejml.ops.RandomMatrices;
 
 /**
  * Provides a real-valued dense matrix with member functions and attributes that are similar to the Armadillo C++
- * Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles’ Efficient Java
+ * Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java
  * Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
  * If not stated otherwise, the provided interfaces should be identical to Armadillo (e.g. same ordering of arguments,
