@@ -15,9 +15,18 @@
   </path>
   
   <path id="libs.test">
+    <path refid="libs.src" />
     <pathelement location="${lib.dir}/junit/junit-4.11.jar" />
     <pathelement location="${lib.dir}/junit/hamcrest-core-1.3.jar" />
+  </path>
+  
+  <path id="classpath.src">
     <path refid="libs.src" />
+  </path>
+  
+  <path id="classpath.test">
+    <path refid="libs.test" />
+    <pathelement location="${build.src.dir}"/>
   </path>
   
   <target name="test" depends="run,clean" />
@@ -34,7 +43,7 @@
     <!-- Compile the java code from ${src.dir} into ${build.src.dir} -->
     <javac srcdir="${src.dir}" destdir="${build.src.dir}" includeantruntime="false">
       <classpath>
-        <path refid="libs.src"/>
+        <path refid="classpath.src"/>
       </classpath>
     </javac>
   </target>
@@ -45,8 +54,7 @@
     <!-- Compile the java code from ${test.dir} into ${build.test.dir} -->
     <javac srcdir="${test.dir}" destdir="${build.test.dir}" includeantruntime="false">
       <classpath>
-        <path refid="libs.test"/>
-        <pathelement location="${build.src.dir}"/>
+        <path refid="classpath.test"/>
       </classpath>
     </javac>
   </target>
@@ -54,11 +62,13 @@
   <target name="run" depends="compile.src,compile.test">
     <junit printsummary="on" haltonerror="true">
       <classpath>
-        <path refid="libs.test" />
+        <path refid="classpath.test" />
         <pathelement location="${build.test.dir}"/>
       </classpath>
       <formatter type="brief" usefile="false"/>
-      <test name="arma.AllTests.java"/>
+      <batchtest>
+        <fileset dir="${test.dir}" includes="**/Test*.java" />
+      </batchtest>
     </junit>
   </target>
 </project>
