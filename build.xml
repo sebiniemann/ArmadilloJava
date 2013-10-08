@@ -67,7 +67,12 @@
       </classpath>
       <formatter type="brief" usefile="false"/>
       <batchtest>
-        <fileset dir="${test.dir}" includes="**/Test*.java" />
+        <fileset dir="${src.dir}">
+          <include name="**/*Test*.java"/>
+          <exclude name="**/All*.java"/>
+          <exclude name="**/TestData.java"/>
+          <exclude name="**/TestUtil.java"/>
+        </fileset>
       </batchtest>
     </junit>
   </target>
