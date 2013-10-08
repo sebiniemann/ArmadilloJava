@@ -52,13 +52,13 @@
   </target>
 
   <target name="run" depends="compile.src,compile.test">
-    <junit printsummary="on">
+    <junit printsummary="on" haltonerror="true">
       <classpath>
         <path refid="libs.test" />
         <pathelement location="${build.test.dir}"/>
       </classpath>
       <formatter type="brief" usefile="false"/>
-      <test name="AllTests.java"/>
+      <test name="arma.AllTests.java"/>
     </junit>
   </target>
 </project>
