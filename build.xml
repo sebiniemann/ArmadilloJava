@@ -21,6 +21,10 @@
     <jar jarfile="${dist}/lib/ArmadilloJava.jar" basedir="${build}"/>
   </target>
 
+  <target name="test" depends="jar">
+    
+  </target>
+  
   <target name="clean">
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
