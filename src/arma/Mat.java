@@ -184,74 +184,133 @@ public class Mat {
 
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
-   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
+   * <p>
+   * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = }{@link #at(int, int) at(i + j * n_rows)}.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * </ul>
    * 
    * @param n The position of the element.
    * @return The value of the <i>n</i>th element.
    * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * 
    * @see #at(int, int)
    */
-  public double at(int n) {
+  public double at(int n) throws IllegalArgumentException {
+    if (n >= n_elem) {
+      throw new IllegalArgumentException("The requested position (" + n + ") is out of bound. n_elem = " + n_elem);
+    }
+
     return _matrix.get(convertMajorOrdering(n));
   }
 
   /**
    * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * </ul>
    * 
    * @param i The row of the element.
    * @param j The column of the element.
    * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
    * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * 
    * @see #at(int)
    */
-  public double at(int i, int j) {
+  public double at(int i, int j) throws IllegalArgumentException {
+    if (i >= n_rows || j >= n_cols) {
+      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
+    }
+
     return _matrix.get(i, j);
   }
 
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
    * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
-   * operation. <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
+   * operation.
+   * <p>
+   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param n The position of the left-hand side operand.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   * 
    * @see #at(int, int, Op, double)
-   * @see #getResult(double, Op, double)
    */
-  public void at(int n, Op operation, double operand) {
-    _matrix.set(n, getResult(at(n), operation, operand));
+  public void at(int n, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(n, Op.getResult(at(n), operation, operand));
   }
 
   /**
    * Performs a right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column. The
    * value of the requested element will be overwritten by the result of the operation.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param i The row of the left-hand side operand.
    * @param j The column of the left-hand side operand.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   * 
    * @see #at(int, Op, double)
-   * @see #getResult(double, Op, double)
    */
-  public void at(int i, int j, Op operation, double operand) {
-    _matrix.set(i, j, getResult(at(i, j), operation, operand));
+  public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
   }
 
   /**
    * Return a copy of the <i>i</i>th row as a (1, {@link #n_cols}) matrix.
+   * <p>
+   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
    * 
    * @param i The row to be copied.
    * @return The copied row.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
    */
-  public Mat row(int i) {
+  public Mat row(int i) throws IllegalArgumentException {
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
     DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
 
     // n_cols = result.getNumElements()
     for (int n = 0; n < n_cols; n++) {
-      result.set(n, at(i, n));
+      result.set(n, _matrix.get(i, n));
     }
 
     return new Mat(result);
@@ -259,37 +318,66 @@ public class Mat {
 
   /**
    * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a row-vector. Use {@link #rows(int, int, Op, Mat)} instead.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left-hand side does not match with the provided right-hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param i The row of the left-hand side operands.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException Thrown if the number of columns of the left-hand side does not match with the
-   *           provided right-hand side operand.
-   * 
-   * @see #getResult(double, Op, double)
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a row-vector or if the number of columns of the left-hand side does not match with the provided right-hand side operand or if the requested row is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
    */
-  public void row(int i, Op operation, Mat operand) throws IllegalArgumentException {
+  public void row(int i, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_rowvec()) {
+      throw new IllegalArgumentException("The provided right-hand side operand needs to be a row-vector. Use rows(int, int, Op, Mat) instead.");
+    }
+    
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
     if (operand.n_cols != n_cols) {
       throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
     }
 
+    DenseMatrix64F memptrOperand = operand.memptr();
     for (int n = 0; n < n_cols; n++) {
-      at(i, n, operation, operand.at(n));
+      at(i, n, operation, memptrOperand.get(n));
     }
   }
 
   /**
    * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row. The single provided
    * right-hand side operand is used for all operations.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param i The row of the left-hand side operands.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @see #getResult(double, Op, double)
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
    */
-  public void row(int i, Op operation, double operand) {
+  public void row(int i, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
     for (int n = 0; n < n_cols; n++) {
       at(i, n, operation, operand);
     }
@@ -297,11 +385,19 @@ public class Mat {
 
   /**
    * Return a copy of the <i>j</i>th column as a ({@link #n_rows}, 1) matrix.
+   * <p>
+   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
    * 
    * @param j The column to be copied.
    * @return The copied column.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column is out of bound.
    */
-  public Mat col(int j) {
+  public Mat col(int j) throws IllegalArgumentException {
+    if (j >= n_cols) {
+      throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
+    }
+    
     DenseMatrix64F result = new DenseMatrix64F(n_rows, 1);
 
     // n_rows = result.getNumElements()
@@ -314,17 +410,33 @@ public class Mat {
 
   /**
    * Performs a right-hand side element-wise operation on all elements of the <i>j</i>th column.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a column-vector. Use {@link #cols(int, int, Op, Mat)} instead.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left-hand side does not match with the provided right-hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param j The column of the left-hand side operands.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException Thrown if the number of rows of the left-hand side does not match with the
-   *           provided right-hand side operand.
-   * 
-   * @see #getResult(double, Op, double)
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a column-vector or if the number of rows of the left-hand side does not match with the provided right-hand side operand or if the requested column is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
    */
-  public void col(int j, Op operation, Mat operand) throws IllegalArgumentException {
+  public void col(int j, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_colvec()) {
+      throw new IllegalArgumentException("The provided right-hand side operand needs to be a column-vector. Use cols(int, int, Op, Mat) instead.");
+    }
+    
+    if (j >= n_cols) {
+      throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
+    }
+    
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
@@ -337,14 +449,26 @@ public class Mat {
   /**
    * Performs a right-hand side element-wise operation on all elements of the <i>j</i>th column. The single provided
    * right-hand side operand is used for all operations.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
    * 
    * @param j The column of the left-hand side operands.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @see #getResult(double, Op, double)
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
    */
-  public void col(int j, Op operation, double operand) {
+  public void col(int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (j >= n_cols) {
+      throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
+    }
+    
     for (int n = 0; n < n_rows; n++) {
       at(n, j, operation, operand);
     }
@@ -398,13 +522,13 @@ public class Mat {
   /**
    * Performs a right-hand side element-wise operation on all elements on the main diagonal.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
    *           right-hand side operand.
    */
-  public void diag(Op operation, Mat operand) throws IllegalArgumentException {
+  public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
     if (operand.n_elem != length) {
       throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
@@ -419,10 +543,10 @@ public class Mat {
    * Performs a right-hand side element-wise operation on all elements on the main diagonal. The single provided
    * right-hand side operand is used for all operations.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    */
-  public void diag(Op operation, double operand) {
+  public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
     for (int i = 0; i < length; i++) {
       at(i, i, operation, operand);
@@ -432,13 +556,12 @@ public class Mat {
   /**
    * Performs the provided right-hand side element-wise operation on each column.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
    * @see #col(int, Op, Mat)
    */
-  public void each_col(Op operation, Mat operand) {
-    // Error-checking should be done in col(int, Op, Mat)
+  public void each_col(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int j = 0; j < n_cols; j++) {
       col(j, operation, operand);
     }
@@ -448,13 +571,12 @@ public class Mat {
    * Performs the provided right-hand side element-wise operation on each column. The single provided right-hand side
    * operand is used for all operations.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
    * @see #col(int, Op, double)
    */
-  public void each_col(Op operation, double operand) {
-    // Error-checking should be done in col(int, Op, double)
+  public void each_col(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int j = 0; j < n_cols; j++) {
       col(j, operation, operand);
     }
@@ -463,13 +585,12 @@ public class Mat {
   /**
    * Performs the provided right-hand side element-wise operation on each row.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
    * @see #row(int, Op, Mat)
    */
-  public void each_row(Op operation, Mat operand) {
-    // Error-checking should be done in row(int, Op, Mat)
+  public void each_row(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int i = 0; i < n_rows; i++) {
       row(i, operation, operand);
     }
@@ -479,13 +600,12 @@ public class Mat {
    * Performs the provided right-hand side element-wise operation on each row. The single provided right-hand side
    * operand is used for all operations.
    * 
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
    * @see #row(int, Op, double)
    */
-  public void each_row(Op operation, double operand) {
-    // Error-checking should be done in row(int, Op, double)
+  public void each_row(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int i = 0; i < n_rows; i++) {
       row(i, operation, operand);
     }
@@ -529,10 +649,10 @@ public class Mat {
    * Performs the provided right-hand side element-wise operation on all elements for which selection.at(n) > 0 holds.
    * 
    * @param selection The selection to be used.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    */
-  public void elem(Mat selection, Op operation, Mat operand) {
+  public void elem(Mat selection, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     int index = 0;
     for (int i = 0; i < selection.n_elem; i++) {
       if (selection.at(i) > 0) {
@@ -547,10 +667,10 @@ public class Mat {
    * The single provided right-hand side value is used for all operations.
    * 
    * @param selection The selection to be used.
-   * @param operation The operation to be performed. See {@link #getResult(double, Op, double)} for more details.
+   * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    */
-  public void elem(Mat selection, Op operation, double operand) {
+  public void elem(Mat selection, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int i = 0; i < selection.n_elem; i++) {
       if (selection.at(i) > 0) {
         at(i, operation, operand);
@@ -869,6 +989,30 @@ public class Mat {
     }
     return false;
   }
+  
+  /**
+   * Returns true if the matrix is a column-vector and false otherwise.
+   * 
+   * @return The boolean value.
+   */
+  public boolean is_colvec() {
+    if (n_cols == 1) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * Returns true if the matrix is a row-vector and false otherwise.
+   * 
+   * @return The boolean value.
+   */
+  public boolean is_rowvec() {
+    if (n_rows == 1) {
+      return true;
+    }
+    return false;
+  }
 
   /**
    * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
@@ -939,48 +1083,6 @@ public class Mat {
     DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
     CommonOps.elementDiv(_matrix, operand.memptr(), result);
     return new Mat(result);
-  }
-
-  /**
-   * Performs the requested binary arithmetic operation on <code>a</code> and <code>b</code> or sets <code>a</code> to
-   * the value of <code>b</code> if <code>operation = {@link Op#EQUAL}</code>.
-   * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed. Only arithmetic operators and equality are supported.
-   * @param b The right-hand side operand.
-   * @return The result.
-   * 
-   * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
-   *           requested.
-   * 
-   * @see Op
-   */
-  private static double getResult(double a, Op operation, double b) throws UnsupportedOperationException {
-    double result = 0;
-
-    switch (operation) {
-      case EQUAL:
-        result = b;
-        break;
-      case PLUS:
-        result = a + b;
-        break;
-      case MINUS:
-        result = a - b;
-        break;
-      case TIMES:
-      case ELEMTIMES:
-        result = a * b;
-        break;
-      case DIVIDE:
-      case ELEMDIVIDE:
-        result = a / b;
-        break;
-      default:
-        throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
-    }
-
-    return result;
   }
 
   /**

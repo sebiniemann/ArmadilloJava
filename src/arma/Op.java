@@ -204,4 +204,44 @@ public enum Op {
 
     return false;
   }
+  
+  /**
+   * <b>Non-canonical:</b> Performs the requested binary arithmetic operation {@code a operator b} or sets {@code a} to
+   * the value of {@code b} if {@code operation = }{@link Op#EQUAL}.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed. Only arithmetic operators and equality are supported.
+   * @param b The right-hand side operand.
+   * @return The result.
+   * 
+   * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   */
+  static double getResult(double a, Op operation, double b) throws UnsupportedOperationException {
+    double result = 0;
+
+    switch (operation) {
+      case EQUAL:
+        result = b;
+        break;
+      case PLUS:
+        result = a + b;
+        break;
+      case MINUS:
+        result = a - b;
+        break;
+      case TIMES:
+      case ELEMTIMES:
+        result = a * b;
+        break;
+      case DIVIDE:
+      case ELEMDIVIDE:
+        result = a / b;
+        break;
+      default:
+        throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
+    }
+
+    return result;
+  }
 }
