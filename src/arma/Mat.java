@@ -181,7 +181,32 @@ public class Mat {
   public Mat(String matrix) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
   }
+  
+  /**
+   * @return
+   */
+  public Mat span() {
+    return Mat.ones(n_elem, 1);
+  }
 
+  /**
+   * @param start 
+   * @param end 
+   * @return
+   */
+  public Mat span(int start, int end) {
+    if(start > end) {
+      throw new IllegalArgumentException();
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
+    for(int n = start; n <= end; n++) {
+      result.set(n, 1);
+    }
+    
+    return new Mat(result);
+  }
+  
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
    * <p>
@@ -440,9 +465,10 @@ public class Mat {
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-
+    
+    DenseMatrix64F memptrOperand = operand.memptr();
     for (int i = 0; i < n_rows; i++) {
-      at(i, j, operation, operand.at(i));
+      at(i, j, operation, memptrOperand.get(i));
     }
   }
 
@@ -475,12 +501,45 @@ public class Mat {
   }
 
   /**
+   * @param first 
+   * @param last 
+   * @return
+   */
+  public Mat cols(int first, int last) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_cols) {
+      throw new IllegalArgumentException();
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, last - first + 1);
+
+    for (int j = first; j <= last; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        result.set(i, j, _matrix.get(i, j));
+      }
+    }
+
+    return new Mat(result);
+  }
+
+  /**
    * @param first
    * @param last
    * @param operation
    * @param operand
    */
   public void cols(int first, int last, Op operation, Mat operand) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_cols) {
+      throw new IllegalArgumentException();
+    }
+    
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
@@ -501,8 +560,91 @@ public class Mat {
    * @param operand
    */
   public void cols(int first, int last, Op operation, double operand) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_cols) {
+      throw new IllegalArgumentException();
+    }
+    
     for (int j = first; j <= last; j++) {
       for (int i = 0; i < n_rows; i++) {
+        at(i, j, operation, operand);
+      }
+    }
+  }
+
+  /**
+   * @param first 
+   * @param last 
+   * @return
+   */
+  public Mat rows(int first, int last) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_rows) {
+      throw new IllegalArgumentException();
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(last - first + 1, n_cols);
+
+    for (int i = first; i <= last; i++) {
+      for (int j = 0; j < n_cols; i++) {
+        result.set(i, j, _matrix.get(i, j));
+      }
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * @param first
+   * @param last
+   * @param operation
+   * @param operand
+   */
+  public void rows(int first, int last, Op operation, Mat operand) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_rows) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (operand.n_rows != n_rows) {
+      throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
+    }
+
+    int operandI = 0;
+    for (int i = first; i <= last; i++) {
+      for (int j = 0; j < n_cols; i++) {
+        at(i, j, operation, operand.at(operandI, j));
+      }
+      operandI++;
+    }
+  }
+
+  /**
+   * @param first
+   * @param last
+   * @param operation
+   * @param operand
+   */
+  public void rows(int first, int last, Op operation, double operand) {
+    if (first > last) {
+      throw new IllegalArgumentException();
+    }
+    
+    if (first < 0 || last >= n_rows) {
+      throw new IllegalArgumentException();
+    }
+    
+    for (int i = first; i <= last; i++) {
+      for (int j = 0; j < n_cols; i++) {
         at(i, j, operation, operand);
       }
     }
