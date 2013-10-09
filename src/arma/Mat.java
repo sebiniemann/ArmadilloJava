@@ -11,12 +11,12 @@ import org.ejml.ops.RandomMatrices;
  * Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java
  * Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
- * If not stated otherwise, the provided interfaces should be identical to Armadillo (e.g. same ordering of arguments,
- * accepted values, ...). However, this project is based on EJML to provide a pure Java solution, which is why numeric
- * results may slightly differ from the Armadillo C++ Algebra Library.
+ * If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g.
+ * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
+ * solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
  * <p>
- * <b>Note:</b> Armadillo stores values by
- * <ahref="https://en.wikipedia.org/wiki/Column_major#Column-major_order">column-major-ordering</a>, while EJML stores
+ * <b>Note:</b> Armadillo stores values by <a
+ * href="https://en.wikipedia.org/wiki/Column_major#Column-major_order">column-major-ordering</a>, while EJML stores
  * them by <a href="http://en.wikipedia.org/wiki/Row-major_order">row-major ordering</a>. In order to be similar to
  * Armadillo, all interfaces work as if column-major-ordering is used while converting to row-major ordering internally.
  * 
@@ -28,73 +28,158 @@ import org.ejml.ops.RandomMatrices;
 public class Mat {
 
   /**
-   * The internal data representation of the matrix.
+   * Reference to the internal data representation of the matrix.
    */
   private DenseMatrix64F _matrix;
 
   /**
-   * The number of rows in the matrix.
+   * The number of rows of the matrix.
    */
   public int             n_rows;
 
   /**
-   * The number of columns in the matrix.
+   * The number of columns of the matrix.
    */
   public int             n_cols;
 
   /**
-   * The number of elements (same as {@link #n_rows} * {@link #n_cols}) in the matrix.
+   * The number of elements of the matrix (same as {@link #n_rows} * {@link #n_cols}) .
    */
   public int             n_elem;
 
   /**
-   * Creates a new matrix by referencing to the provided one.
+   * Creates a matrix by referencing to the provided one.
    * 
    * @param matrix The matrix to be referenced.
    */
   Mat(DenseMatrix64F matrix) {
     _matrix = matrix;
-
     updateAttributes();
   }
 
   /**
-   * Creates a new matrix with {@link #n_elem} = 0.
+   * Creates an empty matrix with {@link #n_elem} = 0.
    */
   public Mat() {
     this(new DenseMatrix64F());
   }
 
   /**
-   * Creates a new matrix with the same dimensions and assignments as the provided two-dimensional array. The array is
-   * assumed to have a structure of <code>array[rows][columns]</code>.
+   * Creates a matrix with the same number of rows and columns as well as elements as the provided two-dimensional
+   * array. The array is assumed to have a structure of {@code array[rows][columns]}.
    * 
-   * @param matrix The two-dimensional array to be converted into a matrix.
+   * @param matrix The two-dimensional array.
    */
   public Mat(double[][] matrix) {
-    // Error-checking should be done in DenseMatrix64F
+    // Error-checking must be done in DenseMatrix64F since this() needs to be the first statement.
     this(new DenseMatrix64F(matrix));
   }
 
   /**
-   * Creates a new matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code>.
+   * Creates a random matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}
+   * filled according to {@code fillType} with either uniformly or normally distributed pseudorandom values.
+   * <p>
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is not one of
+   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill)} instead.
    * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param fillType The fill type.
+   * @param rng The pseudorandom generator.
+   * 
+   * @throws IllegalArgumentException Thrown if {@code fillType} is not one of {@code RANDU} or {@code RANDN}. Use
+   *           {@link #Mat(int, int, Fill)} instead.
    */
-  public Mat(int numberOfRows, int numberOfColumns) {
-    // Error-checking should be done in DenseMatrix64F
-    this(new DenseMatrix64F(numberOfRows, numberOfColumns));
+  public Mat(int numberOfRows, int numberOfColumns, Fill fillType, Random rng) throws IllegalArgumentException {
+    switch (fillType) {
+      case NONE:
+      case ZEROS:
+      case ONES:
+      case EYE:
+        throw new IllegalArgumentException("Use Mat(int, int, Fill) instead.");
+      case RANDU:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+
+        int numberOfElements = _matrix.getNumElements();
+        for (int i = 0; i < numberOfElements; i++) {
+          _matrix.set(i, rng.nextGaussian());
+        }
+        break;
+      case RANDN:
+        _matrix = RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng);
+        break;
+    }
+
+    updateAttributes();
   }
 
   /**
-   * Creates a new matrix by copying the provided one.
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} filled
+   * according to {@code fillType}.
+   * <p>
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
+   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
    * 
-   * @param matrix The matrix to be copied.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param fillType The fill type.
+   * 
+   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
+   *           {@link #Mat(int, int, Fill, Random)} instead.
+   */
+  public Mat(int numberOfRows, int numberOfColumns, Fill fillType) throws IllegalArgumentException {
+    switch (fillType) {
+      case NONE:
+      case ZEROS:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        break;
+      case ONES:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        CommonOps.fill(_matrix, 1);
+        break;
+      case EYE:
+        _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
+        break;
+      case RANDU:
+      case RANDN:
+        throw new IllegalArgumentException("Use Mat(int, int, Fill, Random) instead.");
+    }
+
+    updateAttributes();
+  }
+
+  /**
+   * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * <p>
+   * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   */
+  public Mat(int numberOfRows, int numberOfColumns) {
+    this(numberOfRows, numberOfColumns, Fill.NONE);
+  }
+
+  /**
+   * Creates a matrix by copying the provided one.
+   * 
+   * @param matrix The provided matrix.
    */
   public Mat(Mat matrix) {
     this(new DenseMatrix64F(matrix.memptr()));
+  }
+
+  /**
+   * <b>Non-canonical:</b> Creating a matrix by a string is not supported. Use {@link #Mat(double[][])} instead.
+   * <p>
+   * This constructor only exists to for clarification.
+   * 
+   * @param matrix The provided string.
+   * 
+   * @throws UnsupportedOperationException Creating a matrix by a string is not supported. Use Mat(double[][]) instead.
+   */
+  public Mat(String matrix) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
   }
 
   /**
@@ -264,7 +349,7 @@ public class Mat {
       at(n, j, operation, operand);
     }
   }
-  
+
   /**
    * @param first
    * @param last
@@ -277,14 +362,14 @@ public class Mat {
     }
 
     int operandJ = 0;
-    for(int j = first; j <= last; j++) {
+    for (int j = first; j <= last; j++) {
       for (int i = 0; i < n_rows; i++) {
         at(i, j, operation, operand.at(i, operandJ));
       }
       operandJ++;
     }
   }
-  
+
   /**
    * @param first
    * @param last
@@ -292,7 +377,7 @@ public class Mat {
    * @param operand
    */
   public void cols(int first, int last, Op operation, double operand) {
-    for(int j = first; j <= last; j++) {
+    for (int j = first; j <= last; j++) {
       for (int i = 0; i < n_rows; i++) {
         at(i, j, operation, operand);
       }
@@ -431,7 +516,7 @@ public class Mat {
       }
     }
 
-    if(index > 0) {
+    if (index > 0) {
       // Saves current values of the elements since length <= n_elem
       result.reshape(index, 1);
     } else {
@@ -610,74 +695,62 @@ public class Mat {
   }
 
   /**
-   * Creates a new zero matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code>.
+   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
    * @return The created matrix.
    */
   public static Mat zeros(int numberOfRows, int numberOfColumns) {
-    return new Mat(new DenseMatrix64F(numberOfRows, numberOfColumns));
+    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
   }
 
   /**
-   * Creates a new matrix of ones with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code>.
+   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
    * @return The created matrix.
    */
   public static Mat ones(int numberOfRows, int numberOfColumns) {
-    DenseMatrix64F result = new DenseMatrix64F(numberOfRows, numberOfColumns);
-    CommonOps.fill(result, 1);
-    return new Mat(result);
+    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
   }
 
   /**
-   * Creates a new identity matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code>.
+   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
    * @return The created matrix.
    */
   public static Mat eye(int numberOfRows, int numberOfColumns) {
-    return new Mat(CommonOps.identity(numberOfRows, numberOfColumns));
+    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
   }
 
   /**
-   * Creates a new matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and normally distributed pseudorandom values.
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * uniformly distributed pseudorandom values.
    * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
-   * @param rng The pseudorandom generator to be used.
-   * @return The created matrix.
-   */
-  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
-    DenseMatrix64F result = new DenseMatrix64F(numberOfRows, numberOfColumns);
-
-    int numberOfElements = result.getNumElements();
-    for (int i = 0; i < numberOfElements; i++) {
-      result.set(i, rng.nextGaussian());
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix with {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and uniformly distributed pseudorandom values.
-   * 
-   * @param numberOfRows The number of rows of the matrix to be created.
-   * @param numberOfColumns The number of columns of the matrix to be created.
-   * @param rng The pseudorandom generator to be used.
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
    * @return The created matrix.
    */
   public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng));
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
+  }
+
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * normally distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
+   * @return The created matrix.
+   */
+  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
   }
 
   /**
@@ -784,7 +857,7 @@ public class Mat {
     }
     return true;
   }
-  
+
   /**
    * Returns true if the matrix is a vector and false otherwise.
    * 
