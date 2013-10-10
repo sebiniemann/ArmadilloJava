@@ -1,14 +1,30 @@
-The functions below are all directly called in Matlab, in the namespace "arma" in C++ and in the class "Arma" in Java. 
+Syntax conversion table between Matlab, Armadillo C++ and Armadillo Java.
 
-det, abs, qr, floor, accu, square, sqrt, find, any, norm, cos, acos, cosh, acosh, sin, asin, sinh, asinh, tan, atan, tanh, atanh, sum, mean, join_rows, join_cols, join_horiz, join_vert, as_scalar, solve, svd
+Initialisation
 
-See the calculation of the determinant as an example:
+Element access
+
+Submatrix views
+
+Member functions
+
+Non-member functions
+
+Maxtrix-valued element-wise functions
+
+Trigonometric functions
 
 <table>
   <tr>
-    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
   </tr>
   <tr>
-    <td>det(A)</td><td>arma::det(A)</td><td>Arma.det(A)</td>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
   </tr>
 </table>
+
+Scalar-valued functions
+
+Matrix-valued functions
+
+Others
