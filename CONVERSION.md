@@ -4,15 +4,104 @@ Note: Variable A is a matrix.
 
 Initialisation
 
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td></td><td>A()</td><td>A()</td><td></td>
+  </tr>
+  <tr>
+    <td></td><td>A(n, m)</td><td>A(n, m)</td><td></td>
+  </tr>
+  <tr>
+    <td></td><td>A(n, m, fill::none)</td><td>A(n, m, Fill.NONE)</td><td></td>
+  </tr>
+  <tr>
+    <td>zeros(n, m)</td><td>A(n, m, fill:zeros)</td><td>A(n, m, Fill.ZEROS)</td><td></td>
+  </tr>
+  <tr>
+    <td>zeros(n, m)</td><td>zeros(n, m)</td><td>Mat.zeros(n, m)</td><td></td>
+  </tr>
+  <tr>
+    <td>ones(n, m)</td><td>A(n, m, fill:ones)</td><td>A(n, m, Fill.ONES)</td><td></td>
+  </tr>
+  <tr>
+    <td>ones(n, m)</td><td>ones(n, m)</td><td>Mat.ones(n, m)</td><td></td>
+  </tr>
+  <tr>
+    <td>eye(n, m)</td><td>A(n, m, fill:eye)</td><td>A(n, m, Fill.EYE)</td><td></td>
+  </tr>
+  <tr>
+    <td>eye(n, m)</td><td>eye(n, m)</td><td>Mat.eye(n, m)</td><td></td>
+  </tr>
+</table>
+
 Element access
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
 
 Submatrix views
 
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
+Member attributes
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
 Member functions
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
 
 Non-member functions
 
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
 Maxtrix-valued element-wise functions
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
 
 Trigonometric functions
 
@@ -51,6 +140,44 @@ Trigonometric functions
 
 Scalar-valued functions
 
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
 Matrix-valued functions
 
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
+Decompositions
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
+
 Others
+
+<table>
+  <tr>
+    <th>Matlab</th><th>Armadillo C++</th><th>ArmadilloJava</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td>sin(A)</td><td>arma::sin(A)</td><td>Arma.sin(A)</td><td></td>
+  </tr>
+</table>
