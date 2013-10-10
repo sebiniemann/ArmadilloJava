@@ -35,6 +35,18 @@ Initialisation
   <tr>
     <td>eye(n, m)</td><td>eye(n, m)</td><td>Mat.eye(n, m)</td><td></td>
   </tr>
+  <tr>
+    <td>randu(n, m)</td><td>A(n, m, fill:randu)</td><td>A(n, m, Fill.RANDU, rng)</td><td> rng is a random number generator</td>
+  </tr>
+  <tr>
+    <td>randu(n, m)</td><td>randu(n, m)</td><td>Mat.randu(n, m, rng)</td><td></td>
+  </tr>
+  <tr>
+    <td>randn(n, m)</td><td>A(n, m, fill:randn)</td><td>A(n, m, Fill.RANDN, rng)</td><td></td>
+  </tr>
+  <tr>
+    <td>randn(n, m)</td><td>randn(n, m)</td><td>Mat.randn(n, m, rng)</td><td></td>
+  </tr>
 </table>
 
 Element access
