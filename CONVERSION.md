@@ -226,5 +226,42 @@ Matlab                 | Armadillo C++              | ArmadilloJava             
 ### Pre-defined constants
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
-
-
+pi                     | datum::pi                  | Datum.pi                        | 
+Inf                    | datum::inf                 | Datum.inf                       | 
+NaN                    | datum::nan                 | Datum.nan                       | 
+exp(1)                 | datum::e                   | Datum.e                         | 
+sqrt(2)                | datum::sqrt2               | Datum.sqrt2                     | 
+eps                    | datum::eps                 | Datum.eps                       | **Note:** Machine dependant
+log(realmin)           | datum::log_min             | Datum.log_min                   | **Note:** Machine dependant
+log(realmax)           | datum::log_max             | Datum.log_max                   | **Note:** Machine dependant
+0.5772156649015329     | datum::euler               | Datum.euler                     | 
+1.6180339887498948     | datum::gratio              | Datum.gratio                    | 
+1.660538782e-27        | datum::m_u                 | Datum.m_u                       | 
+6.02214179e23          | datum::N_A                 | Datum.N_A                       | 
+1.3806504e-23          | datum::k                   | Datum.k                         | 
+8.617343e-5            | datum::k_evk               | Datum.k_evk                     | 
+0.52917720859e-10      | datum::a_0                 | Datum.a_0                       | 
+927.400915e-26         | datum::mu_B                | Datum.mu_B                      | 
+3.76730313461771e-2    | datum::Z_0                 | Datum.Z_0                       | 
+7.7480917004e-5        | datum::G_0                 | Datum.G_0                       | 
+8.9875517873681764e9   | datum::k_e                 | Datum.k_e                       | 
+8.85418781762039e-12   | datum::eps_0               | Datum.eps_0                     | 
+9.10938215e-31         | datum::m_e                 | Datum.m_e                       | 
+1.602176487e-19        | datum::eV                  | Datum.eV                        | 
+1.602176487e-19        | datum::ec                  | Datum.ec                        | 
+96485.3399             | datum::F                   | Datum.F                         | 
+7.2973525376e-3        | datum::alpha               | Datum.alpha                     | 
+137.035999679          | datum::alpha_inv           | Datum.alpha_inv                 | 
+483597.891e9           | datum::K_J                 | Datum.K_J                       | 
+1.25663706143592e-06   | datum::mu_0                | Datum.mu_0                      | 
+2.067833667e-15        | datum::phi_0               | Datum.phi_0                     | 
+8.314472               | datum::R                   | Datum.R                         | 
+6.67428e-11            | datum::G                   | Datum.G                         | 
+6.62606896e-34         | datum::h                   | Datum.h                         | 
+1.054571628e-34        | datum::h_bar               | Datum.h_bar                     | 
+1.672621637e-27        | datum::m_p                 | Datum.m_p                       | 
+10973731.568527        | datum::R_inf               | Datum.R_inf                     | 
+299792458.0            | datum::c_0                 | Datum.c_0                       | 
+5.670400e-8            | datum::sigma               | Datum.sigma                     | 
+25812.807557           | datum::R_k                 | Datum.R_k                       | 
+2.8977685e-3           | datum::b                   | Datum.b                         | 
