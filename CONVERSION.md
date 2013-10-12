@@ -44,12 +44,16 @@ numel(A)                   | A.n_elem                   | A.n_elem              
 Element access 
 --------------
 
-Matlab                               | Armadillo C++        | ArmadilloJava           | Notes
--------------------------------------|----------------------|-------------------------|------
-A(i+1, j+1)                          | A(i, j)              | A(i, j)                 | 
-A(i+1, j+1) = A(i+1, j+1) Operator b | A(i, j) Operator= b  | A(i, j, Op.Operator, b) | 
-A(n)                                 | A(n)                 | A(n)                    | 
-A(n) = A(n) Operator b               | A(n) Operator= b     | A(n, Op.Operator, b)    | 
+              | Inline operations
+--------------|-------------------
+Matlab        | A(...) = A(...) Operator B
+Armadillo C++ | A(...) Operator= B
+ArmadilloJava | A(..., Op.Operator, B)
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+A(i+1, j+1)                | A(i, j)                    | A(i, j)                         | 
+A(n)                       | A(n)                       | A(n)                            | 
 
 
 Member functions
@@ -106,18 +110,44 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 ### Submatrix views
 
+              | Inline operations
+--------------|-------------------
+Matlab        | A(...) = A(...) Operator B
+Armadillo C++ | A.... Operator= B
+ArmadilloJava | A....(Op.Operator, B)
+
+#### Contiguous views
+
+Matlab                     | Armadillo C++                        | ArmadilloJava                   | Notes
+---------------------------|--------------------------------------|---------------------------------|------
+A(:, j)                    | A.col(j)                             | A.col(j)                        | 
+A(:, j)                    | A(span::all, j)                      | A.col(j)                        | 
+                           | A.unsafe_col(j)                      |                                 | *Not suppported*
+A(i, :)                    | A.row(i)                             | A.row(i)                        | 
+A(i, :)                    | A(i, span::all)                      | A.row(i)                        | 
+A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                    | 
+A(i, a:b)                  | A(i, span(a, b))                     | A.cols(a, b, i)                 | 
+A(a:b, :)                  | A.rows(a, b)                         | A.rows(a, b)                    | 
+A(a:b, j)                  | A(span(a, b), j)                     | A.rows(a, b, j)                 | 
+A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)        | 
+A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(ai, bi, aj, bj)        | 
+A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(ai, bi, aj, bj)        | 
+A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                  | **Note:** A must be a vector.
+A(a:b)                     | A(span(a, b))                        | A.subvec(a, b)                  | **Note:** A must be a vector.
+
+                           
+#### Non-contiguous views
+
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | col                        |                                 | 
-                           | row                        |                                 | 
-                           | cols                       |                                 | 
-                           | rows                       |                                 | 
-                           | subvec                     |                                 | 
-                           | elem                       |                                 | 
-                           | submat                     |                                 | 
-                           | unsafe_col                 |                                 | 
+A(I)                       | A.elem(I)                  | A.elem(I)                       | **Note:** I must be a vector.
+A(I)                       | A(I)                       | A.elem(I)                       | **Note:** I must be a vector.
+A(:, J)                    | A.cols(J)                  | A.cols(J)                       | **Note:** J must be a vector.
+A(I, :)                    | A.rows(I)                  | A.rows(I)                       | **Note:** I must be a vector.
+A(I, J)                    | A.submat(I, J)             | A.submat(I, J)                  | **Note:** I, J must be vectors.
+A(I, J)                    | A(I, J)                    | A.submat(I, J)                  | **Note:** I, J must be vectors.
 
-
+                           
 ### Internal data access
 **Not recommend unless you know what you are doing.**
 ArmadilloJava uses [Efficient Java Matrix Library](https://code.google.com/p/efficient-java-matrix-library/) internally.
@@ -283,6 +313,7 @@ isfinite(A)                | is_finite(A)               | Arma.is_finite(A)     
 ### Statistics 
 
 Armadillo C++: running_stat<double> S
+
 ArmadilloJava: RunningStat S
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
@@ -298,6 +329,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 
 Armadillo C++: running_stat_vec<double> S([c]) **Default:** c = true
+
 ArmadilloJava: RunningStatVec S([c]) **Default:** c = true
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
@@ -316,6 +348,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 ### Wall clock
 
 Armadillo C++: wall_clock W
+
 ArmadilloJava: WallClock W
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
