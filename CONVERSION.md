@@ -123,7 +123,7 @@ atan(A)                | atan(A)                    | Arma.atan(A)              
 atanh(A)               | atanh(A)                   | Arma.atanh(A)                   | 
 
 
-### Scalar-valued functions
+### Scalar-valued functions of vectors/matrices
 
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
@@ -138,7 +138,27 @@ rank(A [, t])          | rank(A [, t])              | Arma.rank(A [, t])        
 trace(A)               | trace(A)                   | Arma.trace(A)                   | 
 
 
-### Matrix-valued functions
+### Scalar/vector-valued functions of vectors/matrices
+
+Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
+-----------------------|----------------------------|---------------------------------|------
+diag(A [, k])          | diagvec(A [, k])           | Arma.diagvec(A [, k])           | **Default:** k = 0 **Matlab:** Use A(k) if A is a vector.
+prod(A [, d])          | prod(A [, d])              | Arma.prod(A [, d])              | **Note:** d is omitted if A is a vector. **Default:** d = 0
+sum(A [, d])           | sum(A [, d])               | Arma.sum(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
+
+
+#### Statistics
+Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
+-----------------------|----------------------------|---------------------------------|------
+min(A [, d])           | min(A [, d])               | Arma.min(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
+max(A [, d])           | max(A [, d])               | Arma.max(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
+mean(A [, d])          | mean(A [, d])              | Arma.mean(A [, d])              | **Note:** d is omitted if A is a vector. **Default:** d = 0
+median(A [, d])        | median(A [, d])            | Arma.median(A [, d])            | **Note:** d is omitted if A is a vector. **Default:** d = 0
+std(A [, n] [, d])     | stddev(A [, n] [, d])      | Arma.stddev(A [, n] [, d])      | **Note:** d is omitted if A is a vector. **Default:** n = 0, d = 0
+var(A [, n] [, d])     | var(A [, n] [, d])         | Arma.var(A [, n] [, d])         | **Note:** d is omitted if A is a vector. **Default:** n = 0, d = 0
+
+
+### Matrix-valued functions of vectors/matrices
 
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
@@ -198,6 +218,7 @@ Matlab                 | Armadillo C++              | ArmadilloJava             
 Others
 ------
 
+### Statistics
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
 
@@ -205,3 +226,5 @@ Matlab                 | Armadillo C++              | ArmadilloJava             
 ### Pre-defined constants
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
+
+
