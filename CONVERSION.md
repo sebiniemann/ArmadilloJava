@@ -13,7 +13,7 @@ Matlab                 | Armadillo C++              | ArmadilloJava             
                        | A()                        | A()                             | 
                        | A(n, m)                    | A(n, m)                         | 
                        | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | 
-A = [...]              | A << ... << endr;          | A(new double[][]{ ... })        | 
+A = [ ... ]            | A << ... << endr;          | A(new double[][]{ ... })        | 
                        | A(" ... ");                |                                 | *Not suppported*
 zeros(n, m)            | A(n, m, fill::zeros)       | A(n, m, Fill.ZEROS)             | 
 zeros(n, m)            | zeros(n, m)                | Mat.zeros(n, m)                 | 
@@ -57,20 +57,65 @@ Member functions
 
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
-
+                       | A.copy_size(B)             |                                 | 
+                       | A.diag([k])                |                                 | 
+                       | A.each_col([v])            |                                 | 
+                       | A.each_row([v])            |                                 | 
+                       | A.eval()                   |                                 | 
+                       | A.eye([n, m])              |                                 | 
+                       | A.fill(v)                  |                                 | 
+                       | A.i([s])                   |                                 | 
+                       | A.in_range(n)              |                                 | 
+                       | A.in_range(i, j)           |                                 | 
+                       | A.is_empty()               |                                 | 
+                       | A.is_finite()              |                                 | 
+                       | A.is_square()              |                                 | 
+                       | A.is_vec()                 |                                 | 
+                       | A.is_colvec()              |                                 | 
+                       | A.is_rowvec()              |                                 | 
+                       | A.imbue()                  |                                 | 
+                       | A.insert_rows              |                                 | 
+                       | A.min                      |                                 | 
+                       | A.max                      |                                 | 
+                       | A.ones                     |                                 | 
+                       | A.print                    |                                 | 
+                       | A.raw_print                |                                 | 
+                       | A.randu                    |                                 | 
+                       | A.randn                    |                                 | 
+                       | A.reset                    |                                 | 
+                       | A.reshape                  |                                 | 
+                       | A.resize                   |                                 | 
+                       | A.save                     |                                 | 
+                       | A.load                     |                                 | 
+                       | A.quiet_save               |                                 | 
+                       | A.quiet_load               |                                 | 
+                       | A.set_size                 |                                 | 
+                       | A.shed_row                 |                                 | 
+                       | A.shed_rows                |                                 | 
+                       | A.shed_col                 |                                 | 
+                       | A.shed_cols                |                                 | 
+                       | A.clear                    |                                 | 
+                       | A.empty                    |                                 | 
+                       | A.size                     |                                 | 
+                       | A.swap                     |                                 | 
+                       | A.swap_rows                |                                 | 
+                       | A.swap_cols                |                                 | 
+                       | A.t                        |                                 | 
+                       | A.transform                |                                 | 
+                       | A.zeros                    |                                 | 
 
 ### Submatrix views
 
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
-col
-row
-cols
-rows
-subvec
-elem
-submat
-unsafe_col
+                       | col                        |                                 | 
+                       | row                        |                                 | 
+                       | cols                       |                                 | 
+                       | rows                       |                                 | 
+                       | subvec                     |                                 | 
+                       | elem                       |                                 | 
+                       | submat                     |                                 | 
+                       | unsafe_col                 |                                 | 
 
 
 ### Internal data access
@@ -181,7 +226,7 @@ flipud(A)              | flipud(A)                  | Arma.flipud(A)            
 [A; B]                 | join_cols(A, B)            | Arma.join_cols(A, B)            | 
 [A; B]                 | join_vert(A, B)            | Arma.join_vert(A, B)            | 
 kron(A, B)             | kron(A, B)                 | Arma.kron(A, B)                 | 
-                       | reshape(A, n, m [, d])     | Arma.reshape(A, n, m [, d])     | **Default:** d = 0
+reshape(A, n, m)       | reshape(A, n, m [, d])     | Arma.reshape(A, n, m [, d])     | **Default:** d = 0
                        | resize(A, n, m)            | Arma.resize(A, n, m)            | 
                        | shuffle(A [, d])           | Arma.shuffle(A [, d])           | **Default:** d = 0 **Matlab:** A(randperm(size(A, 1)), :) (with d = 0)
 sort(A [, d] [, t])    | sort(A [, t] [, d])        | Arma.sort(A [, t] [, d])        | **Default:** t = 0 ('ascend' in Matlab), d = 0
@@ -218,10 +263,53 @@ Matlab                 | Armadillo C++              | ArmadilloJava             
 Others
 ------
 
-### Statistics
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
 -----------------------|----------------------------|---------------------------------|------
+isfinite(A)            | is_finite(A)               | is_finite(A)                    | **Note:** A may be a matrix or a scalar
 
+### Statistics 
+
+Armadillo C++: running_stat<double> S
+ArmadilloJava: RunningStat S
+
+Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
+-----------------------|----------------------------|---------------------------------|------
+                       | S(v)                       | S.update(v)                     | 
+                       | S.mean()                   | S.mean()                        | 
+                       | S.var([n])                 | S.var([n])                      | **Default:** n = 0
+                       | S.stddev([n])              | S.stddev([n])                   | **Default:** n = 0
+                       | S.min()                    | S.min()                         | 
+                       | S.max()                    | S.max()                         | 
+                       | S.reset()                  | S.reset()                       | 
+                       | S.count()                  | S.count()                       | 
+
+
+Armadillo C++: running_stat_vec<double> S([c]) **Default:** c = true
+ArmadilloJava: RunningStatVec S([c]) **Default:** c = true
+
+Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
+-----------------------|----------------------------|---------------------------------|------
+                       | S(v)                       | S.update(v)                     | 
+                       | S.mean()                   | S.mean()                        | 
+                       | S.var([n])                 | S.var([n])                      | **Default:** n = 0
+                       | S.stddev([n])              | S.stddev([n])                   | **Default:** n = 0
+                       | S.min()                    | S.min()                         | 
+                       | S.max()                    | S.max()                         | 
+                       | S.cov([n])                 | S.cov([n])                      | **Note:** c must be true **Default:** n = 0
+                       | S.reset()                  | S.reset()                       | 
+                       | S.count()                  | S.count()                       | 
+
+                      
+### Wall clock
+
+Armadillo C++: wall_clock W
+ArmadilloJava: WallClock W
+
+Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
+-----------------------|----------------------------|---------------------------------|------
+tic                    | W.tic()                    | W.tic()                         | 
+toc                    | W.toc()                    | W.toc()                         | 
+                       
 
 ### Pre-defined constants
 Matlab                 | Armadillo C++              | ArmadilloJava                   | Notes
