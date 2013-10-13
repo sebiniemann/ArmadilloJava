@@ -36,8 +36,8 @@ Matrix attributes
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-size(A, 1)                 | A.n_rows                   | A.n_rows                        | 
 size(A, 2)                 | A.n_cols                   | A.n_cols                        | 
+size(A, 1)                 | A.n_rows                   | A.n_rows                        | 
 numel(A)                   | A.n_elem                   | A.n_elem                        | 
 
 
@@ -47,7 +47,7 @@ Element access
               | Inline operations
 --------------|-------------------
 Matlab        | A(...) = A(...) Operator B
-Armadillo C++ | A(...) Operator= B
+Armadillo C++ | A.... Operator= B or A.... Operator
 ArmadilloJava | A(..., Op.Operator, B)
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
@@ -64,7 +64,7 @@ Member functions
               | Inline operations
 --------------|-------------------
 Matlab        | A(...) = A(...) Operator B
-Armadillo C++ | A.... Operator= B
+Armadillo C++ | A.... Operator= B or A.... Operator
 ArmadilloJava | A....(Op.Operator, B)
 
 #### Contiguous views
@@ -98,6 +98,29 @@ A(I, :)                    | A.rows(I)                  | A.rows(I)             
 A(I, J)                    | A.submat(I, J)             | A.submat(I, J)                  | **Note:** I, J are vectors.
 A(I, J)                    | A(I, J)                    | A.submat(I, J)                  | **Note:** I, J are vectors.
 
+
+#### Miscellaneous views
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+                           | A.diag([k])                | A.diag([k])                     | **Default:** k = 0
+                           | A.each_col([I])            | A.each_col([I])                 | **Note:** I is a vector.
+                           | A.each_row([I])            | A.each_row([I])                 | **Note:** I is a vector.
+                           
+
+#### Per row/column views
+
+              | Inline operations
+--------------|-------------------
+Matlab        | A(...) = A(...) Operator B
+Armadillo C++ | A.... Operator= B or A.... Operator
+ArmadilloJava | A....(Op.Operator, B)
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+bsxfun(@operation          | A.each_col()  Operator B  | A.each_col([I])                 | **Matlab:** 
+bsxfun(@operation          | A.each_col(I) Operator B  | A.each_col([I])                 | **Matlab:** 
+bsxfun                     | A.each_row()  Operator B  | A.each_row([I]) 
+bsxfun                     | A.each_row(I) Operator B  | A.each_row([I]) 
                            
 ### Internal data access
 **Not recommend unless you know what you are doing.**
@@ -134,22 +157,22 @@ A(:) = v                   | A.fill(v)                  | A.fill(v)             
 
 Matlab                                                 | Armadillo C++              | ArmadilloJava                   | Notes
 -------------------------------------------------------|----------------------------|---------------------------------|------
-A = [A(1:i-1, :); B; A(i+1:end, :)]                    | A.insert_rows(i, B)        | A.insert_rows(i, B)             | **Note:** B is a vector.
-A = [A(1:i-1, :); zeros(n, size(A, 2)); A(i+1:end, :)] | A.insert_rows(i, n [, z])  | A.insert_rows(i, n [, z])       | **Default:** z = true
 A = [A(:, 1:j-1) B A(end:j+1, :)]                      | A.insert_cols(j, B)        | A.insert_cols(j, B)             | **Note:** B is a vector.
 A = [A(:, 1:j-1) zeros(size(A, 1), n); A(end.j+1, :)]  | A.insert_cols(j, n [, z])  | A.insert_cols(j, n [, z])       | **Default:** z = true
-A = [A(1:i-1, :); A(i+1:end, :)]                       | A.shed_row(i)              | A.shed_row(i)                   | 
-A = [A(1:a-1, :); A(b+1:end, :)]                       | A.shed_rows(a, b)          | A.shed_rows(a, b)               | 
+A = [A(1:i-1, :); B; A(i+1:end, :)]                    | A.insert_rows(i, B)        | A.insert_rows(i, B)             | **Note:** B is a vector.
+A = [A(1:i-1, :); zeros(n, size(A, 2)); A(i+1:end, :)] | A.insert_rows(i, n [, z])  | A.insert_rows(i, n [, z])       | **Default:** z = true
 A = [A(:, 1:j-1) A(end.j+1, :)]                        | A.shed_col(j)              | A.shed_col(j)                   | 
 A = [A(:, 1:a-1) A(end.b+1, :)]                        | A.shed_cols(a, b)          | A.shed_cols(a, b)               | 
+A = [A(1:i-1, :); A(i+1:end, :)]                       | A.shed_row(i)              | A.shed_row(i)                   | 
+A = [A(1:a-1, :); A(b+1:end, :)]                       | A.shed_rows(a, b)          | A.shed_rows(a, b)               | 
                            
                            
 ### Swap functions
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A.swap(A)                  | A.swap(A)                       | 
-                           | A.swap_rows(i1, i2)        | A.swap_rows(i1, i2)             | 
                            | A.swap_cols(j1, j2)        | A.swap_cols(j1, j2)             | 
+                           | A.swap_rows(i1, i2)        | A.swap_rows(i1, i2)             | 
 
                            
 ### Is functions
@@ -168,28 +191,28 @@ isrow(A)                   | A.is_rowvec()              | A.is_rowvec()         
 
 Matlab                     | Armadillo C++                          | ArmadilloJava                   | Notes
 ---------------------------|----------------------------------------|---------------------------------|------
-                           | A.in_range(n)                          | A.in_range(n)                   | 
-                           | A.in_range(span(a, b))                 | A.in_range(span(a, b))          | 
-                           | A.in_range(i, j)                       | A.in_range(i, j)                | 
-                           | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(ai, bi, aj, bj)      | 
+                           | A.in_range(n)                          | A.in_range(n)                   | **Matlab:** n > 0 && numel(A) <= n
+                           | A.in_range(span(a, b))                 | A.in_range(span(a, b))          | **Matlab:** a > 0 && numel(A) <= b
+                           | A.in_range(i, j)                       | A.in_range(i, j)                | **Matlab:** i > 0 && j > 0 && size(A, 1) <= i &&  size(A, 2) <= j
+                           | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(ai, bi, aj, bj)      | **Matlab:** ai > 0 && aj > 0 && size(A, 1) <= bi &&  size(A, 2) <= bj
                            
                            
 ### Inline statistics
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.min()                    | A.min()                         | 
-                           | A.min(n)                   | A.min(n)                        | 
-                           | A.min(i, j)                | A.min(i, j)                     | 
-                           | A.max()                    | A.max()                         | 
-                           | A.max(n)                   | A.max(n)                        | 
-                           | A.max(i, j)                | A.max(i, j)                     |
+min(A)                     | A.min()                    | A.min()                         | 
+[v, n] = min(A)            | A.min(n)                   | A.min(n)                        | 
+[v, n] = min(A)            | A.min(i, j)                | A.min(i, j)                     | **Matlab:** [i, j] = ind2sub(size(A), n)
+max(A)                     | A.max()                    | A.max()                         | 
+[v, n] = max(A)            | A.max(n)                   | A.max(n)                        | 
+[v, n] = max(A)            | A.max(i, j)                | A.max(i, j)                     | **Matlab:** [i, j] = ind2sub(size(A), n)
                            
                            
 ### Reshape/resize
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.reshape(n, m [, d])      | A.reshape(n, m [, d])           | 
+A = reshape(A, n, m)       | A.reshape(n, m [, d])      | A.reshape(n, m [, d])           | **Default:** d = 0
                            | A.resize(n [, m])          | A.resize(n [, m])               | 
                            | A.set_size(n [, m])        | A.set_size(n [, m])             | 
                            
@@ -198,24 +221,24 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.print([h])               | A.print([h])                    | 
-                           | A.print(s [, h])           | A.print(s [, h])                | 
-                           | A.raw_print([h])           | A.raw_print([h])                | 
-                           | A.raw_print(s [, h])       | A.raw_print(s [, h])            | 
+A                          | A.print([h])               | A.print([h])                    | **Default:** h = '' **Note:** Output may differ
+A                          | A.print(s [, h])           | A.print(s [, h])                | **Default:** h = '' **Note:** Output may differ
+A                          | A.raw_print([h])           | A.raw_print([h])                | **Default:** h = '' **Note:** Output may differ
+A                          | A.raw_print(s [, h])       | A.raw_print(s [, h])            | **Default:** h = '' **Note:** Output may differ
                            
                            
 ### File input/output
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.save(n [, t])            | A.save(n [, t])                 | 
-                           | A.save(s [, t])            | A.save(s [, t])                 | 
-                           | A.load(n [, t])            | A.load(n [, t])                 | 
-                           | A.load(s [, t])            | A.load(s [, t])                 | 
-                           | A.quiet_save(n [, t])      | A.quiet_save(n [, t])           | 
-                           | A.quiet_save(s [, t])      | A.quiet_save(s [, t])           | 
-                           | A.quiet_load(n [, t])      | A.quiet_load(n [, t])           | 
-                           | A.quiet_load(s [, t])      | A.quiet_load(s [, t])           | 
+save(n, 'A', '-ascii')     | A.save(n [, t])            | A.save(n [, t])                 | **Note:** n is a string **Default:** t = 'arma_binary'
+                           | A.save(s [, t])            | A.save(s [, t])                 | **Note:** s is a stream **Default:** t = 'arma_binary'
+A = load(n)                | A.load(n [, t])            | A.load(n [, t])                 | **Note:** n is a string **Default:** t = 'auto_detect'
+                           | A.load(s [, t])            | A.load(s [, t])                 | **Note:** s is a stream **Default:** t = 'auto_detect'
+                           | A.quiet_save(n [, t])      |                                 | *Not suppported*
+                           | A.quiet_save(s [, t])      |                                 | *Not suppported*
+                           | A.quiet_load(n [, t])      |                                 | *Not suppported*
+                           | A.quiet_load(s [, t])      |                                 | *Not suppported*
                            
                            
 ### Inline function operations
@@ -223,7 +246,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A.transform(f)             | A.transform(f)                  | **Note:** f is a function. 
-                           | A.transform(l)             | A.transform(l)                  | *Not suppported* **Note:** l is a lambda function. 
+                           | A.transform(l)             |                                 | *Not suppported* **Note:** l is a lambda function. 
                            | A.imbue(f)                 | A.imbue(f)                      | **Note:** f is a function. 
                            | A.imbue(l)                 |                                 | *Not suppported* **Note:** l is a lambda function. 
                            
@@ -232,21 +255,18 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.clear()                  | A.clear()                       | 
-                           | A.empty()                  | A.empty()                       | 
-                           | A.size()                   | A.size()                        | 
+A = []                     | A.clear()                  | A.clear()                       | 
+isempty(A)                 | A.empty()                  | A.empty()                       | 
+numel(A)                   | A.size()                   | A.size()                        | 
                            
                            
 ### Miscellaneous
                            
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.diag([k])                | A.diag([k])                     | 
-                           | A.each_col([I])            | A.each_col([I])                 | 
-                           | A.each_row([I])            | A.each_row([I])                 | 
-                           | A.i([s])                   | A.i()                           | 
-                           | A.t()                      | A.t()                           | 
-                           | A.reset()                  | A.reset()                       | 
+inv(A)                     | A.i([s])                   | A.i()                           | 
+A'                         | A.t()                      | A.t()                           | 
+A = []                     | A.reset()                  | A.reset()                       | 
                            | A.copy_size(A)             | A.copy_size(A)                  | 
                            | A.eval()                   | A.eval()                        | *Not suppported*
 
@@ -331,10 +351,10 @@ var(A [, n] [, d])         | var(A [, n] [, d])         | Arma.var(A [, n] [, d]
 #### Matrix joins
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-[A B]                      | join_rows(A, B)            | Arma.join_rows(A, B)            | 
-[A B]                      | join_horiz(A, B)           | Arma.join_horiz(A, B)           | 
 [A; B]                     | join_cols(A, B)            | Arma.join_cols(A, B)            | 
 [A; B]                     | join_vert(A, B)            | Arma.join_vert(A, B)            | 
+[A B]                      | join_rows(A, B)            | Arma.join_rows(A, B)            | 
+[A B]                      | join_horiz(A, B)           | Arma.join_horiz(A, B)           | 
 
 
 #### Logic and relational operations
