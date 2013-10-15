@@ -44,11 +44,6 @@ numel(A)                   | A.n_elem                   | A.n_elem              
 Element access 
 --------------
 
-              | Inline operations
---------------|-------------------
-Matlab        | A(...) = A(...) Operator B
-Armadillo C++ | A.... Operator= B or A.... Operator
-ArmadilloJava | A(..., Op.Operator, B)
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
@@ -60,12 +55,6 @@ Member functions
 ----------------
 
 ### Submatrix views
-
-              | Inline operations
---------------|-------------------
-Matlab        | A(...) = A(...) Operator B
-Armadillo C++ | A.... Operator= B or A.... Operator
-ArmadilloJava | A....(Op.Operator, B)
 
 #### Contiguous views
 
@@ -100,6 +89,7 @@ A(I, J)                    | A(I, J)                    | A.submat(I, J)        
 
 
 #### Miscellaneous views
+
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A.diag([k])                | A.diag([k])                     | **Default:** k = 0
@@ -109,19 +99,53 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 #### Per row/column views
 
-              | Inline operations
---------------|-------------------
-Matlab        | A(...) = A(...) Operator B
-Armadillo C++ | A.... Operator= B or A.... Operator
-ArmadilloJava | A....(Op.Operator, B)
-
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 bsxfun(@operation          | A.each_col()  Operator B  | A.each_col([I])                 | **Matlab:** 
 bsxfun(@operation          | A.each_col(I) Operator B  | A.each_col([I])                 | **Matlab:** 
 bsxfun                     | A.each_row()  Operator B  | A.each_row([I]) 
 bsxfun                     | A.each_row(I) Operator B  | A.each_row([I]) 
-                           
+              
+
+### Arithmetic operations
+              
+Operation           | Matlab | Armadillo C++ | ArmadilloJava
+--------------------|--------|---------------|--------------
+Plus                | A + B  | A + B         | A.plus(B)
+Minus               | A - B  | A -B          | A.minus(B)
+Times               | A * B  | A * B         | A.times(B)
+Element-wise times  | A .* B | A % B         | A.elemTimes(B)
+Element-wise divide | A ./ B | A / B         | A.elemDivide(B)
+
+
+#### Inplace operations
+
+**ArmadilloJava:** A.view(... is a placeholder for any of the specific views given above.
+
+Operation           | Matlab     | Armadillo C++ | ArmadilloJava
+--------------------|------------|---------------|------------------------------------
+Increment           | A = A + 1  | A++           | A.view(..., Op.INCREMENT)
+Decrement           | A = A - 1  | A--           | A.view(..., Op.DECREMENT)
+Plus                | A = A + B  | A += B        | A.view(..., Op.PLUS, B)
+Minus               | A = A - B  | A -= B        | A.view(..., Op.MINUS, B)
+Element-wise times  | A = A .* B | A %= B        | A.view(..., Op.ELEMTIMES, B)
+Element-wise divide | A = A ./ B | A /= B        | A.view(..., Op.ELEMDIVIDE, B)
+Equal               | A = B      | A = B         | A.view(..., Op.EQUAL, B)
+Negate              | -A         | -A            | A.view(..., Op.NEGATE)
+
+
+### Relational operations
+
+Operation               | Matlab  | Armadillo C++ | ArmadilloJava
+------------------------|---------|---------------|--------------
+Equal                   | A == B  | A == B        | Op.evaluate(A, Op.EQUAL, B)
+Not equal               | A != B  | A != B        | Op.evaluate(A, Op.NOT_EQUAL, B)
+Strict less than        | A < B   | A < B         | Op.evaluate(A, Op.STRICT_LESS, B)
+Non-strict less than    | A <= B  | A <= B        | Op.evaluate(A, Op.LESS, B)
+Non-strict greater than | A => B  | A >= B        | Op.evaluate(A, Op.GREATER, B)
+Strict greater than     | A > B   | A < B         | Op.evaluate(A, Op.STRICT_GREATER, B)
+              
+              
 ### Internal data access
 **Not recommend unless you know what you are doing.**
 ArmadilloJava uses [Efficient Java Matrix Library](https://code.google.com/p/efficient-java-matrix-library/) internally.
@@ -357,15 +381,12 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 [A B]                      | join_horiz(A, B)           | Arma.join_horiz(A, B)           | 
 
 
-#### Logic and relational operations
-
-**ArmadilloJava:** Use R = Op.evaluate(A, Relation, B) to evaluate relational operations
+#### Logic operations
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-all(R [, d])               | all(R [, d])               | Arma.all(R [, d])               | **Note:** R is a matrix or a relational expression **Default:** d = 0
-any(R [, d])               | any(R [, d])               | Arma.any(R [, d])               | **Default:** d = 0
-find(R [, k] [, s])        | find(R [, k] [, s])        | Arma.find(R [, k] [, s])        | **Default:** k = 0, s = "first"
+all(A [, d])               | all(A [, d])               | Arma.all(A [, d])               | **Default:** d = 0
+any(A [, d])               | any(A [, d])               | Arma.any(A [, d])               | **Default:** d = 0
 
                            
 #### Sort functions
@@ -423,6 +444,7 @@ tril(A)                    | trimatl(A)                 | Arma.trimatl(A)       
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 A'                         | trans(A)                   | Arma.trans(A)                   | 
+find(A [, k] [, s])        | find(A [, k] [, s])        | Arma.find(A [, k] [, s])        | **Default:** k = 0, s = "first"
 cumsum(A [, d])            | cumsum(A [, d])            | Arma.cumsum(A [, d])            | 
 conv(A, B)                 | conv(A, B)                 | Arma.conv(A, B)                 | **Note:** A, B are vectors.
 cross(A, B)                | cross(A, B)                | Arma.cross(A, B)                | **Note:** A, B are 3-dimensional vectors.
