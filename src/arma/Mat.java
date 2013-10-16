@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://opensource.org/licenses/MIT
+ *******************************************************************************/
+
 package arma;
 
 import java.util.Random;
@@ -7,11 +17,9 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.RandomMatrices;
 
 /**
- * Provides a real-valued dense matrix with member functions and attributes that are similar to the Armadillo C++
- * Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java
- * Matrix Library (EJML) Version 0.23 from 21.06.2013.
+ * Provides a real-valued dense matrix with double precision and member functions as well as attributes similar to the Armadillo C++ Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
- * If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g.
+ * If not stated otherwise (marked as non-canonical in case), the provided interfaces is identical to Armadillo (e.g.
  * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
  * solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
  * <p>
@@ -76,6 +84,75 @@ public class Mat {
   }
 
   /**
+   * Creates a matrix by copying the provided one.
+   * 
+   * @param matrix The provided matrix.
+   */
+  public Mat(Mat matrix) {
+    this(new DenseMatrix64F(matrix.memptr()));
+  }
+  
+  /**
+   * <b>Non-canonical:</b> Creating a matrix by a string is not supported. Use {@link #Mat(double[][])} instead.
+   * <p>
+   * This constructor only exists to for clarification.
+   * 
+   * @param matrix The provided string.
+   * 
+   * @throws UnsupportedOperationException Creating a matrix by a string is not supported. Use Mat(double[][]) instead.
+   */
+  public Mat(String matrix) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
+  }
+  
+  /**
+   * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * <p>
+   * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   */
+  public Mat(int numberOfRows, int numberOfColumns) {
+    this(numberOfRows, numberOfColumns, Fill.NONE);
+  }
+  
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} filled
+   * according to {@code fillType}.
+   * <p>
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
+   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param fillType The fill type.
+   * 
+   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
+   *           {@link #Mat(int, int, Fill, Random)} instead.
+   */
+  public Mat(int numberOfRows, int numberOfColumns, Fill fillType) throws IllegalArgumentException {
+    switch (fillType) {
+      case NONE:
+      case ZEROS:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        break;
+      case ONES:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        CommonOps.fill(_matrix, 1);
+        break;
+      case EYE:
+        _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
+        break;
+      case RANDU:
+      case RANDN:
+        throw new IllegalArgumentException("Use Mat(int, int, Fill, Random) instead.");
+    }
+
+    updateAttributes();
+  }
+  
+  /**
    * Creates a random matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}
    * filled according to {@code fillType} with either uniformly or normally distributed pseudorandom values.
    * <p>
@@ -112,100 +189,6 @@ public class Mat {
 
     updateAttributes();
   }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} filled
-   * according to {@code fillType}.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
-   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param fillType The fill type.
-   * 
-   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
-   *           {@link #Mat(int, int, Fill, Random)} instead.
-   */
-  public Mat(int numberOfRows, int numberOfColumns, Fill fillType) throws IllegalArgumentException {
-    switch (fillType) {
-      case NONE:
-      case ZEROS:
-        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-        break;
-      case ONES:
-        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-        CommonOps.fill(_matrix, 1);
-        break;
-      case EYE:
-        _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
-        break;
-      case RANDU:
-      case RANDN:
-        throw new IllegalArgumentException("Use Mat(int, int, Fill, Random) instead.");
-    }
-
-    updateAttributes();
-  }
-
-  /**
-   * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * <p>
-   * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   */
-  public Mat(int numberOfRows, int numberOfColumns) {
-    this(numberOfRows, numberOfColumns, Fill.NONE);
-  }
-
-  /**
-   * Creates a matrix by copying the provided one.
-   * 
-   * @param matrix The provided matrix.
-   */
-  public Mat(Mat matrix) {
-    this(new DenseMatrix64F(matrix.memptr()));
-  }
-
-  /**
-   * <b>Non-canonical:</b> Creating a matrix by a string is not supported. Use {@link #Mat(double[][])} instead.
-   * <p>
-   * This constructor only exists to for clarification.
-   * 
-   * @param matrix The provided string.
-   * 
-   * @throws UnsupportedOperationException Creating a matrix by a string is not supported. Use Mat(double[][]) instead.
-   */
-  public Mat(String matrix) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
-  }
-  
-  /**
-   * @return
-   */
-  public Mat span() {
-    return Mat.ones(n_elem, 1);
-  }
-
-  /**
-   * @param start 
-   * @param end 
-   * @return
-   */
-  public Mat span(int start, int end) {
-    if(start > end) {
-      throw new IllegalArgumentException();
-    }
-    
-    DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
-    for(int n = start; n <= end; n++) {
-      result.set(n, 1);
-    }
-    
-    return new Mat(result);
-  }
   
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
@@ -233,33 +216,7 @@ public class Mat {
 
     return _matrix.get(convertMajorOrdering(n));
   }
-
-  /**
-   * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
-   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
-   * position is out of bound.
-   * </ul>
-   * 
-   * @param i The row of the element.
-   * @param j The column of the element.
-   * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * 
-   * @see #at(int)
-   */
-  public double at(int i, int j) throws IllegalArgumentException {
-    if (i >= n_rows || j >= n_cols) {
-      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
-    }
-
-    return _matrix.get(i, j);
-  }
-
+  
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
    * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
@@ -288,6 +245,32 @@ public class Mat {
   public void at(int n, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     _matrix.set(n, Op.getResult(at(n), operation, operand));
   }
+  
+  /**
+   * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * </ul>
+   * 
+   * @param i The row of the element.
+   * @param j The column of the element.
+   * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * 
+   * @see #at(int)
+   */
+  public double at(int i, int j) throws IllegalArgumentException {
+    if (i >= n_rows || j >= n_cols) {
+      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
+    }
+
+    return _matrix.get(i, j);
+  }
 
   /**
    * Performs a right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column. The
@@ -314,98 +297,6 @@ public class Mat {
    */
   public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
-  }
-
-  /**
-   * Return a copy of the <i>i</i>th row as a (1, {@link #n_cols}) matrix.
-   * <p>
-   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
-   * 
-   * @param i The row to be copied.
-   * @return The copied row.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
-   */
-  public Mat row(int i) throws IllegalArgumentException {
-    if (i >= n_rows) {
-      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
-    }
-    
-    DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
-
-    // n_cols = result.getNumElements()
-    for (int n = 0; n < n_cols; n++) {
-      result.set(n, _matrix.get(i, n));
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a row-vector. Use {@link #rows(int, int, Op, Mat)} instead.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left-hand side does not match with the provided right-hand side operand.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
-   * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
-   * </ul>
-   * 
-   * @param i The row of the left-hand side operands.
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a row-vector or if the number of columns of the left-hand side does not match with the provided right-hand side operand or if the requested row is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
-   *           requested.
-   */
-  public void row(int i, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    if (!operand.is_rowvec()) {
-      throw new IllegalArgumentException("The provided right-hand side operand needs to be a row-vector. Use rows(int, int, Op, Mat) instead.");
-    }
-    
-    if (i >= n_rows) {
-      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
-    }
-    
-    if (operand.n_cols != n_cols) {
-      throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
-    }
-
-    DenseMatrix64F memptrOperand = operand.memptr();
-    for (int n = 0; n < n_cols; n++) {
-      at(i, n, operation, memptrOperand.get(n));
-    }
-  }
-
-  /**
-   * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row. The single provided
-   * right-hand side operand is used for all operations.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
-   * </ul>
-   * 
-   * @param i The row of the left-hand side operands.
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
-   *           requested.
-   */
-  public void row(int i, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    if (i >= n_rows) {
-      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
-    }
-    
-    for (int n = 0; n < n_cols; n++) {
-      at(i, n, operation, operand);
-    }
   }
 
   /**
@@ -499,6 +390,100 @@ public class Mat {
       at(n, j, operation, operand);
     }
   }
+  
+  /**
+   * Return a copy of the <i>i</i>th row as a (1, {@link #n_cols}) matrix.
+   * <p>
+   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * 
+   * @param i The row to be copied.
+   * @return The copied row.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
+   */
+  public Mat row(int i) throws IllegalArgumentException {
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
+    DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
+
+    // n_cols = result.getNumElements()
+    for (int n = 0; n < n_cols; n++) {
+      result.set(n, _matrix.get(i, n));
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a row-vector. Use {@link #rows(int, int, Op, Mat)} instead.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left-hand side does not match with the provided right-hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
+   * 
+   * @param i The row of the left-hand side operands.
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a row-vector or if the number of columns of the left-hand side does not match with the provided right-hand side operand or if the requested row is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   */
+  public void row(int i, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_rowvec()) {
+      throw new IllegalArgumentException("The provided right-hand side operand needs to be a row-vector. Use rows(int, int, Op, Mat) instead.");
+    }
+    
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
+    if (operand.n_cols != n_cols) {
+      throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
+    }
+
+    DenseMatrix64F memptrOperand = operand.memptr();
+    for (int n = 0; n < n_cols; n++) {
+      at(i, n, operation, memptrOperand.get(n));
+    }
+  }
+
+  /**
+   * Performs a right-hand side element-wise operation on all elements of the <i>i</i>th row. The single provided
+   * right-hand side operand is used for all operations.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
+   * 
+   * @param i The row of the left-hand side operands.
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   */
+  public void row(int i, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (i >= n_rows) {
+      throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
+    }
+    
+    for (int n = 0; n < n_cols; n++) {
+      at(i, n, operation, operand);
+    }
+  }
+
+
 
   /**
    * @param first 
@@ -544,10 +529,11 @@ public class Mat {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
 
+    DenseMatrix64F memptrOperand = operand.memptr();
     int operandJ = 0;
     for (int j = first; j <= last; j++) {
       for (int i = 0; i < n_rows; i++) {
-        at(i, j, operation, operand.at(i, operandJ));
+        at(i, j, operation, memptrOperand.get(i, operandJ));
       }
       operandJ++;
     }
@@ -618,11 +604,12 @@ public class Mat {
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-
+    
+    DenseMatrix64F memptrOperand = operand.memptr();
     int operandI = 0;
     for (int i = first; i <= last; i++) {
       for (int j = 0; j < n_cols; i++) {
-        at(i, j, operation, operand.at(operandI, j));
+        at(i, j, operation, memptrOperand.get(operandI, j));
       }
       operandI++;
     }
@@ -669,15 +656,21 @@ public class Mat {
    * 
    * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
    *           right-hand side operand.
+   * @throws UnsupportedOperationException 
    */
   public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_vec()) {
+      throw new IllegalArgumentException("The provided right-hand side operand needs to be a vector.");
+    }
+    
     int length = Math.min(n_cols, n_rows);
     if (operand.n_elem != length) {
       throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
     }
 
+    DenseMatrix64F memptrOperand = operand.memptr();
     for (int i = 0; i < length; i++) {
-      at(i, i, operation, operand.at(i));
+      at(i, i, operation, memptrOperand.get(i));
     }
   }
 
