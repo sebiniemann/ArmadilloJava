@@ -12,9 +12,10 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 ---------------------------|----------------------------|---------------------------------|------
                            | A()                        | A()                             | 
 A = [ ... ]                | A << ... << endr;          | A(new double[][]{ ... })        | 
+A = B                      | A(B);                      | A(B)                            | 
                            | A(" ... ");                |                                 | *Not suppported*
-                           | A(n, m)                    | A(n, m)                         | 
-                           | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | 
+                           | A(n, m)                    | A(n, m)                         | **Matlab:** Use zeros(n, m)
+                           | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | **Matlab:** Use zeros(n, m)
 zeros(n, m)                | A(n, m, fill::zeros)       | A(n, m, Fill.ZEROS)             | 
 zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
 ones(n, m)                 | A(n, m, fill::ones)        | A(n, m, Fill.ONES)              | 
