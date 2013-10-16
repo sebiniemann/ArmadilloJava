@@ -49,7 +49,7 @@ Element access
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 A(i+1, j+1)                | A(i, j)                    | A(i, j)                         | 
-A(n)                       | A(n)                       | A(n)                            | 
+A(n+1)                     | A(n)                       | A(n)                            | 
 
 
 Member functions
