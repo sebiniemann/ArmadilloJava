@@ -11,10 +11,10 @@ Matrix initialisation / generation
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A()                        | A()                             | 
-                           | A(n, m)                    | A(n, m)                         | 
-                           | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | 
 A = [ ... ]                | A << ... << endr;          | A(new double[][]{ ... })        | 
                            | A(" ... ");                |                                 | *Not suppported*
+                           | A(n, m)                    | A(n, m)                         | 
+                           | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | 
 zeros(n, m)                | A(n, m, fill::zeros)       | A(n, m, Fill.ZEROS)             | 
 zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
 ones(n, m)                 | A(n, m, fill::ones)        | A(n, m, Fill.ONES)              | 
