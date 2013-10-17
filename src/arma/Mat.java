@@ -191,6 +191,24 @@ public class Mat {
   }
   
   /**
+   * @param operation 
+   * @param operand 
+   * @return
+   */
+  public Mat subvec(Op operation, Mat operand) {
+    return null;
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+   * @return
+   */
+  public Mat subvec(Op operation, double operand) {
+    return null;
+  }
+  
+  /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
    * <p>
    * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = }{@link #at(int, int) at(i + j * n_rows)}.
@@ -680,6 +698,9 @@ public class Mat {
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    */
   public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
@@ -693,6 +714,9 @@ public class Mat {
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    * 
    * @see #col(int, Op, Mat)
    */
@@ -709,6 +733,9 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   * 
    * @see #col(int, Op, double)
    */
   public void each_col(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
@@ -722,6 +749,9 @@ public class Mat {
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    * 
    * @see #row(int, Op, Mat)
    */
@@ -737,6 +767,9 @@ public class Mat {
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    * 
    * @see #row(int, Op, double)
    */
@@ -786,6 +819,9 @@ public class Mat {
    * @param selection The selection to be used.
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    */
   public void elem(Mat selection, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     int index = 0;
@@ -804,6 +840,9 @@ public class Mat {
    * @param selection The selection to be used.
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
    */
   public void elem(Mat selection, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int i = 0; i < selection.n_elem; i++) {
