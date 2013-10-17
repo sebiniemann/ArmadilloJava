@@ -164,7 +164,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
                            | A.colptr()                 |                                 | *Not suppported*
 
                            
-### Inline initilisation
+### Inplace initilisation
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
@@ -229,7 +229,7 @@ Matlab                     | Armadillo C++                          | ArmadilloJ
                            | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(ai, bi, aj, bj)      | **Matlab:** ai > 0 && aj > 0 && size(A, 1) <= bi &&  size(A, 2) <= bj
                            
                            
-### Inline statistics
+### Statistics
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
@@ -273,7 +273,7 @@ A = load(n)                | A.load(n [, t])            | A.load(n [, t])       
                            | A.quiet_load(s [, t])      |                                 | *Not suppported*
                            
                            
-### Inline function operations
+### Inplace function operations
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
