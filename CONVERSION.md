@@ -234,9 +234,9 @@ max(A)                     | A.max()                    | A.max()               
 ### Reshape/resize
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
+                           | A.set_size(n [, m])        | A.set_size(n [, m])             | 
 A = reshape(A, n, m)       | A.reshape(n, m [, d])      | A.reshape(n, m [, d])           | **Default:** d = 0
                            | A.resize(n [, m])          | A.resize(n [, m])               | 
-                           | A.set_size(n [, m])        | A.set_size(n [, m])             | 
                            
                            
 ### Text output functions
@@ -338,14 +338,14 @@ atanh(A)                   | atanh(A)                   | Arma.atanh(A)         
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 sum(A(:))                  | accu(A)                    | Arma.accu(A)                    | 
-                           | as_scalar(A)               | Arma.accu(A)                    | 
-det(A)                     | det(A)                     | Arma.det(A)                     | 
 dot(A, B)                  | dot(A, B)                  | Arma.dot(A, B)                  | **Note:** A, B are vectors.
                            | norm_dot(A, B)             | Arma.norm_dot(A, B)             | **Matlab:** dot(A, B) / sqrt(dot(A, A) * dot(B, B))
+det(A)                     | det(A)                     | Arma.det(A)                     | 
                            | log_det(v, s, A)           | Arma.log_det(v, s, A)           | **Matlab:** d = det(A); v = log(abs(d)); s = sign(d) (very inefficient)
 norm(A, p)                 | norm(A, p)                 | Arma.norm(A, p)                 | 
 rank(A [, t])              | rank(A [, t])              | Arma.rank(A [, t])              | **Default:** t = max(size(A))*eps(norm(A))
 trace(A)                   | trace(A)                   | Arma.trace(A)                   | 
+                           | as_scalar(A)               | Arma.accu(A)                    | 
 
 
 ### Scalar/vector-valued functions of vectors/matrices
@@ -383,8 +383,8 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-all(A [, d])               | all(A [, d])               | Arma.all(A [, d])               | **Default:** d = 0
 any(A [, d])               | any(A [, d])               | Arma.any(A [, d])               | **Default:** d = 0
+all(A [, d])               | all(A [, d])               | Arma.all(A [, d])               | **Default:** d = 0
 
                            
 #### Sort functions
@@ -500,13 +500,13 @@ isfinite(A)                | is_finite(A)               | Arma.is_finite(A)     
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | S(v)                       | S.update(v)                     | 
+                           | S.count()                  | S.count()                       | 
+                           | S.min()                    | S.min()                         | 
+                           | S.max()                    | S.max()                         | 
                            | S.mean()                   | S.mean()                        | 
                            | S.var([n])                 | S.var([n])                      | **Default:** n = 0
                            | S.stddev([n])              | S.stddev([n])                   | **Default:** n = 0
-                           | S.min()                    | S.min()                         | 
-                           | S.max()                    | S.max()                         | 
                            | S.reset()                  | S.reset()                       | 
-                           | S.count()                  | S.count()                       | 
 
 
 **Armadillo C++:** running_stat_vec<double> S([c]) **Default:** c = true
@@ -516,14 +516,14 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | S(v)                       | S.update(v)                     | 
+                           | S.count()                  | S.count()                       | 
+                           | S.min()                    | S.min()                         | 
+                           | S.max()                    | S.max()                         | 
                            | S.mean()                   | S.mean()                        | 
                            | S.var([n])                 | S.var([n])                      | **Default:** n = 0
                            | S.stddev([n])              | S.stddev([n])                   | **Default:** n = 0
-                           | S.min()                    | S.min()                         | 
-                           | S.max()                    | S.max()                         | 
                            | S.cov([n])                 | S.cov([n])                      | **Note:** c must be true **Default:** n = 0
                            | S.reset()                  | S.reset()                       | 
-                           | S.count()                  | S.count()                       | 
 
                       
 ### Wall clock
