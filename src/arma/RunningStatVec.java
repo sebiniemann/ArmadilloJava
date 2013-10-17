@@ -21,11 +21,7 @@ public class RunningStatVec {
   /**
    * 
    */
-  private Mat     _mean;
-  /**
-   * 
-   */
-  private Mat     _var;
+  private double  _count;
   /**
    * 
    */
@@ -37,11 +33,15 @@ public class RunningStatVec {
   /**
    * 
    */
-  private Mat     _cov;
+  private Mat     _mean;
   /**
    * 
    */
-  private double  _count;
+  private Mat     _var;
+  /**
+   * 
+   */
+  private Mat     _cov;
 
   /**
    * @param calculateCovariance
@@ -96,6 +96,28 @@ public class RunningStatVec {
     }
 
     _count++;
+  }
+
+  /**
+   * @return
+   */
+  public double count() {
+    return _count;
+  }
+
+  /**
+   * @return
+   */
+  public Mat cov() {
+    return cov(0);
+  }
+
+  /**
+   * @param normType 
+   * @return
+   */
+  public Mat cov(int normType) {
+    return _cov;
   }
 
   /**
@@ -158,29 +180,7 @@ public class RunningStatVec {
   /**
    * @return
    */
-  public Mat cov() {
-    return cov(0);
-  }
-
-  /**
-   * @param normType 
-   * @return
-   */
-  public Mat cov(int normType) {
-    return _cov;
-  }
-
-  /**
-   * @return
-   */
   public void reset() {
     _count = 0;
-  }
-
-  /**
-   * @return
-   */
-  public double count() {
-    return _count;
   }
 }

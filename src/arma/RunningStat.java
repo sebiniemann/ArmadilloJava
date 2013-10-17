@@ -17,14 +17,6 @@ public class RunningStat {
   /**
    * 
    */
-  private double _mean;
-  /**
-   * 
-   */
-  private double _var;
-  /**
-   * 
-   */
   private double _min;
   /**
    * 
@@ -34,6 +26,14 @@ public class RunningStat {
    * 
    */
   private double _count;
+  /**
+   * 
+   */
+  private double _mean;
+  /**
+   * 
+   */
+  private double _var;
 
   /**
    * 
@@ -59,6 +59,27 @@ public class RunningStat {
     }
 
     _count++;
+  }
+
+  /**
+   * @return
+   */
+  public double count() {
+    return _count;
+  }
+
+  /**
+   * @return
+   */
+  public double min() {
+    return _min;
+  }
+
+  /**
+   * @return
+   */
+  public double max() {
+    return _max;
   }
 
   /**
@@ -107,28 +128,7 @@ public class RunningStat {
   /**
    * @return
    */
-  public double min() {
-    return _min;
-  }
-
-  /**
-   * @return
-   */
-  public double max() {
-    return _max;
-  }
-
-  /**
-   * @return
-   */
   public void reset() {
     _count = 0;
-  }
-
-  /**
-   * @return
-   */
-  public double count() {
-    return _count;
   }
 }
