@@ -101,19 +101,9 @@ A(I, J)                    | A(I, J)                    | A.submat(I, J)        
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A.diag([k])                | A.diag([k])                     | **Default:** k = 0
-                           | A.each_col([I])            | A.each_col([I])                 | **Note:** I is a vector.
-                           | A.each_row([I])            | A.each_row([I])                 | **Note:** I is a vector.
+                           | A.each_col([I])            | A.each_col([I])                 | **Note:** I is a vector. **Matlab:** Use bsxfun
+                           | A.each_row([I])            | A.each_row([I])                 | **Note:** I is a vector. **Matlab:** Use bsxfun
                            
-
-#### Per row/column views
-
-Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
----------------------------|----------------------------|---------------------------------|------
-bsxfun(@operation          | A.each_col()  Operator B  | A.each_col([I])                 | **Matlab:** 
-bsxfun(@operation          | A.each_col(I) Operator B  | A.each_col([I])                 | **Matlab:** 
-bsxfun                     | A.each_row()  Operator B  | A.each_row([I]) 
-bsxfun                     | A.each_row(I) Operator B  | A.each_row([I]) 
-              
 
 ### Arithmetic operations
               
@@ -164,7 +154,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
                            | A.colptr()                 |                                 | *Not suppported*
 
                            
-### Inplace initilisation
+### Inline initilisation
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
@@ -229,7 +219,7 @@ Matlab                     | Armadillo C++                          | ArmadilloJ
                            | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(ai, bi, aj, bj)      | **Matlab:** ai > 0 && aj > 0 && size(A, 1) <= bi &&  size(A, 2) <= bj
                            
                            
-### Statistics
+### Inline statistics
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
@@ -273,7 +263,7 @@ A = load(n)                | A.load(n [, t])            | A.load(n [, t])       
                            | A.quiet_load(s [, t])      |                                 | *Not suppported*
                            
                            
-### Inplace function operations
+### Inline function operations
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
