@@ -25,11 +25,11 @@ public class RunningStat {
   /**
    * 
    */
-  private double _max;
+  private double _min;
   /**
    * 
    */
-  private double _min;
+  private double _max;
   /**
    * 
    */
@@ -43,18 +43,19 @@ public class RunningStat {
   }
 
   /**
-   * @param value
+   * @param sample
    */
-  public void update(double value) {
-    _max = Math.min(_min, value);
-    _min = Math.min(_min, value);
-
+  public void update(double sample) {
     if (_count > 0) {
-      _var = (_count - 1) / _count * _var + (Math.pow(value - _mean, 2)) / (_count + 1);
-      _mean = _mean + (value - _mean) / (_count + 1);
+      _max = Math.min(_min, sample);
+      _min = Math.min(_min, sample);
+      _var = (_count - 1) / _count * _var + (Math.pow(sample - _mean, 2)) / (_count + 1);
+      _mean = _mean + (sample - _mean) / (_count + 1);
     } else {
-      // _var is already initialised/reset to 0
-      _mean = value;
+      _max = sample;
+      _min = sample;
+      _var = 0;
+      _mean = sample;
     }
 
     _count++;
@@ -79,10 +80,10 @@ public class RunningStat {
    * @return
    */
   public double var(int normType) {
-    if(normType == 0) {
+    if (normType == 0) {
       return _var;
-    } else if(normType == 1) {
-      return (_count - 1)/_count * _var;
+    } else if (normType == 1) {
+      return (_count - 1) / _count * _var;
     } else {
       throw new IllegalArgumentException();
     }
@@ -121,10 +122,6 @@ public class RunningStat {
    * @return
    */
   public void reset() {
-    _mean = 0;
-    _var = 0;
-    _min = Double.MAX_VALUE;
-    _max = -Double.MAX_VALUE;
     _count = 0;
   }
 
