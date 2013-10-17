@@ -420,25 +420,23 @@ public class Arma {
   public static double accu(Mat matrix) {
     return CommonOps.elementSum(matrix.memptr());
   }
-
+  
   /**
-   * Converts a provided (1,1)-matrix into a scalar of type double.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code matrix.}{@link Mat#n_rows
-   * n_rows} {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
-   * 
-   * @param matrix The provided matrix.
-   * @return The scalar.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix.}{@link Mat#n_rows n_rows}
-   *           {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
+   * @param A
+   * @param B
+   * @return
    */
-  public static double as_scalar(Mat matrix) throws IllegalArgumentException {
-    if (matrix.n_rows != 1 || matrix.n_cols != 1) {
-      throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix but was (" + matrix.n_rows + ", " + matrix.n_cols + ").");
-    }
-
-    return matrix.memptr().get(0);
+  public static double dot(Mat A, Mat B) {
+    return 0.0;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @return
+   */
+  public static double norm_dot(Mat A, Mat B) {
+    return 0.0;
   }
   
   /**
@@ -459,40 +457,837 @@ public class Arma {
 
     return CommonOps.det(matrix.memptr());
   }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static double log_det(Mat A) {
+    return 0.0;
+  }
 
   /**
-   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code x}.
+   * Computes the {@code p}-norm of the provided matrix.
    * <p>
-   * The matrix {@code x} is decomposed into a orthogonal matrix {@code q} and upper triangular matrix {@code r}, such
-   * that {@code x = qr}.
+   * If {@code matrix} is not a vector, an induced norm is computed.
    * <p>
-   * The provided matrices {@code q} and {@code r} are not touched if the decomposition fails.
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not
+   * strict greater than 0.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
+   * one of 1, 2.
+   * </ul>
    * 
-   * @param q An orthogonal matrix.
-   * @param r An upper triangular matrix.
-   * @param x The matrix to be decomposed.
-   * @return False if the decomposition fails and true otherwise.
+   * @param matrix The provided matrix.
+   * @param p The type of the norm.
+   * @return The norm.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
+   *           strict greater than 0or if {@code matrix} is not a vector and {@code p} is not one of 1, 2.
    */
-  public static boolean qr(Mat q, Mat r, Mat x) {
-    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
-    qr.decompose(x.memptr());
-
-    DenseMatrix64F tempQ;
-    DenseMatrix64F tempR;
-    try {
-      tempQ = qr.getQ(null, false);
-      tempR = qr.getR(null, false);
-    } catch(IllegalArgumentException exception) {
-      return false;
+  public static double norm(Mat matrix, int p) throws IllegalArgumentException {
+    if (matrix.is_vec()) {
+      if (p < 0) {
+        throw new IllegalArgumentException("For vectors, p must be strict greater than 0 but was " + p);
+      }
+    } else {
+      if (p != 1 && p != 2) {
+        throw new IllegalArgumentException("For non-vector matrices, p must be one of 1 or 2 but was" + p);
+      }
     }
 
-    q.set_size(tempQ.numRows, tempQ.numCols);
-    q.memptr().set(tempQ);
+    return NormOps.normP(matrix.memptr(), p);
+  }
 
-    r.set_size(tempR.numRows, tempR.numCols);
-    r.memptr().set(tempR);
+  /**
+   * Computes the {@code p}-norm of the provided matrix.
+   * <p>
+   * If {@code matrix} is not a vector, an induced norm is computed.
+   * <p>
+   * "-inf" stand for the minimum norm, "inf" for the maximum norm and "fro" for the Frobenius norm.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not one
+   * of '-inf', 'inf' or 'fro'.
+   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
+   * one of 'inf' or 'fro'.
+   * </ul>
+   * 
+   * @param matrix The provided matrix.
+   * @param p The type of the norm.
+   * @return The norm.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
+   *           one of '-inf', 'inf' or 'fro' or if {@code matrix} is not a vector and {@code p} is not one of 'inf' or
+   *           'fro'.
+   * 
+   * @see #norm(Mat, int)
+   */
+  public static double norm(Mat matrix, String p) throws IllegalArgumentException {
+    if (matrix.is_vec()) {
+      switch (p) {
+        case "-inf":
+          return CommonOps.elementMinAbs(matrix.memptr());
+        case "inf":
+          return CommonOps.elementMaxAbs(matrix.memptr());
+        case "fro":
+          return NormOps.normF(matrix.memptr());
+        default:
+          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro' but was " + p);
+      }
+    } else {
+      switch (p) {
+        case "inf":
+          return NormOps.inducedPInf(matrix.memptr());
+        case "fro":
+          return NormOps.normF(matrix.memptr());
+        default:
+          throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro' but was" + p);
+      }
+    }
+  }
 
-    return true;
+  /**
+   * @param A
+   * @return
+   */
+  public static double rank(Mat A) {
+    return 0.0;
+  }
+
+  /**
+   * @param A
+   * @param tolerance
+   * @return
+   */
+  public static double rank(Mat A, double tolerance) {
+    return 0.0;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static double trace(Mat A) {
+    return 0.0;
+  }
+  
+  /**
+   * Converts a provided (1,1)-matrix into a scalar of type double.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code matrix.}{@link Mat#n_rows
+   * n_rows} {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
+   * 
+   * @param matrix The provided matrix.
+   * @return The scalar.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix.}{@link Mat#n_rows n_rows}
+   *           {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
+   */
+  public static double as_scalar(Mat matrix) throws IllegalArgumentException {
+    if (matrix.n_rows != 1 || matrix.n_cols != 1) {
+      throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix but was (" + matrix.n_rows + ", " + matrix.n_cols + ").");
+    }
+
+    return matrix.memptr().get(0);
+  }
+
+  /**
+   * @param A
+   * @param kthDiagonal
+   * @return
+   */
+  public static Mat diagvec(Mat A, int kthDiagonal) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat prod(Mat A) {
+    return prod(A, 0);
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat prod(Mat A, int dimension) {
+    return null;
+  }
+
+  /**
+   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
+   * the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The sum.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   * 
+   * @see #sum(Mat, int)
+   */
+  public static Mat sum(Mat matrix) throws IllegalArgumentException {
+    return sum(matrix, 0);
+  }
+
+  /**
+   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
+   * the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
+   * or 1.
+   * 
+   * @param matrix The provided matrix.
+   * @param dimension The direction.
+   * @return The sum.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   */
+  public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
+    if (dimension == 0) {
+      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+      CommonOps.sumCols(matrix.memptr(), result);
+      return new Mat(result);
+    } else if (dimension == 1) {
+      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+      CommonOps.sumRows(matrix.memptr(), result);
+      return new Mat(result);
+    } else {
+      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
+    }
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat min(Mat A) {
+    return min(A, 0);
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat min(Mat A, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat max(Mat A) {
+    return max(A, 0);
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat max(Mat A, int dimension) {
+    return null;
+  }
+  
+  /**
+   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
+   * the provided matrix.
+   * 
+   * @param matrix The provided matrix.
+   * @return The mean.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   * 
+   * @see #mean(Mat, int)
+   */
+  public static Mat mean(Mat matrix) throws IllegalArgumentException {
+    return mean(matrix, 0);
+  }
+  
+  /**
+   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
+   * the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
+   * or 1.
+   * 
+   * @param matrix The provided matrix.
+   * @param dimension The direction.
+   * @return The mean.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   */
+  public static Mat mean(Mat matrix, int dimension) throws IllegalArgumentException {
+    if (dimension == 0) {
+      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
+      DenseMatrix64F memptr = matrix.memptr();
+
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double total = 0;
+        for (int i = 0; i < matrix.n_rows; i++) {
+          total += memptr.get(i, j);
+        }
+
+        result.set(j, total / matrix.n_rows);
+      }
+
+      return new Mat(result);
+    } else if (dimension == 1) {
+      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
+      DenseMatrix64F memptr = matrix.memptr();
+
+      for (int i = 0; i < matrix.n_rows; i++) {
+        double total = 0;
+        for (int j = 0; j < matrix.n_cols; j++) {
+          total += memptr.get(i, j);
+        }
+
+        result.set(i, total / matrix.n_cols);
+      }
+
+      return new Mat(result);
+    } else {
+      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
+    }
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat median(Mat A) {
+    return median(A, 0);
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat median(Mat A, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat stddev(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @return
+   */
+  public static Mat stddev(Mat A, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @param dimension
+   * @return
+   */
+  public static Mat stddev(Mat A, int normType, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat var(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @return
+   */
+  public static Mat var(Mat A, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @param dimension
+   * @return
+   */
+  public static Mat var(Mat A, int normType, int dimension) {
+    return null;
+  }
+
+  /**
+   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
+   * and {@code b} bellow.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
+   * {@code != b.n_cols}.
+   * 
+   * @param a First matrix.
+   * @param b Second matrix.
+   * @return The concatenated matrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
+   * 
+   * @see #join_vert(Mat, Mat)
+   */
+  public static Mat join_cols(Mat a, Mat b) throws IllegalArgumentException {
+    if (a.n_cols != b.n_cols) {
+      throw new IllegalArgumentException("The provided matrices must have the same number of columns (" + a.n_cols + " != " + b.n_cols + ").");
+    }
+
+    DenseMatrix64F result = new DenseMatrix64F(a.n_rows + b.n_rows, a.n_cols);
+
+    // Add matrix a
+    DenseMatrix64F memptrA = a.memptr();
+    for (int i = 0; i < a.n_rows; i++) {
+      for (int j = 0; j < a.n_cols; j++) {
+        result.set(i, j, memptrA.get(i, j));
+      }
+    }
+
+    // Add matrix b
+    DenseMatrix64F memptrB = b.memptr();
+    for (int i = 0; i < b.n_rows; i++) {
+      for (int j = 0; j < b.n_cols; j++) {
+        result.set(i + a.n_rows, j, memptrB.get(i, j));
+      }
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
+   * and {@code b} bellow.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
+   * {@code != b.n_cols}.
+   * 
+   * @param a First matrix.
+   * @param b Second matrix.
+   * @return The concatenated matrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
+   * 
+   * @see #join_cols(Mat, Mat)
+   */
+  public static Mat join_vert(Mat a, Mat b) throws IllegalArgumentException {
+    return join_cols(a, b);
+  }
+
+  /**
+   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
+   * {@code b} right.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
+   * {@code != b.n_rows}.
+   * 
+   * @param a First matrix.
+   * @param b Second matrix.
+   * @return The concatenated matrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
+   * 
+   * @see #join_horiz(Mat, Mat)
+   */
+  public static Mat join_rows(Mat a, Mat b) throws IllegalArgumentException {
+    if (a.n_rows != b.n_rows) {
+      throw new IllegalArgumentException("The provided matrices must have the same number of rows (" + a.n_rows + " != " + b.n_rows + ").");
+    }
+
+    DenseMatrix64F result = new DenseMatrix64F(a.n_rows, a.n_cols + b.n_cols);
+
+    // Add matrix a
+    DenseMatrix64F memptrA = a.memptr();
+    for (int i = 0; i < a.n_rows; i++) {
+      for (int j = 0; j < a.n_cols; j++) {
+        result.set(i, j, memptrA.get(i, j));
+      }
+    }
+
+    // Add matrix b
+    DenseMatrix64F memptrB = b.memptr();
+    for (int i = 0; i < b.n_rows; i++) {
+      for (int j = 0; j < b.n_cols; j++) {
+        result.set(i, j + a.n_cols, memptrB.get(i, j));
+      }
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
+   * {@code b} right.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
+   * {@code != b.n_rows}.
+   * 
+   * @param a First matrix.
+   * @param b Second matrix.
+   * @return The concatenated matrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
+   * 
+   * @see #join_rows(Mat, Mat)
+   */
+  public static Mat join_horiz(Mat a, Mat b) throws IllegalArgumentException {
+    return join_rows(a, b);
+  }
+
+  /**
+   * Returns true if any element of the provided matrix is non-zero or if an operation is satisfy if used
+   * together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @return The boolean result.
+   */
+  public static boolean any(Mat matrix) {
+    DenseMatrix64F memptrA = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      if (memptrA.get(i) != 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static boolean all(Mat A) {
+    return false;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat sort(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @return
+   */
+  public static Mat sort(Mat A, int sortType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @param dimension 
+   * @return
+   */
+  public static Mat sort(Mat A, int sortType, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat sort_index(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @return
+   */
+  public static Mat sort_index(Mat A, int sortType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @param dimension 
+   * @return
+   */
+  public static Mat sort_index(Mat A, int sortType, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat stable_sort_index(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @return
+   */
+  public static Mat stable_sort_index(Mat A, int sortType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param sortType 
+   * @param dimension 
+   * @return
+   */
+  public static Mat stable_sort_index(Mat A, int sortType, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param numerOfRows
+   * @param numberOfColumns
+   * @return
+   */
+  public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param numerOfRows
+   * @param numberOfColumns
+   * @param dimension 
+   * @return
+   */
+  public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param numerOfRows
+   * @param numberOfColumns
+   * @return
+   */
+  public static Mat resize(Mat A, int numerOfRows, int numberOfColumns) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat cor(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @return
+   */
+  public static Mat cor(Mat A, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @return
+   */
+  public static Mat cor(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B 
+   * @param normType 
+   * @return
+   */
+  public static Mat cor(Mat A, Mat B, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat cov(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param normType 
+   * @return
+   */
+  public static Mat cov(Mat A, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @return
+   */
+  public static Mat cov(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B 
+   * @param normType 
+   * @return
+   */
+  public static Mat cov(Mat A, Mat B, int normType) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @return
+   */
+  public static Mat hist(Mat X) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param numberOfBins 
+   * @return
+   */
+  public static Mat hist(Mat X, int numberOfBins) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param numberOfBins 
+   * @param dimension 
+   * @return
+   */
+  public static Mat hist(Mat X, int numberOfBins, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param centers 
+   * @return
+   */
+  public static Mat hist(Mat X, Mat centers) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param centers 
+   * @param dimension 
+   * @return
+   */
+  public static Mat hist(Mat X, Mat centers, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param edges 
+   * @return
+   */
+  public static Mat histc(Mat X, Mat edges) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @param edges 
+   * @param dimension 
+   * @return
+   */
+  public static Mat histc(Mat X, Mat edges, int dimension) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat fliplr(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat flipud(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat diagmat(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat trimatu(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat trimatl(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat simmatu(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat simmatl(Mat A) {
+    return null;
+  }
+
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat trans(Mat A) {
+    return null;
   }
 
   /**
@@ -622,371 +1417,294 @@ public class Arma {
   public static Mat find(Mat matrix) throws IllegalArgumentException {
     return find(matrix, 0, "first");
   }
-
+  
   /**
-   * Returns true if any element of the provided matrix is non-zero or if an operation is satisfy if used
-   * together with {@link Op#evaluate(Mat, Op, Mat)}.
-   * 
-   * @param matrix The provided matrix.
-   * @return The boolean result.
+   * @param A
+   * @return
    */
-  public static boolean any(Mat matrix) {
-    DenseMatrix64F memptrA = matrix.memptr();
-
-    for (int i = 0; i < matrix.n_elem; i++) {
-      if (memptrA.get(i) != 0) {
-        return true;
-      }
-    }
-
-    return false;
+  public static Mat cumsum(Mat A) {
+    return null;
   }
-
+  
   /**
-   * Computes the {@code p}-norm of the provided matrix.
-   * <p>
-   * If {@code matrix} is not a vector, an induced norm is computed.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not
-   * strict greater than 0.
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
-   * one of 1, 2.
-   * </ul>
-   * 
-   * @param matrix The provided matrix.
-   * @param p The type of the norm.
-   * @return The norm.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
-   *           strict greater than 0or if {@code matrix} is not a vector and {@code p} is not one of 1, 2.
+   * @param A
+   * @param dimension
+   * @return
    */
-  public static double norm(Mat matrix, int p) throws IllegalArgumentException {
-    if (matrix.is_vec()) {
-      if (p < 0) {
-        throw new IllegalArgumentException("For vectors, p must be strict greater than 0 but was " + p);
-      }
-    } else {
-      if (p != 1 && p != 2) {
-        throw new IllegalArgumentException("For non-vector matrices, p must be one of 1 or 2 but was" + p);
-      }
-    }
-
-    return NormOps.normP(matrix.memptr(), p);
+  public static Mat cumsum(Mat A, int dimension) {
+    return null;
   }
-
+  
   /**
-   * Computes the {@code p}-norm of the provided matrix.
-   * <p>
-   * If {@code matrix} is not a vector, an induced norm is computed.
-   * <p>
-   * "-inf" stand for the minimum norm, "inf" for the maximum norm and "fro" for the Frobenius norm.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not one
-   * of '-inf', 'inf' or 'fro'.
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
-   * one of 'inf' or 'fro'.
-   * </ul>
-   * 
-   * @param matrix The provided matrix.
-   * @param p The type of the norm.
-   * @return The norm.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
-   *           one of '-inf', 'inf' or 'fro' or if {@code matrix} is not a vector and {@code p} is not one of 'inf' or
-   *           'fro'.
-   * 
-   * @see #norm(Mat, int)
+   * @param A
+   * @param B
+   * @return
    */
-  public static double norm(Mat matrix, String p) throws IllegalArgumentException {
-    if (matrix.is_vec()) {
-      switch (p) {
-        case "-inf":
-          return CommonOps.elementMinAbs(matrix.memptr());
-        case "inf":
-          return CommonOps.elementMaxAbs(matrix.memptr());
-        case "fro":
-          return NormOps.normF(matrix.memptr());
-        default:
-          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro' but was " + p);
-      }
-    } else {
-      switch (p) {
-        case "inf":
-          return NormOps.inducedPInf(matrix.memptr());
-        case "fro":
-          return NormOps.normF(matrix.memptr());
-        default:
-          throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro' but was" + p);
-      }
-    }
+  public static Mat conv(Mat A, Mat B) {
+    return null;
   }
-
+  
   /**
-   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
+   * @param A
+   * @param B
+   * @return
+   */
+  public static Mat cross(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @return
+   */
+  public static Mat kron(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat shuffle(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat shuffle(Mat A, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat unique(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat vectorise(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param dimension
+   * @return
+   */
+  public static Mat vectorise(Mat A, int dimension) {
+    return null;
+  }
+  
+  /**
+   * @param X
+   * @return
+   */
+  public static Mat chol(Mat X) {
+    return null;
+  }
+  
+  /**
+   * @param R 
+   * @param X
+   * @return
+   */
+  public static Mat chol(Mat R, Mat X) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat eig_sym(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A 
+   * @param B
+   * @return
+   */
+  public static Mat eig_sym(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @return
+   */
+  public static Mat eig_sym(Mat A, Mat B, Mat C) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat inv(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A 
+   * @param B
+   * @return
+   */
+  public static Mat inv(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @return
+   */
+  public static Mat lu(Mat A, Mat B, Mat C) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @param D
+   * @return
+   */
+  public static Mat lu(Mat A, Mat B, Mat C, Mat D) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat pinv(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param tolerance 
+   * @return
+   */
+  public static Mat pinv(Mat A, double tolerance) {
+    return null;
+  }
+  
+  /**
+   * @param A 
+   * @param B
+   * @return
+   */
+  public static Mat pinv(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A 
+   * @param B
+   * @param tolerance 
+   * @return
+   */
+  public static Mat pinv(Mat A, Mat B, double tolerance) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat princomp(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A 
+   * @param B
+   * @return
+   */
+  public static Mat princomp(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @return
+   */
+  public static Mat princomp(Mat A, Mat B, Mat C) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @param D
+   * @return
+   */
+  public static Mat princomp(Mat A, Mat B, Mat C, Mat D) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @param D
+   * @param E
+   * @return
+   */
+  public static Mat princomp(Mat A, Mat B, Mat C, Mat D, Mat E) {
+    return null;
+  }
+  
+  /**
+   * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code x}.
    * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
-   * or 1.
-   * 
-   * @param matrix The provided matrix.
-   * @param dimension The direction.
-   * @return The sum.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
-   */
-  public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
-    if (dimension == 0) {
-      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-      CommonOps.sumCols(matrix.memptr(), result);
-      return new Mat(result);
-    } else if (dimension == 1) {
-      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-      CommonOps.sumRows(matrix.memptr(), result);
-      return new Mat(result);
-    } else {
-      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
-    }
-  }
-
-  /**
-   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
-   * 
-   * @param matrix The provided matrix.
-   * @return The sum.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
-   * 
-   * @see #sum(Mat, int)
-   */
-  public static Mat sum(Mat matrix) throws IllegalArgumentException {
-    return sum(matrix, 0);
-  }
-
-  /**
-   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
+   * The matrix {@code x} is decomposed into a orthogonal matrix {@code q} and upper triangular matrix {@code r}, such
+   * that {@code x = qr}.
    * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
-   * or 1.
+   * The provided matrices {@code q} and {@code r} are not touched if the decomposition fails.
    * 
-   * @param matrix The provided matrix.
-   * @param dimension The direction.
-   * @return The mean.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   * @param q An orthogonal matrix.
+   * @param r An upper triangular matrix.
+   * @param x The matrix to be decomposed.
+   * @return False if the decomposition fails and true otherwise.
    */
-  public static Mat mean(Mat matrix, int dimension) throws IllegalArgumentException {
-    if (dimension == 0) {
-      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
-      DenseMatrix64F memptr = matrix.memptr();
+  public static boolean qr(Mat q, Mat r, Mat x) {
+    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
+    qr.decompose(x.memptr());
 
-      for (int j = 0; j < matrix.n_cols; j++) {
-        double total = 0;
-        for (int i = 0; i < matrix.n_rows; i++) {
-          total += memptr.get(i, j);
-        }
-
-        result.set(j, total / matrix.n_rows);
-      }
-
-      return new Mat(result);
-    } else if (dimension == 1) {
-      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
-      DenseMatrix64F memptr = matrix.memptr();
-
-      for (int i = 0; i < matrix.n_rows; i++) {
-        double total = 0;
-        for (int j = 0; j < matrix.n_cols; j++) {
-          total += memptr.get(i, j);
-        }
-
-        result.set(i, total / matrix.n_cols);
-      }
-
-      return new Mat(result);
-    } else {
-      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
-    }
-  }
-
-  /**
-   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
-   * 
-   * @param matrix The provided matrix.
-   * @return The mean.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
-   * 
-   * @see #mean(Mat, int)
-   */
-  public static Mat mean(Mat matrix) throws IllegalArgumentException {
-    return mean(matrix, 0);
-  }
-
-  // public static Mat median(Mat matrix, int dimension) {
-  //
-  // }
-  //
-  // public static Mat median(Mat matrix) {
-  // return median(matrix, 0);
-  // }
-  //
-  // public static Mat stddev(Mat matrix, int normType, int dimension) {
-  //
-  // }
-  //
-  // public static Mat stddev(Mat matrix, int normType) {
-  // return stddev(matrix, normType, 0);
-  // }
-  //
-  // public static Mat stddev(Mat matrix, int dimension) {
-  // return stddev(matrix, 0, dimension);
-  // }
-  //
-  // public static Mat stddev(Mat matrix) {
-  // return stddev(matrix, 0, 0);
-  // }
-  //
-  // public static Mat var(Mat matrix, int normType, int dimension) {
-  //
-  // }
-  //
-  // public static Mat var(Mat matrix, int normType) {
-  // return var(matrix, normType, 0);
-  // }
-  //
-  // public static Mat var(Mat matrix, int dimension) {
-  // return var(matrix, 0, dimension);
-  // }
-  //
-  // public static Mat var(Mat matrix) {
-  // return var(matrix, 0, 0);
-  // }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
-   * {@code b} right.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
-   * {@code != b.n_rows}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
-   * 
-   * @see #join_horiz(Mat, Mat)
-   */
-  public static Mat join_rows(Mat a, Mat b) throws IllegalArgumentException {
-    if (a.n_rows != b.n_rows) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of rows (" + a.n_rows + " != " + b.n_rows + ").");
+    DenseMatrix64F tempQ;
+    DenseMatrix64F tempR;
+    try {
+      tempQ = qr.getQ(null, false);
+      tempR = qr.getR(null, false);
+    } catch(IllegalArgumentException exception) {
+      return false;
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(a.n_rows, a.n_cols + b.n_cols);
+    q.set_size(tempQ.numRows, tempQ.numCols);
+    q.memptr().set(tempQ);
 
-    // Add matrix a
-    DenseMatrix64F memptrA = a.memptr();
-    for (int i = 0; i < a.n_rows; i++) {
-      for (int j = 0; j < a.n_cols; j++) {
-        result.set(i, j, memptrA.get(i, j));
-      }
-    }
+    r.set_size(tempR.numRows, tempR.numCols);
+    r.memptr().set(tempR);
 
-    // Add matrix b
-    DenseMatrix64F memptrB = b.memptr();
-    for (int i = 0; i < b.n_rows; i++) {
-      for (int j = 0; j < b.n_cols; j++) {
-        result.set(i, j + a.n_cols, memptrB.get(i, j));
-      }
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
-   * and {@code b} bellow.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
-   * {@code != b.n_cols}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
-   * 
-   * @see #join_vert(Mat, Mat)
-   */
-  public static Mat join_cols(Mat a, Mat b) throws IllegalArgumentException {
-    if (a.n_cols != b.n_cols) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of columns (" + a.n_cols + " != " + b.n_cols + ").");
-    }
-
-    DenseMatrix64F result = new DenseMatrix64F(a.n_rows + b.n_rows, a.n_cols);
-
-    // Add matrix a
-    DenseMatrix64F memptrA = a.memptr();
-    for (int i = 0; i < a.n_rows; i++) {
-      for (int j = 0; j < a.n_cols; j++) {
-        result.set(i, j, memptrA.get(i, j));
-      }
-    }
-
-    // Add matrix b
-    DenseMatrix64F memptrB = b.memptr();
-    for (int i = 0; i < b.n_rows; i++) {
-      for (int j = 0; j < b.n_cols; j++) {
-        result.set(i + a.n_rows, j, memptrB.get(i, j));
-      }
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
-   * {@code b} right.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
-   * {@code != b.n_rows}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
-   * 
-   * @see #join_rows(Mat, Mat)
-   */
-  public static Mat join_horiz(Mat a, Mat b) throws IllegalArgumentException {
-    return join_rows(a, b);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
-   * and {@code b} bellow.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
-   * {@code != b.n_cols}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
-   * 
-   * @see #join_cols(Mat, Mat)
-   */
-  public static Mat join_vert(Mat a, Mat b) throws IllegalArgumentException {
-    return join_cols(a, b);
+    return true;
   }
 
   /**
@@ -1132,5 +1850,34 @@ public class Arma {
     v.memptr().set(tempV);
 
     return true;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @return
+   */
+  public static Mat syl(Mat A, Mat B, Mat C) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B
+   * @param C
+   * @param D
+   * @return
+   */
+  public static Mat syl(Mat A, Mat B, Mat C, Mat D) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static boolean isfinite(Mat A) {
+    return false;
   }
 }
