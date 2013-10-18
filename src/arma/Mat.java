@@ -1597,6 +1597,86 @@ public class Mat {
   }
 
   /**
+   * @param j
+   * @param B
+   */
+  public void insert_cols(int j, Mat B) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   */
+  public void insert_cols(int aj, int bj) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   * @param zero 
+   */
+  public void insert_cols(int aj, int bj, boolean zero) {
+    
+  }
+
+  /**
+   * @param j
+   * @param B
+   */
+  public void insert_rows(int j, Mat B) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   */
+  public void insert_rows(int aj, int bj) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   * @param zero 
+   */
+  public void insert_rows(int aj, int bj, boolean zero) {
+    
+  }
+
+  /**
+   * @param a
+   */
+  public void shed_col(int a) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   */
+  public void shed_cols(int aj, int bj) {
+    
+  }
+
+  /**
+   * @param a
+   */
+  public void shed_row(int a) {
+    
+  }
+
+  /**
+   * @param aj 
+   * @param bj 
+   */
+  public void shed_rows(int aj, int bj) {
+    
+  }
+  
+  /**
    * Returns the transpose of the matrix.
    * 
    * @return The transpose.
