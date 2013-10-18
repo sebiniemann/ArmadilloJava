@@ -36,6 +36,6 @@ public class WallClock {
    * @return The elapsed time.
    */
   public static long toc() {
-    return TimeUnit.SECONDS.convert(System.nanoTime() - _tic, TimeUnit.MILLISECONDS) ;
+    return TimeUnit.SECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS) ;
   }
 }
