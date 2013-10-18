@@ -72,6 +72,14 @@ public class Mat {
     this(new DenseMatrix64F());
   }
 
+
+  /**
+   * @param matrix
+   */
+  public Mat(double[] matrix) {
+    
+  }
+
   /**
    * Creates a matrix with the same number of rows and columns as well as elements as the provided two-dimensional
    * array. The array is assumed to have a structure of {@code array[rows][columns]}.
@@ -106,6 +114,13 @@ public class Mat {
   }
   
   /**
+   * @param numberOfElements
+   */
+  public Mat(int numberOfElements) {
+
+  }
+  
+  /**
    * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * <p>
    * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
@@ -115,6 +130,14 @@ public class Mat {
    */
   public Mat(int numberOfRows, int numberOfColumns) {
     this(numberOfRows, numberOfColumns, Fill.NONE);
+  }
+  
+  /**
+   * @param numberOfElements
+   * @param fillType 
+   */
+  public Mat(int numberOfElements, Fill fillType) {
+
   }
   
   /**
@@ -153,6 +176,15 @@ public class Mat {
   }
   
   /**
+   * @param numberOfElements
+   * @param fillType 
+   * @param rng 
+   */
+  public Mat(int numberOfElements, Fill fillType, Random rng) {
+
+  }
+  
+  /**
    * Creates a random matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}
    * filled according to {@code fillType} with either uniformly or normally distributed pseudorandom values.
    * <p>
@@ -188,110 +220,6 @@ public class Mat {
     }
 
     updateAttributes();
-  }
-
-  /**
-   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat zeros(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
-  }
-
-  /**
-   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat ones(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
-  }
-
-  /**
-   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat eye(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
-  }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * uniformly distributed pseudorandom values.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
-   */
-  public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
-  }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * normally distributed pseudorandom values.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
-   */
-  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
-  }
-  
-  /**
-   * @param A
-   * @param numberOfCopiesPerRow
-   * @param numberOfCopiesPerColumn
-   * @return
-   */
-  public static Mat repmat(Mat A, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
-    return null;
-  }
-  
-  /**
-   * @param A
-   * @return
-   */
-  public static Mat toeplitz(Mat A) {
-    return null;
-  }
-  
-  /**
-   * @param A
-   * @param B 
-   * @return
-   */
-  public static Mat toeplitz(Mat A, Mat B) {
-    return null;
-  }
-  
-  /**
-   * @param A
-   * @return
-   */
-  public static Mat circ_toeplitz(Mat A) {
-    return null;
-  }
-  
-  /**
-   * @param a 
-   * @param b 
-   * @param n 
-   * @return
-   */
-  public static Mat linspace(double a, double b, int n) {
-    return null;
   }
   
   /**
@@ -1561,6 +1489,104 @@ public class Mat {
     return _matrix;
   }
 
+  /**
+   * 
+   */
+  public void zeros() {
+
+  }
+
+  /**
+   * @param numberOfElements
+   */
+  public void zeros(int numberOfElements) {
+
+  }
+
+  /**
+   * @param numberOfRows
+   * @param numberOfColumns
+   */
+  public void zeros(int numberOfRows, int numberOfColumns) {
+
+  }
+
+  /**
+   * 
+   */
+  public void ones() {
+
+  }
+
+  /**
+   * @param numberOfElements
+   */
+  public void ones(int numberOfElements) {
+
+  }
+
+  /**
+   * @param numberOfRows
+   * @param numberOfColumns
+   */
+  public void ones(int numberOfRows, int numberOfColumns) {
+
+  }
+
+  /**
+   * @param numberOfRows
+   * @param numberOfColumns
+   */
+  public void eye(int numberOfRows, int numberOfColumns) {
+
+  }
+
+  /**
+   * 
+   */
+  public void randu() {
+
+  }
+
+  /**
+   * @param numberOfElements
+   */
+  public void randu(int numberOfElements) {
+
+  }
+
+  /**
+   * @param numberOfRows
+   * @param numberOfColumns
+   * @param rng
+   */
+  public void randu(int numberOfRows, int numberOfColumns, Random rng) {
+
+  }
+
+  /**
+   * 
+   */
+  public void randn() {
+
+  }
+
+  /**
+   * @param numberOfElements
+   */
+  public void randn(int numberOfElements) {
+
+  }
+  
+  /**
+   * @param numberOfRows
+   * @param numberOfColumns
+   * @param rng
+   */
+  public void randn(int numberOfRows, int numberOfColumns, Random rng) {
+
+  }
+  
   /**
    * Replaces the value of all elements with the provided one.
    * 
