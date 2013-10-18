@@ -5,7 +5,7 @@ Between Matlab, Armadillo C++ and ArmadilloJava
 **Note:** Currently, only real-valued dense matrices with double precision are supported.
 
 
-Matrix initialisation / generation
+Matrix initialisation
 ----------------------------------
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
@@ -17,14 +17,21 @@ A = B                      | A(B);                      | A(B)                  
                            | A(n, m)                    | A(n, m)                         | **Matlab:** Use zeros(n, m)
                            | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | **Matlab:** Use zeros(n, m)
 zeros(n, m)                | A(n, m, fill::zeros)       | A(n, m, Fill.ZEROS)             | 
-zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
 ones(n, m)                 | A(n, m, fill::ones)        | A(n, m, Fill.ONES)              | 
-ones(n, m)                 | ones(n, m)                 | Mat.ones(n, m)                  | 
 eye(n, m)                  | A(n, m, fill::eye)         | A(n, m, Fill.EYE)               | 
-eye(n, m)                  | eye(n, m)                  | Mat.eye(n, m)                   | 
 randu(n, m)                | A(n, m, fill::randu)       | A(n, m, Fill.RANDU, rng)        | **Note:** rng is a random number generator.
-randu(n, m)                | randu(n, m)                | Mat.randu(n, m, rng)            | 
 randn(n, m)                | A(n, m, fill::randn)       | A(n, m, Fill.RANDN, rng)        | 
+
+
+Matrix generation
+----------------------------------
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
+ones(n, m)                 | ones(n, m)                 | Mat.ones(n, m)                  | 
+eye(n, m)                  | eye(n, m)                  | Mat.eye(n, m)                   | 
+randu(n, m)                | randu(n, m)                | Mat.randu(n, m, rng)            | 
 randn(n, m)                | randn(n, m)                | Mat.randn(n, m, rng)            | 
 repmat(A, n, m)            | repmat(A, n, m)            | Mat.repmat(A, n, m)             | 
 toeplitz(A [, B])          | toeplitz(A [, B])          | Mat.toeplitz(A [, B])           | 
