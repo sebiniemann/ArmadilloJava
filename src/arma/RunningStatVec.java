@@ -73,7 +73,7 @@ public class RunningStatVec {
         }
 
         _cov.subvec(Op.ELEMTIMES, (_count - 1) / _count);
-        _cov.subvec(Op.PLUS, temp.divide(_count + 1));
+        _cov.subvec(Op.PLUS, temp.elemDivide(_count + 1));
       }
       
       for(int n = 0; n < samples.n_elem; n++) {
@@ -81,8 +81,8 @@ public class RunningStatVec {
         _min.at(n, Op.EQUAL, Math.min(_max.at(n), samples.at(n)));
       }
       
-      _var = (Arma.pow(samples.minus(_mean), 2)).divide(_count + 1).plus(_var.times((_count - 1) / _count));
-      _mean = _mean.plus(samples.minus(_mean).divide(_count + 1));
+      _var = (Arma.pow(samples.minus(_mean), 2)).elemDivide(_count + 1).plus(_var.times((_count - 1) / _count));
+      _mean = _mean.plus(samples.minus(_mean).elemDivide(_count + 1));
 
     } else {
       int numberOfRows = samples.n_rows;
