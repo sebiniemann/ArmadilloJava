@@ -10,6 +10,7 @@
 
 package arma;
 
+import java.io.PrintWriter;
 import java.util.Random;
 
 import org.ejml.data.DenseMatrix64F;
@@ -1677,121 +1678,40 @@ public class Mat {
   }
   
   /**
-   * Returns the transpose of the matrix.
-   * 
-   * @return The transpose.
+   * @param B
    */
-  public Mat t() {
-    DenseMatrix64F result = new DenseMatrix64F(n_cols, n_rows);
-    CommonOps.transpose(_matrix, result);
-    return new Mat(result);
+  public void swap(Mat B) {
+    
   }
 
   /**
-   * Returns the inverse matrix. Fails if the provided matrix is not invertible.
-   * 
-   * @return The inverse.
+   * @param a
+   * @param b
    */
-  public Mat i() {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
-    CommonOps.invert(_matrix, result);
-    return new Mat(result);
+  public void swap_cols(int a, int b) {
+    
   }
 
   /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and neither guarantees to reuse the values of the elements, nor their positions.
-   * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * 
-   * @see #reshape(int, int, boolean)
-   * @see #resize
+   * @param a
+   * @param b
    */
-  public void set_size(int numberOfRows, int numberOfColumns) {
-    // EJML fails if DenseMatrix64F was not properly initialised.
-    if (n_rows == 0 && n_cols == 0) {
-      _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-    } else {
-      _matrix.reshape(numberOfRows, numberOfColumns);
-    }
-
-    updateAttributes();
+  public void swap_rows(int a, int b) {
+    
   }
-
+  
   /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements, but not their positions. The
-   * elements of the current matrix are either accessed row-wise (<code>rowWise = true</code>) or column-wise (
-   * <code>rowWise = false</code>), while the new matrix is always filled column-wise.
-   * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * @param rowWise The access of the elements of the current matrix .
-   * 
-   * @see #set_size(int, int)
-   * @see #resize(int, int)
+   * @return
    */
-  public void reshape(int numberOfRows, int numberOfColumns, boolean rowWise) {
-    DenseMatrix64F temp = new DenseMatrix64F(n_rows, n_cols);
-
-    if (rowWise) {
-      // reshape fills the new matrix row-wise and not column-wise. Filling a transposed matrix row-wise and transposing
-      // it again afterwards will result in a column-wise filled matrix.
-      _matrix.reshape(numberOfColumns, numberOfRows, true);
-      CommonOps.transpose(_matrix, temp);
-      _matrix = temp;
-    } else {
-      // same as above with a transpose of the current matrix in order to access it column-wise as a result.
-      CommonOps.transpose(_matrix, temp);
-      temp.reshape(numberOfColumns, numberOfRows, true);
-      CommonOps.transpose(temp, _matrix);
-    }
-
-    updateAttributes();
+  public boolean is_empty() {
+    return false;
   }
-
+  
   /**
-   * Equivalent to {@link #reshape(int, int, boolean) reshape(numberOfRows, numberOfColumns, true)}
-   * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
+   * @return
    */
-  public void reshape(int numberOfRows, int numberOfColumns) {
-    reshape(numberOfRows, numberOfColumns, false);
-  }
-
-  /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements and their positions.
-   * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * 
-   * @see #set_size(int, int)
-   * @see #reshape(int, int, boolean)
-   */
-  public void resize(int numberOfRows, int numberOfColumns) {
-    if (numberOfRows <= n_rows && numberOfColumns <= n_cols) {
-      // No additional memory needs to be allocated.
-      _matrix.reshape(numberOfColumns, numberOfRows);
-    } else {
-      DenseMatrix64F newMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-      for (int i = 0; i < n_rows; i++) {
-        for (int j = 0; j < n_cols; j++) {
-          newMatrix.set(i, j, _matrix.get(i, j));
-        }
-      }
-      _matrix = newMatrix;
-    }
-
-    updateAttributes();
-  }
-
-  @Override
-  public String toString() {
-    return _matrix.toString();
+  public boolean is_finite() {
+    return false;
   }
 
   /**
@@ -1840,6 +1760,396 @@ public class Mat {
       return true;
     }
     return false;
+  }
+  
+  /**
+   * @param n
+   * @return
+   */
+  public boolean in_range(int n) {
+    return false;
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @return
+   */
+  public boolean in_range(int a, int b) {
+    return false;
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param span
+   * @return
+   */
+  public boolean in_range(int a, int b, boolean span) {
+    return false;
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param c
+   * @param d
+   * @return
+   */
+  public boolean in_range(int a, int b, int c, int d) {
+    return false;
+  }
+  
+  /**
+   * @return
+   */
+  public double min() {
+    return 0.0;
+  }
+  
+  /**
+   * @param n
+   * @return
+   */
+  public double min(int n) {
+    return 0.0;
+  }
+  
+  /**
+   * @param i
+   * @param j
+   * @return
+   */
+  public double min(int i, int j) {
+    return 0.0;
+  }
+  
+  /**
+   * @return
+   */
+  public double max() {
+    return 0.0;
+  }
+  
+  /**
+   * @param n
+   * @return
+   */
+  public double max(int n) {
+    return 0.0;
+  }
+  
+  /**
+   * @param i
+   * @param j
+   * @return
+   */
+  public double max(int i, int j) {
+    return 0.0;
+  }
+  
+  /**
+   * @param numberOfElements
+   */
+  public void set_size(int numberOfElements) {
+    
+  }
+
+  /**
+   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
+   * <code>numberOfColumns</code> and neither guarantees to reuse the values of the elements, nor their positions.
+   * 
+   * @param numberOfRows The new number of rows of the matrix.
+   * @param numberOfColumns The new number of columns of the matrix.
+   * 
+   * @see #reshape(int, int, boolean)
+   * @see #resize
+   */
+  public void set_size(int numberOfRows, int numberOfColumns) {
+    // EJML fails if DenseMatrix64F was not properly initialised.
+    if (n_rows == 0 && n_cols == 0) {
+      _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+    } else {
+      _matrix.reshape(numberOfRows, numberOfColumns);
+    }
+
+    updateAttributes();
+  }
+
+  /**
+   * Equivalent to {@link #reshape(int, int, boolean) reshape(numberOfRows, numberOfColumns, true)}
+   * 
+   * @param numberOfRows The new number of rows of the matrix.
+   * @param numberOfColumns The new number of columns of the matrix.
+   */
+  public void reshape(int numberOfRows, int numberOfColumns) {
+    reshape(numberOfRows, numberOfColumns, false);
+  }
+
+  /**
+   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
+   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements, but not their positions. The
+   * elements of the current matrix are either accessed row-wise (<code>rowWise = true</code>) or column-wise (
+   * <code>rowWise = false</code>), while the new matrix is always filled column-wise.
+   * 
+   * @param numberOfRows The new number of rows of the matrix.
+   * @param numberOfColumns The new number of columns of the matrix.
+   * @param rowWise The access of the elements of the current matrix .
+   * 
+   * @see #set_size(int, int)
+   * @see #resize(int, int)
+   */
+  public void reshape(int numberOfRows, int numberOfColumns, boolean rowWise) {
+    DenseMatrix64F temp = new DenseMatrix64F(n_rows, n_cols);
+
+    if (rowWise) {
+      // reshape fills the new matrix row-wise and not column-wise. Filling a transposed matrix row-wise and transposing
+      // it again afterwards will result in a column-wise filled matrix.
+      _matrix.reshape(numberOfColumns, numberOfRows, true);
+      CommonOps.transpose(_matrix, temp);
+      _matrix = temp;
+    } else {
+      // same as above with a transpose of the current matrix in order to access it column-wise as a result.
+      CommonOps.transpose(_matrix, temp);
+      temp.reshape(numberOfColumns, numberOfRows, true);
+      CommonOps.transpose(temp, _matrix);
+    }
+
+    updateAttributes();
+  }
+  
+  /**
+   * @param numberOfElements
+   */
+  public void resize(int numberOfElements) {
+    
+  }
+
+  /**
+   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
+   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements and their positions.
+   * 
+   * @param numberOfRows The new number of rows of the matrix.
+   * @param numberOfColumns The new number of columns of the matrix.
+   * 
+   * @see #set_size(int, int)
+   * @see #reshape(int, int, boolean)
+   */
+  public void resize(int numberOfRows, int numberOfColumns) {
+    if (numberOfRows <= n_rows && numberOfColumns <= n_cols) {
+      // No additional memory needs to be allocated.
+      _matrix.reshape(numberOfColumns, numberOfRows);
+    } else {
+      DenseMatrix64F newMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+      for (int i = 0; i < n_rows; i++) {
+        for (int j = 0; j < n_cols; j++) {
+          newMatrix.set(i, j, _matrix.get(i, j));
+        }
+      }
+      _matrix = newMatrix;
+    }
+
+    updateAttributes();
+  }
+  
+  /**
+   * @return
+   */
+  public String print() {
+    return null;
+  }
+  
+  /**
+   * @param header 
+   * @return
+   */
+  public String print(String header) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @return
+   */
+  public String print(PrintWriter stream) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @param header 
+   * @return
+   */
+  public String print(PrintWriter stream, String header) {
+    return null;
+  }
+  
+  /**
+   * @return
+   */
+  public String raw_print() {
+    return null;
+  }
+  
+  /**
+   * @param header 
+   * @return
+   */
+  public String raw_print(String header) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @return
+   */
+  public String raw_print(PrintWriter stream) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @param header 
+   * @return
+   */
+  public String raw_print(PrintWriter stream, String header) {
+    return null;
+  }
+  
+  /**
+   * @param n 
+   * @return
+   */
+  public String save(String n) {
+    return null;
+  }
+  
+  /**
+   * @param n 
+   * @param t 
+   * @return
+   */
+  public String save(String n, String t) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @return
+   */
+  public String save(PrintWriter stream) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @param t 
+   * @return
+   */
+  public String save(PrintWriter stream, String t) {
+    return null;
+  }
+  
+  /**
+   * @param n 
+   * @return
+   */
+  public String load(String n) {
+    return null;
+  }
+  
+  /**
+   * @param n 
+   * @param t 
+   * @return
+   */
+  public String load(String n, String t) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @return
+   */
+  public String load(PrintWriter stream) {
+    return null;
+  }
+  
+  /**
+   * @param stream 
+   * @param t 
+   * @return
+   */
+  public String load(PrintWriter stream, String t) {
+    return null;
+  }
+  
+  /**
+   * 
+   */
+  public void clear() {
+    
+  }
+  
+  /**
+   * @return
+   */
+  public boolean empty() {
+    return false;
+    
+  }
+  
+  /**
+   * @return
+   */
+  public int size() {
+    return 0;
+  }
+
+  /**
+   * Returns the inverse matrix. Fails if the provided matrix is not invertible.
+   * 
+   * @return The inverse.
+   */
+  public Mat i() {
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
+    CommonOps.invert(_matrix, result);
+    return new Mat(result);
+  }
+
+  
+  /**
+   * Returns the transpose of the matrix.
+   * 
+   * @return The transpose.
+   */
+  public Mat t() {
+    DenseMatrix64F result = new DenseMatrix64F(n_cols, n_rows);
+    CommonOps.transpose(_matrix, result);
+    return new Mat(result);
+  }
+  
+  /**
+   * 
+   */
+  public void reset() {
+
+  }
+  
+  /**
+   * @param B 
+   * 
+   */
+  public void copy_size(Mat B) {
+
+  }
+  
+  
+  
+  @Override
+  public String toString() {
+    return _matrix.toString();
   }
 
   /**
