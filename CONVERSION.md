@@ -210,9 +210,9 @@ A = [A(1:a-1, :); A(b+1:end, :)]                       | A.shed_rows(a, b)      
 ### Swap functions
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.swap(A)                  | A.swap(A)                       | 
-                           | A.swap_cols(j1, j2)        | A.swap_cols(j1, j2)             | 
-                           | A.swap_rows(i1, i2)        | A.swap_rows(i1, i2)             | 
+A(:) = B(:)                | A.swap(B)                  | A.swap(B)                       | 
+A(:, [b a]) = A(:, [a b])  | A.swap_cols(a, b)          | A.swap_cols(a, b)               | 
+A([b a], :) = A([a b], :)  | A.swap_rows(a, b)          | A.swap_rows(a, b)               | 
 
                            
 ### Is functions
