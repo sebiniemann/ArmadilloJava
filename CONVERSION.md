@@ -285,9 +285,9 @@ A = load(n)                | A.load(n [, t])            | A.load(n [, t])       
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.transform(f)             | A.transform(f)                  | **Note:** f is a function. 
+                           | A.transform(f)             |                                 | *Not suppported* **Note:** f is a function. 
                            | A.transform(l)             |                                 | *Not suppported* **Note:** l is a lambda function. 
-                           | A.imbue(f)                 | A.imbue(f)                      | **Note:** f is a function. 
+                           | A.imbue(f)                 |                                 | *Not suppported* **Note:** f is a function. 
                            | A.imbue(l)                 |                                 | *Not suppported* **Note:** l is a lambda function. 
                            
                            
