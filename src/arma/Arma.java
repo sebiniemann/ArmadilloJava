@@ -10,6 +10,8 @@
 
 package arma;
 
+import java.util.Random;
+
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
@@ -33,6 +35,109 @@ import org.ejml.ops.NormOps;
  */
 public class Arma {
 
+  /**
+   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat zeros(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
+  }
+
+  /**
+   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat ones(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
+  }
+
+  /**
+   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat eye(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
+  }
+
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * uniformly distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
+   * @return The created matrix.
+   */
+  public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
+  }
+
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * normally distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
+   * @return The created matrix.
+   */
+  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
+  }
+  
+  /**
+   * @param A
+   * @param numberOfCopiesPerRow
+   * @param numberOfCopiesPerColumn
+   * @return
+   */
+  public static Mat repmat(Mat A, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat toeplitz(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @param B 
+   * @return
+   */
+  public static Mat toeplitz(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat circ_toeplitz(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param n 
+   * @return
+   */
+  public static Mat linspace(double a, double b, int n) {
+    return null;
+  }
 
   /**
    * Creates a matrix with element-wise computed absolute values of the provided matrix.
