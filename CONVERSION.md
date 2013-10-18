@@ -11,15 +11,22 @@ Matrix initialisation
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
                            | A()                        | A()                             | 
+A = [ ... ]                | A << ... << endr;          | A(new double[]{ ... })          | **Note:** Results in a column vector.
 A = [ ... ]                | A << ... << endr;          | A(new double[][]{ ... })        | 
 A = B                      | A(B);                      | A(B)                            | 
                            | A(" ... ");                |                                 | *Not suppported*
+                           | A(n)                       | A(n)                            | **Note:** Results in a column vector. **Matlab:** Use zeros(n, 1)
                            | A(n, m)                    | A(n, m)                         | **Matlab:** Use zeros(n, m)
+                           | A(n, fill::none)           | A(n, Fill.NONE)                 | **Note:** Results in a column vector. **Matlab:** Use zeros(n, 1)
                            | A(n, m, fill::none)        | A(n, m, Fill.NONE)              | **Matlab:** Use zeros(n, m)
+zeros(n, 1)                | A(n, fill::zeros)          | A(n, Fill.ZEROS)                | **Note:** Results in a column vector.
 zeros(n, m)                | A(n, m, fill::zeros)       | A(n, m, Fill.ZEROS)             | 
+ones(n, 1)                 | A(n, fill::ones)           | A(n, Fill.ONES)                 | **Note:** Results in a column vector.
 ones(n, m)                 | A(n, m, fill::ones)        | A(n, m, Fill.ONES)              | 
 eye(n, m)                  | A(n, m, fill::eye)         | A(n, m, Fill.EYE)               | 
+randu(n, 1)                | A(n, fill::randu)          | A(n, Fill.RANDU, rng)           | **Note:** Results in a column vector. **Note:** rng is a random number generator.
 randu(n, m)                | A(n, m, fill::randu)       | A(n, m, Fill.RANDU, rng)        | **Note:** rng is a random number generator.
+randn(n, 1)                | A(n, fill::randn)          | A(n, Fill.RANDN, rng)           | **Note:** Results in a column vector.
 randn(n, m)                | A(n, m, fill::randn)       | A(n, m, Fill.RANDN, rng)        | 
 
 
@@ -28,15 +35,19 @@ Matrix generation
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
-ones(n, m)                 | ones(n, m)                 | Mat.ones(n, m)                  | 
-eye(n, m)                  | eye(n, m)                  | Mat.eye(n, m)                   | 
-randu(n, m)                | randu(n, m)                | Mat.randu(n, m, rng)            | 
-randn(n, m)                | randn(n, m)                | Mat.randn(n, m, rng)            | 
-repmat(A, n, m)            | repmat(A, n, m)            | Mat.repmat(A, n, m)             | 
-toeplitz(A [, B])          | toeplitz(A [, B])          | Mat.toeplitz(A [, B])           | 
-                           | circ_toeplitz(A)           | Mat.circ_toeplitz(A)            | **Matlab:** [Matlab Central File Excange - Circulant matrix](http://www.mathworks.com/matlabcentral/fileexchange/22858)
-linspace(a, b [, n])       | linspace(a, b [, n])       | Mat.linspace(a, b [, n])        | **Note:** Generates a column vector. **Default:** n = 100 
+zeros(n, 1)                | zeros(n)                   | Arma.zeros(n)                   | **Note:** Results in a column vector.
+zeros(n, m)                | zeros(n, m)                | Arma.zeros(n, m)                | 
+ones(n, 1)                 | ones(n)                    | Arma.ones(n)                    | **Note:** Results in a column vector.
+ones(n, m)                 | ones(n, m)                 | Arma.ones(n, m)                 | 
+eye(n, m)                  | eye(n, m)                  | Arma.eye(n, m)                  | 
+randu(n, 1)                | randu(n)                   | Arma.randu(n, rng)              | **Note:** Results in a column vector.
+randu(n, m)                | randu(n, m)                | Arma.randu(n, m, rng)           | 
+randn(n, 1)                | randn(n)                   | Arma.randn(n, rng)              | **Note:** Results in a column vector.
+randn(n, m)                | randn(n, m)                | Arma.randn(n, m, rng)           | 
+repmat(A, n, m)            | repmat(A, n, m)            | Arma.repmat(A, n, m)            | 
+toeplitz(A [, B])          | toeplitz(A [, B])          | Arma.toeplitz(A [, B])          | 
+                           | circ_toeplitz(A)           | Arma.circ_toeplitz(A)           | **Matlab:** [Matlab Central File Excange - Circulant matrix](http://www.mathworks.com/matlabcentral/fileexchange/22858)
+linspace(a, b [, n])       | linspace(a, b [, n])       | Arma.linspace(a, b [, n])       | **Note:** Generates a column vector. **Default:** n = 100 
 
 
 Matrix attributes
@@ -121,6 +132,7 @@ Minus               | A - B  | A -B          | A.minus(B)
 Times               | A * B  | A * B         | A.times(B)
 Element-wise times  | A .* B | A % B         | A.elemTimes(B)
 Element-wise divide | A ./ B | A / B         | A.elemDivide(B)
+Negate              | -A     | -A            | A.negate()
 
 
 #### Inplace operations
@@ -136,7 +148,6 @@ Minus               | A = A - B  | A -= B        | A.view(..., Op.MINUS, B)
 Element-wise times  | A = A .* B | A %= B        | A.view(..., Op.ELEMTIMES, B)
 Element-wise divide | A = A ./ B | A /= B        | A.view(..., Op.ELEMDIVIDE, B)
 Equal               | A = B      | A = B         | A.view(..., Op.EQUAL, B)
-Negate              | -A         | -A            | A.view(..., Op.NEGATE)
 
 
 ### Relational operations
@@ -166,17 +177,17 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 A = zeros(size(A))         | A.zeros()                  | A.zeros()                       | 
-A = zeros(n , 1)           | A.zeros(n)                 | A.zeros(n)                      | 
-A = zeros(n , m)           | A.zeros(n, m)              | A.zeros(n , m)                  | 
+A = zeros(n, 1)            | A.zeros(n)                 | A.zeros(n)                      | **Note:** Results in a column vector.
+A = zeros(n, m)            | A.zeros(n, m)              | A.zeros(n , m)                  | 
 A = ones(size(A))          | A.ones()                   | A.ones()                        | 
-A = ones(n , 1)            | A.ones(n )                 | A.ones(n)                       | 
-A = ones(n , m)            | A.ones(n, m)               | A.ones(n, m)                    | 
+A = ones(n, 1)             | A.ones(n )                 | A.ones(n)                       | **Note:** Results in a column vector.
+A = ones(n, m)             | A.ones(n, m)               | A.ones(n, m)                    | 
 A = eye(size(A))           | A.eye()                    | A.eye()                         | 
 A = eye(n, m)              | A.eye(n, m)                | A.eye(n, m)                     | 
 A = randu(size(A))         | A.randu()                  | A.randu()                       | 
-A = randu(n, 1)            | A.randu(n)                 | A.randu(n)                      | 
+A = randu(n, 1)            | A.randu(n)                 | A.randu(n)                      | **Note:** Results in a column vector.
 A = randu(n, m)            | A.randu(n, m)              | A.randu(n, m)                   | 
-A = randn(size(A))         | A.randn()                  | A.randn()                       | 
+A = randn(size(A))         | A.randn()                  | A.randn()                       | **Note:** Results in a column vector.
 A = randn(n, 1)            | A.randn(n)                 | A.randn(n)                      | 
 A = randn(n, m)            | A.randn(n, m)              | A.randn(n, m)                   | 
 A(:) = v                   | A.fill(v)                  | A.fill(v)                       | 
