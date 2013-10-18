@@ -36,6 +36,14 @@ import org.ejml.ops.NormOps;
 public class Arma {
 
   /**
+   * @param numberOfElements
+   * @return
+   */
+  public static Mat zeros(int numberOfElements) {
+    return null;
+  }
+  
+  /**
    * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
    * @param numberOfRows The number of rows.
@@ -46,6 +54,14 @@ public class Arma {
     return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
   }
 
+  /**
+   * @param numberOfElements
+   * @return
+   */
+  public static Mat ones(int numberOfElements) {
+    return null;
+  }
+  
   /**
    * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
@@ -69,6 +85,15 @@ public class Arma {
   }
 
   /**
+   * @param numberOfElements
+   * @return
+   */
+  public static Mat randu(int numberOfElements) {
+    return null;
+  }
+  
+
+  /**
    * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
    * uniformly distributed pseudorandom values.
    * 
@@ -80,6 +105,15 @@ public class Arma {
   public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
     return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
   }
+
+  /**
+   * @param numberOfElements
+   * @return
+   */
+  public static Mat randn(int numberOfElements) {
+    return null;
+  }
+  
 
   /**
    * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and

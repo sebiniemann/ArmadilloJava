@@ -189,23 +189,171 @@ public class Mat {
 
     updateAttributes();
   }
+
+  /**
+   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat zeros(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
+  }
+
+  /**
+   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat ones(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
+  }
+
+  /**
+   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @return The created matrix.
+   */
+  public static Mat eye(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
+  }
+
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * uniformly distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
+   * @return The created matrix.
+   */
+  public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
+  }
+
+  /**
+   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
+   * normally distributed pseudorandom values.
+   * 
+   * @param numberOfRows The number of rows.
+   * @param numberOfColumns The number of columns.
+   * @param rng The pseudorandom generator.
+   * @return The created matrix.
+   */
+  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
+  }
   
   /**
-   * @param operation 
-   * @param operand 
+   * @param A
+   * @param numberOfCopiesPerRow
+   * @param numberOfCopiesPerColumn
    * @return
    */
-  public Mat subvec(Op operation, Mat operand) {
+  public static Mat repmat(Mat A, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
     return null;
   }
   
   /**
-   * @param operation 
-   * @param operand 
+   * @param A
    * @return
    */
-  public Mat subvec(Op operation, double operand) {
+  public static Mat toeplitz(Mat A) {
     return null;
+  }
+  
+  /**
+   * @param A
+   * @param B 
+   * @return
+   */
+  public static Mat toeplitz(Mat A, Mat B) {
+    return null;
+  }
+  
+  /**
+   * @param A
+   * @return
+   */
+  public static Mat circ_toeplitz(Mat A) {
+    return null;
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param n 
+   * @return
+   */
+  public static Mat linspace(double a, double b, int n) {
+    return null;
+  }
+  
+  /**
+   * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * </ul>
+   * 
+   * @param i The row of the element.
+   * @param j The column of the element.
+   * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * 
+   * @see #at(int)
+   */
+  public double at(int i, int j) throws IllegalArgumentException {
+    if (i >= n_rows || j >= n_cols) {
+      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
+    }
+
+    return _matrix.get(i, j);
+  }
+  
+  /**
+   * @param i
+   * @param j
+   * @param operand
+   */
+  public void at(int i, int j, Op operand) {
+
+  }
+
+  /**
+   * Performs a right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column. The
+   * value of the requested element will be overwritten by the result of the operation.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * </ul>
+   * 
+   * @param i The row of the left-hand side operand.
+   * @param j The column of the left-hand side operand.
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   *           requested.
+   * 
+   * @see #at(int, Op, double)
+   */
+  public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
   }
   
   /**
@@ -262,59 +410,6 @@ public class Mat {
    */
   public void at(int n, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     _matrix.set(n, Op.getResult(at(n), operation, operand));
-  }
-  
-  /**
-   * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
-   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
-   * position is out of bound.
-   * </ul>
-   * 
-   * @param i The row of the element.
-   * @param j The column of the element.
-   * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * 
-   * @see #at(int)
-   */
-  public double at(int i, int j) throws IllegalArgumentException {
-    if (i >= n_rows || j >= n_cols) {
-      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
-    }
-
-    return _matrix.get(i, j);
-  }
-
-  /**
-   * Performs a right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column. The
-   * value of the requested element will be overwritten by the result of the operation.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
-   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
-   * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
-   * </ul>
-   * 
-   * @param i The row of the left-hand side operand.
-   * @param j The column of the left-hand side operand.
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
-   *           requested.
-   * 
-   * @see #at(int, Op, double)
-   */
-  public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
   }
 
   /**
@@ -527,6 +622,15 @@ public class Mat {
 
     return new Mat(result);
   }
+  
+  /**
+   * @param a
+   * @param b
+   * @param operation 
+   */
+  public void cols(int a, int b, Op operation) {
+
+  }
 
   /**
    * @param first
@@ -577,6 +681,48 @@ public class Mat {
         at(i, j, operation, operand);
       }
     }
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param i
+   * @return
+   */
+  public Mat cols(int a, int b, int i) {
+    return null;
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param i
+   * @param operation 
+   */
+  public void cols(int a, int b, int i, Op operation) {
+
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param i
+   * @param operation 
+   * @param operand 
+   */
+  public void cols(int a, int b, int i, Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param a
+   * @param b
+   * @param i
+   * @param operation 
+   * @param operand 
+   */
+  public void cols(int a, int b, int i, Op operation, double operand) {
+
   }
 
   /**
@@ -654,129 +800,198 @@ public class Mat {
       }
     }
   }
-
+  
   /**
-   * Returns a copy of the main diagonal as a (<code>Math.min</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.
-   * 
-   * @return The copy of the main diagonal.
+   * @param a
+   * @param b
+   * @param j
+   * @return
    */
-  public Mat diag() {
-    DenseMatrix64F result = new DenseMatrix64F(Math.min(n_rows, n_cols), 1);
-    CommonOps.extractDiag(_matrix, result);
-    return new Mat(result);
+  public Mat rows(int a, int b, int j) {
+    return null;
   }
-
+  
   /**
-   * Performs a right-hand side element-wise operation on all elements on the main diagonal.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
-   *           right-hand side operand.
-   * @throws UnsupportedOperationException 
+   * @param a
+   * @param b
+   * @param j
+   * @param operation 
    */
-  public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    if (!operand.is_vec()) {
-      throw new IllegalArgumentException("The provided right-hand side operand needs to be a vector.");
-    }
-    
-    int length = Math.min(n_cols, n_rows);
-    if (operand.n_elem != length) {
-      throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
-    }
+  public void rows(int a, int b, int j, Op operation) {
 
-    DenseMatrix64F memptrOperand = operand.memptr();
-    for (int i = 0; i < length; i++) {
-      at(i, i, operation, memptrOperand.get(i));
-    }
   }
-
+  
   /**
-   * Performs a right-hand side element-wise operation on all elements on the main diagonal. The single provided
-   * right-hand side operand is used for all operations.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @param a
+   * @param b
+   * @param j
+   * @param operation 
+   * @param operand 
    */
-  public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    int length = Math.min(n_cols, n_rows);
-    for (int i = 0; i < length; i++) {
-      at(i, i, operation, operand);
-    }
+  public void rows(int a, int b, int j, Op operation, Mat operand) {
+
   }
-
+  
   /**
-   * Performs the provided right-hand side element-wise operation on each column.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
-   * 
-   * @see #col(int, Op, Mat)
+   * @param a
+   * @param b
+   * @param j
+   * @param operation 
+   * @param operand 
    */
-  public void each_col(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    for (int j = 0; j < n_cols; j++) {
-      col(j, operation, operand);
-    }
+  public void rows(int a, int b, int j, Op operation, double operand) {
+
   }
-
+  
   /**
-   * Performs the provided right-hand side element-wise operation on each column. The single provided right-hand side
-   * operand is used for all operations.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
-   * 
-   * @see #col(int, Op, double)
+   * @return
    */
-  public void each_col(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    for (int j = 0; j < n_cols; j++) {
-      col(j, operation, operand);
-    }
+  public Mat submat() {
+    return null;
   }
-
+  
   /**
-   * Performs the provided right-hand side element-wise operation on each row.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
-   * 
-   * @see #row(int, Op, Mat)
+   * @param operation 
    */
-  public void each_row(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    for (int i = 0; i < n_rows; i++) {
-      row(i, operation, operand);
-    }
+  public void submat(Op operation) {
+
   }
-
+  
   /**
-   * Performs the provided right-hand side element-wise operation on each row. The single provided right-hand side
-   * operand is used for all operations.
-   * 
-   * @param operation The operation to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
-   * 
-   * @see #row(int, Op, double)
+   * @param operation 
+   * @param operand 
    */
-  public void each_row(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    for (int i = 0; i < n_rows; i++) {
-      row(i, operation, operand);
-    }
+  public void submat(Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+
+   */
+  public void submat(Op operation, double operand) {
+
+  }
+  
+  /**
+   * @param ai 
+   * @param bi 
+   * @param aj 
+   * @param bj 
+   * @return
+   */
+  public Mat submat(int ai, int bi, int aj, int bj) {
+    return null;
+  }
+  
+  /**
+   * @param ai 
+   * @param bi 
+   * @param aj 
+   * @param bj 
+   * @param operation 
+   */
+  public void submat(int ai, int bi, int aj, int bj, Op operation) {
+
+  }
+  
+  /**
+   * @param ai 
+   * @param bi 
+   * @param aj 
+   * @param bj 
+   * @param operation 
+   * @param operand 
+
+   */
+  public void submat(int ai, int bi, int aj, int bj, Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param ai 
+   * @param bi 
+   * @param aj 
+   * @param bj 
+   * @param operation 
+   * @param operand 
+   */
+  public void submat(int ai, int bi, int aj, int bj, Op operation, double operand) {
+
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+   * @return
+   */
+  public Mat subvec() {
+    return null;
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(Op operation) {
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(Op operation, double operand) {
+
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param operation 
+   * @param operand 
+   * @return
+   */
+  public Mat subvec(int a, int b) {
+    return null;
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(int a, int b, Op operation) {
+
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(int a, int b, Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param a 
+   * @param b 
+   * @param operation 
+   * @param operand 
+   */
+  public void subvec(int a, int b, Op operation, double operand) {
+
   }
 
   /**
@@ -811,6 +1026,14 @@ public class Mat {
       result = new DenseMatrix64F();
     }
     return new Mat(result);
+  }
+  
+  /**
+   * @param I
+   * @param operation
+   */
+  public void elem(Mat I, Op operation) {
+    
   }
 
   /**
@@ -853,12 +1076,480 @@ public class Mat {
   }
 
   /**
-   * Replaces the value of all elements with the provided one.
-   * 
-   * @param value The new value of all elements.
+   * @param J
+   * @return
    */
-  public void fill(double value) {
-    CommonOps.fill(_matrix, value);
+  public Mat cols(Mat J) {
+    return null;
+  }
+
+  /**
+   * @param J
+   * @param operation
+   */
+  public void cols(Mat J, Op operation) {
+
+  }
+
+  /**
+   * @param J
+   * @param operation
+   * @param operand
+   */
+  public void cols(Mat J, Op operation, Mat operand) {
+
+  }
+
+  /**
+   * @param J
+   * @param operation
+   * @param operand
+   */
+  public void cols(Mat J, Op operation, double operand) {
+
+  }
+
+  /**
+   * @param J
+   * @return
+   */
+  public Mat rows(Mat J) {
+    return null;
+  }
+
+  /**
+   * @param J
+   * @param operation
+   */
+  public void rows(Mat J, Op operation) {
+
+  }
+
+  /**
+   * @param J
+   * @param operation
+   * @param operand
+   */
+  public void rows(Mat J, Op operation, Mat operand) {
+
+  }
+
+  /**
+   * @param J
+   * @param operation
+   * @param operand
+   */
+  public void rows(Mat J, Op operation, double operand) {
+
+  }
+  
+  /**
+   * @param I
+   * @param J
+   * @return
+   */
+  public Mat submat(Mat I, Mat J) {
+    return null;
+  }
+  
+  /**
+   * @param I
+   * @param J
+   * @param operation 
+   */
+  public void submat(Mat I, Mat J, Op operation) {
+
+  }
+  
+  /**
+   * @param I
+   * @param J
+   * @param operation 
+   * @param operand 
+   */
+  public void submat(Mat I, Mat J, Op operation, Mat operand) {
+
+  }
+  
+  /**
+   * @param I
+   * @param J
+   * @param operation 
+   * @param operand 
+   */
+  public void submat(Mat I, Mat J, Op operation, double operand) {
+
+  }
+  
+  /**
+   * Returns a copy of the main diagonal as a (<code>Math.min</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.
+   * 
+   * @return The copy of the main diagonal.
+   */
+  public Mat diag() {
+    DenseMatrix64F result = new DenseMatrix64F(Math.min(n_rows, n_cols), 1);
+    CommonOps.extractDiag(_matrix, result);
+    return new Mat(result);
+  }
+
+  /**
+   * @param operation
+   */
+  public void diag(Op operation) {
+    
+  }
+  
+  /**
+   * Performs a right-hand side element-wise operation on all elements on the main diagonal.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
+   *           right-hand side operand.
+   * @throws UnsupportedOperationException 
+   */
+  public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_vec()) {
+      throw new IllegalArgumentException("The provided right-hand side operand needs to be a vector.");
+    }
+    
+    int length = Math.min(n_cols, n_rows);
+    if (operand.n_elem != length) {
+      throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
+    }
+
+    DenseMatrix64F memptrOperand = operand.memptr();
+    for (int i = 0; i < length; i++) {
+      at(i, i, operation, memptrOperand.get(i));
+    }
+  }
+
+  /**
+   * Performs a right-hand side element-wise operation on all elements on the main diagonal. The single provided
+   * right-hand side operand is used for all operations.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   */
+  public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    int length = Math.min(n_cols, n_rows);
+    for (int i = 0; i < length; i++) {
+      at(i, i, operation, operand);
+    }
+  }
+  
+  /**
+   * @param k
+   * @return
+   */
+  public Mat diag(int k) {
+    return null;
+  }
+
+  /**
+   * @param k
+   * @param operation
+   */
+  public void diag(int k, Op operation) {
+    
+  }
+
+  /**
+   * @param k
+   * @param operation
+   * @param operand
+   */
+  public void diag(int k, Op operation, Mat operand) {
+    
+  }
+
+  /**
+   * @param k
+   * @param operation
+   * @param operand
+   */
+  public void diag(int k, Op operation, double operand) {
+    
+  }
+  
+  /**
+   * @param operation
+   */
+  public void each_col(Op operation) {
+    
+  }
+  
+  /**
+   * Performs the provided right-hand side element-wise operation on each column.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   * 
+   * @see #col(int, Op, Mat)
+   */
+  public void each_col(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    for (int j = 0; j < n_cols; j++) {
+      col(j, operation, operand);
+    }
+  }
+
+  /**
+   * Performs the provided right-hand side element-wise operation on each column. The single provided right-hand side
+   * operand is used for all operations.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   * 
+   * @see #col(int, Op, double)
+   */
+  public void each_col(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    for (int j = 0; j < n_cols; j++) {
+      col(j, operation, operand);
+    }
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   */
+  public void each_col(Mat I, Op operation) {
+    
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   * @param operand 
+   */
+  public void each_col(Mat I, Op operation, Mat operand) {
+    
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   * @param operand 
+   */
+  public void each_col(Mat I, Op operation, double operand) {
+    
+  }
+
+  /**
+   * @param operation
+   */
+  public void each_row(Op operation) {
+    
+  }
+  
+  /**
+   * Performs the provided right-hand side element-wise operation on each row.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   * 
+   * @see #row(int, Op, Mat)
+   */
+  public void each_row(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    for (int i = 0; i < n_rows; i++) {
+      row(i, operation, operand);
+    }
+  }
+
+  /**
+   * Performs the provided right-hand side element-wise operation on each row. The single provided right-hand side
+   * operand is used for all operations.
+   * 
+   * @param operation The operation to be performed.
+   * @param operand The right-hand side operand.
+   * 
+   * @throws IllegalArgumentException 
+   * @throws UnsupportedOperationException 
+   * 
+   * @see #row(int, Op, double)
+   */
+  public void each_row(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    for (int i = 0; i < n_rows; i++) {
+      row(i, operation, operand);
+    }
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   */
+  public void each_row(Mat I, Op operation) {
+    
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   * @param operand 
+   */
+  public void each_row(Mat I, Op operation, Mat operand) {
+    
+  }
+  
+  /**
+   * @param I 
+   * @param operation
+   * @param operand 
+   */
+  public void each_row(Mat I, Op operation, double operand) {
+    
+  }
+
+  /**
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided
+   * right-hand side addend.
+   * 
+   * @param operand The right-hand side addend.
+   * @return The created matrix.
+   */
+  public Mat plus(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.add(_matrix, operand.memptr(), result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand.
+   * The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The right-hand side operand.
+   * @return The created matrix.
+   */
+  public Mat plus(double operand) {
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    CommonOps.add(_matrix, operand, result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
+   * subtrahend.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat minus(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.sub(_matrix, operand.memptr(), result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
+   * subtrahend. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The subtrahend.
+   * @return The created matrix.
+   */
+  public Mat minus(double operand) {
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    // Applies subtraction by addition with the additive inverse value.
+    CommonOps.add(_matrix, -operand, result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the product of a right-hand side matrix multiplication with the provided multiplier.
+   * 
+   * @param operand The multiplier.
+   * @return The created matrix.
+   */
+  public Mat times(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.mult(_matrix, operand.memptr(), result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The multiplier.
+   * @return The created matrix.
+   * 
+   * @see #elemTimes(double)
+   */
+  public Mat times(double operand) {
+    return elemTimes(operand);
+  }
+
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier.
+   * 
+   * @param operand The multiplier.
+   * @return The created matrix.
+   */
+  public Mat elemTimes(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.elementMult(_matrix, operand.memptr(), result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
+   * multiplier. The single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The multiplier.
+   * @return The created matrix.
+   * 
+   * @see #times(double)
+   */
+  public Mat elemTimes(double operand) {
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    CommonOps.scale(operand, _matrix, result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor.
+   * 
+   * @param operand The divisor.
+   * @return The created matrix.
+   */
+  public Mat elemDivide(Mat operand) {
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.elementDiv(_matrix, operand.memptr(), result);
+    return new Mat(result);
+  }
+
+  /**
+   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
+   * single provided right-hand side value is used for all operations.
+   * 
+   * @param operand The divisor.
+   * @return The created matrix.
+   * 
+   * @see #divide(double)
+   */
+  public Mat elemDivide(double operand) {
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
+    CommonOps.divide(operand, _matrix, result);
+    return new Mat(result);
+  }
+  
+  /**
+   * @return
+   */
+  public Mat negate() {
+    return null;
   }
 
   /**
@@ -868,6 +1559,15 @@ public class Mat {
    */
   public DenseMatrix64F memptr() {
     return _matrix;
+  }
+
+  /**
+   * Replaces the value of all elements with the provided one.
+   * 
+   * @param value The new value of all elements.
+   */
+  public void fill(double value) {
+    CommonOps.fill(_matrix, value);
   }
 
   /**
@@ -989,158 +1689,6 @@ public class Mat {
   }
 
   /**
-   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat zeros(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
-  }
-
-  /**
-   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat ones(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
-  }
-
-  /**
-   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
-   */
-  public static Mat eye(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
-  }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * uniformly distributed pseudorandom values.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
-   */
-  public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
-  }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * normally distributed pseudorandom values.
-   * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
-   */
-  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
-  }
-
-  /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand.
-   * The single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The right-hand side operand.
-   * @return The created matrix.
-   */
-  public Mat plus(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.add(_matrix, operand, result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided
-   * right-hand side addend.
-   * 
-   * @param operand The right-hand side addend.
-   * @return The created matrix.
-   */
-  public Mat plus(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.add(_matrix, operand.memptr(), result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
-   * subtrahend. The single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The subtrahend.
-   * @return The created matrix.
-   */
-  public Mat minus(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    // Applies subtraction by addition with the additive inverse value.
-    CommonOps.add(_matrix, -operand, result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
-   * subtrahend.
-   * 
-   * @param operand The subtrahend.
-   * @return The created matrix.
-   */
-  public Mat minus(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.sub(_matrix, operand.memptr(), result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier. The single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   * 
-   * @see #elemTimes(double)
-   */
-  public Mat times(double operand) {
-    return elemTimes(operand);
-  }
-
-  /**
-   * Creates a new matrix being the product of a right-hand side matrix multiplication with the provided multiplier.
-   * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   */
-  public Mat times(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.mult(_matrix, operand.memptr(), result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier. The single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   * 
-   * @see #times(double)
-   */
-  public Mat elemTimes(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.scale(operand, _matrix, result);
-    return new Mat(result);
-  }
-
-  /**
    * Returns true if the matrix is square and false otherwise.
    * 
    * @return The boolean value.
@@ -1186,77 +1734,6 @@ public class Mat {
       return true;
     }
     return false;
-  }
-
-  /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier.
-   * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   */
-  public Mat elemTimes(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.elementMult(_matrix, operand.memptr(), result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
-   * single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The divisor.
-   * @return The created matrix.
-   * 
-   * @see #elemDivide(double)
-   */
-  public Mat divide(double operand) {
-    return elemDivide(operand);
-  }
-
-  /**
-   * Creates a new matrix being the quotient of a right-hand side matrix division with the provided divisor. Fails if
-   * the provided divisor is not invertible.
-   * 
-   * @param operand The divisor.
-   * @return The created matrix.
-   */
-  public Mat divide(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    DenseMatrix64F inverse = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-
-    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
-    CommonOps.invert(operand.memptr(), inverse);
-    CommonOps.mult(_matrix, inverse, result);
-
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
-   * single provided right-hand side value is used for all operations.
-   * 
-   * @param operand The divisor.
-   * @return The created matrix.
-   * 
-   * @see #divide(double)
-   */
-  public Mat elemDivide(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.divide(operand, _matrix, result);
-    return new Mat(result);
-  }
-
-  /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor.
-   * 
-   * @param operand The divisor.
-   * @return The created matrix.
-   */
-  public Mat elemDivide(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.elementDiv(_matrix, operand.memptr(), result);
-    return new Mat(result);
   }
 
   /**
