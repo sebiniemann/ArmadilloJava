@@ -232,8 +232,8 @@ isrow(A)                   | A.is_rowvec()              | A.is_rowvec()         
 Matlab                     | Armadillo C++                          | ArmadilloJava                   | Notes
 ---------------------------|----------------------------------------|---------------------------------|------
                            | A.in_range(n)                          | A.in_range(n)                   | **Matlab:** n > 0 && numel(A) <= n
-                           | A.in_range(span(a, b))                 | A.in_range(span(a, b))          | **Matlab:** a > 0 && numel(A) <= b
-                           | A.in_range(i, j)                       | A.in_range(i, j)                | **Matlab:** i > 0 && j > 0 && size(A, 1) <= i &&  size(A, 2) <= j
+                           | A.in_range(span(a, b))                 | A.in_range(a, b, true)          | **Matlab:** a > 0 && numel(A) <= b
+                           | A.in_range(i, j)                       | A.in_range(i, j, false)         | **Matlab:** i > 0 && j > 0 && size(A, 1) <= i &&  size(A, 2) <= j
                            | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(ai, bi, aj, bj)      | **Matlab:** ai > 0 && aj > 0 && size(A, 1) <= bi &&  size(A, 2) <= bj
                            
                            
