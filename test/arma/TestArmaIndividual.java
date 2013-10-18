@@ -189,21 +189,21 @@ public class TestArmaIndividual {
   public void testNorm() {
     Mat testMatrix;
 
-    testMatrix = Mat.zeros(10, 1);
+    testMatrix = Arma.zeros(10, 1);
     assertEquals(0, Arma.norm(testMatrix, 1), TestData.NUMERIC_TOLERANCE);
     assertEquals(0, Arma.norm(testMatrix, 2), TestData.NUMERIC_TOLERANCE);
     assertEquals(0, Arma.norm(testMatrix, "-inf"), TestData.NUMERIC_TOLERANCE);
     assertEquals(0, Arma.norm(testMatrix, "inf"), TestData.NUMERIC_TOLERANCE);
     assertEquals(0, Arma.norm(testMatrix, "fro"), TestData.NUMERIC_TOLERANCE);
 
-    testMatrix = Mat.ones(10, 1);
+    testMatrix = Arma.ones(10, 1);
     assertEquals(10, Arma.norm(testMatrix, 1), TestData.NUMERIC_TOLERANCE);
     assertEquals(Math.sqrt(10), Arma.norm(testMatrix, 2), TestData.NUMERIC_TOLERANCE);
     assertEquals(1, Arma.norm(testMatrix, "-inf"), TestData.NUMERIC_TOLERANCE);
     assertEquals(1, Arma.norm(testMatrix, "inf"), TestData.NUMERIC_TOLERANCE);
     assertEquals(Math.sqrt(10), Arma.norm(testMatrix, "fro"), TestData.NUMERIC_TOLERANCE);
 
-    testMatrix = Mat.eye(10, 1);
+    testMatrix = Arma.eye(10, 1);
     assertEquals(1, Arma.norm(testMatrix, 1), TestData.NUMERIC_TOLERANCE);
     assertEquals(1, Arma.norm(testMatrix, 2), TestData.NUMERIC_TOLERANCE);
     assertEquals(0, Arma.norm(testMatrix, "-inf"), TestData.NUMERIC_TOLERANCE);
