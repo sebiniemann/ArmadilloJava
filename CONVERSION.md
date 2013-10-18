@@ -28,15 +28,15 @@ Matrix generation
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-zeros(n, m)                | zeros(n, m)                | Mat.zeros(n, m)                 | 
-ones(n, m)                 | ones(n, m)                 | Mat.ones(n, m)                  | 
-eye(n, m)                  | eye(n, m)                  | Mat.eye(n, m)                   | 
-randu(n, m)                | randu(n, m)                | Mat.randu(n, m, rng)            | 
-randn(n, m)                | randn(n, m)                | Mat.randn(n, m, rng)            | 
-repmat(A, n, m)            | repmat(A, n, m)            | Mat.repmat(A, n, m)             | 
-toeplitz(A [, B])          | toeplitz(A [, B])          | Mat.toeplitz(A [, B])           | 
-                           | circ_toeplitz(A)           | Mat.circ_toeplitz(A)            | **Matlab:** [Matlab Central File Excange - Circulant matrix](http://www.mathworks.com/matlabcentral/fileexchange/22858)
-linspace(a, b [, n])       | linspace(a, b [, n])       | Mat.linspace(a, b [, n])        | **Note:** Generates a column vector. **Default:** n = 100 
+zeros(n, m)                | zeros(n, m)                | Arma.zeros(n, m)                | 
+ones(n, m)                 | ones(n, m)                 | Arma.ones(n, m)                 | 
+eye(n, m)                  | eye(n, m)                  | Arma.eye(n, m)                  | 
+randu(n, m)                | randu(n, m)                | Arma.randu(n, m, rng)           | 
+randn(n, m)                | randn(n, m)                | Arma.randn(n, m, rng)           | 
+repmat(A, n, m)            | repmat(A, n, m)            | Arma.repmat(A, n, m)            | 
+toeplitz(A [, B])          | toeplitz(A [, B])          | Arma.toeplitz(A [, B])          | 
+                           | circ_toeplitz(A)           | Arma.circ_toeplitz(A)           | **Matlab:** [Matlab Central File Excange - Circulant matrix](http://www.mathworks.com/matlabcentral/fileexchange/22858)
+linspace(a, b [, n])       | linspace(a, b [, n])       | Arma.linspace(a, b [, n])       | **Note:** Generates a column vector. **Default:** n = 100 
 
 
 Matrix attributes
