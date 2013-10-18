@@ -307,7 +307,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 inv(A)                     | A.i([s])                   | A.i()                           | 
 A'                         | A.t()                      | A.t()                           | 
 A = []                     | A.reset()                  | A.reset()                       | 
-                           | A.copy_size(A)             | A.copy_size(A)                  | 
+A = reshape(A, size(B))    | A.copy_size(B)             | A.copy_size(B)                  | 
                            | A.eval()                   | A.eval()                        | *Not suppported*
 
 
