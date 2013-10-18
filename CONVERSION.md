@@ -121,6 +121,7 @@ Minus               | A - B  | A -B          | A.minus(B)
 Times               | A * B  | A * B         | A.times(B)
 Element-wise times  | A .* B | A % B         | A.elemTimes(B)
 Element-wise divide | A ./ B | A / B         | A.elemDivide(B)
+Negate              | -A     | -A            | A.negate()
 
 
 #### Inplace operations
@@ -136,7 +137,6 @@ Minus               | A = A - B  | A -= B        | A.view(..., Op.MINUS, B)
 Element-wise times  | A = A .* B | A %= B        | A.view(..., Op.ELEMTIMES, B)
 Element-wise divide | A = A ./ B | A /= B        | A.view(..., Op.ELEMDIVIDE, B)
 Equal               | A = B      | A = B         | A.view(..., Op.EQUAL, B)
-Negate              | -A         | -A            | A.view(..., Op.NEGATE)
 
 
 ### Relational operations
