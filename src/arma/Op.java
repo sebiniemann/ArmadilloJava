@@ -42,10 +42,6 @@ public enum Op {
    */
   ELEMTIMES,
   /**
-   * Division (arithmetic operator)
-   */
-  DIVIDE,
-  /**
    * Element-wise division (arithmetic operator)
    */
   ELEMDIVIDE,
@@ -244,7 +240,6 @@ public enum Op {
       case ELEMTIMES:
         result = a * b;
         break;
-      case DIVIDE:
       case ELEMDIVIDE:
         result = a / b;
         break;
