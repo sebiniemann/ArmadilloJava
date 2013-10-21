@@ -245,7 +245,7 @@ public class Mat {
    * 
    * @param i The row of the element.
    * @param j The column of the element.
-   * @return The value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * @return The value of the element at the <i>i</i>th row and <i>j</i>th column.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
    * 
@@ -253,15 +253,15 @@ public class Mat {
    */
   public double at(int i, int j) throws IllegalArgumentException {
     if (!in_range(i, j)) {
-      throw new IllegalArgumentException("The requested position is out of bound. Matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
+      throw new IllegalArgumentException("The requested position is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
     }
 
     return _matrix.get(i, j);
   }
 
   /**
-   * Performs a unary right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column
-   * and overwrites it with the result.
+   * Performs a unary operation on the value of the element at the <i>i</i>th row and <i>j</i>th column and overwrites
+   * it with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -277,27 +277,22 @@ public class Mat {
    * @param operation The operation to be performed.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
-   *           operators or equality is
-   *           requested.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators is requested.
    * 
    * @see #at(int, Op, double)
    */
-  public void at(int i, int j, Op operation) {
-    if (!in_range(i, j)) {
-      throw new IllegalArgumentException("The requested position is out of bound. Matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
-    }
-
-    _matrix.set(i, j, Op.getResult(_matrix.get(i, j), operation));
+  public void at(int i, int j, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(i, j, Op.getResult(at(i, j), operation));
   }
 
   /**
-   * Performs a right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column. The
-   * value of the requested element will be overwritten by the result of the operation.
+   * Performs a right-hand side operation on the value of the element at the <i>i</i>th row and <i>j</i>th column and
+   * overwrites it with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
    * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
    * position is out of bound.
    * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
@@ -310,24 +305,23 @@ public class Mat {
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
-   *           operators or equality is
-   *           requested.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
    * 
    * @see #at(int, Op, double)
    */
   public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
+    _matrix.set(i, j, Op.getResult(at(i, j), operation, operand));
   }
 
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
    * <p>
-   * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = }{@link #at(int, int) at(i + j * n_rows)}.
+   * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
    * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
    * position is out of bound.
    * </ul>
@@ -340,19 +334,46 @@ public class Mat {
    * @see #at(int, int)
    */
   public double at(int n) throws IllegalArgumentException {
-    if (n >= n_elem) {
-      throw new IllegalArgumentException("The requested position (" + n + ") is out of bound. n_elem = " + n_elem);
+    if (!in_range(n)) {
+      throw new IllegalArgumentException("The requested position  is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
     }
 
-    return _matrix.get(convertMajorOrdering(n));
+    return _matrix.get(convertToRowMajorOrdering(n));
+  }
+
+  /**
+   * Performs a unary operation on the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of
+   * the matrix and overwrites it with the result.
+   * <p>
+   * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
+   * </ul>
+   * 
+   * @param n The position of the element.
+   * @param operation The operation to be performed.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators is requested.
+   * 
+   * @see #at(int, Op, double)
+   */
+  public void at(int n, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(n, Op.getResult(at(n), operation));
   }
 
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
-   * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
-   * operation.
+   * one-dimensional view of the matrix and overwrites it with the result.
    * <p>
-   * <b>Note:</b> {@link #at(int, int) at(i, j)} = {@link #at(int, int) at(i + j * n_rows)}.
+   * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -2218,7 +2239,7 @@ public class Mat {
    * 
    * @throws IllegalArgumentException Thrown if a negative value is provided for the position.
    */
-  int convertMajorOrdering(int n) throws IllegalArgumentException {
+  int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
     if (n < 0) {
       throw new IllegalArgumentException("The value of the provided position must be non-negative.");
     }

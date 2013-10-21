@@ -103,7 +103,7 @@ public enum Op {
 
     for (int i = 0; i < a.n_elem; i++) {
       if (evaluate(memptrA.get(i), operator, memptrB.get(i))) {
-        result.set(a.convertMajorOrdering(i), 1);
+        result.set(a.convertToRowMajorOrdering(i), 1);
       }
     }
 
@@ -130,7 +130,7 @@ public enum Op {
 
     for (int i = 0; i < a.n_elem; i++) {
       if (evaluate(memptrA.get(i), operator, b)) {
-        result.set(a.convertMajorOrdering(i), 1);
+        result.set(a.convertToRowMajorOrdering(i), 1);
       }
     }
 
