@@ -36,6 +36,10 @@ public class Span {
    * @param end The position b.
    */
   public Span(int start, int end) {
+    if(end < start) {
+      throw new IllegalArgumentException("The start needs to be less than equal the end but were " + start + " and " + end + ".");
+    }
+    
     _start = start;
     _end = end;
 
