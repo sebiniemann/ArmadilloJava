@@ -105,7 +105,8 @@ public class RunningStat {
   /**
    * Returns the variance of all observed values with normalisation by {@link #count()} - 1.
    * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one of 0 or 1.
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
+   * of 0 or 1.
    * 
    * @return The variance.
    * 
@@ -120,7 +121,8 @@ public class RunningStat {
    * <p>
    * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
    * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one of 0 or 1.
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
+   * of 0 or 1.
    * 
    * @param normType The normalisation to be used.
    * @return The variance.
@@ -131,7 +133,7 @@ public class RunningStat {
     if (normType == 0) {
       return _var;
     } else if (normType == 1) {
-      if(_count > 0) {
+      if (_count > 0) {
         return (_count - 1) / _count * _var;
       } else {
         return _var;
@@ -144,7 +146,8 @@ public class RunningStat {
   /**
    * Returns the standard deviation of all observed values with normalisation by {@link #count()} - 1.
    * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one of 0 or 1.
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
+   * of 0 or 1.
    * 
    * @return The standard deviation.
    * 
@@ -159,7 +162,8 @@ public class RunningStat {
    * <p>
    * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
    * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one of 0 or 1.
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
+   * of 0 or 1.
    * 
    * @param normType The normalisation to be used.
    * @return The standard deviation.
@@ -178,7 +182,7 @@ public class RunningStat {
     _min = Double.NaN;
     _mean = Double.NaN;
     _var = Double.NaN;
-    
+
     _count = 0;
   }
 }
