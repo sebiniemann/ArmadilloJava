@@ -13,7 +13,6 @@ package arma;
 import org.ejml.data.DenseMatrix64F;
 
 /**
- * <p>
  * Provides constants for the following operators.
  * <p>
  * Arithmetic operators: <br>
