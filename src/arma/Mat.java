@@ -260,7 +260,8 @@ public class Mat {
   }
 
   /**
-   * Performs a unary right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column and overwrites it with the result.
+   * Performs a unary right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column
+   * and overwrites it with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
