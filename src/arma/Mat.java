@@ -174,7 +174,7 @@ public class Mat {
         break;
       case RANDU:
       case RANDN:
-        throw new IllegalArgumentException("Use Mat(int, int, Fill, Random) instead.");
+        throw new IllegalArgumentException("Does not support Fill.RANDU or FILL.RANDN. Use Mat(int, int, Fill, Random) instead.");
     }
 
     updateAttributes();
@@ -1841,7 +1841,11 @@ public class Mat {
    * @return
    */
   public boolean in_range(int n) {
-    return true;
+    if(n > -1 && n < n_elem) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
@@ -1849,15 +1853,23 @@ public class Mat {
    * @return
    */
   public boolean in_range(Span span) {
+    if(span.isEntireRange() || (span.getStart() > -1 && span.getEnd() < n_elem)) {
+      return true;
+    }
+    
     return true;
   }
 
   /**
-   * @param a
-   * @param b
+   * @param i
+   * @param j
    * @return
    */
-  public boolean in_range(int a, int b) {
+  public boolean in_range(int i, int j) {
+    if(i > -1 && j > -1 && i < n_rows && j < n_cols) {
+      return true;
+    }
+    
     return true;
   }
 
@@ -1867,7 +1879,11 @@ public class Mat {
    * @return
    */
   public boolean in_range(Span spanI, Span spanJ) {
-    return true;
+    if((spanI.isEntireRange() || (spanI.getStart() > -1 && spanI.getEnd() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getStart() > -1 && spanJ.getEnd() < n_cols))) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
