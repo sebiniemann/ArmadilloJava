@@ -337,8 +337,12 @@ public class Mat {
     if (!in_range(n)) {
       throw new IllegalArgumentException("The requested position  is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
     }
-
-    return _matrix.get(convertToRowMajorOrdering(n));
+    
+    if(is_vec()) {
+      return _matrix.get(n);
+    } else {
+      return _matrix.get(convertToRowMajorOrdering(n));
+    }
   }
 
   /**
