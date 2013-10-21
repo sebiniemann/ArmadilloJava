@@ -17,7 +17,7 @@ import org.ejml.data.DenseMatrix64F;
  * Provides constants for the following operators.
  * <p>
  * Arithmetic operators: <br>
- * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES}, {@link #DIVIDE}, {@link #ELEMDIVIDE}
+ * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES}, {@link #ELEMDIVIDE}
  * <p>
  * Relational operators: <br>
  * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER} , {@link #GREATER}
@@ -169,10 +169,15 @@ public enum Op {
    * @param b The right-hand side operand.
    * @return The boolean result.
    * 
+   * @throws IllegalArgumentException Thrown if any of the operands is not a number (NaN).
    * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
    *           is provided.
    */
-  private static boolean evaluate(double a, Op operator, double b) throws UnsupportedOperationException {
+  private static boolean evaluate(double a, Op operator, double b) throws IllegalArgumentException, UnsupportedOperationException {
+    if(Double.isNaN(a) || Double.isNaN(b)) {
+      throw new IllegalArgumentException("Relational operations on NaN are not supported.");
+    }
+    
     switch (operator) {
       case STRICT_LESS:
         if (a < b) {
@@ -220,11 +225,17 @@ public enum Op {
    * @param b The right-hand side operand.
    * @return The result.
    * 
+   * @throws IllegalArgumentException Thrown if any of the operands is not a number (NaN).
+   * @throws ArithmeticException Thrown if division by zero or infinity is requested.
    * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
    *           requested.
    */
-  static double getResult(double a, Op operation, double b) throws UnsupportedOperationException {
+  static double getResult(double a, Op operation, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
     double result = 0;
+    
+    if(Double.isNaN(a) || Double.isNaN(b)) {
+      throw new IllegalArgumentException("Arithmetic operations on NaN are not supported.");
+    }
 
     switch (operation) {
       case EQUAL:
@@ -241,6 +252,14 @@ public enum Op {
         result = a * b;
         break;
       case ELEMDIVIDE:
+        if(b == 0) {
+          throw new ArithmeticException("Division by zero.");
+        }
+        
+        if(Double.isInfinite(b)) {
+          throw new ArithmeticException("Division by infinity.");
+        }
+        
         result = a / b;
         break;
       default:
