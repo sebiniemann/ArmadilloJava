@@ -26,15 +26,15 @@ public class RunningStat {
    */
   private double _max;
   /**
-   * The amount of observed values.
+   * The amount of observed samples.
    */
   private double _count;
   /**
-   * The mean of all observed values.
+   * The mean of all observed samples.
    */
   private double _mean;
   /**
-   * The variance of all observed values.
+   * The variance of all observed samples.
    */
   private double _var;
 
@@ -67,7 +67,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the amount of observed values.
+   * Returns the amount of observed samples.
    * 
    * @return The amount.
    */
@@ -94,7 +94,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the mean of all observed values.
+   * Returns the mean of all observed samples.
    * 
    * @return The mean.
    */
@@ -103,21 +103,19 @@ public class RunningStat {
   }
 
   /**
-   * Returns the variance of all observed values with normalisation by {@link #count()} - 1.
+   * Returns the variance of all observed samples with normalisation by {@link #count()} - 1.
    * <p>
    * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
    * of 0 or 1.
    * 
    * @return The variance.
-   * 
-   * @throws IllegalArgumentException Thrown if the normalisation type is not one of 0 or 1.
    */
-  public double var() throws IllegalArgumentException {
+  public double var() {
     return var(0);
   }
 
   /**
-   * Returns the variance of all observed values.
+   * Returns the variance of all observed samples.
    * <p>
    * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
    * <p>
@@ -144,21 +142,19 @@ public class RunningStat {
   }
 
   /**
-   * Returns the standard deviation of all observed values with normalisation by {@link #count()} - 1.
+   * Returns the standard deviation of all observed samples with normalisation by {@link #count()} - 1.
    * <p>
    * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
    * of 0 or 1.
    * 
    * @return The standard deviation.
-   * 
-   * @throws IllegalArgumentException Thrown if the normalisation type is not one of 0 or 1.
    */
-  public double stddev() throws IllegalArgumentException {
+  public double stddev() {
     return Math.sqrt(var(0));
   }
 
   /**
-   * Returns the standard deviation of all observed values.
+   * Returns the standard deviation of all observed samples.
    * <p>
    * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
    * <p>
