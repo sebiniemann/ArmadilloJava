@@ -76,15 +76,23 @@ public class Mat {
   }
 
   /**
-   * @param matrix
+   * Creates a column vector with the same number of elements as the provided one-dimensional array.
+   * 
+   * @param matrix The one-dimensional array.
    */
   public Mat(double[] matrix) {
-
+    _matrix = new DenseMatrix64F(matrix.length, 1);
+    
+    for(int n = 0; n < _matrix.numRows; n++) {
+      _matrix.set(n, matrix[n]);
+    }
+    
+    updateAttributes();
   }
 
   /**
-   * Creates a matrix with the same number of rows and columns as well as elements as the provided two-dimensional
-   * array. The array is assumed to have a structure of {@code array[rows][columns]}.
+   * Creates a matrix with the same size as the provided two-dimensional array. The array is assumed to have a structure
+   * of {@code array[rows][columns]}.
    * 
    * @param matrix The two-dimensional array.
    */
@@ -103,27 +111,16 @@ public class Mat {
   }
 
   /**
-   * <b>Non-canonical:</b> Creating a matrix by a string is not supported. Use {@link #Mat(double[][])} instead.
-   * <p>
-   * This constructor only exists to for clarification.
+   * Creates a uninitialised column vector with {@code numberOfElements} elements.
    * 
-   * @param matrix The provided string.
-   * 
-   * @throws UnsupportedOperationException Creating a matrix by a string is not supported. Use Mat(double[][]) instead.
-   */
-  public Mat(String matrix) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
-  }
-
-  /**
-   * @param numberOfElements
+   * @param numberOfElements The number of elements.
    */
   public Mat(int numberOfElements) {
 
   }
 
   /**
-   * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * Creates a uninitialised matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
    * <p>
    * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
    * 
