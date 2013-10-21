@@ -229,7 +229,7 @@ public enum Op {
    * Prints a warning to Sysout.out if an overflow is detected.
    * 
    * @param a The left-hand side operand.
-   * @param operation The operation to be performed. Only unary arithmetic operators and equality are supported.
+   * @param operation The operation to be performed. Only unary arithmetic operators.
    * @return The result.
    * 
    * @throws IllegalArgumentException Thrown if the operand is not a number (NaN).
