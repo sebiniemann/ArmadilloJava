@@ -68,7 +68,7 @@
       <formatter type="brief" usefile="false"/>
       <batchtest>
         <fileset dir="${test.dir}">
-          <include name="**/*Test*.java"/>
+          <include name="**/Test*.java"/>
           <exclude name="**/All*.java"/>
           <exclude name="**/TestData.java"/>
           <exclude name="**/TestUtil.java"/>
