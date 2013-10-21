@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -25,7 +25,7 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(Parameterized.class)
 public class TestArmaElementWise {
-  
+
   /**
    * Returns all test matrices used for this test.
    * 
@@ -41,15 +41,15 @@ public class TestArmaElementWise {
    */
   @Parameter
   public Mat _testElements;
-  
+
   /**
    * Tests {@link Arma#abs(Mat)} by comparing it per-element with <code>Math.abs(double)</code>.
    */
   @Test
   public void testAbs() {
     Mat actual = Arma.abs(_testElements);
-    
-    for(int n = 0; n < _testElements.n_elem; n++) {
+
+    for (int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.abs(_testElements.at(n));
       assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }
@@ -61,8 +61,8 @@ public class TestArmaElementWise {
   @Test
   public void testFloor() {
     Mat actual = Arma.floor(_testElements);
-    
-    for(int n = 0; n < _testElements.n_elem; n++) {
+
+    for (int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.floor(_testElements.at(n));
       assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }
@@ -74,8 +74,8 @@ public class TestArmaElementWise {
   @Test
   public void testSquare() {
     Mat actual = Arma.square(_testElements);
-    
-    for(int n = 0; n < _testElements.n_elem; n++) {
+
+    for (int n = 0; n < _testElements.n_elem; n++) {
       double expected = Math.pow(_testElements.at(n), 2);
       assertEquals(expected, actual.at(n), TestData.NUMERIC_TOLERANCE);
     }

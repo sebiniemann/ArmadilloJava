@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -73,7 +73,8 @@ public class TestData {
   }
 
   /**
-   * Returns a (non-vector) test matrices for parametrised interface tests composed of simple values (0.0, 1.0, 2.0, 3.0, -1.0, -123.0, -123456.0, 0.123, -0.000456) and
+   * Returns a (non-vector) test matrices for parametrised interface tests composed of simple values (0.0, 1.0, 2.0,
+   * 3.0, -1.0, -123.0, -123456.0, 0.123, -0.000456) and
    * special values (PI, INF, NaN, E, sqrt(2), Machine epsilon). The values are arranged in a non-vector matrix.
    * 
    * @return The test matrix.

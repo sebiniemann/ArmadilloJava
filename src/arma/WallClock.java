@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class WallClock {
-  
+
   /**
    * The starting time.
    */
@@ -36,6 +36,6 @@ public class WallClock {
    * @return The elapsed time.
    */
   public static long toc() {
-    return TimeUnit.SECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS) ;
+    return TimeUnit.SECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS);
   }
 }

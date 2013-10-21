@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -18,7 +18,9 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.RandomMatrices;
 
 /**
- * Provides a real-valued dense matrix with double precision and member functions as well as attributes similar to the Armadillo C++ Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java Matrix Library (EJML) Version 0.23 from 21.06.2013.
+ * Provides a real-valued dense matrix with double precision and member functions as well as attributes similar to the
+ * Armadillo C++ Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles'
+ * Efficient Java Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
  * If not stated otherwise (marked as non-canonical in case), the provided interfaces is identical to Armadillo (e.g.
  * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
@@ -73,12 +75,11 @@ public class Mat {
     this(new DenseMatrix64F());
   }
 
-
   /**
    * @param matrix
    */
   public Mat(double[] matrix) {
-    
+
   }
 
   /**
@@ -100,7 +101,7 @@ public class Mat {
   public Mat(Mat matrix) {
     this(new DenseMatrix64F(matrix.memptr()));
   }
-  
+
   /**
    * <b>Non-canonical:</b> Creating a matrix by a string is not supported. Use {@link #Mat(double[][])} instead.
    * <p>
@@ -113,14 +114,14 @@ public class Mat {
   public Mat(String matrix) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Creating a matrix by a string is not supported. Use Mat(double[][]) instead.");
   }
-  
+
   /**
    * @param numberOfElements
    */
   public Mat(int numberOfElements) {
 
   }
-  
+
   /**
    * Creates a new matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * <p>
@@ -132,15 +133,15 @@ public class Mat {
   public Mat(int numberOfRows, int numberOfColumns) {
     this(numberOfRows, numberOfColumns, Fill.NONE);
   }
-  
+
   /**
    * @param numberOfElements
-   * @param fillType 
+   * @param fillType
    */
   public Mat(int numberOfElements, Fill fillType) {
 
   }
-  
+
   /**
    * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} filled
    * according to {@code fillType}.
@@ -175,16 +176,16 @@ public class Mat {
 
     updateAttributes();
   }
-  
+
   /**
    * @param numberOfElements
-   * @param fillType 
-   * @param rng 
+   * @param fillType
+   * @param rng
    */
   public Mat(int numberOfElements, Fill fillType, Random rng) {
 
   }
-  
+
   /**
    * Creates a random matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}
    * filled according to {@code fillType} with either uniformly or normally distributed pseudorandom values.
@@ -222,7 +223,7 @@ public class Mat {
 
     updateAttributes();
   }
-  
+
   /**
    * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
    * <p>
@@ -248,7 +249,7 @@ public class Mat {
 
     return _matrix.get(i, j);
   }
-  
+
   /**
    * @param i
    * @param j
@@ -267,7 +268,8 @@ public class Mat {
    * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
    * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
    * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param i The row of the left-hand side operand.
@@ -276,7 +278,8 @@ public class Mat {
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    * 
    * @see #at(int, Op, double)
@@ -284,7 +287,7 @@ public class Mat {
   public void at(int i, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     _matrix.set(i, j, Op.getResult(memptr().get(i, j), operation, operand));
   }
-  
+
   /**
    * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
    * <p>
@@ -311,7 +314,7 @@ public class Mat {
 
     return _matrix.get(convertMajorOrdering(n));
   }
-  
+
   /**
    * Performs a right-hand side operation on the value of the <i>n</i>th element of a column-major-ordered
    * one-dimensional view of the matrix. The value of the requested element will be overwritten by the result of the
@@ -324,7 +327,8 @@ public class Mat {
    * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
    * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
    * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param n The position of the left-hand side operand.
@@ -332,7 +336,8 @@ public class Mat {
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    * 
    * @see #at(int, int, Op, double)
@@ -344,7 +349,8 @@ public class Mat {
   /**
    * Return a copy of the <i>j</i>th column as a ({@link #n_rows}, 1) matrix.
    * <p>
-   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
+   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested column is out of
+   * bound.
    * 
    * @param j The column to be copied.
    * @return The copied column.
@@ -355,7 +361,7 @@ public class Mat {
     if (j >= n_cols) {
       throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
     }
-    
+
     DenseMatrix64F result = new DenseMatrix64F(n_rows, 1);
 
     // n_rows = result.getNumElements()
@@ -371,34 +377,40 @@ public class Mat {
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a column-vector. Use {@link #cols(int, int, Op, Mat)} instead.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left-hand side does not match with the provided right-hand side operand.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
-   * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a
+   * column-vector. Use {@link #cols(int, int, Op, Mat)} instead.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left-hand side does not
+   * match with the provided right-hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound. position is out
+   * of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param j The column of the left-hand side operands.
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a column-vector or if the number of rows of the left-hand side does not match with the provided right-hand side operand or if the requested column is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a
+   *           column-vector or if the number of rows of the left-hand side does not match with the provided right-hand
+   *           side operand or if the requested column is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    */
   public void col(int j, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     if (!operand.is_colvec()) {
       throw new IllegalArgumentException("The provided right-hand side operand needs to be a column-vector. Use cols(int, int, Op, Mat) instead.");
     }
-    
+
     if (j >= n_cols) {
       throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
     }
-    
+
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-    
+
     DenseMatrix64F memptrOperand = operand.memptr();
     for (int i = 0; i < n_rows; i++) {
       at(i, j, operation, memptrOperand.get(i));
@@ -412,7 +424,8 @@ public class Mat {
    * <b>Non-canonical:</b>
    * <ul>
    * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param j The column of the left-hand side operands.
@@ -420,19 +433,20 @@ public class Mat {
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    */
   public void col(int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     if (j >= n_cols) {
       throw new IllegalArgumentException("The requested column (" + j + ") is out of bound. n_cols = " + n_cols);
     }
-    
+
     for (int n = 0; n < n_rows; n++) {
       at(n, j, operation, operand);
     }
   }
-  
+
   /**
    * Return a copy of the <i>i</i>th row as a (1, {@link #n_cols}) matrix.
    * <p>
@@ -447,7 +461,7 @@ public class Mat {
     if (i >= n_rows) {
       throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
     }
-    
+
     DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
 
     // n_cols = result.getNumElements()
@@ -463,30 +477,36 @@ public class Mat {
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a row-vector. Use {@link #rows(int, int, Op, Mat)} instead.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left-hand side does not match with the provided right-hand side operand.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
-   * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right-hand side operand is not a
+   * row-vector. Use {@link #rows(int, int, Op, Mat)} instead.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left-hand side does not
+   * match with the provided right-hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound. position is out of
+   * bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param i The row of the left-hand side operands.
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a row-vector or if the number of columns of the left-hand side does not match with the provided right-hand side operand or if the requested row is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right-hand side operand is not a
+   *           row-vector or if the number of columns of the left-hand side does not match with the provided right-hand
+   *           side operand or if the requested row is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    */
   public void row(int i, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     if (!operand.is_rowvec()) {
       throw new IllegalArgumentException("The provided right-hand side operand needs to be a row-vector. Use rows(int, int, Op, Mat) instead.");
     }
-    
+
     if (i >= n_rows) {
       throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
     }
-    
+
     if (operand.n_cols != n_cols) {
       throw new IllegalArgumentException("The number of columns of the left-hand side operand (n_cols = " + n_cols + ") does not match with the provided right-hand side operand (n_cols = " + operand.n_cols + ").");
     }
@@ -504,7 +524,8 @@ public class Mat {
    * <b>Non-canonical:</b>
    * <ul>
    * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators or equality is requested.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
    * </ul>
    * 
    * @param i The row of the left-hand side operands.
@@ -512,35 +533,34 @@ public class Mat {
    * @param operand The right-hand side operand.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic operators or equality is
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
    *           requested.
    */
   public void row(int i, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     if (i >= n_rows) {
       throw new IllegalArgumentException("The requested row (" + i + ") is out of bound. n_rows = " + n_rows);
     }
-    
+
     for (int n = 0; n < n_cols; n++) {
       at(i, n, operation, operand);
     }
   }
 
-
-
   /**
-   * @param first 
-   * @param last 
+   * @param first
+   * @param last
    * @return
    */
   public Mat cols(int first, int last) {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_cols) {
       throw new IllegalArgumentException();
     }
-    
+
     DenseMatrix64F result = new DenseMatrix64F(n_rows, last - first + 1);
 
     for (int j = first; j <= last; j++) {
@@ -551,11 +571,11 @@ public class Mat {
 
     return new Mat(result);
   }
-  
+
   /**
    * @param a
    * @param b
-   * @param operation 
+   * @param operation
    */
   public void cols(int a, int b, Op operation) {
 
@@ -571,11 +591,11 @@ public class Mat {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_cols) {
       throw new IllegalArgumentException();
     }
-    
+
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
@@ -600,18 +620,18 @@ public class Mat {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_cols) {
       throw new IllegalArgumentException();
     }
-    
+
     for (int j = first; j <= last; j++) {
       for (int i = 0; i < n_rows; i++) {
         at(i, j, operation, operand);
       }
     }
   }
-  
+
   /**
    * @param a
    * @param b
@@ -621,53 +641,53 @@ public class Mat {
   public Mat cols(int a, int b, int i) {
     return null;
   }
-  
+
   /**
    * @param a
    * @param b
    * @param i
-   * @param operation 
+   * @param operation
    */
   public void cols(int a, int b, int i, Op operation) {
 
   }
-  
+
   /**
    * @param a
    * @param b
    * @param i
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void cols(int a, int b, int i, Op operation, Mat operand) {
 
   }
-  
+
   /**
    * @param a
    * @param b
    * @param i
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void cols(int a, int b, int i, Op operation, double operand) {
 
   }
 
   /**
-   * @param first 
-   * @param last 
+   * @param first
+   * @param last
    * @return
    */
   public Mat rows(int first, int last) {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_rows) {
       throw new IllegalArgumentException();
     }
-    
+
     DenseMatrix64F result = new DenseMatrix64F(last - first + 1, n_cols);
 
     for (int i = first; i <= last; i++) {
@@ -689,15 +709,15 @@ public class Mat {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_rows) {
       throw new IllegalArgumentException();
     }
-    
+
     if (operand.n_rows != n_rows) {
       throw new IllegalArgumentException("The number of rows of the left-hand side operand (n_rows = " + n_rows + ") does not match with the provided right-hand side operand (n_rows = " + operand.n_rows + ").");
     }
-    
+
     DenseMatrix64F memptrOperand = operand.memptr();
     int operandI = 0;
     for (int i = first; i <= last; i++) {
@@ -718,18 +738,18 @@ public class Mat {
     if (first > last) {
       throw new IllegalArgumentException();
     }
-    
+
     if (first < 0 || last >= n_rows) {
       throw new IllegalArgumentException();
     }
-    
+
     for (int i = first; i <= last; i++) {
       for (int j = 0; j < n_cols; i++) {
         at(i, j, operation, operand);
       }
     }
   }
-  
+
   /**
    * @param a
    * @param b
@@ -739,185 +759,182 @@ public class Mat {
   public Mat rows(int a, int b, int j) {
     return null;
   }
-  
+
   /**
    * @param a
    * @param b
    * @param j
-   * @param operation 
+   * @param operation
    */
   public void rows(int a, int b, int j, Op operation) {
 
   }
-  
+
   /**
    * @param a
    * @param b
    * @param j
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void rows(int a, int b, int j, Op operation, Mat operand) {
 
   }
-  
+
   /**
    * @param a
    * @param b
    * @param j
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void rows(int a, int b, int j, Op operation, double operand) {
 
   }
-  
+
   /**
    * @return
    */
   public Mat submat() {
     return null;
   }
-  
+
   /**
-   * @param operation 
+   * @param operation
    */
   public void submat(Op operation) {
 
   }
-  
+
   /**
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void submat(Op operation, Mat operand) {
 
   }
-  
-  /**
-   * @param operation 
-   * @param operand 
 
+  /**
+   * @param operation
+   * @param operand
    */
   public void submat(Op operation, double operand) {
 
   }
-  
+
   /**
-   * @param ai 
-   * @param bi 
-   * @param aj 
-   * @param bj 
+   * @param ai
+   * @param bi
+   * @param aj
+   * @param bj
    * @return
    */
   public Mat submat(int ai, int bi, int aj, int bj) {
     return null;
   }
-  
+
   /**
-   * @param ai 
-   * @param bi 
-   * @param aj 
-   * @param bj 
-   * @param operation 
+   * @param ai
+   * @param bi
+   * @param aj
+   * @param bj
+   * @param operation
    */
   public void submat(int ai, int bi, int aj, int bj, Op operation) {
 
   }
-  
-  /**
-   * @param ai 
-   * @param bi 
-   * @param aj 
-   * @param bj 
-   * @param operation 
-   * @param operand 
 
+  /**
+   * @param ai
+   * @param bi
+   * @param aj
+   * @param bj
+   * @param operation
+   * @param operand
    */
   public void submat(int ai, int bi, int aj, int bj, Op operation, Mat operand) {
 
   }
-  
+
   /**
-   * @param ai 
-   * @param bi 
-   * @param aj 
-   * @param bj 
-   * @param operation 
-   * @param operand 
+   * @param ai
+   * @param bi
+   * @param aj
+   * @param bj
+   * @param operation
+   * @param operand
    */
   public void submat(int ai, int bi, int aj, int bj, Op operation, double operand) {
 
   }
-  
+
   /**
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    * @return
    */
   public Mat subvec() {
     return null;
   }
-  
+
   /**
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
-  public void subvec(Op operation) {
-  }
-  
+  public void subvec(Op operation) {}
+
   /**
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void subvec(Op operation, Mat operand) {
 
   }
-  
+
   /**
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void subvec(Op operation, double operand) {
 
   }
-  
+
   /**
-   * @param a 
-   * @param b 
-   * @param operation 
-   * @param operand 
+   * @param a
+   * @param b
+   * @param operation
+   * @param operand
    * @return
    */
   public Mat subvec(int a, int b) {
     return null;
   }
-  
+
   /**
-   * @param a 
-   * @param b 
-   * @param operation 
-   * @param operand 
+   * @param a
+   * @param b
+   * @param operation
+   * @param operand
    */
   public void subvec(int a, int b, Op operation) {
 
   }
-  
+
   /**
-   * @param a 
-   * @param b 
-   * @param operation 
-   * @param operand 
+   * @param a
+   * @param b
+   * @param operation
+   * @param operand
    */
   public void subvec(int a, int b, Op operation, Mat operand) {
 
   }
-  
+
   /**
-   * @param a 
-   * @param b 
-   * @param operation 
-   * @param operand 
+   * @param a
+   * @param b
+   * @param operation
+   * @param operand
    */
   public void subvec(int a, int b, Op operation, double operand) {
 
@@ -956,13 +973,13 @@ public class Mat {
     }
     return new Mat(result);
   }
-  
+
   /**
    * @param I
    * @param operation
    */
   public void elem(Mat I, Op operation) {
-    
+
   }
 
   /**
@@ -972,8 +989,8 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    */
   public void elem(Mat selection, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     int index = 0;
@@ -993,8 +1010,8 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    */
   public void elem(Mat selection, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int i = 0; i < selection.n_elem; i++) {
@@ -1071,7 +1088,7 @@ public class Mat {
   public void rows(Mat J, Op operation, double operand) {
 
   }
-  
+
   /**
    * @param I
    * @param J
@@ -1080,36 +1097,36 @@ public class Mat {
   public Mat submat(Mat I, Mat J) {
     return null;
   }
-  
+
   /**
    * @param I
    * @param J
-   * @param operation 
+   * @param operation
    */
   public void submat(Mat I, Mat J, Op operation) {
 
   }
-  
+
   /**
    * @param I
    * @param J
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void submat(Mat I, Mat J, Op operation, Mat operand) {
 
   }
-  
+
   /**
    * @param I
    * @param J
-   * @param operation 
-   * @param operand 
+   * @param operation
+   * @param operand
    */
   public void submat(Mat I, Mat J, Op operation, double operand) {
 
   }
-  
+
   /**
    * Returns a copy of the main diagonal as a (<code>Math.min</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.
    * 
@@ -1125,9 +1142,9 @@ public class Mat {
    * @param operation
    */
   public void diag(Op operation) {
-    
+
   }
-  
+
   /**
    * Performs a right-hand side element-wise operation on all elements on the main diagonal.
    * 
@@ -1136,13 +1153,13 @@ public class Mat {
    * 
    * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
    *           right-hand side operand.
-   * @throws UnsupportedOperationException 
+   * @throws UnsupportedOperationException
    */
   public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     if (!operand.is_vec()) {
       throw new IllegalArgumentException("The provided right-hand side operand needs to be a vector.");
     }
-    
+
     int length = Math.min(n_cols, n_rows);
     if (operand.n_elem != length) {
       throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
@@ -1161,8 +1178,8 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    */
   public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
@@ -1170,7 +1187,7 @@ public class Mat {
       at(i, i, operation, operand);
     }
   }
-  
+
   /**
    * @param k
    * @return
@@ -1184,7 +1201,7 @@ public class Mat {
    * @param operation
    */
   public void diag(int k, Op operation) {
-    
+
   }
 
   /**
@@ -1193,7 +1210,7 @@ public class Mat {
    * @param operand
    */
   public void diag(int k, Op operation, Mat operand) {
-    
+
   }
 
   /**
@@ -1202,24 +1219,24 @@ public class Mat {
    * @param operand
    */
   public void diag(int k, Op operation, double operand) {
-    
+
   }
-  
+
   /**
    * @param operation
    */
   public void each_col(Op operation) {
-    
+
   }
-  
+
   /**
    * Performs the provided right-hand side element-wise operation on each column.
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    * 
    * @see #col(int, Op, Mat)
    */
@@ -1236,8 +1253,8 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    * 
    * @see #col(int, Op, double)
    */
@@ -1246,48 +1263,48 @@ public class Mat {
       col(j, operation, operand);
     }
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
    */
   public void each_col(Mat I, Op operation) {
-    
+
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
-   * @param operand 
+   * @param operand
    */
   public void each_col(Mat I, Op operation, Mat operand) {
-    
+
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
-   * @param operand 
+   * @param operand
    */
   public void each_col(Mat I, Op operation, double operand) {
-    
+
   }
 
   /**
    * @param operation
    */
   public void each_row(Op operation) {
-    
+
   }
-  
+
   /**
    * Performs the provided right-hand side element-wise operation on each row.
    * 
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    * 
    * @see #row(int, Op, Mat)
    */
@@ -1304,8 +1321,8 @@ public class Mat {
    * @param operation The operation to be performed.
    * @param operand The right-hand side operand.
    * 
-   * @throws IllegalArgumentException 
-   * @throws UnsupportedOperationException 
+   * @throws IllegalArgumentException
+   * @throws UnsupportedOperationException
    * 
    * @see #row(int, Op, double)
    */
@@ -1314,31 +1331,31 @@ public class Mat {
       row(i, operation, operand);
     }
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
    */
   public void each_row(Mat I, Op operation) {
-    
+
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
-   * @param operand 
+   * @param operand
    */
   public void each_row(Mat I, Op operation, Mat operand) {
-    
+
   }
-  
+
   /**
-   * @param I 
+   * @param I
    * @param operation
-   * @param operand 
+   * @param operand
    */
   public void each_row(Mat I, Op operation, double operand) {
-    
+
   }
 
   /**
@@ -1473,7 +1490,7 @@ public class Mat {
     CommonOps.divide(operand, _matrix, result);
     return new Mat(result);
   }
-  
+
   /**
    * @return
    */
@@ -1578,7 +1595,7 @@ public class Mat {
   public void randn(int numberOfElements) {
 
   }
-  
+
   /**
    * @param numberOfRows
    * @param numberOfColumns
@@ -1587,7 +1604,7 @@ public class Mat {
   public void randn(int numberOfRows, int numberOfColumns, Random rng) {
 
   }
-  
+
   /**
    * Replaces the value of all elements with the provided one.
    * 
@@ -1602,24 +1619,24 @@ public class Mat {
    * @param B
    */
   public void insert_cols(int j, Mat B) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
+   * @param aj
+   * @param bj
    */
   public void insert_cols(int aj, int bj) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
-   * @param zero 
+   * @param aj
+   * @param bj
+   * @param zero
    */
   public void insert_cols(int aj, int bj, boolean zero) {
-    
+
   }
 
   /**
@@ -1627,61 +1644,61 @@ public class Mat {
    * @param B
    */
   public void insert_rows(int j, Mat B) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
+   * @param aj
+   * @param bj
    */
   public void insert_rows(int aj, int bj) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
-   * @param zero 
+   * @param aj
+   * @param bj
+   * @param zero
    */
   public void insert_rows(int aj, int bj, boolean zero) {
-    
+
   }
 
   /**
    * @param a
    */
   public void shed_col(int a) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
+   * @param aj
+   * @param bj
    */
   public void shed_cols(int aj, int bj) {
-    
+
   }
 
   /**
    * @param a
    */
   public void shed_row(int a) {
-    
+
   }
 
   /**
-   * @param aj 
-   * @param bj 
+   * @param aj
+   * @param bj
    */
   public void shed_rows(int aj, int bj) {
-    
+
   }
-  
+
   /**
    * @param B
    */
   public void swap(Mat B) {
-    
+
   }
 
   /**
@@ -1689,7 +1706,7 @@ public class Mat {
    * @param b
    */
   public void swap_cols(int a, int b) {
-    
+
   }
 
   /**
@@ -1697,16 +1714,16 @@ public class Mat {
    * @param b
    */
   public void swap_rows(int a, int b) {
-    
+
   }
-  
+
   /**
    * @return
    */
   public boolean is_empty() {
     return false;
   }
-  
+
   /**
    * @return
    */
@@ -1737,7 +1754,7 @@ public class Mat {
     }
     return false;
   }
-  
+
   /**
    * Returns true if the matrix is a column-vector and false otherwise.
    * 
@@ -1749,7 +1766,7 @@ public class Mat {
     }
     return false;
   }
-  
+
   /**
    * Returns true if the matrix is a row-vector and false otherwise.
    * 
@@ -1761,7 +1778,7 @@ public class Mat {
     }
     return false;
   }
-  
+
   /**
    * @param n
    * @return
@@ -1769,7 +1786,7 @@ public class Mat {
   public boolean in_range(int n) {
     return false;
   }
-  
+
   /**
    * @param a
    * @param b
@@ -1778,7 +1795,7 @@ public class Mat {
   public boolean in_range(int a, int b) {
     return false;
   }
-  
+
   /**
    * @param a
    * @param b
@@ -1788,7 +1805,7 @@ public class Mat {
   public boolean in_range(int a, int b, boolean span) {
     return false;
   }
-  
+
   /**
    * @param a
    * @param b
@@ -1799,14 +1816,14 @@ public class Mat {
   public boolean in_range(int a, int b, int c, int d) {
     return false;
   }
-  
+
   /**
    * @return
    */
   public double min() {
     return 0.0;
   }
-  
+
   /**
    * @param n
    * @return
@@ -1814,7 +1831,7 @@ public class Mat {
   public double min(int n) {
     return 0.0;
   }
-  
+
   /**
    * @param i
    * @param j
@@ -1823,14 +1840,14 @@ public class Mat {
   public double min(int i, int j) {
     return 0.0;
   }
-  
+
   /**
    * @return
    */
   public double max() {
     return 0.0;
   }
-  
+
   /**
    * @param n
    * @return
@@ -1838,7 +1855,7 @@ public class Mat {
   public double max(int n) {
     return 0.0;
   }
-  
+
   /**
    * @param i
    * @param j
@@ -1847,12 +1864,12 @@ public class Mat {
   public double max(int i, int j) {
     return 0.0;
   }
-  
+
   /**
    * @param numberOfElements
    */
   public void set_size(int numberOfElements) {
-    
+
   }
 
   /**
@@ -1917,12 +1934,12 @@ public class Mat {
 
     updateAttributes();
   }
-  
+
   /**
    * @param numberOfElements
    */
   public void resize(int numberOfElements) {
-    
+
   }
 
   /**
@@ -1951,154 +1968,154 @@ public class Mat {
 
     updateAttributes();
   }
-  
+
   /**
    * @return
    */
   public String print() {
     return null;
   }
-  
+
   /**
-   * @param header 
+   * @param header
    * @return
    */
   public String print(String header) {
     return null;
   }
-  
+
   /**
-   * @param stream 
+   * @param stream
    * @return
    */
   public String print(PrintWriter stream) {
     return null;
   }
-  
+
   /**
-   * @param stream 
-   * @param header 
+   * @param stream
+   * @param header
    * @return
    */
   public String print(PrintWriter stream, String header) {
     return null;
   }
-  
+
   /**
    * @return
    */
   public String raw_print() {
     return null;
   }
-  
+
   /**
-   * @param header 
+   * @param header
    * @return
    */
   public String raw_print(String header) {
     return null;
   }
-  
+
   /**
-   * @param stream 
+   * @param stream
    * @return
    */
   public String raw_print(PrintWriter stream) {
     return null;
   }
-  
+
   /**
-   * @param stream 
-   * @param header 
+   * @param stream
+   * @param header
    * @return
    */
   public String raw_print(PrintWriter stream, String header) {
     return null;
   }
-  
+
   /**
-   * @param n 
+   * @param n
    * @return
    */
   public String save(String n) {
     return null;
   }
-  
+
   /**
-   * @param n 
-   * @param t 
+   * @param n
+   * @param t
    * @return
    */
   public String save(String n, String t) {
     return null;
   }
-  
+
   /**
-   * @param stream 
+   * @param stream
    * @return
    */
   public String save(PrintWriter stream) {
     return null;
   }
-  
+
   /**
-   * @param stream 
-   * @param t 
+   * @param stream
+   * @param t
    * @return
    */
   public String save(PrintWriter stream, String t) {
     return null;
   }
-  
+
   /**
-   * @param n 
+   * @param n
    * @return
    */
   public String load(String n) {
     return null;
   }
-  
+
   /**
-   * @param n 
-   * @param t 
+   * @param n
+   * @param t
    * @return
    */
   public String load(String n, String t) {
     return null;
   }
-  
+
   /**
-   * @param stream 
+   * @param stream
    * @return
    */
   public String load(PrintWriter stream) {
     return null;
   }
-  
+
   /**
-   * @param stream 
-   * @param t 
+   * @param stream
+   * @param t
    * @return
    */
   public String load(PrintWriter stream, String t) {
     return null;
   }
-  
+
   /**
    * 
    */
   public void clear() {
-    
+
   }
-  
+
   /**
    * @return
    */
   public boolean empty() {
     return false;
-    
+
   }
-  
+
   /**
    * @return
    */
@@ -2118,7 +2135,6 @@ public class Mat {
     return new Mat(result);
   }
 
-  
   /**
    * Returns the transpose of the matrix.
    * 
@@ -2129,24 +2145,22 @@ public class Mat {
     CommonOps.transpose(_matrix, result);
     return new Mat(result);
   }
-  
+
   /**
    * 
    */
   public void reset() {
 
   }
-  
+
   /**
-   * @param B 
+   * @param B
    * 
    */
   public void copy_size(Mat B) {
 
   }
-  
-  
-  
+
   @Override
   public String toString() {
     return _matrix.toString();

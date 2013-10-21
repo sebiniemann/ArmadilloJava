@@ -70,7 +70,7 @@ public class RunningStatVec {
    * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the size of the provided samples
    * did not match previous observations. Use {@link #reset()} to reuse this instance for new sample sizes.
    * 
-   * @param samples The provided values. 
+   * @param samples The provided values.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the size of the provided samples did not match
    *           previous observations. Use {code reset()} to reuse this instance for new sample sizes.

@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -71,14 +71,14 @@ public enum Op {
   GREATER;
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise evaluation of
-   * {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
+   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
    * 
    * @param a The left-hand side operand.
    * @param operator The operator to be used.
    * @param b The right-hand side operand.
    * @return The created column vector.
-
+   * 
    * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
    *           is provided.
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if both arguments are matrices but have an unequal
@@ -88,7 +88,7 @@ public enum Op {
     if (a.n_elem != b.n_elem) {
       throw new IllegalArgumentException("The provided matrices must have the same number of elements (" + a.n_elem + " != " + b.n_elem + ").");
     }
-    
+
     DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
     DenseMatrix64F memptrA = a.memptr();
     DenseMatrix64F memptrB = b.memptr();
@@ -103,17 +103,17 @@ public enum Op {
   }
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise evaluation of
-   * {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
+   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
    * 
    * @param a The left-hand side operand.
    * @param operator The operator to be used.
    * @param b The right-hand side operand.
    * @return The created column vector.
-
+   * 
    * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
    *           is provided.
-   *           
+   * 
    * @see #evaluate(Mat, Op, Mat)
    */
   public static Mat evaluate(Mat a, Op operator, double b) throws UnsupportedOperationException {
@@ -130,17 +130,17 @@ public enum Op {
   }
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise evaluation of
-   * {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
+   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
    * 
    * @param a The left-hand side operand.
    * @param operator The operator to be used.
    * @param b The right-hand side operand.
    * @return The created column vector.
-
+   * 
    * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
    *           is provided.
-   *           
+   * 
    * @see #evaluate(Mat, Op, Mat)
    */
   public static Mat evaluate(double a, Op operator, Mat b) throws UnsupportedOperationException {
@@ -174,10 +174,10 @@ public enum Op {
    *           is provided.
    */
   private static boolean evaluate(double a, Op operator, double b) throws IllegalArgumentException, UnsupportedOperationException {
-    if(Double.isNaN(a) || Double.isNaN(b)) {
+    if (Double.isNaN(a) || Double.isNaN(b)) {
       throw new IllegalArgumentException("Relational operations on NaN are not supported.");
     }
-    
+
     switch (operator) {
       case STRICT_LESS:
         if (a < b) {
@@ -215,7 +215,7 @@ public enum Op {
 
     return false;
   }
-  
+
   /**
    * <b>Non-canonical:</b> Performs the requested binary arithmetic operation {@code a operator b} or sets {@code a} to
    * the value of {@code b} if {@code operation = }{@link Op#EQUAL}.
@@ -232,8 +232,8 @@ public enum Op {
    */
   static double getResult(double a, Op operation, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
     double result = 0;
-    
-    if(Double.isNaN(a) || Double.isNaN(b)) {
+
+    if (Double.isNaN(a) || Double.isNaN(b)) {
       throw new IllegalArgumentException("Arithmetic operations on NaN are not supported.");
     }
 
@@ -252,14 +252,14 @@ public enum Op {
         result = a * b;
         break;
       case ELEMDIVIDE:
-        if(b == 0) {
+        if (b == 0) {
           throw new ArithmeticException("Division by zero.");
         }
-        
-        if(Double.isInfinite(b)) {
+
+        if (Double.isInfinite(b)) {
           throw new ArithmeticException("Division by infinity.");
         }
-        
+
         result = a / b;
         break;
       default:

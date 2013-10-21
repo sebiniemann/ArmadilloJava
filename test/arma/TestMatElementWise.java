@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
 /**
  * Contains all test cases for parametrised interface tests of element-wise operations in {@link Mat}.
  * 
@@ -41,7 +42,7 @@ public class TestMatElementWise {
    */
   @Parameter
   public Mat _testElements;
-  
+
   @Test
   public void testPlusDouble() {
     fail("Not yet implemented");

@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -42,7 +42,7 @@ public class Arma {
   public static Mat zeros(int numberOfElements) {
     return null;
   }
-  
+
   /**
    * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
@@ -61,7 +61,7 @@ public class Arma {
   public static Mat ones(int numberOfElements) {
     return null;
   }
-  
+
   /**
    * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
    * 
@@ -91,7 +91,6 @@ public class Arma {
   public static Mat randu(int numberOfElements) {
     return null;
   }
-  
 
   /**
    * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
@@ -113,7 +112,6 @@ public class Arma {
   public static Mat randn(int numberOfElements) {
     return null;
   }
-  
 
   /**
    * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
@@ -127,7 +125,7 @@ public class Arma {
   public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
     return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
   }
-  
+
   /**
    * @param A
    * @param numberOfCopiesPerRow
@@ -137,7 +135,7 @@ public class Arma {
   public static Mat repmat(Mat A, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -145,16 +143,16 @@ public class Arma {
   public static Mat toeplitz(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param B 
+   * @param B
    * @return
    */
   public static Mat toeplitz(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -162,11 +160,11 @@ public class Arma {
   public static Mat circ_toeplitz(Mat A) {
     return null;
   }
-  
+
   /**
-   * @param a 
-   * @param b 
-   * @param n 
+   * @param a
+   * @param b
+   * @param n
    * @return
    */
   public static Mat linspace(double a, double b, int n) {
@@ -193,7 +191,7 @@ public class Arma {
 
     return new Mat(result);
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -201,7 +199,7 @@ public class Arma {
   public static Mat eps(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -209,7 +207,7 @@ public class Arma {
   public static Mat exp(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -217,7 +215,7 @@ public class Arma {
   public static Mat exp2(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -225,7 +223,7 @@ public class Arma {
   public static Mat exp10(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -233,7 +231,7 @@ public class Arma {
   public static Mat trunc_exp(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -241,7 +239,7 @@ public class Arma {
   public static Mat log(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -249,7 +247,7 @@ public class Arma {
   public static Mat log2(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -257,7 +255,7 @@ public class Arma {
   public static Mat log10(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -265,10 +263,10 @@ public class Arma {
   public static Mat trunc_log(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
-   * @param power 
+   * @param power
    * @return
    */
   public static Mat pow(Mat matrix, int power) {
@@ -318,7 +316,7 @@ public class Arma {
 
     return new Mat(result);
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -326,7 +324,7 @@ public class Arma {
   public static Mat ceil(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -334,7 +332,7 @@ public class Arma {
   public static Mat round(Mat matrix) {
     return null;
   }
-  
+
   /**
    * @param matrix
    * @return
@@ -559,7 +557,7 @@ public class Arma {
   public static double accu(Mat matrix) {
     return CommonOps.elementSum(matrix.memptr());
   }
-  
+
   /**
    * @param A
    * @param B
@@ -568,7 +566,7 @@ public class Arma {
   public static double dot(Mat A, Mat B) {
     return 0.0;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -577,7 +575,7 @@ public class Arma {
   public static double norm_dot(Mat A, Mat B) {
     return 0.0;
   }
-  
+
   /**
    * Computes the determinant of the provided matrix.
    * <p>
@@ -596,7 +594,7 @@ public class Arma {
 
     return CommonOps.det(matrix.memptr());
   }
-  
+
   /**
    * @param A
    * @return
@@ -712,7 +710,7 @@ public class Arma {
   public static double trace(Mat A) {
     return 0.0;
   }
-  
+
   /**
    * Converts a provided (1,1)-matrix into a scalar of type double.
    * <p>
@@ -741,7 +739,7 @@ public class Arma {
   public static Mat diagvec(Mat A, int kthDiagonal) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -750,7 +748,7 @@ public class Arma {
   public static Mat prod(Mat A) {
     return prod(A, 0);
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -801,7 +799,7 @@ public class Arma {
       throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
     }
   }
-  
+
   /**
    * @param A
    * @return
@@ -809,7 +807,7 @@ public class Arma {
   public static Mat min(Mat A) {
     return min(A, 0);
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -818,7 +816,7 @@ public class Arma {
   public static Mat min(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -826,7 +824,7 @@ public class Arma {
   public static Mat max(Mat A) {
     return max(A, 0);
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -835,7 +833,7 @@ public class Arma {
   public static Mat max(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
    * the provided matrix.
@@ -850,7 +848,7 @@ public class Arma {
   public static Mat mean(Mat matrix) throws IllegalArgumentException {
     return mean(matrix, 0);
   }
-  
+
   /**
    * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
    * the provided matrix.
@@ -897,7 +895,7 @@ public class Arma {
       throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
     }
   }
-  
+
   /**
    * @param A
    * @return
@@ -905,7 +903,7 @@ public class Arma {
   public static Mat median(Mat A) {
     return median(A, 0);
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -914,7 +912,7 @@ public class Arma {
   public static Mat median(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -922,26 +920,26 @@ public class Arma {
   public static Mat stddev(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @return
    */
   public static Mat stddev(Mat A, int normType) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @param dimension
    * @return
    */
   public static Mat stddev(Mat A, int normType, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -949,19 +947,19 @@ public class Arma {
   public static Mat var(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @return
    */
   public static Mat var(Mat A, int normType) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @param dimension
    * @return
    */
@@ -1107,7 +1105,7 @@ public class Arma {
 
     return false;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1115,7 +1113,7 @@ public class Arma {
   public static boolean all(Mat A) {
     return false;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1123,26 +1121,26 @@ public class Arma {
   public static Mat sort(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
+   * @param sortType
    * @return
    */
   public static Mat sort(Mat A, int sortType) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
-   * @param dimension 
+   * @param sortType
+   * @param dimension
    * @return
    */
   public static Mat sort(Mat A, int sortType, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1150,26 +1148,26 @@ public class Arma {
   public static Mat sort_index(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
+   * @param sortType
    * @return
    */
   public static Mat sort_index(Mat A, int sortType) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
-   * @param dimension 
+   * @param sortType
+   * @param dimension
    * @return
    */
   public static Mat sort_index(Mat A, int sortType, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1177,26 +1175,26 @@ public class Arma {
   public static Mat stable_sort_index(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
+   * @param sortType
    * @return
    */
   public static Mat stable_sort_index(Mat A, int sortType) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param sortType 
-   * @param dimension 
+   * @param sortType
+   * @param dimension
    * @return
    */
   public static Mat stable_sort_index(Mat A, int sortType, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param numerOfRows
@@ -1206,18 +1204,18 @@ public class Arma {
   public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param numerOfRows
    * @param numberOfColumns
-   * @param dimension 
+   * @param dimension
    * @return
    */
   public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param numerOfRows
@@ -1227,7 +1225,7 @@ public class Arma {
   public static Mat resize(Mat A, int numerOfRows, int numberOfColumns) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1235,16 +1233,16 @@ public class Arma {
   public static Mat cor(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @return
    */
   public static Mat cor(Mat A, int normType) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1253,17 +1251,17 @@ public class Arma {
   public static Mat cor(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param B 
-   * @param normType 
+   * @param B
+   * @param normType
    * @return
    */
   public static Mat cor(Mat A, Mat B, int normType) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1271,16 +1269,16 @@ public class Arma {
   public static Mat cov(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param normType 
+   * @param normType
    * @return
    */
   public static Mat cov(Mat A, int normType) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1289,17 +1287,17 @@ public class Arma {
   public static Mat cov(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param B 
-   * @param normType 
+   * @param B
+   * @param normType
    * @return
    */
   public static Mat cov(Mat A, Mat B, int normType) {
     return null;
   }
-  
+
   /**
    * @param X
    * @return
@@ -1307,58 +1305,58 @@ public class Arma {
   public static Mat hist(Mat X) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param numberOfBins 
+   * @param numberOfBins
    * @return
    */
   public static Mat hist(Mat X, int numberOfBins) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param numberOfBins 
-   * @param dimension 
+   * @param numberOfBins
+   * @param dimension
    * @return
    */
   public static Mat hist(Mat X, int numberOfBins, int dimension) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param centers 
+   * @param centers
    * @return
    */
   public static Mat hist(Mat X, Mat centers) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param centers 
-   * @param dimension 
+   * @param centers
+   * @param dimension
    * @return
    */
   public static Mat hist(Mat X, Mat centers, int dimension) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param edges 
+   * @param edges
    * @return
    */
   public static Mat histc(Mat X, Mat edges) {
     return null;
   }
-  
+
   /**
    * @param X
-   * @param edges 
-   * @param dimension 
+   * @param edges
+   * @param dimension
    * @return
    */
   public static Mat histc(Mat X, Mat edges, int dimension) {
@@ -1556,7 +1554,7 @@ public class Arma {
   public static Mat find(Mat matrix) throws IllegalArgumentException {
     return find(matrix, 0, "first");
   }
-  
+
   /**
    * @param A
    * @return
@@ -1564,7 +1562,7 @@ public class Arma {
   public static Mat cumsum(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -1573,7 +1571,7 @@ public class Arma {
   public static Mat cumsum(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1582,7 +1580,7 @@ public class Arma {
   public static Mat conv(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1591,7 +1589,7 @@ public class Arma {
   public static Mat cross(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1600,7 +1598,7 @@ public class Arma {
   public static Mat kron(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1608,7 +1606,7 @@ public class Arma {
   public static Mat shuffle(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -1617,7 +1615,7 @@ public class Arma {
   public static Mat shuffle(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1625,7 +1623,7 @@ public class Arma {
   public static Mat unique(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1633,7 +1631,7 @@ public class Arma {
   public static Mat vectorise(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param dimension
@@ -1642,7 +1640,7 @@ public class Arma {
   public static Mat vectorise(Mat A, int dimension) {
     return null;
   }
-  
+
   /**
    * @param X
    * @return
@@ -1650,16 +1648,16 @@ public class Arma {
   public static Mat chol(Mat X) {
     return null;
   }
-  
+
   /**
-   * @param R 
+   * @param R
    * @param X
    * @return
    */
   public static Mat chol(Mat R, Mat X) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1667,16 +1665,16 @@ public class Arma {
   public static Mat eig_sym(Mat A) {
     return null;
   }
-  
+
   /**
-   * @param A 
+   * @param A
    * @param B
    * @return
    */
   public static Mat eig_sym(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1686,7 +1684,7 @@ public class Arma {
   public static Mat eig_sym(Mat A, Mat B, Mat C) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1694,16 +1692,16 @@ public class Arma {
   public static Mat inv(Mat A) {
     return null;
   }
-  
+
   /**
-   * @param A 
+   * @param A
    * @param B
    * @return
    */
   public static Mat inv(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1713,7 +1711,7 @@ public class Arma {
   public static Mat lu(Mat A, Mat B, Mat C) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1724,7 +1722,7 @@ public class Arma {
   public static Mat lu(Mat A, Mat B, Mat C, Mat D) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1732,35 +1730,35 @@ public class Arma {
   public static Mat pinv(Mat A) {
     return null;
   }
-  
+
   /**
    * @param A
-   * @param tolerance 
+   * @param tolerance
    * @return
    */
   public static Mat pinv(Mat A, double tolerance) {
     return null;
   }
-  
+
   /**
-   * @param A 
+   * @param A
    * @param B
    * @return
    */
   public static Mat pinv(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
-   * @param A 
+   * @param A
    * @param B
-   * @param tolerance 
+   * @param tolerance
    * @return
    */
   public static Mat pinv(Mat A, Mat B, double tolerance) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
@@ -1768,16 +1766,16 @@ public class Arma {
   public static Mat princomp(Mat A) {
     return null;
   }
-  
+
   /**
-   * @param A 
+   * @param A
    * @param B
    * @return
    */
   public static Mat princomp(Mat A, Mat B) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1787,7 +1785,7 @@ public class Arma {
   public static Mat princomp(Mat A, Mat B, Mat C) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1798,7 +1796,7 @@ public class Arma {
   public static Mat princomp(Mat A, Mat B, Mat C, Mat D) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -1810,7 +1808,7 @@ public class Arma {
   public static Mat princomp(Mat A, Mat B, Mat C, Mat D, Mat E) {
     return null;
   }
-  
+
   /**
    * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code x}.
    * <p>
@@ -1990,7 +1988,7 @@ public class Arma {
 
     return true;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -2000,7 +1998,7 @@ public class Arma {
   public static Mat syl(Mat A, Mat B, Mat C) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
@@ -2011,7 +2009,7 @@ public class Arma {
   public static Mat syl(Mat A, Mat B, Mat C, Mat D) {
     return null;
   }
-  
+
   /**
    * @param A
    * @return
