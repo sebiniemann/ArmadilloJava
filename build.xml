@@ -2,7 +2,7 @@
 <project name="ArmadilloJava" default="test" basedir=".">
   <!-- set global properties for this build -->
   <property name="src.dir" location="src"/>
-  <property name="test.dir" location="test"/>
+  <property name="test.Arma.dir" location="test/Arma"/>
   
   <property name="lib.dir" location="lib"/>
   
@@ -51,8 +51,8 @@
   <target name="compile.test">
     <!-- Create the directory structure used -->
     <mkdir dir="${build.test.dir}"/>
-    <!-- Compile the java code from ${test.dir} into ${build.test.dir} -->
-    <javac srcdir="${test.dir}" destdir="${build.test.dir}" includeantruntime="false">
+    <!-- Compile the java code from ${test.Arma.dir} into ${build.test.dir} -->
+    <javac srcdir="${test.Arma.dir}" destdir="${build.test.dir}" includeantruntime="false">
       <classpath>
         <path refid="classpath.test"/>
       </classpath>
@@ -67,11 +67,8 @@
       </classpath>
       <formatter type="brief" usefile="false"/>
       <batchtest>
-        <fileset dir="${test.dir}">
+        <fileset dir="${test.Arma.dir}">
           <include name="**/Test*.java"/>
-          <exclude name="**/All*.java"/>
-          <exclude name="**/TestData.java"/>
-          <exclude name="**/TestUtil.java"/>
         </fileset>
       </batchtest>
     </junit>
