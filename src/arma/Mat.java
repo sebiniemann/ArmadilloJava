@@ -82,11 +82,11 @@ public class Mat {
    */
   public Mat(double[] matrix) {
     _matrix = new DenseMatrix64F(matrix.length, 1);
-    
-    for(int n = 0; n < _matrix.numRows; n++) {
+
+    for (int n = 0; n < _matrix.numRows; n++) {
       _matrix.set(n, matrix[n]);
     }
-    
+
     updateAttributes();
   }
 
@@ -116,13 +116,11 @@ public class Mat {
    * @param numberOfElements The number of elements.
    */
   public Mat(int numberOfElements) {
-
+    this(numberOfElements, 1, Fill.NONE);
   }
 
   /**
    * Creates a uninitialised matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
-   * <p>
-   * Same as {@link #Mat(int, int, Fill)} with fill type {@link Fill#NONE}.
    * 
    * @param numberOfRows The number of rows.
    * @param numberOfColumns The number of columns.
@@ -132,19 +130,27 @@ public class Mat {
   }
 
   /**
-   * @param numberOfElements
-   * @param fillType
-   */
-  public Mat(int numberOfElements, Fill fillType) {
-
-  }
-
-  /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} filled
-   * according to {@code fillType}.
+   * Creates a column vector with {@code numberOfElements} elements that is filled according to {@code fillType}.
    * <p>
    * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
    * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
+   * 
+   * @param numberOfElements The number of elements.
+   * @param fillType The fill type.
+   * 
+   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
+   *           {@link #Mat(int, int, Fill, Random)} instead.
+   */
+  public Mat(int numberOfElements, Fill fillType) {
+    this(numberOfElements, 1, fillType);
+  }
+
+  /**
+   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns that is filled according to
+   * {@code fillType}.
+   * <p>
+   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
+   * {@link Fill#RANDU} or {@link Fill#RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
    * 
    * @param numberOfRows The number of rows.
    * @param numberOfColumns The number of columns.
@@ -175,36 +181,42 @@ public class Mat {
   }
 
   /**
-   * @param numberOfElements
-   * @param fillType
-   * @param rng
+   * Creates a column vector with {@code numberOfElements} elements that is filled according to {@code fillType}.
+   * <p>
+   * Works also with {@link Fill#RANDU} and {@link Fill#RANDN}.
+   * 
+   * @param numberOfElements The number of elements.
+   * @param fillType The fill type.
+   * @param rng The pseudorandom generator.
    */
   public Mat(int numberOfElements, Fill fillType, Random rng) {
-
+    this(numberOfElements, 1, fillType, rng);
   }
 
   /**
-   * Creates a random matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}
-   * filled according to {@code fillType} with either uniformly or normally distributed pseudorandom values.
+   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns that is filled according to
+   * {@code fillType}.
    * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is not one of
-   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill)} instead.
+   * Works also with {@link Fill#RANDU} and {@link Fill#RANDN}.
    * 
    * @param numberOfRows The number of rows.
    * @param numberOfColumns The number of columns.
    * @param fillType The fill type.
    * @param rng The pseudorandom generator.
-   * 
-   * @throws IllegalArgumentException Thrown if {@code fillType} is not one of {@code RANDU} or {@code RANDN}. Use
-   *           {@link #Mat(int, int, Fill)} instead.
    */
-  public Mat(int numberOfRows, int numberOfColumns, Fill fillType, Random rng) throws IllegalArgumentException {
+  public Mat(int numberOfRows, int numberOfColumns, Fill fillType, Random rng) {
     switch (fillType) {
       case NONE:
       case ZEROS:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        break;
       case ONES:
+        _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+        CommonOps.fill(_matrix, 1);
+        break;
       case EYE:
-        throw new IllegalArgumentException("Use Mat(int, int, Fill) instead.");
+        _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
+        break;
       case RANDU:
         _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
 
@@ -222,11 +234,11 @@ public class Mat {
   }
 
   /**
-   * Returns the value of the element at the <i>n</i>th row and <i>j</i>th column.
+   * Returns the value of the element at the <i>i</i>th row and <i>j</i>th column.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>Performs a boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
    * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
    * position is out of bound.
    * </ul>
@@ -240,20 +252,42 @@ public class Mat {
    * @see #at(int)
    */
   public double at(int i, int j) throws IllegalArgumentException {
-    if (i >= n_rows || j >= n_cols) {
-      throw new IllegalArgumentException("The requested position (" + i + ", " + j + ") is out of bound. n_rows = " + n_rows + ", n_cols = " + n_cols);
+    if (!in_range(i, j)) {
+      throw new IllegalArgumentException("The requested position is out of bound. Matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
     }
 
     return _matrix.get(i, j);
   }
 
   /**
-   * @param i
-   * @param j
-   * @param operand
+   * Performs a unary right-hand side operation on the value of the element at the <i>n</i>th row and <i>j</i>th column and overwrites it with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
+   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
+   * position is out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides arithmetic operators
+   * or equality is requested.
+   * </ul>
+   * 
+   * @param i The row of the left-hand side operand.
+   * @param j The column of the left-hand side operand.
+   * @param operation The operation to be performed.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides arithmetic
+   *           operators or equality is
+   *           requested.
+   * 
+   * @see #at(int, Op, double)
    */
-  public void at(int i, int j, Op operand) {
+  public void at(int i, int j, Op operation) {
+    if (!in_range(i, j)) {
+      throw new IllegalArgumentException("The requested position is out of bound. Matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
+    }
 
+    _matrix.set(i, j, Op.getResult(_matrix.get(i, j), operation));
   }
 
   /**
