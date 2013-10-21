@@ -66,6 +66,15 @@ public class Span {
   }
 
   /**
+   * Creates a span like Matlab's : but without creating a new matrix.
+   * 
+   * @return The created span.
+   */
+  public static Span all() {
+    return new Span();
+  }
+  
+  /**
    * Return the start of the span.
    * 
    * @return The start.
