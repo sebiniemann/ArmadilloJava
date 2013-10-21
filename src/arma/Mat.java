@@ -1815,7 +1815,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(int n) {
-    return false;
+    return true;
   }
 
   /**
@@ -1824,7 +1824,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(int a, int b) {
-    return false;
+    return true;
   }
 
   /**
@@ -1834,7 +1834,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(int a, int b, boolean span) {
-    return false;
+    return true;
   }
 
   /**
@@ -1845,7 +1845,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(int a, int b, int c, int d) {
-    return false;
+    return true;
   }
 
   /**
