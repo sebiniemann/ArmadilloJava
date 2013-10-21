@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
-package arma.testArma;
+package arma;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  *
  */
-public class MatrixValuedFunctionsOfVectorsMatrices {
+public class TestMatrixValuedFunctionsOfVectorsMatrices {
 
 	// Matrix joins 
 	

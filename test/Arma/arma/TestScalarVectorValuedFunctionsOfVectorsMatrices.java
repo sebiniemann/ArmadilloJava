@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
-package arma.testArma;
+package arma;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  *
  */
-public class ScalarVectorValuedFunctionsOfVectorsMatrices {
+public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
 
 	/**
 	 * Test method for {@link arma.Arma#diagvec(arma.Mat, int)}.

@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
-package arma.testArma;
+package arma;
 
 
 import static org.junit.Assert.*;
@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  *
  */
-public class MatrixGeneration {
+public class TestMatrixGeneration {
 
 	/**
 	 * Test method for {@link arma.Arma#zeros(int)}.
