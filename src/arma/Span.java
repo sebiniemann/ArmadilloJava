@@ -18,11 +18,11 @@ public class Span {
   /**
    * Start of the span.
    */
-  private int     _start;
+  private int     _first;
   /**
    * End of the span.
    */
-  private int     _end;
+  private int     _last;
 
   /**
    * Indicates whether a:b (false) or only : (true) was provided.
@@ -32,16 +32,16 @@ public class Span {
   /**
    * Creates a span like Matlab's a:b but without creating a new matrix.
    * 
-   * @param start The position a.
-   * @param end The position b.
+   * @param first The position a.
+   * @param last The position b.
    */
-  public Span(int start, int end) {
-    if (end < start) {
-      throw new IllegalArgumentException("The start needs to be less than equal the end but were " + start + " and " + end + ".");
+  public Span(int first, int last) {
+    if (last < first) {
+      throw new IllegalArgumentException("The first value needs to be less than equal the last but were " + first + " and " + last + ".");
     }
 
-    _start = start;
-    _end = end;
+    _first = first;
+    _last = last;
 
     _isEntireRange = false;
   }
@@ -52,8 +52,8 @@ public class Span {
    * @param position The position a.
    */
   public Span(int position) {
-    _start = position;
-    _end = position;
+    _first = position;
+    _last = position;
 
     _isEntireRange = false;
   }
@@ -79,8 +79,8 @@ public class Span {
    * 
    * @return The start.
    */
-  int getStart() {
-    return _start;
+  int getFirst() {
+    return _first;
   }
 
   /**
@@ -88,8 +88,8 @@ public class Span {
    * 
    * @return The end.
    */
-  int getEnd() {
-    return _end;
+  int getLast() {
+    return _last;
   }
 
   /**

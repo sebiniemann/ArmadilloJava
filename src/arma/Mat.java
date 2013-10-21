@@ -403,9 +403,9 @@ public class Mat {
   }
 
   /**
-   * Return a copy of the <i>j</i>th column.
+   * Returns a copy of the <i>j</i>th column.
    * <p>
-   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested column is out of
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested column is out of
    * bound.
    * 
    * @param j The column to be copied.
@@ -428,7 +428,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>j</i>th column and overwrites each with the result.
+   * Performs a unary operation on all elements of the <i>j</i>th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -455,15 +455,15 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each with
-   * the result.
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each
+   * element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
    * <li>A {@code IllegalArgumentException} exception is thrown if the provided right hand side operand is not a column
-   * vector. Use {@link #cols(int, int, Op, Mat)} instead.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left hand side does not
-   * match with the provided right hand side operand.
+   * vector.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left hand side operand does
+   * not match with the provided right hand side operand.
    * <li>A {@code IllegalArgumentException} exception is thrown if the requested column is out of bound.
    * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
    * operators or equality is requested.
@@ -499,8 +499,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each with
-   * the result.
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each
+   * element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -528,9 +528,147 @@ public class Mat {
   }
 
   /**
-   * Return a copy of the <i>i</i>th row.
+   * Returns a copy of the <i>j</i>th column from the <i>a</i>th to <i>b</b>th row.
    * <p>
-   * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested column or rows are
+   * out of bound.
+   * 
+   * @param a The first row to be copied.
+   * @param b The last row to be copied.
+   * @param j The column to be copied.
+   * @return The copied submatrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column or rows are out of bound.
+   */
+  public Mat col(int a, int b, int j) throws IllegalArgumentException {
+    if (!in_range(new Span(a, b), new Span(j))) {
+      throw new IllegalArgumentException("The requested column or rows are out of bound.");
+    }
+
+    DenseMatrix64F result = new DenseMatrix64F(b - a + 1, 1);
+
+    int resultN = 0;
+    for (int i = a; i <= b; i++) {
+      result.set(resultN, _matrix.get(i, j));
+      resultN++;
+    }
+
+    return new Mat(result);
+  }
+
+  /**
+   * Performs a unary operation on all elements of the <i>j</i>th column from the <i>a</i>th to <i>b</b>th row and
+   * overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column or rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides unary arithmetic
+   * operators is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param j The column of the left hand side operands.
+   * @param operation The operation to be performed. Only unary arithmetic operators are supported.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column or rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators or equality is requested.
+   */
+  public void col(int a, int b, int j, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(new Span(a, b), new Span(j))) {
+      throw new IllegalArgumentException("The requested column or rows are out of bound.");
+    }
+
+    for (int i = a; i <= b; i++) {
+      at(i, j, operation);
+    }
+  }
+
+  /**
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column from the <i>a</i>th to
+   * <i>b</b>th row and overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right hand side operand is not a column
+   * vector.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left hand side operand does
+   * not match with the provided right hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column or rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param j The column of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operands.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right hand side operand is not a
+   *           column vector or if the number of rows of the left hand side does not match with the provided right hand
+   *           side operand or if the requested column or rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
+   */
+  public void col(int a, int b, int j, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_colvec()) {
+      throw new IllegalArgumentException("The provided right hand side operand must be a column vector.");
+    }
+
+    if (operand.n_rows != n_rows) {
+      throw new IllegalArgumentException("The number of rows of the left hand side operand does not match with the right hand side operand.");
+    }
+
+    if (!in_range(new Span(a, b), new Span(j))) {
+      throw new IllegalArgumentException("The requested column or rows are out of bound.");
+    }
+
+    int operandN = 0;
+    DenseMatrix64F memptrOperand = operand.memptr();
+    for (int i = a; i <= b; i++) {
+      at(i, j, operation, memptrOperand.get(operandN));
+      operandN++;
+    }
+  }
+
+  /**
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column from the <i>a</i>th to
+   * <i>b</b>th row and overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column or rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param j The column of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column or rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
+   */
+  public void col(int a, int b, int j, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(Span.all(), new Span(j))) {
+      throw new IllegalArgumentException("The requested column or rows are out of bound.");
+    }
+
+    for (int i = a; i <= b; i++) {
+      at(i, j, operation, operand);
+    }
+  }
+
+  /**
+   * Returns a copy of the <i>i</i>th row.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
    * 
    * @param i The row to be copied.
    * @return The copied row.
@@ -552,7 +690,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>i</i>th row and overwrites each with the result.
+   * Performs a unary operation on all elements of the <i>i</i>th row and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -579,15 +717,15 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each with
-   * the result.
+   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each element
+   * with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
    * <li>A {@code IllegalArgumentException} exception is thrown if the provided right hand side operand is not a row
-   * vector. Use {@link #cols(int, int, Op, Mat)} instead.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left hand side does not
-   * match with the provided right hand side operand.
+   * vector.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left hand side operand
+   * does not match with the provided right hand side operand.
    * <li>A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
    * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
    * operators or equality is requested.
@@ -623,8 +761,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each with
-   * the result.
+   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each element
+   * with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -652,23 +790,164 @@ public class Mat {
   }
 
   /**
-   * @param first
-   * @param last
-   * @return
+   * Returns a copy of the <i>i</i>th row from the <i>a</i>th to <i>b</b>th column.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested row or columns are
+   * out of bound.
+   * 
+   * @param a The first column to be copied.
+   * @param b The last column to be copied.
+   * @param i The row to be copied.
+   * @return The copied submatrix.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested column or rows are out of bound.
    */
-  public Mat cols(int first, int last) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public Mat row(int a, int b, int i) throws IllegalArgumentException {
+    if (!in_range(new Span(i), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested row or columns are out of bound.");
     }
 
-    if (first < 0 || last >= n_cols) {
-      throw new IllegalArgumentException();
+    DenseMatrix64F result = new DenseMatrix64F(1, b - a + 1);
+
+    int resultN = 0;
+    for (int j = a; j <= b; j++) {
+      result.set(resultN, _matrix.get(i, j));
+      resultN++;
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, last - first + 1);
+    return new Mat(result);
+  }
 
-    for (int j = first; j <= last; j++) {
-      for (int i = 0; i < n_rows; i++) {
+  /**
+   * Performs a unary operation on all elements of the <i>j</i>th row from the <i>a</i>th to <i>b</b>th column and
+   * overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row or columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides unary arithmetic
+   * operators is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param i The row of the left hand side operands.
+   * @param operation The operation to be performed. Only unary arithmetic operators are supported.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row or columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators or equality is requested.
+   */
+  public void row(int a, int b, int i, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(new Span(i), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested row or columns are out of bound.");
+    }
+
+    for (int j = a; j <= b; j++) {
+      at(i, j, operation);
+    }
+  }
+
+  /**
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th row from the <i>a</i>th to
+   * <i>b</b>th column and overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the provided right hand side operand is not a row
+   * vector.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of columns of the left hand side operand
+   * does not match with the provided right hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row or columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param i The row of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operands.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right hand side operand is not a
+   *           row vector or if the number of columns of the left hand side does not match with the provided right hand
+   *           side operand or if the requested row or columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
+   */
+  public void row(int a, int b, int i, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!operand.is_rowvec()) {
+      throw new IllegalArgumentException("The provided right hand side operand must be a row vector.");
+    }
+
+    if (operand.n_cols != n_cols) {
+      throw new IllegalArgumentException("The number of columns of the left hand side operand does not match with the right hand side operand.");
+    }
+
+    if (!in_range(new Span(i), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested row or columns are out of bound.");
+    }
+
+    int operandN = 0;
+    DenseMatrix64F memptrOperand = operand.memptr();
+    for (int j = a; j <= b; j++) {
+      at(i, j, operation, memptrOperand.get(operandN));
+      operandN++;
+    }
+  }
+
+  /**
+   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th row from the <i>a</i>th to
+   * <i>b</b>th column and overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested row or columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param i The row of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested row or columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
+   */
+  public void row(int a, int b, int i, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(new Span(i), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested row or columns are out of bound.");
+    }
+
+    for (int j = a; j <= b; j++) {
+      at(i, j, operation, operand);
+    }
+  }
+
+  /**
+   * Return a copy of the <i>a</i>th to <i>b</b>th column.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested columns are out of
+   * bound.
+   * 
+   * @param a The first column to be copied.
+   * @param b The last column to be copied.
+   * @return The copied columns.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested columns are out of bound.
+   */
+  public Mat cols(int a, int b) throws IllegalArgumentException {
+    if (!in_range(Span.all(), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested columns are out of bound.");
+    }
+
+    DenseMatrix64F result = new DenseMatrix64F(n_rows, b - a + 1);
+
+    for (int i = 0; i < n_rows; i++) {
+      for (int j = a; j <= b; j++) {
         result.set(i, j, _matrix.get(i, j));
       }
     }
@@ -677,37 +956,72 @@ public class Mat {
   }
 
   /**
-   * @param a
-   * @param b
-   * @param operation
+   * Performs a unary operation on all elements of the <i>a</i>th to <i>b</b>th column and overwrites each element with
+   * the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides unary arithmetic
+   * operators is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param operation The operation to be performed. Only unary arithmetic operators are supported.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators or equality is requested.
    */
-  public void cols(int a, int b, Op operation) {
+  public void cols(int a, int b, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(Span.all(), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested columns are out of bound.");
+    }
 
+    for (int i = 0; i < n_rows; i++) {
+      for (int j = a; j <= b; j++) {
+        at(i, j, operation);
+      }
+    }
   }
 
   /**
-   * @param first
-   * @param last
-   * @param operation
-   * @param operand
+   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th column and
+   * overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the size of the left hand side operand does not match
+   * with the provided right hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operands.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the size of the left hand side operand does not
+   *           match with the provided right hand side operand or if the requested columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
    */
-  public void cols(int first, int last, Op operation, Mat operand) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public void cols(int a, int b, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (operand.n_rows != n_rows || operand.n_cols != n_cols) {
+      throw new IllegalArgumentException("The size of the left hand side operand does not match with the provided right hand side operand");
     }
 
-    if (first < 0 || last >= n_cols) {
-      throw new IllegalArgumentException();
-    }
-
-    if (operand.n_rows != n_rows) {
-      throw new IllegalArgumentException("The number of rows of the left hand side operand (n_rows = " + n_rows + ") does not match with the provided right hand side operand (n_rows = " + operand.n_rows + ").");
+    if (!in_range(Span.all(), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested columns are out of bound.");
     }
 
     DenseMatrix64F memptrOperand = operand.memptr();
     int operandJ = 0;
-    for (int j = first; j <= last; j++) {
-      for (int i = 0; i < n_rows; i++) {
+    for (int i = 0; i < n_rows; i++) {
+      for (int j = a; j <= b; j++) {
         at(i, j, operation, memptrOperand.get(i, operandJ));
       }
       operandJ++;
@@ -715,87 +1029,58 @@ public class Mat {
   }
 
   /**
-   * @param first
-   * @param last
-   * @param operation
-   * @param operand
+   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th column and
+   * overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested columns are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first column of the left hand side operands.
+   * @param b The last column of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested columns are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
    */
-  public void cols(int first, int last, Op operation, double operand) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public void cols(int a, int b, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(Span.all(), new Span(a, b))) {
+      throw new IllegalArgumentException("The requested columns are out of bound.");
     }
 
-    if (first < 0 || last >= n_cols) {
-      throw new IllegalArgumentException();
-    }
-
-    for (int j = first; j <= last; j++) {
-      for (int i = 0; i < n_rows; i++) {
+    for (int i = 0; i < n_rows; i++) {
+      for (int j = a; j <= b; j++) {
         at(i, j, operation, operand);
       }
     }
   }
 
   /**
-   * @param a
-   * @param b
-   * @param i
-   * @return
+   * Return a copy of the <i>a</i>th to <i>b</b>th row.
+   * <p>
+   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested rows are out of
+   * bound.
+   * 
+   * @param a The first row to be copied.
+   * @param b The last row to be copied.
+   * @return The copied rows.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested rows are out of bound.
    */
-  public Mat cols(int a, int b, int i) {
-    return null;
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param i
-   * @param operation
-   */
-  public void cols(int a, int b, int i, Op operation) {
-
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param i
-   * @param operation
-   * @param operand
-   */
-  public void cols(int a, int b, int i, Op operation, Mat operand) {
-
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param i
-   * @param operation
-   * @param operand
-   */
-  public void cols(int a, int b, int i, Op operation, double operand) {
-
-  }
-
-  /**
-   * @param first
-   * @param last
-   * @return
-   */
-  public Mat rows(int first, int last) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public Mat rows(int a, int b) throws IllegalArgumentException {
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
-    if (first < 0 || last >= n_rows) {
-      throw new IllegalArgumentException();
-    }
+    DenseMatrix64F result = new DenseMatrix64F(b - a + 1, n_cols);
 
-    DenseMatrix64F result = new DenseMatrix64F(last - first + 1, n_cols);
-
-    for (int i = first; i <= last; i++) {
-      for (int j = 0; j < n_cols; i++) {
+    for (int i = a; i <= b; i++) {
+      for (int j = 0; j < n_cols; j++) {
         result.set(i, j, _matrix.get(i, j));
       }
     }
@@ -804,96 +1089,107 @@ public class Mat {
   }
 
   /**
-   * @param first
-   * @param last
-   * @param operation
-   * @param operand
+   * Performs a unary operation on all elements of the <i>a</i>th to <i>b</b>th row and overwrites each element with the
+   * result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides unary arithmetic
+   * operators is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param operation The operation to be performed. Only unary arithmetic operators are supported.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
+   *           operators or equality is requested.
    */
-  public void rows(int first, int last, Op operation, Mat operand) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public void rows(int a, int b, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
-    if (first < 0 || last >= n_rows) {
-      throw new IllegalArgumentException();
+    for (int i = a; i <= b; i++) {
+      for (int j = 0; j < n_cols; j++) {
+        at(i, j, operation);
+      }
     }
+  }
 
+  /**
+   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th row and
+   * overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the size of the left hand side operand does not match
+   * with the provided right hand side operand.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operands.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the size of the left hand side operand does not
+   *           match with the provided right hand side operand or if the requested rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
+   */
+  public void rows(int a, int b, Op operation, Mat operand) {
     if (operand.n_rows != n_rows) {
-      throw new IllegalArgumentException("The number of rows of the left hand side operand (n_rows = " + n_rows + ") does not match with the provided right hand side operand (n_rows = " + operand.n_rows + ").");
+      throw new IllegalArgumentException("The size of the left hand side operand does not match with the provided right hand side operand");
+    }
+
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
     DenseMatrix64F memptrOperand = operand.memptr();
-    int operandI = 0;
-    for (int i = first; i <= last; i++) {
-      for (int j = 0; j < n_cols; i++) {
-        at(i, j, operation, memptrOperand.get(operandI, j));
+    int operandJ = 0;
+    for (int i = a; i <= b; i++) {
+      for (int j = 0; j < n_cols; j++) {
+        at(i, j, operation, memptrOperand.get(i, operandJ));
       }
-      operandI++;
+      operandJ++;
     }
   }
 
   /**
-   * @param first
-   * @param last
-   * @param operation
-   * @param operand
+   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th row and overwrites each element with the result.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the requested rows are out of bound.
+   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
+   * operators or equality is requested.
+   * </ul>
+   * 
+   * @param a The first row of the left hand side operands.
+   * @param b The last row of the left hand side operands.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operand.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested rows are out of bound.
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
    */
-  public void rows(int first, int last, Op operation, double operand) {
-    if (first > last) {
-      throw new IllegalArgumentException();
+  public void rows(int a, int b, Op operation, double operand) {
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
-    if (first < 0 || last >= n_rows) {
-      throw new IllegalArgumentException();
-    }
-
-    for (int i = first; i <= last; i++) {
-      for (int j = 0; j < n_cols; i++) {
+    for (int i = a; i <= b; i++) {
+      for (int j = 0; j < n_cols; j++) {
         at(i, j, operation, operand);
       }
     }
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param j
-   * @return
-   */
-  public Mat rows(int a, int b, int j) {
-    return null;
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param j
-   * @param operation
-   */
-  public void rows(int a, int b, int j, Op operation) {
-
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param j
-   * @param operation
-   * @param operand
-   */
-  public void rows(int a, int b, int j, Op operation, Mat operand) {
-
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param j
-   * @param operation
-   * @param operand
-   */
-  public void rows(int a, int b, int j, Op operation, double operand) {
-
   }
 
   /**
@@ -1900,7 +2196,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(Span span) {
-    if (span.isEntireRange() || (span.getStart() > -1 && span.getEnd() < n_elem)) {
+    if (span.isEntireRange() || (span.getFirst() > -1 && span.getLast() < n_elem)) {
       return true;
     }
 
@@ -1926,7 +2222,7 @@ public class Mat {
    * @return
    */
   public boolean in_range(Span spanI, Span spanJ) {
-    if ((spanI.isEntireRange() || (spanI.getStart() > -1 && spanI.getEnd() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getStart() > -1 && spanJ.getEnd() < n_cols))) {
+    if ((spanI.isEntireRange() || (spanI.getFirst() > -1 && spanI.getLast() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getFirst() > -1 && spanJ.getLast() < n_cols))) {
       return true;
     }
 
