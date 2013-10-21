@@ -404,7 +404,7 @@ public class Mat {
   }
 
   /**
-   * Return a copy of the <i>j</i>th column as a ({@link #n_rows}, 1) matrix.
+   * Return a copy of the <i>j</i>th column.
    * <p>
    * <b>Non-canonical:</b> >A {@code IllegalArgumentException} exception is thrown if the requested column is out of
    * bound.
@@ -1845,6 +1845,14 @@ public class Mat {
   }
 
   /**
+   * @param span 
+   * @return
+   */
+  public boolean in_range(Span span) {
+    return true;
+  }
+
+  /**
    * @param a
    * @param b
    * @return
@@ -1854,23 +1862,11 @@ public class Mat {
   }
 
   /**
-   * @param a
-   * @param b
-   * @param span
+   * @param spanI 
+   * @param spanJ 
    * @return
    */
-  public boolean in_range(int a, int b, boolean span) {
-    return true;
-  }
-
-  /**
-   * @param a
-   * @param b
-   * @param c
-   * @param d
-   * @return
-   */
-  public boolean in_range(int a, int b, int c, int d) {
+  public boolean in_range(Span spanI, Span spanJ) {
     return true;
   }
 
