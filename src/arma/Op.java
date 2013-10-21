@@ -226,6 +226,8 @@ public enum Op {
 
   /**
    * <b>Non-canonical:</b> Performs the requested unary arithmetic operation {@code a operator}.
+   * <p>
+   * Prints a warning to Sysout.out if an overflow is detected.
    * 
    * @param a The left-hand side operand.
    * @param operation The operation to be performed. Only unary arithmetic operators and equality are supported.
@@ -252,12 +254,19 @@ public enum Op {
         throw new UnsupportedOperationException("Only unary arithmetic operators are supported.");
     }
 
+    if (!Double.isInfinite(a) && Double.isInfinite(result)) {
+      System.out.println("WARNING: Overflow detected. Requested " + a + " " + operation);
+      Thread.dumpStack();
+    }
+
     return result;
   }
 
   /**
    * <b>Non-canonical:</b> Performs the requested binary arithmetic operation {@code a operator b} or sets {@code a} to
    * the value of {@code b} if {@code operation = }{@link Op#EQUAL}.
+   * <p>
+   * Prints a warning to Sysout.out if an overflow or underflow is detected.
    * 
    * @param a The left-hand side operand.
    * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
@@ -304,7 +313,19 @@ public enum Op {
       default:
         throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
     }
-    
+
+    if (operation.equals(TIMES) || operation.equals(ELEMTIMES) || operation.equals(ELEMDIVIDE)) {
+      if (a != 0 && b != 0 && result == 0) {
+        System.out.println("WARNING: Underflow detected. Requested " + a + " " + operation + " " + b);
+        Thread.dumpStack();
+      }
+    }
+
+    if (!Double.isInfinite(a) && !Double.isInfinite(b) && Double.isInfinite(result)) {
+      System.out.println("WARNING: Overflow detected. Requested " + a + " " + operation + " " + b);
+      Thread.dumpStack();
+    }
+
     return result;
   }
 }
