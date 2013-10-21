@@ -79,26 +79,26 @@ Member functions
 
 Matlab                     | Armadillo C++                        | ArmadilloJava                   | Notes
 ---------------------------|--------------------------------------|---------------------------------|------
+A(:, :)                    | A.submat(span::all, span::all)       | A.submat()                      | 
+A(:, :)                    | A(span::all, span::all)              | A.submat()                      | 
 A(:, j)                    | A.col(j)                             | A.col(j)                        | 
+A(:, j)                    | A(span::all, j)                      | A.col(j)                        | 
+A(a:b, j)                  | A(span(a, b), j)                     | A.col(a, b, j)                  | 
+A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                    | 
+A(:, a:b)                  | A.submat(span::all, span(a, b))      | A.cols(a, b)                    | 
+A(:, a:b)                  | A(span::all, span(a, b))             | A.cols(a, b)                    | 
                            | A.unsafe_col(j)                      |                                 | *Not suppported*
 A(i, :)                    | A.row(i)                             | A.row(i)                        | 
-A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                    | 
 A(i, :)                    | A(i, span::all)                      | A.row(i)                        | 
-A(i, a:b)                  | A(i, span(a, b))                     | A.cols(a, b, i)                 | 
+A(i, a:b)                  | A(i, span(a, b))                     | A.row(a, b, i)                  | 
 A(a:b, :)                  | A.rows(a, b)                         | A.rows(a, b)                    | 
-A(:, j)                    | A(span::all, j)                      | A.col(j)                        | 
-A(a:b, j)                  | A(span(a, b), j)                     | A.rows(a, b, j)                 | 
-A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)        | 
-A(:, :)                    | A.submat(span::all, span::all)       | A.submat()                      | 
-A(:, a:b)                  | A.submat(span::all, span(a, b))      | A.cols(a, b)                    | 
 A(a:b, :)                  | A.submat(span(a, b), span::all)      | A.rows(a, b)                    | 
-A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(ai, bi, aj, bj)        | 
-A(:, :)                    | A(span::all, span::all)              | A.submat()                      | 
-A(:, a:b)                  | A(span::all, span(a, b))             | A.cols(a, b)                    | 
 A(a:b, :)                  | A(span(a, b), span::all)             | A.rows(a, b)                    | 
+A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)        | 
+A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(ai, bi, aj, bj)        | 
 A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(ai, bi, aj, bj)        | 
-A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                  | **Note:** A is a vector.
 A(:)                       | A(span::all)                         | A.subvec()                      | **Note:** A is a vector.
+A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                  | **Note:** A is a vector.
 A(a:b)                     | A(span(a, b))                        | A.subvec(a, b)                  | **Note:** A is a vector.
 
                            
