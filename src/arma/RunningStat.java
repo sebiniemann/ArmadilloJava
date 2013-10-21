@@ -39,7 +39,7 @@ public class RunningStat {
   private double _var;
 
   /**
-   * 
+   * Initialises the statistical measures.
    */
   public RunningStat() {
     reset();
@@ -131,7 +131,11 @@ public class RunningStat {
     if (normType == 0) {
       return _var;
     } else if (normType == 1) {
-      return (_count - 1) / _count * _var;
+      if(_count > 0) {
+        return (_count - 1) / _count * _var;
+      } else {
+        return _var;
+      }
     } else {
       throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was :" + normType);
     }
