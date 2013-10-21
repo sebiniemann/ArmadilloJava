@@ -26,6 +26,14 @@ import org.ejml.data.DenseMatrix64F;
  */
 public enum Op {
   /**
+   * Increment (unary arithmetic operator)
+   */
+  INCREMENT,
+  /**
+   * Decrement (unary arithmetic operator)
+   */
+  DECREMENT,
+  /**
    * Summation (arithmetic operator)
    */
   PLUS,
@@ -217,18 +225,49 @@ public enum Op {
   }
 
   /**
+   * <b>Non-canonical:</b> Performs the requested unary arithmetic operation {@code a operator}.
+   * 
+   * @param a The left-hand side operand.
+   * @param operation The operation to be performed. Only unary arithmetic operators and equality are supported.
+   * @return The result.
+   * 
+   * @throws IllegalArgumentException Thrown if the operand is not a number (NaN).
+   * @throws UnsupportedOperationException Thrown if another operation besides unary arithmetic operators is requested.
+   */
+  static double getResult(double a, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    double result = 0;
+
+    if (Double.isNaN(a)) {
+      throw new IllegalArgumentException("Arithmetic operations on NaN are not supported.");
+    }
+
+    switch (operation) {
+      case INCREMENT:
+        result = a++;
+        break;
+      case DECREMENT:
+        result = a--;
+        break;
+      default:
+        throw new UnsupportedOperationException("Only unary arithmetic operators are supported.");
+    }
+
+    return result;
+  }
+
+  /**
    * <b>Non-canonical:</b> Performs the requested binary arithmetic operation {@code a operator b} or sets {@code a} to
    * the value of {@code b} if {@code operation = }{@link Op#EQUAL}.
    * 
    * @param a The left-hand side operand.
-   * @param operation The operation to be performed. Only arithmetic operators and equality are supported.
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
    * @param b The right-hand side operand.
    * @return The result.
    * 
    * @throws IllegalArgumentException Thrown if any of the operands is not a number (NaN).
    * @throws ArithmeticException Thrown if division by zero or infinity is requested.
-   * @throws UnsupportedOperationException Thrown if another operation besides arithmetic operators or equality is
-   *           requested.
+   * @throws UnsupportedOperationException Thrown if another operation besides binary arithmetic operators or equality
+   *           is requested.
    */
   static double getResult(double a, Op operation, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
     double result = 0;
@@ -265,7 +304,7 @@ public enum Op {
       default:
         throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
     }
-
+    
     return result;
   }
 }
