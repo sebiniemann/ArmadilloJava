@@ -137,7 +137,7 @@ Negate              | -A     | -A            | A.negate()
 
 #### Inplace operations
 
-**ArmadilloJava:** A.view(... is a placeholder for any of the specific views given above.
+**ArmadilloJava:** A.view(... is a placeholder for any of the specific views given above. Use A.submat(Op. ...) for inplace operations on all elements.
 
 Operation           | Matlab     | Armadillo C++ | ArmadilloJava
 --------------------|------------|---------------|------------------------------------
