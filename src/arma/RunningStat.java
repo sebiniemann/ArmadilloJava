@@ -52,7 +52,7 @@ public class RunningStat {
    */
   public void update(double sample) {
     if (_count > 0) {
-      _max = Math.min(_min, sample);
+      _max = Math.max(_max, sample);
       _min = Math.min(_min, sample);
       _var = (_count - 1) / _count * _var + (Math.pow(sample - _mean, 2)) / (_count + 1);
       _mean = _mean + (sample - _mean) / (_count + 1);

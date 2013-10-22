@@ -1587,7 +1587,21 @@ public class Arma {
    * @return
    */
   public static Mat cross(Mat A, Mat B) {
-    return null;
+    if (!A.is_vec() || !B.is_vec()) {
+
+    }
+
+    if (A.n_elem != 3 || B.n_elem != 3) {
+
+    }
+
+    return new Mat(new double[][]{{
+      A.at(1) * B.at(2) - A.at(2) * B.at(1)
+    }, {
+      A.at(2) * B.at(0) - A.at(0) * B.at(2)
+    }, {
+      A.at(0) * B.at(1) - A.at(1) * B.at(0)
+    }});
   }
 
   /**
