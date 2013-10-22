@@ -335,14 +335,10 @@ public class Mat {
    */
   public double at(int n) throws IllegalArgumentException {
     if (!in_range(n)) {
-      throw new IllegalArgumentException("The requested position  is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
+      throw new IllegalArgumentException("The requested position is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
     }
 
-    if (is_vec()) {
-      return _matrix.get(n);
-    } else {
-      return _matrix.get(convertToRowMajorOrdering(n));
-    }
+    return _matrix.get(convertToRowMajorOrdering(n));
   }
 
   /**
@@ -370,6 +366,10 @@ public class Mat {
    * @see #at(int, Op, double)
    */
   public void at(int n, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+    if (!in_range(n)) {
+      throw new IllegalArgumentException("The requested position is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
+    }
+    
     n = convertToRowMajorOrdering(n);
     _matrix.set(n, Op.getResult(_matrix.get(n), operation));
   }
@@ -400,7 +400,12 @@ public class Mat {
    * @see #at(int, int, Op, double)
    */
   public void at(int n, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    _matrix.set(n, Op.getResult(at(n), operation, operand));
+    if (!in_range(n)) {
+      throw new IllegalArgumentException("The requested position is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
+    }
+    
+    n = convertToRowMajorOrdering(n);
+    _matrix.set(n, Op.getResult(_matrix.get(n), operation, operand));
   }
 
   /**
@@ -420,7 +425,6 @@ public class Mat {
     }
 
     Mat result = new Mat(n_rows, 1);
-
     for (int n = 0; n < n_rows; n++) {
       result._matrix.set(n, _matrix.get(n, j));
     }
@@ -446,10 +450,6 @@ public class Mat {
    *           operators or equality is requested.
    */
   public void col(int j, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
-    if (!in_range(Span.all(), new Span(j))) {
-      throw new IllegalArgumentException("The requested column is out of bound.");
-    }
-
     for (int i = 0; i < n_rows; i++) {
       at(i, j, operation);
     }
@@ -1545,7 +1545,7 @@ public class Mat {
   }
 
   /**
-   * Returns a column vector containing all elements for which selection.at(n) > 0 holds.
+   * Returns a column vector containing all elements 
    * 
    * @param selection The selection to be used.
    * @return The copy of the selected elements.
@@ -2800,22 +2800,26 @@ public class Mat {
    * @param n The position based on column-major-ordering.
    * @return The position based on row-major-ordering.
    * 
-   * @throws IllegalArgumentException Thrown if a negative value is provided for the position.
+   * @throws IllegalArgumentException Thrown if the provided position is out of bound.
    */
-  int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
-    if (n < 0) {
-      throw new IllegalArgumentException("The value of the provided position must be non-negative.");
+  private int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
+    if (!in_range(n)) {
+      throw new IllegalArgumentException("The provided position is out of bound.");
     }
-
-    /*
-     * n = i + j * n_rows, i < n_rows
-     * 
-     * i = n - j * n_rows
-     * i = Math.floor(n / n_rows)
-     * 
-     * j = (n - i) / n_rows
-     * j = n % n_rows
-     */
-    return (n / n_rows) + (n % n_rows) * n_cols;
+    
+    if(is_vec()) {
+      return n;
+    } else {
+      /*
+       * n = i + j * n_rows, i < n_rows
+       * 
+       * i = n - j * n_rows
+       * i = Math.floor(n / n_rows)
+       * 
+       * j = (n - i) / n_rows
+       * j = n % n_rows
+       */
+      return (n / n_rows) + (n % n_rows) * n_cols;
+    }
   }
 }

@@ -13,13 +13,16 @@ package arma;
 import org.ejml.data.DenseMatrix64F;
 
 /**
- * Provides constants for the following operators.
+ * Provides predefined constants to identify arithmetic or relational operators.
  * <p>
- * Arithmetic operators: <br>
- * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES}, {@link #ELEMDIVIDE}
+ * Unary arithmetic operators: <br>
+ * {@link #INCREMENT} and {@link #DECREMENT}
+ * <p>
+ * Binary arithmetic operators: <br>
+ * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES} and {@link #ELEMDIVIDE}
  * <p>
  * Relational operators: <br>
- * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER} , {@link #GREATER}
+ * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER} and {@link #GREATER}
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
@@ -33,23 +36,23 @@ public enum Op {
    */
   DECREMENT,
   /**
-   * Summation (arithmetic operator)
+   * Summation (binary arithmetic operator)
    */
   PLUS,
   /**
-   * Subtraction (arithmetic operator)
+   * Subtraction (binary arithmetic operator)
    */
   MINUS,
   /**
-   * Multiplication (arithmetic operator)
+   * Multiplication (binary arithmetic operator)
    */
   TIMES,
   /**
-   * Element-wise multiplication (arithmetic operator)
+   * Element-wise multiplication (binary arithmetic operator)
    */
   ELEMTIMES,
   /**
-   * Element-wise division (arithmetic operator)
+   * Element-wise division (binary arithmetic operator)
    */
   ELEMDIVIDE,
   /**
