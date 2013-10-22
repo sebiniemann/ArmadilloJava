@@ -79,8 +79,8 @@ Member functions
 
 Matlab                     | Armadillo C++                        | ArmadilloJava                   | Notes
 ---------------------------|--------------------------------------|---------------------------------|------
-A(:, :)                    | A.submat(span::all, span::all)       | A.submat()                      | 
-A(:, :)                    | A(span::all, span::all)              | A.submat()                      | 
+A(:, :)                    | A.submat(span::all, span::all)       | A                               | 
+A(:, :)                    | A(span::all, span::all)              | A                               | 
 A(:, j)                    | A.col(j)                             | A.col(j)                        | 
 A(:, j)                    | A(span::all, j)                      | A.col(j)                        | 
 A(a:b, j)                  | A(span(a, b), j)                     | A.col(a, b, j)                  | 
@@ -97,7 +97,7 @@ A(a:b, :)                  | A(span(a, b), span::all)             | A.rows(a, b)
 A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)        | 
 A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(ai, bi, aj, bj)        | 
 A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(ai, bi, aj, bj)        | 
-A(:)                       | A(span::all)                         | A.subvec()                      | **Note:** A is a vector.
+A(:)                       | A(span::all)                         | A                               | **Note:** A is a vector.
 A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                  | **Note:** A is a vector.
 A(a:b)                     | A(span(a, b))                        | A.subvec(a, b)                  | **Note:** A is a vector.
 
