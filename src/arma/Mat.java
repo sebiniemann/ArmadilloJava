@@ -41,7 +41,7 @@ public class Mat {
   /**
    * Reference to the internal data representation of the matrix.
    */
-  private DenseMatrix64F _matrix;
+  DenseMatrix64F _matrix;
 
   /**
    * The number of rows of the matrix.
@@ -370,7 +370,8 @@ public class Mat {
    * @see #at(int, Op, double)
    */
   public void at(int n, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
-    _matrix.set(n, Op.getResult(at(n), operation));
+    n = convertToRowMajorOrdering(n);
+    _matrix.set(n, Op.getResult(_matrix.get(n), operation));
   }
 
   /**
@@ -418,13 +419,13 @@ public class Mat {
       throw new IllegalArgumentException("The requested column is out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, 1);
+    Mat result = new Mat(n_rows, 1);
 
     for (int n = 0; n < n_rows; n++) {
-      result.set(n, _matrix.get(n, j));
+      result._matrix.set(n, _matrix.get(n, j));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -491,9 +492,8 @@ public class Mat {
       throw new IllegalArgumentException("The requested column is out of bound.");
     }
 
-    DenseMatrix64F memptrOperand = operand.memptr();
     for (int i = 0; i < n_rows; i++) {
-      at(i, j, operation, memptrOperand.get(i));
+      at(i, j, operation, operand._matrix.get(i));
     }
   }
 
@@ -544,15 +544,14 @@ public class Mat {
       throw new IllegalArgumentException("The requested column or rows are out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(b - a + 1, 1);
-
+    Mat result = new Mat(b - a + 1, 1);
     int resultN = 0;
     for (int i = a; i <= b; i++) {
-      result.set(resultN, _matrix.get(i, j));
+      result._matrix.set(resultN, _matrix.get(i, j));
       resultN++;
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -625,9 +624,8 @@ public class Mat {
     }
 
     int operandN = 0;
-    DenseMatrix64F memptrOperand = operand.memptr();
     for (int i = a; i <= b; i++) {
-      at(i, j, operation, memptrOperand.get(operandN));
+      at(i, j, operation, operand._matrix.get(operandN));
       operandN++;
     }
   }
@@ -678,13 +676,12 @@ public class Mat {
       throw new IllegalArgumentException("The requested row is out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(1, n_cols);
-
+    Mat result = new Mat(1, n_cols);
     for (int n = 0; n < n_cols; n++) {
-      result.set(n, _matrix.get(i, n));
+      result._matrix.set(n, _matrix.get(i, n));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -751,9 +748,8 @@ public class Mat {
       throw new IllegalArgumentException("The requested row is out of bound.");
     }
 
-    DenseMatrix64F memptrOperand = operand.memptr();
     for (int j = 0; j < n_cols; j++) {
-      at(i, j, operation, memptrOperand.get(j));
+      at(i, j, operation, operand._matrix.get(j));
     }
   }
 
@@ -804,15 +800,14 @@ public class Mat {
       throw new IllegalArgumentException("The requested row or columns are out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(1, b - a + 1);
-
+    Mat result = new Mat(1, b - a + 1);
     int resultN = 0;
     for (int j = a; j <= b; j++) {
-      result.set(resultN, _matrix.get(i, j));
+      result._matrix.set(resultN, _matrix.get(i, j));
       resultN++;
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -885,9 +880,8 @@ public class Mat {
     }
 
     int operandN = 0;
-    DenseMatrix64F memptrOperand = operand.memptr();
     for (int j = a; j <= b; j++) {
-      at(i, j, operation, memptrOperand.get(operandN));
+      at(i, j, operation, operand._matrix.get(operandN));
       operandN++;
     }
   }
@@ -940,15 +934,14 @@ public class Mat {
       throw new IllegalArgumentException("The requested columns are out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, b - a + 1);
-
+    Mat result = new Mat(n_rows, b - a + 1);
     for (int i = 0; i < n_rows; i++) {
       for (int j = a; j <= b; j++) {
-        result.set(i, j, _matrix.get(i, j));
+        result._matrix.set(i, j, _matrix.get(i, j));
       }
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -1014,11 +1007,10 @@ public class Mat {
       throw new IllegalArgumentException("The requested columns are out of bound.");
     }
 
-    DenseMatrix64F memptrOperand = operand.memptr();
     int operandJ = 0;
     for (int i = 0; i < n_rows; i++) {
       for (int j = a; j <= b; j++) {
-        at(i, j, operation, memptrOperand.get(i, operandJ));
+        at(i, j, operation, operand._matrix.get(i, operandJ));
       }
       operandJ++;
     }
@@ -1073,15 +1065,14 @@ public class Mat {
       throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(b - a + 1, n_cols);
-
+    Mat result = new Mat(b - a + 1, n_cols);
     for (int i = a; i <= b; i++) {
       for (int j = 0; j < n_cols; j++) {
-        result.set(i, j, _matrix.get(i, j));
+        result._matrix.set(i, j, _matrix.get(i, j));
       }
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -1147,11 +1138,10 @@ public class Mat {
       throw new IllegalArgumentException("The requested rows are out of bound.");
     }
 
-    DenseMatrix64F memptrOperand = operand.memptr();
     int operandJ = 0;
     for (int i = a; i <= b; i++) {
       for (int j = 0; j < n_cols; j++) {
-        at(i, j, operation, memptrOperand.get(i, operandJ));
+        at(i, j, operation, operand._matrix.get(i, operandJ));
       }
       operandJ++;
     }
@@ -1217,35 +1207,45 @@ public class Mat {
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the number of rows of the left hand side operand does
-   * not match with the provided right hand side operand.
-   * <li>A {@code IllegalArgumentException} exception is thrown if the requested column or rows are out of bound.
+   * <li>A {@code IllegalArgumentException} exception is thrown if the number of elements of the left hand side operand
+   * does not match with the provided right hand side operand.
    * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
    * operators or equality is requested.
    * </ul>
    * 
-   * @param a The first row of the left hand side operands.
-   * @param b The last row of the left hand side operands.
-   * @param j The column of the left hand side operands.
    * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
    * @param operand The right hand side operands.
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided right hand side operand is not a
-   *           column vector or if the number of rows of the left hand side does not match with the provided right hand
-   *           side operand or if the requested column or rows are out of bound.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the number of rows of the left hand side does not match with the provided right hand side operand.
    * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
    *           operators or equality is requested.
    */
-  public void submat(Op operation, Mat operand) {
-
+  public void submat(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    if (operand.n_elem != n_elem) {
+      throw new IllegalArgumentException("The size of the left hand side operand does not match with the provided right hand side operand");
+    }
+    
+    for (int n = 0; n < n_elem; n++) {
+      _matrix.set(n, Op.getResult(_matrix.get(n), operation, operand._matrix.get(n)));
+    }
   }
 
   /**
-   * @param operation
-   * @param operand
+   * Performs a right hand side element-wise operation on all elements the matrix and overwrites each element with the
+   * result.
+   * <p>
+   * <b>Non-canonical:</b> A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic operators or equality is requested.
+   * 
+   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
+   * @param operand The right hand side operands.
+   * 
+   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides binary arithmetic
+   *           operators or equality is requested.
    */
-  public void submat(Op operation, double operand) {
-
+  public void submat(Op operation, double operand) throws UnsupportedOperationException {
+    for (int n = 0; n < n_elem; n++) {
+      _matrix.set(n, Op.getResult(_matrix.get(n), operation, operand));
+    }
   }
 
   /**
