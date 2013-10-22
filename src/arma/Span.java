@@ -31,13 +31,30 @@ public class Span {
 
   /**
    * Creates a span like Matlab's a:b but without creating a new matrix.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the first provided value is larger than the last one.
+   * <li>A {@code IllegalArgumentException} exception is thrown if any value negative.
+   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
+   * </ul>
    * 
    * @param first The position a.
    * @param last The position b.
+   * 
+   * @throws IllegalArgumentException Thrown if the first provided value is larger than the last one or if any value is NaN or infinity or any value is negative.
    */
-  public Span(int first, int last) {
+  public Span(int first, int last) throws IllegalArgumentException {
     if (last < first) {
       throw new IllegalArgumentException("The first value needs to be less than equal the last but were " + first + " and " + last + ".");
+    }
+    
+    if(Double.isInfinite(first) || Double.isNaN(first) || Double.isInfinite(last) || Double.isNaN(last)) {
+      throw new IllegalArgumentException("NaN or infinity is not supported.");
+    }
+    
+    if(first < 0) {
+      throw new IllegalArgumentException("All values must be non negative.");
     }
 
     _first = first;
@@ -48,20 +65,29 @@ public class Span {
 
   /**
    * Creates a span like Matlab's a:a but without creating a new matrix.
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>A {@code IllegalArgumentException} exception is thrown if the first provided value is larger than the last one.
+   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
+   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
+   * </ul>
    * 
    * @param position The position a.
+   * 
+   * @throws IllegalArgumentException Thrown if the first provided value is larger than the last one or if any value is NaN or infinity or any value is negative.
    */
-  public Span(int position) {
-    _first = position;
-    _last = position;
-
-    _isEntireRange = false;
+  public Span(int position) throws IllegalArgumentException {
+    this(position, position);
   }
 
   /**
    * Creates a span like Matlab's : but without creating a new matrix.
    */
   public Span() {
+    _first = -1; // Illegal value by design. Should result in an exception if used.
+    _last = -1; // Illegal value by design. Should result in an exception if used.
+    
     _isEntireRange = true;
   }
 
