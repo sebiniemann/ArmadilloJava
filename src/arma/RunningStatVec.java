@@ -90,8 +90,8 @@ public class RunningStatVec {
           temp = temp.t().times(temp);
         }
 
-        _cov.subvec(Op.ELEMTIMES, (_count - 1) / _count);
-        _cov.subvec(Op.PLUS, temp.elemDivide(_count + 1));
+        _cov.submat(Op.ELEMTIMES, (_count - 1) / _count);
+        _cov.submat(Op.PLUS, temp.elemDivide(_count + 1));
       }
 
       for (int n = 0; n < samples.n_elem; n++) {

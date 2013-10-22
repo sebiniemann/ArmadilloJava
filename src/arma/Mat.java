@@ -1193,13 +1193,6 @@ public class Mat {
   }
 
   /**
-   * @return
-   */
-  public Mat submat() {
-    return null;
-  }
-
-  /**
    * @param operation
    */
   public void submat(Op operation) {
@@ -1265,37 +1258,6 @@ public class Mat {
    * @param operand
    */
   public void submat(int ai, int bi, int aj, int bj, Op operation, double operand) {
-
-  }
-
-  /**
-   * @param operation
-   * @param operand
-   * @return
-   */
-  public Mat subvec() {
-    return null;
-  }
-
-  /**
-   * @param operation
-   * @param operand
-   */
-  public void subvec(Op operation) {}
-
-  /**
-   * @param operation
-   * @param operand
-   */
-  public void subvec(Op operation, Mat operand) {
-
-  }
-
-  /**
-   * @param operation
-   * @param operand
-   */
-  public void subvec(Op operation, double operand) {
 
   }
 
