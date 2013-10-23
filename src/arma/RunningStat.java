@@ -10,45 +10,46 @@
 package arma;
 
 /**
- * Provides statistical measures for large observations where the individual observations cannot be stored completely or
- * are not relevant.
+ * Provides statistical measures that are updated iterative per sample.
+ * <p>
+ * Useful if the storage of all samples together is not possible or not required.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class RunningStat {
 
   /**
-   * The smallest observed value.
+   * The smallest provided sample
    */
   private double _min;
   /**
-   * The largest observed value.
+   * The largest provided sample
    */
   private double _max;
   /**
-   * The amount of observed samples.
+   * The amount of provided samples
    */
   private double _count;
   /**
-   * The mean of all observed samples.
+   * The mean of all provided samples
    */
   private double _mean;
   /**
-   * The variance of all observed samples.
+   * The variance of all provided samples
    */
   private double _var;
 
   /**
-   * Initialises the statistical measures.
+   * Initialises the statistical measures
    */
   public RunningStat() {
     reset();
   }
 
   /**
-   * Recalculates the statistical measures with the provided value.
+   * Recalculates the statistical values with inclusion of the provided sample.
    * 
-   * @param sample The provided value.
+   * @param sample The sample
    */
   public void update(double sample) {
     if (_count > 0) {
@@ -67,36 +68,36 @@ public class RunningStat {
   }
 
   /**
-   * Returns the amount of observed samples.
+   * Returns the amount of provided samples.
    * 
-   * @return The amount.
+   * @return The amount
    */
   public double count() {
     return _count;
   }
 
   /**
-   * Returns the smallest observed value.
+   * Returns the smallest provided sample.
    * 
-   * @return The minimum.
+   * @return The minimum
    */
   public double min() {
     return _min;
   }
 
   /**
-   * Returns the largest observed value.
+   * Returns the largest provided sample.
    * 
-   * @return The maximum.
+   * @return The maximum
    */
   public double max() {
     return _max;
   }
 
   /**
-   * Returns the mean of all observed samples.
+   * Returns the mean of all provided samples.
    * 
-   * @return The mean.
+   * @return The mean
    */
   public double mean() {
     return _mean;
@@ -104,11 +105,8 @@ public class RunningStat {
 
   /**
    * Returns the variance of all observed samples with normalisation by {@link #count()} - 1.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
-   * of 0 or 1.
-   * 
-   * @return The variance.
+   *
+   * @return The variance
    */
   public double var() {
     return var(0);
@@ -117,15 +115,12 @@ public class RunningStat {
   /**
    * Returns the variance of all observed samples.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
-   * of 0 or 1.
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
    * 
-   * @param normType The normalisation to be used.
-   * @return The variance.
+   * @param normType The normalisation
+   * @return The variance
    * 
-   * @throws IllegalArgumentException Thrown if the normalisation type is not one of 0 or 1.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
   public double var(int normType) throws IllegalArgumentException {
     if (normType == 0) {
@@ -137,16 +132,13 @@ public class RunningStat {
         return _var;
       }
     } else {
-      throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was :" + normType);
+      throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
     }
   }
 
   /**
    * Returns the standard deviation of all observed samples with normalisation by {@link #count()} - 1.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
-   * of 0 or 1.
-   * 
+   *
    * @return The standard deviation.
    */
   public double stddev() {
@@ -156,22 +148,19 @@ public class RunningStat {
   /**
    * Returns the standard deviation of all observed samples.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 if {@code normType = 0} or by {@link #count()}.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if the normalisation type is not one
-   * of 0 or 1.
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
    * 
-   * @param normType The normalisation to be used.
-   * @return The standard deviation.
+   * @param normType The normalisation
+   * @return The standard deviation
    * 
-   * @throws IllegalArgumentException Thrown if the normalisation type is not one of 0 or 1.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
   public double stddev(int normType) throws IllegalArgumentException {
     return Math.sqrt(var(normType));
   }
 
   /**
-   * Resets the observation.
+   * Resets the statistical values.
    */
   public void reset() {
     _max = Double.NaN;
