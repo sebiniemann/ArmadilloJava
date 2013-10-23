@@ -57,7 +57,7 @@ public class RunningStat {
     if (Double.isNaN(sample)) {
       throw new IllegalArgumentException("NaN is not valid sample value.");
     }
-    
+
     if (_count > 0) {
       _max = Math.max(_max, sample);
       _min = Math.min(_min, sample);
@@ -75,6 +75,9 @@ public class RunningStat {
 
   /**
    * Returns the amount of samples.
+   * <p>
+   * <b>Note:</b> Returns a double. Therefore, no more than 2^53 (approx. 9 * 10^15) samples can be processed before the
+   * stored amount of samples suffers a loss of precision due to gaps between representable integers as double.
    * 
    * @return The amount
    */
@@ -111,7 +114,7 @@ public class RunningStat {
 
   /**
    * Returns the variance of all samples with normalisation by {@link #count()} - 1.
-   *
+   * 
    * @return The variance
    */
   public double var() {
@@ -121,7 +124,8 @@ public class RunningStat {
   /**
    * Returns the variance of all samples.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType}
+   * = 1).
    * 
    * @param normType The normalisation
    * @return The variance
@@ -144,7 +148,7 @@ public class RunningStat {
 
   /**
    * Returns the standard deviation of all samples with normalisation by {@link #count()} - 1.
-   *
+   * 
    * @return The standard deviation.
    */
   public double stddev() {
@@ -154,7 +158,8 @@ public class RunningStat {
   /**
    * Returns the standard deviation of all samples.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType}
+   * = 1).
    * 
    * @param normType The normalisation
    * @return The standard deviation
