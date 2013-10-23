@@ -47,7 +47,7 @@ public class RunningStat {
   }
 
   /**
-   * Recalculates the statistical values with inclusion of the provided sample.
+   * Recalculates the statistical values with inclusion of the sample.
    * 
    * @param sample The sample
    * 
