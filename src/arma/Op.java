@@ -10,8 +10,6 @@
 
 package arma;
 
-import org.ejml.data.DenseMatrix64F;
-
 /**
  * Provides predefined constants to identify arithmetic or relational operators.
  * <p>
@@ -81,79 +79,70 @@ public enum Op {
   GREATER;
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
-   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a 1 for each element for which the evaluation of
+   * {@code a operator b} holds true and 0 otherwise.
    * 
-   * @param a The left-hand side operand.
-   * @param operator The operator to be used.
-   * @param b The right-hand side operand.
-   * @return The created column vector.
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param b The right-hand side operand
+   * @return The vector
    * 
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
-   *           is provided.
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if both arguments are matrices but have an unequal
-   *           number of elements.
+   * @throws IllegalArgumentException NaN is not a valid operand value.
+   * @throws IllegalArgumentException Both provided matrices must have the same number of elements, but had
+   *           {@code a.n_elem} and {@code b.n_elem} elements.
+   * @throws UnsupportedOperationException Only relational operators are supported.
    */
-  public static Mat evaluate(Mat a, Op operator, Mat b) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat evaluate(Mat a, Op operator, Mat b) throws IllegalArgumentException, UnsupportedOperationException {
     if (a.n_elem != b.n_elem) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of elements, but their amount were " + a.n_elem + " and " + b.n_elem + ".");
+      throw new IllegalArgumentException("Both provided matrices must have the same number of elements, but had " + a.n_elem + " and " + b.n_elem + " elements.");
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
-    DenseMatrix64F memptrA = a.memptr();
-    DenseMatrix64F memptrB = b.memptr();
-
-    for (int i = 0; i < a.n_elem; i++) {
-      if (evaluate(memptrA.get(i), operator, memptrB.get(i))) {
-        result.set(a.convertToRowMajorOrdering(i), 1);
+    Mat result = new Mat(a.n_elem, 1);
+    for (int n = 0; n < a.n_elem; n++) {
+      if (evaluate(a._matrix.get(n), operator, b._matrix.get(n))) {
+        result._matrix.set(n, 1);
       }
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
-   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a 1 for each element for which the evaluation of
+   * {@code a operator b} holds true and 0 otherwise.
    * 
-   * @param a The left-hand side operand.
-   * @param operator The operator to be used.
-   * @param b The right-hand side operand.
-   * @return The created column vector.
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param b The right-hand side operand
+   * @return The vector
    * 
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
-   *           is provided.
-   * 
-   * @see #evaluate(Mat, Op, Mat)
+   * @throws IllegalArgumentException NaN is not a valid operand value.
+   * @throws UnsupportedOperationException Only relational operators are supported.
    */
-  public static Mat evaluate(Mat a, Op operator, double b) throws UnsupportedOperationException {
-    DenseMatrix64F result = new DenseMatrix64F(a.n_elem, 1);
-    DenseMatrix64F memptrA = a.memptr();
-
-    for (int i = 0; i < a.n_elem; i++) {
-      if (evaluate(memptrA.get(i), operator, b)) {
-        result.set(a.convertToRowMajorOrdering(i), 1);
+  public static Mat evaluate(Mat a, Op operator, double b) throws IllegalArgumentException, UnsupportedOperationException {
+    Mat result = new Mat(a.n_elem, 1);
+    for (int n = 0; n < a.n_elem; n++) {
+      if (evaluate(a._matrix.get(n), operator, b)) {
+        result._matrix.set(n, 1);
       }
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
-   * <b>Non-canonical:</b> Creates a column vector containing a {@code 1} for each element for which an element-wise
-   * evaluation of {@code a operator b} holds true and a {@code 0} otherwise.
+   * <b>Non-canonical:</b> Creates a column vector containing a 1 for each element for which the evaluation of
+   * {@code a operator b} holds true and 0 otherwise.
    * 
-   * @param a The left-hand side operand.
-   * @param operator The operator to be used.
-   * @param b The right-hand side operand.
-   * @return The created column vector.
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param b The right-hand side operand
+   * @return The vector
    * 
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
-   *           is provided.
-   * 
-   * @see #evaluate(Mat, Op, Mat)
+   * @throws IllegalArgumentException NaN is not a valid operand value.
+   * @throws UnsupportedOperationException Only relational operators are supported.
    */
-  public static Mat evaluate(double a, Op operator, Mat b) throws UnsupportedOperationException {
+  public static Mat evaluate(double a, Op operator, Mat b) throws IllegalArgumentException, UnsupportedOperationException {
     switch (operator) {
       case STRICT_LESS:
         return evaluate(b, Op.STRICT_GREATER, a);
@@ -172,20 +161,19 @@ public enum Op {
   }
 
   /**
-   * Returns true if the evaluation of {@code a operator b} holds true.
+   * <b>Non-canonical:</b> Returns true if the evaluation of {@code a operator b} holds true and false otherwise.
    * 
-   * @param a The left-hand side operand.
-   * @param operator The operator to be used.
-   * @param b The right-hand side operand.
-   * @return The boolean result.
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param b The right-hand side operand
+   * @return Whether the evaluation holds true
    * 
-   * @throws IllegalArgumentException Thrown if any of the operands is not a number (NaN).
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operator besides relational operators
-   *           is provided.
+   * @throws IllegalArgumentException NaN is not a valid operand value.
+   * @throws UnsupportedOperationException Only relational operators are supported.
    */
   private static boolean evaluate(double a, Op operator, double b) throws IllegalArgumentException, UnsupportedOperationException {
     if (Double.isNaN(a) || Double.isNaN(b)) {
-      throw new IllegalArgumentException("Relational operations on NaN are not supported.");
+      throw new IllegalArgumentException("NaN is not a valid operand value.");
     }
 
     switch (operator) {
@@ -227,25 +215,23 @@ public enum Op {
   }
 
   /**
-   * <b>Non-canonical:</b> Performs the requested unary arithmetic operation {@code a operator}.
-   * <p>
-   * Prints a warning to Sysout.out if an overflow is detected.
+   * <b>Non-canonical:</b> Evaluates an unary arithmetic operation {@code a operator}.
    * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed. Only unary arithmetic operators.
-   * @return The result.
+   * @param a The left-hand side operand
+   * @param operator The operation (only unary arithmetic operators)
+   * @return The result
    * 
-   * @throws IllegalArgumentException Thrown if the operand is not a number (NaN).
-   * @throws UnsupportedOperationException Thrown if another operation besides unary arithmetic operators is requested.
+   * @throws IllegalArgumentException NaN is not a valid operand.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  static double getResult(double a, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
+  static double getResult(double a, Op operator) throws IllegalArgumentException, UnsupportedOperationException {
     double result = 0;
 
     if (Double.isNaN(a)) {
-      throw new IllegalArgumentException("Arithmetic operations on NaN are not supported.");
+      throw new IllegalArgumentException("NaN is not a valid operand.");
     }
 
-    switch (operation) {
+    switch (operator) {
       case INCREMENT:
         result = a++;
         break;
@@ -255,39 +241,32 @@ public enum Op {
       default:
         throw new UnsupportedOperationException("Only unary arithmetic operators are supported.");
     }
-
-    if (!Double.isInfinite(a) && Double.isInfinite(result)) {
-      System.out.println("WARNING: Overflow detected. Requested " + a + " " + operation);
-      Thread.dumpStack();
-    }
-
+    
+    underflowOverflowDetection(a, operator, result);
     return result;
   }
 
   /**
-   * <b>Non-canonical:</b> Performs the requested binary arithmetic operation {@code a operator b} or sets {@code a} to
-   * the value of {@code b} if {@code operation = }{@link Op#EQUAL}.
-   * <p>
-   * Prints a warning to Sysout.out if an overflow or underflow is detected.
+   * <b>Non-canonical:</b> Evaluates an binary arithmetic operation {@code a operator b} or returns {@code b} if {@code operation} = {@link Op#EQUAL}.
    * 
-   * @param a The left-hand side operand.
-   * @param operation The operation to be performed. Only binary arithmetic operators and equality are supported.
-   * @param b The right-hand side operand.
-   * @return The result.
+   * @param a The left-hand side operand
+   * @param operator The operation (only binary arithmetic operators)
+   * @param b The right-hand side operand
+   * @return The result
    * 
-   * @throws IllegalArgumentException Thrown if any of the operands is not a number (NaN).
-   * @throws ArithmeticException Thrown if division by zero or infinity is requested.
-   * @throws UnsupportedOperationException Thrown if another operation besides binary arithmetic operators or equality
-   *           is requested.
+   * @throws IllegalArgumentException NaN is not a valid operand.
+   * @throws ArithmeticException Division by zero.
+   * @throws ArithmeticException Division by infinity.
+   * @throws UnsupportedOperationException Only arithmetic operators and equality are supported.
    */
-  static double getResult(double a, Op operation, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
+  static double getResult(double a, Op operator, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
     double result = 0;
 
     if (Double.isNaN(a) || Double.isNaN(b)) {
-      throw new IllegalArgumentException("Arithmetic operations on NaN are not supported.");
+      throw new IllegalArgumentException("NaN is not a valid operand.");
     }
 
-    switch (operation) {
+    switch (operator) {
       case EQUAL:
         result = b;
         break;
@@ -316,18 +295,50 @@ public enum Op {
         throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
     }
 
-    if (operation.equals(TIMES) || operation.equals(ELEMTIMES) || operation.equals(ELEMDIVIDE)) {
+    underflowOverflowDetection(a, operator, b, result);
+    return result;
+  }
+  
+  /**
+   * Detects if the result of an unary operation was affected by an overflow.
+   * <p>
+   * Note: The supported unary operations cannot result in an underflow.
+   * 
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param result The calculated result
+   * 
+   * @throws ArithmeticException Underflow detected. {@code a operator} resulted in {@code result}.
+   * @throws ArithmeticException Overflow detected. {@code a operator} resulted in {@code result}.
+   */
+  static void underflowOverflowDetection(double a, Op operator, double result) throws ArithmeticException {
+    if (!Double.isInfinite(a) && Double.isInfinite(result)) {
+      throw new ArithmeticException("Overflow detected. " + a + " " + operator + " resulted in " + result + ".");
+    }
+  }
+  
+  /**
+   * Detects if the result of an binary operation was affected by an underflow or overflow.
+   * <p>
+   * The overflow detection is only active if the operator is one of {@link #TIMES}, {@link #ELEMTIMES} or {@link #ELEMDIVIDE}.
+   * 
+   * @param a The left-hand side operand
+   * @param operator The operator
+   * @param b The right-hand side operand
+   * @param result The calculated result
+   * 
+   * @throws ArithmeticException Underflow detected. {@code a operator b} resulted in {@code result}.
+   * @throws ArithmeticException Overflow detected. {@code a operator b} resulted in {@code result}.
+   */
+  static void underflowOverflowDetection(double a, Op operator, double b, double result) throws ArithmeticException {
+    if (operator.equals(TIMES) || operator.equals(ELEMTIMES) || operator.equals(ELEMDIVIDE)) {
       if (a != 0 && b != 0 && result == 0) {
-        System.out.println("WARNING: Underflow detected. Requested " + a + " " + operation + " " + b);
-        Thread.dumpStack();
+        throw new ArithmeticException("Underflow detected. " + a + " " + operator + " " + b + " resulted in " + result + ".");
       }
     }
 
     if (!Double.isInfinite(a) && !Double.isInfinite(b) && Double.isInfinite(result)) {
-      System.out.println("WARNING: Overflow detected. Requested " + a + " " + operation + " " + b);
-      Thread.dumpStack();
+      throw new ArithmeticException("Overflow detected. " + a + " " + operator + " " + b + " resulted in " + result + ".");
     }
-
-    return result;
   }
 }
