@@ -11,13 +11,13 @@
 package arma;
 
 /**
- * The file types.
+ * Provides predefined constants to identify fill types.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public enum Fill {
   /**
-   * Do nothing.
+   * Do nothing
    */
   NONE,
   /**
