@@ -2802,7 +2802,7 @@ public class Mat {
    * 
    * @throws IllegalArgumentException Thrown if the provided position is out of bound.
    */
-  private int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
+  int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
     if (!in_range(n)) {
       throw new IllegalArgumentException("The provided position is out of bound.");
     }
