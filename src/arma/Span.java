@@ -49,7 +49,7 @@ public class Span {
     }
 
     if (Double.isInfinite(first) || Double.isNaN(first) || Double.isInfinite(last) || Double.isNaN(last)) {
-      throw new IllegalArgumentException("NaN and infinity are not valid element positions.");
+      throw new IllegalArgumentException("NaN and infinity are not valid positions value.");
     }
 
     _first = first;

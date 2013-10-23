@@ -69,18 +69,23 @@ public class RunningStatVec {
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> The sample vector must be a vector, but was a (
    *           {@code samples.n_rows}, {@code samples.n_cols})-matrix.
-   * @throws IllegalArgumentException <b>Non-canonical:</b> The number of elements in the provided sample vector did not
-   *           match previous one. {@code samples.n_elem} was previously: {@code max.n_elem}, but is now:
+   * @throws IllegalArgumentException <b>Non-canonical:</b> NaN is not valid sample value for any element.
+   * @throws IllegalArgumentException <b>Non-canonical:</b> The provided sample vector must have the same number of
+   *           elements as the previous one. {@code samples.n_elem} was previously: {@code max.n_elem}, but is now:
    *           {@code samples.n_elem}.
    */
   public void update(Mat samples) throws IllegalArgumentException {
     if (!samples.is_vec()) {
       throw new IllegalArgumentException("The sample vector must be a vector, but was a (" + samples.n_rows + ", " + samples.n_cols + ")-matrix.");
     }
+    
+    if(!samples.is_number()) {
+      throw new IllegalArgumentException("NaN is not valid sample value for any element.");
+    }
 
     if (_count > 0) {
       if (_max.n_elem != samples.n_elem) {
-        throw new IllegalArgumentException("The number of elements in the provided sample vector did not match previous one. samples.n_elem was previously: " + _max.n_elem + ", but is now: " + samples.n_elem + ".");
+        throw new IllegalArgumentException("The provided sample vector must have the same number of elements as the previous one. samples.n_elem was previously: " + _max.n_elem + ", but is now: " + samples.n_elem + ".");
       }
 
       if (_calculateCovariance) {
@@ -156,7 +161,7 @@ public class RunningStatVec {
 
   /**
    * Returns the variance of all samples per dimension with normalisation by {@link #count()} - 1.
-   *
+   * 
    * @return The variance
    */
   public Mat var() {
@@ -166,7 +171,8 @@ public class RunningStatVec {
   /**
    * Returns the variance of all samples per dimension.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType}
+   * = 1).
    * 
    * @param normType The normalisation
    * @return The variance
@@ -199,7 +205,8 @@ public class RunningStatVec {
   /**
    * Returns the standard deviation of all samples per dimension.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType}
+   * = 1).
    * 
    * @param normType The normalisation
    * @return The standard deviation
@@ -213,6 +220,7 @@ public class RunningStatVec {
   /**
    * Returns the covariance of all observed samples per dimension with normalisation by {@link #count()} - 1.
    * *
+   * 
    * @return The covariance
    * 
    * @throws IllegalAccessException The constructor must be invoked with calculateCovariance be set to true to activate
@@ -225,7 +233,8 @@ public class RunningStatVec {
   /**
    * Returns the covariance of all observed samples per dimension.
    * <p>
-   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
+   * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType}
+   * = 1).
    * 
    * @param normType The normalisation
    * @return The covariance

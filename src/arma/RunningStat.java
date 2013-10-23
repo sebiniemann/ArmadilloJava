@@ -50,8 +50,14 @@ public class RunningStat {
    * Recalculates the statistical values with inclusion of the provided sample.
    * 
    * @param sample The sample
+   * 
+   * @throws IllegalArgumentException NaN is not valid sample.
    */
-  public void update(double sample) {
+  public void update(double sample) throws IllegalArgumentException {
+    if (Double.isNaN(sample)) {
+      throw new IllegalArgumentException("NaN is not valid sample value.");
+    }
+    
     if (_count > 0) {
       _max = Math.max(_max, sample);
       _min = Math.min(_min, sample);
