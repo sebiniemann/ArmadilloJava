@@ -18,9 +18,12 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.RandomMatrices;
 
 /**
- * Provides a real-valued dense matrix with double precision and member functions as well as attributes similar to the
+ * Provides a real-valued dense matrix with double precision. Member functions as well as attributes are similar to the
  * Armadillo C++ Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles'
  * Efficient Java Matrix Library (EJML) Version 0.23 from 21.06.2013.
+ * <p>
+ * See also the <a href="https://github.com/SebastianNiemann/ArmadilloJava/blob/master/CONVERSION.md">syntax conversion
+ * table</a>.
  * <p>
  * If not stated otherwise (marked as non-canonical in case), the provided interfaces is identical to Armadillo (e.g.
  * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
@@ -39,37 +42,37 @@ import org.ejml.ops.RandomMatrices;
 public class Mat {
 
   /**
-   * Reference to the internal data representation of the matrix.
+   * The internal data representation of the matrix
    */
   DenseMatrix64F _matrix;
 
   /**
-   * The number of rows of the matrix.
+   * The number of rows
    */
   public int     n_rows;
 
   /**
-   * The number of columns of the matrix.
+   * The number of columns
    */
   public int     n_cols;
 
   /**
-   * The number of elements of the matrix (same as {@link #n_rows} * {@link #n_cols}) .
+   * The number of elements (same as {@link #n_rows} * {@link #n_cols}) .
    */
   public int     n_elem;
 
   /**
-   * Creates a matrix by referencing to the provided one.
+   * Creates a matrix by copying to the provided one.
    * 
-   * @param matrix The matrix to be referenced.
+   * @param matrix The matrix
    */
   Mat(DenseMatrix64F matrix) {
-    _matrix = matrix;
+    _matrix = new DenseMatrix64F(matrix);
     updateAttributes();
   }
 
   /**
-   * Creates an empty matrix with {@link #n_elem} = 0.
+   * Creates an empty matrix with zero elements.
    */
   public Mat() {
     this(new DenseMatrix64F());
@@ -78,33 +81,58 @@ public class Mat {
   /**
    * Creates a column vector with the same number of elements as the provided one-dimensional array.
    * 
-   * @param matrix The one-dimensional array.
+   * @param matrix The array
    */
   public Mat(double[] matrix) {
-    _matrix = new DenseMatrix64F(matrix.length, 1);
+    if (matrix.length > 0) {
+      _matrix = new DenseMatrix64F(matrix.length, 1);
 
-    for (int n = 0; n < _matrix.numRows; n++) {
-      _matrix.set(n, matrix[n]);
+      for (int n = 0; n < _matrix.numRows; n++) {
+        _matrix.set(n, matrix[n]);
+      }
+    } else {
+      _matrix = new DenseMatrix64F();
     }
 
     updateAttributes();
   }
 
   /**
-   * Creates a matrix with the same size as the provided two-dimensional array. The array is assumed to have a structure
-   * of {@code array[rows][columns]}.
+   * Creates a matrix with the same size as the provided two-dimensional array.
+   * <p>
+   * The array is assumed to have a structure like {@code array[rows][columns]}.
    * 
-   * @param matrix The two-dimensional array.
+   * @param matrix The array
+   * 
+   * @throws IllegalArgumentException All columns must have the same length.
    */
-  public Mat(double[][] matrix) {
-    // Error-checking must be done in DenseMatrix64F since this() needs to be the first statement.
-    this(new DenseMatrix64F(matrix));
+  public Mat(double[][] matrix) throws IllegalArgumentException {
+    if (matrix.length > 0 && matrix[0].length > 0) {
+      int numberOfRows = matrix.length;
+      int numberOfColumns = matrix[0].length;
+
+      _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+
+      for (int i = 0; i < _matrix.numRows; i++) {
+        for (int j = 0; j < _matrix.numCols; j++) {
+          if (matrix[0].length != _matrix.numCols) {
+            throw new IllegalArgumentException("All columns must have the same length.");
+          }
+
+          _matrix.set(i, j, matrix[i][j]);
+        }
+      }
+    } else {
+      _matrix = new DenseMatrix64F();
+    }
+
+    updateAttributes();
   }
 
   /**
    * Creates a matrix by copying the provided one.
    * 
-   * @param matrix The provided matrix.
+   * @param matrix The matrix
    */
   public Mat(Mat matrix) {
     this(new DenseMatrix64F(matrix.memptr()));
@@ -113,17 +141,17 @@ public class Mat {
   /**
    * Creates a uninitialised column vector with {@code numberOfElements} elements.
    * 
-   * @param numberOfElements The number of elements.
+   * @param numberOfElements The number of elements
    */
   public Mat(int numberOfElements) {
     this(numberOfElements, 1, Fill.NONE);
   }
 
   /**
-   * Creates a uninitialised matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
+   * Creates an uninitialised matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    */
   public Mat(int numberOfRows, int numberOfColumns) {
     this(numberOfRows, numberOfColumns, Fill.NONE);
@@ -131,15 +159,12 @@ public class Mat {
 
   /**
    * Creates a column vector with {@code numberOfElements} elements that is filled according to {@code fillType}.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
-   * {@code RANDU} or {@code RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
    * 
-   * @param numberOfElements The number of elements.
-   * @param fillType The fill type.
+   * @param numberOfElements The number of elements
+   * @param fillType The fill type
    * 
-   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
-   *           {@link #Mat(int, int, Fill, Random)} instead.
+   * @throws IllegalArgumentException Does not support {@link Fill#RANDU} or {@link Fill#RANDN}. Use
+   *           {@link #Mat(int, Fill, Random)} instead.
    */
   public Mat(int numberOfElements, Fill fillType) {
     this(numberOfElements, 1, fillType);
@@ -148,15 +173,12 @@ public class Mat {
   /**
    * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns that is filled according to
    * {@code fillType}.
-   * <p>
-   * <b>Non-canonical:</b> An {@code IllegalArgumentException} exception is thrown if {@code fillType} is one of
-   * {@link Fill#RANDU} or {@link Fill#RANDN}. Use {@link #Mat(int, int, Fill, Random)} instead.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param fillType The fill type.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param fillType The fill type
    * 
-   * @throws IllegalArgumentException Thrown if {@code fillType} is one of {@code RANDU} or {@code RANDN}. Use
+   * @throws IllegalArgumentException Does not support {@link Fill#RANDU} or {@link Fill#RANDN}. Use
    *           {@link #Mat(int, int, Fill, Random)} instead.
    */
   public Mat(int numberOfRows, int numberOfColumns, Fill fillType) throws IllegalArgumentException {
@@ -185,9 +207,9 @@ public class Mat {
    * <p>
    * Works also with {@link Fill#RANDU} and {@link Fill#RANDN}.
    * 
-   * @param numberOfElements The number of elements.
-   * @param fillType The fill type.
-   * @param rng The pseudorandom generator.
+   * @param numberOfElements The number of elements
+   * @param fillType The fill type
+   * @param rng The pseudorandom generator
    */
   public Mat(int numberOfElements, Fill fillType, Random rng) {
     this(numberOfElements, 1, fillType, rng);
@@ -199,10 +221,10 @@ public class Mat {
    * <p>
    * Works also with {@link Fill#RANDU} and {@link Fill#RANDN}.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param fillType The fill type.
-   * @param rng The pseudorandom generator.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param fillType The fill type
+   * @param rng The pseudorandom generator
    */
   public Mat(int numberOfRows, int numberOfColumns, Fill fillType, Random rng) {
     switch (fillType) {
@@ -234,60 +256,46 @@ public class Mat {
   }
 
   /**
-   * Returns the value of the element at the <i>i</i>th row and <i>j</i>th column.
+   * Returns the value of the element at the {@code i}th row and {@code j}th column.
    * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
-   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
-   * position is out of bound.
-   * </ul>
+   * <b>Non-canonical:</b> Performs boundary checks. <b>Note:</b> There is no element access provided without boundary
+   * checks.
    * 
-   * @param i The row of the element.
-   * @param j The column of the element.
-   * @return The value of the element at the <i>i</i>th row and <i>j</i>th column.
+   * @param i The row
+   * @param j The column
+   * @return The value
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * 
-   * @see #at(int)
+   * @throws ArrayIndexOutOfBoundsException The requested position is out of bound. The matrix is of size ({@code n_rows}, {@code n_cols}) but the position was ({@code i}, {@code j}).
    */
-  public double at(int i, int j) throws IllegalArgumentException {
+  public double at(int i, int j) throws ArrayIndexOutOfBoundsException {
     if (!in_range(i, j)) {
-      throw new IllegalArgumentException("The requested position is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but position (" + i + ", " + j + ") was requested.");
+      throw new ArrayIndexOutOfBoundsException("The requested position is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the position was (" + i + ", " + j + ").");
     }
 
     return _matrix.get(i, j);
   }
 
   /**
-   * Performs a unary operation on the value of the element at the <i>i</i>th row and <i>j</i>th column and overwrites
+   * Performs a unary operation on the value of the element at the {@code i}th row and {@code j}th column and overwrites
    * it with the result.
    * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>Performs boundary checks. <b>Note:</b> There is no element access provided without boundary checks.
-   * <li>A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if the requested
-   * position is out of bound.
-   * <li>A {@code UnsupportedOperationException} exception is thrown if another operation besides binary arithmetic
-   * operators or equality is requested.
-   * </ul>
+   * <b>Non-canonical:</b> Performs boundary checks. <b>Note:</b> There is no element access provided without boundary
+   * checks.
    * 
-   * @param i The row of the left hand side operand.
-   * @param j The column of the left hand side operand.
-   * @param operation The operation to be performed. Only binary unary operators are supported.
+   * @param i The row
+   * @param j The column
+   * @param operator The operator
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
-   * @throws UnsupportedOperationException <b>Non-canonical:</b> Thrown if another operation besides unary arithmetic
-   *           operators is requested.
-   * 
-   * @see #at(int, Op, double)
+   * @throws ArrayIndexOutOfBoundsException The requested position is out of bound. The matrix is of size ({@code n_rows}, {@code n_cols}) but the position was ({@code i}, {@code j}).
+   * @throws IllegalArgumentException NaN is not a valid operand.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void at(int i, int j, Op operation) throws IllegalArgumentException, UnsupportedOperationException {
-    _matrix.set(i, j, Op.getResult(at(i, j), operation));
+  public void at(int i, int j, Op operator) throws IllegalArgumentException, UnsupportedOperationException {
+    _matrix.set(i, j, Op.getResult(at(i, j), operator));
   }
 
   /**
-   * Performs a right hand side operation on the value of the element at the <i>i</i>th row and <i>j</i>th column and
+   * Performs a right hand side operation on the value of the element at the {@code i}th row and {@code j}th column and
    * overwrites it with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -315,7 +323,7 @@ public class Mat {
   }
 
   /**
-   * Returns the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of the matrix.
+   * Returns the value of the {@code n}th element of a column-major-ordered one-dimensional view of the matrix.
    * <p>
    * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
    * <p>
@@ -327,7 +335,7 @@ public class Mat {
    * </ul>
    * 
    * @param n The position of the element.
-   * @return The value of the <i>n</i>th element.
+   * @return The value of the {@code n}th element.
    * 
    * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the requested position is out of bound.
    * 
@@ -342,7 +350,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on the value of the <i>n</i>th element of a column-major-ordered one-dimensional view of
+   * Performs a unary operation on the value of the {@code n}th element of a column-major-ordered one-dimensional view of
    * the matrix and overwrites it with the result.
    * <p>
    * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
@@ -369,13 +377,13 @@ public class Mat {
     if (!in_range(n)) {
       throw new IllegalArgumentException("The requested position is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
     }
-    
+
     n = convertToRowMajorOrdering(n);
     _matrix.set(n, Op.getResult(_matrix.get(n), operation));
   }
 
   /**
-   * Performs a right hand side operation on the value of the <i>n</i>th element of a column-major-ordered
+   * Performs a right hand side operation on the value of the {@code n}th element of a column-major-ordered
    * one-dimensional view of the matrix and overwrites it with the result.
    * <p>
    * <b>Note:</b> {@link #at(int, int) at(i, j)}{@code = at(i + j * n_rows)}.
@@ -403,13 +411,13 @@ public class Mat {
     if (!in_range(n)) {
       throw new IllegalArgumentException("The requested position is out of bound. The matrix contains " + n_elem + " elements, but position " + n + " was requested.");
     }
-    
+
     n = convertToRowMajorOrdering(n);
     _matrix.set(n, Op.getResult(_matrix.get(n), operation, operand));
   }
 
   /**
-   * Returns a copy of the <i>j</i>th column.
+   * Returns a copy of the {@code j}th column.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested column is out of
    * bound.
@@ -433,7 +441,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>j</i>th column and overwrites each element with the result.
+   * Performs a unary operation on all elements of the {@code j}th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -456,7 +464,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th column and overwrites each
    * element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -498,7 +506,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and overwrites each
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th column and overwrites each
    * element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -527,7 +535,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of all elements in the <i>j</i>th column and <i>a</i>th to <i>b</b>th row.
+   * Returns a copy of all elements in the {@code j}th column and {@code a}th to {@code b}th row.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested column or rows are
    * out of bound.
@@ -555,7 +563,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>j</i>th column and <i>a</i>th to <i>b</b>th row and overwrites
+   * Performs a unary operation on all elements of the {@code j}th column and {@code a}th to {@code b}th row and overwrites
    * each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -585,8 +593,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and <i>a</i>th to
-   * <i>b</b>th row and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th column and {@code a}th to
+   * {@code b}th row and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -631,8 +639,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th column and <i>a</i>th to
-   * <i>b</b>th row and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th column and {@code a}th to
+   * {@code b}th row and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -662,7 +670,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of the <i>i</i>th row.
+   * Returns a copy of the {@code i}th row.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested row is out of bound.
    * 
@@ -685,7 +693,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>i</i>th row and overwrites each element with the result.
+   * Performs a unary operation on all elements of the {@code i}th row and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -712,7 +720,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each element
+   * Performs a right hand side element-wise operation on all elements of the {@code i}th row and overwrites each element
    * with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -754,7 +762,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>i</i>th row and overwrites each element
+   * Performs a right hand side element-wise operation on all elements of the {@code i}th row and overwrites each element
    * with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -783,7 +791,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of all elements in the <i>i</i>th row and <i>a</i>th to <i>b</b>th column.
+   * Returns a copy of all elements in the {@code i}th row and {@code a}th to {@code b}th column.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested row or columns are
    * out of bound.
@@ -811,7 +819,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>j</i>th row and <i>a</i>th to <i>b</b>th column and overwrites
+   * Performs a unary operation on all elements of the {@code j}th row and {@code a}th to {@code b}th column and overwrites
    * each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -841,8 +849,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th row and <i>a</i>th to
-   * <i>b</b>th column and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th row and {@code a}th to
+   * {@code b}th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -887,8 +895,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>j</i>th row and <i>a</i>th to
-   * <i>b</b>th column and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements of the {@code j}th row and {@code a}th to
+   * {@code b}th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -918,7 +926,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of the <i>a</i>th to <i>b</b>th column.
+   * Returns a copy of the {@code a}th to {@code b}th column.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested columns are out of
    * bound.
@@ -945,7 +953,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>a</i>th to <i>b</b>th column and overwrites each element with
+   * Performs a unary operation on all elements of the {@code a}th to {@code b}th column and overwrites each element with
    * the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -976,7 +984,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th column and
+   * Performs a right hand side element-wise operation on all elements of the {@code a}th to {@code b}th column and
    * overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1018,7 +1026,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th column and
+   * Performs a right hand side element-wise operation on all elements of the {@code a}th to {@code b}th column and
    * overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1050,7 +1058,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of the <i>a</i>th to <i>b</b>th row.
+   * Returns a copy of the {@code a}th to {@code b}th row.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested rows are out of
    * bound.
@@ -1077,7 +1085,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements of the <i>a</i>th to <i>b</b>th row and overwrites each element with the
+   * Performs a unary operation on all elements of the {@code a}th to {@code b}th row and overwrites each element with the
    * result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1108,7 +1116,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th row and
+   * Performs a right hand side element-wise operation on all elements of the {@code a}th to {@code b}th row and
    * overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1150,7 +1158,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements of the <i>a</i>th to <i>b</b>th row and
+   * Performs a right hand side element-wise operation on all elements of the {@code a}th to {@code b}th row and
    * overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1253,7 +1261,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of all elements in the <i>ai</i>th to <i>bi</b>th row and <i>aj</i>th and <i>bj</>th column.
+   * Returns a copy of all elements in the {@code ai}th to {@code bi}th row and {@code aj}th and {@code bj}th column.
    * <p>
    * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the requested rows or columns are
    * out of bound.
@@ -1282,7 +1290,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all elements in the <i>ai</i>th to <i>bi</b>th row and <i>aj</i>th and <i>bj</>th
+   * Performs a unary operation on all elements in the {@code ai}th to {@code bi}th row and {@code aj}th and {@code bj}th
    * column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1315,8 +1323,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements in the <i>ai</i>th to <i>bi</b>th row and
-   * <i>aj</i>th and <i>bj</>th column and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements in the {@code ai}th to {@code bi}th row and
+   * {@code aj}th and {@code bj}th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -1359,8 +1367,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on all elements in the <i>ai</i>th to <i>bi</b>th row and
-   * <i>aj</i>th and <i>bj</>th column and overwrites each element with the result.
+   * Performs a right hand side element-wise operation on all elements in the {@code ai}th to {@code bi}th row and
+   * {@code aj}th and {@code bj}th column and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -1393,7 +1401,7 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of the <i>a</i>th to <i>b</b>th element.
+   * Returns a copy of the {@code a}th to {@code b}th element.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -1435,7 +1443,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on the <i>a</i>th to <i>b</b>th element and overwrites each element with the result.
+   * Performs a unary operation on the {@code a}th to {@code b}th element and overwrites each element with the result.
    * <p>
    * <b>Non-canonical:</b>
    * <ul>
@@ -1468,7 +1476,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on the <i>a</i>th to <i>b</b>th element and overwrites each
+   * Performs a right hand side element-wise operation on the {@code a}th to {@code b}th element and overwrites each
    * element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1510,7 +1518,7 @@ public class Mat {
   }
 
   /**
-   * Performs a right hand side element-wise operation on the <i>a</i>th to <i>b</b>th element and overwrites each
+   * Performs a right hand side element-wise operation on the {@code a}th to {@code b}th element and overwrites each
    * element with the result.
    * <p>
    * <b>Non-canonical:</b>
@@ -1545,7 +1553,7 @@ public class Mat {
   }
 
   /**
-   * Returns a column vector containing all elements 
+   * Returns a column vector containing all elements
    * 
    * @param selection The selection to be used.
    * @return The copy of the selected elements.
@@ -2334,7 +2342,7 @@ public class Mat {
   public boolean is_finite() {
     return false;
   }
-  
+
   /**
    * @return
    */
@@ -2813,8 +2821,8 @@ public class Mat {
     if (!in_range(n)) {
       throw new IllegalArgumentException("The provided position is out of bound.");
     }
-    
-    if(is_vec()) {
+
+    if (is_vec()) {
       return n;
     } else {
       /*
