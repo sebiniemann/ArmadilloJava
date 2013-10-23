@@ -218,7 +218,7 @@ public enum Op {
    * <b>Non-canonical:</b> Evaluates an unary arithmetic operation {@code a operator}.
    * 
    * @param a The left-hand side operand
-   * @param operator The operator (only unary arithmetic operators)
+   * @param operator The operator
    * @return The result
    * 
    * @throws IllegalArgumentException NaN is not a valid operand.
@@ -250,14 +250,14 @@ public enum Op {
    * <b>Non-canonical:</b> Evaluates an binary arithmetic operation {@code a operator b} or returns {@code b} if {@code operation} = {@link Op#EQUAL}.
    * 
    * @param a The left-hand side operand
-   * @param operator The operator (only binary arithmetic operators)
+   * @param operator The operator
    * @param b The right-hand side operand
    * @return The result
    * 
    * @throws IllegalArgumentException NaN is not a valid operand.
    * @throws ArithmeticException Division by zero.
    * @throws ArithmeticException Division by infinity.
-   * @throws UnsupportedOperationException Only arithmetic operators and equality are supported.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   static double getResult(double a, Op operator, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
     double result = 0;
@@ -292,7 +292,7 @@ public enum Op {
         result = a / b;
         break;
       default:
-        throw new UnsupportedOperationException("Only arithmetic operators and equality are supported.");
+        throw new UnsupportedOperationException("Only binary arithmetic operators and equality are supported.");
     }
 
     underflowOverflowDetection(a, operator, b, result);
