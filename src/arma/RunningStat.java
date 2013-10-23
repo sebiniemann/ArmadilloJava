@@ -19,23 +19,23 @@ package arma;
 public class RunningStat {
 
   /**
-   * The smallest provided sample
+   * The smallest sample
    */
   private double _min;
   /**
-   * The largest provided sample
+   * The largest sample
    */
   private double _max;
   /**
-   * The amount of provided samples
+   * The amount of samples
    */
   private double _count;
   /**
-   * The mean of all provided samples
+   * The mean of all samples
    */
   private double _mean;
   /**
-   * The variance of all provided samples
+   * The variance of all samples
    */
   private double _var;
 
@@ -68,7 +68,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the amount of provided samples.
+   * Returns the amount of samples.
    * 
    * @return The amount
    */
@@ -77,7 +77,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the smallest provided sample.
+   * Returns the smallest sample.
    * 
    * @return The minimum
    */
@@ -86,7 +86,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the largest provided sample.
+   * Returns the largest sample.
    * 
    * @return The maximum
    */
@@ -95,7 +95,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the mean of all provided samples.
+   * Returns the mean of all samples.
    * 
    * @return The mean
    */
@@ -104,7 +104,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the variance of all observed samples with normalisation by {@link #count()} - 1.
+   * Returns the variance of all samples with normalisation by {@link #count()} - 1.
    *
    * @return The variance
    */
@@ -113,7 +113,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the variance of all observed samples.
+   * Returns the variance of all samples.
    * <p>
    * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
    * 
@@ -137,7 +137,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the standard deviation of all observed samples with normalisation by {@link #count()} - 1.
+   * Returns the standard deviation of all samples with normalisation by {@link #count()} - 1.
    *
    * @return The standard deviation.
    */
@@ -146,7 +146,7 @@ public class RunningStat {
   }
 
   /**
-   * Returns the standard deviation of all observed samples.
+   * Returns the standard deviation of all samples.
    * <p>
    * Performs either normalisation by {@link #count()} - 1 ({@code normType} = 0) or {@code #count()} ({@code normType} = 1).
    * 
