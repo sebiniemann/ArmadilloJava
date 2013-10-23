@@ -2334,6 +2334,13 @@ public class Mat {
   public boolean is_finite() {
     return false;
   }
+  
+  /**
+   * @return
+   */
+  boolean is_number() {
+    return false;
+  }
 
   /**
    * Returns true if the matrix is square and false otherwise.
