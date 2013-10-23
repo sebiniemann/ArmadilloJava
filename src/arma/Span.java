@@ -10,52 +10,46 @@
 package arma;
 
 /**
- * Provides support for Matlab's a:b
+ * Provides support for Matlab's index expression range a:b.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class Span {
   /**
-   * Start of the span.
+   * First position of the span
    */
   private int     _first;
   /**
-   * End of the span.
+   * Last position of the span
    */
   private int     _last;
-
   /**
-   * Indicates whether a:b (false) or only : (true) was provided.
+   * Whether the span includes the entire range
    */
   private boolean _isEntireRange;
 
   /**
-   * Creates a span like Matlab's a:b but without creating a new matrix.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the first provided value is larger than the last one.
-   * <li>A {@code IllegalArgumentException} exception is thrown if any value negative.
-   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
-   * </ul>
+   * Creates a span similar to Matlab's index expression range a:b, but without creating a vector.
    * 
-   * @param first The position a.
-   * @param last The position b.
+   * @param first The first element of the span (a)
+   * @param last The last element of the span (b)
    * 
-   * @throws IllegalArgumentException Thrown if the first provided value is larger than the last one or if any value is
-   *           NaN or infinity or any value is negative.
+   * @throws IllegalArgumentException The first position needs to be less than equal the last but were {@code first} and
+   *           {@code last}.
+   * @throws IllegalArgumentException All position must be non-negative.
+   * @throws IllegalArgumentException NaN and infinity are not valid element positions.
    */
   public Span(int first, int last) throws IllegalArgumentException {
     if (last < first) {
-      throw new IllegalArgumentException("The first value needs to be less than equal the last but were " + first + " and " + last + ".");
-    }
-
-    if (Double.isInfinite(first) || Double.isNaN(first) || Double.isInfinite(last) || Double.isNaN(last)) {
-      throw new IllegalArgumentException("NaN or infinity is not supported.");
+      throw new IllegalArgumentException("The first position needs to be less than equal the last but were " + first + " and " + last + ".");
     }
 
     if (first < 0) {
-      throw new IllegalArgumentException("All values must be non negative.");
+      throw new IllegalArgumentException("All position must be non-negative.");
+    }
+
+    if (Double.isInfinite(first) || Double.isNaN(first) || Double.isInfinite(last) || Double.isNaN(last)) {
+      throw new IllegalArgumentException("NaN and infinity are not valid element positions.");
     }
 
     _first = first;
@@ -65,65 +59,60 @@ public class Span {
   }
 
   /**
-   * Creates a span like Matlab's a:a but without creating a new matrix.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>A {@code IllegalArgumentException} exception is thrown if the first provided value is larger than the last one.
-   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
-   * <li>A {@code IllegalArgumentException} exception is thrown if any value is NaN or infinity.
-   * </ul>
+   * Creates a span similar to Matlab's index expression range a:a, but without creating a vector.
    * 
-   * @param position The position a.
+   * @param position The position (a)
    * 
-   * @throws IllegalArgumentException Thrown if the first provided value is larger than the last one or if any value is
-   *           NaN or infinity or any value is negative.
+   * @throws IllegalArgumentException All position must be non-negative.
+   * @throws IllegalArgumentException NaN and infinity are not valid element positions.
    */
   public Span(int position) throws IllegalArgumentException {
     this(position, position);
   }
 
   /**
-   * Creates a span like Matlab's : but without creating a new matrix.
+   * Creates a span similar to Matlab's index expression special range :, but without creating a vector.
    */
   public Span() {
-    _first = -1; // Illegal value by design. Should result in an exception if used.
-    _last = -1; // Illegal value by design. Should result in an exception if used.
+    // Illegal values by design. Should result in an exception if used together with other provided methods/classes.
+    _first = -1;
+    _last = -1;
 
     _isEntireRange = true;
   }
 
   /**
-   * Creates a span like Matlab's : but without creating a new matrix.
+   * Creates a span similar to Matlab's index expression special range :, but without creating a vector.
    * 
-   * @return The created span.
+   * @return The span
    */
   public static Span all() {
     return new Span();
   }
 
   /**
-   * Return the start of the span.
+   * Return the last position of the span.
    * 
-   * @return The start.
+   * @return The position
    */
   int getFirst() {
     return _first;
   }
 
   /**
-   * Return the start of the span.
+   * Return the first position of the span.
    * 
-   * @return The end.
+   * @return The position
    */
   int getLast() {
     return _last;
   }
 
   /**
-   * Indicates whether a:b (false) or only : (true) was provided.
+   * Returns whether the span should include the entire range (true) or a range from the first to the last position
+   * (false).
    * 
-   * @return The boolean value.
+   * @return Whether the span includes the entire range
    */
   boolean isEntireRange() {
     return _isEntireRange;
