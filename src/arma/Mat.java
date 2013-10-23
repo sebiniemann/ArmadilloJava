@@ -520,8 +520,7 @@ public class Mat {
     Mat result = new Mat(b - a + 1, 1);
     int resultN = 0;
     for (int i = a; i <= b; i++) {
-      result._matrix.set(resultN, _matrix.get(i, j));
-      resultN++;
+      result._matrix.set(resultN++, _matrix.get(i, j));
     }
 
     return result;
@@ -731,8 +730,7 @@ public class Mat {
     Mat result = new Mat(1, b - a + 1);
     int resultN = 0;
     for (int j = a; j <= b; j++) {
-      result._matrix.set(resultN, _matrix.get(i, j));
-      resultN++;
+      result._matrix.set(resultN++, _matrix.get(i, j));
     }
 
     return result;
@@ -841,9 +839,10 @@ public class Mat {
     }
 
     Mat result = new Mat(n_rows, b - a + 1);
+    int resultN = 0;
     for (int i = 0; i < n_rows; i++) {
       for (int j = a; j <= b; j++) {
-        result._matrix.set(i, j, _matrix.get(i, j));
+        result._matrix.set(resultN, _matrix.get(i, j));
       }
     }
 
@@ -948,9 +947,10 @@ public class Mat {
     }
 
     Mat result = new Mat(b - a + 1, n_cols);
+    int resultN = 0;
     for (int i = a; i <= b; i++) {
       for (int j = 0; j < n_cols; j++) {
-        result._matrix.set(i, j, _matrix.get(i, j));
+        result._matrix.set(resultN, _matrix.get(i, j));
       }
     }
 
@@ -1109,9 +1109,10 @@ public class Mat {
     }
 
     Mat result = new Mat(bi - ai + 1, bj - aj + 1);
+    int resultN = 0;
     for (int i = ai; i <= bi; i++) {
       for (int j = aj; j <= bj; j++) {
-        result._matrix.set(i, j, _matrix.get(i, j));
+        result._matrix.set(resultN++, _matrix.get(i, j));
       }
     }
 
@@ -1240,8 +1241,7 @@ public class Mat {
 
     int resultN = 0;
     for (int n = a; n <= b; n++) {
-      result._matrix.set(resultN, _matrix.get(n));
-      resultN++;
+      result._matrix.set(resultN++, _matrix.get(n));
     }
 
     return result;
@@ -1342,12 +1342,10 @@ public class Mat {
   }
 
   /**
-   * Returns all element specified in the selection – a vector of positions.
-   * <p>
-   * <b>Non-canonical:</b> Returns a row/column vector if the selection is a row/column vector.
+   * Returns all elements specified in the selection – a vector of positions.
    * 
    * @param selection The vector of positions
-   * @return The copy of the selected elements.
+   * @return The elements
    * 
    * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
    *           {@link #n_cols selection.n_cols})-matrix.
@@ -1361,22 +1359,18 @@ public class Mat {
     }
 
     if (selection.n_elem > 0) {
-      Mat result;
-      if (selection.is_colvec()) {
-        result = new Mat(selection.n_elem, 1);
-      } else {
-        result = new Mat(1, selection.n_elem);
-      }
+      Mat result = new Mat(selection.n_elem, 1);
 
       for (int n = 0; n < selection.n_elem; n++) {
-        double element = selection._matrix.get(n);
+        double elementDouble = selection._matrix.get(n);
+        int elementInt = (int) elementDouble;
 
         // Will also fail if the value is negative, which are also not allowed.
-        if (element != (int) element) {
-          throw new IllegalArgumentException("Each position must be a integer value, but one was " + element + ".");
+        if (elementDouble != elementInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + elementDouble + ".");
         }
 
-        result._matrix.set(n, at((int) element));
+        result._matrix.set(n, at(elementInt));
       }
 
       return result;
@@ -1386,7 +1380,7 @@ public class Mat {
   }
 
   /**
-   * Performs a unary operation on all element specified in the selection – a vector of positions – and overwrites each
+   * Performs a unary operation on all elements specified in the selection – a vector of positions – and overwrites each
    * element with the result.
    * 
    * @param selection The selection
@@ -1418,8 +1412,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all element specified in the selection – a vector of positions
-   * – and overwrites each element with the result.
+   * Performs a right-hand side element-wise operation on all elements specified in the selection – a vector of
+   * positions – and overwrites each element with the result.
    * 
    * @param selection The selection
    * @param operator The operator
@@ -1430,7 +1424,7 @@ public class Mat {
    * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
    *           hand side operand, but were {@link #n_elem selection.n_elem} and {@code operand.n_elem}.
    * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
-   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@code n_elem} elements,
    *           but the position was {@code n}.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
@@ -1458,8 +1452,8 @@ public class Mat {
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all element specified in the selection – a vector of positions
-   * – and overwrites each element with the result.
+   * Performs a right-hand side element-wise operation on all elements specified in the selection – a vector of
+   * positions – and overwrites each element with the result.
    * 
    * @param selection The selection
    * @param operator The operator
@@ -1481,7 +1475,7 @@ public class Mat {
       double elementDouble = selection._matrix.get(n);
       int elementInt = (int) elementDouble;
 
-      // Will also fail if the value is negative, which are also not allowed.
+      // Will also fail if the value is negative, which is also not allowed.
       if (elementDouble != elementInt) {
         throw new IllegalArgumentException("Each position must be a integer values, but one was " + elementDouble + ".");
       }
@@ -1491,109 +1485,506 @@ public class Mat {
   }
 
   /**
-   * @param J
-   * @return
+   * Returns all columns specified in the selection – a vector of column positions.
+   * 
+   * @param selection The vector of column positions
+   * @return The elements
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
    */
-  public Mat cols(Mat J) {
-    return null;
+  public Mat cols(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
+
+    if (selection.n_elem > 0) {
+      Mat result = new Mat(n_rows, selection.n_elem);
+
+      int resultN = 0;
+      for (int n = 0; n < selection.n_elem; n++) {
+        double jDouble = selection._matrix.get(n);
+        int jInt = (int) jDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (jDouble != jInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+        }
+
+        for (int i = 0; i < n_rows; i++) {
+          result._matrix.set(resultN++, _matrix.get(i, jInt));
+        }
+      }
+
+      return result;
+    } else {
+      return new Mat();
+    }
   }
 
   /**
-   * @param J
-   * @param operation
+   * Performs a unary operation on all columns specified in the selection – a vector of column positions – and
+   * overwrites each element with the result.
+   * 
+   * @param selection The vector of column positions
+   * @param operator The operator
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void cols(Mat J, Op operation) {
+  public void cols(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    for (int n = 0; n < selection.n_elem; n++) {
+      double jDouble = selection._matrix.get(n);
+      int jInt = (int) jDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (jDouble != jInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+      }
+
+      col(jInt, operator);
+    }
   }
 
   /**
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all columns specified in the selection – a vector of
+   * column positions – and overwrites each element with the result.
+   * 
+   * @param selection The vector of column positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem selection.n_elem} and {@code operand.n_elem}.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@code n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void cols(Mat J, Op operation, Mat operand) {
+  public void cols(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    if (operand.n_elem != selection.n_elem) {
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + selection.n_elem + " and " + operand.n_elem + ".");
+    }
+
+    for (int n = 0; n < selection.n_elem; n++) {
+      double jDouble = selection._matrix.get(n);
+      int jInt = (int) jDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (jDouble != jInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+      }
+
+      col(jInt, operator, operand);
+    }
   }
 
   /**
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all columns specified in the selection – a vector of
+   * column positions – and overwrites each element with the result.
+   * 
+   * @param selection The vector of column positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@code n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void cols(Mat J, Op operation, double operand) {
+  public void cols(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    for (int n = 0; n < selection.n_elem; n++) {
+      double jDouble = selection._matrix.get(n);
+      int jInt = (int) jDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (jDouble != jInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+      }
+
+      col(jInt, operator, operand);
+    }
   }
 
   /**
-   * @param J
-   * @return
+   * Returns all rows specified in the selection – a vector of row positions.
+   * 
+   * @param selection The vector of row positions
+   * @return The elements
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
    */
-  public Mat rows(Mat J) {
-    return null;
+  public Mat rows(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
+
+    if (selection.n_elem > 0) {
+      Mat result = new Mat(selection.n_elem, n_cols);
+
+      int resultN = 0;
+      for (int n = 0; n < selection.n_elem; n++) {
+        double iDouble = selection._matrix.get(n);
+        int iInt = (int) iDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (iDouble != iInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+        }
+
+        for (int j = 0; j < n_cols; j++) {
+          result._matrix.set(resultN++, _matrix.get(iInt, j));
+        }
+      }
+
+      return result;
+    } else {
+      return new Mat();
+    }
   }
 
   /**
-   * @param J
-   * @param operation
+   * Performs a unary operation on all rows specified in the selection – a vector of row positions – and overwrites each
+   * element with the result.
+   * 
+   * @param selection The vector of row positions
+   * @param operator The operator
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void rows(Mat J, Op operation) {
+  public void rows(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    for (int n = 0; n < selection.n_elem; n++) {
+      double iDouble = selection._matrix.get(n);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      row(iInt, operator);
+    }
   }
 
   /**
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all rows specified in the selection – a vector of row
+   * positions – and overwrites each element with the result.
+   * 
+   * @param selection The vector of row positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem selection.n_elem} and {@code operand.n_elem}.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@code n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void rows(Mat J, Op operation, Mat operand) {
+  public void rows(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    if (operand.n_elem != selection.n_elem) {
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + selection.n_elem + " and " + operand.n_elem + ".");
+    }
+
+    for (int n = 0; n < selection.n_elem; n++) {
+      double iDouble = selection._matrix.get(n);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      row(iInt, operator, operand);
+    }
   }
 
   /**
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all rows specified in the selection – a vector of row
+   * positions – and overwrites each element with the result.
+   * 
+   * @param selection The vector of row positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@code n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void rows(Mat J, Op operation, double operand) {
+  public void rows(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
 
+    for (int n = 0; n < selection.n_elem; n++) {
+      double iDouble = selection._matrix.get(n);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      row(iInt, operator, operand);
+    }
   }
 
   /**
-   * @param I
-   * @param J
-   * @return
+   * Returns all elements in the specified selection – a cartesian product of a vector of row positions and column
+   * positions.
+   * 
+   * @param rowSelection The vector of row positions
+   * @param columnSelection The vector of column positions
+   * @return The elements
+   * 
+   * @throws IllegalArgumentException The rowSelection must be a vector, but was a ({@link #n_rows rowSelection.n_rows},
+   *           {@link #n_cols rowSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException The columnSelection must be a vector, but was a ({@code columnSelection.n_rows},
+   *           {@code columnSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
    */
-  public Mat submat(Mat I, Mat J) {
-    return null;
+  public Mat submat(Mat rowSelection, Mat columnSelection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    if (!rowSelection.is_vec()) {
+      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+    }
+
+    if (!columnSelection.is_vec()) {
+      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+    }
+
+    if (rowSelection.n_elem > 0 && columnSelection.n_elem > 0) {
+      Mat result = new Mat(rowSelection.n_elem, columnSelection.n_elem);
+
+      int resultN = 0;
+      for (int i = 0; i < rowSelection.n_elem; i++) {
+        double iDouble = rowSelection._matrix.get(i);
+        int iInt = (int) iDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (iDouble != iInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+        }
+
+        for (int j = 0; j < columnSelection.n_elem; j++) {
+          double jDouble = columnSelection._matrix.get(j);
+          int jInt = (int) jDouble;
+
+          // Will also fail if the value is negative, which is also not allowed.
+          if (jDouble != jInt) {
+            throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+          }
+
+          result._matrix.set(resultN++, _matrix.get(iInt, jInt));
+        }
+      }
+
+      return result;
+    } else {
+      return new Mat();
+    }
   }
 
   /**
-   * @param I
-   * @param J
-   * @param operation
+   * Performs a unary operation on all elements in the specified selection – a cartesian product of a vector of row
+   * positions and column positions – and overwrites each element with the result.
+   * 
+   * @param rowSelection The vector of row positions
+   * @param columnSelection The vector of column positions
+   * @param operator The operator
+   * 
+   * @throws IllegalArgumentException The rowSelection must be a vector, but was a ({@link #n_rows rowSelection.n_rows},
+   *           {@link #n_cols rowSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException The columnSelection must be a vector, but was a ({@code columnSelection.n_rows},
+   *           {@code columnSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void submat(Mat I, Mat J, Op operation) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator) {
+    if (!rowSelection.is_vec()) {
+      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+    }
 
+    if (!columnSelection.is_vec()) {
+      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+    }
+
+    for (int i = 0; i < rowSelection.n_elem; i++) {
+      double iDouble = rowSelection._matrix.get(i);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      for (int j = 0; j < columnSelection.n_elem; j++) {
+        double jDouble = columnSelection._matrix.get(j);
+        int jInt = (int) jDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (jDouble != jInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+        }
+
+        at(iInt, jInt, operator);
+      }
+    }
   }
 
   /**
-   * @param I
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all elements in the specified selection – a cartesian product
+   * of a vector of row positions and column positions – and overwrites each element with the result.
+   * 
+   * @param rowSelection The vector of row positions
+   * @param columnSelection The vector of column positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The rowSelection must be a vector, but was a ({@link #n_rows rowSelection.n_rows},
+   *           {@link #n_cols rowSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException The columnSelection must be a vector, but was a ({@code columnSelection.n_rows},
+   *           {@code columnSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem rowSelection.n_elem} * {@code columnSelection.n_elem} and
+   *           {@code operand.n_elem}.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void submat(Mat I, Mat J, Op operation, Mat operand) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) {
+    if (!rowSelection.is_vec()) {
+      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+    }
 
+    if (!columnSelection.is_vec()) {
+      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+    }
+
+    if (operand.n_elem != rowSelection.n_elem * columnSelection.n_elem) {
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + rowSelection.n_elem * columnSelection.n_elem + " and " + operand.n_elem + ".");
+    }
+
+    for (int i = 0; i < rowSelection.n_elem; i++) {
+      double iDouble = rowSelection._matrix.get(i);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      for (int j = 0; j < columnSelection.n_elem; j++) {
+        double jDouble = columnSelection._matrix.get(j);
+        int jInt = (int) jDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (jDouble != jInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+        }
+
+        at(iInt, jInt, operator);
+      }
+    }
   }
 
   /**
-   * @param I
-   * @param J
-   * @param operation
-   * @param operand
+   * Performs a right-hand side element-wise operation on all elements in the specified selection – a cartesian product
+   * of a vector of row positions and column positions – and overwrites each element with the result.
+   * 
+   * @param rowSelection The vector of row positions
+   * @param columnSelection The vector of column positions
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The rowSelection must be a vector, but was a ({@link #n_rows rowSelection.n_rows},
+   *           {@link #n_cols rowSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException The columnSelection must be a vector, but was a ({@code columnSelection.n_rows},
+   *           {@code columnSelection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void submat(Mat I, Mat J, Op operation, double operand) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) {
+    if (!rowSelection.is_vec()) {
+      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+    }
 
+    if (!columnSelection.is_vec()) {
+      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+    }
+    
+    for (int i = 0; i < rowSelection.n_elem; i++) {
+      double iDouble = rowSelection._matrix.get(i);
+      int iInt = (int) iDouble;
+
+      // Will also fail if the value is negative, which is also not allowed.
+      if (iDouble != iInt) {
+        throw new IllegalArgumentException("Each position must be a integer value, but one was " + iDouble + ".");
+      }
+
+      for (int j = 0; j < columnSelection.n_elem; j++) {
+        double jDouble = columnSelection._matrix.get(j);
+        int jInt = (int) jDouble;
+
+        // Will also fail if the value is negative, which is also not allowed.
+        if (jDouble != jInt) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + jDouble + ".");
+        }
+
+        at(iInt, jInt, operator);
+      }
+    }
   }
 
   /**
