@@ -474,7 +474,7 @@ public class Mat {
     }
 
     for (int i = 0; i < n_rows; i++) {
-      at(i, j, operator, operand._matrix.get(i));
+      at(i, j, operator, operand.at(i));
     }
   }
 
@@ -585,8 +585,7 @@ public class Mat {
 
     int operandN = 0;
     for (int i = a; i <= b; i++) {
-      at(i, j, operation, operand._matrix.get(operandN));
-      operandN++;
+      at(i, j, operation, operand.at(operandN++));
     }
   }
 
@@ -687,7 +686,7 @@ public class Mat {
     }
 
     for (int j = 0; j < n_cols; j++) {
-      at(i, j, operator, operand._matrix.get(j));
+      at(i, j, operator, operand.at(j));
     }
   }
 
@@ -797,8 +796,7 @@ public class Mat {
 
     int operandN = 0;
     for (int j = a; j <= b; j++) {
-      at(i, j, operator, operand._matrix.get(operandN));
-      operandN++;
+      at(i, j, operator, operand.at(operandN++));
     }
   }
 
@@ -904,8 +902,7 @@ public class Mat {
     int operandN = 0;
     for (int i = 0; i < n_rows; i++) {
       for (int j = a; j <= b; j++) {
-        at(i, j, operator, operand._matrix.get(operandN));
-        operandN++;
+        at(i, j, operator, operand.at(operandN++));
       }
     }
   }
@@ -1012,8 +1009,7 @@ public class Mat {
     int operandN = 0;
     for (int i = a; i <= b; i++) {
       for (int j = 0; j < n_cols; j++) {
-        at(i, j, operator, operand._matrix.get(operandN));
-        operandN++;
+        at(i, j, operator, operand.at(operandN++));
       }
     }
   }
@@ -1075,7 +1071,7 @@ public class Mat {
     }
 
     for (int n = 0; n < n_elem; n++) {
-      _matrix.set(n, Op.getResult(_matrix.get(n), operator, operand._matrix.get(n)));
+      at(n, operator, operand.at(n));
     }
   }
 
@@ -1090,7 +1086,7 @@ public class Mat {
    */
   public void submat(Op operator, double operand) throws UnsupportedOperationException {
     for (int n = 0; n < n_elem; n++) {
-      _matrix.set(n, Op.getResult(_matrix.get(n), operator, operand));
+      at(n, operator, operand);
     }
   }
 
@@ -1180,8 +1176,7 @@ public class Mat {
     int operandN = 0;
     for (int i = ai; i <= bi; i++) {
       for (int j = aj; j <= bj; j++) {
-        at(i, j, operator, operand._matrix.get(operandN));
-        operandN++;
+        at(i, j, operator, operand.at(operandN++));
       }
     }
   }
@@ -1314,7 +1309,7 @@ public class Mat {
     }
 
     for (int n = a; n <= b; n++) {
-      at(n, operator, operand._matrix.get(n));
+      at(n, operator, at(n));
     }
   }
 
@@ -1347,83 +1342,151 @@ public class Mat {
   }
 
   /**
-   * Returns a column vector containing all elements
+   * Returns all element specified in the selection – a vector of positions.
+   * <p>
+   * <b>Non-canonical:</b> Returns a row/column vector if the selection is a row/column vector.
    * 
-   * @param selection The selection to be used.
+   * @param selection The vector of positions
    * @return The copy of the selected elements.
    * 
-   * @throws IllegalArgumentException Thrown if the number of elements of the matrix does not match with the provided
-   *           selection.
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
    */
-  public Mat elem(Mat selection) throws IllegalArgumentException {
-    if (selection.n_elem != n_elem) {
-      throw new IllegalArgumentException("The number of elements of the matrix (n_elem = " + n_elem + ") does not match with the provided selection (n_elem = " + selection.n_elem + ").");
+  public Mat elem(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
-    DenseMatrix64F memptrSelection = selection.memptr();
-
-    DenseMatrix64F result = new DenseMatrix64F(n_elem, 1);
-    int index = 0;
-    for (int i = 0; i < n_elem; i++) {
-      if (memptrSelection.get(i) > 0) {
-        result.set(index, _matrix.get(i));
-        index++;
+    if (selection.n_elem > 0) {
+      Mat result;
+      if (selection.is_colvec()) {
+        result = new Mat(selection.n_elem, 1);
+      } else {
+        result = new Mat(1, selection.n_elem);
       }
-    }
 
-    if (index > 0) {
-      // Saves current values of the elements since length <= n_elem
-      result.reshape(index, 1);
+      for (int n = 0; n < selection.n_elem; n++) {
+        double element = selection._matrix.get(n);
+
+        // Will also fail if the value is negative, which are also not allowed.
+        if (element != (int) element) {
+          throw new IllegalArgumentException("Each position must be a integer value, but one was " + element + ".");
+        }
+
+        result._matrix.set(n, at((int) element));
+      }
+
+      return result;
     } else {
-      result = new DenseMatrix64F();
-    }
-    return new Mat(result);
-  }
-
-  /**
-   * @param I
-   * @param operation
-   */
-  public void elem(Mat I, Op operation) {
-
-  }
-
-  /**
-   * Performs the provided right-hand side element-wise operation on all elements for which selection.at(n) > 0 holds.
-   * 
-   * @param selection The selection to be used.
-   * @param operation The operator to be performed.
-   * @param operand The right-hand side operand.
-   * 
-   * @throws IllegalArgumentException
-   * @throws UnsupportedOperationException
-   */
-  public void elem(Mat selection, Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    int index = 0;
-    for (int i = 0; i < selection.n_elem; i++) {
-      if (selection.at(i) > 0) {
-        at(i, operation, operand.at(index));
-        index++;
-      }
+      return new Mat();
     }
   }
 
   /**
-   * Performs the provided right-hand side element-wise operation on all elements for which selection.at(n) > 0 holds.
-   * The single provided right-hand side value is used for all operations.
+   * Performs a unary operation on all element specified in the selection – a vector of positions – and overwrites each
+   * element with the result.
    * 
-   * @param selection The selection to be used.
-   * @param operation The operator to be performed.
-   * @param operand The right-hand side operand.
+   * @param selection The selection
+   * @param operator The operator
    * 
-   * @throws IllegalArgumentException
-   * @throws UnsupportedOperationException
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void elem(Mat selection, Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
-    for (int i = 0; i < selection.n_elem; i++) {
-      if (selection.at(i) > 0) {
-        at(i, operation, operand);
+  public void elem(Mat selection, Op operator) {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
+
+    for (int n = 0; n < selection.n_elem; n++) {
+      double elementDouble = selection._matrix.get(n);
+      int elementInt = (int) elementDouble;
+
+      // Will also fail if the value is negative, which are also not allowed.
+      if (elementDouble != elementInt) {
+        throw new IllegalArgumentException("Each position must be a integer values, but one was " + elementDouble + ".");
       }
+
+      at(elementInt, operator);
+    }
+  }
+
+  /**
+   * Performs a right-hand side element-wise operation on all element specified in the selection – a vector of positions
+   * – and overwrites each element with the result.
+   * 
+   * @param selection The selection
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem selection.n_elem} and {@code operand.n_elem}.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
+   */
+  public void elem(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
+
+    if (operand.n_elem != selection.n_elem) {
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + selection.n_elem + " and " + operand.n_elem + ".");
+    }
+
+    int indexN = 0;
+    for (int n = 0; n < selection.n_elem; n++) {
+      double elementDouble = selection._matrix.get(n);
+      int elementInt = (int) elementDouble;
+
+      // Will also fail if the value is negative, which are also not allowed.
+      if (elementDouble != elementInt) {
+        throw new IllegalArgumentException("Each position must be a integer values, but one was " + elementDouble + ".");
+      }
+
+      at(elementInt, operator, operand.at(indexN++));
+    }
+  }
+
+  /**
+   * Performs a right-hand side element-wise operation on all element specified in the selection – a vector of positions
+   * – and overwrites each element with the result.
+   * 
+   * @param selection The selection
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws IllegalArgumentException The selection must be a vector, but was a ({@link #n_rows selection.n_rows},
+   *           {@link #n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException Each position must be a integer value, but one was {@code selection.at(n)}.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
+   */
+  public void elem(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (!selection.is_vec()) {
+      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+    }
+
+    for (int n = 0; n < selection.n_elem; n++) {
+      double elementDouble = selection._matrix.get(n);
+      int elementInt = (int) elementDouble;
+
+      // Will also fail if the value is negative, which are also not allowed.
+      if (elementDouble != elementInt) {
+        throw new IllegalArgumentException("Each position must be a integer values, but one was " + elementDouble + ".");
+      }
+
+      at(elementInt, operator, operand);
     }
   }
 
