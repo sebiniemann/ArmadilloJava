@@ -218,7 +218,7 @@ public enum Op {
    * <b>Non-canonical:</b> Evaluates an unary arithmetic operation {@code a operator}.
    * 
    * @param a The left-hand side operand
-   * @param operator The operation (only unary arithmetic operators)
+   * @param operator The operator (only unary arithmetic operators)
    * @return The result
    * 
    * @throws IllegalArgumentException NaN is not a valid operand.
@@ -250,7 +250,7 @@ public enum Op {
    * <b>Non-canonical:</b> Evaluates an binary arithmetic operation {@code a operator b} or returns {@code b} if {@code operation} = {@link Op#EQUAL}.
    * 
    * @param a The left-hand side operand
-   * @param operator The operation (only binary arithmetic operators)
+   * @param operator The operator (only binary arithmetic operators)
    * @param b The right-hand side operand
    * @return The result
    * 
@@ -302,13 +302,12 @@ public enum Op {
   /**
    * Detects if the result of an unary operation was affected by an overflow.
    * <p>
-   * Note: The supported unary operations cannot result in an underflow.
+   * Note: The supported unary operators cannot result in an underflow.
    * 
    * @param a The left-hand side operand
    * @param operator The operator
    * @param result The calculated result
    * 
-   * @throws ArithmeticException Underflow detected. {@code a operator} resulted in {@code result}.
    * @throws ArithmeticException Overflow detected. {@code a operator} resulted in {@code result}.
    */
   static void underflowOverflowDetection(double a, Op operator, double result) throws ArithmeticException {
