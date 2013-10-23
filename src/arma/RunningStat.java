@@ -12,7 +12,7 @@ package arma;
 /**
  * Provides statistical measures that are updated iterative per sample.
  * <p>
- * Useful if the storage of all samples together is not possible or not required.
+ * Useful if the storage of individual samples is not possible or not required.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
@@ -40,7 +40,7 @@ public class RunningStat {
   private double _var;
 
   /**
-   * Initialises the statistical measures
+   * Initialises the statistical measures.
    */
   public RunningStat() {
     reset();
@@ -160,7 +160,7 @@ public class RunningStat {
   }
 
   /**
-   * Resets the statistical values.
+   * Resets all statistical values.
    */
   public void reset() {
     _max = Double.NaN;
