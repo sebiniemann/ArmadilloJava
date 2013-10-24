@@ -3188,53 +3188,45 @@ public class Mat {
   }
 
   /**
-   * @param n
-   * @return
+   * Returns true if the element position is within the boundary
+   * 
+   * @param n The element position
+   * @return Whether the element position is within the boundary
    */
   public boolean in_range(int n) {
-    if (n > -1 && n < n_elem) {
-      return true;
-    }
-
-    return false;
+    return (n > -1 && n < n_elem);
   }
 
   /**
-   * @param span
-   * @return
+   * Returns true if the span is within the boundary
+   * 
+   * @param span The span
+   * @return Whether the span is within the boundary
    */
   public boolean in_range(Span span) {
-    if (span.isEntireRange() || (span.getFirst() > -1 && span.getLast() < n_elem)) {
-      return true;
-    }
-
-    return true;
+    return (span.isEntireRange() || (span.getFirst() > -1 && span.getLast() < n_elem));
   }
 
   /**
-   * @param i
-   * @param j
-   * @return
+   * Returns true if the row position and column position are within the boundary
+   * 
+   * @param i The row position
+   * @param j The column position
+   * @return Whether the row position and column position are within the boundary
    */
   public boolean in_range(int i, int j) {
-    if (i > -1 && j > -1 && i < n_rows && j < n_cols) {
-      return true;
-    }
-
-    return true;
+    return (i > -1 && j > -1 && i < n_rows && j < n_cols);
   }
 
   /**
-   * @param spanI
-   * @param spanJ
-   * @return
+   * Returns true if the row span and column span are within the boundary
+   * 
+   * @param spanI The row span
+   * @param spanJ The column span
+   * @return Whether the row span and column span are within the boundary
    */
   public boolean in_range(Span spanI, Span spanJ) {
-    if ((spanI.isEntireRange() || (spanI.getFirst() > -1 && spanI.getLast() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getFirst() > -1 && spanJ.getLast() < n_cols))) {
-      return true;
-    }
-
-    return false;
+    return  ((spanI.isEntireRange() || (spanI.getFirst() > -1 && spanI.getLast() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getFirst() > -1 && spanJ.getLast() < n_cols)));
   }
 
   /**
