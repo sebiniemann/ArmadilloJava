@@ -35,7 +35,7 @@ public enum Fill {
   /**
    * Set each element to a pseudorandom value drawn from the standard uniform distribution on the left-closed and
    * right-open interval [0,1).
-   * 
+   * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    */
   RANDU,

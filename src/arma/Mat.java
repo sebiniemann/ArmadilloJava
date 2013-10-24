@@ -240,15 +240,15 @@ public class Mat {
         _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
         break;
       case RANDU:
+        _matrix = RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng);
+        break;
+      case RANDN:
         _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
 
         int numberOfElements = _matrix.getNumElements();
         for (int i = 0; i < numberOfElements; i++) {
           _matrix.set(i, rng.nextGaussian());
         }
-        break;
-      case RANDN:
-        _matrix = RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng);
         break;
     }
 
@@ -2549,7 +2549,7 @@ public class Mat {
    * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
    *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
-  public Mat elemTimes(Mat operand) {
+  public Mat elemTimes(Mat operand) throws IllegalArgumentException {
     Mat result = new Mat(_matrix);
     result.submat(Op.ELEMTIMES, operand);
     return result;
@@ -2568,7 +2568,7 @@ public class Mat {
   }
 
   /**
-   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor 
+   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor
    * 
    * @param operand The multiplier
    * @return The matrix
@@ -2576,14 +2576,14 @@ public class Mat {
    * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
    *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
-  public Mat elemDivide(Mat operand) {
+  public Mat elemDivide(Mat operand) throws IllegalArgumentException {
     Mat result = new Mat(_matrix);
     result.submat(Op.ELEMDIVIDE, operand);
     return result;
   }
 
   /**
-   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor 
+   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor
    * 
    * @param operand The multiplier
    * @return The matrix
@@ -2601,125 +2601,220 @@ public class Mat {
    */
   public Mat negate() {
     Mat result = new Mat(_matrix);
-    
+
     for (int n = 0; n < n_elem; n++) {
       result._matrix.set(n, _matrix.get(n));
     }
-    
+
     return result;
   }
 
   /**
    * Returns a reference to the internal data representation of the matrix.
    * 
-   * @return The reference to the internal data representation of the matrix.
+   * @return The reference
    */
   public DenseMatrix64F memptr() {
     return _matrix;
   }
 
   /**
-   * 
+   * Sets all elements to 0.
    */
   public void zeros() {
-
+    fill(0);
   }
 
   /**
-   * @param numberOfElements
+   * Resizes the vector and sets all elements to 0.
+   * <p>
+   * <b>Non-canonical:</b> Remains a row/column vector if this is invoked for a row/column vector.
+   * 
+   * @param numberOfElements The number of elements
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void zeros(int numberOfElements) {
+  public void zeros(int numberOfElements) throws UnsupportedOperationException {
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
 
+    set_size(numberOfElements);
+    zeros();
   }
 
   /**
-   * @param numberOfRows
-   * @param numberOfColumns
+   * Resizes the matrix and sets all elements to 0.
+   * 
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    */
   public void zeros(int numberOfRows, int numberOfColumns) {
-
+    set_size(numberOfRows, numberOfColumns);
+    zeros();
   }
 
   /**
-   * 
+   * Sets all elements to 1.
    */
   public void ones() {
-
+    fill(1);
   }
 
   /**
-   * @param numberOfElements
+   * Resizes the vector and sets all elements to 1.
+   * <p>
+   * <b>Non-canonical:</b> Remains a row/column vector if this is invoked for a row/column vector.
+   * 
+   * @param numberOfElements The number of elements
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void ones(int numberOfElements) {
+  public void ones(int numberOfElements) throws UnsupportedOperationException {
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
 
+    set_size(numberOfElements);
+    ones();
   }
 
   /**
-   * @param numberOfRows
-   * @param numberOfColumns
+   * Resizes the matrix and sets all elements to 1.
+   * 
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    */
   public void ones(int numberOfRows, int numberOfColumns) {
-
+    set_size(numberOfRows, numberOfColumns);
+    ones();
   }
 
   /**
-   * @param numberOfRows
-   * @param numberOfColumns
+   * Resizes the matrix and sets all elements along the main diagonal to 1 and the other elements to 0.
+   * 
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    */
   public void eye(int numberOfRows, int numberOfColumns) {
-
+    _matrix = CommonOps.identity(numberOfRows, numberOfColumns);
+    updateAttributes();
   }
 
   /**
+   * Sets each element to a pseudorandom value drawn from the standard uniform distribution on the left-closed and
+   * right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
+   * @param rng The pseudorandom generator
    */
-  public void randu() {
-
+  public void randu(Random rng) {
+    _matrix = RandomMatrices.createRandom(n_rows, n_cols, rng);
+    updateAttributes();
   }
 
   /**
-   * @param numberOfElements
+   * Resizes the matrix and sets each element to a pseudorandom value drawn from the standard uniform distribution on
+   * the left-closed and right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b>
+   * <ul>
+   * <li>Drawn from [0,1) instead of the closed interval [0,1].
+   * <li>Remains a row/column vector if this is invoked for a row/column vector.
+   * </ul>
+   * 
+   * @param numberOfElements The number of elements
+   * @param rng The pseudorandom generator
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void randu(int numberOfElements) {
+  public void randu(int numberOfElements, Random rng) throws UnsupportedOperationException {
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
 
+    if (is_colvec()) {
+      _matrix = RandomMatrices.createRandom(numberOfElements, 1, rng);
+    } else {
+      _matrix = RandomMatrices.createRandom(1, numberOfElements, rng);
+    }
+
+    updateAttributes();
   }
 
   /**
-   * @param numberOfRows
-   * @param numberOfColumns
-   * @param rng
+   * Resizes the matrix and sets each element to a pseudorandom value drawn from the standard uniform distribution on
+   * the left-closed and right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
+   * 
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param rng The pseudorandom generator
    */
   public void randu(int numberOfRows, int numberOfColumns, Random rng) {
-
+    _matrix = RandomMatrices.createRandom(numberOfRows, numberOfColumns, rng);
+    updateAttributes();
   }
 
   /**
+   * Sets each element to a pseudorandom value drawn from the standard normal distribution with mean 0.0 and standard
+   * deviation 1.0.
    * 
+   * @param rng The pseudorandom generator
    */
-  public void randn() {
-
+  public void randn(Random rng) {
+    for (int i = 0; i < n_elem; i++) {
+      _matrix.set(i, rng.nextGaussian());
+    }
   }
 
   /**
-   * @param numberOfElements
+   * Resizes the matrix and sets each element to a pseudorandom value drawn from the standard normal distribution with
+   * mean 0.0 and standard deviation 1.0.
+   * <p>
+   * <b>Non-canonical:</b> Remains a row/column vector if this is invoked for a row/column vector.
+   * 
+   * @param numberOfElements The number of elements
+   * @param rng The pseudorandom generator
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void randn(int numberOfElements) {
+  public void randn(int numberOfElements, Random rng) throws UnsupportedOperationException {
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
 
+    if (is_colvec()) {
+      _matrix = new DenseMatrix64F(numberOfElements, 1);
+    } else {
+      _matrix = new DenseMatrix64F(1, numberOfElements);
+    }
+    updateAttributes();
+    
+    randn(rng);
   }
 
   /**
-   * @param numberOfRows
-   * @param numberOfColumns
-   * @param rng
+   * Resizes the matrix and sets each element to a pseudorandom value drawn from the standard normal distribution with
+   * mean 0.0 and standard deviation 1.0.
+   * 
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param rng The pseudorandom generator
    */
   public void randn(int numberOfRows, int numberOfColumns, Random rng) {
-
+    _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+    updateAttributes();
+    
+    randn(rng);
   }
 
   /**
-   * Replaces the value of all elements with the provided one.
+   * Replaces the value of each element with the provided one.
    * 
-   * @param value The new value of all elements.
+   * @param value The value
    */
   public void fill(double value) {
     CommonOps.fill(_matrix, value);
