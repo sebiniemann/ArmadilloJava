@@ -1023,10 +1023,8 @@ public class Mat {
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
   public void submat(Op operator) throws UnsupportedOperationException {
-    for (int i = 0; i < n_rows; i++) {
-      for (int j = 0; j < n_cols; j++) {
-        at(i, j, operator);
-      }
+    for (int n = 0; n < n_elem; n++) {
+      _matrix.set(n, Op.getResult(_matrix.get(n), operator));
     }
   }
 
@@ -1047,7 +1045,7 @@ public class Mat {
     }
 
     for (int n = 0; n < n_elem; n++) {
-      at(n, operator, operand.at(n));
+      _matrix.set(n, Op.getResult(_matrix.get(n), operator, operand._matrix.get(n)));
     }
   }
 
@@ -1062,7 +1060,7 @@ public class Mat {
    */
   public void submat(Op operator, double operand) throws UnsupportedOperationException {
     for (int n = 0; n < n_elem; n++) {
-      at(n, operator, operand);
+      _matrix.set(n, Op.getResult(_matrix.get(n), operator, operand));
     }
   }
 
@@ -2457,143 +2455,158 @@ public class Mat {
   }
 
   /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided
-   * right-hand side addend.
+   * Creates a matrix being the addition of this matrix with a right-hand side addend
    * 
-   * @param operand The right-hand side addend.
-   * @return The created matrix.
+   * @param operand The addend
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
-  public Mat plus(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.add(_matrix, operand.memptr(), result);
-    return new Mat(result);
+  public Mat plus(Mat operand) throws IllegalArgumentException {
+    Mat result = new Mat(_matrix);
+    result.submat(Op.PLUS, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the sum of a right-hand side (always element-wise) summation with the provided operand.
-   * The single provided right-hand side value is used for all operations.
+   * Creates a matrix being the addition of this matrix with a right-hand side addend
    * 
-   * @param operand The right-hand side operand.
-   * @return The created matrix.
+   * @param operand The addend
+   * @return The matrix
    */
   public Mat plus(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.add(_matrix, operand, result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.PLUS, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
-   * subtrahend.
+   * Creates a matrix being the subtration of this matrix with a right-hand side subtrahend
    * 
-   * @param operand The subtrahend.
-   * @return The created matrix.
+   * @param operand The subtrahend
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
-  public Mat minus(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.sub(_matrix, operand.memptr(), result);
-    return new Mat(result);
+  public Mat minus(Mat operand) throws IllegalArgumentException {
+    Mat result = new Mat(_matrix);
+    result.submat(Op.MINUS, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the difference of a right-hand side (always element-wise) subtraction with the provided
-   * subtrahend. The single provided right-hand side value is used for all operations.
+   * Creates a matrix being the subtration of this matrix with a right-hand side subtrahend
    * 
-   * @param operand The subtrahend.
-   * @return The created matrix.
+   * @param operand The subtrahend
+   * @return The matrix
    */
   public Mat minus(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    // Applies subtraction by addition with the additive inverse value.
-    CommonOps.add(_matrix, -operand, result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.MINUS, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side matrix multiplication with the provided multiplier.
+   * Creates a matrix being the multiplication of this matrix with a right-hand side multiplier
    * 
-   * @param operand The multiplier.
-   * @return The created matrix.
+   * @param operand The multiplier
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The number of columns of the left-hand side operand must match with the number of
+   *           rows of the right hand side operand, but were {@link #n_cols} and {@link #n_rows operand.n_rows}.
    */
   public Mat times(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.mult(_matrix, operand.memptr(), result);
-    return new Mat(result);
+    if (n_cols != operand.n_rows) {
+      throw new IllegalArgumentException("The number of columns of the left-hand side operand must match with the number of rows of the right hand side operand, but were " + n_cols + " and " + operand.n_rows + ".");
+    }
+
+    // Performed by EJML, since non-element-wise multiplication is needed.
+    Mat result = new Mat(operand.n_rows, operand.n_cols);
+    CommonOps.mult(_matrix, operand._matrix, result._matrix);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier. The single provided right-hand side value is used for all operations.
+   * Creates a matrix being the multiplication of this matrix with a right-hand side multiplier
    * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   * 
-   * @see #elemTimes(double)
+   * @param operand The multiplier
+   * @return The matrix
    */
   public Mat times(double operand) {
-    return elemTimes(operand);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.TIMES, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier.
+   * Creates a matrix being the element-wise multiplication of this matrix with a right-hand side multiplier
    * 
-   * @param operand The multiplier.
-   * @return The created matrix.
+   * @param operand The multiplier
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
   public Mat elemTimes(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.elementMult(_matrix, operand.memptr(), result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.ELEMTIMES, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the product of a right-hand side (element-wise) multiplication with the provided
-   * multiplier. The single provided right-hand side value is used for all operations.
+   * Creates a matrix being the element-wise multiplication of this matrix with a right-hand side multiplier
    * 
-   * @param operand The multiplier.
-   * @return The created matrix.
-   * 
-   * @see #times(double)
+   * @param operand The multiplier
+   * @return The matrix
    */
   public Mat elemTimes(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.scale(operand, _matrix, result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.ELEMTIMES, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor.
+   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor 
    * 
-   * @param operand The divisor.
-   * @return The created matrix.
+   * @param operand The multiplier
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link #n_elem} and {@code operand.n_elem}.
    */
   public Mat elemDivide(Mat operand) {
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.elementDiv(_matrix, operand.memptr(), result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.ELEMDIVIDE, operand);
+    return result;
   }
 
   /**
-   * Creates a new matrix being the quotient of a right-hand side (element-wise) division with the provided divisor. The
-   * single provided right-hand side value is used for all operations.
+   * Creates a matrix being the element-wise division of this matrix with a right-hand side divisor 
    * 
-   * @param operand The divisor.
-   * @return The created matrix.
-   * 
-   * @see #divide(double)
+   * @param operand The multiplier
+   * @return The matrix
    */
   public Mat elemDivide(double operand) {
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    CommonOps.divide(operand, _matrix, result);
-    return new Mat(result);
+    Mat result = new Mat(_matrix);
+    result.submat(Op.ELEMDIVIDE, operand);
+    return result;
   }
 
   /**
-   * @return
+   * Creates a matrix being the element-wise negation of this matrix
+   * 
+   * @return The matrix
    */
   public Mat negate() {
-    return null;
+    Mat result = new Mat(_matrix);
+    
+    for (int n = 0; n < n_elem; n++) {
+      result._matrix.set(n, _matrix.get(n));
+    }
+    
+    return result;
   }
 
   /**
