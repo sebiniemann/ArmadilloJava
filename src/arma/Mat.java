@@ -10,9 +10,17 @@
 
 package arma;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 import org.ejml.data.DenseMatrix64F;
@@ -3536,8 +3544,9 @@ public class Mat {
    * Prints the matrix to System.out,  with an additional header.
    * 
    * @param header The header
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void print(String header) {
+  public void print(String header) throws UnsupportedEncodingException {
     print(System.out, header);
   }
 
@@ -3546,7 +3555,7 @@ public class Mat {
    * 
    * @param stream The stream
    */
-  public void print(PrintStream stream) {
+  public void print(OutputStream stream) {
     print(stream);
   }
 
@@ -3555,12 +3564,15 @@ public class Mat {
    * 
    * @param stream The stream
    * @param header The header
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void print(PrintStream stream, String header) {
+  public void print(OutputStream stream, String header) throws UnsupportedEncodingException {
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
+
     if(!header.isEmpty()) {
-      stream.println(header);
+      writer.println(header);
     }
-    stream.println(toString());
+    writer.println(toString());
   }
 
   /**
@@ -3574,8 +3586,9 @@ public class Mat {
    * Prints the matrix to System.out, with an additional header.
    * 
    * @param header The header
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void raw_print(String header) {
+  public void raw_print(String header) throws UnsupportedEncodingException {
     print(header);
   }
 
@@ -3584,7 +3597,7 @@ public class Mat {
    * 
    * @param stream The stream
    */
-  public void raw_print(PrintStream stream) {
+  public void raw_print(OutputStream stream) {
     print(stream);
   }
 
@@ -3593,16 +3606,18 @@ public class Mat {
    * 
    * @param stream The stream
    * @param header The header
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void raw_print(PrintStream stream, String header) {
+  public void raw_print(OutputStream stream, String header) throws UnsupportedEncodingException {
     print(stream, header);
   }
 
   /**
    * @param filename The filename
    * @throws FileNotFoundException File not found.
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void save(String filename) throws FileNotFoundException {
+  public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
     save(filename, "arma_binary");
   }
 
@@ -3611,54 +3626,63 @@ public class Mat {
    * @param filetype The filetype
    * 
    * @throws FileNotFoundException File not found.
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void save(String filename, String filetype) throws FileNotFoundException {
-    save(new PrintStream(new FileOutputStream(filename, true)), filetype);
+  public void save(String filename, String filetype) throws FileNotFoundException, UnsupportedEncodingException {
+    save(new FileOutputStream(filename, true), filetype);
   }
 
   /**
    * @param stream The stream
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void save(PrintStream stream) {
+  public void save(OutputStream stream) throws UnsupportedEncodingException {
     save(stream, "arma_binary");
   }
 
   /**
    * @param stream The stream
    * @param filetype The filetype
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void save(PrintStream stream, String filetype) {
-
+  public void save(OutputStream stream, String filetype) throws UnsupportedEncodingException {
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
   }
 
   /**
    * @param filename The filename
+   * @throws FileNotFoundException File not found.
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void load(String filename) {
+  public void load(String filename) throws FileNotFoundException, UnsupportedEncodingException {
     load(filename, "auto_detect");
   }
 
   /**
    * @param filename The filename
    * @param filetype The filetype
+   * @throws FileNotFoundException File not found.
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void load(String filename, String filetype) {
-
+  public void load(String filename, String filetype) throws FileNotFoundException, UnsupportedEncodingException {
+    load(new FileInputStream(filename), filetype);
   }
 
   /**
    * @param stream The stream
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void load(PrintStream stream) {
+  public void load(InputStream stream) throws UnsupportedEncodingException {
     load(stream, "auto_detect");
   }
 
   /**
    * @param stream The stream
    * @param filetype The filetype
+   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void load(PrintStream stream, String filetype) {
-
+  public void load(InputStream stream, String filetype) throws UnsupportedEncodingException {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
   }
 
   /**
