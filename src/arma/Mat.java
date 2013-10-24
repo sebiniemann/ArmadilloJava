@@ -1988,33 +1988,29 @@ public class Mat {
   }
 
   /**
-   * Returns the main diagonal as a column vector.
+   * Returns the main diagonal of the matrix as a column vector.
    * 
    * @return The diagonal
    */
   public Mat diag() {
-    DenseMatrix64F result = new DenseMatrix64F(Math.min(n_rows, n_cols), 1);
-    CommonOps.extractDiag(_matrix, result);
-    return new Mat(result);
+    return diag(0);
   }
 
   /**
-   * Performs a unary operation on all elements of the main diagonal and overwrites each element with the result.
+   * Performs a unary operation on all elements of the main diagonal of the matrix and overwrites each element with the
+   * result.
    * 
    * @param operator The operator
    * 
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
   public void diag(Op operator) throws UnsupportedOperationException {
-    int length = Math.min(n_rows, n_cols);
-    for (int i = 0; i < length; i++) {
-      at(i, i, operator);
-    }
+    diag(0, operator);
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all elements of the main diagonal and overwrites each element
-   * with the result.
+   * Performs a right-hand side element-wise operation on all elements of the main diagonal of the matrix and overwrites
+   * each element with the result.
    * 
    * @param operator The operator
    * @param operand The right-hand side operand
@@ -2024,21 +2020,12 @@ public class Mat {
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   public void diag(Op operator, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    int length = Math.min(n_cols, n_rows);
-
-    if (operand.n_elem != length) {
-      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + length + " and " + operand.n_elem + ".");
-    }
-
-    int operandN = 0;
-    for (int i = 0; i < length; i++) {
-      at(i, i, operator, operand.at(operandN++));
-    }
+    diag(0, operator, operand);
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all elements of the main diagonal and overwrites each element
-   * with the result.
+   * Performs a right-hand side element-wise operation on all elements of the main diagonal of the matrix and overwrites
+   * each element with the result.
    * 
    * @param operator The operator
    * @param operand The right-hand side operand
@@ -2046,45 +2033,170 @@ public class Mat {
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   public void diag(Op operator, double operand) throws UnsupportedOperationException {
-    int length = Math.min(n_cols, n_rows);
+    diag(0, operator, operand);
+  }
 
-    for (int i = 0; i < length; i++) {
-      at(i, i, operator, operand);
+  /**
+   * Returns the {@code k}th diagonal of the matrix as a column vector.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param k The diagonal position
+   * @return The diagonal
+   * 
+   * @throws ArrayIndexOutOfBoundsException The diagonal is out of bound. The matrix is of size ({@link #n_rows},
+   *           {@link #n_cols}), but the diagonal position was {@code k}.
+   */
+  public Mat diag(int k) throws ArrayIndexOutOfBoundsException {
+    if (k <= n_rows || k >= n_cols) {
+      throw new ArrayIndexOutOfBoundsException("The diagonal is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + "), but the diagonal position was " + k + ".");
+    }
+
+    Mat result;
+    if (k > 0) {
+      int length = Math.min(n_rows, n_cols - k);
+
+      result = new Mat(length, 1);
+      for (int n = 0; n < length; n++) {
+        result._matrix.set(n, _matrix.get(n, n + k));
+      }
+    } else {
+      int length = Math.min(n_rows + k, n_cols);
+
+      result = new Mat(length, 1);
+      for (int n = 0; n < length; n++) {
+        result._matrix.set(n, _matrix.get(n - k, n));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Performs a unary operation on all elements of the {@code k}th diagonal of the matrix and overwrites each element
+   * with the result.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param k The diagonal position
+   * @param operator The operator
+   * 
+   * @throws ArrayIndexOutOfBoundsException The diagonal is out of bound. The matrix is of size ({@link #n_rows},
+   *           {@link #n_cols}), but the diagonal position was {@code k}.
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
+   */
+  public void diag(int k, Op operator) throws ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+    if (k <= n_rows || k >= n_cols) {
+      throw new ArrayIndexOutOfBoundsException("The diagonal is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + "), but the diagonal position was " + k + ".");
+    }
+
+    if (k > 0) {
+      int length = Math.min(n_rows, n_cols - k);
+
+      for (int n = 0; n < length; n++) {
+        at(n, n + k, operator);
+      }
+    } else {
+      int length = Math.min(n_rows + k, n_cols);
+
+      for (int n = 0; n < length; n++) {
+        at(n - k, n, operator);
+      }
     }
   }
 
   /**
-   * @param k
-   * @return
+   * Performs a right-hand side element-wise operation on all elements of the {@code k}th diagonal of the matrix and
+   * overwrites each element with the result.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param k The diagonal position
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws ArrayIndexOutOfBoundsException The diagonal is out of bound. The matrix is of size ({@link #n_rows},
+   *           {@link #n_cols}), but the diagonal position was {@code k}.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were min({@link #n_cols}, {@link #n_rows}) and {@link #n_elem operand.n_elem}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public Mat diag(int k) {
-    return null;
+  public void diag(int k, Op operator, Mat operand) throws ArrayIndexOutOfBoundsException, IllegalArgumentException, UnsupportedOperationException {
+    if (k <= n_rows || k >= n_cols) {
+      throw new ArrayIndexOutOfBoundsException("The diagonal is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + "), but the diagonal position was " + k + ".");
+    }
+
+    if (k > 0) {
+      int length = Math.min(n_rows, n_cols - k);
+
+      if (operand.n_elem != length) {
+        throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + length + " and " + operand.n_elem + ".");
+      }
+
+      for (int n = 0; n < length; n++) {
+        at(n, n + k, operator, operand.at(n));
+      }
+    } else {
+      int length = Math.min(n_rows + k, n_cols);
+
+      if (operand.n_elem != length) {
+        throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + length + " and " + operand.n_elem + ".");
+      }
+
+      for (int n = 0; n < length; n++) {
+        at(n - k, n, operator, operand.at(n));
+      }
+    }
   }
 
   /**
-   * @param k
-   * @param operation
+   * Performs a right-hand side element-wise operation on all elements of the {@code k}th diagonal of the matrix and
+   * overwrites each element with the result.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param k The diagonal position
+   * @param operator The operator
+   * @param operand The right-hand side operand
+   * 
+   * @throws ArrayIndexOutOfBoundsException The diagonal is out of bound. The matrix is of size ({@link #n_rows},
+   *           {@link #n_cols}), but the diagonal position was {@code k}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void diag(int k, Op operation) {
+  public void diag(int k, Op operator, double operand) {
+    if (k <= n_rows || k >= n_cols) {
+      throw new ArrayIndexOutOfBoundsException("The diagonal is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + "), but the diagonal position was " + k + ".");
+    }
 
-  }
+    if (k > 0) {
+      int length = Math.min(n_rows, n_cols - k);
 
-  /**
-   * @param k
-   * @param operation
-   * @param operand
-   */
-  public void diag(int k, Op operation, Mat operand) {
+      for (int n = 0; n < length; n++) {
+        at(n, n + k, operator, operand);
+      }
+    } else {
+      int length = Math.min(n_rows + k, n_cols);
 
-  }
-
-  /**
-   * @param k
-   * @param operation
-   * @param operand
-   */
-  public void diag(int k, Op operation, double operand) {
-
+      for (int n = 0; n < length; n++) {
+        at(n - k, n, operator, operand);
+      }
+    }
   }
 
   /**
