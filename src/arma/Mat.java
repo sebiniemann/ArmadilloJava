@@ -3121,14 +3121,14 @@ public class Mat {
    * @return Whether the matrix is finite
    */
   public boolean is_finite() {
-    for(int n = 0; n < n_elem; n++) {
+    for (int n = 0; n < n_elem; n++) {
       double element = _matrix.get(n);
-      
-      if(Double.isInfinite(element) || Double.isNaN(element)) {
+
+      if (Double.isInfinite(element) || Double.isNaN(element)) {
         return false;
       }
     }
-    
+
     return true;
   }
 
@@ -3140,14 +3140,14 @@ public class Mat {
    * @return Whether the matrix contains only numbers
    */
   boolean is_number() {
-    for(int n = 0; n < n_elem; n++) {
+    for (int n = 0; n < n_elem; n++) {
       double element = _matrix.get(n);
-      
-      if(Double.isNaN(element)) {
+
+      if (Double.isNaN(element)) {
         return false;
       }
     }
-    
+
     return true;
   }
 
@@ -3157,7 +3157,7 @@ public class Mat {
    * @return Whether the matrix is sqaure
    */
   public boolean is_square() {
-    return (n_rows != n_cols);
+    return (n_rows == n_cols);
   }
 
   /**
@@ -3226,7 +3226,7 @@ public class Mat {
    * @return Whether the row span and column span are within the boundary
    */
   public boolean in_range(Span spanI, Span spanJ) {
-    return  ((spanI.isEntireRange() || (spanI.getFirst() > -1 && spanI.getLast() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getFirst() > -1 && spanJ.getLast() < n_cols)));
+    return ((spanI.isEntireRange() || (spanI.getFirst() > -1 && spanI.getLast() < n_rows)) && (spanJ.isEntireRange() || (spanJ.getFirst() > -1 && spanJ.getLast() < n_cols)));
   }
 
   /**
@@ -3237,15 +3237,15 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double min() throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double minimum = _matrix.get(0);
-    for(int n = 1; n < n_elem; n++) {
+    for (int n = 1; n < n_elem; n++) {
       minimum = Math.min(minimum, _matrix.get(n));
     }
-    
+
     return minimum;
   }
 
@@ -3260,25 +3260,26 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double min(int[] n) throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double minimum = _matrix.get(0);
-    for(int elementN = 1; elementN < n_elem; elementN++) {
+    for (int elementN = 1; elementN < n_elem; elementN++) {
       double element = _matrix.get(elementN);
-      
-      if(element < minimum) {
+
+      if (element < minimum) {
         minimum = element;
         n[0] = elementN;
       }
     }
-    
+
     return minimum;
   }
 
   /**
-   * Returns the smallest value of all elements and stores its row position in {@code j} and column position in {@code j}.
+   * Returns the smallest value of all elements and stores its row position in {@code j} and column position in
+   * {@code j}.
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
@@ -3289,21 +3290,21 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double min(int[] i, int[] j) throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double minimum = _matrix.get(0);
-    for(int n = 1; n < n_elem; n++) {
+    for (int n = 1; n < n_elem; n++) {
       double element = _matrix.get(n);
-      
-      if(element < minimum) {
+
+      if (element < minimum) {
         minimum = element;
         i[0] = n / n_cols;
         j[0] = n - (i[0] * n_cols);
       }
     }
-    
+
     return minimum;
   }
 
@@ -3315,15 +3316,15 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double max() throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double maximum = _matrix.get(0);
-    for(int n = 1; n < n_elem; n++) {
+    for (int n = 1; n < n_elem; n++) {
       maximum = Math.max(maximum, _matrix.get(n));
     }
-    
+
     return maximum;
   }
 
@@ -3338,25 +3339,26 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double max(int[] n) throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double maximum = _matrix.get(0);
-    for(int elementN = 1; elementN < n_elem; elementN++) {
+    for (int elementN = 1; elementN < n_elem; elementN++) {
       double element = _matrix.get(elementN);
-      
-      if(element > maximum) {
+
+      if (element > maximum) {
         maximum = element;
         n[0] = elementN;
       }
     }
-    
+
     return maximum;
   }
 
   /**
-   * Returns the largest value of all elements and stores its row position in {@code j} and column position in {@code j}.
+   * Returns the largest value of all elements and stores its row position in {@code j} and column position in {@code j}
+   * .
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
@@ -3367,79 +3369,98 @@ public class Mat {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public double max(int[] i, int[] j) throws UnsupportedOperationException {
-    if(n_elem < 1) {
+    if (n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     double maximum = _matrix.get(0);
-    for(int n = 1; n < n_elem; n++) {
+    for (int n = 1; n < n_elem; n++) {
       double element = _matrix.get(n);
-      
-      if(element > maximum) {
+
+      if (element > maximum) {
         maximum = element;
         i[0] = n / n_cols;
         j[0] = n - (i[0] * n_cols);
       }
     }
-    
+
     return maximum;
   }
 
   /**
-   * @param numberOfElements
+   * Sets the size of the vector to contain {@code numberOfElements} elements.
+   * <p>
+   * Neither guarantees to reuse the values of the elements nor their positions, except the number of elements is the same as before.
+   * <p>
+   * In this case, the values of the elements are reused and only the size changes.
+   * 
+   * @param numberOfElements The number of elements
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void set_size(int numberOfElements) {
+  public void set_size(int numberOfElements) throws UnsupportedOperationException {
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
 
+    if (numberOfElements == n_elem) {
+      return;
+    } else if (is_colvec()) {
+      set_size(numberOfElements, 1);
+    } else {
+      set_size(1, numberOfElements);
+    }
   }
 
   /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and neither guarantees to reuse the values of the elements, nor their positions.
+   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * <p>
+   * Neither guarantees to reuse the values of the elements nor their positions, except the number of elements is the same as before.
+   * <p>
+   * In this case, the values of the elements are reused and only the size changes.
    * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * 
-   * @see #reshape(int, int, boolean)
-   * @see #resize
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    */
   public void set_size(int numberOfRows, int numberOfColumns) {
-    // EJML fails if DenseMatrix64F was not properly initialised.
-    if (n_rows == 0 && n_cols == 0) {
-      _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-    } else {
-      _matrix.reshape(numberOfRows, numberOfColumns);
-    }
-
+    _matrix.reshape(numberOfRows, numberOfColumns);
     updateAttributes();
   }
 
   /**
-   * Equivalent to {@link #reshape(int, int, boolean) reshape(numberOfRows, numberOfColumns, true)}
+   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * <p>
+   * Elements are accessed column-wise, while the matrix is also filled column-wise.
+   * <p>
+   * Guarantees to reuse the values of the elements but not their positions.
    * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
+   * @param numberOfRows The new number of rows
+   * @param numberOfColumns The new number of columns
    */
   public void reshape(int numberOfRows, int numberOfColumns) {
-    reshape(numberOfRows, numberOfColumns, false);
+    reshape(numberOfRows, numberOfColumns, 0);
   }
 
   /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements, but not their positions. The
-   * elements of the current matrix are either accessed row-wise (<code>rowWise = true</code>) or column-wise (
-   * <code>rowWise = false</code>), while the new matrix is always filled column-wise.
+   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * <p>
+   * Elements can be accessed either column-wise ({@code dimension} = 0) or row-wise ({@code dimension} = 1), while the matrix is always filled column-wise.
+   * <p>
+   * Guarantees to reuse the values of the elements but not their positions.
    * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * @param rowWise The access of the elements of the current matrix .
+   * @param numberOfRows The new number of rows
+   * @param numberOfColumns The new number of columns
+   * @param dimension The dimension
    * 
-   * @see #set_size(int, int)
-   * @see #resize(int, int)
+   * @throws IllegalArgumentException The dimension must be on of 0 or 1, but was {@code dimension}.
    */
-  public void reshape(int numberOfRows, int numberOfColumns, boolean rowWise) {
-    DenseMatrix64F temp = new DenseMatrix64F(n_rows, n_cols);
-
-    if (rowWise) {
+  public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
+    if(dimension < 0 || dimension > 1) {
+      throw new IllegalArgumentException("The dimension must be on of 0 or 1, but was " + dimension + ".");
+    }
+    
+    DenseMatrix64F temp = new DenseMatrix64F(numberOfColumns, numberOfRows);
+    if (dimension == 1) {
       // reshape fills the new matrix row-wise and not column-wise. Filling a transposed matrix row-wise and transposing
       // it again afterwards will result in a column-wise filled matrix.
       _matrix.reshape(numberOfColumns, numberOfRows, true);
@@ -3456,26 +3477,39 @@ public class Mat {
   }
 
   /**
-   * @param numberOfElements
+   * Sets the size of the vector to contain {@code numberOfElements} elements.
+   * <p>
+   * Guarantees to reuse the values of the elements and their positions.
+   * 
+   * @param numberOfElements The number of elements
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
   public void resize(int numberOfElements) {
-
+    if (!is_vec()) {
+      throw new UnsupportedOperationException("Must only be invoked for vectors.");
+    }
+    
+    if (is_colvec()) {
+      resize(numberOfElements, 1);
+    } else {
+      resize(1, numberOfElements);
+    }
   }
 
   /**
-   * Changes the dimension of the matrix to {@link #n_rows} = <code>numberOfRows</code> and {@link #n_cols} =
-   * <code>numberOfColumns</code> and guarantees to reuses the values of the elements and their positions.
+   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * <p>
+   * Guarantees to reuse the values of the elements and their positions.
    * 
-   * @param numberOfRows The new number of rows of the matrix.
-   * @param numberOfColumns The new number of columns of the matrix.
-   * 
-   * @see #set_size(int, int)
-   * @see #reshape(int, int, boolean)
+   * @param numberOfRows The new number of rows
+   * @param numberOfColumns The new number of columns
    */
   public void resize(int numberOfRows, int numberOfColumns) {
     if (numberOfRows <= n_rows && numberOfColumns <= n_cols) {
-      // No additional memory needs to be allocated.
-      _matrix.reshape(numberOfColumns, numberOfRows);
+      // No additional memory needs to be allocated
+      // Shrinks n_rows and n_cols only
+      _matrix.reshape(numberOfColumns, numberOfRows, false);
     } else {
       DenseMatrix64F newMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
       for (int i = 0; i < n_rows; i++) {
@@ -3492,56 +3526,24 @@ public class Mat {
   /**
    * @return
    */
-  public String print() {
-    return null;
+  public void print() {
+    print("");
   }
 
   /**
    * @param header
    * @return
    */
-  public String print(String header) {
-    return null;
+  public void print(String header) {
+    System.out.println(header + toString());
   }
 
   /**
    * @param stream
    * @return
    */
-  public String print(PrintWriter stream) {
-    return null;
-  }
-
-  /**
-   * @param stream
-   * @param header
-   * @return
-   */
-  public String print(PrintWriter stream, String header) {
-    return null;
-  }
-
-  /**
-   * @return
-   */
-  public String raw_print() {
-    return null;
-  }
-
-  /**
-   * @param header
-   * @return
-   */
-  public String raw_print(String header) {
-    return null;
-  }
-
-  /**
-   * @param stream
-   * @return
-   */
-  public String raw_print(PrintWriter stream) {
-    return null;
+  public void print(PrintWriter stream) {
+    print(stream, "");
   }
 
   /**
@@ -3549,7 +3551,39 @@ public class Mat {
    * @param header
    * @return
    */
-  public String raw_print(PrintWriter stream, String header) {
+  public void print(PrintWriter stream, String header) {
+    stream.println(header + toString());
+  }
+
+  /**
+   * @return
+   */
+  public void raw_print() {
+    return null;
+  }
+
+  /**
+   * @param header
+   * @return
+   */
+  public void raw_print(String header) {
+    return null;
+  }
+
+  /**
+   * @param stream
+   * @return
+   */
+  public void raw_print(PrintWriter stream) {
+    return null;
+  }
+
+  /**
+   * @param stream
+   * @param header
+   * @return
+   */
+  public void raw_print(PrintWriter stream, String header) {
     return null;
   }
 
