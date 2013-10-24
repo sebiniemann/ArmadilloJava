@@ -2906,7 +2906,7 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
    *           but the column position was {@code i}.
    */
-  public void insert_rows(int i, Mat matrix) {
+  public void insert_rows(int i, Mat matrix) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
     if (matrix.n_cols != n_cols) {
       throw new IllegalArgumentException("The number of columns of this matrix must match with the matrix to be inserted, but was " + n_cols + " and " + matrix.n_cols + ".");
     }
@@ -2932,7 +2932,7 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
    *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void insert_rows(int a, int b) {
+  public void insert_rows(int a, int b) throws ArrayIndexOutOfBoundsException {
     insert_rows(a, b, true);
   }
 
@@ -2948,7 +2948,7 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
    *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void insert_rows(int a, int b, boolean fillWithZeros) {
+  public void insert_rows(int a, int b, boolean fillWithZeros) throws ArrayIndexOutOfBoundsException {
     if (!in_range(new Span(a, b), Span.all())) {
       throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
     }
@@ -2977,7 +2977,7 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
    *           columns, but the column positions are from {@code j} to {@code j}.
    */
-  public void shed_col(int j) {
+  public void shed_col(int j) throws ArrayIndexOutOfBoundsException {
     shed_cols(j, j);
   }
 
@@ -2990,13 +2990,13 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
    *           columns, but the column positions are from {@code a} to {@code b}.
    */
-  public void shed_cols(int a, int b) {
+  public void shed_cols(int a, int b) throws ArrayIndexOutOfBoundsException {
     if (!in_range(new Span(), new Span(a, b))) {
       throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
     }
-    
+
     int spanLength = b - a + 1;
-    
+
     Mat temp = new Mat(_matrix);
     set_size(n_rows, n_cols - spanLength);
     // Note: n_cols and n_rows were updated by .set_size()
@@ -3012,7 +3012,7 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
    *           rows, but the row positions are from {@code i} to {@code i}.
    */
-  public void shed_row(int i) {
+  public void shed_row(int i) throws ArrayIndexOutOfBoundsException {
     shed_rows(i, i);
   }
 
@@ -3025,13 +3025,13 @@ public class Mat {
    * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
    *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void shed_rows(int a, int b) {
+  public void shed_rows(int a, int b) throws ArrayIndexOutOfBoundsException {
     if (!in_range(new Span(a, b), Span.all())) {
       throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
     }
-    
+
     int spanLength = b - a + 1;
-    
+
     Mat temp = new Mat(_matrix);
     set_size(n_rows - spanLength, n_cols);
     // Note: n_cols and n_rows were updated by .set_size()
@@ -3040,95 +3040,151 @@ public class Mat {
   }
 
   /**
-   * @param B
+   * Swaps the elements of this matrix with another one.
+   * 
+   * @param matrix The matrix
+   * 
+   * @throws IllegalArgumentException The size of this matrix must match with the one to be swaped with, but this is a (
+   *           {@link #n_rows}, {@link #n_cols})-matrix while the other one was a ({@code matrix.n_rows},
+   *           {@code matrix.n_cols})-matrix.
    */
-  public void swap(Mat B) {
+  public void swap(Mat matrix) throws IllegalArgumentException {
+    if (n_rows != matrix.n_rows || n_cols != matrix.n_cols) {
+      throw new IllegalArgumentException("The size of this matrix must match with the one to be swaped with, but this is a (" + n_rows + ", " + n_cols + ")-matrix while the other one was a (" + matrix.n_rows + ", " + matrix.n_rows + ")-matrix");
+    }
 
+    submat(Op.EQUAL, matrix);
   }
 
   /**
-   * @param j1
-   * @param j2
+   * Swaps the {@code j1}th column with the {@code j2}th.
+   * 
+   * @param j1 The first column
+   * @param j2 The second column
+   * 
+   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column position was {@code j1}.
+   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column position was {@code j2}.
    */
-  public void swap_cols(int j1, int j2) {
+  public void swap_cols(int j1, int j2) throws ArrayIndexOutOfBoundsException {
+    if (!in_range(Span.all(), new Span(j1))) {
+      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j1 + ".");
+    }
 
+    if (!in_range(Span.all(), new Span(j2))) {
+      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j2 + ".");
+    }
+
+    Mat temp = col(j1);
+    col(j2, Op.EQUAL, j1);
+    col(j1, Op.EQUAL, temp);
   }
 
   /**
-   * @param i1
-   * @param i2
+   * Swaps the {@code i1}th row with the {@code i2}th.
+   * 
+   * @param i1 The first row
+   * @param i2 The second row
+   * 
+   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
+   *           but the row position was {@code i1}.
+   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
+   *           but the row position was {@code i2}.
    */
-  public void swap_rows(int i1, int i2) {
+  public void swap_rows(int i1, int i2) throws ArrayIndexOutOfBoundsException {
+    if (!in_range(new Span(i1), Span.all())) {
+      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i1 + ".");
+    }
 
+    if (!in_range(new Span(i2), Span.all())) {
+      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i2 + ".");
+    }
+
+    Mat temp = row(i1);
+    row(i2, Op.EQUAL, i1);
+    row(i1, Op.EQUAL, temp);
   }
 
   /**
-   * @return
+   * Returns true if the matrix is empty and false otherwise.
+   * 
+   * @return Whether the matrix is empty
    */
   public boolean is_empty() {
-    return false;
+    return (n_elem == 0);
   }
 
   /**
-   * @return
+   * Returns true if the matrix contains only finite values and false otherwise.
+   * 
+   * @return Whether the matrix is finite
    */
   public boolean is_finite() {
-    return false;
+    for(int n = 0; n < n_elem; n++) {
+      double element = _matrix.get(n);
+      
+      if(Double.isInfinite(element) || Double.isNaN(element)) {
+        return false;
+      }
+    }
+    
+    return true;
   }
 
   /**
-   * @return
+   * <b>Non-canonical:</b> Returns true if the matrix contains only numbers and false otherwise.
+   * <p>
+   * Note: False will only be returned if the value NaN is found.
+   * 
+   * @return Whether the matrix contains only numbers
    */
   boolean is_number() {
-    return false;
+    for(int n = 0; n < n_elem; n++) {
+      double element = _matrix.get(n);
+      
+      if(Double.isNaN(element)) {
+        return false;
+      }
+    }
+    
+    return true;
   }
 
   /**
    * Returns true if the matrix is square and false otherwise.
    * 
-   * @return The boolean value.
+   * @return Whether the matrix is sqaure
    */
   public boolean is_square() {
-    if (n_rows != n_cols) {
-      return false;
-    }
-    return true;
+    return (n_rows != n_cols);
   }
 
   /**
    * Returns true if the matrix is a vector and false otherwise.
    * 
-   * @return The boolean value.
+   * @return Whether the matrix is vector
    */
   public boolean is_vec() {
-    if (n_rows == 1 || n_cols == 1) {
-      return true;
-    }
-    return false;
+    return (n_rows == 1 || n_cols == 1);
   }
 
   /**
    * Returns true if the matrix is a column vector and false otherwise.
    * 
-   * @return The boolean value.
+   * @return Whether the matrix is column vector
    */
   public boolean is_colvec() {
-    if (n_cols == 1) {
-      return true;
-    }
-    return false;
+    return (n_cols == 1);
   }
 
   /**
-   * Returns true if the matrix is a row-vector and false otherwise.
+   * Returns true if the matrix is a row vector and false otherwise.
    * 
-   * @return The boolean value.
+   * @return Whether the matrix is row vector
    */
   public boolean is_rowvec() {
-    if (n_rows == 1) {
-      return true;
-    }
-    return false;
+    return (n_rows == 1);
   }
 
   /**
