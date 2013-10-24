@@ -2792,7 +2792,7 @@ public class Mat {
       _matrix = new DenseMatrix64F(1, numberOfElements);
     }
     updateAttributes();
-    
+
     randn(rng);
   }
 
@@ -2807,7 +2807,7 @@ public class Mat {
   public void randn(int numberOfRows, int numberOfColumns, Random rng) {
     _matrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
     updateAttributes();
-    
+
     randn(rng);
   }
 
@@ -2821,82 +2821,177 @@ public class Mat {
   }
 
   /**
+   * Expands the matrix by insertion of a matrix at column position {@code j}.
+   * 
+   * @param j The column position
+   * @param matrix The matrix
+   * 
+   * 
+   * @throws IllegalArgumentException The number of rows of this matrix must match with the matrix to be inserted, but
+   *           was {@link #n_rows} and {@code matrix.n_rows}.
+   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column position was {@code j}.
+   */
+  public void insert_cols(int j, Mat matrix) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    if (matrix.n_rows != n_rows) {
+      throw new IllegalArgumentException("The number of rows of this matrix must match with the matrix to be inserted, but was " + n_rows + " and " + matrix.n_rows + ".");
+    }
+
+    if (!in_range(Span.all(), new Span(j))) {
+      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j + ".");
+    }
+
+    Mat temp = new Mat(_matrix);
+    resize(n_rows, n_cols + matrix.n_cols);
+    cols(0, j - 1, Op.EQUAL, temp.cols(0, j - 1));
+    cols(j, matrix.n_cols - 1, Op.EQUAL, matrix);
+    cols(matrix.n_cols, n_cols + matrix.n_cols, Op.EQUAL, temp.cols(j, n_cols));
+  }
+
+  /**
+   * Expands the matrix by insertion of a zero matrix from the {@code a}th to {@code b}th column.
+   * 
+   * @param a The first column position
+   * @param b The last column position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column positions are from {@code a} to {@code b}.
+   */
+  public void insert_cols(int a, int b) throws ArrayIndexOutOfBoundsException {
+    insert_cols(a, b, true);
+  }
+
+  /**
+   * Expands the matrix by insertion of a matrix from the {@code a}th to {@code b}th column.
+   * <p>
+   * The inserted matrix will be filled with 0 ({@code fillWithZeros} = true) or uninitialised otherwise.
+   * 
+   * @param a The first column position
+   * @param b The last column position
+   * @param fillWithZeros Whether to be filled with 0
+   * 
+   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column positions are from {@code a} to {@code b}.
+   */
+  public void insert_cols(int a, int b, boolean fillWithZeros) throws ArrayIndexOutOfBoundsException {
+    if (!in_range(new Span(), new Span(a, b))) {
+      throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
+    }
+
+    int span = b - a + 1;
+    Mat fillMatrix;
+    if (fillWithZeros) {
+      fillMatrix = new Mat(n_rows, span, Fill.ZEROS);
+    } else {
+      fillMatrix = new Mat(n_rows, span);
+    }
+
+    Mat temp = new Mat(_matrix);
+    resize(n_rows, n_cols + span);
+    cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
+    cols(a, b, Op.EQUAL, fillMatrix);
+    cols(b, n_cols + span, Op.EQUAL, temp.cols(b, n_cols));
+  }
+
+  /**
+   * Expands the matrix by insertion of a matrix at row position {@code j}.
+   * 
+   * @param i The row position
+   * @param matrix The matrix
+   * 
+   * @throws IllegalArgumentException The number of columns of this matrix must match with the matrix to be inserted,
+   *           but was {@link #n_cols} and {@code matrix.n_cols}.
+   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
+   *           but the column position was {@code i}.
+   */
+  public void insert_rows(int i, Mat matrix) {
+    if (matrix.n_cols != n_cols) {
+      throw new IllegalArgumentException("The number of columns of this matrix must match with the matrix to be inserted, but was " + n_cols + " and " + matrix.n_cols + ".");
+    }
+
+    if (!in_range(new Span(i), Span.all())) {
+      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i + ".");
+    }
+
+    Mat temp = new Mat(_matrix);
+    resize(n_rows + matrix.n_rows, n_cols);
+    rows(0, i - 1, Op.EQUAL, temp.rows(0, i - 1));
+    rows(i, matrix.n_cols - 1, Op.EQUAL, matrix);
+    rows(matrix.n_rows, n_rows + matrix.n_rows, Op.EQUAL, temp.rows(i, n_rows));
+  }
+
+  /**
+   * Expands the matrix by insertion of a zero matrix from the {@code a}th to {@code b}th row.
+   * 
+   * @param a The first row position
+   * @param b The last row position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
+   *           rows, but the row positions are from {@code a} to {@code b}.
+   */
+  public void insert_rows(int a, int b) {
+    insert_rows(a, b, true);
+  }
+
+  /**
+   * Expands the matrix by insertion of a matrix from the {@code a}th to {@code b}th row.
+   * <p>
+   * The inserted matrix will be filled with 0 ({@code fillWithZeros} = true) or uninitialised otherwise.
+   * 
+   * @param a The first row position
+   * @param b The last row position
+   * @param fillWithZeros Whether to be filled with 0
+   * 
+   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
+   *           rows, but the row positions are from {@code a} to {@code b}.
+   */
+  public void insert_rows(int a, int b, boolean fillWithZeros) {
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
+    }
+
+    int span = b - a + 1;
+    Mat fillMatrix;
+    if (fillWithZeros) {
+      fillMatrix = new Mat(span, n_cols, Fill.ZEROS);
+    } else {
+      fillMatrix = new Mat(span, n_cols);
+    }
+
+    Mat temp = new Mat(_matrix);
+    resize(n_rows + span, n_cols);
+    rows(0, a - 1, Op.EQUAL, temp.rows(0, a - 1));
+    rows(a, b, Op.EQUAL, fillMatrix);
+    rows(b, n_rows + span, Op.EQUAL, temp.rows(b, n_rows));
+  }
+
+  /**
    * @param j
-   * @param B
    */
-  public void insert_cols(int j, Mat B) {
-
-  }
-
-  /**
-   * @param aj
-   * @param bj
-   */
-  public void insert_cols(int aj, int bj) {
-
-  }
-
-  /**
-   * @param aj
-   * @param bj
-   * @param zero
-   */
-  public void insert_cols(int aj, int bj, boolean zero) {
-
-  }
-
-  /**
-   * @param j
-   * @param B
-   */
-  public void insert_rows(int j, Mat B) {
-
-  }
-
-  /**
-   * @param aj
-   * @param bj
-   */
-  public void insert_rows(int aj, int bj) {
-
-  }
-
-  /**
-   * @param aj
-   * @param bj
-   * @param zero
-   */
-  public void insert_rows(int aj, int bj, boolean zero) {
-
+  public void shed_col(int j) {
+    shed_cols(j, j);
   }
 
   /**
    * @param a
+   * @param b
    */
-  public void shed_col(int a) {
+  public void shed_cols(int a, int b) {
 
   }
 
   /**
-   * @param aj
-   * @param bj
+   * @param i
    */
-  public void shed_cols(int aj, int bj) {
-
+  public void shed_row(int i) {
+    shed_rows(i, i);
   }
 
   /**
    * @param a
+   * @param b
    */
-  public void shed_row(int a) {
-
-  }
-
-  /**
-   * @param aj
-   * @param bj
-   */
-  public void shed_rows(int aj, int bj) {
+  public void shed_rows(int a, int b) {
 
   }
 
@@ -2908,18 +3003,18 @@ public class Mat {
   }
 
   /**
-   * @param a
-   * @param b
+   * @param j1
+   * @param j2
    */
-  public void swap_cols(int a, int b) {
+  public void swap_cols(int j1, int j2) {
 
   }
 
   /**
-   * @param a
-   * @param b
+   * @param i1
+   * @param i2
    */
-  public void swap_rows(int a, int b) {
+  public void swap_rows(int i1, int i2) {
 
   }
 

@@ -40,7 +40,7 @@ public class Arma {
    * @return
    */
   public static Mat zeros(int numberOfElements) {
-    return null;
+    return zeros(numberOfElements, 1);
   }
 
   /**
@@ -59,7 +59,7 @@ public class Arma {
    * @return
    */
   public static Mat ones(int numberOfElements) {
-    return null;
+    return ones(numberOfElements, 1);
   }
 
   /**
@@ -86,10 +86,11 @@ public class Arma {
 
   /**
    * @param numberOfElements
+   * @param rng 
    * @return
    */
-  public static Mat randu(int numberOfElements) {
-    return null;
+  public static Mat randu(int numberOfElements, Random rng) {
+    return randu(numberOfElements, 1, rng);
   }
 
   /**
@@ -107,10 +108,11 @@ public class Arma {
 
   /**
    * @param numberOfElements
+   * @param rng 
    * @return
    */
-  public static Mat randn(int numberOfElements) {
-    return null;
+  public static Mat randn(int numberOfElements, Random rng) {
+    return randn(numberOfElements, 1, rng);
   }
 
   /**
