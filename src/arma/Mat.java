@@ -10,6 +10,8 @@
 
 package arma;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
@@ -3597,103 +3599,120 @@ public class Mat {
   }
 
   /**
-   * @param n
+   * @param filename The filename
+   * @throws FileNotFoundException File not found.
    */
-  public void save(String n) {
-    
+  public void save(String filename) throws FileNotFoundException {
+    save(filename, "arma_binary");
   }
 
   /**
-   * @param n
-   * @param t
+   * @param filename The filename
+   * @param filetype The filetype
+   * 
+   * @throws FileNotFoundException File not found.
    */
-  public void save(String n, String t) {
-    
+  public void save(String filename, String filetype) throws FileNotFoundException {
+    save(new PrintStream(new FileOutputStream(filename, true)), filetype);
   }
 
   /**
-   * @param stream
+   * @param stream The stream
    */
   public void save(PrintStream stream) {
-
+    save(stream, "arma_binary");
   }
 
   /**
-   * @param stream
-   * @param t
+   * @param stream The stream
+   * @param filetype The filetype
    */
-  public void save(PrintStream stream, String t) {
+  public void save(PrintStream stream, String filetype) {
 
   }
 
   /**
-   * @param n
+   * @param filename The filename
    */
-  public void load(String n) {
-
+  public void load(String filename) {
+    load(filename, "auto_detect");
   }
 
   /**
-   * @param n
-   * @param t
+   * @param filename The filename
+   * @param filetype The filetype
    */
-  public void load(String n, String t) {
+  public void load(String filename, String filetype) {
 
   }
 
   /**
-   * @param stream
+   * @param stream The stream
    */
   public void load(PrintStream stream) {
-
+    load(stream, "auto_detect");
   }
 
   /**
-   * @param stream
-   * @param t
+   * @param stream The stream
+   * @param filetype The filetype
    */
-  public void load(PrintStream stream, String t) {
+  public void load(PrintStream stream, String filetype) {
 
   }
 
   /**
-   * 
+   * Resets the matrix to an emtpy one.
    */
   public void clear() {
-
+    reset();
   }
 
   /**
-   * @return
+   * Returns true if the matrix is empty and false otherwise.
+   * 
+   * @return Whether the matrix is empty
    */
   public boolean empty() {
-    return false;
-
+    return is_empty();
   }
 
   /**
-   * @return
+   * Returns the number of elements.
+   * 
+   * @return The number of elements
    */
   public int size() {
-    return 0;
+    return n_elem;
   }
 
   /**
-   * Returns the inverse matrix. Fails if the provided matrix is not invertible.
+   * Returns the inverse matrix.
+   * <p>
+   * Fails if the provided matrix is not invertible.
    * 
-   * @return The inverse.
+   * @return The inverse
+   * 
+   * @throws UnsupportedOperationException Must only be invoked for square matrices.
+   * @throws UnsupportedOperationException The matrix is not invertible.
    */
-  public Mat i() {
+  public Mat i() throws UnsupportedOperationException {
+    if(!is_square()) {
+      throw new UnsupportedOperationException("Must only be invoked for square matrices.");
+    }
+    
     DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    // Error-checking should be done in CommonOps.invert(DenseMatrix64F, DenseMatrix64F)
-    CommonOps.invert(_matrix, result);
+    if(!CommonOps.invert(_matrix, result)) {
+      throw new UnsupportedOperationException("The matrix is not invertible.");
+    }
+    
     return new Mat(result);
   }
 
   /**
    * Returns the transpose of the matrix.
    * 
-   * @return The transpose.
+   * @return The transpose
    */
   public Mat t() {
     DenseMatrix64F result = new DenseMatrix64F(n_cols, n_rows);
@@ -3702,18 +3721,22 @@ public class Mat {
   }
 
   /**
-   * 
+   * Resets the matrix to an emtpy one.
    */
   public void reset() {
-
+    _matrix = new DenseMatrix64F();
+    updateAttributes();
   }
 
   /**
-   * @param B
+   * Sets the size of to be the same as {@code matrix}.
+   * <p>
+   * Neither guarantees to reuse the values of the elements nor their positions.
    * 
+   * @param matrix The matrix
    */
-  public void copy_size(Mat B) {
-
+  public void copy_size(Mat matrix) {
+    set_size(matrix.n_rows, matrix.n_cols);
   }
 
   @Override
@@ -3722,8 +3745,9 @@ public class Mat {
   }
 
   /**
-   * Updates the attributes {@link #n_rows}, {@link #n_cols} and {@link #n_elem} of the matrix. Should be called right
-   * after the shape of the matrix is changed.
+   * Updates the attributes {@link #n_rows}, {@link #n_cols} and {@link #n_elem}.
+   * <p>
+   * Should always be called right after the size of the matrix is changed.
    */
   private void updateAttributes() {
     n_rows = _matrix.numRows;
@@ -3739,11 +3763,12 @@ public class Mat {
    * @param n The position based on column-major-ordering.
    * @return The position based on row-major-ordering.
    * 
-   * @throws IllegalArgumentException Thrown if the provided position is out of bound.
+   * @throws ArrayIndexOutOfBoundsException The position is out of bound. The matrix contains {@link #n_elem} elements,
+   *           but the position was {@code n}.
    */
-  int convertToRowMajorOrdering(int n) throws IllegalArgumentException {
+  int convertToRowMajorOrdering(int n) throws ArrayIndexOutOfBoundsException {
     if (!in_range(n)) {
-      throw new IllegalArgumentException("The provided position is out of bound.");
+      throw new ArrayIndexOutOfBoundsException("The  position is out of bound. The matrix contains " + n_elem + " elements, but the position was  " + n + ".");
     }
 
     if (is_vec()) {
