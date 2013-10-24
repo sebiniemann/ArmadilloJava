@@ -1342,7 +1342,7 @@ public class Mat {
   }
 
   /**
-   * Returns all elements specified in the selection – a vector of positions.
+   * Returns all elements specified in the selection – a vector of positions – as a column vector.
    * 
    * @param selection The vector of positions
    * @return The elements
@@ -1848,7 +1848,7 @@ public class Mat {
    *           but the position was {@code n}.
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
       throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
@@ -1901,7 +1901,7 @@ public class Mat {
    *           but the position was {@code n}.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
       throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
@@ -1955,7 +1955,7 @@ public class Mat {
    *           but the position was {@code n}.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) {
+  public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
       throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
@@ -1963,7 +1963,7 @@ public class Mat {
     if (!columnSelection.is_vec()) {
       throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
     }
-    
+
     for (int i = 0; i < rowSelection.n_elem; i++) {
       double iDouble = rowSelection._matrix.get(i);
       int iInt = (int) iDouble;
@@ -1988,9 +1988,9 @@ public class Mat {
   }
 
   /**
-   * Returns a copy of the main diagonal as a (<code>Math.min</code>({@link #n_rows}, {@link #n_cols}), 1) matrix.
+   * Returns the main diagonal as a column vector.
    * 
-   * @return The copy of the main diagonal.
+   * @return The diagonal
    */
   public Mat diag() {
     DenseMatrix64F result = new DenseMatrix64F(Math.min(n_rows, n_cols), 1);
@@ -1999,52 +1999,57 @@ public class Mat {
   }
 
   /**
-   * @param operation
+   * Performs a unary operation on all elements of the main diagonal and overwrites each element with the result.
+   * 
+   * @param operator The operator
+   * 
+   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void diag(Op operation) {
-
+  public void diag(Op operator) throws UnsupportedOperationException {
+    int length = Math.min(n_rows, n_cols);
+    for (int i = 0; i < length; i++) {
+      at(i, i, operator);
+    }
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all elements on the main diagonal.
+   * Performs a right-hand side element-wise operation on all elements of the main diagonal and overwrites each element
+   * with the result.
    * 
-   * @param operation The operator to be performed.
-   * @param operand The right-hand side operand.
+   * @param operator The operator
+   * @param operand The right-hand side operand
    * 
-   * @throws IllegalArgumentException Thrown if the number of elements on main diagonal does not match with the provided
-   *           right-hand side operand.
-   * @throws UnsupportedOperationException
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were min({@link #n_cols}, {@link #n_rows}) and {@link #n_elem operand.n_elem}.
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void diag(Op operation, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    if (!operand.is_vec()) {
-      throw new IllegalArgumentException("The provided right-hand side operand needs to be a vector.");
-    }
-
+  public void diag(Op operator, Mat operand) throws IllegalArgumentException, UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
+
     if (operand.n_elem != length) {
-      throw new IllegalArgumentException("The number of elements on main diagonal (n_elem = " + length + ") does not match with the provided right-hand side operand (n_elem = " + operand.n_elem + ").");
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + length + " and " + operand.n_elem + ".");
     }
 
-    DenseMatrix64F memptrOperand = operand.memptr();
+    int operandN = 0;
     for (int i = 0; i < length; i++) {
-      at(i, i, operation, memptrOperand.get(i));
+      at(i, i, operator, operand.at(operandN++));
     }
   }
 
   /**
-   * Performs a right-hand side element-wise operation on all elements on the main diagonal. The single provided
-   * right-hand side operand is used for all operations.
+   * Performs a right-hand side element-wise operation on all elements of the main diagonal and overwrites each element
+   * with the result.
    * 
-   * @param operation The operator to be performed.
-   * @param operand The right-hand side operand.
+   * @param operator The operator
+   * @param operand The right-hand side operand
    * 
-   * @throws IllegalArgumentException
-   * @throws UnsupportedOperationException
+   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void diag(Op operation, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+  public void diag(Op operator, double operand) throws UnsupportedOperationException {
     int length = Math.min(n_cols, n_rows);
+
     for (int i = 0; i < length; i++) {
-      at(i, i, operation, operand);
+      at(i, i, operator, operand);
     }
   }
 
