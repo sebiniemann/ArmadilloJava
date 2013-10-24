@@ -3230,51 +3230,159 @@ public class Mat {
   }
 
   /**
-   * @return
+   * Returns the smallest value of all elements.
+   * 
+   * @return The minimum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double min() {
-    return 0.0;
+  public double min() throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double minimum = _matrix.get(0);
+    for(int n = 1; n < n_elem; n++) {
+      minimum = Math.min(minimum, _matrix.get(n));
+    }
+    
+    return minimum;
   }
 
   /**
-   * @param n
-   * @return
+   * Returns the smallest value of all elements and stores its element position in {@code n}.
+   * <p>
+   * Note: The position must be of the mutable type int[].
+   * 
+   * @param n The element position
+   * @return The minimum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double min(int n) {
-    return 0.0;
+  public double min(int[] n) throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double minimum = _matrix.get(0);
+    for(int elementN = 1; elementN < n_elem; elementN++) {
+      double element = _matrix.get(elementN);
+      
+      if(element < minimum) {
+        minimum = element;
+        n[0] = elementN;
+      }
+    }
+    
+    return minimum;
   }
 
   /**
-   * @param i
-   * @param j
-   * @return
+   * Returns the smallest value of all elements and stores its row position in {@code j} and column position in {@code j}.
+   * <p>
+   * Note: The positions must be of the mutable type int[].
+   * 
+   * @param i The row position
+   * @param j The column position
+   * @return The minimum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double min(int i, int j) {
-    return 0.0;
+  public double min(int[] i, int[] j) throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double minimum = _matrix.get(0);
+    for(int n = 1; n < n_elem; n++) {
+      double element = _matrix.get(n);
+      
+      if(element < minimum) {
+        minimum = element;
+        i[0] = n / n_cols;
+        j[0] = n - (i[0] * n_cols);
+      }
+    }
+    
+    return minimum;
   }
 
   /**
-   * @return
+   * Returns the largest value of all elements.
+   * 
+   * @return The maximum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double max() {
-    return 0.0;
+  public double max() throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double maximum = _matrix.get(0);
+    for(int n = 1; n < n_elem; n++) {
+      maximum = Math.max(maximum, _matrix.get(n));
+    }
+    
+    return maximum;
   }
 
   /**
-   * @param n
-   * @return
+   * Returns the largest value of all elements and stores its element position in {@code n}.
+   * <p>
+   * Note: The position must be of the mutable type int[].
+   * 
+   * @param n The element position
+   * @return The maximum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double max(int n) {
-    return 0.0;
+  public double max(int[] n) throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double maximum = _matrix.get(0);
+    for(int elementN = 1; elementN < n_elem; elementN++) {
+      double element = _matrix.get(elementN);
+      
+      if(element > maximum) {
+        maximum = element;
+        n[0] = elementN;
+      }
+    }
+    
+    return maximum;
   }
 
   /**
-   * @param i
-   * @param j
-   * @return
+   * Returns the largest value of all elements and stores its row position in {@code j} and column position in {@code j}.
+   * <p>
+   * Note: The positions must be of the mutable type int[].
+   * 
+   * @param i The row position
+   * @param j The column position
+   * @return The maximum
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public double max(int i, int j) {
-    return 0.0;
+  public double max(int[] i, int[] j) throws UnsupportedOperationException {
+    if(n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+    
+    double maximum = _matrix.get(0);
+    for(int n = 1; n < n_elem; n++) {
+      double element = _matrix.get(n);
+      
+      if(element > maximum) {
+        maximum = element;
+        i[0] = n / n_cols;
+        j[0] = n - (i[0] * n_cols);
+      }
+    }
+    
+    return maximum;
   }
 
   /**
@@ -3610,12 +3718,13 @@ public class Mat {
        * n = i + j * n_rows, i < n_rows
        * 
        * i = n - j * n_rows
-       * i = Math.floor(n / n_rows)
+       * i = n % n_rows
        * 
        * j = (n - i) / n_rows
-       * j = n % n_rows
+       * j = Math.floor(n / n_rows)
        */
-      return (n / n_rows) + (n % n_rows) * n_cols;
+      int j = n / n_rows;
+      return j + (n - j * n_rows) * n_cols;
     }
   }
 }
