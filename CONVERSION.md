@@ -26,8 +26,8 @@ ones(n, m)                 | A(n, m, fill::ones)        | A(n, m, Fill.ONES)    
 eye(n, m)                  | A(n, m, fill::eye)         | A(n, m, Fill.EYE)               | 
 randu(n, 1)                | A(n, fill::randu)          | A(n, Fill.RANDU, rng)           | **Note:** Results in a column vector. **Note:** rng is a random number generator.
 randu(n, m)                | A(n, m, fill::randu)       | A(n, m, Fill.RANDU, rng)        | **Note:** rng is a random number generator.
-randn(n, 1)                | A(n, fill::randn)          | A(n, Fill.RANDN, rng)           | **Note:** Results in a column vector.
-randn(n, m)                | A(n, m, fill::randn)       | A(n, m, Fill.RANDN, rng)        | 
+randn(n, 1)                | A(n, fill::randn)          | A(n, Fill.RANDN, rng)           | **Note:** Results in a column vector. **Note:** rng is a random number generator.
+randn(n, m)                | A(n, m, fill::randn)       | A(n, m, Fill.RANDN, rng)        | **Note:** rng is a random number generator.
 
 
 Matrix generation
@@ -177,19 +177,19 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 A = zeros(size(A))         | A.zeros()                  | A.zeros()                       | 
-A = zeros(n, 1)            | A.zeros(n)                 | A.zeros(n)                      | **Note:** Results in a column vector.
+A = zeros(n, 1)            | A.zeros(n)                 | A.zeros(n)                      | 
 A = zeros(n, m)            | A.zeros(n, m)              | A.zeros(n , m)                  | 
 A = ones(size(A))          | A.ones()                   | A.ones()                        | 
-A = ones(n, 1)             | A.ones(n )                 | A.ones(n)                       | **Note:** Results in a column vector.
+A = ones(n, 1)             | A.ones(n )                 | A.ones(n)                       | 
 A = ones(n, m)             | A.ones(n, m)               | A.ones(n, m)                    | 
 A = eye(size(A))           | A.eye()                    | A.eye()                         | 
 A = eye(n, m)              | A.eye(n, m)                | A.eye(n, m)                     | 
-A = randu(size(A))         | A.randu()                  | A.randu()                       | 
-A = randu(n, 1)            | A.randu(n)                 | A.randu(n)                      | **Note:** Results in a column vector.
-A = randu(n, m)            | A.randu(n, m)              | A.randu(n, m)                   | 
-A = randn(size(A))         | A.randn()                  | A.randn()                       | **Note:** Results in a column vector.
-A = randn(n, 1)            | A.randn(n)                 | A.randn(n)                      | 
-A = randn(n, m)            | A.randn(n, m)              | A.randn(n, m)                   | 
+A = randu(size(A))         | A.randu()                  | A.randu(rng)                    | **Note:** rng is a random number generator.
+A = randu(n, 1)            | A.randu(n)                 | A.randu(n, rng)                 | **Note:** rng is a random number generator.
+A = randu(n, m)            | A.randu(n, m)              | A.randu(n, m, rng)              | **Note:** rng is a random number generator.
+A = randn(size(A))         | A.randn()                  | A.randn(rng)                    | **Note:** rng is a random number generator.
+A = randn(n, 1)            | A.randn(n)                 | A.randn(n, rng)                 | **Note:** rng is a random number generator.
+A = randn(n, m)            | A.randn(n, m)              | A.randn(n, m, rng)              | **Note:** rng is a random number generator.
 A(:) = v                   | A.fill(v)                  | A.fill(v)                       | 
                            
                            
