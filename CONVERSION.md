@@ -271,10 +271,12 @@ A                          | A.raw_print(s [, h])       | A.raw_print(s [, h])  
                            
 ### File input/output
 
+**ArmadilloJava:** Only t = 'ascii' (and 'auto_detect') is supported.
+
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-save(n, 'A', '-ascii')     | A.save(n [, t])            | A.save(n [, t])                 | **Note:** n is a string **Default:** t = 'arma_binary'
-                           | A.save(s [, t])            | A.save(s [, t])                 | **Note:** s is a stream **Default:** t = 'arma_binary'
+save(n, 'A', '-ascii')     | A.save(n [, t])            | A.save(n [, t])                 | **Note:** n is a string
+                           | A.save(s [, t])            | A.save(s [, t])                 | **Note:** s is a stream
 A = load(n)                | A.load(n [, t])            | A.load(n [, t])                 | **Note:** n is a string **Default:** t = 'auto_detect'
                            | A.load(s [, t])            | A.load(s [, t])                 | **Note:** s is a stream **Default:** t = 'auto_detect'
                            | A.quiet_save(n [, t])      |                                 | *Not suppported*
