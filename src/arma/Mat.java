@@ -2821,7 +2821,7 @@ public class Mat {
   }
 
   /**
-   * Expands the matrix by insertion of a matrix at column position {@code j}.
+   * Expands the matrix by inserting a matrix at column position {@code j}.
    * 
    * @param j The column position
    * @param matrix The matrix
@@ -2842,14 +2842,15 @@ public class Mat {
     }
 
     Mat temp = new Mat(_matrix);
-    resize(n_rows, n_cols + matrix.n_cols);
+    set_size(n_rows, n_cols + matrix.n_cols);
+    // Note: n_cols and n_rows were updated by .set_size()
     cols(0, j - 1, Op.EQUAL, temp.cols(0, j - 1));
     cols(j, matrix.n_cols - 1, Op.EQUAL, matrix);
-    cols(matrix.n_cols, n_cols + matrix.n_cols, Op.EQUAL, temp.cols(j, n_cols));
+    cols(matrix.n_cols, n_cols - 1, Op.EQUAL, temp.cols(j, n_cols - matrix.n_cols - 1));
   }
 
   /**
-   * Expands the matrix by insertion of a zero matrix from the {@code a}th to {@code b}th column.
+   * Expands the matrix by inserting a zero matrix from the {@code a}th to {@code b}th column.
    * 
    * @param a The first column position
    * @param b The last column position
@@ -2862,7 +2863,7 @@ public class Mat {
   }
 
   /**
-   * Expands the matrix by insertion of a matrix from the {@code a}th to {@code b}th column.
+   * Expands the matrix by inserting a matrix from the {@code a}th to {@code b}th column.
    * <p>
    * The inserted matrix will be filled with 0 ({@code fillWithZeros} = true) or uninitialised otherwise.
    * 
@@ -2878,23 +2879,24 @@ public class Mat {
       throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
     }
 
-    int span = b - a + 1;
+    int spanLength = b - a + 1;
     Mat fillMatrix;
     if (fillWithZeros) {
-      fillMatrix = new Mat(n_rows, span, Fill.ZEROS);
+      fillMatrix = new Mat(n_rows, spanLength, Fill.ZEROS);
     } else {
-      fillMatrix = new Mat(n_rows, span);
+      fillMatrix = new Mat(n_rows, spanLength);
     }
 
     Mat temp = new Mat(_matrix);
-    resize(n_rows, n_cols + span);
+    set_size(n_rows, n_cols + spanLength);
+    // Note: n_cols and n_rows were updated by .set_size()
     cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
     cols(a, b, Op.EQUAL, fillMatrix);
-    cols(b, n_cols + span, Op.EQUAL, temp.cols(b, n_cols));
+    cols(b + 1, n_cols - 1, Op.EQUAL, temp.cols(a, n_cols - spanLength - 1));
   }
 
   /**
-   * Expands the matrix by insertion of a matrix at row position {@code j}.
+   * Expands the matrix by inserting a matrix at row position {@code j}.
    * 
    * @param i The row position
    * @param matrix The matrix
@@ -2914,14 +2916,15 @@ public class Mat {
     }
 
     Mat temp = new Mat(_matrix);
-    resize(n_rows + matrix.n_rows, n_cols);
+    set_size(n_rows + matrix.n_rows, n_cols);
+    // Note: n_cols and n_rows were updated by .set_size()
     rows(0, i - 1, Op.EQUAL, temp.rows(0, i - 1));
-    rows(i, matrix.n_cols - 1, Op.EQUAL, matrix);
-    rows(matrix.n_rows, n_rows + matrix.n_rows, Op.EQUAL, temp.rows(i, n_rows));
+    rows(i, matrix.n_rows - 1, Op.EQUAL, matrix);
+    rows(matrix.n_rows, n_rows - 1, Op.EQUAL, temp.rows(i, n_rows - matrix.n_rows - 1));
   }
 
   /**
-   * Expands the matrix by insertion of a zero matrix from the {@code a}th to {@code b}th row.
+   * Expands the matrix by inserting a zero matrix from the {@code a}th to {@code b}th row.
    * 
    * @param a The first row position
    * @param b The last row position
@@ -2934,7 +2937,7 @@ public class Mat {
   }
 
   /**
-   * Expands the matrix by insertion of a matrix from the {@code a}th to {@code b}th row.
+   * Expands the matrix by inserting a matrix from the {@code a}th to {@code b}th row.
    * <p>
    * The inserted matrix will be filled with 0 ({@code fillWithZeros} = true) or uninitialised otherwise.
    * 
@@ -2950,49 +2953,90 @@ public class Mat {
       throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
     }
 
-    int span = b - a + 1;
+    int spanLength = b - a + 1;
     Mat fillMatrix;
     if (fillWithZeros) {
-      fillMatrix = new Mat(span, n_cols, Fill.ZEROS);
+      fillMatrix = new Mat(spanLength, n_cols, Fill.ZEROS);
     } else {
-      fillMatrix = new Mat(span, n_cols);
+      fillMatrix = new Mat(spanLength, n_cols);
     }
 
     Mat temp = new Mat(_matrix);
-    resize(n_rows + span, n_cols);
+    set_size(n_rows + spanLength, n_cols);
+    // Note: n_cols and n_rows were updated by .set_size()
     rows(0, a - 1, Op.EQUAL, temp.rows(0, a - 1));
     rows(a, b, Op.EQUAL, fillMatrix);
-    rows(b, n_rows + span, Op.EQUAL, temp.rows(b, n_rows));
+    rows(b + 1, n_rows - 1, Op.EQUAL, temp.rows(a, n_rows - spanLength - 1));
   }
 
   /**
-   * @param j
+   * Shrinks the matrix by removing the {@code j}th column.
+   * 
+   * @param j The column position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column positions are from {@code j} to {@code j}.
    */
   public void shed_col(int j) {
     shed_cols(j, j);
   }
 
   /**
-   * @param a
-   * @param b
+   * Shrinks the matrix by removing the {@code a}th to {@code b}th columns.
+   * 
+   * @param a The first column position
+   * @param b The last column position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
+   *           columns, but the column positions are from {@code a} to {@code b}.
    */
   public void shed_cols(int a, int b) {
-
+    if (!in_range(new Span(), new Span(a, b))) {
+      throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
+    }
+    
+    int spanLength = b - a + 1;
+    
+    Mat temp = new Mat(_matrix);
+    set_size(n_rows, n_cols - spanLength);
+    // Note: n_cols and n_rows were updated by .set_size()
+    cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
+    cols(a, n_cols - 1, Op.EQUAL, temp.cols(b + 1, n_cols + spanLength - 1));
   }
 
   /**
-   * @param i
+   * Shrinks the matrix by removing the {@code j}th row.
+   * 
+   * @param i The row position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
+   *           rows, but the row positions are from {@code i} to {@code i}.
    */
   public void shed_row(int i) {
     shed_rows(i, i);
   }
 
   /**
-   * @param a
-   * @param b
+   * Shrinks the matrix by removing the {@code a}th to {@code b}th rows.
+   * 
+   * @param a The first row position
+   * @param b The last row position
+   * 
+   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
+   *           rows, but the row positions are from {@code a} to {@code b}.
    */
   public void shed_rows(int a, int b) {
-
+    if (!in_range(new Span(a, b), Span.all())) {
+      throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
+    }
+    
+    int spanLength = b - a + 1;
+    
+    Mat temp = new Mat(_matrix);
+    set_size(n_rows - spanLength, n_cols);
+    // Note: n_cols and n_rows were updated by .set_size()
+    rows(0, a - 1, Op.EQUAL, temp.rows(0, a - 1));
+    rows(a, n_rows - 1, Op.EQUAL, temp.rows(b + 1, n_rows + spanLength - 1));
   }
 
   /**
