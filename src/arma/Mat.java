@@ -10,7 +10,7 @@
 
 package arma;
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.Random;
 
 import org.ejml.data.DenseMatrix64F;
@@ -3524,135 +3524,136 @@ public class Mat {
   }
 
   /**
-   * @return
+   * Prints the matrix to System.out.
    */
   public void print() {
-    print("");
+    print(System.out);
   }
 
   /**
-   * @param header
-   * @return
+   * Prints the matrix to System.out,  with an additional header.
+   * 
+   * @param header The header
    */
   public void print(String header) {
-    System.out.println(header + toString());
+    print(System.out, header);
   }
 
   /**
-   * @param stream
-   * @return
+   * Prints the matrix to a Stream.
+   * 
+   * @param stream The stream
    */
-  public void print(PrintWriter stream) {
-    print(stream, "");
+  public void print(PrintStream stream) {
+    print(stream);
   }
 
   /**
-   * @param stream
-   * @param header
-   * @return
+   * Prints the matrix to a Stream, with an additional header.
+   * 
+   * @param stream The stream
+   * @param header The header
    */
-  public void print(PrintWriter stream, String header) {
-    stream.println(header + toString());
+  public void print(PrintStream stream, String header) {
+    if(!header.isEmpty()) {
+      stream.println(header);
+    }
+    stream.println(toString());
   }
 
   /**
-   * @return
+   * Prints the matrix to System.out.
    */
   public void raw_print() {
-    return null;
+    print();
   }
 
   /**
-   * @param header
-   * @return
+   * Prints the matrix to System.out, with an additional header.
+   * 
+   * @param header The header
    */
   public void raw_print(String header) {
-    return null;
+    print(header);
   }
 
   /**
-   * @param stream
-   * @return
+   * Prints the matrix to a Stream.
+   * 
+   * @param stream The stream
    */
-  public void raw_print(PrintWriter stream) {
-    return null;
+  public void raw_print(PrintStream stream) {
+    print(stream);
   }
 
   /**
-   * @param stream
-   * @param header
-   * @return
+   * Prints the matrix to a Stream, with an additional header.
+   * 
+   * @param stream The stream
+   * @param header The header
    */
-  public void raw_print(PrintWriter stream, String header) {
-    return null;
-  }
-
-  /**
-   * @param n
-   * @return
-   */
-  public String save(String n) {
-    return null;
+  public void raw_print(PrintStream stream, String header) {
+    print(stream, header);
   }
 
   /**
    * @param n
-   * @param t
-   * @return
    */
-  public String save(String n, String t) {
-    return null;
-  }
-
-  /**
-   * @param stream
-   * @return
-   */
-  public String save(PrintWriter stream) {
-    return null;
-  }
-
-  /**
-   * @param stream
-   * @param t
-   * @return
-   */
-  public String save(PrintWriter stream, String t) {
-    return null;
-  }
-
-  /**
-   * @param n
-   * @return
-   */
-  public String load(String n) {
-    return null;
+  public void save(String n) {
+    
   }
 
   /**
    * @param n
    * @param t
-   * @return
    */
-  public String load(String n, String t) {
-    return null;
+  public void save(String n, String t) {
+    
   }
 
   /**
    * @param stream
-   * @return
    */
-  public String load(PrintWriter stream) {
-    return null;
+  public void save(PrintStream stream) {
+
   }
 
   /**
    * @param stream
    * @param t
-   * @return
    */
-  public String load(PrintWriter stream, String t) {
-    return null;
+  public void save(PrintStream stream, String t) {
+
+  }
+
+  /**
+   * @param n
+   */
+  public void load(String n) {
+
+  }
+
+  /**
+   * @param n
+   * @param t
+   */
+  public void load(String n, String t) {
+
+  }
+
+  /**
+   * @param stream
+   */
+  public void load(PrintStream stream) {
+
+  }
+
+  /**
+   * @param stream
+   * @param t
+   */
+  public void load(PrintStream stream, String t) {
+
   }
 
   /**
