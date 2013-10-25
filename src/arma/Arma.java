@@ -18,6 +18,7 @@ import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
+import org.ejml.ops.MatrixFeatures;
 import org.ejml.ops.NormOps;
 
 /**
@@ -298,7 +299,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed absolute values of the provided matrix.
+   * Creates a matrix with element-wise computed absolute values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -321,7 +322,7 @@ public class Arma {
 
   /**
    * Creates a matrix with element-wise determined positive distances between each value and next larger one in
-   * magnitude of the provided matrix.
+   * magnitude of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -337,7 +338,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-e exponential values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -353,7 +354,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-2 exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-2 exponential values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -369,7 +370,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-10 exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-10 exponential values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -385,7 +386,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-e exponential values of the matrix.
    * <p>
    * Values that would result in infinity are truncated to the largest representable number.
    * 
@@ -408,7 +409,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e logarithmic values of the provided matrix.
+   * Creates a matrix with element-wise computed base-e logarithmic values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -424,7 +425,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-2 logarithmic values of the provided matrix.
+   * Creates a matrix with element-wise computed base-2 logarithmic values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -440,7 +441,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-10 logarithmic values of the provided matrix.
+   * Creates a matrix with element-wise computed base-10 logarithmic values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -456,7 +457,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e logarithmic values of the provided matrix.
+   * Creates a matrix with element-wise computed base-e logarithmic values of the matrix.
    * <p>
    * Values that would result in infinity are truncated to the base-e logarithmic of the largest representable number
    * and values that would result in a complex number are truncated to the base-e logarithmic of the smallest
@@ -483,7 +484,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed raise to power of {@code power} of the provided matrix.
+   * Creates a matrix with element-wise computed raise to power of {@code power} of the matrix.
    * 
    * @param matrix The matrix
    * @param power The power
@@ -500,7 +501,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed square root of the provided matrix.
+   * Creates a matrix with element-wise computed square root of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -517,7 +518,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise squared values of the provided matrix.
+   * Creates a matrix with element-wise squared values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -527,7 +528,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise floored values of the provided matrix.
+   * Creates a matrix with element-wise floored values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -544,7 +545,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise rounded up values of the provided matrix.
+   * Creates a matrix with element-wise rounded up values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -561,7 +562,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise rounded values of the provided matrix.
+   * Creates a matrix with element-wise rounded values of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -578,7 +579,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise determined sign values of the provided matrix.
+   * Creates a matrix with element-wise determined sign values of the matrix.
    * <p>
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
@@ -597,7 +598,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed sine of the provided matrix.
+   * Creates a matrix with element-wise computed sine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -612,7 +613,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse sine of the provided matrix.
+   * Creates a matrix with element-wise computed inverse sine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -627,7 +628,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed hyperbolic sine of the provided matrix.
+   * Creates a matrix with element-wise computed hyperbolic sine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -642,7 +643,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse hyperbolic sine of the provided matrix.
+   * Creates a matrix with element-wise computed inverse hyperbolic sine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -658,7 +659,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed cosine of the provided matrix.
+   * Creates a matrix with element-wise computed cosine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -673,7 +674,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse cosine of the provided matrix.
+   * Creates a matrix with element-wise computed inverse cosine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix.
@@ -688,7 +689,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed hyperbolic cosine of the provided matrix.
+   * Creates a matrix with element-wise computed hyperbolic cosine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -703,7 +704,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse hyperbolic cosine of the provided matrix.
+   * Creates a matrix with element-wise computed inverse hyperbolic cosine of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -719,7 +720,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed tangent of the provided matrix.
+   * Creates a matrix with element-wise computed tangent of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -734,7 +735,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse tangent of the provided matrix.
+   * Creates a matrix with element-wise computed inverse tangent of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -749,7 +750,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed hyperbolic tangent of the provided matrix.
+   * Creates a matrix with element-wise computed hyperbolic tangent of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -764,7 +765,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed inverse hyperbolic tangent of the provided matrix.
+   * Creates a matrix with element-wise computed inverse hyperbolic tangent of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -780,7 +781,7 @@ public class Arma {
   }
 
   /**
-   * Returns the sum of all elements of the provided matrix.
+   * Returns the sum of all elements of the matrix.
    * 
    * @param matrix The matrix
    * @return The sum
@@ -834,11 +835,11 @@ public class Arma {
    *           hand side operand, but were {@link Mat#n_elem vector1.n_elem} and {@code vector2.n_elem}.
    */
   public static double norm_dot(Mat vector1, Mat vector2) throws IllegalArgumentException {
-    return dot(vector1, vector2) / Math.sqrt(dot(vector1,vector1) * dot(vector2, vector2));
+    return dot(vector1, vector2) / Math.sqrt(dot(vector1, vector1) * dot(vector2, vector2));
   }
 
   /**
-   * Returns the determinant of the provided matrix.
+   * Returns the determinant of the matrix.
    * 
    * @param matrix The matrix
    * @return The determinant
@@ -854,7 +855,10 @@ public class Arma {
   }
 
   /**
-   * Sets {@code value} to the absolute value of the base-e logarithmic determinant and {@sign} to the sign of the determinant of the provided matrix.
+   * Sets {@code value} to the absolute value of the base-e logarithmic determinant and {@sign} to the sign of the
+   * determinant of the matrix.
+   * <p>
+   * Note: The value must be of the mutable type double[] and the sign of the mutable type int[].
    * 
    * @param value The value
    * @param sign The sign
@@ -862,41 +866,33 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The provided matrix must be square.
    */
-  public static void log_det(double[] value, int[] sign, Mat matrix) {
+  public static void log_det(double[] value, int[] sign, Mat matrix) throws IllegalArgumentException {
     double determinant = det(matrix);
-    
+
     value[0] = Math.log(Math.abs(determinant));
     sign[0] = (int) Math.signum(determinant);
   }
 
   /**
-   * Computes the {@code p}-norm of the provided matrix.
+   * Computes the {@code p}-norm of the matrix.
    * <p>
    * If {@code matrix} is not a vector, an induced norm is computed.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not
-   * strict greater than 0.
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
-   * one of 1, 2.
-   * </ul>
    * 
-   * @param matrix The provided matrix.
-   * @param p The type of the norm.
-   * @return The norm.
+   * @param matrix The matrix
+   * @param p The type
+   * @return The norm
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
-   *           strict greater than 0or if {@code matrix} is not a vector and {@code p} is not one of 1, 2.
+   * @throws IllegalArgumentException For vectors, p must be strict greater than 0, but was {@code p}.
+   * @throws IllegalArgumentException For non-vector matrices, p must be one of 1 or 2, but was {@code p}.
    */
   public static double norm(Mat matrix, int p) throws IllegalArgumentException {
     if (matrix.is_vec()) {
       if (p < 0) {
-        throw new IllegalArgumentException("For vectors, p must be strict greater than 0 but was " + p);
+        throw new IllegalArgumentException("For vectors, p must be strict greater than 0, but was " + p);
       }
     } else {
       if (p != 1 && p != 2) {
-        throw new IllegalArgumentException("For non-vector matrices, p must be one of 1 or 2 but was" + p);
+        throw new IllegalArgumentException("For non-vector matrices, p must be one of 1 or 2, but was " + p);
       }
     }
 
@@ -904,29 +900,18 @@ public class Arma {
   }
 
   /**
-   * Computes the {@code p}-norm of the provided matrix.
+   * Computes the {@code p}-norm of the matrix.
    * <p>
    * If {@code matrix} is not a vector, an induced norm is computed.
    * <p>
-   * "-inf" stand for the minimum norm, "inf" for the maximum norm and "fro" for the Frobenius norm.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is a vector and {@code p} is not one
-   * of '-inf', 'inf' or 'fro'.
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code matrix} is not a vector and {@code p} is not
-   * one of 'inf' or 'fro'.
-   * </ul>
+   * {@code -inf} stands for the minimum norm, {@code inf} for the maximum norm and {@code fro} for the Frobenius norm.
    * 
-   * @param matrix The provided matrix.
-   * @param p The type of the norm.
-   * @return The norm.
+   * @param matrix The matrix
+   * @param p The type
+   * @return The norm
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix} is a vector and {@code p} is not
-   *           one of '-inf', 'inf' or 'fro' or if {@code matrix} is not a vector and {@code p} is not one of 'inf' or
-   *           'fro'.
-   * 
-   * @see #norm(Mat, int)
+   * @throws IllegalArgumentException For vectors, p must be one of '-inf', 'inf' or 'fro', but was {@code p}.
+   * @throws IllegalArgumentException For non-vector matrices, p must be one of 'inf' or 'fro', but was {@code p}.
    */
   public static double norm(Mat matrix, String p) throws IllegalArgumentException {
     if (matrix.is_vec()) {
@@ -938,7 +923,7 @@ public class Arma {
         case "fro":
           return NormOps.normF(matrix.memptr());
         default:
-          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro' but was " + p);
+          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro', but was " + p);
       }
     } else {
       switch (p) {
@@ -947,54 +932,60 @@ public class Arma {
         case "fro":
           return NormOps.normF(matrix.memptr());
         default:
-          throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro' but was" + p);
+          throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro', but was " + p);
       }
     }
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the rank of the matrix.
+   * <p>
+   * All values smaller than {@code max(size(A))*eps(norm(A))} are treated as zero.
+   * 
+   * @param matrix The matrix
+   * @return The rank
    */
-  public static double rank(Mat A) {
-    return 0.0;
+  public static double rank(Mat matrix) {
+    return rank(matrix, Math.max(matrix.n_rows, matrix.n_cols) * Math.ulp(norm(matrix, 2)));
   }
 
   /**
-   * @param A
-   * @param tolerance
-   * @return
+   * Returns the rank of the matrix.
+   * <p>
+   * All values smaller than {@code tolerance} are treated as zero.
+   * 
+   * @param matrix The matrix
+   * @param tolerance The tolerance
+   * @return The rank
    */
-  public static double rank(Mat A, double tolerance) {
-    return 0.0;
+  public static double rank(Mat matrix, double tolerance) {
+    return MatrixFeatures.rank(matrix._matrix, tolerance);
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the trace of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The trace
    */
-  public static double trace(Mat A) {
-    return 0.0;
+  public static double trace(Mat matrix) {
+    return CommonOps.trace(matrix._matrix);
   }
 
   /**
    * Converts a provided (1,1)-matrix into a scalar of type double.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code matrix.}{@link Mat#n_rows
-   * n_rows} {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
    * 
-   * @param matrix The provided matrix.
-   * @return The scalar.
+   * @param matrix The matrix
+   * @return The scalar
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code matrix.}{@link Mat#n_rows n_rows}
-   *           {@code  > 1 || matrix.}{@link Mat#n_cols n_cols}{@code  > 1}.
+   * @throws IllegalArgumentException The provided matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows matrix.n_rows}, {@link Mat#n_cols matrix.n_cols})-matrix.
    */
   public static double as_scalar(Mat matrix) throws IllegalArgumentException {
     if (matrix.n_rows != 1 || matrix.n_cols != 1) {
-      throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix but was (" + matrix.n_rows + ", " + matrix.n_cols + ").");
+      throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix, but was a (" + matrix.n_rows + ", " + matrix.n_cols + ")-matrix.");
     }
 
-    return matrix.memptr().get(0);
+    return matrix._matrix.get(0);
   }
 
   /**
@@ -1354,7 +1345,7 @@ public class Arma {
   }
 
   /**
-   * Returns true if any element of the provided matrix is non-zero or if an operation is satisfy if used
+   * Returns true if any element of the matrix is non-zero or if an operation is satisfy if used
    * together with {@link Op#evaluate(Mat, Op, Mat)}.
    * 
    * @param matrix The provided matrix.
