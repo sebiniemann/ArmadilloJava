@@ -143,48 +143,157 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @param numberOfCopiesPerRow
-   * @param numberOfCopiesPerColumn
-   * @return
+   * Creates a matrix by copying the matrix {@code numberOfCopiesPerRow} times per row and
+   * {@code numberOfCopiesPerColumn} per column.
+   * 
+   * @param matrix The matrix
+   * @param numberOfCopiesPerRow The number of copies per row
+   * @param numberOfCopiesPerColumn The number of copies per column
+   * @return The matrix
    */
-  public static Mat repmat(Mat A, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
-    return null;
+  public static Mat repmat(Mat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
+    Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
+    for (int i = 0; i < matrix.n_rows; i++) {
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double element = matrix._matrix.get(i, j);
+        for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
+          for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
+            result._matrix.set(i + copyI * matrix.n_rows, j + copyJ * matrix.n_cols, element);
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   /**
-   * @param A
-   * @return
+   * Creates a toeplitz matrix with {@code The} as the first column of the matrix.
+   * 
+   * @param vector The vector
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
+   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat toeplitz(Mat A) {
-    return null;
+  public static Mat toeplitz(Mat vector) throws IllegalArgumentException {
+    if (!vector.is_vec()) {
+      throw new UnsupportedOperationException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+    }
+
+    if (vector.n_elem > 0) {
+      Mat result = new Mat(vector.n_elem, vector.n_elem);
+
+      result.diag(Op.EQUAL, vector._matrix.get(0));
+      for (int n = 1; n < vector.n_elem; n++) {
+        double element = vector._matrix.get(n);
+        result.diag(n, Op.EQUAL, element);
+        result.diag(-n, Op.EQUAL, element);
+      }
+
+      return result;
+    } else {
+      return new Mat();
+    }
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * Creates a toeplitz matrix with {@code vector1} as the first column and {@code vector2} the first row of the matrix.
+   * 
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
+   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@link Mat#n_rows
+   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat toeplitz(Mat A, Mat B) {
-    return null;
+  public static Mat toeplitz(Mat vector1, Mat vector2) throws IllegalArgumentException {
+    if (!vector1.is_vec()) {
+      throw new UnsupportedOperationException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
+    }
+
+    if (!vector2.is_vec()) {
+      throw new UnsupportedOperationException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
+    }
+
+    Mat result = new Mat(vector1.n_elem, vector2.n_elem);
+
+    if (vector1.n_elem > 0 && vector2.n_elem > 0) {
+      result.diag(Op.EQUAL, vector1._matrix.get(0));
+      for (int n = 1; n < vector1.n_elem; n++) {
+        result.diag(n, Op.EQUAL, vector1._matrix.get(n));
+      }
+      for (int n = 1; n < vector2.n_elem; n++) {
+        result.diag(-n, Op.EQUAL, vector2._matrix.get(n));
+      }
+
+      return result;
+    } else {
+      return result;
+    }
   }
 
   /**
-   * @param A
-   * @return
+   * Creates a circulant toeplitz matrix with {@code The} as the first column of the matrix.
+   * 
+   * @param vector The vector
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
+   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat circ_toeplitz(Mat A) {
-    return null;
+  public static Mat circ_toeplitz(Mat vector) {
+    if (!vector.is_vec()) {
+      throw new UnsupportedOperationException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+    }
+
+    if (vector.n_elem > 0) {
+      Mat result = new Mat(vector.n_elem, vector.n_elem);
+
+      result.diag(Op.EQUAL, vector._matrix.get(0));
+      for (int n = 1; n < vector.n_elem; n++) {
+        double element = vector._matrix.get(n);
+        result.diag(vector.n_elem - n, Op.EQUAL, element);
+        result.diag(-n, Op.EQUAL, element);
+      }
+
+      return result;
+    } else {
+      return new Mat();
+    }
   }
 
   /**
-   * @param a
-   * @param b
-   * @param n
-   * @return
+   * Creates a column vector with 100 elements linear increasing from value {@code a} to {@code b}.
+   * 
+   * @param startValue The start value
+   * @param endValue The end value
+   * @return The matrix
    */
-  public static Mat linspace(double a, double b, int n) {
-    return null;
+  public static Mat linspace(double startValue, double endValue) {
+    return linspace(startValue, endValue, 100);
+  }
+
+  /**
+   * Creates a column vector with {@code numberOfElements} elements linear increasing from value {@code a} to {@code b}.
+   * 
+   * @param startValue The start value
+   * @param endValue The end value
+   * @param numberOfElements The number of elements
+   * @return The matrix
+   */
+  public static Mat linspace(double startValue, double endValue, int numberOfElements) {
+    Mat result = new Mat(numberOfElements, 1);
+    
+    double stepLength = (endValue - startValue) / numberOfElements;
+    for(int n = 0; n < result.n_elem; n++) {
+      // Increasing a value step by step by stepLength might be faster, but also reduces its precision
+      result._matrix.set(n, startValue + stepLength * n);
+    }
+    
+    return result;
   }
 
   /**
