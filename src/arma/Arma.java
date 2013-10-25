@@ -286,123 +286,193 @@ public class Arma {
    */
   public static Mat linspace(double startValue, double endValue, int numberOfElements) {
     Mat result = new Mat(numberOfElements, 1);
-    
+
     double stepLength = (endValue - startValue) / numberOfElements;
-    for(int n = 0; n < result.n_elem; n++) {
+    for (int n = 0; n < result.n_elem; n++) {
       // Increasing a value step by step by stepLength might be faster, but also reduces its precision
       result._matrix.set(n, startValue + stepLength * n);
     }
-    
+
     return result;
   }
 
   /**
    * Creates a matrix with element-wise computed absolute values of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat abs(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.memptr());
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int i = 0; i < matrix.n_elem; i++) {
-      double element = memptr.get(i);
+      double element = matrix._matrix.get(i);
 
       if (element < 0) {
-        result.set(i, -element);
+        result._matrix.set(i, -element);
+      } else {
+        result._matrix.set(i, element);
       }
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * Creates a matrix with element-wise determination of the positive distance between each value and next larger one in
+   * magnitude.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat eps(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.ulp(matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat exp(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.exp(matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat exp2(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.pow(2, matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat exp10(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.pow(10, matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat trunc_exp(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.pow(10, matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat log(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.log(matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat log2(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.log(matrix._matrix.get(i)) / Math.log(2));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat log10(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.log10(matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat trunc_log(Mat matrix) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.log(matrix._matrix.get(i)));
+    }
+
+    return result;
   }
 
   /**
-   * @param matrix
-   * @param power
-   * @return
+   * @param matrix The matrix
+   * @param power The power
+   * @return The matrix
    */
   public static Mat pow(Mat matrix, int power) {
-    return null;
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result._matrix.set(i, Math.pow(matrix._matrix.get(i), power));
+    }
+
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed square root of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat sqrt(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
@@ -418,8 +488,8 @@ public class Arma {
   /**
    * Creates a matrix with element-wise squared values of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat square(Mat matrix) {
     return matrix.elemTimes(matrix);
@@ -428,8 +498,8 @@ public class Arma {
   /**
    * Creates a matrix with element-wise floored values of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat floor(Mat matrix) {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
@@ -443,234 +513,231 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat ceil(Mat matrix) {
-    return null;
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.ceil(memptr.get(i)));
+    }
+
+    return new Mat(result);
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat round(Mat matrix) {
-    return null;
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.round(memptr.get(i)));
+    }
+
+    return new Mat(result);
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat sign(Mat matrix) {
-    return null;
+    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    DenseMatrix64F memptr = matrix.memptr();
+
+    for (int i = 0; i < matrix.n_elem; i++) {
+      result.set(i, Math.signum(memptr.get(i)));
+    }
+
+    return new Mat(result);
   }
 
   /**
    * Creates a matrix with element-wise computed sine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat sin(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.sin(memptr.get(i)));
+      result._matrix.set(i, Math.sin(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse sine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat asin(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.asin(memptr.get(i)));
+      result._matrix.set(i, Math.asin(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed hyperbolic sine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat sinh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.sinh(memptr.get(i)));
+      result._matrix.set(i, Math.sinh(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse hyperbolic sine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat asinh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      double value = memptr.get(i);
-      result.set(i, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
+      double value = matrix._matrix.get(i);
+      result._matrix.set(i, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed cosine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat cos(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.cos(memptr.get(i)));
+      result._matrix.set(i, Math.cos(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse cosine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix.
    */
   public static Mat acos(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.acos(memptr.get(i)));
+      result._matrix.set(i, Math.acos(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed hyperbolic cosine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat cosh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.cosh(memptr.get(i)));
+      result._matrix.set(i, Math.cosh(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse hyperbolic cosine of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat acosh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      double value = memptr.get(i);
-      result.set(i, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
+      double value = matrix._matrix.get(i);
+      result._matrix.set(i, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed tangent of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat tan(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.tan(memptr.get(i)));
+      result._matrix.set(i, Math.tan(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse tangent of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat atan(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.atan(memptr.get(i)));
+      result._matrix.set(i, Math.atan(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed hyperbolic tangent of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat tanh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.tanh(memptr.get(i)));
+      result._matrix.set(i, Math.tanh(matrix._matrix.get(i)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
    * Creates a matrix with element-wise computed inverse hyperbolic tangent of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The created matrix.
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat atanh(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
-
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int i = 0; i < matrix.n_elem; i++) {
-      double value = memptr.get(i);
-      result.set(i, 0.5 * Math.log((1 + value) / (1 - value)));
+      double value = matrix._matrix.get(i);
+      result._matrix.set(i, 0.5 * Math.log((1 + value) / (1 - value)));
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
