@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -53,7 +54,7 @@ import org.ejml.ops.RandomMatrices;
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>
  */
-public class Mat {
+public class Mat implements Iterable<Double> {
 
   /**
    * The internal data representation of the matrix
@@ -3921,5 +3922,36 @@ public class Mat {
       int j = n / n_rows;
       return j + (n - j * n_rows) * n_cols;
     }
+  }
+
+  @Override
+  public Iterator<Double> iterator() {
+    class MatIterator implements Iterator<Double> {
+
+      private Mat _matrix;
+      private int _currentPosition;
+      
+      public MatIterator(Mat matrix) {
+        _matrix = matrix;
+        _currentPosition = 0;
+      }
+      
+      @Override
+      public boolean hasNext() {
+       return (_currentPosition < _matrix.n_elem);
+      }
+
+      @Override
+      public Double next() {
+       return _matrix.at(_currentPosition++);
+      }
+
+      @Override
+      public void remove() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Removal is not supported.");
+      }
+     }
+    
+    return new MatIterator(this);
   }
 }
