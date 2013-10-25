@@ -367,7 +367,7 @@ det(A)                     | det(A)                     | Arma.det(A)           
 norm(A, p)                 | norm(A, p)                 | Arma.norm(A, p)                 | 
 rank(A [, t])              | rank(A [, t])              | Arma.rank(A [, t])              | **Default:** t = max(size(A))*eps(norm(A))
 trace(A)                   | trace(A)                   | Arma.trace(A)                   | 
-                           | as_scalar(A)               | Arma.accu(A)                    | 
+                           | as_scalar(A)               | Arma.as_scalar(A)               | 
 
 
 ### Scalar/vector-valued functions of vectors/matrices
