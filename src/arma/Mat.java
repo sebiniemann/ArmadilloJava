@@ -180,7 +180,7 @@ public class Mat {
    * @throws IllegalArgumentException Does not support {@link Fill#RANDU} or {@link Fill#RANDN}. Use
    *           {@link #Mat(int, Fill, Random)} instead.
    */
-  public Mat(int numberOfElements, Fill fillType) {
+  public Mat(int numberOfElements, Fill fillType) throws IllegalArgumentException {
     this(numberOfElements, 1, fillType);
   }
 
@@ -1338,7 +1338,7 @@ public class Mat {
    */
   public Mat elem(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (selection.n_elem > 0) {
@@ -1376,9 +1376,9 @@ public class Mat {
    *           but the position was {@code n}.
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  public void elem(Mat selection, Op operator) {
+  public void elem(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1413,7 +1413,7 @@ public class Mat {
    */
   public void elem(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (operand.n_elem != selection.n_elem) {
@@ -1451,7 +1451,7 @@ public class Mat {
    */
   public void elem(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1481,7 +1481,7 @@ public class Mat {
    */
   public Mat cols(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (selection.n_elem > 0) {
@@ -1524,7 +1524,7 @@ public class Mat {
    */
   public void cols(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1559,7 +1559,7 @@ public class Mat {
    */
   public void cols(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (operand.n_elem != selection.n_elem) {
@@ -1596,7 +1596,7 @@ public class Mat {
    */
   public void cols(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1626,7 +1626,7 @@ public class Mat {
    */
   public Mat rows(Mat selection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (selection.n_elem > 0) {
@@ -1669,7 +1669,7 @@ public class Mat {
    */
   public void rows(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1704,7 +1704,7 @@ public class Mat {
    */
   public void rows(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     if (operand.n_elem != selection.n_elem) {
@@ -1741,7 +1741,7 @@ public class Mat {
    */
   public void rows(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < selection.n_elem; n++) {
@@ -1775,11 +1775,11 @@ public class Mat {
    */
   public Mat submat(Mat rowSelection, Mat columnSelection) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
     if (!rowSelection.is_vec()) {
-      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
 
     if (!columnSelection.is_vec()) {
-      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
     }
 
     if (rowSelection.n_elem > 0 && columnSelection.n_elem > 0) {
@@ -1833,11 +1833,11 @@ public class Mat {
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
-      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
 
     if (!columnSelection.is_vec()) {
-      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
     }
 
     for (int i = 0; i < rowSelection.n_elem; i++) {
@@ -1886,11 +1886,11 @@ public class Mat {
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
-      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
 
     if (!columnSelection.is_vec()) {
-      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
     }
 
     if (operand.n_elem != rowSelection.n_elem * columnSelection.n_elem) {
@@ -1940,11 +1940,11 @@ public class Mat {
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!rowSelection.is_vec()) {
-      throw new UnsupportedOperationException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The rowSelection must be a vector, but was a (" + rowSelection.n_rows + ", " + rowSelection.n_cols + ")-matrix.");
     }
 
     if (!columnSelection.is_vec()) {
-      throw new UnsupportedOperationException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The columnSelection must be a vector, but was a (" + columnSelection.n_rows + ", " + columnSelection.n_cols + ")-matrix.");
     }
 
     for (int i = 0; i < rowSelection.n_elem; i++) {
@@ -2241,7 +2241,7 @@ public class Mat {
    */
   public void each_col(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2276,7 +2276,7 @@ public class Mat {
    */
   public void each_col(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2309,7 +2309,7 @@ public class Mat {
    */
   public void each_col(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2384,7 +2384,7 @@ public class Mat {
    */
   public void each_row(Mat selection, Op operator) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2419,7 +2419,7 @@ public class Mat {
    */
   public void each_row(Mat selection, Op operator, Mat operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2452,7 +2452,7 @@ public class Mat {
    */
   public void each_row(Mat selection, Op operator, double operand) throws IllegalArgumentException, ArrayIndexOutOfBoundsException, UnsupportedOperationException {
     if (!selection.is_vec()) {
-      throw new UnsupportedOperationException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The selection must be a vector, but was a (" + selection.n_rows + ", " + selection.n_cols + ")-matrix.");
     }
 
     for (int n = 0; n < n_cols; n++) {
@@ -2531,7 +2531,7 @@ public class Mat {
    * @throws IllegalArgumentException The number of columns of the left-hand side operand must match with the number of
    *           rows of the right hand side operand, but were {@link #n_cols} and {@link #n_rows operand.n_rows}.
    */
-  public Mat times(Mat operand) {
+  public Mat times(Mat operand) throws IllegalArgumentException {
     if (n_cols != operand.n_rows) {
       throw new IllegalArgumentException("The number of columns of the left-hand side operand must match with the number of rows of the right hand side operand, but were " + n_cols + " and " + operand.n_rows + ".");
     }
@@ -3471,7 +3471,7 @@ public class Mat {
    * 
    * @throws IllegalArgumentException The dimension must be on of 0 or 1, but was {@code dimension}.
    */
-  public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
+  public void reshape(int numberOfRows, int numberOfColumns, int dimension) throws IllegalArgumentException {
     if (dimension < 0 || dimension > 1) {
       throw new IllegalArgumentException("The dimension must be on of 0 or 1, but was " + dimension + ".");
     }
@@ -3502,7 +3502,7 @@ public class Mat {
    * 
    * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
-  public void resize(int numberOfElements) {
+  public void resize(int numberOfElements) throws UnsupportedOperationException {
     if (!is_vec()) {
       throw new UnsupportedOperationException("Must only be invoked for vectors.");
     }
