@@ -62,7 +62,7 @@ public class TestMatrixGeneration {
 	}
 
 	/**
-	 * Test method for {@link arma.Arma#randu(int)}.
+	 * Test method for {@link arma.Arma#randu(int, java.util.Random)}.
 	 */
 	@Test
 	public void testRanduInt() {
@@ -78,7 +78,7 @@ public class TestMatrixGeneration {
 	}
 
 	/**
-	 * Test method for {@link arma.Arma#randn(int)}.
+	 * Test method for {@link arma.Arma#randn(int, java.util.Random)}.
 	 */
 	@Test
 	public void testRandnInt() {
