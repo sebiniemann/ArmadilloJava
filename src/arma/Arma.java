@@ -36,93 +36,107 @@ import org.ejml.ops.NormOps;
 public class Arma {
 
   /**
-   * @param numberOfElements
-   * @return
+   * Returns a zero column vector with {@code numberOfElements} elements.
+   * 
+   * @param numberOfElements The number of elements
+   * @return The vector
    */
   public static Mat zeros(int numberOfElements) {
     return zeros(numberOfElements, 1);
   }
 
   /**
-   * Creates a zero matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * Creates a zero matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @return The matrix
    */
   public static Mat zeros(int numberOfRows, int numberOfColumns) {
     return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
   }
 
   /**
-   * @param numberOfElements
-   * @return
+   * Returns a column vector of ones with {@code numberOfElements} elements.
+   * 
+   * @param numberOfElements The number of elements
+   * @return The vector
    */
   public static Mat ones(int numberOfElements) {
     return ones(numberOfElements, 1);
   }
 
   /**
-   * Creates a matrix of ones with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * Creates a matrix of ones with {@code numberOfRows} rows and {@code numberOfColumns} columns.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @return The matrix
    */
   public static Mat ones(int numberOfRows, int numberOfColumns) {
     return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
   }
 
   /**
-   * Creates a identity matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns}.
+   * Creates a identity of ones with {@code numberOfRows} rows and {@code numberOfColumns} columns.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @return The created matrix.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @return The matrix
    */
   public static Mat eye(int numberOfRows, int numberOfColumns) {
     return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
   }
 
   /**
-   * @param numberOfElements
-   * @param rng 
-   * @return
+   * Creates a column vector with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from
+   * the standard uniform distribution on the left-closed and right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
+   * 
+   * @param numberOfElements The number of elements
+   * @param rng The pseudorandom generator
+   * @return The vector
    */
   public static Mat randu(int numberOfElements, Random rng) {
     return randu(numberOfElements, 1, rng);
   }
 
   /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * uniformly distributed pseudorandom values.
+   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from the
+   * standard uniform distribution on the left-closed and right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param rng The pseudorandom generator
+   * @return The matrix
    */
   public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
     return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
   }
 
   /**
-   * @param numberOfElements
-   * @param rng 
-   * @return
+   * Creates a column vector with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from
+   * the standard normal distribution with mean 0.0 and standard deviation 1.0.
+   * 
+   * @param numberOfElements The number of elements
+   * @param rng The pseudorandom generator
+   * @return The vector
    */
   public static Mat randn(int numberOfElements, Random rng) {
     return randn(numberOfElements, 1, rng);
   }
 
   /**
-   * Creates a matrix with {@link #n_rows}{@code = numberOfRows} and {@link #n_cols}{@code = numberOfColumns} and
-   * normally distributed pseudorandom values.
+   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from the
+   * standard normal distribution with mean 0.0 and standard deviation 1.0.
    * 
-   * @param numberOfRows The number of rows.
-   * @param numberOfColumns The number of columns.
-   * @param rng The pseudorandom generator.
-   * @return The created matrix.
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param rng The pseudorandom generator
+   * @return The matrix
    */
   public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
     return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
