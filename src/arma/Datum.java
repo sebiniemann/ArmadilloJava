@@ -41,7 +41,7 @@ public class Datum {
    * <p>
    * <b>Note:</b> Machine dependent
    */
-  public static final double eps       = Math.pow(2, -52);
+  public static final double eps       = Math.ulp(1.0d);
 
   /**
    * The logarithm of the smallest representable normal number
