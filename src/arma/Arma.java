@@ -12,6 +12,7 @@ package arma;
 
 import java.util.Random;
 
+import org.ejml.alg.dense.mult.VectorVectorMult;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
@@ -178,7 +179,7 @@ public class Arma {
    */
   public static Mat toeplitz(Mat vector) throws IllegalArgumentException {
     if (!vector.is_vec()) {
-      throw new UnsupportedOperationException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
     if (vector.n_elem > 0) {
@@ -206,16 +207,16 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
    *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@link Mat#n_rows
-   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
+   *           {@code selection.n_cols})-matrix.
    */
   public static Mat toeplitz(Mat vector1, Mat vector2) throws IllegalArgumentException {
     if (!vector1.is_vec()) {
-      throw new UnsupportedOperationException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
     }
 
     if (!vector2.is_vec()) {
-      throw new UnsupportedOperationException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
     }
 
     Mat result = new Mat(vector1.n_elem, vector2.n_elem);
@@ -244,9 +245,9 @@ public class Arma {
    * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
    *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat circ_toeplitz(Mat vector) {
+  public static Mat circ_toeplitz(Mat vector) throws IllegalArgumentException {
     if (!vector.is_vec()) {
-      throw new UnsupportedOperationException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
     if (vector.n_elem > 0) {
@@ -469,12 +470,12 @@ public class Arma {
 
     for (int i = 0; i < matrix.n_elem; i++) {
       double value = matrix._matrix.get(i);
-      if(Double.isInfinite(value)) {
+      if (Double.isInfinite(value)) {
         value = Double.MAX_VALUE;
-      } else if(value <= 0) {
+      } else if (value <= 0) {
         value = Double.MIN_NORMAL;
       }
-      
+
       result._matrix.set(i, Math.log(value));
     }
 
@@ -577,7 +578,9 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise determined signum values of the provided matrix.
+   * Creates a matrix with element-wise determined sign values of the provided matrix.
+   * <p>
+   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -777,58 +780,93 @@ public class Arma {
   }
 
   /**
-   * Computes the sum of all elements of the provided matrix.
+   * Returns the sum of all elements of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The sum.
+   * @param matrix The matrix
+   * @return The sum
    */
   public static double accu(Mat matrix) {
     return CommonOps.elementSum(matrix.memptr());
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * Returns the dot product between two vectors.
+   * 
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The dot product
+   * 
+   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
+   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
+   *           {@code selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link Mat#n_elem vector1.n_elem} and {@code vector2.n_elem}.
    */
-  public static double dot(Mat A, Mat B) {
-    return 0.0;
+  public static double dot(Mat vector1, Mat vector2) throws IllegalArgumentException {
+    if (!vector1.is_vec()) {
+      throw new IllegalArgumentException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
+    }
+
+    if (!vector2.is_vec()) {
+      throw new IllegalArgumentException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
+    }
+
+    if (vector1.n_elem != vector2.n_elem) {
+      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + vector1.n_elem + " and " + vector2.n_elem + ".");
+    }
+
+    return VectorVectorMult.innerProd(vector1._matrix, vector2._matrix);
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * Returns the normalised dot product between two vectors.
+   * 
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The dot product
+   * 
+   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
+   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
+   *           {@code selection.n_cols})-matrix.
+   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
+   *           hand side operand, but were {@link Mat#n_elem vector1.n_elem} and {@code vector2.n_elem}.
    */
-  public static double norm_dot(Mat A, Mat B) {
-    return 0.0;
+  public static double norm_dot(Mat vector1, Mat vector2) throws IllegalArgumentException {
+    return dot(vector1, vector2) / Math.sqrt(dot(vector1,vector1) * dot(vector2, vector2));
   }
 
   /**
-   * Computes the determinant of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown instead of C++'s std::logic_error if
-   * the provided matrix is not square.
+   * Returns the determinant of the provided matrix.
    * 
-   * @param matrix The provided matrix.
-   * @return The determinant.
+   * @param matrix The matrix
+   * @return The determinant
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the provided matrix is not square.
+   * @throws IllegalArgumentException The provided matrix must be square.
    */
   public static double det(Mat matrix) throws IllegalArgumentException {
     if (!matrix.is_square()) {
-      throw new IllegalArgumentException("The provided matrix needs to be square .");
+      throw new IllegalArgumentException("The provided matrix must be square.");
     }
 
     return CommonOps.det(matrix.memptr());
   }
 
   /**
-   * @param A
-   * @return
+   * Sets {@code value} to the absolute value of the base-e logarithmic determinant and {@sign} to the sign of the determinant of the provided matrix.
+   * 
+   * @param value The value
+   * @param sign The sign
+   * @param matrix The matrix
+   * 
+   * @throws IllegalArgumentException The provided matrix must be square.
    */
-  public static double log_det(Mat A) {
-    return 0.0;
+  public static void log_det(double[] value, int[] sign, Mat matrix) {
+    double determinant = det(matrix);
+    
+    value[0] = Math.log(Math.abs(determinant));
+    sign[0] = (int) Math.signum(determinant);
   }
 
   /**
