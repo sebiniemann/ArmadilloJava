@@ -15,12 +15,15 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -3548,9 +3551,8 @@ public class Mat {
    * Prints the matrix to System.out, with an additional header.
    * 
    * @param header The header
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void print(String header) throws UnsupportedEncodingException {
+  public void print(String header) {
     print(System.out, header);
   }
 
@@ -3568,10 +3570,15 @@ public class Mat {
    * 
    * @param stream The stream
    * @param header The header
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void print(OutputStream stream, String header) throws UnsupportedEncodingException {
-    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
+  public void print(OutputStream stream, String header) {
+    
+    PrintWriter writer;
+    try {
+      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
+    } catch(UnsupportedEncodingException exception) {
+      throw new AssertionError("UTF-8 is not supported. How could this happen?");
+    }
 
     if (!header.isEmpty()) {
       writer.println(header);
@@ -3590,9 +3597,8 @@ public class Mat {
    * Prints the matrix to System.out, with an additional header.
    * 
    * @param header The header
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void raw_print(String header) throws UnsupportedEncodingException {
+  public void raw_print(String header) {
     print(header);
   }
 
@@ -3610,61 +3616,68 @@ public class Mat {
    * 
    * @param stream The stream
    * @param header The header
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public void raw_print(OutputStream stream, String header) throws UnsupportedEncodingException {
+  public void raw_print(OutputStream stream, String header) {
     print(stream, header);
   }
 
   /**
+   * Store the element into a file with filetype {@code ascii} and returns true on succes.
+   * 
    * @param filename The filename
    * @return Whether the process was succesfully.
    * 
    * @throws FileNotFoundException File not found.
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public boolean save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
+  public boolean save(String filename) throws FileNotFoundException {
     return save(filename, "ascii");
   }
 
   /**
+   * Store the element into a file with filetype {@code filetype} and returns true on succes.
+   * 
    * @param filename The filename
    * @param filetype The filetype
    * @return Whether the process was succesfully.
    * 
    * @throws FileNotFoundException File not found.
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
-   * @throws UnsupportedEncodingException Only ascii and auto_detect is supported, but was {@code filetype}.
+   * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
    */
-  public boolean save(String filename, String filetype) throws FileNotFoundException, UnsupportedEncodingException {
+  public boolean save(String filename, String filetype) throws FileNotFoundException, IllegalArgumentException {
     return save(new FileOutputStream(filename, false), filetype);
   }
 
   /**
+   * Store the element into a stream with filetype {@code ascii} and returns true on succes.
+   * 
    * @param stream The stream
    * @return Whether the process was succesfully.
-   * 
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
    */
-  public boolean save(OutputStream stream) throws UnsupportedEncodingException {
+  public boolean save(OutputStream stream) {
     return save(stream, "ascii");
   }
 
   /**
+   * Store the element into a stream with filetype {@code filetype} and returns true on succes.
+   * 
    * @param stream The stream
    * @param filetype The filetype
    * @return Whether the process was succesfully.
    * 
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
-   * @throws UnsupportedEncodingException Only ascii is supported, but was {@code filetype}.
+   * @throws IllegalArgumentException Only ascii is supported, but was {@code filetype}.
    */
-  public boolean save(OutputStream stream, String filetype) throws UnsupportedEncodingException {
+  public boolean save(OutputStream stream, String filetype) throws IllegalArgumentException {
     if (!filetype.equals("ascii")) {
-      throw new UnsupportedEncodingException("Only ascii is supported, but was " + filetype + ".");
+      throw new IllegalArgumentException("Only ascii is supported, but was " + filetype + ".");
     }
 
-    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
-
+    PrintWriter writer;
+    try {
+      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
+    } catch(UnsupportedEncodingException exception) {
+      throw new AssertionError("UTF-8 is not supported. How could this happen?");
+    }
+    
     for (int i = 0; i < n_rows; i++)
     {
       writer.print(" ");
@@ -3683,55 +3696,104 @@ public class Mat {
   }
 
   /**
+   * Fills the matrix with data from a file of filetype {@code ascii} and returns true on succes.
+   * <p>
+   * Resets the matrix if an error occured.
+   * 
    * @param filename The filename
    * @return Whether the process was succesfully.
    * 
-   * @throws FileNotFoundException File not found.
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
+   * @throws IOException An I/O error occured
    */
-  public boolean load(String filename) throws FileNotFoundException, UnsupportedEncodingException {
+  public boolean load(String filename) throws IOException {
     return load(filename, "auto_detect");
   }
 
   /**
+   * Fills the matrix with data from a file of filetype {@code filetype} and returns true on succes.
+   * <p>
+   * Resets the matrix if an error occured.
+   * 
    * @param filename The filename
    * @param filetype The filetype
    * @return Whether the process was succesfully.
    * 
-   * @throws FileNotFoundException File not found.
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
-   * @throws UnsupportedEncodingException Only ascii and auto_detect is supported, but was {@code filetype}.
+   * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
+   * @throws IOException An I/O error occured
    */
-  public boolean load(String filename, String filetype) throws FileNotFoundException, UnsupportedEncodingException {
+  public boolean load(String filename, String filetype) throws IllegalArgumentException, IOException {
     return load(new FileInputStream(filename), filetype);
   }
 
   /**
+   * Fills the matrix with data from a stream of filetype {@code ascii} and returns true on succes.
+   * <p>
+   * Resets the matrix if an error occured.
+   * 
    * @param stream The stream
    * @return Whether the process was succesfully.
    * 
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
+   * @throws IOException An I/O error occured
    */
-  public boolean load(InputStream stream) throws UnsupportedEncodingException {
+  public boolean load(InputStream stream) throws IOException {
     return load(stream, "auto_detect");
   }
 
   /**
+   * Fills the matrix with data from a stream of filetype {@code filetype} and returns true on succes.
+   * <p>
+   * Resets the matrix if an error occured.
+   * 
    * @param stream The stream
    * @param filetype The filetype
    * @return Whether the process was succesfully.
    * 
-   * @throws UnsupportedEncodingException UTF-8 was not supported.
-   * @throws UnsupportedEncodingException Only ascii and auto_detect is supported, but was {@code filetype}.
+   * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
+   * @throws IOException An I/O error occured
+   * @throws IllegalArgumentException All columns must have the same length.
    */
-  public boolean load(InputStream stream, String filetype) throws UnsupportedEncodingException {
+  public boolean load(InputStream stream, String filetype) throws IllegalArgumentException, IOException {
     if (!filetype.equals("ascii") && !filetype.equals("auto_detect")) {
-      throw new UnsupportedEncodingException("Only ascii and auto_detect is supported, but was " + filetype + ".");
+      throw new IllegalArgumentException("Only ascii and auto_detect is supported, but was " + filetype + ".");
     }
 
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+    BufferedReader reader;
+    try {
+      reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+    } catch(UnsupportedEncodingException exception) {
+      throw new AssertionError("UTF-8 is not supported. How could this happen?");
+    }
 
-    return false;
+    String line = reader.readLine();
+    if(line == null) {
+      reset();
+      return false;
+    }
+    
+    int numberOfColumns = line.trim().split("\\s+").length;
+    List<double[]> matrix = new ArrayList<double[]>();
+    do {
+      String rowString[] = line.trim().split("\\s+");
+      
+      if(rowString.length != numberOfColumns) {
+        reset();
+        throw new IllegalArgumentException("All columns must have the same length.");
+      }
+      
+      double[] rowDouble = new double[numberOfColumns];
+      for(int j = 0; j < numberOfColumns; j++) {
+        rowDouble[j] = Double.valueOf(rowString[j]);
+      }
+      matrix.add(rowDouble);
+      
+    } while ((line = reader.readLine()) != null);
+    
+    _matrix = new DenseMatrix64F(matrix.toArray(new double[0][0]));
+    updateAttributes();
+    
+    reader.close();
+      
+    return true;
   }
 
   /**
