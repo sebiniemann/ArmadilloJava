@@ -2217,10 +2217,22 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @return
+   * Returns true if the matrix contains only finite values and false otherwise.
+   * 
+   * @param matrix The matrix
+   * @return Whether the matrix is finite
    */
-  public static boolean isfinite(Mat A) {
-    return false;
+  public static boolean is_finite(Mat matrix) {
+    return matrix.is_finite();
+  }
+
+  /**
+   * Returns true if the value is neither NaN nor +/-infinity.
+   * 
+   * @param value The value
+   * @return Whether the value is finite
+   */
+  public static boolean is_finite(double value) {
+    return (!Double.isInfinite(value) && !Double.isNaN(value));
   }
 }
