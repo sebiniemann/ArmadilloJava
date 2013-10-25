@@ -319,8 +319,8 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise determination of the positive distance between each value and next larger one in
-   * magnitude.
+   * Creates a matrix with element-wise determined positive distances between each value and next larger one in
+   * magnitude of the provided matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -352,7 +352,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-2 exponential values of the provided matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -368,7 +368,7 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * Creates a matrix with element-wise computed base-10 exponential values of the provided matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -384,6 +384,10 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise computed base-e exponential values of the provided matrix.
+   * <p>
+   * Values that would result in infinity are truncated to the largest representable number.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -391,13 +395,20 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.pow(10, matrix._matrix.get(i)));
+      double exp = Math.exp(matrix._matrix.get(i));
+      if (!Double.isInfinite(exp)) {
+        result._matrix.set(i, exp);
+      } else {
+        result._matrix.set(i, Double.MAX_VALUE);
+      }
     }
 
     return result;
   }
 
   /**
+   * Creates a matrix with element-wise computed base-e logarithmic values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -412,6 +423,8 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise computed base-2 logarithmic values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -426,6 +439,8 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise computed base-10 logarithmic values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -440,6 +455,12 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise computed base-e logarithmic values of the provided matrix.
+   * <p>
+   * Values that would result in infinity are truncated to the base-e logarithmic of the largest representable number
+   * and values that would result in a complex number are truncated to the base-e logarithmic of the smallest
+   * representable number.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -447,13 +468,22 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.log(matrix._matrix.get(i)));
+      double value = matrix._matrix.get(i);
+      if(Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      } else if(value <= 0) {
+        value = Double.MIN_NORMAL;
+      }
+      
+      result._matrix.set(i, Math.log(value));
     }
 
     return result;
   }
 
   /**
+   * Creates a matrix with element-wise computed raise to power of {@code power} of the provided matrix.
+   * 
    * @param matrix The matrix
    * @param power The power
    * @return The matrix
@@ -513,6 +543,8 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise rounded up values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -528,6 +560,8 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise rounded values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
@@ -543,6 +577,8 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise determined signum values of the provided matrix.
+   * 
    * @param matrix The matrix
    * @return The matrix
    */
