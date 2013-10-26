@@ -378,17 +378,17 @@ trace(A)                   | trace(A)                   | Arma.trace(A)         
 #### Statistics
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-min(A [, d])               | min(V)                     | Arma.min(A [, d])               | **Note:** V is a vector.
+min(V [, d])               | min(V)                     | Arma.min(V [, d])               | **Note:** V is a vector.
 min(A [, d])               | min(A [, d])               | Arma.minMat(A [, d])            | **Default:** d = 0
-max(A [, d])               | max(V)                     | Arma.max(A [, d])               | **Note:** V is a vector.
+max(V [, d])               | max(V)                     | Arma.max(V [, d])               | **Note:** V is a vector.
 max(A [, d])               | max(A [, d])               | Arma.maxMat(A [, d])            | **Default:** d = 0
-mean(A [, d])              | mean(V)                    | Arma.mean(A [, d])              | **Note:** V is a vector.
+mean(V [, d])              | mean(V)                    | Arma.mean(V [, d])              | **Note:** V is a vector.
 mean(A [, d])              | mean(A [, d])              | Arma.meanMat(A [, d])           | ***Default:** d = 0
-median(A [, d])            | median(V)                  | Arma.median(A [, d])            | **Note:** V is a vector.
+median(V [, d])            | median(V)                  | Arma.median(V [, d])            | **Note:** V is a vector.
 median(A [, d])            | median(A [, d])            | Arma.medianMat(A [, d])         | **Default:** d = 0
-std(A [, n] [, d])         | stddev(V [, n])            | Arma.stddev(A [, n] [, d])      | **Note:** V is a vector. **Default:** n = 0, d = 0
+std(V [, n] [, d])         | stddev(V [, n])            | Arma.stddev(V [, n] [, d])      | **Note:** V is a vector. **Default:** n = 0, d = 0
 std(A [, n] [, d])         | stddev(A [, n] [, d])      | Arma.stddevMat(A [, n] [, d])   | **Default:** n = 0, d = 0
-var(A [, n] [, d])         | var(V [, n])               | Arma.var(A [, n] [, d])         | **Note:** V is a vector. **Default:** n = 0, d = 0
+var(V [, n] [, d])         | var(V [, n])               | Arma.var(V [, n] [, d])         | **Note:** V is a vector. **Default:** n = 0, d = 0
 var(A [, n] [, d])         | var(A [, n] [, d])         | Arma.varMat(A [, n] [, d])      | **Default:** n = 0, d = 0
 
 #### Logic operations
@@ -405,9 +405,9 @@ all(A [, d])               | all(A [, d])               | Arma.allMat(A [, d])  
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-prod(A [, d])              | prod(V)                    | Arma.prod(V)                    | **Note:** V is a vector.
+prod(V [, d])              | prod(V)                    | Arma.prod(V)                    | **Note:** V is a vector.
 prod(A [, d])              | prod(A [, d])              | Arma.prodMat(A [, d])           | **Default:** d = 0
-sum(A [, d])               | sum(V)                     | Arma.sum(V)                     | **Note:** V is a vector.
+sum(V [, d])               | sum(V)                     | Arma.sum(V)                     | **Note:** V is a vector.
 sum(A [, d])               | sum(A [, d])               | Arma.sumMat(A [, d])            | **Default:** d = 0
 
 
