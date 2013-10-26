@@ -19,11 +19,11 @@ import org.junit.Test;
  */
 public class TestMiscellaneous {
 
-	/**
-	 * Test method for {@link arma.Arma#is_finite(arma.Mat)}.
-	 */
-	@Test
-	public void testIs_finite() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#is_finite(arma.Mat)}.
+   */
+  @Test
+  public void testIs_finite() {
+    fail("Not yet implemented"); // TODO
+  }
 }

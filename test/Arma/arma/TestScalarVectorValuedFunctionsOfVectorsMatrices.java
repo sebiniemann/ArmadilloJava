@@ -18,8 +18,8 @@ import org.junit.Test;
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  */
 public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
-	
-	// Statistics 
+
+  // Statistics
 
   /**
    * Test method for {@link arma.Arma#min(arma.Mat)}.
@@ -29,21 +29,21 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#minMat(arma.Mat)}.
-	 */
-	@Test
-	public void testMinMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#minMat(arma.Mat)}.
+   */
+  @Test
+  public void testMinMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#minMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testMinMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#minMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testMinMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   /**
    * Test method for {@link arma.Arma#max(arma.Mat)}.
@@ -53,21 +53,21 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#maxMat(arma.Mat)}.
-	 */
-	@Test
-	public void testMaxMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#maxMat(arma.Mat)}.
+   */
+  @Test
+  public void testMaxMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#maxMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testMaxMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#maxMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testMaxMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   /**
    * Test method for {@link arma.Arma#mean(arma.Mat)}.
@@ -77,21 +77,21 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#meanMat(arma.Mat)}.
-	 */
-	@Test
-	public void testMeanMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#meanMat(arma.Mat)}.
+   */
+  @Test
+  public void testMeanMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#meanMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testMeanMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#meanMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testMeanMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   /**
    * Test method for {@link arma.Arma#median(arma.Mat)}.
@@ -101,21 +101,21 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#medianMat(arma.Mat)}.
-	 */
-	@Test
-	public void testMedianMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#medianMat(arma.Mat)}.
+   */
+  @Test
+  public void testMedianMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#medianMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testMedianMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#medianMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testMedianMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   /**
    * Test method for {@link arma.Arma#stddev(arma.Mat)}.
@@ -133,29 +133,29 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#stddevMat(arma.Mat)}.
-	 */
-	@Test
-	public void testStddevMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#stddevMat(arma.Mat)}.
+   */
+  @Test
+  public void testStddevMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#stddevMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testStddevMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#stddevMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testStddevMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#stddevMat(arma.Mat, int, int)}.
-	 */
-	@Test
-	public void testStddevMatMatIntInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#stddevMat(arma.Mat, int, int)}.
+   */
+  @Test
+  public void testStddevMatMatIntInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   /**
    * Test method for {@link arma.Arma#var(arma.Mat)}.
@@ -173,32 +173,32 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
     fail("Not yet implemented"); // TODO
   }
 
-	/**
-	 * Test method for {@link arma.Arma#varMat(arma.Mat)}.
-	 */
-	@Test
-	public void testVarMatMat() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#varMat(arma.Mat)}.
+   */
+  @Test
+  public void testVarMatMat() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#varMat(arma.Mat, int)}.
-	 */
-	@Test
-	public void testVarMatMatInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#varMat(arma.Mat, int)}.
+   */
+  @Test
+  public void testVarMatMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#varMat(arma.Mat, int, int)}.
-	 */
-	@Test
-	public void testVarMatMatIntInt() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#varMat(arma.Mat, int, int)}.
+   */
+  @Test
+  public void testVarMatMatIntInt() {
+    fail("Not yet implemented"); // TODO
+  }
 
   // Logic operations
-  
+
   /**
    * Test method for {@link arma.Arma#any(arma.Mat)}.
    */
@@ -206,7 +206,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   public void testAnyMat() {
     fail("Not yet implemented"); // TODO
   }
-  
+
   /**
    * Test method for {@link arma.Arma#anyMat(arma.Mat)}.
    */
@@ -214,7 +214,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   public void testAnyMatMat() {
     fail("Not yet implemented"); // TODO
   }
-  
+
   /**
    * Test method for {@link arma.Arma#anyMat(arma.Mat, int)}.
    */
@@ -248,7 +248,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   // Miscellaneous
-  
+
   /**
    * Test method for {@link arma.Arma#prod(arma.Mat)}.
    */
@@ -256,7 +256,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   public void testProdMat() {
     fail("Not yet implemented"); // TODO
   }
-  
+
   /**
    * Test method for {@link arma.Arma#prodMat(arma.Mat)}.
    */

@@ -19,116 +19,118 @@ import org.junit.Test;
  */
 public class TestMatrixValuedElementWiseFunctions {
 
-	// Trigonometric functions 
-	
-	/**
-	 * Test method for {@link arma.Arma#sign(arma.Mat)}.
-	 */
-	@Test
-	public void testSign() {
-		fail("Not yet implemented"); // TODO
-	}
+  // Trigonometric functions
 
-	/**
-	 * Test method for {@link arma.Arma#sin(arma.Mat)}.
-	 */
-	@Test
-	public void testSin() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#sign(arma.Mat)}.
+   */
+  @Test
+  public void testSign() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#asin(arma.Mat)}.
-	 */
-	@Test
-	public void testAsin() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#sin(arma.Mat)}.
+   */
+  @Test
+  public void testSin() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#sinh(arma.Mat)}.
-	 */
-	@Test
-	public void testSinh() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#asin(arma.Mat)}.
+   */
+  @Test
+  public void testAsin() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#asinh(arma.Mat)}.
-	 */
-	@Test
-	public void testAsinh() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#sinh(arma.Mat)}.
+   */
+  @Test
+  public void testSinh() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#cos(arma.Mat)}.
-	 */
-	@Test
-	public void testCos() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#asinh(arma.Mat)}.
+   */
+  @Test
+  public void testAsinh() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#acos(arma.Mat)}.
-	 */
-	@Test
-	public void testAcos() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#cos(arma.Mat)}.
+   */
+  @Test
+  public void testCos() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#cosh(arma.Mat)}.
-	 */
-	@Test
-	public void testCosh() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#acos(arma.Mat)}.
+   */
+  @Test
+  public void testAcos() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#acosh(arma.Mat)}.
-	 */
-	@Test
-	public void testAcosh() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#cosh(arma.Mat)}.
+   */
+  @Test
+  public void testCosh() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#tan(arma.Mat)}.
-	 */
-	@Test
-	public void testTan() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#acosh(arma.Mat)}.
+   */
+  @Test
+  public void testAcosh() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#atan(arma.Mat)}.
-	 */
-	@Test
-	public void testAtan() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#tan(arma.Mat)}.
+   */
+  @Test
+  public void testTan() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#tanh(arma.Mat)}.
-	 */
-	@Test
-	public void testTanh() {
-		fail("Not yet implemented"); // TODO
-	}
+  /**
+   * Test method for {@link arma.Arma#atan(arma.Mat)}.
+   */
+  @Test
+  public void testAtan() {
+    fail("Not yet implemented"); // TODO
+  }
 
-	/**
-	 * Test method for {@link arma.Arma#atanh(arma.Mat)}.
-	 */
-	@Test
-	public void testAtanh() {
-		fail("Not yet implemented"); // TODO
-	}  /**
+  /**
+   * Test method for {@link arma.Arma#tanh(arma.Mat)}.
+   */
+  @Test
+  public void testTanh() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#atanh(arma.Mat)}.
+   */
+  @Test
+  public void testAtanh() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
    * Test method for {@link arma.Arma#abs(arma.Mat)}.
    */
-	
-	// Miscellaneous
-	
+
+  // Miscellaneous
+
   @Test
   public void testAbs() {
     fail("Not yet implemented"); // TODO
