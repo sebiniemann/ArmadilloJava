@@ -405,8 +405,9 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-any(A [, d])               | any(A [, d])               | Arma.any(A [, d])               | **Default:** d = 0
-all(A [, d])               | all(A [, d])               | Arma.all(A [, d])               | **Default:** d = 0
+any(V)                     | any(V)                     | Arma.any(V)                     | **Note:** V is a vector.
+any(A [, d])               | any(A [, d])               | Arma.anyMat(A [, d])            | **Default:** d = 0
+all(A [, d])               | all(A [, d])               | Arma.allMat(A [, d])            | **Default:** d = 0
 
                            
 #### Sort functions
