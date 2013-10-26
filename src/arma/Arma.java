@@ -307,13 +307,13 @@ public class Arma {
   public static Mat abs(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double element = matrix._matrix.get(i);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double element = matrix._matrix.get(n);
 
       if (element < 0) {
-        result._matrix.set(i, -element);
+        result._matrix.set(n, -element);
       } else {
-        result._matrix.set(i, element);
+        result._matrix.set(n, element);
       }
     }
 
@@ -330,8 +330,8 @@ public class Arma {
   public static Mat eps(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.ulp(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.ulp(matrix._matrix.get(n)));
     }
 
     return result;
@@ -346,8 +346,8 @@ public class Arma {
   public static Mat exp(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.exp(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.exp(matrix._matrix.get(n)));
     }
 
     return result;
@@ -362,8 +362,8 @@ public class Arma {
   public static Mat exp2(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.pow(2, matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.pow(2, matrix._matrix.get(n)));
     }
 
     return result;
@@ -378,8 +378,8 @@ public class Arma {
   public static Mat exp10(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.pow(10, matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.pow(10, matrix._matrix.get(n)));
     }
 
     return result;
@@ -396,12 +396,12 @@ public class Arma {
   public static Mat trunc_exp(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double exp = Math.exp(matrix._matrix.get(i));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double exp = Math.exp(matrix._matrix.get(n));
       if (!Double.isInfinite(exp)) {
-        result._matrix.set(i, exp);
+        result._matrix.set(n, exp);
       } else {
-        result._matrix.set(i, Double.MAX_VALUE);
+        result._matrix.set(n, Double.MAX_VALUE);
       }
     }
 
@@ -417,8 +417,8 @@ public class Arma {
   public static Mat log(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.log(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.log(matrix._matrix.get(n)));
     }
 
     return result;
@@ -433,8 +433,8 @@ public class Arma {
   public static Mat log2(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.log(matrix._matrix.get(i)) / Math.log(2));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.log(matrix._matrix.get(n)) / Math.log(2));
     }
 
     return result;
@@ -449,8 +449,8 @@ public class Arma {
   public static Mat log10(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.log10(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.log10(matrix._matrix.get(n)));
     }
 
     return result;
@@ -469,15 +469,15 @@ public class Arma {
   public static Mat trunc_log(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double value = matrix._matrix.get(i);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
       if (Double.isInfinite(value)) {
         value = Double.MAX_VALUE;
       } else if (value <= 0) {
         value = Double.MIN_NORMAL;
       }
 
-      result._matrix.set(i, Math.log(value));
+      result._matrix.set(n, Math.log(value));
     }
 
     return result;
@@ -493,8 +493,8 @@ public class Arma {
   public static Mat pow(Mat matrix, int power) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.pow(matrix._matrix.get(i), power));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.pow(matrix._matrix.get(n), power));
     }
 
     return result;
@@ -510,8 +510,8 @@ public class Arma {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
     DenseMatrix64F memptr = matrix.memptr();
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.sqrt(memptr.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result.set(n, Math.sqrt(memptr.get(n)));
     }
 
     return new Mat(result);
@@ -537,8 +537,8 @@ public class Arma {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
     DenseMatrix64F memptr = matrix.memptr();
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.floor(memptr.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result.set(n, Math.floor(memptr.get(n)));
     }
 
     return new Mat(result);
@@ -554,8 +554,8 @@ public class Arma {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
     DenseMatrix64F memptr = matrix.memptr();
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.ceil(memptr.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result.set(n, Math.ceil(memptr.get(n)));
     }
 
     return new Mat(result);
@@ -571,8 +571,8 @@ public class Arma {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
     DenseMatrix64F memptr = matrix.memptr();
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.round(memptr.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result.set(n, Math.round(memptr.get(n)));
     }
 
     return new Mat(result);
@@ -590,8 +590,8 @@ public class Arma {
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
     DenseMatrix64F memptr = matrix.memptr();
 
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result.set(i, Math.signum(memptr.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result.set(n, Math.signum(memptr.get(n)));
     }
 
     return new Mat(result);
@@ -605,8 +605,8 @@ public class Arma {
    */
   public static Mat sin(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.sin(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.sin(matrix._matrix.get(n)));
     }
 
     return result;
@@ -620,8 +620,8 @@ public class Arma {
    */
   public static Mat asin(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.asin(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.asin(matrix._matrix.get(n)));
     }
 
     return result;
@@ -635,8 +635,8 @@ public class Arma {
    */
   public static Mat sinh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.sinh(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.sinh(matrix._matrix.get(n)));
     }
 
     return result;
@@ -650,9 +650,9 @@ public class Arma {
    */
   public static Mat asinh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double value = matrix._matrix.get(i);
-      result._matrix.set(i, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
     }
 
     return result;
@@ -666,8 +666,8 @@ public class Arma {
    */
   public static Mat cos(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.cos(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.cos(matrix._matrix.get(n)));
     }
 
     return result;
@@ -681,8 +681,8 @@ public class Arma {
    */
   public static Mat acos(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.acos(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.acos(matrix._matrix.get(n)));
     }
 
     return result;
@@ -696,8 +696,8 @@ public class Arma {
    */
   public static Mat cosh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.cosh(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.cosh(matrix._matrix.get(n)));
     }
 
     return result;
@@ -711,9 +711,9 @@ public class Arma {
    */
   public static Mat acosh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double value = matrix._matrix.get(i);
-      result._matrix.set(i, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
     }
 
     return result;
@@ -727,8 +727,8 @@ public class Arma {
    */
   public static Mat tan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.tan(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.tan(matrix._matrix.get(n)));
     }
 
     return result;
@@ -742,8 +742,8 @@ public class Arma {
    */
   public static Mat atan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.atan(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.atan(matrix._matrix.get(n)));
     }
 
     return result;
@@ -757,8 +757,8 @@ public class Arma {
    */
   public static Mat tanh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      result._matrix.set(i, Math.tanh(matrix._matrix.get(i)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.tanh(matrix._matrix.get(n)));
     }
 
     return result;
@@ -772,9 +772,9 @@ public class Arma {
    */
   public static Mat atanh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int i = 0; i < matrix.n_elem; i++) {
-      double value = matrix._matrix.get(i);
-      result._matrix.set(i, 0.5 * Math.log((1 + value) / (1 - value)));
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, 0.5 * Math.log((1 + value) / (1 - value)));
     }
 
     return result;
@@ -978,7 +978,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The scalar
    * 
-   * @throws IllegalArgumentException The provided matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows matrix.n_rows}, {@link Mat#n_cols matrix.n_cols})-matrix.
+   * @throws IllegalArgumentException The provided matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows
+   *           matrix.n_rows}, {@link Mat#n_cols matrix.n_cols})-matrix.
    */
   public static double as_scalar(Mat matrix) throws IllegalArgumentException {
     if (matrix.n_rows != 1 || matrix.n_cols != 1) {
@@ -989,72 +990,111 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @param kthDiagonal
-   * @return
+   * Returns the main diagonal of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The diagonal
    */
-  public static Mat diagvec(Mat A, int kthDiagonal) {
-    return null;
+  public static Mat diagvec(Mat matrix) {
+    return matrix.diag(0);
   }
 
   /**
-   * @param A
-   * @param dimension
-   * @return
+   * Returns the {@code k}th diagonal of the matrix as a column vector.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param matrix The matrix
+   * @param k The diagonal position
+   * @return The diagonal
    */
-  public static Mat prod(Mat A) {
-    return prod(A, 0);
+  public static Mat diagvec(Mat matrix, int k) {
+    return matrix.diag(k);
   }
 
   /**
-   * @param A
-   * @param dimension
-   * @return
+   * Returns the product of all elements for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat prod(Mat A, int dimension) {
-    return null;
+  public static Mat prod(Mat matrix) {
+    return prod(matrix, 0);
   }
 
   /**
-   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
+   * Returns the product of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
+   * matrix as a column vector.
    * 
-   * @param matrix The provided matrix.
-   * @return The sum.
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
-   * 
-   * @see #sum(Mat, int)
+   * @throws IllegalArgumentException The dimension needs to be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat sum(Mat matrix) throws IllegalArgumentException {
+  public static Mat prod(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result = new Mat(matrix.n_rows, 1);
+
+    if (dimension == 0) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        double product = 1;
+        for (int j = 0; j < matrix.n_cols; j++) {
+          product *= matrix._matrix.get(i, j);
+        }
+        result._matrix.set(i, product);
+      }
+    } else if (dimension == 1) {
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double product = 1;
+        for (int i = 0; i < matrix.n_rows; i++) {
+          product *= matrix._matrix.get(i, j);
+        }
+        result._matrix.set(j, product);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension needs to be either 0 or 1, but was " + dimension + ".");
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns the sum of all elements for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   */
+  public static Mat sum(Mat matrix) {
     return sum(matrix, 0);
   }
 
   /**
-   * Computes the sum of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
-   * or 1.
+   * Returns the sum of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
+   * matrix as a column vector.
    * 
-   * @param matrix The provided matrix.
-   * @param dimension The direction.
-   * @return The sum.
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   * @throws IllegalArgumentException The dimension needs to be either 0 or 1, but was {@code dimension}.
    */
   public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result = new Mat(matrix.n_rows, 1);
+
     if (dimension == 0) {
-      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-      CommonOps.sumCols(matrix.memptr(), result);
-      return new Mat(result);
+      CommonOps.sumCols(matrix._matrix, result._matrix);
     } else if (dimension == 1) {
-      DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-      CommonOps.sumRows(matrix.memptr(), result);
-      return new Mat(result);
+      CommonOps.sumRows(matrix._matrix, result._matrix);
     } else {
-      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
+      throw new IllegalArgumentException("The dimension needs to be either 0 or 1, but was " + dimension + ".");
     }
+
+    return result;
   }
 
   /**
