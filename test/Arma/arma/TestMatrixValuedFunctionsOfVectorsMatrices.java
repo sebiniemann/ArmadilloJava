@@ -16,7 +16,6 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestMatrixValuedFunctionsOfVectorsMatrices {
 
@@ -51,24 +50,6 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
 	 */
 	@Test
 	public void testJoin_horiz() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	// Logic operations
-	
-	/**
-	 * Test method for {@link arma.Arma#any(arma.Mat)}.
-	 */
-	@Test
-	public void testAny() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#all(arma.Mat)}.
-	 */
-	@Test
-	public void testAll() {
 		fail("Not yet implemented"); // TODO
 	}
 
@@ -399,6 +380,22 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
 		fail("Not yet implemented"); // TODO
 	}
 
+  /**
+   * Test method for {@link arma.Arma#diagvec(arma.Mat)}.
+   */
+  @Test
+  public void testDiagvecMat() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#diagvec(arma.Mat, int)}.
+   */
+  @Test
+  public void testDiagvecMatInt() {
+    fail("Not yet implemented"); // TODO
+  }
+
 	/**
 	 * Test method for {@link arma.Arma#cumsum(arma.Mat)}.
 	 */
@@ -478,5 +475,4 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
 	public void testVectoriseMatInt() {
 		fail("Not yet implemented"); // TODO
 	}
-
 }

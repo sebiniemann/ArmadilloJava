@@ -10,14 +10,12 @@
 
 package arma;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestMatrixGeneration {
 
@@ -117,5 +115,4 @@ public class TestMatrixGeneration {
 	public void testCirc_toeplitz() {
 		fail("Not yet implemented"); // TODO
 	}
-
 }

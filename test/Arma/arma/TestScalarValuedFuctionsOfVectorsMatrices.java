@@ -16,7 +16,6 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestScalarValuedFuctionsOfVectorsMatrices {
 
@@ -53,7 +52,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
 	}
 
 	/**
-	 * Test method for {@link arma.Arma#log_det(arma.Mat)}.
+	 * Test method for {@link arma.Arma#log_det(double[], int[], arma.Mat)}.
 	 */
 	@Test
 	public void testLog_det() {
@@ -99,5 +98,4 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
 	public void testTrace() {
 		fail("Not yet implemented"); // TODO
 	}
-
 }

@@ -16,7 +16,6 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestDecompositions {
 
@@ -227,5 +226,4 @@ public class TestDecompositions {
 	public void testSylMatMatMatMat() {
 		fail("Not yet implemented"); // TODO
 	}
-
 }

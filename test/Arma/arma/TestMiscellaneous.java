@@ -16,16 +16,14 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestMiscellaneous {
 
 	/**
-	 * Test method for {@link arma.Arma#isfinite(arma.Mat)}.
+	 * Test method for {@link arma.Arma#is_finite(arma.Mat)}.
 	 */
 	@Test
-	public void testIsfinite() {
+	public void testIs_finite() {
 		fail("Not yet implemented"); // TODO
 	}
-
 }

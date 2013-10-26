@@ -16,141 +16,10 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
- *
  */
 public class TestMatrixValuedElementWiseFunctions {
 
-	/**
-	 * Test method for {@link arma.Arma#abs(arma.Mat)}.
-	 */
-	@Test
-	public void testAbs() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#eps(arma.Mat)}.
-	 */
-	@Test
-	public void testEps() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#exp(arma.Mat)}.
-	 */
-	@Test
-	public void testExp() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#exp2(arma.Mat)}.
-	 */
-	@Test
-	public void testExp2() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#exp10(arma.Mat)}.
-	 */
-	@Test
-	public void testExp10() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#trunc_exp(arma.Mat)}.
-	 */
-	@Test
-	public void testTrunc_exp() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#log(arma.Mat)}.
-	 */
-	@Test
-	public void testLog() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#log2(arma.Mat)}.
-	 */
-	@Test
-	public void testLog2() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#log10(arma.Mat)}.
-	 */
-	@Test
-	public void testLog10() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#trunc_log(arma.Mat)}.
-	 */
-	@Test
-	public void testTrunc_log() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#pow(arma.Mat, int)}.
-	 */
-	@Test
-	public void testPow() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#sqrt(arma.Mat)}.
-	 */
-	@Test
-	public void testSqrt() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#square(arma.Mat)}.
-	 */
-	@Test
-	public void testSquare() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#floor(arma.Mat)}.
-	 */
-	@Test
-	public void testFloor() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#ceil(arma.Mat)}.
-	 */
-	@Test
-	public void testCeil() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link arma.Arma#round(arma.Mat)}.
-	 */
-	@Test
-	public void testRound() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	
 	// Trigonometric functions 
-	
 	
 	/**
 	 * Test method for {@link arma.Arma#sign(arma.Mat)}.
@@ -254,6 +123,134 @@ public class TestMatrixValuedElementWiseFunctions {
 	@Test
 	public void testAtanh() {
 		fail("Not yet implemented"); // TODO
-	}
+	}  /**
+   * Test method for {@link arma.Arma#abs(arma.Mat)}.
+   */
+	
+	// Miscellaneous
+	
+  @Test
+  public void testAbs() {
+    fail("Not yet implemented"); // TODO
+  }
 
+  /**
+   * Test method for {@link arma.Arma#eps(arma.Mat)}.
+   */
+  @Test
+  public void testEps() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#exp(arma.Mat)}.
+   */
+  @Test
+  public void testExp() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#exp2(arma.Mat)}.
+   */
+  @Test
+  public void testExp2() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#exp10(arma.Mat)}.
+   */
+  @Test
+  public void testExp10() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#trunc_exp(arma.Mat)}.
+   */
+  @Test
+  public void testTrunc_exp() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#log(arma.Mat)}.
+   */
+  @Test
+  public void testLog() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#log2(arma.Mat)}.
+   */
+  @Test
+  public void testLog2() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#log10(arma.Mat)}.
+   */
+  @Test
+  public void testLog10() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#trunc_log(arma.Mat)}.
+   */
+  @Test
+  public void testTrunc_log() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#pow(arma.Mat, int)}.
+   */
+  @Test
+  public void testPow() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#sqrt(arma.Mat)}.
+   */
+  @Test
+  public void testSqrt() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#square(arma.Mat)}.
+   */
+  @Test
+  public void testSquare() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#floor(arma.Mat)}.
+   */
+  @Test
+  public void testFloor() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#ceil(arma.Mat)}.
+   */
+  @Test
+  public void testCeil() {
+    fail("Not yet implemented"); // TODO
+  }
+
+  /**
+   * Test method for {@link arma.Arma#round(arma.Mat)}.
+   */
+  @Test
+  public void testRound() {
+    fail("Not yet implemented"); // TODO
+  }
 }
