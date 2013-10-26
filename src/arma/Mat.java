@@ -3684,7 +3684,16 @@ public class Mat implements Iterable<Double> {
       writer.print(" ");
 
       for (int j = 0; j < n_cols; j++) {
-        writer.format(Locale.ENGLISH, "%1$ 24.16e", _matrix.get(i, j));
+        double value = _matrix.get(i, j);
+        if(Double.isInfinite(value)) {
+          String sign = "";
+          if(value < 0) {
+            sign = "-";
+          }
+          writer.format("%24s", sign + "Inf");
+        } else {
+          writer.format(Locale.ENGLISH, "%1$ 24.16e", _matrix.get(i, j));
+        }
       }
 
       writer.println();
@@ -3783,7 +3792,13 @@ public class Mat implements Iterable<Double> {
       
       double[] rowDouble = new double[numberOfColumns];
       for(int j = 0; j < numberOfColumns; j++) {
-        rowDouble[j] = Double.valueOf(rowString[j]);
+        if(rowString[j].equals("Inf")) {
+          rowDouble[j] = Double.POSITIVE_INFINITY;
+        } else if(rowString[j].equals("-Inf")) {
+          rowDouble[j] = Double.NEGATIVE_INFINITY;
+        } else {
+          rowDouble[j] = Double.valueOf(rowString[j]);
+        }
       }
       matrix.add(rowDouble);
       
