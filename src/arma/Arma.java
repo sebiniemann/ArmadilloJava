@@ -1034,12 +1034,13 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
-   * @throws IllegalArgumentException The dimension needs to be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat prod(Mat matrix, int dimension) throws IllegalArgumentException {
-    Mat result = new Mat(matrix.n_rows, 1);
+    Mat result;
 
     if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         double product = 1;
         for (int j = 0; j < matrix.n_cols; j++) {
@@ -1048,6 +1049,7 @@ public class Arma {
         result._matrix.set(i, product);
       }
     } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         double product = 1;
         for (int i = 0; i < matrix.n_rows; i++) {
@@ -1056,7 +1058,7 @@ public class Arma {
         result._matrix.set(j, product);
       }
     } else {
-      throw new IllegalArgumentException("The dimension needs to be either 0 or 1, but was " + dimension + ".");
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
@@ -1066,7 +1068,6 @@ public class Arma {
    * Returns the sum of all elements for each column of the matrix as a column vector.
    * 
    * @param matrix The matrix
-   * @param dimension The dimension
    * @return The matrix
    */
   public static Mat sum(Mat matrix) {
@@ -1081,187 +1082,356 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
-   * @throws IllegalArgumentException The dimension needs to be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
-    Mat result = new Mat(matrix.n_rows, 1);
+    Mat result;
 
     if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
       CommonOps.sumCols(matrix._matrix, result._matrix);
     } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
       CommonOps.sumRows(matrix._matrix, result._matrix);
     } else {
-      throw new IllegalArgumentException("The dimension needs to be either 0 or 1, but was " + dimension + ".");
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
   }
 
   /**
-   * @param A
-   * @return
-   */
-  public static Mat min(Mat A) {
-    return min(A, 0);
-  }
-
-  /**
-   * @param A
-   * @param dimension
-   * @return
-   */
-  public static Mat min(Mat A, int dimension) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @return
-   */
-  public static Mat max(Mat A) {
-    return max(A, 0);
-  }
-
-  /**
-   * @param A
-   * @param dimension
-   * @return
-   */
-  public static Mat max(Mat A, int dimension) {
-    return null;
-  }
-
-  /**
-   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
+   * Returns the smallest value for each column of the matrix as a column vector.
    * 
-   * @param matrix The provided matrix.
-   * @return The mean.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
-   * 
-   * @see #mean(Mat, int)
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat mean(Mat matrix) throws IllegalArgumentException {
+  public static Mat min(Mat matrix) {
+    return min(matrix, 0);
+  }
+
+  /**
+   * Returns the smallest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as
+   * a column vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   */
+  public static Mat min(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result;
+
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double minimum = matrix._matrix.get(0, j);
+        for (int i = 0; i < matrix.n_rows; i++) {
+          minimum = Math.min(minimum, matrix._matrix.get(i, j));
+        }
+        result._matrix.set(j, minimum);
+      }
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        double minimum = matrix._matrix.get(i, 0);
+        for (int j = 1; j < matrix.n_cols; j++) {
+          minimum = Math.min(minimum, matrix._matrix.get(i, j));
+        }
+        result._matrix.set(i, minimum);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns the largest value for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat max(Mat matrix) {
+    return max(matrix, 0);
+  }
+
+  /**
+   * Returns the largest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a
+   * column vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   */
+  public static Mat max(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result;
+
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double maximum = matrix._matrix.get(0, j);
+        for (int i = 0; i < matrix.n_rows; i++) {
+          maximum = Math.max(maximum, matrix._matrix.get(i, j));
+        }
+        result._matrix.set(j, maximum);
+      }
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        double maximum = matrix._matrix.get(i, 0);
+        for (int j = 1; j < matrix.n_cols; j++) {
+          maximum = Math.max(maximum, matrix._matrix.get(i, j));
+        }
+        result._matrix.set(i, maximum);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns the mean for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat mean(Mat matrix) {
     return mean(matrix, 0);
   }
 
   /**
-   * Computes the mean of all elements for each col ({@code dimension = 0}, default) or row ({@code dimension = 1}) of
-   * the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code dimension} is not one of 0
-   * or 1.
+   * Returns the mean for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column
+   * vector.
    * 
-   * @param matrix The provided matrix.
-   * @param dimension The direction.
-   * @return The mean.
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code dimension} is not one of 0 or 1.
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat mean(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result = sum(matrix, dimension);
+    
+    int count;
     if (dimension == 0) {
-      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
-      DenseMatrix64F memptr = matrix.memptr();
-
-      for (int j = 0; j < matrix.n_cols; j++) {
-        double total = 0;
-        for (int i = 0; i < matrix.n_rows; i++) {
-          total += memptr.get(i, j);
-        }
-
-        result.set(j, total / matrix.n_rows);
-      }
-
-      return new Mat(result);
+      count = matrix.n_cols;
     } else if (dimension == 1) {
-      DenseMatrix64F result = new DenseMatrix64F(1, matrix.n_cols);
-      DenseMatrix64F memptr = matrix.memptr();
-
-      for (int i = 0; i < matrix.n_rows; i++) {
-        double total = 0;
-        for (int j = 0; j < matrix.n_cols; j++) {
-          total += memptr.get(i, j);
-        }
-
-        result.set(i, total / matrix.n_cols);
-      }
-
-      return new Mat(result);
+      count = matrix.n_rows;
     } else {
-      throw new IllegalArgumentException("The parameter dimension needs to be either '0' or '1' but was " + dimension);
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
+    
+    for(int n = 0; n < result.n_elem; n++) {
+      result._matrix.set(n, result._matrix.get(n) / count);
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the median for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat median(Mat A) {
-    return median(A, 0);
+  public static Mat median(Mat matrix) {
+    return median(matrix, 0);
   }
 
   /**
-   * @param A
-   * @param dimension
-   * @return
+   * Returns the median for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column
+   * vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat median(Mat A, int dimension) {
-    return null;
+  public static Mat median(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for(int j = 0; j < matrix.n_cols; j++) {
+        Mat sortedColumn = sort(matrix.col(j));
+        
+        double median;
+        if(matrix.n_rows % 2 == 1) {
+          int middle = matrix.n_rows / 2;
+          median = (sortedColumn._matrix.get(middle - 1) + sortedColumn._matrix.get(middle)) / 2;
+        } else {
+          median = sortedColumn._matrix.get(matrix.n_rows / 2);
+        }
+        
+        result._matrix.set(j, median);
+      }
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      for(int i = 0; i < matrix.n_rows; i++) {
+        Mat sortedRow = sort(matrix.col(i));
+        
+        double median;
+        if(matrix.n_cols % 2 == 1) {
+          int middle = matrix.n_cols / 2;
+          median = (sortedRow._matrix.get(middle - 1) + sortedRow._matrix.get(middle)) / 2;
+        } else {
+          median = sortedRow._matrix.get(matrix.n_cols / 2);
+        }
+        
+        result._matrix.set(i, median);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1 as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat stddev(Mat A) {
-    return null;
+  public static Mat stddev(Mat matrix) {
+    return stddev(matrix, 0, 0);
   }
 
   /**
-   * @param A
-   * @param normType
-   * @return
+   * Returns the standard deviation for each column of the matrix as a column vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
+   * = 1).
+   * 
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddev(Mat A, int normType) {
-    return null;
+  public static Mat stddev(Mat matrix, int normType) throws IllegalArgumentException {
+    return stddev(matrix, normType, 0);
   }
 
   /**
-   * @param A
-   * @param normType
-   * @param dimension
-   * @return
+   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
+   * = 1).
+   * 
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddev(Mat A, int normType, int dimension) {
-    return null;
+  public static Mat stddev(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
+    Mat result = var(matrix, dimension);
+    
+    for(int n = 0; n < result.n_elem; n++) {
+      result._matrix.set(n, Math.sqrt(result._matrix.get(n)));
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the variance for each column of the matrix with normalisation by {@code count} - 1 as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat var(Mat A) {
-    return null;
+  public static Mat var(Mat matrix) {
+    return var(matrix, 0, 0);
   }
 
   /**
-   * @param A
-   * @param normType
-   * @return
+   * Returns the variance for each column of the matrix as a column vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
+   * = 1).
+   * 
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat var(Mat A, int normType) {
-    return null;
+  public static Mat var(Mat matrix, int normType) throws IllegalArgumentException {
+    return var(matrix, normType, 0);
   }
 
   /**
-   * @param A
-   * @param normType
-   * @param dimension
-   * @return
+   * Returns the variance for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
+   * = 1).
+   * 
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat var(Mat A, int normType, int dimension) {
-    return null;
+  public static Mat var(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
+    Mat result;
+    Mat mean = mean(matrix, dimension);
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for(int j = 0; j < matrix.n_cols; j++) {
+        int squaredDifference = 0;
+        for(int i = 0; i < matrix.n_rows; i++) {
+          squaredDifference += Math.pow(matrix._matrix.get(i, j) - mean._matrix.get(j), 2);
+        }
+        
+        double variance;
+        if (normType == 0) {
+          variance = squaredDifference / (matrix.n_rows - 1);
+        } else if (normType == 1) {
+          variance = squaredDifference / matrix.n_rows;
+        } else {
+          throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
+        }
+        
+        result._matrix.set(j, variance);
+      }
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      for(int i = 0; i < matrix.n_rows; i++) {
+        int squaredDifference = 0;
+        for(int j = 0; j < matrix.n_cols; j++) {
+          squaredDifference += Math.pow(matrix._matrix.get(i, j) - mean._matrix.get(i), 2);
+        }
+        
+        double variance;
+        if (normType == 0) {
+          variance = squaredDifference / (matrix.n_cols - 1);
+        } else if (normType == 1) {
+          variance = squaredDifference / matrix.n_cols;
+        } else {
+          throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
+        }
+        
+        result._matrix.set(i, variance);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+    
+    return result;
   }
 
   /**
@@ -1404,10 +1574,29 @@ public class Arma {
   }
 
   /**
+   * @param matrix
+   * @param dimension
+   * @return
+   */
+  public static boolean any(Mat matrix, int dimension) {
+    return false;
+  }
+
+  /**
    * @param A
    * @return
    */
   public static boolean all(Mat A) {
+    return false;
+  }
+
+
+  /**
+   * @param matrix
+   * @param dimension
+   * @return
+   */
+  public static boolean all(Mat matrix, int dimension) {
     return false;
   }
 
