@@ -320,6 +320,23 @@ Non-member functions
 
 ### Maxtrix-valued element-wise functions
 
+#### Trigonometric functions
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+sin(A)                     | sin(A)                     | Arma.sin(A)                     | 
+asin(A)                    | asin(A)                    | Arma.asin(A)                    | 
+asinh(A)                   | asinh(A)                   | Arma.asinh(A)                   | 
+cos(A)                     | cos(A)                     | Arma.cos(A)                     | 
+acos(A)                    | acos(A)                    | Arma.acos(A)                    | 
+acosh(A)                   | acosh(A)                   | Arma.acosh(A)                   | 
+tan(A)                     | tan(A)                     | Arma.tan(A)                     | 
+atan(A)                    | atan(A)                    | Arma.atan(A)                    | 
+atanh(A)                   | atanh(A)                   | Arma.atanh(A)                   | 
+
+
+#### Miscellaneous
+
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 abs(A)                     | abs(A)                     | Arma.abs(A)                     | 
@@ -340,20 +357,6 @@ ceil(A)                    | ceil(A)                    | Arma.ceil(A)          
 round(A)                   | round(A)                   | Arma.round(A)                   | 
 sign(A)                    | sign(A)                    | Arma.sign(A)                    | 
 
-#### Trigonometric functions
-
-Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
----------------------------|----------------------------|---------------------------------|------
-sin(A)                     | sin(A)                     | Arma.sin(A)                     | 
-asin(A)                    | asin(A)                    | Arma.asin(A)                    | 
-asinh(A)                   | asinh(A)                   | Arma.asinh(A)                   | 
-cos(A)                     | cos(A)                     | Arma.cos(A)                     | 
-acos(A)                    | acos(A)                    | Arma.acos(A)                    | 
-acosh(A)                   | acosh(A)                   | Arma.acosh(A)                   | 
-tan(A)                     | tan(A)                     | Arma.tan(A)                     | 
-atan(A)                    | atan(A)                    | Arma.atan(A)                    | 
-atanh(A)                   | atanh(A)                   | Arma.atanh(A)                   | 
-
 
 ### Scalar-valued functions of vectors/matrices
 
@@ -372,22 +375,40 @@ trace(A)                   | trace(A)                   | Arma.trace(A)         
 
 ### Scalar/vector-valued functions of vectors/matrices
 
-Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
----------------------------|----------------------------|---------------------------------|------
-diag(A [, k])              | diagvec(A [, k])           | Arma.diagvec(A [, k])           | **Default:** k = 0 **Matlab:** Use A(k) if A is a vector.
-prod(A [, d])              | prod(A [, d])              | Arma.prod(A [, d])              | **Note:** d is omitted if A is a vector. **Default:** d = 0
-sum(A [, d])               | sum(A [, d])               | Arma.sum(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
-
-
 #### Statistics
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-min(A [, d])               | min(A [, d])               | Arma.min(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
-max(A [, d])               | max(A [, d])               | Arma.max(A [, d])               | **Note:** d is omitted if A is a vector. **Default:** d = 0
-mean(A [, d])              | mean(A [, d])              | Arma.mean(A [, d])              | **Note:** d is omitted if A is a vector. **Default:** d = 0
-median(A [, d])            | median(A [, d])            | Arma.median(A [, d])            | **Note:** d is omitted if A is a vector. **Default:** d = 0
-std(A [, n] [, d])         | stddev(A [, n] [, d])      | Arma.stddev(A [, n] [, d])      | **Note:** d is omitted if A is a vector. **Default:** n = 0, d = 0
-var(A [, n] [, d])         | var(A [, n] [, d])         | Arma.var(A [, n] [, d])         | **Note:** d is omitted if A is a vector. **Default:** n = 0, d = 0
+min(V [, d])               | min(V)                     | Arma.min(V [, d])               | **Note:** V is a vector.
+min(A [, d])               | min(A [, d])               | Arma.minMat(A [, d])            | **Default:** d = 0
+max(V [, d])               | max(V)                     | Arma.max(V [, d])               | **Note:** V is a vector.
+max(A [, d])               | max(A [, d])               | Arma.maxMat(A [, d])            | **Default:** d = 0
+mean(V [, d])              | mean(V)                    | Arma.mean(V [, d])              | **Note:** V is a vector.
+mean(A [, d])              | mean(A [, d])              | Arma.meanMat(A [, d])           | ***Default:** d = 0
+median(V [, d])            | median(V)                  | Arma.median(V [, d])            | **Note:** V is a vector.
+median(A [, d])            | median(A [, d])            | Arma.medianMat(A [, d])         | **Default:** d = 0
+std(V [, n] [, d])         | stddev(V [, n])            | Arma.stddev(V [, n] [, d])      | **Note:** V is a vector. **Default:** n = 0, d = 0
+std(A [, n] [, d])         | stddev(A [, n] [, d])      | Arma.stddevMat(A [, n] [, d])   | **Default:** n = 0, d = 0
+var(V [, n] [, d])         | var(V [, n])               | Arma.var(V [, n] [, d])         | **Note:** V is a vector. **Default:** n = 0, d = 0
+var(A [, n] [, d])         | var(A [, n] [, d])         | Arma.varMat(A [, n] [, d])      | **Default:** n = 0, d = 0
+
+#### Logic operations
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+any(V)                     | any(V)                     | Arma.any(V)                     | **Note:** V is a vector.
+any(A [, d])               | any(A [, d])               | Arma.anyMat(A [, d])            | **Default:** d = 0
+all(V)                     | all(V)                     | Arma.all(V)                     | **Note:** V is a vector.
+all(A [, d])               | all(A [, d])               | Arma.allMat(A [, d])            | **Default:** d = 0
+
+
+#### Miscellaneous
+
+Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
+---------------------------|----------------------------|---------------------------------|------
+prod(V [, d])              | prod(V)                    | Arma.prod(V)                    | **Note:** V is a vector.
+prod(A [, d])              | prod(A [, d])              | Arma.prodMat(A [, d])           | **Default:** d = 0
+sum(V [, d])               | sum(V)                     | Arma.sum(V)                     | **Note:** V is a vector.
+sum(A [, d])               | sum(A [, d])               | Arma.sumMat(A [, d])            | **Default:** d = 0
 
 
 ### Matrix-valued functions of vectors/matrices
@@ -401,12 +422,6 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 [A B]                      | join_horiz(A, B)           | Arma.join_horiz(A, B)           | 
 
 
-#### Logic operations
-
-Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
----------------------------|----------------------------|---------------------------------|------
-any(A [, d])               | any(A [, d])               | Arma.any(A [, d])               | **Default:** d = 0
-all(A [, d])               | all(A [, d])               | Arma.all(A [, d])               | **Default:** d = 0
 
                            
 #### Sort functions
@@ -465,6 +480,7 @@ Matlab                     | Armadillo C++              | ArmadilloJava         
 ---------------------------|----------------------------|---------------------------------|------
 A'                         | trans(A)                   | Arma.trans(A)                   | 
 find(A [, k] [, s])        | find(A [, k] [, s])        | Arma.find(A [, k] [, s])        | **Default:** k = 0, s = "first"
+diag(A [, k])              | diagvec(A [, k])           | Arma.diagvec(A [, k])           | **Default:** k = 0 **Matlab:** Use A(k) if A is a vector.
 cumsum(A [, d])            | cumsum(A [, d])            | Arma.cumsum(A [, d])            | 
 conv(A, B)                 | conv(A, B)                 | Arma.conv(A, B)                 | **Note:** A, B are vectors.
 cross(A, B)                | cross(A, B)                | Arma.cross(A, B)                | **Note:** A, B are 3-dimensional vectors.
