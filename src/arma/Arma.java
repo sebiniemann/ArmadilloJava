@@ -299,6 +299,189 @@ public class Arma {
   }
 
   /**
+   * Creates a matrix with element-wise computed sine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat sin(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.sin(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse sine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat asin(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.asin(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic sine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat sinh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.sinh(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic sine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat asinh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed cosine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat cos(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.cos(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse cosine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix.
+   */
+  public static Mat acos(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.acos(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic cosine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat cosh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.cosh(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic cosine of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat acosh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed tangent of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat tan(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.tan(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse tangent of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat atan(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.atan(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed hyperbolic tangent of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat tanh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix.set(n, Math.tanh(matrix._matrix.get(n)));
+    }
+
+    return result;
+  }
+
+  /**
+   * Creates a matrix with element-wise computed inverse hyperbolic tangent of the matrix.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat atanh(Mat matrix) {
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    for (int n = 0; n < matrix.n_elem; n++) {
+      double value = matrix._matrix.get(n);
+      result._matrix.set(n, 0.5 * Math.log((1 + value) / (1 - value)));
+    }
+
+    return result;
+  }
+
+  /**
    * Creates a matrix with element-wise computed absolute values of the matrix.
    * 
    * @param matrix The matrix
@@ -598,189 +781,6 @@ public class Arma {
   }
 
   /**
-   * Creates a matrix with element-wise computed sine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat sin(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.sin(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse sine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat asin(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.asin(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed hyperbolic sine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat sinh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.sinh(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse hyperbolic sine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat asinh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed cosine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat cos(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.cos(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse cosine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix.
-   */
-  public static Mat acos(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.acos(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed hyperbolic cosine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat cosh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.cosh(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse hyperbolic cosine of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat acosh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed tangent of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat tan(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.tan(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse tangent of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat atan(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.atan(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed hyperbolic tangent of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat tanh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.tanh(matrix._matrix.get(n)));
-    }
-
-    return result;
-  }
-
-  /**
-   * Creates a matrix with element-wise computed inverse hyperbolic tangent of the matrix.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat atanh(Mat matrix) {
-    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-    for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, 0.5 * Math.log((1 + value) / (1 - value)));
-    }
-
-    return result;
-  }
-
-  /**
    * Returns the sum of all elements of the matrix.
    * 
    * @param matrix The matrix
@@ -990,124 +990,13 @@ public class Arma {
   }
 
   /**
-   * Returns the main diagonal of the matrix as a column vector.
-   * 
-   * @param matrix The matrix
-   * @return The diagonal
-   */
-  public static Mat diagvec(Mat matrix) {
-    return matrix.diag(0);
-  }
-
-  /**
-   * Returns the {@code k}th diagonal of the matrix as a column vector.
-   * <p>
-   * <ul>
-   * <li>For {@code k} = 0, the main diagonal is returned
-   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
-   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
-   * </ul>
-   * 
-   * @param matrix The matrix
-   * @param k The diagonal position
-   * @return The diagonal
-   */
-  public static Mat diagvec(Mat matrix, int k) {
-    return matrix.diag(k);
-  }
-
-  /**
-   * Returns the product of all elements for each column of the matrix as a column vector.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat prod(Mat matrix) {
-    return prod(matrix, 0);
-  }
-
-  /**
-   * Returns the product of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
-   * matrix as a column vector.
-   * 
-   * @param matrix The matrix
-   * @param dimension The dimension
-   * @return The matrix
-   * 
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
-   */
-  public static Mat prod(Mat matrix, int dimension) throws IllegalArgumentException {
-    Mat result;
-
-    if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      for (int i = 0; i < matrix.n_rows; i++) {
-        double product = 1;
-        for (int j = 0; j < matrix.n_cols; j++) {
-          product *= matrix._matrix.get(i, j);
-        }
-        result._matrix.set(i, product);
-      }
-    } else if (dimension == 1) {
-      result = new Mat(matrix.n_rows, 1);
-      for (int j = 0; j < matrix.n_cols; j++) {
-        double product = 1;
-        for (int i = 0; i < matrix.n_rows; i++) {
-          product *= matrix._matrix.get(i, j);
-        }
-        result._matrix.set(j, product);
-      }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
-
-    return result;
-  }
-
-  /**
-   * Returns the sum of all elements for each column of the matrix as a column vector.
-   * 
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat sum(Mat matrix) {
-    return sum(matrix, 0);
-  }
-
-  /**
-   * Returns the sum of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
-   * matrix as a column vector.
-   * 
-   * @param matrix The matrix
-   * @param dimension The dimension
-   * @return The matrix
-   * 
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
-   */
-  public static Mat sum(Mat matrix, int dimension) throws IllegalArgumentException {
-    Mat result;
-
-    if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      CommonOps.sumCols(matrix._matrix, result._matrix);
-    } else if (dimension == 1) {
-      result = new Mat(matrix.n_rows, 1);
-      CommonOps.sumRows(matrix._matrix, result._matrix);
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
-
-    return result;
-  }
-
-  /**
    * Returns the smallest value for each column of the matrix as a column vector.
    * 
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat min(Mat matrix) {
-    return min(matrix, 0);
+  public static Mat minMat(Mat matrix) {
+    return minMat(matrix, 0);
   }
 
   /**
@@ -1120,7 +1009,7 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat min(Mat matrix, int dimension) throws IllegalArgumentException {
+  public static Mat minMat(Mat matrix, int dimension) throws IllegalArgumentException {
     Mat result;
 
     if (dimension == 0) {
@@ -1154,8 +1043,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat max(Mat matrix) {
-    return max(matrix, 0);
+  public static Mat maxMat(Mat matrix) {
+    return maxMat(matrix, 0);
   }
 
   /**
@@ -1168,7 +1057,7 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat max(Mat matrix, int dimension) throws IllegalArgumentException {
+  public static Mat maxMat(Mat matrix, int dimension) throws IllegalArgumentException {
     Mat result;
 
     if (dimension == 0) {
@@ -1202,8 +1091,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat mean(Mat matrix) {
-    return mean(matrix, 0);
+  public static Mat meanMat(Mat matrix) {
+    return meanMat(matrix, 0);
   }
 
   /**
@@ -1216,9 +1105,9 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat mean(Mat matrix, int dimension) throws IllegalArgumentException {
-    Mat result = sum(matrix, dimension);
-    
+  public static Mat meanMat(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result = sumMat(matrix, dimension);
+
     int count;
     if (dimension == 0) {
       count = matrix.n_cols;
@@ -1227,11 +1116,11 @@ public class Arma {
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
-    
-    for(int n = 0; n < result.n_elem; n++) {
+
+    for (int n = 0; n < result.n_elem; n++) {
       result._matrix.set(n, result._matrix.get(n) / count);
     }
-    
+
     return result;
   }
 
@@ -1241,8 +1130,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat median(Mat matrix) {
-    return median(matrix, 0);
+  public static Mat medianMat(Mat matrix) {
+    return medianMat(matrix, 0);
   }
 
   /**
@@ -1255,60 +1144,60 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat median(Mat matrix, int dimension) throws IllegalArgumentException {
+  public static Mat medianMat(Mat matrix, int dimension) throws IllegalArgumentException {
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
-      for(int j = 0; j < matrix.n_cols; j++) {
+      for (int j = 0; j < matrix.n_cols; j++) {
         Mat sortedColumn = sort(matrix.col(j));
-        
+
         double median;
-        if(matrix.n_rows % 2 == 1) {
+        if (matrix.n_rows % 2 == 1) {
           int middle = matrix.n_rows / 2;
           median = (sortedColumn._matrix.get(middle - 1) + sortedColumn._matrix.get(middle)) / 2;
         } else {
           median = sortedColumn._matrix.get(matrix.n_rows / 2);
         }
-        
+
         result._matrix.set(j, median);
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
-      for(int i = 0; i < matrix.n_rows; i++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
         Mat sortedRow = sort(matrix.col(i));
-        
+
         double median;
-        if(matrix.n_cols % 2 == 1) {
+        if (matrix.n_cols % 2 == 1) {
           int middle = matrix.n_cols / 2;
           median = (sortedRow._matrix.get(middle - 1) + sortedRow._matrix.get(middle)) / 2;
         } else {
           median = sortedRow._matrix.get(matrix.n_cols / 2);
         }
-        
+
         result._matrix.set(i, median);
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
-    
+
     return result;
   }
 
   /**
-   * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1 as a column vector.
+   * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1 as a column
+   * vector.
    * 
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat stddev(Mat matrix) {
-    return stddev(matrix, 0, 0);
+  public static Mat stddevMat(Mat matrix) {
+    return stddevMat(matrix, 0, 0);
   }
 
   /**
    * Returns the standard deviation for each column of the matrix as a column vector.
    * <p>
-   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
-   * = 1).
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param matrix The matrix
    * @param normType The normalisation
@@ -1317,15 +1206,15 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddev(Mat matrix, int normType) throws IllegalArgumentException {
-    return stddev(matrix, normType, 0);
+  public static Mat stddevMat(Mat matrix, int normType) throws IllegalArgumentException {
+    return stddevMat(matrix, normType, 0);
   }
 
   /**
-   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column vector.
+   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix
+   * as a column vector.
    * <p>
-   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
-   * = 1).
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param matrix The matrix
    * @param normType The normalisation
@@ -1335,13 +1224,13 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddev(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
-    Mat result = var(matrix, dimension);
-    
-    for(int n = 0; n < result.n_elem; n++) {
+  public static Mat stddevMat(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
+    Mat result = varMat(matrix, dimension);
+
+    for (int n = 0; n < result.n_elem; n++) {
       result._matrix.set(n, Math.sqrt(result._matrix.get(n)));
     }
-    
+
     return result;
   }
 
@@ -1351,15 +1240,14 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat var(Mat matrix) {
-    return var(matrix, 0, 0);
+  public static Mat varMat(Mat matrix) {
+    return varMat(matrix, 0, 0);
   }
 
   /**
    * Returns the variance for each column of the matrix as a column vector.
    * <p>
-   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
-   * = 1).
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param matrix The matrix
    * @param normType The normalisation
@@ -1368,15 +1256,15 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat var(Mat matrix, int normType) throws IllegalArgumentException {
-    return var(matrix, normType, 0);
+  public static Mat varMat(Mat matrix, int normType) throws IllegalArgumentException {
+    return varMat(matrix, normType, 0);
   }
 
   /**
-   * Returns the variance for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column vector.
+   * Returns the variance for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a
+   * column vector.
    * <p>
-   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType}
-   * = 1).
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param matrix The matrix
    * @param normType The normalisation
@@ -1386,17 +1274,17 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat var(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
+  public static Mat varMat(Mat matrix, int normType, int dimension) throws IllegalArgumentException {
     Mat result;
-    Mat mean = mean(matrix, dimension);
+    Mat mean = meanMat(matrix, dimension);
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
-      for(int j = 0; j < matrix.n_cols; j++) {
+      for (int j = 0; j < matrix.n_cols; j++) {
         int squaredDifference = 0;
-        for(int i = 0; i < matrix.n_rows; i++) {
+        for (int i = 0; i < matrix.n_rows; i++) {
           squaredDifference += Math.pow(matrix._matrix.get(i, j) - mean._matrix.get(j), 2);
         }
-        
+
         double variance;
         if (normType == 0) {
           variance = squaredDifference / (matrix.n_rows - 1);
@@ -1405,17 +1293,17 @@ public class Arma {
         } else {
           throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
         }
-        
+
         result._matrix.set(j, variance);
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
-      for(int i = 0; i < matrix.n_rows; i++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
         int squaredDifference = 0;
-        for(int j = 0; j < matrix.n_cols; j++) {
+        for (int j = 0; j < matrix.n_cols; j++) {
           squaredDifference += Math.pow(matrix._matrix.get(i, j) - mean._matrix.get(i), 2);
         }
-        
+
         double variance;
         if (normType == 0) {
           variance = squaredDifference / (matrix.n_cols - 1);
@@ -1424,148 +1312,32 @@ public class Arma {
         } else {
           throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
         }
-        
+
         result._matrix.set(i, variance);
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
-    
+
     return result;
   }
 
   /**
-   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
-   * and {@code b} bellow.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
-   * {@code != b.n_cols}.
+   * Returns true if any element of the vector is non-zero.
    * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
+   * @param vector The vector
+   * @return Whether any element is non-zero
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
-   * 
-   * @see #join_vert(Mat, Mat)
+   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
+   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat join_cols(Mat a, Mat b) throws IllegalArgumentException {
-    if (a.n_cols != b.n_cols) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of columns (" + a.n_cols + " != " + b.n_cols + ").");
+  public static boolean any(Mat vector) {
+    if (!vector.is_vec()) {
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
-
-    DenseMatrix64F result = new DenseMatrix64F(a.n_rows + b.n_rows, a.n_cols);
-
-    // Add matrix a
-    DenseMatrix64F memptrA = a.memptr();
-    for (int i = 0; i < a.n_rows; i++) {
-      for (int j = 0; j < a.n_cols; j++) {
-        result.set(i, j, memptrA.get(i, j));
-      }
-    }
-
-    // Add matrix b
-    DenseMatrix64F memptrB = b.memptr();
-    for (int i = 0; i < b.n_rows; i++) {
-      for (int j = 0; j < b.n_cols; j++) {
-        result.set(i + a.n_rows, j, memptrB.get(i, j));
-      }
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their columns. Matrix {@code a} will be placed above
-   * and {@code b} bellow.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_cols n_cols}
-   * {@code != b.n_cols}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_cols != b.n_cols}.
-   * 
-   * @see #join_cols(Mat, Mat)
-   */
-  public static Mat join_vert(Mat a, Mat b) throws IllegalArgumentException {
-    return join_cols(a, b);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
-   * {@code b} right.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
-   * {@code != b.n_rows}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
-   * 
-   * @see #join_horiz(Mat, Mat)
-   */
-  public static Mat join_rows(Mat a, Mat b) throws IllegalArgumentException {
-    if (a.n_rows != b.n_rows) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of rows (" + a.n_rows + " != " + b.n_rows + ").");
-    }
-
-    DenseMatrix64F result = new DenseMatrix64F(a.n_rows, a.n_cols + b.n_cols);
-
-    // Add matrix a
-    DenseMatrix64F memptrA = a.memptr();
-    for (int i = 0; i < a.n_rows; i++) {
-      for (int j = 0; j < a.n_cols; j++) {
-        result.set(i, j, memptrA.get(i, j));
-      }
-    }
-
-    // Add matrix b
-    DenseMatrix64F memptrB = b.memptr();
-    for (int i = 0; i < b.n_rows; i++) {
-      for (int j = 0; j < b.n_cols; j++) {
-        result.set(i, j + a.n_cols, memptrB.get(i, j));
-      }
-    }
-
-    return new Mat(result);
-  }
-
-  /**
-   * Concatenation of the matrices {@code a} and {@code b} along their rows. Matrix {@code a} will be placed left and
-   * {@code b} right.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if {@code a.}{@link Mat#n_rows n_rows}
-   * {@code != b.n_rows}.
-   * 
-   * @param a First matrix.
-   * @param b Second matrix.
-   * @return The concatenated matrix.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code a.n_rows != b.n_rows}.
-   * 
-   * @see #join_rows(Mat, Mat)
-   */
-  public static Mat join_horiz(Mat a, Mat b) throws IllegalArgumentException {
-    return join_rows(a, b);
-  }
-
-  /**
-   * Returns true if any element of the matrix is non-zero or if an operation is satisfy if used
-   * together with {@link Op#evaluate(Mat, Op, Mat)}.
-   * 
-   * @param matrix The provided matrix.
-   * @return The boolean result.
-   */
-  public static boolean any(Mat matrix) {
-    DenseMatrix64F memptrA = matrix.memptr();
-
-    for (int i = 0; i < matrix.n_elem; i++) {
-      if (memptrA.get(i) != 0) {
+    
+    for (int i = 0; i < vector.n_elem; i++) {
+      if (vector._matrix.get(i) != 0) {
         return true;
       }
     }
@@ -1574,110 +1346,330 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @param dimension
-   * @return
+   * Returns true if any element of the matrix is non-zero.
+   * 
+   * @param matrix The matrix
+   * @return Whether any element is non-zero
    */
-  public static boolean any(Mat matrix, int dimension) {
+  public static boolean anyMat(Mat matrix) {
+    return anyMat(matrix, 0);
+  }
+
+  /**
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   */
+  public static boolean anyMat(Mat matrix, int dimension) {
     return false;
   }
 
   /**
-   * @param A
-   * @return
+   * Returns true if all element of the vector are non-zero.
+   * 
+   * @param vector The vector
+   * @return Whether any element is non-zero
+   * 
+   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
+   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static boolean all(Mat A) {
+  public static boolean all(Mat vector) {
+    if (!vector.is_vec()) {
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+    }
+    
+    for (int i = 0; i < vector.n_elem; i++) {
+      if (vector._matrix.get(i) == 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static boolean allMat(Mat matrix) {
+    return allMat(matrix, 0);
+  }
+
+  /**
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   */
+  public static boolean allMat(Mat matrix, int dimension) {
     return false;
   }
 
-
   /**
-   * @param matrix
-   * @param dimension
-   * @return
+   * Returns the product of all elements for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static boolean all(Mat matrix, int dimension) {
-    return false;
+  public static Mat prodMat(Mat matrix) {
+    return prodMat(matrix, 0);
   }
 
   /**
-   * @param A
-   * @return
+   * Returns the product of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
+   * matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat sort(Mat A) {
+  public static Mat prodMat(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result;
+
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        double product = 1;
+        for (int j = 0; j < matrix.n_cols; j++) {
+          product *= matrix._matrix.get(i, j);
+        }
+        result._matrix.set(i, product);
+      }
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        double product = 1;
+        for (int i = 0; i < matrix.n_rows; i++) {
+          product *= matrix._matrix.get(i, j);
+        }
+        result._matrix.set(j, product);
+      }
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns the sum of all elements for each column of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat sumMat(Mat matrix) {
+    return sumMat(matrix, 0);
+  }
+
+  /**
+   * Returns the sum of all elements for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
+   * matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   */
+  public static Mat sumMat(Mat matrix, int dimension) throws IllegalArgumentException {
+    Mat result;
+
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      CommonOps.sumCols(matrix._matrix, result._matrix);
+    } else if (dimension == 1) {
+      result = new Mat(matrix.n_rows, 1);
+      CommonOps.sumRows(matrix._matrix, result._matrix);
+    } else {
+      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
+    }
+
+    return result;
+  }
+
+  /**
+   * Concatenation of the matrices {@code matrix1} and {@code matrix2} along their columns.
+   * <p>
+   * Matrix {@code matrix1} will be placed above and {@code matrix2} bellow.
+   * 
+   * @param matrix1 First matrix
+   * @param matrix2 Second matrix
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The provided matrices must have the same number of columns, but were
+   *           {@link Mat#n_cols matrix1.n_cols} and {@code matrix2.n_cols}.
+   */
+  public static Mat join_cols(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+    if (matrix1.n_cols != matrix2.n_cols) {
+      throw new IllegalArgumentException("The provided matrices must have the same number of columns, but were " + matrix1.n_cols + " and " + matrix2.n_cols + ".");
+    }
+
+    Mat result = new Mat(matrix1.n_rows + matrix2.n_rows, matrix1.n_cols);
+
+    // Add matrix matrix1
+    for (int i = 0; i < matrix1.n_rows; i++) {
+      for (int j = 0; j < matrix1.n_cols; j++) {
+        result._matrix.set(i, j, matrix1._matrix.get(i, j));
+      }
+    }
+
+    // Add matrix matrix2
+    for (int i = 0; i < matrix2.n_rows; i++) {
+      for (int j = 0; j < matrix2.n_cols; j++) {
+        result._matrix.set(i + matrix1.n_rows, j, matrix2._matrix.get(i, j));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Concatenation of the matrices {@code matrix1} and {@code matrix2} along their columns.
+   * <p>
+   * Matrix {@code matrix1} will be placed above and {@code matrix2} bellow.
+   * 
+   * @param matrix1 First matrix
+   * @param matrix2 Second matrix
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The provided matrices must have the same number of columns, but were
+   *           {@link Mat#n_cols matrix1.n_cols} and {@code matrix2.n_cols}.
+   */
+  public static Mat join_vert(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+    return join_cols(matrix1, matrix2);
+  }
+
+  /**
+   * Concatenation of the matrices {@code matrix1} and {@code matrix2} along their rows.
+   * <p>
+   * Matrix {@code matrix1} will be placed left and {@code matrix2} right.
+   * 
+   * @param matrix1 First matrix
+   * @param matrix2 Second matrix
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The provided matrices must have the same number of rows, but were
+   *           {@link Mat#n_cols matrix1.n_rows} and {@code matrix2.n_rows}.
+   */
+  public static Mat join_rows(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+    if (matrix1.n_rows != matrix2.n_rows) {
+      throw new IllegalArgumentException("The provided matrices must have the same number of columns, but were " + matrix1.n_rows + " and " + matrix2.n_rows + ".");
+    }
+
+    Mat result = new Mat(matrix1.n_rows, matrix1.n_cols + matrix2.n_cols);
+
+    // Add matrix matrix1
+    for (int i = 0; i < matrix1.n_rows; i++) {
+      for (int j = 0; j < matrix1.n_cols; j++) {
+        result._matrix.set(i, j, matrix1._matrix.get(i, j));
+      }
+    }
+
+    // Add matrix matrix2
+    for (int i = 0; i < matrix2.n_rows; i++) {
+      for (int j = 0; j < matrix2.n_cols; j++) {
+        result._matrix.set(i, j + matrix1.n_cols, matrix2._matrix.get(i, j));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Concatenation of the matrices {@code matrix1} and {@code matrix2} along their rows.
+   * <p>
+   * Matrix {@code matrix1} will be placed left and {@code matrix2} right.
+   * 
+   * @param matrix1 First matrix
+   * @param matrix2 Second matrix
+   * @return The matrix
+   * 
+   * @throws IllegalArgumentException The provided matrices must have the same number of rows, but were
+   *           {@link Mat#n_cols matrix1.n_rows} and {@code matrix2.n_rows}.
+   */
+  public static Mat join_horiz(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+    return join_rows(matrix1, matrix2);
+  }
+
+  /**
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat sort(Mat matrix) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @return The matrix
    */
-  public static Mat sort(Mat A, int sortType) {
+  public static Mat sort(Mat matrix, int sortType) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @param dimension The dimension
+   * @return The matrix
    */
-  public static Mat sort(Mat A, int sortType, int dimension) {
+  public static Mat sort(Mat matrix, int sortType, int dimension) {
     return null;
   }
 
   /**
-   * @param A
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat sort_index(Mat A) {
+  public static Mat sort_index(Mat matrix) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @return The matrix
    */
-  public static Mat sort_index(Mat A, int sortType) {
+  public static Mat sort_index(Mat matrix, int sortType) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @param dimension The dimension
+   * @return The matrix
    */
-  public static Mat sort_index(Mat A, int sortType, int dimension) {
+  public static Mat sort_index(Mat matrix, int sortType, int dimension) {
     return null;
   }
 
   /**
-   * @param A
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
-  public static Mat stable_sort_index(Mat A) {
+  public static Mat stable_sort_index(Mat matrix) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @return The matrix
    */
-  public static Mat stable_sort_index(Mat A, int sortType) {
+  public static Mat stable_sort_index(Mat matrix, int sortType) {
     return null;
   }
 
   /**
-   * @param A
-   * @param sortType
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param sortType The sortType
+   * @param dimension The dimension
+   * @return The matrix
    */
-  public static Mat stable_sort_index(Mat A, int sortType, int dimension) {
+  public static Mat stable_sort_index(Mat matrix, int sortType, int dimension) {
     return null;
   }
 
@@ -2039,6 +2031,33 @@ public class Arma {
    */
   public static Mat find(Mat matrix) throws IllegalArgumentException {
     return find(matrix, 0, "first");
+  }
+
+  /**
+   * Returns the main diagonal of the matrix as a column vector.
+   * 
+   * @param matrix The matrix
+   * @return The diagonal
+   */
+  public static Mat diagvec(Mat matrix) {
+    return matrix.diag(0);
+  }
+
+  /**
+   * Returns the {@code k}th diagonal of the matrix as a column vector.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, the main diagonal is returned
+   * <li>For {@code k} > 0, the {@code k}th super-diagonal is returned.
+   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is returned.
+   * </ul>
+   * 
+   * @param matrix The matrix
+   * @param k The diagonal position
+   * @return The diagonal
+   */
+  public static Mat diagvec(Mat matrix, int k) {
+    return matrix.diag(k);
   }
 
   /**
