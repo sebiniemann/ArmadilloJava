@@ -26,11 +26,11 @@ package arma;
  */
 public enum Op {
   /**
-   * Increment (unary arithmetic operator)
+   * Pre-increment (unary arithmetic operator)
    */
   INCREMENT,
   /**
-   * Decrement (unary arithmetic operator)
+   * Pre-decrement (unary arithmetic operator)
    */
   DECREMENT,
   /**
@@ -99,8 +99,8 @@ public enum Op {
 
     Mat result = new Mat(a.n_elem, 1);
     for (int n = 0; n < a.n_elem; n++) {
-      if (evaluate(a._matrix.get(n), operator, b._matrix.get(n))) {
-        result._matrix.set(n, 1);
+      if (evaluate(a.at(n), operator, b.at(n))) {
+        result.at(n, Op.EQUAL, 1);
       }
     }
 
@@ -122,8 +122,8 @@ public enum Op {
   public static Mat evaluate(Mat a, Op operator, double b) throws IllegalArgumentException, UnsupportedOperationException {
     Mat result = new Mat(a.n_elem, 1);
     for (int n = 0; n < a.n_elem; n++) {
-      if (evaluate(a._matrix.get(n), operator, b)) {
-        result._matrix.set(n, 1);
+      if (evaluate(a.at(n), operator, b)) {
+        result.at(n, Op.EQUAL, 1);
       }
     }
 
@@ -212,132 +212,5 @@ public enum Op {
     }
 
     return false;
-  }
-
-  /**
-   * <b>Non-canonical:</b> Evaluates an unary arithmetic operation {@code a operator}.
-   * 
-   * @param a The left-hand side operand
-   * @param operator The operator
-   * @return The result
-   * 
-   * @throws IllegalArgumentException NaN is not a valid operand.
-   * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
-   */
-  static double getResult(double a, Op operator) throws IllegalArgumentException, UnsupportedOperationException {
-    double result = 0;
-
-    if (Double.isNaN(a)) {
-      throw new IllegalArgumentException("NaN is not a valid operand.");
-    }
-
-    switch (operator) {
-      case INCREMENT:
-        result = a++;
-        break;
-      case DECREMENT:
-        result = a--;
-        break;
-      default:
-        throw new UnsupportedOperationException("Only unary arithmetic operators are supported.");
-    }
-    
-    underflowOverflowDetection(a, operator, result);
-    return result;
-  }
-
-  /**
-   * <b>Non-canonical:</b> Evaluates an binary arithmetic operation {@code a operator b} or returns {@code b} if {@code operation} = {@link Op#EQUAL}.
-   * 
-   * @param a The left-hand side operand
-   * @param operator The operator
-   * @param b The right-hand side operand
-   * @return The result
-   * 
-   * @throws IllegalArgumentException NaN is not a valid operand.
-   * @throws ArithmeticException Division by zero.
-   * @throws ArithmeticException Division by infinity.
-   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
-   */
-  static double getResult(double a, Op operator, double b) throws IllegalArgumentException, ArithmeticException, UnsupportedOperationException {
-    double result = 0;
-
-    if (Double.isNaN(a) || Double.isNaN(b)) {
-      throw new IllegalArgumentException("NaN is not a valid operand.");
-    }
-
-    switch (operator) {
-      case EQUAL:
-        result = b;
-        break;
-      case PLUS:
-        result = a + b;
-        break;
-      case MINUS:
-        result = a - b;
-        break;
-      case TIMES:
-      case ELEMTIMES:
-        result = a * b;
-        break;
-      case ELEMDIVIDE:
-        if (b == 0) {
-          throw new ArithmeticException("Division by zero.");
-        }
-
-        if (Double.isInfinite(b)) {
-          throw new ArithmeticException("Division by infinity.");
-        }
-
-        result = a / b;
-        break;
-      default:
-        throw new UnsupportedOperationException("Only binary arithmetic operators and equality are supported.");
-    }
-
-    underflowOverflowDetection(a, operator, b, result);
-    return result;
-  }
-  
-  /**
-   * Detects if the result of an unary operation was affected by an overflow.
-   * <p>
-   * Note: The supported unary operators cannot result in an underflow.
-   * 
-   * @param a The left-hand side operand
-   * @param operator The operator
-   * @param result The calculated result
-   * 
-   * @throws ArithmeticException Overflow detected. {@code a operator} resulted in {@code result}.
-   */
-  static void underflowOverflowDetection(double a, Op operator, double result) throws ArithmeticException {
-    if (!Double.isInfinite(a) && Double.isInfinite(result)) {
-      throw new ArithmeticException("Overflow detected. " + a + " " + operator + " resulted in " + result + ".");
-    }
-  }
-  
-  /**
-   * Detects if the result of an binary operation was affected by an underflow or overflow.
-   * <p>
-   * The overflow detection is only active if the operator is one of {@link #TIMES}, {@link #ELEMTIMES} or {@link #ELEMDIVIDE}.
-   * 
-   * @param a The left-hand side operand
-   * @param operator The operator
-   * @param b The right-hand side operand
-   * @param result The calculated result
-   * 
-   * @throws ArithmeticException Underflow detected. {@code a operator b} resulted in {@code result}.
-   * @throws ArithmeticException Overflow detected. {@code a operator b} resulted in {@code result}.
-   */
-  static void underflowOverflowDetection(double a, Op operator, double b, double result) throws ArithmeticException {
-    if (operator.equals(TIMES) || operator.equals(ELEMTIMES) || operator.equals(ELEMDIVIDE)) {
-      if (a != 0 && b != 0 && result == 0) {
-        throw new ArithmeticException("Underflow detected. " + a + " " + operator + " " + b + " resulted in " + result + ".");
-      }
-    }
-
-    if (!Double.isInfinite(a) && !Double.isInfinite(b) && Double.isInfinite(result)) {
-      throw new ArithmeticException("Overflow detected. " + a + " " + operator + " " + b + " resulted in " + result + ".");
-    }
   }
 }
