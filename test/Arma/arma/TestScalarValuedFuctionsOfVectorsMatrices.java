@@ -98,4 +98,12 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   public void testTrace() {
     fail("Not yet implemented"); // TODO
   }
-}
+  
+  /**
+   * Test method for {@link arma.Arma#as_scalar(arma.Mat)}.
+   */
+  @Test
+  public void testAs_scalar() {
+    fail("Not yet implemented"); // TODO
+  }
+ }
