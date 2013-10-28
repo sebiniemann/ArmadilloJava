@@ -68,8 +68,8 @@ public class RunningStatVec {
    * 
    * @param samples The vector
    * 
-   * @throws IllegalArgumentException The sample vector must be a vector, but was a (
-   *           {@code samples.n_rows}, {@code samples.n_cols})-matrix.
+   * @throws IllegalArgumentException The sample vector must be a vector, but was a ( {@code samples.n_rows},
+   *           {@code samples.n_cols})-matrix.
    * @throws IllegalArgumentException The sample vector must contain at least one element.
    * @throws IllegalArgumentException NaN is not valid sample value for any element.
    * @throws IllegalArgumentException The sample vector must have the same number of elements as

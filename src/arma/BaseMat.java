@@ -1,16 +1,17 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
 package arma;
 
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * Used as a base class for {@link Mat} and its submatrices.
@@ -238,7 +239,7 @@ abstract class BaseMat implements Iterable<Double> {
    *           {@code b}.
    */
   protected static void isInvalidRangeDetection(int a, int b) throws IllegalArgumentException {
-    if (a < b) {
+    if (a > b) {
       throw new IllegalArgumentException("The first position needs to be less than equal the last, but were " + a + " and " + b + ".");
     }
 
@@ -356,9 +357,11 @@ abstract class BaseMat implements Iterable<Double> {
       throw new UnsupportedOperationException("The matrix must be a non-vector, but was a (" + n_rows + ", " + n_cols + ")-vector.");
     }
   }
-  
+
   /**
    * Returns the element position based on the actual submatrix view.
+   * <p>
+   * Should not perform error detection.
    * 
    * @param n The element position
    * @return The actual element position
@@ -368,5 +371,25 @@ abstract class BaseMat implements Iterable<Double> {
   @Override
   public Iterator<Double> iterator() {
     return new MatIterator(this);
+  }
+
+  @Override
+  public String toString() {
+    String output = "(" + n_rows + ", " + n_cols + ")-matrix: [";
+    for (double element : this)
+    {
+      if (Double.isInfinite(element)) {
+        String sign = "";
+        if (element < 0) {
+          sign = "-";
+        }
+        output += String.format("%24s", sign + "Inf");
+      } else {
+        output += String.format(Locale.ENGLISH, "%1$ 24.16e", element);
+      }
+    }
+    output += "]";
+
+    return output;
   }
 }

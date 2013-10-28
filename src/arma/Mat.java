@@ -52,26 +52,6 @@ import org.ejml.ops.CommonOps;
 public class Mat extends BaseMat {
 
   /**
-   * The internal data representation of the matrix
-   */
-  double[]   _matrix;
-
-  /**
-   * The number of rows
-   */
-  public int n_rows;
-
-  /**
-   * The number of columns
-   */
-  public int n_cols;
-
-  /**
-   * The number of elements (same as {@link #n_rows} * {@link #n_cols}) .
-   */
-  public int n_elem;
-
-  /**
    * Creates an empty matrix with zero elements.
    */
   public Mat() {
@@ -84,7 +64,7 @@ public class Mat extends BaseMat {
    * @param matrix The array
    */
   public Mat(double[] matrix) {
-    if (_matrix.length > 0) {
+    if (_matrix != null && _matrix.length > 0) {
       set_size(_matrix.length, 1);
       System.arraycopy(matrix, 0, _matrix, 0, matrix.length);
     } else {
@@ -102,7 +82,7 @@ public class Mat extends BaseMat {
    * @throws IllegalArgumentException All rows must have the same length.
    */
   public Mat(double[][] matrix) throws IllegalArgumentException {
-    if (matrix.length > 0 && matrix[0].length > 0) {
+    if (_matrix != null && _matrix.length > 0 && matrix[0].length > 0) {
       int numberOfRows = matrix.length;
       int numberOfColumns = matrix[0].length;
 
@@ -137,7 +117,11 @@ public class Mat extends BaseMat {
    */
   protected Mat(SubviewMat submatrix) {
     set_size(submatrix.n_rows, submatrix.n_cols);
-    System.arraycopy(submatrix._matrix, 0, _matrix, 0, submatrix.n_elem);
+
+    int n = 0;
+    for (double element : submatrix) {
+      _matrix[n++] = element;
+    }
   }
 
   /**
@@ -192,11 +176,8 @@ public class Mat extends BaseMat {
    * 
    * @param numberOfElements The number of elements
    * @param fillType The fill type
-   * 
-   * @throws IllegalArgumentException Does not support {@link Fill#RANDU} or {@link Fill#RANDN}. Use
-   *           {@link #Mat(int, Fill, Random)} instead.
    */
-  public Mat(int numberOfElements, Fill fillType) throws IllegalArgumentException {
+  public Mat(int numberOfElements, Fill fillType) {
     this(numberOfElements, 1, fillType);
   }
 
@@ -1396,7 +1377,7 @@ public class Mat extends BaseMat {
    */
   public Mat plus(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.PLUS, operand);
+    result.inPlace(Op.PLUS, operand);
     return result;
   }
 
@@ -1408,7 +1389,7 @@ public class Mat extends BaseMat {
    */
   public Mat plus(double operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.PLUS, operand);
+    result.inPlace(Op.PLUS, operand);
     return result;
   }
 
@@ -1420,7 +1401,7 @@ public class Mat extends BaseMat {
    */
   public Mat minus(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.MINUS, operand);
+    result.inPlace(Op.MINUS, operand);
     return result;
   }
 
@@ -1432,7 +1413,7 @@ public class Mat extends BaseMat {
    */
   public Mat minus(double operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.MINUS, operand);
+    result.inPlace(Op.MINUS, operand);
     return result;
   }
 
@@ -1441,17 +1422,20 @@ public class Mat extends BaseMat {
    * 
    * @param operand The multiplier
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The number of columns of the left-hand side operand must match with the number of
-   *           rows of the right hand side operand, but were {@link #n_cols} and {@link #n_rows operand.n_rows}.
    */
-  public Mat times(Mat operand) throws IllegalArgumentException {
+  public Mat times(Mat operand) {
     isNonEqualNumberOfElementsDetection(n_cols, operand.n_rows);
 
-    // Performed by EJML because non-element-wise multiplication is needed.
-    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
-    CommonOps.mult(convertMatToEJMLMat(this), convertMatToEJMLMat(operand), result);
-    return convertEJMLToMat(result);
+    Mat result = new Mat(n_rows, operand.n_cols);
+
+    int position = 0;
+    for (int j = 0; j < operand.n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        result._matrix[position++] = Arma.dot(row(i), operand.col(j));
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -1462,7 +1446,7 @@ public class Mat extends BaseMat {
    */
   public Mat times(double operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.TIMES, operand);
+    result.inPlace(Op.TIMES, operand);
     return result;
   }
 
@@ -1474,7 +1458,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemTimes(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.ELEMTIMES, operand);
+    result.inPlace(Op.ELEMTIMES, operand);
     return result;
   }
 
@@ -1486,7 +1470,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemTimes(double operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.ELEMTIMES, operand);
+    result.inPlace(Op.ELEMTIMES, operand);
     return result;
   }
 
@@ -1498,7 +1482,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemDivide(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.ELEMDIVIDE, operand);
+    result.inPlace(Op.ELEMDIVIDE, operand);
     return result;
   }
 
@@ -1510,7 +1494,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemDivide(double operand) {
     Mat result = new Mat(_matrix);
-    result.submat(Op.ELEMDIVIDE, operand);
+    result.inPlace(Op.ELEMDIVIDE, operand);
     return result;
   }
 
@@ -1741,21 +1725,10 @@ public class Mat extends BaseMat {
    * 
    * @param j The column position
    * @param matrix The matrix
-   * 
-   * 
-   * @throws IllegalArgumentException The number of rows of this matrix must match with the matrix to be inserted, but
-   *           was {@link #n_rows} and {@code matrix.n_rows}.
-   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column position was {@code j}.
    */
-  public void insert_cols(int j, Mat matrix) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-    if (matrix.n_rows != n_rows) {
-      throw new IllegalArgumentException("The number of rows of this matrix must match with the matrix to be inserted, but was " + n_rows + " and " + matrix.n_rows + ".");
-    }
-
-    if (!in_range(Span.all(), new Span(j))) {
-      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j + ".");
-    }
+  public void insert_cols(int j, Mat matrix) {
+    isNonEqualNumberOfElementsDetection(matrix.n_rows, n_rows);
+    isColumnOutOfBoundsDetection(j);
 
     Mat temp = new Mat(_matrix);
     set_size(n_rows, n_cols + matrix.n_cols);
@@ -1770,11 +1743,8 @@ public class Mat extends BaseMat {
    * 
    * @param a The first column position
    * @param b The last column position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column positions are from {@code a} to {@code b}.
    */
-  public void insert_cols(int a, int b) throws ArrayIndexOutOfBoundsException {
+  public void insert_cols(int a, int b) {
     insert_cols(a, b, true);
   }
 
@@ -1786,14 +1756,9 @@ public class Mat extends BaseMat {
    * @param a The first column position
    * @param b The last column position
    * @param fillWithZeros Whether to be filled with 0
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column positions are from {@code a} to {@code b}.
    */
-  public void insert_cols(int a, int b, boolean fillWithZeros) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(new Span(), new Span(a, b))) {
-      throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
-    }
+  public void insert_cols(int a, int b, boolean fillWithZeros) {
+    isColumnRangeOutOfBoundsDetection(a, b);
 
     int spanLength = b - a + 1;
     Mat fillMatrix;
@@ -1816,20 +1781,10 @@ public class Mat extends BaseMat {
    * 
    * @param i The row position
    * @param matrix The matrix
-   * 
-   * @throws IllegalArgumentException The number of columns of this matrix must match with the matrix to be inserted,
-   *           but was {@link #n_cols} and {@code matrix.n_cols}.
-   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
-   *           but the column position was {@code i}.
    */
-  public void insert_rows(int i, Mat matrix) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-    if (matrix.n_cols != n_cols) {
-      throw new IllegalArgumentException("The number of columns of this matrix must match with the matrix to be inserted, but was " + n_cols + " and " + matrix.n_cols + ".");
-    }
-
-    if (!in_range(new Span(i), Span.all())) {
-      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i + ".");
-    }
+  public void insert_rows(int i, Mat matrix) {
+    isNonEqualNumberOfElementsDetection(matrix.n_cols, n_cols);
+    isColumnOutOfBoundsDetection(i);
 
     Mat temp = new Mat(_matrix);
     set_size(n_rows + matrix.n_rows, n_cols);
@@ -1844,11 +1799,8 @@ public class Mat extends BaseMat {
    * 
    * @param a The first row position
    * @param b The last row position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
-   *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void insert_rows(int a, int b) throws ArrayIndexOutOfBoundsException {
+  public void insert_rows(int a, int b) {
     insert_rows(a, b, true);
   }
 
@@ -1860,14 +1812,9 @@ public class Mat extends BaseMat {
    * @param a The first row position
    * @param b The last row position
    * @param fillWithZeros Whether to be filled with 0
-   * 
-   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
-   *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void insert_rows(int a, int b, boolean fillWithZeros) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(new Span(a, b), Span.all())) {
-      throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
-    }
+  public void insert_rows(int a, int b, boolean fillWithZeros) {
+    isRowRangeOutOfBoundsDetection(a, b);
 
     int spanLength = b - a + 1;
     Mat fillMatrix;
@@ -1889,11 +1836,8 @@ public class Mat extends BaseMat {
    * Shrinks the matrix by removing the {@code j}th column.
    * 
    * @param j The column position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column positions are from {@code j} to {@code j}.
    */
-  public void shed_col(int j) throws ArrayIndexOutOfBoundsException {
+  public void shed_col(int j) {
     shed_cols(j, j);
   }
 
@@ -1902,14 +1846,9 @@ public class Mat extends BaseMat {
    * 
    * @param a The first column position
    * @param b The last column position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column positions are out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column positions are from {@code a} to {@code b}.
    */
-  public void shed_cols(int a, int b) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(new Span(), new Span(a, b))) {
-      throw new ArrayIndexOutOfBoundsException("The column positions are out of bound. The matrix contains " + n_cols + " columns, but the column positions are from  " + a + " to " + b + ".");
-    }
+  public void shed_cols(int a, int b) {
+    isColumnRangeOutOfBoundsDetection(a, b);
 
     int spanLength = b - a + 1;
 
@@ -1924,11 +1863,8 @@ public class Mat extends BaseMat {
    * Shrinks the matrix by removing the {@code j}th row.
    * 
    * @param i The row position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
-   *           rows, but the row positions are from {@code i} to {@code i}.
    */
-  public void shed_row(int i) throws ArrayIndexOutOfBoundsException {
+  public void shed_row(int i) {
     shed_rows(i, i);
   }
 
@@ -1937,14 +1873,9 @@ public class Mat extends BaseMat {
    * 
    * @param a The first row position
    * @param b The last row position
-   * 
-   * @throws ArrayIndexOutOfBoundsException The row positions are out of bound. The matrix contains {@link #n_rows}
-   *           rows, but the row positions are from {@code a} to {@code b}.
    */
-  public void shed_rows(int a, int b) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(new Span(a, b), Span.all())) {
-      throw new IllegalArgumentException("The row positions are out of bound. The matrix contains " + n_rows + " rows, but the row positions are from " + a + " to " + b + ".");
-    }
+  public void shed_rows(int a, int b) {
+    isRowRangeOutOfBoundsDetection(a, b);
 
     int spanLength = b - a + 1;
 
@@ -1959,15 +1890,10 @@ public class Mat extends BaseMat {
    * Swaps the elements of this matrix with another one.
    * 
    * @param matrix The matrix
-   * 
-   * @throws IllegalArgumentException The size of this matrix must match with the one to be swaped with, but this is a (
-   *           {@link #n_rows}, {@link #n_cols})-matrix while the other one was a ({@code matrix.n_rows},
-   *           {@code matrix.n_cols})-matrix.
    */
-  public void swap(Mat matrix) throws IllegalArgumentException {
-    if (n_rows != matrix.n_rows || n_cols != matrix.n_cols) {
-      throw new IllegalArgumentException("The size of this matrix must match with the one to be swaped with, but this is a (" + n_rows + ", " + n_cols + ")-matrix while the other one was a (" + matrix.n_rows + ", " + matrix.n_rows + ")-matrix");
-    }
+  public void swap(Mat matrix) {
+    isNonEqualNumberOfElementsDetection(n_rows, matrix.n_rows);
+    isNonEqualNumberOfElementsDetection(n_cols, matrix.n_cols);
 
     submat(Op.EQUAL, matrix);
   }
@@ -1977,20 +1903,10 @@ public class Mat extends BaseMat {
    * 
    * @param j1 The first column
    * @param j2 The second column
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column position was {@code j1}.
-   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column position was {@code j2}.
    */
-  public void swap_cols(int j1, int j2) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(Span.all(), new Span(j1))) {
-      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j1 + ".");
-    }
-
-    if (!in_range(Span.all(), new Span(j2))) {
-      throw new ArrayIndexOutOfBoundsException("The column position is out of bound. The matrix contains " + n_cols + " columns, but the column position was  " + j2 + ".");
-    }
+  public void swap_cols(int j1, int j2) {
+    isColumnOutOfBoundsDetection(j1);
+    isColumnOutOfBoundsDetection(j2);
 
     Mat temp = col(j1);
     col(j2, Op.EQUAL, j1);
@@ -2002,20 +1918,10 @@ public class Mat extends BaseMat {
    * 
    * @param i1 The first row
    * @param i2 The second row
-   * 
-   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
-   *           but the row position was {@code i1}.
-   * @throws ArrayIndexOutOfBoundsException The row position is out of bound. The matrix contains {@link #n_rows} rows,
-   *           but the row position was {@code i2}.
    */
-  public void swap_rows(int i1, int i2) throws ArrayIndexOutOfBoundsException {
-    if (!in_range(new Span(i1), Span.all())) {
-      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i1 + ".");
-    }
-
-    if (!in_range(new Span(i2), Span.all())) {
-      throw new ArrayIndexOutOfBoundsException("The row position is out of bound. The matrix contains " + n_rows + " rows, but the row position was  " + i2 + ".");
-    }
+  public void swap_rows(int i1, int i2) {
+    isRowOutOfBoundsDetection(i1);
+    isRowOutOfBoundsDetection(i2);
 
     Mat temp = row(i1);
     row(i2, Op.EQUAL, i1);
@@ -2260,6 +2166,7 @@ public class Mat extends BaseMat {
    */
   public void set_size(int numberOfElements) {
     isNonVectorDetection();
+    isInvalidPositionDetection(numberOfElements);
 
     if (numberOfElements == n_elem) {
       return;
@@ -2319,8 +2226,6 @@ public class Mat extends BaseMat {
    */
   public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
     isNotInSetDetection(dimension, 0, 1);
-    isInvalidPositionDetection(numberOfRows);
-    isInvalidPositionDetection(numberOfColumns);
 
     Mat temp = new Mat(_matrix);
     set_size(numberOfColumns, numberOfRows);
@@ -2362,9 +2267,6 @@ public class Mat extends BaseMat {
    * @param numberOfColumns The new number of columns
    */
   public void resize(int numberOfRows, int numberOfColumns) {
-    isInvalidPositionDetection(numberOfRows);
-    isInvalidPositionDetection(numberOfColumns);
-
     Mat temp = new Mat(_matrix);
     set_size(numberOfColumns, numberOfRows);
 
@@ -2421,7 +2323,7 @@ public class Mat extends BaseMat {
     if (!header.isEmpty()) {
       writer.println(header);
     }
-    writer.println(toString());
+    writer.println(this);
   }
 
   /**
@@ -2479,9 +2381,8 @@ public class Mat extends BaseMat {
    * @return Whether the process was succesfully.
    * 
    * @throws FileNotFoundException File not found.
-   * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
    */
-  public boolean save(String filename, String filetype) throws FileNotFoundException, IllegalArgumentException {
+  public boolean save(String filename, String filetype) throws FileNotFoundException {
     return save(new FileOutputStream(filename, false), filetype);
   }
 
@@ -2539,7 +2440,6 @@ public class Mat extends BaseMat {
     writer.close();
 
     return true;
-
   }
 
   /**
@@ -2565,10 +2465,9 @@ public class Mat extends BaseMat {
    * @param filetype The filetype
    * @return Whether the process was succesfully.
    * 
-   * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
    * @throws IOException An I/O error occured
    */
-  public boolean load(String filename, String filetype) throws IllegalArgumentException, IOException {
+  public boolean load(String filename, String filetype) throws IOException {
     return load(new FileInputStream(filename), filetype);
   }
 
@@ -2642,15 +2541,12 @@ public class Mat extends BaseMat {
     } while ((line = reader.readLine()) != null);
     int numberOfRow = matrix.size();
 
-    _matrix = new double[numberOfRow * numberOfColumns];
-    for (int i = 0; i < matrix.size(); i++) {
+    set_size(numberOfRow, numberOfColumns);
+    for (int i = 0; i < numberOfRow; i++) {
       for (int j = 0; j < numberOfColumns; j++) {
         _matrix[getElementPosition(i, j)] = matrix.get(i)[j];
       }
     }
-
-    updateAttributes(numberOfRow, numberOfColumns);
-
     reader.close();
 
     return true;
@@ -2692,6 +2588,7 @@ public class Mat extends BaseMat {
    */
   public Mat i() throws UnsupportedOperationException {
     isNotSquareDetection();
+    isIllConditionedDectetion();
 
     DenseMatrix64F inverse = new DenseMatrix64F(n_rows, n_cols);
     if (!CommonOps.invert(convertMatToEJMLMat(this), inverse)) {
@@ -2707,9 +2604,15 @@ public class Mat extends BaseMat {
    * @return The transpose
    */
   public Mat t() {
-    DenseMatrix64F transpose = new DenseMatrix64F(n_cols, n_rows);
-    CommonOps.transpose(convertMatToEJMLMat(this), transpose);
-    return convertEJMLToMat(transpose);
+    Mat transpose = new Mat(n_cols, n_rows);
+    int position = 0;
+    for (int j = 0; j < n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        transpose._matrix[getElementPosition(j, i)] = _matrix[position++];
+      }
+    }
+
+    return transpose;
   }
 
   /**
@@ -2733,23 +2636,47 @@ public class Mat extends BaseMat {
 
   @Override
   public String toString() {
-    return _matrix.toString();
+    String output = "(" + n_rows + ", " + n_cols + ")-matrix: [\n";
+    for (int i = 0; i < n_rows; i++)
+    {
+      output += " ";
+
+      for (int j = 0; j < n_cols; j++) {
+        double value = _matrix[getElementPosition(i, j)];
+        if (Double.isInfinite(value)) {
+          String sign = "";
+          if (value < 0) {
+            sign = "-";
+          }
+          output += String.format("%5s", sign + "Inf");
+        } else {
+          output += String.format(Locale.ENGLISH, "%1$ 7.0f", value);
+        }
+      }
+
+      output += "\n";
+    }
+    output += "]";
+
+    return output;
   }
 
   /**
    * Returns an element position based on column-major-ordering.
+   * <p>
+   * Performs no error detection.
    * 
    * @param i The row position
    * @param j The colum position
    * @return The element position
    */
   protected int getElementPosition(int i, int j) {
-    return i + j * n_cols;
+    return i + j * n_rows;
   }
 
   @Override
-  public Iterator<Double> iterator() {
-    return new MatIterator(this);
+  protected int getElementPosition(int position) {
+    return position;
   }
 
   /**
@@ -2914,8 +2841,8 @@ public class Mat extends BaseMat {
   }
 
   @Override
-  protected int getElementPosition(int position) {
-    return position;
+  public Iterator<Double> iterator() {
+    return new MatIterator(this);
   }
 
   /**

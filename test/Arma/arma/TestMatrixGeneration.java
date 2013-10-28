@@ -114,7 +114,7 @@ public class TestMatrixGeneration {
   public void testCirc_toeplitz() {
     fail("Not yet implemented"); // TODO
   }
-  
+
   /**
    * Test method for {@link arma.Arma#linspace(double, double)}.
    */
@@ -122,7 +122,7 @@ public class TestMatrixGeneration {
   public void testLinspaceDoubbleDoubble() {
     fail("Not yet implemented"); // TODO
   }
-  
+
   /**
    * Test method for {@link arma.Arma#linspace(double, double, int)}.
    */

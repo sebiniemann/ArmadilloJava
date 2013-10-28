@@ -155,7 +155,7 @@ public class Arma {
   public static Mat repmat(Mat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
     Mat.isInvalidPositionDetection(numberOfCopiesPerRow);
     Mat.isInvalidPositionDetection(numberOfCopiesPerColumn);
-    
+
     Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
 
     int srcColumnPointer = 0;
@@ -164,7 +164,7 @@ public class Arma {
       for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
         for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
           System.arraycopy(matrix._matrix, srcColumnPointer, result, destColumnPointer, matrix.n_rows);
-           destColumnPointer += matrix.n_rows;
+          destColumnPointer += matrix.n_rows;
         }
         destColumnPointer += numberOfCopiesPerColumn * matrix.n_rows * (matrix.n_cols - 1);
       }
@@ -186,7 +186,7 @@ public class Arma {
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
 
-      result.diag(Op.EQUAL,  vector._matrix[0]);
+      result.diag(Op.EQUAL, vector._matrix[0]);
       for (int n = 1; n < vector.n_elem; n++) {
         double element = vector._matrix[n];
         result.diag(n, Op.EQUAL, element);
@@ -770,7 +770,7 @@ public class Arma {
    */
   public static double accu(Mat matrix) {
     double sum = 0;
-    for(double element : matrix) {
+    for (double element : matrix) {
       sum += element;
     }
     return sum;
@@ -789,10 +789,10 @@ public class Arma {
     Mat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
     double dotProduct = 0;
-    for(int n = 0; n < vector1.n_elem; n++) {
+    for (int n = 0; n < vector1.n_elem; n++) {
       dotProduct += vector1._matrix[n] * vector2._matrix[n];
     }
-    
+
     return dotProduct;
   }
 
@@ -939,12 +939,12 @@ public class Arma {
    */
   public static double trace(Mat matrix) {
     DiagMat diag = matrix.diagInternal(0);
-    
+
     double trace = 0;
-    for(double element : diag) {
+    for (double element : diag) {
       trace += element;
     }
-    
+
     return trace;
   }
 
@@ -1745,7 +1745,7 @@ public class Arma {
         result._matrix[result.getElementPosition(i, j + matrix1.n_cols)] = matrix2._matrix[matrix2.getElementPosition(i, j)];
       }
     }
-    
+
     return result;
   }
 

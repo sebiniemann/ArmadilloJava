@@ -17,9 +17,17 @@ package arma;
  */
 class SubviewMat extends BaseMat {
   /**
+   * The original number of rows
+   */
+  boolean _orig_is_vec;
+  /**
+   * The original number of rows
+   */
+  int     _orig_n_rows;
+  /**
    * The first element position
    */
-  int _a;
+  int     _a;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to a subvector from row {@code a} to {@code b}.
@@ -33,6 +41,8 @@ class SubviewMat extends BaseMat {
     vector.isElementRangeOutOfBoundsDetection(a, b);
 
     _matrix = vector._matrix;
+    _orig_n_rows = vector.n_rows;
+    _orig_is_vec = vector.is_vec();
 
     if (is_colvec()) {
       n_rows = 1;
@@ -61,21 +71,23 @@ class SubviewMat extends BaseMat {
     matrix.isColumnRangeOutOfBoundsDetection(aj, bj);
 
     _matrix = matrix._matrix;
+    _orig_n_rows = matrix.n_rows;
+    _orig_is_vec = matrix.is_vec();
 
     n_rows = bi - ai + 1;
     n_cols = bj - aj + 1;
     n_elem = n_rows * n_cols;
 
-    _a = ai + aj * n_rows;
+    _a = matrix.getElementPosition(ai, aj);
   }
 
   @Override
   protected int getElementPosition(int n) {
-    if (is_vec()) {
+    if (_orig_is_vec) {
       return n;
     } else {
-      int jTimesN_Rows = (n / n_rows) * n_rows; // Note: jTimesN_Rows = Math.floor(n / n_rows) * n_rows != n
-      return _a + (n - jTimesN_Rows) + jTimesN_Rows;
+      int j = (n / n_rows);
+      return _a + (n - j * n_rows) + j * _orig_n_rows;
     }
   }
 }
