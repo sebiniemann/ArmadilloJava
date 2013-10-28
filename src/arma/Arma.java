@@ -19,6 +19,7 @@ import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.MatrixFeatures;
 import org.ejml.ops.NormOps;
+import org.hamcrest.core.IsEqual;
 
 /**
  * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
@@ -210,9 +211,9 @@ public class Arma {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
 
-    Mat result = new Mat(vector1.n_elem, vector2.n_elem);
-
     if (vector1.n_elem > 0 && vector2.n_elem > 0) {
+      Mat result = new Mat(vector1.n_elem, vector2.n_elem);
+
       result.diag(Op.EQUAL, vector1._matrix[0]);
       for (int n = 1; n < vector1.n_elem; n++) {
         result.diag(n, Op.EQUAL, vector1._matrix[n]);
@@ -223,7 +224,7 @@ public class Arma {
 
       return result;
     } else {
-      return result;
+      return new Mat();
     }
   }
 
@@ -234,9 +235,7 @@ public class Arma {
    * @return The matrix
    */
   public static Mat circ_toeplitz(Mat vector) {
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+    vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
@@ -274,6 +273,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat linspace(double startValue, double endValue, int numberOfElements) {
+    Mat.isInvalidPositionDetection(numberOfElements);
+
     Mat result = new Mat(numberOfElements, 1);
 
     double stepLength = (endValue - startValue) / numberOfElements;
@@ -292,6 +293,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sin(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.sin(matrix._matrix[n]);
@@ -307,6 +310,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat asin(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.asin(matrix._matrix[n]);
@@ -322,6 +327,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sinh(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.sinh(matrix._matrix[n]);
@@ -337,10 +344,12 @@ public class Arma {
    * @return The matrix
    */
   public static Mat asinh(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix[n];
-      result._matrix[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
+      double element = matrix._matrix[n];
+      result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) + 1));
     }
 
     return result;
@@ -353,6 +362,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat cos(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.cos(matrix._matrix[n]);
@@ -368,6 +379,8 @@ public class Arma {
    * @return The matrix.
    */
   public static Mat acos(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.acos(matrix._matrix[n]);
@@ -383,6 +396,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat cosh(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] = Math.cosh(matrix._matrix[n]);
@@ -398,10 +413,12 @@ public class Arma {
    * @return The matrix
    */
   public static Mat acosh(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix[n];
-      result._matrix[n] = Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1));
+      double element = matrix._matrix[n];
+      result._matrix[n] = Math.log(element + Math.sqrt(element + 1) * Math.sqrt(element - 1));
     }
 
     return result;
@@ -459,10 +476,12 @@ public class Arma {
    * @return The matrix
    */
   public static Mat atanh(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix[n];
-      result._matrix[n] = 0.5 * Math.log((1 + value) / (1 - value));
+      double element = matrix._matrix[n];
+      result._matrix[n] = 0.5 * Math.log((1 + element) / (1 - element));
     }
 
     return result;
@@ -475,16 +494,12 @@ public class Arma {
    * @return The matrix
    */
   public static Mat abs(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      double element = matrix._matrix[n];
-
-      if (element < 0) {
-        result._matrix[n] = -element;
-      } else {
-        result._matrix[n] = element;
-      }
+      result._matrix[n] = Math.abs(matrix._matrix[n]);
     }
 
     return result;
@@ -498,6 +513,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat eps(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -514,6 +531,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat exp(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -530,6 +549,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat exp2(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -546,6 +567,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat exp10(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -564,6 +587,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat trunc_exp(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -585,6 +610,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat log(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -601,6 +628,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat log2(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -617,6 +646,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat log10(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -637,6 +668,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat trunc_log(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -661,6 +694,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat pow(Mat matrix, int power) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -677,6 +712,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sqrt(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -693,7 +730,15 @@ public class Arma {
    * @return The matrix
    */
   public static Mat square(Mat matrix) {
-    return matrix.elemTimes(matrix);
+    matrix.isEmptyDetection();
+
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix[n] = Math.pow(matrix._matrix[n], 2);
+    }
+
+    return result;
   }
 
   /**
@@ -703,6 +748,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat floor(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -719,6 +766,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat ceil(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -735,6 +784,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat round(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -753,6 +804,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sign(Mat matrix) {
+    matrix.isEmptyDetection();
+
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -769,6 +822,8 @@ public class Arma {
    * @return The sum
    */
   public static double accu(Mat matrix) {
+    matrix.isEmptyDetection();
+
     double sum = 0;
     for (double element : matrix) {
       sum += element;
@@ -786,6 +841,7 @@ public class Arma {
   public static double dot(Mat vector1, Mat vector2) {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
+    vector1.isEmptyDetection();
     Mat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
     double dotProduct = 0;
@@ -822,6 +878,8 @@ public class Arma {
    */
   public static double det(Mat matrix) {
     matrix.isNotSquareDetection();
+    matrix.isEmptyDetection();
+
     return CommonOps.det(Mat.convertMatToEJMLMat(matrix));
   }
 
@@ -852,7 +910,6 @@ public class Arma {
    * @return The norm
    * 
    * @throws IllegalArgumentException For vectors, p must be strict greater than 0, but was {@code p}.
-   * @throws IllegalArgumentException For non-vector matrices, p must be one of 1 or 2, but was {@code p}.
    */
   public static double norm(Mat matrix, int p) throws IllegalArgumentException {
     if (matrix.is_vec()) {
@@ -928,6 +985,8 @@ public class Arma {
    * @return The rank
    */
   public static double rank(Mat matrix, double tolerance) {
+    matrix.isEmptyDetection();
+
     return MatrixFeatures.rank(Mat.convertMatToEJMLMat(matrix));
   }
 
@@ -938,28 +997,28 @@ public class Arma {
    * @return The trace
    */
   public static double trace(Mat matrix) {
-    DiagMat diag = matrix.diagInternal(0);
+    matrix.isEmptyDetection();
 
-    double trace = 0;
-    for (double element : diag) {
-      trace += element;
+    double trace = matrix._matrix[0];
+    for (int n = 1; n < matrix.n_elem; n++) {
+      trace += matrix._matrix[matrix.getElementPosition(n, n)];
     }
 
     return trace;
   }
 
   /**
-   * Converts a provided (1,1)-matrix into a scalar of type double.
+   * Converts a (1,1)-matrix into a scalar.
    * 
    * @param matrix The matrix
    * @return The scalar
    * 
-   * @throws IllegalArgumentException The provided matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows
-   *           matrix.n_rows}, {@link Mat#n_cols matrix.n_cols})-matrix.
+   * @throws IllegalArgumentException The matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows matrix.n_rows},
+   *           {@link Mat#n_cols matrix.n_cols})-matrix.
    */
   public static double as_scalar(Mat matrix) throws IllegalArgumentException {
     if (matrix.n_rows != 1 || matrix.n_cols != 1) {
-      throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix, but was a (" + matrix.n_rows + ", " + matrix.n_cols + ")-matrix.");
+      throw new IllegalArgumentException("The matrices must be a (1,1)-matrix, but was a (" + matrix.n_rows + ", " + matrix.n_cols + ")-matrix.");
     }
 
     return matrix._matrix[0];
@@ -970,22 +1029,13 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The minimum
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static double min(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static double min(Mat vector) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
 
     double minimum = vector._matrix[0];
-    for (int n = 0; n < vector.n_elem; n++) {
+    for (int n = 1; n < vector.n_elem; n++) {
       minimum = Math.min(minimum, vector._matrix[n]);
     }
 
@@ -1000,7 +1050,7 @@ public class Arma {
    * 
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat minMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat minMat(Mat matrix) {
     return minMat(matrix, 0);
   }
 
@@ -1011,11 +1061,11 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat minMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat minMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+    
     Mat result;
 
     if (dimension == 0) {
@@ -1023,14 +1073,12 @@ public class Arma {
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = min(matrix.col(j));
       }
-    } else if (dimension == 1) {
+    } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = min(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
+    } 
 
     return result;
   }
@@ -1040,22 +1088,13 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The maximum
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static double max(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static double max(Mat vector) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
 
     double maximum = vector._matrix[0];
-    for (int n = 0; n < vector.n_elem; n++) {
+    for (int n = 1; n < vector.n_elem; n++) {
       maximum = Math.max(maximum, vector._matrix[n]);
     }
 
@@ -1067,10 +1106,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat maxMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat maxMat(Mat matrix) {
     return maxMat(matrix, 0);
   }
 
@@ -1081,11 +1118,11 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat maxMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat maxMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+    
     Mat result;
 
     if (dimension == 0) {
@@ -1093,13 +1130,11 @@ public class Arma {
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = max(matrix.col(j));
       }
-    } else if (dimension == 1) {
+    } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = max(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
@@ -1110,18 +1145,10 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The mean
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static double mean(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static double mean(Mat vector) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
 
     return sum(vector) / vector.n_elem;
   }
@@ -1131,10 +1158,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat meanMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat meanMat(Mat matrix) {
     return meanMat(matrix, 0);
   }
 
@@ -1145,26 +1170,24 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat meanMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
-    Mat result;
-    if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = mean(matrix.col(j));
-      }
-    } else if (dimension == 1) {
-      result = new Mat(matrix.n_rows, 1);
-      for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = mean(matrix.row(i));
-      }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
+  public static Mat meanMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
 
+    Mat result = sumMat(matrix, dimension);
+    
+    int count;
+    if (dimension == 0) {
+      count = matrix.n_rows;
+    } else {
+      count = matrix.n_cols;
+    }
+    
+    for (int n = 0; n < matrix.n_elem; n++) {
+      result._matrix[n] /= count;
+    }
+    
     return result;
   }
 
@@ -1173,19 +1196,10 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The median
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static double median(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static double median(Mat vector) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
 
     Mat sortedColumn = sort(vector);
 
@@ -1205,10 +1219,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat medianMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat medianMat(Mat matrix) {
     return medianMat(matrix, 0);
   }
 
@@ -1219,25 +1231,23 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat medianMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat medianMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+    
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = median(matrix.col(j));
       }
-    } else if (dimension == 1) {
+    } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = median(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
+    } 
 
     return result;
   }
@@ -1247,12 +1257,8 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The standard deviation
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static double stddev(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
+  public static double stddev(Mat vector) {
     return stddev(vector, 0);
   }
 
@@ -1262,21 +1268,8 @@ public class Arma {
    * @param vector The vector
    * @param normType The normalisation
    * @return The standard deviation
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static double stddev(Mat vector, int normType) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
-
+  public static double stddev(Mat vector, int normType) {
     return Math.sqrt(var(vector, normType));
   }
 
@@ -1286,10 +1279,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat stddevMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat stddevMat(Mat matrix) {
     return stddevMat(matrix, 0, 0);
   }
 
@@ -1301,11 +1292,8 @@ public class Arma {
    * @param matrix The matrix
    * @param normType The normalisation
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddevMat(Mat matrix, int normType) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat stddevMat(Mat matrix, int normType) {
     return stddevMat(matrix, normType, 0);
   }
 
@@ -1319,12 +1307,8 @@ public class Arma {
    * @param normType The normalisation
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat stddevMat(Mat matrix, int normType, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat stddevMat(Mat matrix, int normType, int dimension) {
     Mat result = varMat(matrix, dimension);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -1339,12 +1323,8 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The variance
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static double var(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
+  public static double var(Mat vector) {
     return stddev(vector, 0);
   }
 
@@ -1354,35 +1334,18 @@ public class Arma {
    * @param vector The vector
    * @param normType The normalisation
    * @return The variance
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static double var(Mat vector, int normType) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
+  public static double var(Mat vector, int normType) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
+    Mat.isNotInSetDetection(normType, 0, 1);
 
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
-
-    int squaredDifference = 0;
-    double mean = mean(vector);
-    for (int n = 0; n < vector.n_elem; n++) {
-      squaredDifference += Math.pow(vector._matrix[n] - mean, 2);
-    }
-
-    double variance;
+    double variance = sum(square(vector.minus(mean(vector))));
     if (normType == 0) {
-      variance = squaredDifference / (vector.n_elem - 1);
-    } else if (normType == 1) {
-      variance = squaredDifference / vector.n_elem;
+      variance /= (vector.n_elem - 1);
     } else {
-      throw new IllegalArgumentException("The normalisation type must be one of 0 or 1, but was:" + normType + ".");
-    }
+      variance /= vector.n_elem;
+    } 
 
     return variance;
   }
@@ -1392,10 +1355,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat varMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat varMat(Mat matrix) {
     return varMat(matrix, 0, 0);
   }
 
@@ -1407,12 +1368,8 @@ public class Arma {
    * @param matrix The matrix
    * @param normType The normalisation
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat varMat(Mat matrix, int normType) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat varMat(Mat matrix, int normType) {
     return varMat(matrix, normType, 0);
   }
 
@@ -1426,26 +1383,23 @@ public class Arma {
    * @param normType The normalisation
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
-   * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public static Mat varMat(Mat matrix, int normType, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat varMat(Mat matrix, int normType, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+    
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = var(matrix.col(j));
       }
-    } else if (dimension == 1) {
+    } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = var(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
-    }
+    } 
 
     return result;
   }
@@ -1455,17 +1409,12 @@ public class Arma {
    * 
    * @param vector The vector
    * @return Whether any element is non-zero
-   * 
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
   public static boolean any(Mat vector) {
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+    vector.isNonVectorDetection();
 
-    for (int n = 0; n < vector.n_elem; n++) {
-      if (vector._matrix[n] != 0) {
+    for (double element : vector) {
+      if (element != 0) {
         return true;
       }
     }
@@ -1497,18 +1446,13 @@ public class Arma {
    * 
    * @param vector The vector
    * @return Whether any element is non-zero
-   * 
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
   public static boolean all(Mat vector) {
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+    vector.isNonVectorDetection();
 
-    for (int n = 0; n < vector.n_elem; n++) {
-      if (vector._matrix[n] == 0) {
-        return false;
+    for (double element : vector) {
+      if (element == 0) {
+        return true;
       }
     }
 
@@ -1646,19 +1590,23 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat sumMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
-    DenseMatrix64F result;
+    Mat result;
 
     if (dimension == 0) {
-      result = new DenseMatrix64F(matrix.n_cols, 1);
-      CommonOps.sumCols(Mat.convertMatToEJMLMat(matrix), result);
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result._matrix[j] = sum(matrix.col(j));
+      }
     } else if (dimension == 1) {
-      result = new DenseMatrix64F(matrix.n_rows, 1);
-      CommonOps.sumRows(Mat.convertMatToEJMLMat(matrix), result);
+      result = new Mat(1, matrix.n_rows);
+      for (int i = 0; i < matrix.n_cols; i++) {
+        result._matrix[i] = sum(matrix.row(i));
+      }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
-    return Mat.convertEJMLToMat(result);
+    return result;
   }
 
   /**

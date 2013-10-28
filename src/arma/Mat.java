@@ -2805,7 +2805,7 @@ public class Mat extends BaseMat {
    * 
    * @throws IllegalArgumentException The position must be an integer, but was not: {@code rowPositionDouble}.
    */
-  protected void isNonIntergerPositionDetection(double position) throws IllegalArgumentException {
+  protected static void isNonIntergerPositionDetection(double position) throws IllegalArgumentException {
     int positionInt = (int) position;
 
     // Will also fail if the value is negative, which is also not allowed.
@@ -2834,7 +2834,7 @@ public class Mat extends BaseMat {
    * 
    * @throws IllegalArgumentException The given value is not in the set, but were {@code value} and {@code set}.
    */
-  protected void isNotInSetDetection(int value, int... set) throws IllegalArgumentException {
+  protected static void isNotInSetDetection(int value, int... set) throws IllegalArgumentException {
     if (!Arrays.asList(set).contains(value)) {
       throw new IllegalArgumentException("The given value is not in the set, but were " + value + " and " + Arrays.toString(set) + ".");
     }
