@@ -377,7 +377,7 @@ public class Mat extends BaseMat {
    * @param j The column position
    * @return The submatrix
    */
-  protected SubviewMat colInternal(int j) {
+  SubviewMat colInternal(int j) {
     return new SubviewMat(this, 0, n_rows - 1, j, j);
   }
 
@@ -435,7 +435,7 @@ public class Mat extends BaseMat {
    * @param j The column position
    * @return The submatrix
    */
-  protected SubviewMat colInternal(int a, int b, int j) {
+  SubviewMat colInternal(int a, int b, int j) {
     return new SubviewMat(this, a, b, j, j);
   }
 
@@ -498,7 +498,7 @@ public class Mat extends BaseMat {
    * @param i The row position
    * @return The submatrix
    */
-  protected SubviewMat rowInternal(int i) {
+  SubviewMat rowInternal(int i) {
     return new SubviewMat(this, i, i, 0, n_cols - 1);
   }
 
@@ -552,7 +552,7 @@ public class Mat extends BaseMat {
    * @param i The column position
    * @return The submatrix
    */
-  protected SubviewMat rowInternal(int a, int b, int i) {
+  SubviewMat rowInternal(int a, int b, int i) {
     return new SubviewMat(this, i, i, a, b);
   }
 
@@ -616,7 +616,7 @@ public class Mat extends BaseMat {
    * @param b The last column position
    * @return The submatrix
    */
-  protected SubviewMat colsInternal(int a, int b) {
+  SubviewMat colsInternal(int a, int b) {
     return new SubviewMat(this, 0, n_rows - 1, a, b);
   }
 
@@ -676,7 +676,7 @@ public class Mat extends BaseMat {
    * @param b The last row position
    * @return The submatrix
    */
-  protected SubviewMat rowsInternal(int a, int b) {
+  SubviewMat rowsInternal(int a, int b) {
     return new SubviewMat(this, a, b, 0, n_cols - 1);
   }
 
@@ -768,7 +768,7 @@ public class Mat extends BaseMat {
    * @param bj The last column position
    * @return The submatrix
    */
-  protected SubviewMat submatInternal(int ai, int bi, int aj, int bj) {
+  SubviewMat submatInternal(int ai, int bi, int aj, int bj) {
     return new SubviewMat(this, ai, bi, aj, bj);
   }
 
@@ -838,7 +838,7 @@ public class Mat extends BaseMat {
    * @param b The last element position
    * @return The submatrix
    */
-  protected SubviewMat subvecInternal(int a, int b) {
+  SubviewMat subvecInternal(int a, int b) {
     return new SubviewMat(this, a, b);
   }
 
@@ -897,7 +897,7 @@ public class Mat extends BaseMat {
    * @param selection The element positions
    * @return The elements
    */
-  protected SelectionMat elemInternal(Mat selection) {
+  SelectionMat elemInternal(Mat selection) {
     return new SelectionMat(this, selection);
   }
 
@@ -949,7 +949,7 @@ public class Mat extends BaseMat {
    * @param selection The column positions
    * @return The elements
    */
-  protected SelectionMat colsInternal(Mat selection) {
+  SelectionMat colsInternal(Mat selection) {
     return new SelectionMat(this, null, selection);
   }
 
@@ -1001,7 +1001,7 @@ public class Mat extends BaseMat {
    * @param selection The row positions
    * @return The elements
    */
-  protected SelectionMat rowsInternal(Mat selection) {
+  SelectionMat rowsInternal(Mat selection) {
     return new SelectionMat(this, selection, null);
   }
 
@@ -1054,7 +1054,7 @@ public class Mat extends BaseMat {
    * @param columnSelection The column positions
    * @return The elements
    */
-  protected SelectionMat submatInternal(Mat rowSelection, Mat columnSelection) {
+  SelectionMat submatInternal(Mat rowSelection, Mat columnSelection) {
     return new SelectionMat(this, rowSelection, columnSelection);
   }
 

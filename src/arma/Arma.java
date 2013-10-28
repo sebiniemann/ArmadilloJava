@@ -12,7 +12,6 @@ package arma;
 
 import java.util.Random;
 
-import org.ejml.alg.dense.mult.VectorVectorMult;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
@@ -154,16 +153,22 @@ public class Arma {
    * @return The matrix
    */
   public static Mat repmat(Mat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
+    Mat.isInvalidPositionDetection(numberOfCopiesPerRow);
+    Mat.isInvalidPositionDetection(numberOfCopiesPerColumn);
+    
     Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
-    for (int i = 0; i < matrix.n_rows; i++) {
-      for (int j = 0; j < matrix.n_cols; j++) {
-        double element = matrix._matrix.get(i, j);
+
+    int srcColumnPointer = 0;
+    for (int j = 0; j < matrix.n_cols; j++) {
+      int destColumnPointer = j * numberOfCopiesPerColumn * matrix.n_rows;
+      for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
         for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
-          for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
-            result._matrix.set(i + copyI * matrix.n_rows, j + copyJ * matrix.n_cols, element);
-          }
+          System.arraycopy(matrix._matrix, srcColumnPointer, result, destColumnPointer, matrix.n_rows);
+           destColumnPointer += matrix.n_rows;
         }
+        destColumnPointer += numberOfCopiesPerColumn * matrix.n_rows * (matrix.n_cols - 1);
       }
+      srcColumnPointer += matrix.n_rows;
     }
 
     return result;
@@ -174,21 +179,16 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat toeplitz(Mat vector) throws IllegalArgumentException {
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static Mat toeplitz(Mat vector) {
+    vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
 
-      result.diag(Op.EQUAL, vector._matrix.get(0));
+      result.diag(Op.EQUAL,  vector._matrix[0]);
       for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix.get(n);
+        double element = vector._matrix[n];
         result.diag(n, Op.EQUAL, element);
         result.diag(-n, Op.EQUAL, element);
       }
@@ -205,30 +205,20 @@ public class Arma {
    * @param vector1 The first vector
    * @param vector2 The second vector
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
-   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
-   *           {@code selection.n_cols})-matrix.
    */
-  public static Mat toeplitz(Mat vector1, Mat vector2) throws IllegalArgumentException {
-    if (!vector1.is_vec()) {
-      throw new IllegalArgumentException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
-    }
-
-    if (!vector2.is_vec()) {
-      throw new IllegalArgumentException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
-    }
+  public static Mat toeplitz(Mat vector1, Mat vector2) {
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
 
     Mat result = new Mat(vector1.n_elem, vector2.n_elem);
 
     if (vector1.n_elem > 0 && vector2.n_elem > 0) {
-      result.diag(Op.EQUAL, vector1._matrix.get(0));
+      result.diag(Op.EQUAL, vector1._matrix[0]);
       for (int n = 1; n < vector1.n_elem; n++) {
-        result.diag(n, Op.EQUAL, vector1._matrix.get(n));
+        result.diag(n, Op.EQUAL, vector1._matrix[n]);
       }
       for (int n = 1; n < vector2.n_elem; n++) {
-        result.diag(-n, Op.EQUAL, vector2._matrix.get(n));
+        result.diag(-n, Op.EQUAL, vector2._matrix[n]);
       }
 
       return result;
@@ -242,11 +232,8 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-   *           , {@link Mat#n_cols selection.n_cols})-matrix.
    */
-  public static Mat circ_toeplitz(Mat vector) throws IllegalArgumentException {
+  public static Mat circ_toeplitz(Mat vector) {
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
@@ -254,9 +241,9 @@ public class Arma {
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
 
-      result.diag(Op.EQUAL, vector._matrix.get(0));
+      result.diag(Op.EQUAL, vector._matrix[0]);
       for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix.get(n);
+        double element = vector._matrix[n];
         result.diag(vector.n_elem - n, Op.EQUAL, element);
         result.diag(-n, Op.EQUAL, element);
       }
@@ -292,7 +279,7 @@ public class Arma {
     double stepLength = (endValue - startValue) / numberOfElements;
     for (int n = 0; n < result.n_elem; n++) {
       // Increasing a value step by step by stepLength might be faster, but also reduces its precision
-      result._matrix.set(n, startValue + stepLength * n);
+      result._matrix[n] = startValue + stepLength * n;
     }
 
     return result;
@@ -307,7 +294,7 @@ public class Arma {
   public static Mat sin(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.sin(matrix._matrix.get(n)));
+      result._matrix[n] = Math.sin(matrix._matrix[n]);
     }
 
     return result;
@@ -322,7 +309,7 @@ public class Arma {
   public static Mat asin(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.asin(matrix._matrix.get(n)));
+      result._matrix[n] = Math.asin(matrix._matrix[n]);
     }
 
     return result;
@@ -337,7 +324,7 @@ public class Arma {
   public static Mat sinh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.sinh(matrix._matrix.get(n)));
+      result._matrix[n] = Math.sinh(matrix._matrix[n]);
     }
 
     return result;
@@ -352,8 +339,8 @@ public class Arma {
   public static Mat asinh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, Math.log(value + Math.sqrt(Math.pow(value, 2) + 1)));
+      double value = matrix._matrix[n];
+      result._matrix[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
     }
 
     return result;
@@ -368,7 +355,7 @@ public class Arma {
   public static Mat cos(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.cos(matrix._matrix.get(n)));
+      result._matrix[n] = Math.cos(matrix._matrix[n]);
     }
 
     return result;
@@ -383,7 +370,7 @@ public class Arma {
   public static Mat acos(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.acos(matrix._matrix.get(n)));
+      result._matrix[n] = Math.acos(matrix._matrix[n]);
     }
 
     return result;
@@ -398,7 +385,7 @@ public class Arma {
   public static Mat cosh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.cosh(matrix._matrix.get(n)));
+      result._matrix[n] = Math.cosh(matrix._matrix[n]);
     }
 
     return result;
@@ -413,8 +400,8 @@ public class Arma {
   public static Mat acosh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1)));
+      double value = matrix._matrix[n];
+      result._matrix[n] = Math.log(value + Math.sqrt(value + 1) * Math.sqrt(value - 1));
     }
 
     return result;
@@ -429,7 +416,7 @@ public class Arma {
   public static Mat tan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.tan(matrix._matrix.get(n)));
+      result._matrix[n] = Math.tan(matrix._matrix[n]);
     }
 
     return result;
@@ -444,7 +431,7 @@ public class Arma {
   public static Mat atan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.atan(matrix._matrix.get(n)));
+      result._matrix[n] = Math.atan(matrix._matrix[n]);
     }
 
     return result;
@@ -459,7 +446,7 @@ public class Arma {
   public static Mat tanh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.tanh(matrix._matrix.get(n)));
+      result._matrix[n] = Math.tanh(matrix._matrix[n]);
     }
 
     return result;
@@ -474,8 +461,8 @@ public class Arma {
   public static Mat atanh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
-      result._matrix.set(n, 0.5 * Math.log((1 + value) / (1 - value)));
+      double value = matrix._matrix[n];
+      result._matrix[n] = 0.5 * Math.log((1 + value) / (1 - value));
     }
 
     return result;
@@ -491,12 +478,12 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      double element = matrix._matrix.get(n);
+      double element = matrix._matrix[n];
 
       if (element < 0) {
-        result._matrix.set(n, -element);
+        result._matrix[n] = -element;
       } else {
-        result._matrix.set(n, element);
+        result._matrix[n] = element;
       }
     }
 
@@ -514,7 +501,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.ulp(matrix._matrix.get(n)));
+      result._matrix[n] = Math.ulp(matrix._matrix[n]);
     }
 
     return result;
@@ -530,7 +517,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.exp(matrix._matrix.get(n)));
+      result._matrix[n] = Math.exp(matrix._matrix[n]);
     }
 
     return result;
@@ -546,7 +533,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.pow(2, matrix._matrix.get(n)));
+      result._matrix[n] = Math.pow(2, matrix._matrix[n]);
     }
 
     return result;
@@ -562,7 +549,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.pow(10, matrix._matrix.get(n)));
+      result._matrix[n] = Math.pow(10, matrix._matrix[n]);
     }
 
     return result;
@@ -580,11 +567,11 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      double exp = Math.exp(matrix._matrix.get(n));
+      double exp = Math.exp(matrix._matrix[n]);
       if (!Double.isInfinite(exp)) {
-        result._matrix.set(n, exp);
+        result._matrix[n] = exp;
       } else {
-        result._matrix.set(n, Double.MAX_VALUE);
+        result._matrix[n] = Double.MAX_VALUE;
       }
     }
 
@@ -601,7 +588,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.log(matrix._matrix.get(n)));
+      result._matrix[n] = Math.log(matrix._matrix[n]);
     }
 
     return result;
@@ -617,7 +604,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.log(matrix._matrix.get(n)) / Math.log(2));
+      result._matrix[n] = Math.log(matrix._matrix[n]) / Math.log(2);
     }
 
     return result;
@@ -633,7 +620,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.log10(matrix._matrix.get(n)));
+      result._matrix[n] = Math.log10(matrix._matrix[n]);
     }
 
     return result;
@@ -653,14 +640,14 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix.get(n);
+      double value = matrix._matrix[n];
       if (Double.isInfinite(value)) {
         value = Double.MAX_VALUE;
       } else if (value <= 0) {
         value = Double.MIN_NORMAL;
       }
 
-      result._matrix.set(n, Math.log(value));
+      result._matrix[n] = Math.log(value);
     }
 
     return result;
@@ -677,7 +664,7 @@ public class Arma {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix.set(n, Math.pow(matrix._matrix.get(n), power));
+      result._matrix[n] = Math.pow(matrix._matrix[n], power);
     }
 
     return result;
@@ -690,14 +677,13 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sqrt(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result.set(n, Math.sqrt(memptr.get(n)));
+      result._matrix[n] = Math.sqrt(matrix._matrix[n]);
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -717,14 +703,13 @@ public class Arma {
    * @return The matrix
    */
   public static Mat floor(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result.set(n, Math.floor(memptr.get(n)));
+      result._matrix[n] = Math.floor(matrix._matrix[n]);
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -734,14 +719,13 @@ public class Arma {
    * @return The matrix
    */
   public static Mat ceil(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result.set(n, Math.ceil(memptr.get(n)));
+      result._matrix[n] = Math.ceil(matrix._matrix[n]);
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -751,14 +735,13 @@ public class Arma {
    * @return The matrix
    */
   public static Mat round(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result.set(n, Math.round(memptr.get(n)));
+      result._matrix[n] = Math.round(matrix._matrix[n]);
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -770,14 +753,13 @@ public class Arma {
    * @return The matrix
    */
   public static Mat sign(Mat matrix) {
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-    DenseMatrix64F memptr = matrix.memptr();
+    Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     for (int n = 0; n < matrix.n_elem; n++) {
-      result.set(n, Math.signum(memptr.get(n)));
+      result._matrix[n] = Math.signum(matrix._matrix[n]);
     }
 
-    return new Mat(result);
+    return result;
   }
 
   /**
@@ -787,7 +769,11 @@ public class Arma {
    * @return The sum
    */
   public static double accu(Mat matrix) {
-    return CommonOps.elementSum(matrix.memptr());
+    double sum = 0;
+    for(double element : matrix) {
+      sum += element;
+    }
+    return sum;
   }
 
   /**
@@ -796,28 +782,18 @@ public class Arma {
    * @param vector1 The first vector
    * @param vector2 The second vector
    * @return The dot product
-   * 
-   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
-   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
-   *           {@code selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
-   *           hand side operand, but were {@link Mat#n_elem vector1.n_elem} and {@code vector2.n_elem}.
    */
-  public static double dot(Mat vector1, Mat vector2) throws IllegalArgumentException {
-    if (!vector1.is_vec()) {
-      throw new IllegalArgumentException("The vector1 must really be a vector, but was a (" + vector1.n_rows + ", " + vector1.n_cols + ")-matrix.");
-    }
+  public static double dot(Mat vector1, Mat vector2) {
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
+    Mat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
-    if (!vector2.is_vec()) {
-      throw new IllegalArgumentException("The vector2 must really be a vector, but was a (" + vector2.n_rows + ", " + vector2.n_cols + ")-matrix.");
+    double dotProduct = 0;
+    for(int n = 0; n < vector1.n_elem; n++) {
+      dotProduct += vector1._matrix[n] * vector2._matrix[n];
     }
-
-    if (vector1.n_elem != vector2.n_elem) {
-      throw new IllegalArgumentException("The number of elements of the left-hand side operand must match with the right-hand side operand, but were " + vector1.n_elem + " and " + vector2.n_elem + ".");
-    }
-
-    return VectorVectorMult.innerProd(vector1._matrix, vector2._matrix);
+    
+    return dotProduct;
   }
 
   /**
@@ -843,15 +819,10 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The determinant
-   * 
-   * @throws IllegalArgumentException The provided matrix must be square.
    */
-  public static double det(Mat matrix) throws IllegalArgumentException {
-    if (!matrix.is_square()) {
-      throw new IllegalArgumentException("The provided matrix must be square.");
-    }
-
-    return CommonOps.det(matrix.memptr());
+  public static double det(Mat matrix) {
+    matrix.isNotSquareDetection();
+    return CommonOps.det(Mat.convertMatToEJMLMat(matrix));
   }
 
   /**
@@ -863,10 +834,8 @@ public class Arma {
    * @param value The value
    * @param sign The sign
    * @param matrix The matrix
-   * 
-   * @throws IllegalArgumentException The provided matrix must be square.
    */
-  public static void log_det(double[] value, int[] sign, Mat matrix) throws IllegalArgumentException {
+  public static void log_det(double[] value, int[] sign, Mat matrix) {
     double determinant = det(matrix);
 
     value[0] = Math.log(Math.abs(determinant));
@@ -896,7 +865,7 @@ public class Arma {
       }
     }
 
-    return NormOps.normP(matrix.memptr(), p);
+    return NormOps.normP(Mat.convertMatToEJMLMat(matrix), p);
   }
 
   /**
@@ -917,20 +886,20 @@ public class Arma {
     if (matrix.is_vec()) {
       switch (p) {
         case "-inf":
-          return CommonOps.elementMinAbs(matrix.memptr());
+          return CommonOps.elementMinAbs(Mat.convertMatToEJMLMat(matrix));
         case "inf":
-          return CommonOps.elementMaxAbs(matrix.memptr());
+          return CommonOps.elementMaxAbs(Mat.convertMatToEJMLMat(matrix));
         case "fro":
-          return NormOps.normF(matrix.memptr());
+          return NormOps.normF(Mat.convertMatToEJMLMat(matrix));
         default:
           throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro', but was " + p);
       }
     } else {
       switch (p) {
         case "inf":
-          return NormOps.inducedPInf(matrix.memptr());
+          return NormOps.inducedPInf(Mat.convertMatToEJMLMat(matrix));
         case "fro":
-          return NormOps.normF(matrix.memptr());
+          return NormOps.normF(Mat.convertMatToEJMLMat(matrix));
         default:
           throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro', but was " + p);
       }
@@ -959,7 +928,7 @@ public class Arma {
    * @return The rank
    */
   public static double rank(Mat matrix, double tolerance) {
-    return MatrixFeatures.rank(matrix._matrix, tolerance);
+    return MatrixFeatures.rank(Mat.convertMatToEJMLMat(matrix));
   }
 
   /**
@@ -969,7 +938,14 @@ public class Arma {
    * @return The trace
    */
   public static double trace(Mat matrix) {
-    return CommonOps.trace(matrix._matrix);
+    DiagMat diag = matrix.diagInternal(0);
+    
+    double trace = 0;
+    for(double element : diag) {
+      trace += element;
+    }
+    
+    return trace;
   }
 
   /**
@@ -986,7 +962,7 @@ public class Arma {
       throw new IllegalArgumentException("The provided matrices must be a (1,1)-matrix, but was a (" + matrix.n_rows + ", " + matrix.n_cols + ")-matrix.");
     }
 
-    return matrix._matrix.get(0);
+    return matrix._matrix[0];
   }
 
   /**
@@ -1008,9 +984,9 @@ public class Arma {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
-    double minimum = vector._matrix.get(0);
+    double minimum = vector._matrix[0];
     for (int n = 0; n < vector.n_elem; n++) {
-      minimum = Math.min(minimum, vector._matrix.get(n));
+      minimum = Math.min(minimum, vector._matrix[n]);
     }
 
     return minimum;
@@ -1045,12 +1021,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, min(matrix.col(j)));
+        result._matrix[j] = min(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, min(matrix.row(i)));
+        result._matrix[i] = min(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1078,9 +1054,9 @@ public class Arma {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
-    double maximum = vector._matrix.get(0);
+    double maximum = vector._matrix[0];
     for (int n = 0; n < vector.n_elem; n++) {
-      maximum = Math.max(maximum, vector._matrix.get(n));
+      maximum = Math.max(maximum, vector._matrix[n]);
     }
 
     return maximum;
@@ -1115,12 +1091,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, max(matrix.col(j)));
+        result._matrix[j] = max(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, max(matrix.row(i)));
+        result._matrix[i] = max(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1178,12 +1154,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, mean(matrix.col(j)));
+        result._matrix[j] = mean(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, mean(matrix.row(i)));
+        result._matrix[i] = mean(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1216,9 +1192,9 @@ public class Arma {
     double median;
     if (vector.n_elem % 2 == 1) {
       int middle = vector.n_elem / 2;
-      median = (sortedColumn._matrix.get(middle - 1) + sortedColumn._matrix.get(middle)) / 2;
+      median = (sortedColumn._matrix[middle - 1] + sortedColumn._matrix[middle]) / 2;
     } else {
-      median = sortedColumn._matrix.get(vector.n_elem / 2);
+      median = sortedColumn._matrix[vector.n_elem / 2];
     }
 
     return median;
@@ -1252,12 +1228,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, median(matrix.col(j)));
+        result._matrix[j] = median(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, median(matrix.row(i)));
+        result._matrix[i] = median(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1352,7 +1328,7 @@ public class Arma {
     Mat result = varMat(matrix, dimension);
 
     for (int n = 0; n < result.n_elem; n++) {
-      result._matrix.set(n, Math.sqrt(result._matrix.get(n)));
+      result._matrix[n] = Math.sqrt(result._matrix[n]);
     }
 
     return result;
@@ -1396,7 +1372,7 @@ public class Arma {
     int squaredDifference = 0;
     double mean = mean(vector);
     for (int n = 0; n < vector.n_elem; n++) {
-      squaredDifference += Math.pow(vector._matrix.get(n) - mean, 2);
+      squaredDifference += Math.pow(vector._matrix[n] - mean, 2);
     }
 
     double variance;
@@ -1460,12 +1436,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, var(matrix.col(j)));
+        result._matrix[j] = var(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, var(matrix.row(i)));
+        result._matrix[i] = var(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1488,8 +1464,8 @@ public class Arma {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
-    for (int i = 0; i < vector.n_elem; i++) {
-      if (vector._matrix.get(i) != 0) {
+    for (int n = 0; n < vector.n_elem; n++) {
+      if (vector._matrix[n] != 0) {
         return true;
       }
     }
@@ -1530,8 +1506,8 @@ public class Arma {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
-    for (int i = 0; i < vector.n_elem; i++) {
-      if (vector._matrix.get(i) == 0) {
+    for (int n = 0; n < vector.n_elem; n++) {
+      if (vector._matrix[n] == 0) {
         return false;
       }
     }
@@ -1576,7 +1552,7 @@ public class Arma {
 
     double product = 1;
     for (int n = 0; n < vector.n_rows; n++) {
-      product *= vector._matrix.get(n);
+      product *= vector._matrix[n];
     }
 
     return product;
@@ -1610,12 +1586,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix.set(j, prod(matrix.col(j)));
+        result._matrix[j] = prod(matrix.col(j));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix.set(i, prod(matrix.row(i)));
+        result._matrix[i] = prod(matrix.row(i));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
@@ -1642,7 +1618,7 @@ public class Arma {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
 
-    return CommonOps.elementSum(vector._matrix);
+    return accu(vector);
   }
 
   /**
@@ -1670,19 +1646,19 @@ public class Arma {
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat sumMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
-    Mat result;
+    DenseMatrix64F result;
 
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      CommonOps.sumCols(matrix._matrix, result._matrix);
+      result = new DenseMatrix64F(matrix.n_cols, 1);
+      CommonOps.sumCols(Mat.convertMatToEJMLMat(matrix), result);
     } else if (dimension == 1) {
-      result = new Mat(matrix.n_rows, 1);
-      CommonOps.sumRows(matrix._matrix, result._matrix);
+      result = new DenseMatrix64F(matrix.n_rows, 1);
+      CommonOps.sumRows(Mat.convertMatToEJMLMat(matrix), result);
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
-    return result;
+    return Mat.convertEJMLToMat(result);
   }
 
   /**
@@ -1707,14 +1683,14 @@ public class Arma {
     // Add matrix matrix1
     for (int i = 0; i < matrix1.n_rows; i++) {
       for (int j = 0; j < matrix1.n_cols; j++) {
-        result._matrix.set(i, j, matrix1._matrix.get(i, j));
+        result._matrix[result.getElementPosition(i, j)] = matrix1._matrix[matrix1.getElementPosition(i, j)];
       }
     }
 
     // Add matrix matrix2
     for (int i = 0; i < matrix2.n_rows; i++) {
       for (int j = 0; j < matrix2.n_cols; j++) {
-        result._matrix.set(i + matrix1.n_rows, j, matrix2._matrix.get(i, j));
+        result._matrix[result.getElementPosition(i + matrix1.n_rows, j)] = matrix2._matrix[matrix2.getElementPosition(i, j)];
       }
     }
 
@@ -1759,17 +1735,17 @@ public class Arma {
     // Add matrix matrix1
     for (int i = 0; i < matrix1.n_rows; i++) {
       for (int j = 0; j < matrix1.n_cols; j++) {
-        result._matrix.set(i, j, matrix1._matrix.get(i, j));
+        result._matrix[result.getElementPosition(i, j)] = matrix1._matrix[matrix1.getElementPosition(i, j)];
       }
     }
 
     // Add matrix matrix2
     for (int i = 0; i < matrix2.n_rows; i++) {
       for (int j = 0; j < matrix2.n_cols; j++) {
-        result._matrix.set(i, j + matrix1.n_cols, matrix2._matrix.get(i, j));
+        result._matrix[result.getElementPosition(i, j + matrix1.n_cols)] = matrix2._matrix[matrix2.getElementPosition(i, j)];
       }
     }
-
+    
     return result;
   }
 
@@ -2177,7 +2153,7 @@ public class Arma {
     } else {
       result = new DenseMatrix64F();
     }
-    return new Mat(result);
+    return Mat.convertEJMLToMat(result);
   }
 
   /**
@@ -2540,7 +2516,7 @@ public class Arma {
    */
   public static boolean qr(Mat q, Mat r, Mat x) {
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
-    qr.decompose(x.memptr());
+    qr.decompose(Mat.convertMatToEJMLMat(x));
 
     DenseMatrix64F tempQ;
     DenseMatrix64F tempR;
@@ -2552,10 +2528,10 @@ public class Arma {
     }
 
     q.set_size(tempQ.numRows, tempQ.numCols);
-    q.memptr().set(tempQ);
+    q = Mat.convertEJMLToMat(tempQ);
 
     r.set_size(tempR.numRows, tempR.numCols);
-    r.memptr().set(tempR);
+    r = Mat.convertEJMLToMat(tempR);
 
     return true;
   }
@@ -2581,11 +2557,11 @@ public class Arma {
 
     DenseMatrix64F x = new DenseMatrix64F();
 
-    if (!CommonOps.solve(a.memptr(), b.memptr(), x)) {
+    if (!CommonOps.solve(Mat.convertMatToEJMLMat(a), Mat.convertMatToEJMLMat(b), x)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
     };
 
-    return new Mat(x);
+    return Mat.convertEJMLToMat(x);
   }
 
   /**
@@ -2626,9 +2602,9 @@ public class Arma {
    * 
    * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
    */
-  public static Mat svd(BaseMat x) throws RuntimeException {
+  public static Mat svd(Mat x) throws RuntimeException {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
-    svd.decompose(x.memptr());
+    svd.decompose(Mat.convertMatToEJMLMat(x));
 
     DenseMatrix64F s;
     try {
@@ -2638,7 +2614,7 @@ public class Arma {
       throw new RuntimeException("The algorithm was unable to decompose the matrix.");
     }
 
-    return new Mat(s);
+    return Mat.convertEJMLToMat(s);
   }
 
   /**
@@ -2680,7 +2656,7 @@ public class Arma {
    */
   public static boolean svd(Mat u, Mat s, Mat v, Mat x) {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, true, true, false);
-    svd.decompose(x.memptr());
+    svd.decompose(Mat.convertMatToEJMLMat(x));
 
     DenseMatrix64F tempU;
     DenseMatrix64F tempS;
@@ -2694,13 +2670,13 @@ public class Arma {
     }
 
     u.set_size(tempU.numRows, tempU.numCols);
-    u.memptr().set(tempU);
+    u = Mat.convertEJMLToMat(tempU);
 
     s.set_size(tempS.numRows, tempS.numCols);
-    s.memptr().set(tempS);
+    s = Mat.convertEJMLToMat(tempS);
 
     v.set_size(tempV.numRows, tempV.numCols);
-    v.memptr().set(tempV);
+    v = Mat.convertEJMLToMat(tempV);
 
     return true;
   }
@@ -2714,7 +2690,7 @@ public class Arma {
   public static Mat syl(Mat A, Mat B, Mat C) {
     return null;
   }
-  
+
   /**
    * @param A
    * @param B
