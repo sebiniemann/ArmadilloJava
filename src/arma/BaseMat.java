@@ -75,9 +75,9 @@ abstract class BaseMat implements Iterable<Double> {
    * @throws IllegalArgumentException NaN is not a valid operand.
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  protected void inPlace(Op operator) throws IllegalArgumentException, UnsupportedOperationException {
+  protected void inplace(Op operator) throws IllegalArgumentException, UnsupportedOperationException {
     for (int n = 0; n < n_elem; n++) {
-      inPlace(n, operator);
+      inplace(n, operator);
     }
   }
 
@@ -90,7 +90,7 @@ abstract class BaseMat implements Iterable<Double> {
    * @throws IllegalArgumentException NaN is not a valid operand.
    * @throws UnsupportedOperationException Only unary arithmetic operators are supported.
    */
-  protected void inPlace(int n, Op operator) throws IllegalArgumentException, UnsupportedOperationException {
+  protected void inplace(int n, Op operator) throws IllegalArgumentException, UnsupportedOperationException {
     int index = getElementPosition(n);
     double operand = _matrix[index];
 
@@ -122,11 +122,11 @@ abstract class BaseMat implements Iterable<Double> {
    * @throws IllegalArgumentException NaN is not a valid operand.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  protected void inPlace(Op operator, BaseMat operand) throws IllegalArgumentException, UnsupportedOperationException {
+  protected void inplace(Op operator, BaseMat operand) throws IllegalArgumentException, UnsupportedOperationException {
     isNonEqualNumberOfElementsDetection(n_elem, operand.n_elem);
 
     for (int n = 0; n < n_elem; n++) {
-      inPlace(n, operator, operand._matrix[n]);
+      inplace(n, operator, operand._matrix[n]);
     }
   }
 
@@ -139,9 +139,9 @@ abstract class BaseMat implements Iterable<Double> {
    * @throws IllegalArgumentException NaN is not a valid operand.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  protected void inPlace(Op operator, double operand) throws IllegalArgumentException, UnsupportedOperationException {
+  protected void inplace(Op operator, double operand) throws IllegalArgumentException, UnsupportedOperationException {
     for (int n = 0; n < n_elem; n++) {
-      inPlace(n, operator, operand);
+      inplace(n, operator, operand);
     }
   }
 
@@ -157,7 +157,7 @@ abstract class BaseMat implements Iterable<Double> {
    * @throws ArithmeticException Division by infinity.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  protected void inPlace(int n, Op operator, double rightHandSideOperand) throws IllegalArgumentException, UnsupportedOperationException {
+  protected void inplace(int n, Op operator, double rightHandSideOperand) throws IllegalArgumentException, UnsupportedOperationException {
     int index = getElementPosition(n);
     double leftHandSideOperand = _matrix[index];
 

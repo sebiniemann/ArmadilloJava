@@ -64,8 +64,8 @@ public class Mat extends BaseMat {
    * @param matrix The array
    */
   public Mat(double[] matrix) {
-    if (_matrix != null && _matrix.length > 0) {
-      set_size(_matrix.length, 1);
+    if (matrix != null && matrix.length > 0) {
+      set_size(matrix.length, 1);
       System.arraycopy(matrix, 0, _matrix, 0, matrix.length);
     } else {
       set_size(0, 0);
@@ -82,7 +82,7 @@ public class Mat extends BaseMat {
    * @throws IllegalArgumentException All rows must have the same length.
    */
   public Mat(double[][] matrix) throws IllegalArgumentException {
-    if (_matrix != null && _matrix.length > 0 && matrix[0].length > 0) {
+    if (matrix != null && matrix.length > 0 && matrix[0].length > 0) {
       int numberOfRows = matrix.length;
       int numberOfColumns = matrix[0].length;
 
@@ -330,7 +330,7 @@ public class Mat extends BaseMat {
   public void at(int n, Op operator) {
     isElementOutOfBoundsDetection(n);
 
-    inPlace(n, operator);
+    inplace(n, operator);
   }
 
   /**
@@ -349,7 +349,7 @@ public class Mat extends BaseMat {
   public void at(int n, Op operator, double operand) {
     isElementOutOfBoundsDetection(n);
 
-    inPlace(n, operator, operand);
+    inplace(n, operator, operand);
   }
 
   /**
@@ -379,7 +379,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void col(int j, Op operator) {
-    colInternal(j).inPlace(operator);
+    colInternal(j).inplace(operator);
   }
 
   /**
@@ -390,7 +390,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void col(int j, Op operator, Mat operand) {
-    colInternal(j).inPlace(operator, operand);
+    colInternal(j).inplace(operator, operand);
   }
 
   /**
@@ -405,7 +405,7 @@ public class Mat extends BaseMat {
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   public void col(int j, Op operator, double operand) throws ArrayIndexOutOfBoundsException, UnsupportedOperationException {
-    colInternal(j).inPlace(operator, operand);
+    colInternal(j).inplace(operator, operand);
   }
 
   /**
@@ -442,7 +442,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void col(int a, int b, int j, Op operator) {
-    colInternal(a, b, j).inPlace(operator);
+    colInternal(a, b, j).inplace(operator);
   }
 
   /**
@@ -456,7 +456,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void col(int a, int b, int j, Op operator, Mat operand) {
-    colInternal(a, b, j).inPlace(operator, operand);
+    colInternal(a, b, j).inplace(operator, operand);
   }
 
   /**
@@ -470,7 +470,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void col(int a, int b, int j, Op operator, double operand) {
-    colInternal(a, b, j).inPlace(operator, operand);
+    colInternal(a, b, j).inplace(operator, operand);
   }
 
   /**
@@ -500,7 +500,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void row(int i, Op operator) {
-    rowInternal(i).inPlace(operator);
+    rowInternal(i).inplace(operator);
   }
 
   /**
@@ -511,7 +511,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void row(int i, Op operator, Mat operand) {
-    rowInternal(i).inPlace(operator, operand);
+    rowInternal(i).inplace(operator, operand);
   }
 
   /**
@@ -522,7 +522,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void row(int i, Op operator, double operand) {
-    rowInternal(i).inPlace(operator, operand);
+    rowInternal(i).inplace(operator, operand);
   }
 
   /**
@@ -559,7 +559,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void row(int a, int b, int i, Op operator) {
-    rowInternal(a, b, i).inPlace(operator);
+    rowInternal(a, b, i).inplace(operator);
   }
 
   /**
@@ -573,7 +573,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void row(int a, int b, int i, Op operator, Mat operand) {
-    rowInternal(a, b, i).inPlace(operator, operand);
+    rowInternal(a, b, i).inplace(operator, operand);
   }
 
   /**
@@ -587,7 +587,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void row(int a, int b, int i, Op operator, double operand) {
-    rowInternal(a, b, i).inPlace(operator, operand);
+    rowInternal(a, b, i).inplace(operator, operand);
   }
 
   /**
@@ -621,7 +621,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void cols(int a, int b, Op operator) {
-    colsInternal(a, b).inPlace(operator);
+    colsInternal(a, b).inplace(operator);
   }
 
   /**
@@ -634,7 +634,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void cols(int a, int b, Op operator, Mat operand) {
-    colsInternal(a, b).inPlace(operator, operand);
+    colsInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -647,7 +647,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void cols(int a, int b, Op operator, double operand) {
-    colsInternal(a, b).inPlace(operator, operand);
+    colsInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -681,7 +681,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void rows(int a, int b, Op operator) {
-    rowsInternal(a, b).inPlace(operator);
+    rowsInternal(a, b).inplace(operator);
   }
 
   /**
@@ -694,7 +694,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void rows(int a, int b, Op operator, Mat operand) {
-    rowsInternal(a, b).inPlace(operator, operand);
+    rowsInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -707,7 +707,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void rows(int a, int b, Op operator, double operand) {
-    rowsInternal(a, b).inPlace(operator, operand);
+    rowsInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -716,7 +716,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void submat(Op operator) {
-    inPlace(operator);
+    inplace(operator);
   }
 
   /**
@@ -726,7 +726,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(Op operator, Mat operand) {
-    inPlace(operator, operand);
+    inplace(operator, operand);
   }
 
   /**
@@ -736,7 +736,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(Op operator, double operand) {
-    inPlace(operator, operand);
+    inplace(operator, operand);
   }
 
   /**
@@ -779,7 +779,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void submat(int ai, int bi, int aj, int bj, Op operator) {
-    submatInternal(ai, bi, aj, bj).inPlace(operator);
+    submatInternal(ai, bi, aj, bj).inplace(operator);
   }
 
   /**
@@ -794,7 +794,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(int ai, int bi, int aj, int bj, Op operator, Mat operand) {
-    submatInternal(ai, bi, aj, bj).inPlace(operator, operand);
+    submatInternal(ai, bi, aj, bj).inplace(operator, operand);
   }
 
   /**
@@ -809,7 +809,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(int ai, int bi, int aj, int bj, Op operator, double operand) {
-    submatInternal(ai, bi, aj, bj).inPlace(operator, operand);
+    submatInternal(ai, bi, aj, bj).inplace(operator, operand);
   }
 
   /**
@@ -843,7 +843,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void subvec(int a, int b, Op operator) {
-    subvecInternal(a, b).inPlace(operator);
+    subvecInternal(a, b).inplace(operator);
   }
 
   /**
@@ -856,7 +856,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void subvec(int a, int b, Op operator, Mat operand) {
-    subvecInternal(a, b).inPlace(operator, operand);
+    subvecInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -869,7 +869,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void subvec(int a, int b, Op operator, double operand) {
-    subvecInternal(a, b).inPlace(operator, operand);
+    subvecInternal(a, b).inplace(operator, operand);
   }
 
   /**
@@ -899,7 +899,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void elem(Mat selection, Op operator) {
-    elemInternal(selection).inPlace(operator);
+    elemInternal(selection).inplace(operator);
   }
 
   /**
@@ -910,7 +910,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void elem(Mat selection, Op operator, Mat operand) {
-    elemInternal(selection).inPlace(operator, operand);
+    elemInternal(selection).inplace(operator, operand);
   }
 
   /**
@@ -921,7 +921,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void elem(Mat selection, Op operator, double operand) {
-    elemInternal(selection).inPlace(operator, operand);
+    elemInternal(selection).inplace(operator, operand);
   }
 
   /**
@@ -951,7 +951,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void cols(Mat selection, Op operator) {
-    colsInternal(selection).inPlace(operator);
+    colsInternal(selection).inplace(operator);
   }
 
   /**
@@ -962,7 +962,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void cols(Mat selection, Op operator, Mat operand) {
-    colsInternal(selection).inPlace(operator, operand);
+    colsInternal(selection).inplace(operator, operand);
   }
 
   /**
@@ -973,7 +973,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void cols(Mat selection, Op operator, double operand) {
-    colsInternal(selection).inPlace(operator, operand);
+    colsInternal(selection).inplace(operator, operand);
   }
 
   /**
@@ -1003,7 +1003,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void rows(Mat selection, Op operator) {
-    rows(selection).inPlace(operator);
+    rows(selection).inplace(operator);
   }
 
   /**
@@ -1014,7 +1014,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void rows(Mat selection, Op operator, Mat operand) {
-    rows(selection).inPlace(operator, operand);
+    rows(selection).inplace(operator, operand);
   }
 
   /**
@@ -1025,7 +1025,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void rows(Mat selection, Op operator, double operand) {
-    rows(selection).inPlace(operator, operand);
+    rows(selection).inplace(operator, operand);
   }
 
   /**
@@ -1058,7 +1058,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator) {
-    submatInternal(rowSelection, columnSelection).inPlace(operator);
+    submatInternal(rowSelection, columnSelection).inplace(operator);
   }
 
   /**
@@ -1070,7 +1070,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) {
-    submatInternal(rowSelection, columnSelection).inPlace(operator, operand);
+    submatInternal(rowSelection, columnSelection).inplace(operator, operand);
   }
 
   /**
@@ -1082,7 +1082,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) {
-    submatInternal(rowSelection, columnSelection).inPlace(operator, operand);
+    submatInternal(rowSelection, columnSelection).inplace(operator, operand);
   }
 
   /**
@@ -1168,7 +1168,7 @@ public class Mat extends BaseMat {
    * @param operator The operator
    */
   public void diag(int k, Op operator) {
-    diagInternal(k).inPlace(operator);
+    diagInternal(k).inplace(operator);
   }
 
   /**
@@ -1185,7 +1185,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void diag(int k, Op operator, Mat operand) {
-    diagInternal(k).inPlace(operator, operand);
+    diagInternal(k).inplace(operator, operand);
   }
 
   /**
@@ -1202,7 +1202,7 @@ public class Mat extends BaseMat {
    * @param operand The right-hand side operand
    */
   public void diag(int k, Op operator, double operand) {
-    diagInternal(k).inPlace(operator, operand);
+    diagInternal(k).inplace(operator, operand);
   }
 
   /**
@@ -1377,7 +1377,7 @@ public class Mat extends BaseMat {
    */
   public Mat plus(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.PLUS, operand);
+    result.inplace(Op.PLUS, operand);
     return result;
   }
 
@@ -1389,7 +1389,7 @@ public class Mat extends BaseMat {
    */
   public Mat plus(double operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.PLUS, operand);
+    result.inplace(Op.PLUS, operand);
     return result;
   }
 
@@ -1401,7 +1401,7 @@ public class Mat extends BaseMat {
    */
   public Mat minus(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.MINUS, operand);
+    result.inplace(Op.MINUS, operand);
     return result;
   }
 
@@ -1413,7 +1413,7 @@ public class Mat extends BaseMat {
    */
   public Mat minus(double operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.MINUS, operand);
+    result.inplace(Op.MINUS, operand);
     return result;
   }
 
@@ -1446,7 +1446,7 @@ public class Mat extends BaseMat {
    */
   public Mat times(double operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.TIMES, operand);
+    result.inplace(Op.TIMES, operand);
     return result;
   }
 
@@ -1458,7 +1458,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemTimes(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.ELEMTIMES, operand);
+    result.inplace(Op.ELEMTIMES, operand);
     return result;
   }
 
@@ -1470,7 +1470,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemTimes(double operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.ELEMTIMES, operand);
+    result.inplace(Op.ELEMTIMES, operand);
     return result;
   }
 
@@ -1482,7 +1482,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemDivide(Mat operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.ELEMDIVIDE, operand);
+    result.inplace(Op.ELEMDIVIDE, operand);
     return result;
   }
 
@@ -1494,7 +1494,7 @@ public class Mat extends BaseMat {
    */
   public Mat elemDivide(double operand) {
     Mat result = new Mat(_matrix);
-    result.inPlace(Op.ELEMDIVIDE, operand);
+    result.inplace(Op.ELEMDIVIDE, operand);
     return result;
   }
 

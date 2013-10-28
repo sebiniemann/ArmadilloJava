@@ -10,7 +10,11 @@
 
 package arma;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
@@ -19,7 +23,6 @@ import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.MatrixFeatures;
 import org.ejml.ops.NormOps;
-import org.hamcrest.core.IsEqual;
 
 /**
  * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
@@ -1065,7 +1068,7 @@ public class Arma {
   public static Mat minMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
     Mat.isNotInSetDetection(dimension, 0, 1);
-    
+
     Mat result;
 
     if (dimension == 0) {
@@ -1078,7 +1081,7 @@ public class Arma {
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = min(matrix.row(i));
       }
-    } 
+    }
 
     return result;
   }
@@ -1122,7 +1125,7 @@ public class Arma {
   public static Mat maxMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
     Mat.isNotInSetDetection(dimension, 0, 1);
-    
+
     Mat result;
 
     if (dimension == 0) {
@@ -1176,18 +1179,18 @@ public class Arma {
     Mat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result = sumMat(matrix, dimension);
-    
+
     int count;
     if (dimension == 0) {
       count = matrix.n_rows;
     } else {
       count = matrix.n_cols;
     }
-    
+
     for (int n = 0; n < matrix.n_elem; n++) {
       result._matrix[n] /= count;
     }
-    
+
     return result;
   }
 
@@ -1235,7 +1238,7 @@ public class Arma {
   public static Mat medianMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
     Mat.isNotInSetDetection(dimension, 0, 1);
-    
+
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
@@ -1247,7 +1250,7 @@ public class Arma {
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = median(matrix.row(i));
       }
-    } 
+    }
 
     return result;
   }
@@ -1345,7 +1348,7 @@ public class Arma {
       variance /= (vector.n_elem - 1);
     } else {
       variance /= vector.n_elem;
-    } 
+    }
 
     return variance;
   }
@@ -1387,7 +1390,7 @@ public class Arma {
   public static Mat varMat(Mat matrix, int normType, int dimension) {
     matrix.isEmptyDetection();
     Mat.isNotInSetDetection(dimension, 0, 1);
-    
+
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
@@ -1399,7 +1402,7 @@ public class Arma {
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = var(matrix.row(i));
       }
-    } 
+    }
 
     return result;
   }
@@ -1428,7 +1431,7 @@ public class Arma {
    * @param matrix The matrix
    * @return Whether any element is non-zero
    */
-  public static boolean anyMat(Mat matrix) {
+  public static Mat anyMat(Mat matrix) {
     return anyMat(matrix, 0);
   }
 
@@ -1437,8 +1440,24 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static boolean anyMat(Mat matrix, int dimension) {
-    return false;
+  public static Mat anyMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result._matrix[j] = any(matrix.col(j)) ? 1 : 0;
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result._matrix[i] = any(matrix.row(i)) ? 1 : 0;
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -1450,9 +1469,13 @@ public class Arma {
   public static boolean all(Mat vector) {
     vector.isNonVectorDetection();
 
+    if (vector.n_elem < 1) {
+      return false;
+    }
+
     for (double element : vector) {
       if (element == 0) {
-        return true;
+        return false;
       }
     }
 
@@ -1463,7 +1486,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static boolean allMat(Mat matrix) {
+  public static Mat allMat(Mat matrix) {
     return allMat(matrix, 0);
   }
 
@@ -1472,8 +1495,24 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static boolean allMat(Mat matrix, int dimension) {
-    return false;
+  public static Mat allMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result._matrix[j] = all(matrix.col(j)) ? 1 : 0;
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result._matrix[i] = all(matrix.row(i)) ? 1 : 0;
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -1481,22 +1520,14 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The product
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static double prod(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
+  public static double prod(Mat vector) {
+    vector.isEmptyDetection();
+    vector.isNonVectorDetection();
 
     double product = 1;
-    for (int n = 0; n < vector.n_rows; n++) {
-      product *= vector._matrix[n];
+    for (double element : vector) {
+      product *= element;
     }
 
     return product;
@@ -1507,10 +1538,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat prodMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat prodMat(Mat matrix) {
     return prodMat(matrix, 0);
   }
 
@@ -1521,24 +1550,22 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat prodMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
+  public static Mat prodMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
     Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = prod(matrix.col(j));
       }
-    } else if (dimension == 1) {
+    } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = prod(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
@@ -1549,19 +1576,8 @@ public class Arma {
    * 
    * @param vector The vector
    * @return The sum
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static double sum(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-    if (vector.n_elem < 1) {
-      throw new UnsupportedOperationException("The matrix must have at least one element.");
-    }
-
-    if (!vector.is_vec()) {
-      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }
-
+  public static double sum(Mat vector) {
     return accu(vector);
   }
 
@@ -1570,10 +1586,8 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat sumMat(Mat matrix) throws UnsupportedOperationException {
+  public static Mat sumMat(Mat matrix) {
     return sumMat(matrix, 0);
   }
 
@@ -1584,26 +1598,22 @@ public class Arma {
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
-   * 
-   * 
-   * @throws UnsupportedOperationException The matrix must have at least one element.
-   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat sumMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
-    Mat result;
+  public static Mat sumMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
 
+    Mat result;
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = sum(matrix.col(j));
       }
-    } else if (dimension == 1) {
-      result = new Mat(1, matrix.n_rows);
-      for (int i = 0; i < matrix.n_cols; i++) {
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
         result._matrix[i] = sum(matrix.row(i));
       }
-    } else {
-      throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
@@ -1617,30 +1627,13 @@ public class Arma {
    * @param matrix1 First matrix
    * @param matrix2 Second matrix
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The provided matrices must have the same number of columns, but were
-   *           {@link Mat#n_cols matrix1.n_cols} and {@code matrix2.n_cols}.
    */
-  public static Mat join_cols(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
-    if (matrix1.n_cols != matrix2.n_cols) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of columns, but were " + matrix1.n_cols + " and " + matrix2.n_cols + ".");
-    }
+  public static Mat join_cols(Mat matrix1, Mat matrix2) {
+    Mat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
 
     Mat result = new Mat(matrix1.n_rows + matrix2.n_rows, matrix1.n_cols);
-
-    // Add matrix matrix1
-    for (int i = 0; i < matrix1.n_rows; i++) {
-      for (int j = 0; j < matrix1.n_cols; j++) {
-        result._matrix[result.getElementPosition(i, j)] = matrix1._matrix[matrix1.getElementPosition(i, j)];
-      }
-    }
-
-    // Add matrix matrix2
-    for (int i = 0; i < matrix2.n_rows; i++) {
-      for (int j = 0; j < matrix2.n_cols; j++) {
-        result._matrix[result.getElementPosition(i + matrix1.n_rows, j)] = matrix2._matrix[matrix2.getElementPosition(i, j)];
-      }
-    }
+    result.submat(0, 0, matrix1.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix1);
+    result.submat(matrix1.n_rows, 0, result.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix2);
 
     return result;
   }
@@ -1657,7 +1650,7 @@ public class Arma {
    * @throws IllegalArgumentException The provided matrices must have the same number of columns, but were
    *           {@link Mat#n_cols matrix1.n_cols} and {@code matrix2.n_cols}.
    */
-  public static Mat join_vert(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+  public static Mat join_vert(Mat matrix1, Mat matrix2) {
     return join_cols(matrix1, matrix2);
   }
 
@@ -1669,30 +1662,13 @@ public class Arma {
    * @param matrix1 First matrix
    * @param matrix2 Second matrix
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The provided matrices must have the same number of rows, but were
-   *           {@link Mat#n_cols matrix1.n_rows} and {@code matrix2.n_rows}.
    */
-  public static Mat join_rows(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
-    if (matrix1.n_rows != matrix2.n_rows) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of columns, but were " + matrix1.n_rows + " and " + matrix2.n_rows + ".");
-    }
+  public static Mat join_rows(Mat matrix1, Mat matrix2) {
+    Mat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
 
     Mat result = new Mat(matrix1.n_rows, matrix1.n_cols + matrix2.n_cols);
-
-    // Add matrix matrix1
-    for (int i = 0; i < matrix1.n_rows; i++) {
-      for (int j = 0; j < matrix1.n_cols; j++) {
-        result._matrix[result.getElementPosition(i, j)] = matrix1._matrix[matrix1.getElementPosition(i, j)];
-      }
-    }
-
-    // Add matrix matrix2
-    for (int i = 0; i < matrix2.n_rows; i++) {
-      for (int j = 0; j < matrix2.n_cols; j++) {
-        result._matrix[result.getElementPosition(i, j + matrix1.n_cols)] = matrix2._matrix[matrix2.getElementPosition(i, j)];
-      }
-    }
+    result.submat(0, 0, result.n_rows - 1, matrix1.n_cols - 1, Op.EQUAL, matrix1);
+    result.submat(0, matrix1.n_cols, result.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix2);
 
     return result;
   }
@@ -1705,261 +1681,424 @@ public class Arma {
    * @param matrix1 First matrix
    * @param matrix2 Second matrix
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The provided matrices must have the same number of rows, but were
-   *           {@link Mat#n_cols matrix1.n_rows} and {@code matrix2.n_rows}.
    */
-  public static Mat join_horiz(Mat matrix1, Mat matrix2) throws IllegalArgumentException {
+  public static Mat join_horiz(Mat matrix1, Mat matrix2) {
     return join_rows(matrix1, matrix2);
   }
 
   /**
-   * @param matrix The matrix
-   * @return The matrix
+   * Sorts the vector in ascending order.
+   * 
+   * @param vector The vector
+   * @return The vector
    */
-  public static Mat sort(Mat matrix) {
-    return null;
+  public static Mat sort(Mat vector) {
+    return sort(vector, 0);
   }
 
   /**
+   * Sorts the vector either in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order.
+   * 
+   * @param vector The vector
+   * @param sortType The sortType
+   * @return The vector
+   */
+  public static Mat sort(Mat vector, int sortType) {
+    vector.isNonVectorDetection();
+    Mat.isNotInSetDetection(sortType, 0, 1);
+
+    Mat result = new Mat(vector);
+    Arrays.sort(result._matrix);
+
+    if (sortType == 1) {
+      // Why is there no native implementation of a descending sort on primitives in Java ...
+      for (int n = 0; n < vector.n_elem / 2; n++) {
+        double temp = result._matrix[n];
+        result._matrix[n] = result._matrix[vector.n_elem - (n + 1)];
+        result._matrix[vector.n_elem - (n + 1)] = temp;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Sorts the matrix either in ascending order per column.
+   * 
+   * @param matrix The matrix
+   * @return The matrix
+   */
+  public static Mat sortMat(Mat matrix) {
+    return sortMat(matrix, 0, 0);
+  }
+
+  /**
+   * Sorts the matrix either in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order per column.
+   * 
    * @param matrix The matrix
    * @param sortType The sortType
    * @return The matrix
    */
-  public static Mat sort(Mat matrix, int sortType) {
-    return null;
+  public static Mat sortMat(Mat matrix, int sortType) {
+    return sortMat(matrix, sortType, 0);
   }
 
   /**
-   * @param matrix The matrix
-   * @param sortType The sortType
-   * @param dimension The dimension
-   * @return The matrix
-   */
-  public static Mat sort(Mat matrix, int sortType, int dimension) {
-    return null;
-  }
-
-  /**
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat sort_index(Mat matrix) {
-    return null;
-  }
-
-  /**
-   * @param matrix The matrix
-   * @param sortType The sortType
-   * @return The matrix
-   */
-  public static Mat sort_index(Mat matrix, int sortType) {
-    return null;
-  }
-
-  /**
-   * @param matrix The matrix
-   * @param sortType The sortType
-   * @param dimension The dimension
-   * @return The matrix
-   */
-  public static Mat sort_index(Mat matrix, int sortType, int dimension) {
-    return null;
-  }
-
-  /**
-   * @param matrix The matrix
-   * @return The matrix
-   */
-  public static Mat stable_sort_index(Mat matrix) {
-    return null;
-  }
-
-  /**
-   * @param matrix The matrix
-   * @param sortType The sortType
-   * @return The matrix
-   */
-  public static Mat stable_sort_index(Mat matrix, int sortType) {
-    return null;
-  }
-
-  /**
+   * Sorts the matrix either in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order either per
+   * column ({@code sortType} = 0) or row ({@code sortType} = 1).
+   * 
    * @param matrix The matrix
    * @param sortType The sortType
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat stable_sort_index(Mat matrix, int sortType, int dimension) {
-    return null;
+  public static Mat sortMat(Mat matrix, int sortType, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, sort(matrix.col(j), sortType));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, sort(matrix.row(i), sortType));
+      }
+    }
+
+    return result;
   }
 
   /**
-   * @param A
-   * @param numerOfRows
-   * @param numberOfColumns
+   * 
+   * 
+   * @param vector The vector
+   * @return The vector
+   */
+  public static Mat sort_index(Mat vector) {
+    return sort_index(vector, 0);
+  }
+
+  /**
+   * 
+   * 
+   * @param vector The vector
+   * @param sortType The sortType
+   * @return The vector
+   */
+  public static Mat sort_index(Mat vector, int sortType) {
+    return stable_sort_index(vector, sortType);
+  }
+
+  /**
+   * 
+   * 
+   * @param vector The vector
+   * @return The vector
+   */
+  public static Mat stable_sort_index(Mat vector) {
+    return stable_sort_index(vector, 0);
+  }
+
+  /**
+   * 
+   * 
+   * @param vector The vector
+   * @param sortType The sortType
+   * @return The vector
+   */
+  public static Mat stable_sort_index(Mat vector, int sortType) {
+    vector.isNonVectorDetection();
+    Mat.isNotInSetDetection(sortType, 0, 1);
+
+    // TreeMap will do the job, nothing to do here – great!
+    TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
+    for (int i = 0; i < vector.n_elem; i++) {
+      List<Integer> index = map.get(vector._matrix[i]);
+      if (index == null) {
+        index = new ArrayList<Integer>();
+        map.put(vector._matrix[i], index);
+      }
+      index.add(i);
+    }
+
+    Mat result = new Mat();
+    result.copy_size(vector);
+    int position = 0;
+    for (List<Integer> indices : map.values()) {
+      for (int index : indices) {
+        result._matrix[position++] = index;
+      }
+    }
+
+    if (sortType == 1) {
+      // Why is there no native implementation of a descending sort on primitives in Java ...
+      for (int n = 0; n < vector.n_elem / 2; n++) {
+        double temp = result._matrix[n];
+        result._matrix[n] = result._matrix[vector.n_elem - (n + 1)];
+        result._matrix[vector.n_elem - (n + 1)] = temp;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * @param matrix The matrix
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of rows
    * @return
    */
-  public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns) {
-    return null;
+  public static Mat reshape(Mat matrix, int numberOfRows, int numberOfColumns) {
+    return reshape(matrix, numberOfRows, numberOfColumns, 0);
   }
 
   /**
-   * @param A
-   * @param numerOfRows
-   * @param numberOfColumns
-   * @param dimension
+   * @param matrix The matrix
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
+   * @param dimension The dimension
    * @return
    */
-  public static Mat reshape(Mat A, int numerOfRows, int numberOfColumns, int dimension) {
-    return null;
+  public static Mat reshape(Mat matrix, int numberOfRows, int numberOfColumns, int dimension) {
+    Mat temp = new Mat(matrix);
+    temp.reshape(numberOfRows, numberOfColumns, dimension);
+    return temp;
   }
 
   /**
-   * @param A
-   * @param numerOfRows
-   * @param numberOfColumns
+   * @param matrix The matrix
+   * @param numberOfRows The number of rows
+   * @param numberOfColumns The number of columns
    * @return
    */
-  public static Mat resize(Mat A, int numerOfRows, int numberOfColumns) {
-    return null;
+  public static Mat resize(Mat matrix, int numberOfRows, int numberOfColumns) {
+    Mat temp = new Mat(matrix);
+    temp.resize(numberOfRows, numberOfColumns);
+    return temp;
   }
 
   /**
-   * @param A
+   * @param matrix The matrix
    * @return
    */
-  public static Mat cor(Mat A) {
-    return null;
+  public static Mat cor(Mat matrix) {
+    return cor(matrix, 0);
   }
 
   /**
-   * @param A
+   * @param matrix
    * @param normType
    * @return
    */
-  public static Mat cor(Mat A, int normType) {
-    return null;
+  public static Mat cor(Mat matrix, int normType) {
+    return cor(matrix, matrix, normType);
   }
 
   /**
-   * @param A
-   * @param B
+   * @param matrix1
+   * @param matrix2
    * @return
    */
-  public static Mat cor(Mat A, Mat B) {
-    return null;
+  public static Mat cor(Mat matrix1, Mat matrix2) {
+    return cor(matrix1, matrix2, 0);
   }
 
   /**
-   * @param A
-   * @param B
+   * @param matrix1
+   * @param matrix2
    * @param normType
    * @return
    */
-  public static Mat cor(Mat A, Mat B, int normType) {
+  public static Mat cor(Mat matrix1, Mat matrix2, int normType) {
     return null;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat cov(Mat A) {
-    return null;
+  public static Mat cov(Mat matrix) {
+    return cov(matrix, matrix, 0);
   }
 
   /**
-   * @param A
+   * @param matrix
    * @param normType
    * @return
    */
-  public static Mat cov(Mat A, int normType) {
+  public static Mat cov(Mat matrix, int normType) {
     return null;
   }
 
   /**
-   * @param A
-   * @param B
+   * @param matrix1
+   * @param matrix2
    * @return
    */
-  public static Mat cov(Mat A, Mat B) {
-    return null;
+  public static Mat cov(Mat matrix1, Mat matrix2) {
+    return cov(matrix1, matrix2, 0);
   }
 
   /**
-   * @param A
-   * @param B
+   * @param matrix1
+   * @param matrix2
    * @param normType
    * @return
    */
-  public static Mat cov(Mat A, Mat B, int normType) {
+  public static Mat cov(Mat matrix1, Mat matrix2, int normType) {
     return null;
   }
 
   /**
-   * @param X
+   * @param matrix
    * @return
    */
-  public static Mat hist(Mat X) {
-    return null;
+  public static Mat hist(Mat matrix) {
+    return hist(matrix, 10);
   }
 
   /**
-   * @param X
+   * @param matrix
    * @param numberOfBins
    * @return
    */
-  public static Mat hist(Mat X, int numberOfBins) {
+  public static Mat hist(Mat matrix, int numberOfBins) {
     return null;
   }
 
   /**
-   * @param X
+   * @param matrix
+   * @return
+   */
+  public static Mat histMat(Mat matrix) {
+    return histMat(matrix, 10);
+  }
+
+  /**
+   * @param matrix
+   * @param numberOfBins
+   * @return
+   */
+  public static Mat histMat(Mat matrix, int numberOfBins) {
+    return histMat(matrix, numberOfBins, 0);
+  }
+
+  /**
+   * @param matrix
    * @param numberOfBins
    * @param dimension
    * @return
    */
-  public static Mat hist(Mat X, int numberOfBins, int dimension) {
-    return null;
+  public static Mat histMat(Mat matrix, int numberOfBins, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, hist(matrix.col(j), numberOfBins));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, hist(matrix.row(i), numberOfBins));
+      }
+    }
+
+    return result;
   }
 
   /**
-   * @param X
+   * @param matrix
    * @param centers
    * @return
    */
-  public static Mat hist(Mat X, Mat centers) {
+  public static Mat hist(Mat matrix, Mat centers) {
     return null;
   }
 
   /**
-   * @param X
+   * @param matrix
+   * @param centers
+   * @return
+   */
+  public static Mat histMat(Mat matrix, Mat centers) {
+    return histMat(matrix, centers, 0);
+  }
+
+  /**
+   * @param matrix
    * @param centers
    * @param dimension
    * @return
    */
-  public static Mat hist(Mat X, Mat centers, int dimension) {
-    return null;
+  public static Mat histMat(Mat matrix, Mat centers, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, hist(matrix.col(j), centers));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, hist(matrix.row(i), centers));
+      }
+    }
+
+    return result;
   }
 
   /**
-   * @param X
+   * @param matrix
    * @param edges
    * @return
    */
-  public static Mat histc(Mat X, Mat edges) {
+  public static Mat histc(Mat matrix, Mat edges) {
     return null;
   }
 
   /**
-   * @param X
+   * @param matrix
+   * @param edges
+   * @return
+   */
+  public static Mat histcMat(Mat matrix, Mat edges) {
+    return histcMat(matrix, edges, 0);
+  }
+
+  /**
+   * @param matrix
    * @param edges
    * @param dimension
    * @return
    */
-  public static Mat histc(Mat X, Mat edges, int dimension) {
-    return null;
+  public static Mat histcMat(Mat matrix, Mat edges, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, histc(matrix.col(j), edges));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, histc(matrix.row(i), edges));
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -2024,6 +2163,39 @@ public class Arma {
    */
   public static Mat trans(Mat A) {
     return null;
+  }
+
+  /**
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * 
+   * @see #find(Mat, int, String)
+   */
+  public static Mat find(Mat matrix) throws IllegalArgumentException {
+    return find(matrix, 0, "first");
+  }
+
+  /**
+   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
+   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
+   * 
+   * @param matrix The provided matrix.
+   * @param k The number of elements to be evaluated.
+   * @return The created column vector.
+   * 
+   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
+   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * 
+   * @see #find(Mat, int, String)
+   */
+  public static Mat find(Mat matrix, int k) throws IllegalArgumentException {
+    return find(matrix, k, "first");
   }
 
   /**
@@ -2105,63 +2277,13 @@ public class Arma {
   }
 
   /**
-   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
-   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
-   * 
-   * @param matrix The provided matrix.
-   * @param k The number of elements to be evaluated.
-   * @return The created column vector.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
-   * 
-   * @see #find(Mat, int, String)
-   */
-  public static Mat find(Mat matrix, int k) throws IllegalArgumentException {
-    return find(matrix, k, "first");
-  }
-
-  /**
-   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
-   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
-   * 
-   * @param matrix The provided matrix.
-   * @param s The element to to begin with.
-   * @return The created column vector.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
-   * 
-   * @see #find(Mat, int, String)
-   */
-  public static Mat find(Mat matrix, String s) throws IllegalArgumentException {
-    return find(matrix, 0, s);
-  }
-
-  /**
-   * Creates a column vector containing indices of all non-zero elements. Contains all indices of elements that satisfy
-   * an operation if used together with {@link Op#evaluate(Mat, Op, Mat)}.
-   * 
-   * @param matrix The provided matrix.
-   * @return The created column vector.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
-   * 
-   * @see #find(Mat, int, String)
-   */
-  public static Mat find(Mat matrix) throws IllegalArgumentException {
-    return find(matrix, 0, "first");
-  }
-
-  /**
    * Returns the main diagonal of the matrix as a column vector.
    * 
    * @param matrix The matrix
    * @return The diagonal
    */
   public static Mat diagvec(Mat matrix) {
-    return matrix.diag(0);
+    return diagvec(matrix, 0);
   }
 
   /**
@@ -2182,19 +2304,19 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat cumsum(Mat A) {
-    return null;
+  public static Mat cumsum(Mat matrix) {
+    return cumsum(matrix, 0);
   }
 
   /**
-   * @param A
+   * @param matrix
    * @param dimension
    * @return
    */
-  public static Mat cumsum(Mat A, int dimension) {
+  public static Mat cumsum(Mat matrix, int dimension) {
     return null;
   }
 
@@ -2240,19 +2362,19 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat shuffle(Mat A) {
-    return null;
+  public static Mat shuffle(Mat matrix) {
+    return shuffle(matrix, 0);
   }
 
   /**
-   * @param A
+   * @param matrix
    * @param dimension
    * @return
    */
-  public static Mat shuffle(Mat A, int dimension) {
+  public static Mat shuffle(Mat matrix, int dimension) {
     return null;
   }
 
@@ -2265,20 +2387,26 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @return
+   * @param matrix The matrix
+   * @return The vector
    */
-  public static Mat vectorise(Mat A) {
-    return null;
+  public static Mat vectorise(Mat matrix) {
+    return vectorise(matrix, 0);
   }
 
   /**
-   * @param A
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The vector
    */
-  public static Mat vectorise(Mat A, int dimension) {
-    return null;
+  public static Mat vectorise(Mat matrix, int dimension) {
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    if (dimension == 0) {
+      return reshape(matrix, matrix.n_elem, 1);
+    } else {
+      return reshape(matrix, 1, matrix.n_elem);
+    }
   }
 
   /**
