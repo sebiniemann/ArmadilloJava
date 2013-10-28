@@ -1003,16 +1003,16 @@ public class Arma {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }    
-    
+    }
+
     double minimum = vector._matrix.get(0);
     for (int n = 0; n < vector.n_elem; n++) {
       minimum = Math.min(minimum, vector._matrix.get(n));
     }
-    
+
     return minimum;
   }
 
@@ -1073,16 +1073,16 @@ public class Arma {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }    
-    
+    }
+
     double maximum = vector._matrix.get(0);
     for (int n = 0; n < vector.n_elem; n++) {
       maximum = Math.max(maximum, vector._matrix.get(n));
     }
-    
+
     return maximum;
   }
 
@@ -1128,7 +1128,7 @@ public class Arma {
 
     return result;
   }
-  
+
   /**
    * Returns the mean of the vector.
    * 
@@ -1142,21 +1142,21 @@ public class Arma {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    } 
+    }
 
     return sum(vector) / vector.n_elem;
   }
-  
+
   /**
    * Returns the mean for each column of the matrix as a column vector.
    * 
    * @param matrix The matrix
    * @return The matrix
    * 
-  * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public static Mat meanMat(Mat matrix) throws UnsupportedOperationException {
     return meanMat(matrix, 0);
@@ -1170,7 +1170,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
-  * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat meanMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
@@ -1192,35 +1192,36 @@ public class Arma {
     return result;
   }
 
- /**
-  * Returns the median of the vector.
-  * @param vector The vector
-  * @return The median
-  * 
-  * @throws UnsupportedOperationException The matrix must have at least one element.
-  * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
-  *           , {@link Mat#n_cols selection.n_cols})-matrix.
-  */
- public static double median(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
-   if (vector.n_elem < 1) {
-     throw new UnsupportedOperationException("The matrix must have at least one element.");
-   }
-   
-   if (!vector.is_vec()) {
-     throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-   }  
-   
-   Mat sortedColumn = sort(vector);
+  /**
+   * Returns the median of the vector.
+   * 
+   * @param vector The vector
+   * @return The median
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws IllegalArgumentException The vector must really be a vector, but was a ({@link Mat#n_rows selection.n_rows}
+   *           , {@link Mat#n_cols selection.n_cols})-matrix.
+   */
+  public static double median(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
+    if (vector.n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
 
-   double median;
-   if (vector.n_elem % 2 == 1) {
-     int middle = vector.n_elem / 2;
-     median = (sortedColumn._matrix.get(middle - 1) + sortedColumn._matrix.get(middle)) / 2;
-   } else {
-     median = sortedColumn._matrix.get(vector.n_elem / 2);
-   }
-   
-   return median;
+    if (!vector.is_vec()) {
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+    }
+
+    Mat sortedColumn = sort(vector);
+
+    double median;
+    if (vector.n_elem % 2 == 1) {
+      int middle = vector.n_elem / 2;
+      median = (sortedColumn._matrix.get(middle - 1) + sortedColumn._matrix.get(middle)) / 2;
+    } else {
+      median = sortedColumn._matrix.get(vector.n_elem / 2);
+    }
+
+    return median;
   }
 
   /**
@@ -1229,7 +1230,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    * 
-  * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
   public static Mat medianMat(Mat matrix) throws UnsupportedOperationException {
     return medianMat(matrix, 0);
@@ -1243,7 +1244,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
-  * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
   public static Mat medianMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
@@ -1267,6 +1268,7 @@ public class Arma {
 
   /**
    * Returns the standard deviation of the vector.
+   * 
    * @param vector The vector
    * @return The standard deviation
    * 
@@ -1276,10 +1278,11 @@ public class Arma {
    */
   public static double stddev(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
     return stddev(vector, 0);
-   }
+  }
 
   /**
    * Returns the standard deviation of the vector.
+   * 
    * @param vector The vector
    * @param normType The normalisation
    * @return The standard deviation
@@ -1293,13 +1296,13 @@ public class Arma {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }  
+    }
 
     return Math.sqrt(var(vector, normType));
-   }
+  }
 
   /**
    * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1 as a column
@@ -1357,6 +1360,7 @@ public class Arma {
 
   /**
    * Returns the variance of the vector.
+   * 
    * @param vector The vector
    * @return The variance
    * 
@@ -1366,10 +1370,11 @@ public class Arma {
    */
   public static double var(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
     return stddev(vector, 0);
-   }
+  }
 
   /**
    * Returns the variance of the vector.
+   * 
    * @param vector The vector
    * @param normType The normalisation
    * @return The variance
@@ -1383,11 +1388,11 @@ public class Arma {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    }  
-    
+    }
+
     int squaredDifference = 0;
     double mean = mean(vector);
     for (int n = 0; n < vector.n_elem; n++) {
@@ -1404,7 +1409,7 @@ public class Arma {
     }
 
     return variance;
-   }
+  }
 
   /**
    * Returns the variance for each column of the matrix with normalisation by {@code count} - 1 as a column vector.
@@ -1482,7 +1487,7 @@ public class Arma {
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
-    
+
     for (int i = 0; i < vector.n_elem; i++) {
       if (vector._matrix.get(i) != 0) {
         return true;
@@ -1524,7 +1529,7 @@ public class Arma {
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
     }
-    
+
     for (int i = 0; i < vector.n_elem; i++) {
       if (vector._matrix.get(i) == 0) {
         return false;
@@ -1552,12 +1557,40 @@ public class Arma {
   }
 
   /**
+   * Returns the product of the vector.
+   * 
+   * @param vector The vector
+   * @return The product
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
+   * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
+   */
+  public static double prod(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
+    if (vector.n_elem < 1) {
+      throw new UnsupportedOperationException("The matrix must have at least one element.");
+    }
+
+    if (!vector.is_vec()) {
+      throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
+    }
+
+    double product = 1;
+    for (int n = 0; n < vector.n_rows; n++) {
+      product *= vector._matrix.get(n);
+    }
+
+    return product;
+  }
+
+  /**
    * Returns the product of all elements for each column of the matrix as a column vector.
    * 
    * @param matrix The matrix
    * @return The matrix
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat prodMat(Mat matrix) {
+  public static Mat prodMat(Mat matrix) throws UnsupportedOperationException {
     return prodMat(matrix, 0);
   }
 
@@ -1569,36 +1602,28 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat prodMat(Mat matrix, int dimension) throws IllegalArgumentException {
+  public static Mat prodMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
     Mat result;
-
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
-      for (int i = 0; i < matrix.n_rows; i++) {
-        double product = 1;
-        for (int j = 0; j < matrix.n_cols; j++) {
-          product *= matrix._matrix.get(i, j);
-        }
-        result._matrix.set(i, product);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result._matrix.set(j, prod(matrix.col(j)));
       }
     } else if (dimension == 1) {
       result = new Mat(matrix.n_rows, 1);
-      for (int j = 0; j < matrix.n_cols; j++) {
-        double product = 1;
-        for (int i = 0; i < matrix.n_rows; i++) {
-          product *= matrix._matrix.get(i, j);
-        }
-        result._matrix.set(j, product);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result._matrix.set(i, prod(matrix.row(i)));
       }
     } else {
       throw new IllegalArgumentException("The dimension must be either 0 or 1, but was " + dimension + ".");
     }
 
     return result;
-  } 
-  
+  }
+
   /**
    * Returns the sum of all elements for each column of the matrix as a column vector.
    * 
@@ -1608,15 +1633,15 @@ public class Arma {
    * @throws UnsupportedOperationException The matrix must have at least one element.
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static double sum(Mat vector) {
+  public static double sum(Mat vector) throws UnsupportedOperationException, IllegalArgumentException {
     if (vector.n_elem < 1) {
       throw new UnsupportedOperationException("The matrix must have at least one element.");
     }
-    
+
     if (!vector.is_vec()) {
       throw new IllegalArgumentException("The vector must really be a vector, but was a (" + vector.n_rows + ", " + vector.n_cols + ")-matrix.");
-    } 
-    
+    }
+
     return CommonOps.elementSum(vector._matrix);
   }
 
@@ -1625,8 +1650,10 @@ public class Arma {
    * 
    * @param matrix The matrix
    * @return The matrix
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat sumMat(Mat matrix) {
+  public static Mat sumMat(Mat matrix) throws UnsupportedOperationException {
     return sumMat(matrix, 0);
   }
 
@@ -1638,9 +1665,11 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    * 
+   * 
+   * @throws UnsupportedOperationException The matrix must have at least one element.
    * @throws IllegalArgumentException The dimension must be either 0 or 1, but was {@code dimension}.
    */
-  public static Mat sumMat(Mat matrix, int dimension) throws IllegalArgumentException {
+  public static Mat sumMat(Mat matrix, int dimension) throws UnsupportedOperationException, IllegalArgumentException {
     Mat result;
 
     if (dimension == 0) {
@@ -2597,7 +2626,7 @@ public class Arma {
    * 
    * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
    */
-  public static Mat svd(Mat x) throws RuntimeException {
+  public static Mat svd(BaseMat x) throws RuntimeException {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
     svd.decompose(x.memptr());
 
@@ -2685,7 +2714,7 @@ public class Arma {
   public static Mat syl(Mat A, Mat B, Mat C) {
     return null;
   }
-
+  
   /**
    * @param A
    * @param B

@@ -31,7 +31,6 @@ import java.util.Random;
 
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
-import org.ejml.ops.RandomMatrices;
 
 /**
  * Provides a real-valued dense matrix with double precision. Member functions as well as attributes are similar to the
@@ -85,12 +84,11 @@ public class Mat extends BaseMat {
    * @param matrix The array
    */
   public Mat(double[] matrix) {
-    _matrix = matrix;
-
     if (_matrix.length > 0) {
-      updateAttributes(_matrix.length, 1);
+      set_size(_matrix.length, 1);
+      System.arraycopy(matrix, 0, _matrix, 0, matrix.length);
     } else {
-      updateAttributes(0, 0);
+      set_size(0, 0);
     }
   }
 
@@ -108,21 +106,18 @@ public class Mat extends BaseMat {
       int numberOfRows = matrix.length;
       int numberOfColumns = matrix[0].length;
 
-      _matrix = new double[numberOfRows * numberOfColumns];
-      for (int i = 0; i < numberOfRows; i++) {
-        for (int j = 0; j < numberOfColumns; j++) {
-          if (matrix[i].length != numberOfColumns) {
+      set_size(numberOfRows, numberOfColumns);
+      for (int i = 0; i < n_rows; i++) {
+        for (int j = 0; j < n_cols; j++) {
+          if (matrix[i].length != n_cols) {
             throw new IllegalArgumentException("All rows must have the same length.");
           }
 
           _matrix[getElementPosition(i, j)] = matrix[i][j];
         }
       }
-
-      updateAttributes(numberOfRows, numberOfColumns);
     } else {
-      _matrix = new double[]{};
-      updateAttributes(0, 0);
+      set_size(0, 0);
     }
   }
 
@@ -141,9 +136,8 @@ public class Mat extends BaseMat {
    * @param submatrix The matrix
    */
   protected Mat(SubviewMat submatrix) {
-    _matrix = new double[submatrix.n_elem];
+    set_size(submatrix.n_rows, submatrix.n_cols);
     System.arraycopy(submatrix._matrix, 0, _matrix, 0, submatrix.n_elem);
-    updateAttributes(submatrix.n_rows, submatrix.n_cols);
   }
 
   /**
@@ -152,14 +146,12 @@ public class Mat extends BaseMat {
    * @param submatrix The matrix
    */
   protected Mat(SelectionMat submatrix) {
-    _matrix = new double[submatrix.n_elem];
-    
+    set_size(submatrix.n_rows, submatrix.n_cols);
+
     int n = 0;
-    for(double element : submatrix) {
+    for (double element : submatrix) {
       _matrix[n++] = element;
     }
-    
-    updateAttributes(submatrix.n_rows, submatrix.n_cols);
   }
 
   /**
@@ -168,14 +160,12 @@ public class Mat extends BaseMat {
    * @param submatrix The matrix
    */
   protected Mat(DiagMat submatrix) {
-    _matrix = new double[submatrix.n_elem];
-    
+    set_size(submatrix.n_rows, submatrix.n_cols);
+
     int n = 0;
-    for(double element : submatrix) {
+    for (double element : submatrix) {
       _matrix[n++] = element;
     }
-    
-    updateAttributes(submatrix.n_rows, submatrix.n_cols);
   }
 
   /**
@@ -1456,14 +1446,12 @@ public class Mat extends BaseMat {
    *           rows of the right hand side operand, but were {@link #n_cols} and {@link #n_rows operand.n_rows}.
    */
   public Mat times(Mat operand) throws IllegalArgumentException {
-    if (n_cols != operand.n_rows) {
-      throw new IllegalArgumentException("The number of columns of the left-hand side operand must match with the number of rows of the right hand side operand, but were " + n_cols + " and " + operand.n_rows + ".");
-    }
+    isNonEqualNumberOfElementsDetection(n_cols, operand.n_rows);
 
-    // Performed by EJML, since non-element-wise multiplication is needed.
-    Mat result = new Mat(operand.n_rows, operand.n_cols);
-    CommonOps.mult(_matrix, operand._matrix, result._matrix);
-    return result;
+    // Performed by EJML because non-element-wise multiplication is needed.
+    DenseMatrix64F result = new DenseMatrix64F(operand.n_rows, operand.n_cols);
+    CommonOps.mult(convertMatToEJMLMat(this), convertMatToEJMLMat(operand), result);
+    return convertEJMLToMat(result);
   }
 
   /**
@@ -2294,7 +2282,10 @@ public class Mat extends BaseMat {
    * @param numberOfColumns The number of columns
    */
   public void set_size(int numberOfRows, int numberOfColumns) {
-    if(n_rows != numberOfRows || n_cols != numberOfColumns) {
+    isInvalidPositionDetection(numberOfRows);
+    isInvalidPositionDetection(numberOfColumns);
+
+    if (n_rows != numberOfRows || n_cols != numberOfColumns) {
       _matrix = new double[numberOfRows * numberOfColumns];
     }
     updateAttributes(numberOfRows, numberOfColumns);
@@ -2325,29 +2316,22 @@ public class Mat extends BaseMat {
    * @param numberOfRows The new number of rows
    * @param numberOfColumns The new number of columns
    * @param dimension The dimension
-   * 
-   * @throws IllegalArgumentException The dimension must be on of 0 or 1, but was {@code dimension}.
    */
-  public void reshape(int numberOfRows, int numberOfColumns, int dimension) throws IllegalArgumentException {
-    if (dimension < 0 || dimension > 1) {
-      throw new IllegalArgumentException("The dimension must be on of 0 or 1, but was " + dimension + ".");
-    }
+  public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
+    isNotInSetDetection(dimension, 0, 1);
+    isInvalidPositionDetection(numberOfRows);
+    isInvalidPositionDetection(numberOfColumns);
 
-    DenseMatrix64F temp = new DenseMatrix64F(numberOfColumns, numberOfRows);
-    if (dimension == 1) {
-      // reshape fills the new matrix row-wise and not column-wise. Filling a transposed matrix row-wise and transposing
-      // it again afterwards will result in a column-wise filled matrix.
-      _matrix.reshape(numberOfColumns, numberOfRows, true);
-      CommonOps.transpose(_matrix, temp);
-      _matrix = temp;
+    Mat temp = new Mat(_matrix);
+    set_size(numberOfColumns, numberOfRows);
+
+    if (dimension == 0) {
+      System.arraycopy(temp, 0, _matrix, 0, temp.n_elem);
     } else {
-      // same as above with a transpose of the current matrix in order to access it column-wise as a result.
-      CommonOps.transpose(_matrix, temp);
-      temp.reshape(numberOfColumns, numberOfRows, true);
-      CommonOps.transpose(temp, _matrix);
+      for (int n = 0; n < temp.n_elem; n++) {
+        _matrix[n] = temp._matrix[n];
+      }
     }
-
-    updateAttributes();
   }
 
   /**
@@ -2360,9 +2344,7 @@ public class Mat extends BaseMat {
    * @throws UnsupportedOperationException Must only be invoked for vectors.
    */
   public void resize(int numberOfElements) throws UnsupportedOperationException {
-    if (!is_vec()) {
-      throw new UnsupportedOperationException("Must only be invoked for vectors.");
-    }
+    isNonVectorDetection();
 
     if (is_colvec()) {
       resize(numberOfElements, 1);
@@ -2380,21 +2362,20 @@ public class Mat extends BaseMat {
    * @param numberOfColumns The new number of columns
    */
   public void resize(int numberOfRows, int numberOfColumns) {
-    if (numberOfRows <= n_rows && numberOfColumns <= n_cols) {
-      // No additional memory needs to be allocated
-      // Shrinks n_rows and n_cols only
-      _matrix.reshape(numberOfColumns, numberOfRows, false);
-    } else {
-      DenseMatrix64F newMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
-      for (int i = 0; i < n_rows; i++) {
-        for (int j = 0; j < n_cols; j++) {
-          newMatrix.set(i, j, _matrix.get(i, j));
-        }
-      }
-      _matrix = newMatrix;
-    }
+    isInvalidPositionDetection(numberOfRows);
+    isInvalidPositionDetection(numberOfColumns);
 
-    updateAttributes();
+    Mat temp = new Mat(_matrix);
+    set_size(numberOfColumns, numberOfRows);
+
+    int srcColumnPointer = 0;
+    int destColumnPointer = 0;
+    int length = Math.min(temp.n_rows, numberOfRows);
+    for (int j = 0; j < n_cols; j++) {
+      System.arraycopy(temp, srcColumnPointer, _matrix, destColumnPointer, length);
+      srcColumnPointer += temp.n_rows;
+      destColumnPointer += numberOfRows;
+    }
   }
 
   /**
@@ -2660,14 +2641,14 @@ public class Mat extends BaseMat {
 
     } while ((line = reader.readLine()) != null);
     int numberOfRow = matrix.size();
-    
+
     _matrix = new double[numberOfRow * numberOfColumns];
     for (int i = 0; i < matrix.size(); i++) {
       for (int j = 0; j < numberOfColumns; j++) {
         _matrix[getElementPosition(i, j)] = matrix.get(i)[j];
       }
     }
-    
+
     updateAttributes(numberOfRow, numberOfColumns);
 
     reader.close();
@@ -2707,20 +2688,17 @@ public class Mat extends BaseMat {
    * 
    * @return The inverse
    * 
-   * @throws UnsupportedOperationException Must only be invoked for square matrices.
    * @throws UnsupportedOperationException The matrix is not invertible.
    */
   public Mat i() throws UnsupportedOperationException {
-    if (!is_square()) {
-      throw new UnsupportedOperationException("Must only be invoked for square matrices.");
-    }
+    isNotSquareDetection();
 
-    DenseMatrix64F result = new DenseMatrix64F(n_rows, n_cols);
-    if (!CommonOps.invert(_matrix, result)) {
+    DenseMatrix64F inverse = new DenseMatrix64F(n_rows, n_cols);
+    if (!CommonOps.invert(convertMatToEJMLMat(this), inverse)) {
       throw new UnsupportedOperationException("The matrix is not invertible.");
     }
 
-    return new Mat(result);
+    return convertEJMLToMat(inverse);
   }
 
   /**
@@ -2729,9 +2707,9 @@ public class Mat extends BaseMat {
    * @return The transpose
    */
   public Mat t() {
-    DenseMatrix64F result = new DenseMatrix64F(n_cols, n_rows);
-    CommonOps.transpose(_matrix, result);
-    return new Mat(result);
+    DenseMatrix64F transpose = new DenseMatrix64F(n_cols, n_rows);
+    CommonOps.transpose(convertMatToEJMLMat(this), transpose);
+    return convertEJMLToMat(transpose);
   }
 
   /**
@@ -2743,7 +2721,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Sets the size of to be the same as {@code matrix}.
+   * Sets the size of the matrix to be the same as {@code matrix}.
    * <p>
    * Neither guarantees to reuse the values of the elements nor their positions.
    * 
@@ -2759,7 +2737,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Returns the element position based on column-major-ordering.
+   * Returns an element position based on column-major-ordering.
    * 
    * @param i The row position
    * @param j The colum position
@@ -2800,7 +2778,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Detects if the column position is invalid or out of bound and throws an exception if so.
+   * Detects if a column position is invalid or out of bound and throws an exception if so.
    * 
    * @param j The column position
    * 
@@ -2812,7 +2790,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Detects if the column position range is invalid or out of bound and throws an exception if so.
+   * Detects if a column position range is invalid or out of bound and throws an exception if so.
    * 
    * @param a The first row position
    * @param b The last row position
@@ -2829,7 +2807,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Detects if the row position is invalid or out of bound and throws an exception if so.
+   * Detects if a row position is invalid or out of bound and throws an exception if so.
    * 
    * @param i The row position
    * 
@@ -2841,7 +2819,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Detects if the row position range is out of bound and throws an exception if so.
+   * Detects if a row position range is out of bound and throws an exception if so.
    * 
    * @param a The first row position
    * @param b The last row position
@@ -2894,7 +2872,7 @@ public class Mat extends BaseMat {
   }
 
   /**
-   * Detects if the position is not an integer and throws an exception if so.
+   * Detects if a position is not an integer and throws an exception if so.
    * 
    * @param position The position
    * 
@@ -2909,8 +2887,71 @@ public class Mat extends BaseMat {
     }
   }
 
+  /**
+   * Detects if the matrix is not square and throws an exception if so.
+   * 
+   * @throws UnsupportedOperationException The matrix must be square, but was a ({@link #n_rows}, {@link #n_cols}
+   *           )-matrix.
+   */
+  protected void isNotSquareDetection() throws UnsupportedOperationException {
+    if (!is_square()) {
+      throw new IllegalArgumentException("The matrix must be square, but was a (" + n_rows + ", " + n_cols + ")-matrix.");
+    }
+  }
+
+  /**
+   * Detects if a value is not in a set and throws an exception if so.
+   * 
+   * @param value The value
+   * @param set The set
+   * 
+   * @throws IllegalArgumentException The given value is not in the set, but were {@code value} and {@code set}.
+   */
+  protected void isNotInSetDetection(int value, int... set) throws IllegalArgumentException {
+    if (!Arrays.asList(set).contains(value)) {
+      throw new IllegalArgumentException("The given value is not in the set, but were " + value + " and " + Arrays.toString(set) + ".");
+    }
+  }
+
   @Override
   protected int getElementPosition(int position) {
     return position;
+  }
+
+  /**
+   * Converts a matrix from the Mat format into EJML's DenseMatrix64F format.
+   * 
+   * @param matrix The matrix in Mat format
+   * @return The matrix in DenseMatrix64F format
+   */
+  static DenseMatrix64F convertMatToEJMLMat(Mat matrix) {
+    DenseMatrix64F ejmlMatrix = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
+    int position = 0;
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        ejmlMatrix.set(i, j, matrix._matrix[position++]);
+      }
+    }
+
+    return ejmlMatrix;
+  }
+
+  /**
+   * Converts a matrix from EJML's DenseMatrix64F format into the Mat format.
+   * 
+   * @param ejmlMatrix The matrix in DenseMatrix64F format
+   * @return The matrix in Mat format
+   */
+  static Mat convertEJMLToMat(DenseMatrix64F ejmlMatrix) {
+    Mat matrix = new Mat(ejmlMatrix.numRows, ejmlMatrix.numCols);
+
+    int position = 0;
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        matrix._matrix[position++] = ejmlMatrix.get(i, j);
+      }
+    }
+
+    return matrix;
   }
 }
