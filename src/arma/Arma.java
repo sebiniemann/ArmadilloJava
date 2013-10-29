@@ -12,6 +12,8 @@ package arma;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
@@ -2158,11 +2160,13 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat trans(Mat A) {
-    return null;
+  public static Mat trans(Mat matrix) {
+    Mat temp = new Mat(matrix);
+    temp.t();
+    return temp;
   }
 
   /**
@@ -2375,15 +2379,45 @@ public class Arma {
    * @return
    */
   public static Mat shuffle(Mat matrix, int dimension) {
-    return null;
+    Double[] array = new Double[matrix.n_elem]; 
+    for (int n = 0; n < matrix.n_elem; n++) { 
+      array[n] = matrix._matrix[n]; 
+    } 
+
+    Collections.shuffle(Arrays.asList(array)); 
+
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    for (int n = 0; n < result.n_elem; n++) { 
+      result._matrix[n] = array[n]; 
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat unique(Mat A) {
-    return null;
+  public static Mat unique(Mat matrix) {
+    HashSet<Double> set = new HashSet<Double>();
+    for (double element : matrix) {
+      set.add(element);
+    }
+    
+    Mat result;
+    if (matrix.is_rowvec()) {
+      result = new Mat(1, set.size());
+    } else {
+      result = new Mat(set.size(), 1);
+    }
+    
+    int position = 0;
+    for(double element : set) {
+      result._matrix[position++] = element;
+    }
+
+    return result;
   }
 
   /**
