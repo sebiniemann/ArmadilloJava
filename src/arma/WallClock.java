@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class WallClock {
-
   /**
    * The start instant of a time interval.
    */

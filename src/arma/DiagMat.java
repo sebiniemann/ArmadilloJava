@@ -10,16 +10,28 @@
 
 package arma;
 
+
 /**
  * Used for shallow copies of diagonals of {@link Mat}.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
-class DiagMat extends BaseMat {
+class DiagMat extends AbstractMat {
+  
   /**
-   * The diagonal position
+   * The diagonal index
    */
   int _k;
+
+  /**
+   * The current index
+   */
+  protected int      _n;
+  
+  /**
+   * The difference between the current and the next index
+   */
+  int           _step;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to its {@code k}th diagonal.
@@ -33,7 +45,7 @@ class DiagMat extends BaseMat {
    * @param matrix The matrix
    * @param k The diagonal position
    */
-  DiagMat(Mat matrix, int k) {
+  protected DiagMat(AbstractMat matrix, int k) {
     matrix.isVectorDetection();
 
     int length;
@@ -46,18 +58,51 @@ class DiagMat extends BaseMat {
 
       length = Math.min(matrix.n_rows + k, matrix.n_cols);
     }
-
-    _matrix = matrix._matrix;
-
-    n_rows = 1;
-    n_cols = length;
+    
+    n_rows = length;
+    n_cols = 1;
     n_elem = n_rows * n_cols;
 
+    _underlyingMatrix = matrix;
+    _matrix = _underlyingMatrix._matrix;
+    
+    _step = n_rows + 1;
     _k = k;
   }
 
   @Override
-  protected int getElementPosition(int n) {
-    return n * n_rows + 1 - _k;
+  public void iteratorReset() {
+    if(_k > 0) {
+      _n = _k * n_rows;
+    } else {
+      _n = -_k;
+    }
+    
+    _n -= n_rows + 1;
+  }
+
+  @Override
+  public int iteratorNext() {
+    super.iteratorNext();
+    
+    _n += _step;
+    return _underlyingMatrix.getElementIndex(_n);
+  }
+
+  @Override
+  public int getElementIndex(int i, int j) {
+    return _underlyingMatrix.getElementIndex(i);
+  }
+
+  @Override
+  public int getElementIndex(int n) {
+    int nn;
+    if(_k > 0) {
+      nn =  n * (n_rows + 1) + _k * n_rows;
+    } else {
+      nn = n * (n_rows + 1) - _k;
+    }
+    
+    return _underlyingMatrix.getElementIndex(nn);
   }
 }

@@ -15,19 +15,32 @@ package arma;
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
-class SelectionMat extends BaseMat {
+class SelectMat extends AbstractMat {
+
+  /**
+   * The current row iterator position
+   */
+  private int _i;
+
+  /**
+   * The current column iterator position
+   */
+  private int _j;
+
   /**
    * The element positions
    */
-  Mat _elementSelection;
+  Mat         _elementSelection;
+
   /**
    * The row positions
    */
-  Mat _rowSelection;
+  Mat         _rowSelection;
+
   /**
    * The column positions
    */
-  Mat _columnSelection;
+  Mat         _columnSelection;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to the elements specified in the selection.
@@ -35,15 +48,16 @@ class SelectionMat extends BaseMat {
    * @param matrix The matrix
    * @param selection The element positions
    */
-  SelectionMat(Mat matrix, Mat selection) {
+  protected SelectMat(AbstractMat matrix, Mat selection) {
     selection.isNonVectorDetection();
     matrix.isInvalidElementSelectionDetection(selection);
-
-    _matrix = matrix._matrix;
 
     n_rows = selection.n_elem;
     n_cols = 1;
     n_elem = n_rows * n_cols;
+
+    _underlyingMatrix = matrix;
+    _matrix = _underlyingMatrix._matrix;
 
     _elementSelection = selection;
     _columnSelection = null;
@@ -59,9 +73,7 @@ class SelectionMat extends BaseMat {
    * 
    * @throws IllegalArgumentException At least one selection must not be null.
    */
-  SelectionMat(Mat matrix, Mat rowSelection, Mat columnSelection) throws IllegalArgumentException {
-    _matrix = matrix._matrix;
-
+  protected SelectMat(AbstractMat matrix, Mat rowSelection, Mat columnSelection) throws IllegalArgumentException {
     if (rowSelection == null && columnSelection == null) {
       throw new IllegalArgumentException("At least one selection must not be null.");
     } else if (rowSelection == null) {
@@ -85,7 +97,11 @@ class SelectionMat extends BaseMat {
       n_rows = rowSelection.n_elem;
       n_cols = columnSelection.n_elem;
     }
+
     n_elem = n_rows * n_cols;
+
+    _underlyingMatrix = matrix;
+    _matrix = _underlyingMatrix._matrix;
 
     _elementSelection = null;
     _rowSelection = rowSelection;
@@ -93,20 +109,51 @@ class SelectionMat extends BaseMat {
   }
 
   @Override
-  protected int getElementPosition(int n) {
+  protected void iteratorReset() {
+    _i = 0;
+    _j = 0;
+  }
+
+  @Override
+  protected int iteratorNext() {
+    super.iteratorNext();
+    return _underlyingMatrix.getElementIndex(getElementIndex(_i++, _j++));
+  }
+
+  @Override
+  protected int getElementIndex(int i, int j) {
+    int n;
     if (_elementSelection != null) {
-      return (int) _elementSelection._matrix[n];
+      n = (int) _elementSelection._matrix[i];
+    } else if (_rowSelection == null) {
+      n = i + ((int) _rowSelection._matrix[j]) * n_rows;
+    } else if (_columnSelection == null) {
+      n = ((int) _rowSelection._matrix[i]) + j * n_rows;
+    } else {
+      n = ((int) _rowSelection._matrix[i]) + ((int) _rowSelection._matrix[j]) * n_rows;
+    }
+
+    return _underlyingMatrix.getElementIndex(n);
+  }
+
+  @Override
+  protected int getElementIndex(int n) {
+    int nn;
+    if (_elementSelection != null) {
+      nn = (int) _elementSelection._matrix[n];
     } else {
       int j = n / n_rows;
       int i = n - j * n_rows;
 
       if (_rowSelection == null) {
-        return i + ((int) _rowSelection._matrix[j]) * n_rows;
+        nn = i + ((int) _rowSelection._matrix[j]) * n_rows;
       } else if (_columnSelection == null) {
-        return ((int) _rowSelection._matrix[i]) + j * n_rows;
+        nn = ((int) _rowSelection._matrix[i]) + j * n_rows;
       } else {
-        return ((int) _rowSelection._matrix[i]) + ((int) _rowSelection._matrix[j]) * n_rows;
+        nn = ((int) _rowSelection._matrix[i]) + ((int) _rowSelection._matrix[j]) * n_rows;
       }
     }
+
+    return _underlyingMatrix.getElementIndex(nn);
   }
 }

@@ -96,7 +96,7 @@ public class Span {
    * 
    * @return The position
    */
-  int getFirst() {
+  protected int getFirst() {
     return _first;
   }
 
@@ -105,7 +105,7 @@ public class Span {
    * 
    * @return The position
    */
-  int getLast() {
+  protected int getLast() {
     return _last;
   }
 
@@ -115,7 +115,7 @@ public class Span {
    * 
    * @return Whether the span includes the entire range
    */
-  boolean isEntireRange() {
+  protected boolean isEntireRange() {
     return _isEntireRange;
   }
 }

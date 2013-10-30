@@ -10,6 +10,7 @@
 
 package arma;
 
+
 /**
  * Provides statistical measures that are updated iterative per sample vector.
  * <p>
@@ -20,7 +21,6 @@ package arma;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class RunningStatVec {
-
   /**
    * Whether to calculate the covariance
    */

@@ -17,7 +17,6 @@ package arma;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class RunningStat {
-
   /**
    * The smallest sample
    */

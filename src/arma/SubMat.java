@@ -15,19 +15,27 @@ package arma;
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
-class SubviewMat extends BaseMat {
+class SubMat extends AbstractMat {
+
   /**
-   * The original number of rows
+   * The current index
    */
-  boolean _orig_is_vec;
+  private int _n;
+  
   /**
-   * The original number of rows
-   */
-  int     _orig_n_rows;
-  /**
-   * The first element position
+   * The first corresponding index
    */
   int     _a;
+  
+  /**
+   * The remaining rows
+   */
+  private int _remainingRows;
+  
+  /**
+   * The difference between the last index of a row and the next index of the next row
+   */
+  int     _stepRow;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to a subvector from row {@code a} to {@code b}.
@@ -36,13 +44,9 @@ class SubviewMat extends BaseMat {
    * @param a The first element position
    * @param b The last element position
    */
-  SubviewMat(Mat vector, int a, int b) {
+  protected SubMat(AbstractMat vector, int a, int b) {
     vector.isNonVectorDetection();
     vector.isElementRangeOutOfBoundsDetection(a, b);
-
-    _matrix = vector._matrix;
-    _orig_n_rows = vector.n_rows;
-    _orig_is_vec = vector.is_vec();
 
     if (is_colvec()) {
       n_rows = 1;
@@ -53,6 +57,10 @@ class SubviewMat extends BaseMat {
     }
     n_elem = n_rows * n_cols;
 
+    _underlyingMatrix = vector;
+    _matrix = _underlyingMatrix._matrix;
+    
+    _stepRow = vector.n_rows - n_rows;
     _a = a;
   }
 
@@ -66,28 +74,68 @@ class SubviewMat extends BaseMat {
    * @param aj The first column position
    * @param bj The last column position
    */
-  SubviewMat(Mat matrix, int ai, int bi, int aj, int bj) {
+  protected SubMat(AbstractMat matrix, int ai, int bi, int aj, int bj) {
     matrix.isRowRangeOutOfBoundsDetection(ai, bi);
     matrix.isColumnRangeOutOfBoundsDetection(aj, bj);
-
-    _matrix = matrix._matrix;
-    _orig_n_rows = matrix.n_rows;
-    _orig_is_vec = matrix.is_vec();
 
     n_rows = bi - ai + 1;
     n_cols = bj - aj + 1;
     n_elem = n_rows * n_cols;
 
-    _a = matrix.getElementPosition(ai, aj);
+    _underlyingMatrix = matrix;
+    _matrix = _underlyingMatrix._matrix;
+    
+    _stepRow = matrix.n_rows - n_rows;
+    _a = ai + aj * n_rows;
+  }
+  
+  @Override
+  protected void iteratorReset() {
+    _n = _a;
+    _remainingRows = n_rows;
+  }
+  
+  @Override
+  protected int iteratorNext() {
+    super.iteratorNext();
+    
+    if(_underlyingMatrix.is_vec()) {
+      return _n++;
+    } else {
+      if(_remainingRows < 1) {
+        _remainingRows = n_rows;
+        _n += _stepRow;
+      }
+      
+      _remainingRows--;
+      
+      return _n++;
+    }
+    
   }
 
   @Override
-  protected int getElementPosition(int n) {
-    if (_orig_is_vec) {
-      return n;
+  protected int getElementIndex(int i, int j) {
+    int n;
+    if(_underlyingMatrix.is_vec()) {
+      n = i;
+    } else {
+      n = i + j * n_rows;
+    }
+    
+    return _underlyingMatrix.getElementIndex(n);
+  }
+  
+  @Override
+  protected int getElementIndex(int n) {
+    int nn;
+    if(_underlyingMatrix.is_vec()) {
+      nn = n;
     } else {
       int j = (n / n_rows);
-      return _a + (n - j * n_rows) + j * _orig_n_rows;
+      nn = _a + n + j * (_stepRow + 1);
     }
+    
+    return _underlyingMatrix.getElementIndex(nn);
   }
 }

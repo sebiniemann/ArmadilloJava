@@ -41,7 +41,6 @@ import org.ejml.ops.NormOps;
  * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>
  */
 public class Arma {
-
   /**
    * Returns a zero column vector with {@code numberOfElements} elements.
    * 
@@ -161,7 +160,7 @@ public class Arma {
   public static Mat repmat(Mat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
     Mat.isInvalidPositionDetection(numberOfCopiesPerRow);
     Mat.isInvalidPositionDetection(numberOfCopiesPerColumn);
-
+    
     Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
 
     int srcColumnPointer = 0;
@@ -192,9 +191,10 @@ public class Arma {
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
 
-      result.diag(Op.EQUAL, vector._matrix[0]);
+      vector.iteratorReset();
+      result.diag(Op.EQUAL, vector._matrix[vector.iteratorNext()]);
       for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix[n];
+        double element = vector._matrix[vector.iteratorNext()];
         result.diag(n, Op.EQUAL, element);
         result.diag(-n, Op.EQUAL, element);
       }
@@ -219,12 +219,16 @@ public class Arma {
     if (vector1.n_elem > 0 && vector2.n_elem > 0) {
       Mat result = new Mat(vector1.n_elem, vector2.n_elem);
 
-      result.diag(Op.EQUAL, vector1._matrix[0]);
+      vector1.iteratorReset();
+      result.diag(Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
       for (int n = 1; n < vector1.n_elem; n++) {
-        result.diag(n, Op.EQUAL, vector1._matrix[n]);
+        result.diag(n, Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
       }
+      
+      vector2.iteratorReset();
+      vector2.iteratorNext(); // Skip this one
       for (int n = 1; n < vector2.n_elem; n++) {
-        result.diag(-n, Op.EQUAL, vector2._matrix[n]);
+        result.diag(-n, Op.EQUAL, vector2._matrix[vector2.iteratorNext()]);
       }
 
       return result;
@@ -245,9 +249,10 @@ public class Arma {
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
 
-      result.diag(Op.EQUAL, vector._matrix[0]);
+      vector.iteratorReset();
+      result.diag(Op.EQUAL, vector._matrix[vector.iteratorNext()]);
       for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix[n];
+        double element = vector._matrix[vector.iteratorNext()];
         result.diag(vector.n_elem - n, Op.EQUAL, element);
         result.diag(-n, Op.EQUAL, element);
       }
@@ -301,8 +306,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.sin(matrix._matrix[n]);
+      result._matrix[n] = Math.sin(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -318,8 +325,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.asin(matrix._matrix[n]);
+      result._matrix[n] = Math.asin(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -335,8 +344,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.sinh(matrix._matrix[n]);
+      result._matrix[n] = Math.sinh(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -352,8 +363,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      double element = matrix._matrix[n];
+      double element = matrix._matrix[matrix.iteratorNext()];
       result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) + 1));
     }
 
@@ -370,8 +383,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.cos(matrix._matrix[n]);
+      result._matrix[n] = Math.cos(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -387,8 +402,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.acos(matrix._matrix[n]);
+      result._matrix[n] = Math.acos(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -404,8 +421,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.cosh(matrix._matrix[n]);
+      result._matrix[n] = Math.cosh(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -421,8 +440,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      double element = matrix._matrix[n];
+      double element = matrix._matrix[matrix.iteratorNext()];
       result._matrix[n] = Math.log(element + Math.sqrt(element + 1) * Math.sqrt(element - 1));
     }
 
@@ -437,8 +458,10 @@ public class Arma {
    */
   public static Mat tan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.tan(matrix._matrix[n]);
+      result._matrix[n] = Math.tan(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -452,8 +475,10 @@ public class Arma {
    */
   public static Mat atan(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.atan(matrix._matrix[n]);
+      result._matrix[n] = Math.atan(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -467,8 +492,10 @@ public class Arma {
    */
   public static Mat tanh(Mat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.tanh(matrix._matrix[n]);
+      result._matrix[n] = Math.tanh(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -484,8 +511,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      double element = matrix._matrix[n];
+      double element = matrix._matrix[matrix.iteratorNext()];
       result._matrix[n] = 0.5 * Math.log((1 + element) / (1 - element));
     }
 
@@ -502,9 +531,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.abs(matrix._matrix[n]);
+      result._matrix[n] = Math.abs(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -521,9 +551,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.ulp(matrix._matrix[n]);
+      result._matrix[n] = Math.ulp(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -539,9 +570,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.exp(matrix._matrix[n]);
+      result._matrix[n] = Math.exp(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -557,9 +589,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.pow(2, matrix._matrix[n]);
+      result._matrix[n] = Math.pow(2, matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -575,9 +608,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.pow(10, matrix._matrix[n]);
+      result._matrix[n] = Math.pow(10, matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -595,9 +629,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      double exp = Math.exp(matrix._matrix[n]);
+      double exp = Math.exp(matrix._matrix[matrix.iteratorNext()]);
       if (!Double.isInfinite(exp)) {
         result._matrix[n] = exp;
       } else {
@@ -618,9 +653,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.log(matrix._matrix[n]);
+      result._matrix[n] = Math.log(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -636,9 +672,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.log(matrix._matrix[n]) / Math.log(2);
+      result._matrix[n] = Math.log(matrix._matrix[matrix.iteratorNext()]) / Math.log(2);
     }
 
     return result;
@@ -654,9 +691,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.log10(matrix._matrix[n]);
+      result._matrix[n] = Math.log10(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -676,9 +714,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      double value = matrix._matrix[n];
+      double value = matrix._matrix[matrix.iteratorNext()];
       if (Double.isInfinite(value)) {
         value = Double.MAX_VALUE;
       } else if (value <= 0) {
@@ -702,9 +741,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.pow(matrix._matrix[n], power);
+      result._matrix[n] = Math.pow(matrix._matrix[matrix.iteratorNext()], power);
     }
 
     return result;
@@ -720,9 +760,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.sqrt(matrix._matrix[n]);
+      result._matrix[n] = Math.sqrt(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -738,9 +779,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.pow(matrix._matrix[n], 2);
+      result._matrix[n] = Math.pow(matrix._matrix[matrix.iteratorNext()], 2);
     }
 
     return result;
@@ -756,9 +798,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.floor(matrix._matrix[n]);
+      result._matrix[n] = Math.floor(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -774,9 +817,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.ceil(matrix._matrix[n]);
+      result._matrix[n] = Math.ceil(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -792,9 +836,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.round(matrix._matrix[n]);
+      result._matrix[n] = Math.round(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -812,9 +857,10 @@ public class Arma {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
-
+    
+    matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.signum(matrix._matrix[n]);
+      result._matrix[n] = Math.signum(matrix._matrix[matrix.iteratorNext()]);
     }
 
     return result;
@@ -826,13 +872,15 @@ public class Arma {
    * @param matrix The matrix
    * @return The sum
    */
-  public static double accu(Mat matrix) {
+  public static double accu(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
+    matrix.iteratorReset();
     double sum = 0;
-    for (double element : matrix) {
-      sum += element;
+    while (matrix.iteratorHasNext()) {
+      sum += matrix._matrix[matrix.iteratorNext()];
     }
+
     return sum;
   }
 
@@ -843,15 +891,17 @@ public class Arma {
    * @param vector2 The second vector
    * @return The dot product
    */
-  public static double dot(Mat vector1, Mat vector2) {
+  public static double dot(AbstractMat vector1, AbstractMat vector2) {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
     vector1.isEmptyDetection();
     Mat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
+    vector1.iteratorReset();
+    vector2.iteratorReset();
     double dotProduct = 0;
-    for (int n = 0; n < vector1.n_elem; n++) {
-      dotProduct += vector1._matrix[n] * vector2._matrix[n];
+    while (vector1.iteratorHasNext()) {
+      dotProduct += vector1._matrix[vector1.iteratorNext()] * vector2._matrix[vector2.iteratorNext()];
     }
 
     return dotProduct;
@@ -863,15 +913,8 @@ public class Arma {
    * @param vector1 The first vector
    * @param vector2 The second vector
    * @return The dot product
-   * 
-   * @throws IllegalArgumentException The vector1 must really be a vector, but was a ({@link Mat#n_rows
-   *           selection.n_rows}, {@link Mat#n_cols selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The vector2 must really be a vector, but was a ({@code selection.n_rows},
-   *           {@code selection.n_cols})-matrix.
-   * @throws IllegalArgumentException The number of elements of the left-hand side operand must match with the right
-   *           hand side operand, but were {@link Mat#n_elem vector1.n_elem} and {@code vector2.n_elem}.
    */
-  public static double norm_dot(Mat vector1, Mat vector2) throws IllegalArgumentException {
+  public static double norm_dot(Mat vector1, Mat vector2) {
     return dot(vector1, vector2) / Math.sqrt(dot(vector1, vector1) * dot(vector2, vector2));
   }
 
@@ -885,7 +928,7 @@ public class Arma {
     matrix.isNotSquareDetection();
     matrix.isEmptyDetection();
 
-    return CommonOps.det(Mat.convertMatToEJMLMat(matrix));
+    return CommonOps.det(AbstractMat.convertMatToEJMLMat(matrix));
   }
 
   /**
@@ -927,7 +970,7 @@ public class Arma {
       }
     }
 
-    return NormOps.normP(Mat.convertMatToEJMLMat(matrix), p);
+    return NormOps.normP(AbstractMat.convertMatToEJMLMat(matrix), p);
   }
 
   /**
@@ -948,20 +991,20 @@ public class Arma {
     if (matrix.is_vec()) {
       switch (p) {
         case "-inf":
-          return CommonOps.elementMinAbs(Mat.convertMatToEJMLMat(matrix));
+          return CommonOps.elementMinAbs(AbstractMat.convertMatToEJMLMat(matrix));
         case "inf":
-          return CommonOps.elementMaxAbs(Mat.convertMatToEJMLMat(matrix));
+          return CommonOps.elementMaxAbs(AbstractMat.convertMatToEJMLMat(matrix));
         case "fro":
-          return NormOps.normF(Mat.convertMatToEJMLMat(matrix));
+          return NormOps.normF(AbstractMat.convertMatToEJMLMat(matrix));
         default:
           throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro', but was " + p);
       }
     } else {
       switch (p) {
         case "inf":
-          return NormOps.inducedPInf(Mat.convertMatToEJMLMat(matrix));
+          return NormOps.inducedPInf(AbstractMat.convertMatToEJMLMat(matrix));
         case "fro":
-          return NormOps.normF(Mat.convertMatToEJMLMat(matrix));
+          return NormOps.normF(AbstractMat.convertMatToEJMLMat(matrix));
         default:
           throw new IllegalArgumentException("For non-vector matrices, p must be one of 'inf' or 'fro', but was " + p);
       }
@@ -992,7 +1035,7 @@ public class Arma {
   public static double rank(Mat matrix, double tolerance) {
     matrix.isEmptyDetection();
 
-    return MatrixFeatures.rank(Mat.convertMatToEJMLMat(matrix));
+    return MatrixFeatures.rank(AbstractMat.convertMatToEJMLMat(matrix));
   }
 
   /**
@@ -1006,7 +1049,7 @@ public class Arma {
 
     double trace = matrix._matrix[0];
     for (int n = 1; n < matrix.n_elem; n++) {
-      trace += matrix._matrix[matrix.getElementPosition(n, n)];
+      trace += matrix._matrix[matrix.getElementIndex(n, n)];
     }
 
     return trace;
@@ -1035,13 +1078,14 @@ public class Arma {
    * @param vector The vector
    * @return The minimum
    */
-  public static double min(Mat vector) {
+  public static double min(AbstractMat vector) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
-    double minimum = vector._matrix[0];
-    for (int n = 1; n < vector.n_elem; n++) {
-      minimum = Math.min(minimum, vector._matrix[n]);
+    vector.iteratorReset();
+    double minimum = vector._matrix[vector.iteratorNext()];
+    while (vector.iteratorHasNext()) {
+      minimum = Math.min(minimum, vector._matrix[vector.iteratorNext()]);
     }
 
     return minimum;
@@ -1076,12 +1120,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = min(matrix.col(j));
+        result._matrix[j] = min(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = min(matrix.row(i));
+        result._matrix[i] = min(matrix.rowInternal(i));
       }
     }
 
@@ -1094,13 +1138,14 @@ public class Arma {
    * @param vector The vector
    * @return The maximum
    */
-  public static double max(Mat vector) {
+  public static double max(AbstractMat vector) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
-    double maximum = vector._matrix[0];
-    for (int n = 1; n < vector.n_elem; n++) {
-      maximum = Math.max(maximum, vector._matrix[n]);
+    vector.iteratorReset();
+    double maximum = vector._matrix[vector.iteratorNext()];
+    while (vector.iteratorHasNext()) {
+      maximum = Math.max(maximum, vector._matrix[vector.iteratorNext()]);
     }
 
     return maximum;
@@ -1133,12 +1178,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = max(matrix.col(j));
+        result._matrix[j] = max(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = max(matrix.row(i));
+        result._matrix[i] = max(matrix.rowInternal(i));
       }
     }
 
@@ -1151,11 +1196,11 @@ public class Arma {
    * @param vector The vector
    * @return The mean
    */
-  public static double mean(Mat vector) {
+  public static double mean(AbstractMat vector) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
-    return sum(vector) / vector.n_elem;
+    return accu(vector) / vector.n_elem;
   }
 
   /**
@@ -1202,18 +1247,18 @@ public class Arma {
    * @param vector The vector
    * @return The median
    */
-  public static double median(Mat vector) {
+  public static double median(AbstractMat vector) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
-    Mat sortedColumn = sort(vector);
+    Mat sort = sort(vector);
 
     double median;
     if (vector.n_elem % 2 == 1) {
       int middle = vector.n_elem / 2;
-      median = (sortedColumn._matrix[middle - 1] + sortedColumn._matrix[middle]) / 2;
+      median = (sort._matrix[sort.getElementIndex(middle - 1)] + sort._matrix[sort.getElementIndex(middle)]) / 2;
     } else {
-      median = sortedColumn._matrix[vector.n_elem / 2];
+      median = sort._matrix[sort.getElementIndex(vector.n_elem / 2)];
     }
 
     return median;
@@ -1245,12 +1290,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = median(matrix.col(j));
+        result._matrix[j] = median(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = median(matrix.row(i));
+        result._matrix[i] = median(matrix.rowInternal(i));
       }
     }
 
@@ -1329,8 +1374,8 @@ public class Arma {
    * @param vector The vector
    * @return The variance
    */
-  public static double var(Mat vector) {
-    return stddev(vector, 0);
+  public static double var(AbstractMat vector) {
+    return var(vector, 0);
   }
 
   /**
@@ -1340,7 +1385,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The variance
    */
-  public static double var(Mat vector, int normType) {
+  public static double var(AbstractMat vector, int normType) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
     Mat.isNotInSetDetection(normType, 0, 1);
@@ -1397,12 +1442,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = var(matrix.col(j));
+        result._matrix[j] = var(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = var(matrix.row(i));
+        result._matrix[i] = var(matrix.rowInternal(i));
       }
     }
 
@@ -1415,11 +1460,12 @@ public class Arma {
    * @param vector The vector
    * @return Whether any element is non-zero
    */
-  public static boolean any(Mat vector) {
+  public static boolean any(AbstractMat vector) {
     vector.isNonVectorDetection();
 
-    for (double element : vector) {
-      if (element != 0) {
+    vector.iteratorReset();
+    while (vector.iteratorHasNext()) {
+      if (vector._matrix[vector.iteratorNext()] != 0) {
         return true;
       }
     }
@@ -1450,12 +1496,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = any(matrix.col(j)) ? 1 : 0;
+        result._matrix[j] = any(matrix.colInternal(j)) ? 1 : 0;
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = any(matrix.row(i)) ? 1 : 0;
+        result._matrix[i] = any(matrix.rowInternal(i)) ? 1 : 0;
       }
     }
 
@@ -1468,15 +1514,16 @@ public class Arma {
    * @param vector The vector
    * @return Whether any element is non-zero
    */
-  public static boolean all(Mat vector) {
+  public static boolean all(AbstractMat vector) {
     vector.isNonVectorDetection();
 
     if (vector.n_elem < 1) {
       return false;
     }
 
-    for (double element : vector) {
-      if (element == 0) {
+    vector.iteratorReset();
+    while (vector.iteratorHasNext()) {
+      if (vector._matrix[vector.iteratorNext()] == 0) {
         return false;
       }
     }
@@ -1505,12 +1552,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = all(matrix.col(j)) ? 1 : 0;
+        result._matrix[j] = all(matrix.colInternal(j)) ? 1 : 0;
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = all(matrix.row(i)) ? 1 : 0;
+        result._matrix[i] = all(matrix.rowInternal(i)) ? 1 : 0;
       }
     }
 
@@ -1523,13 +1570,14 @@ public class Arma {
    * @param vector The vector
    * @return The product
    */
-  public static double prod(Mat vector) {
+  public static double prod(AbstractMat vector) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
+    vector.iteratorReset();
     double product = 1;
-    for (double element : vector) {
-      product *= element;
+    while (vector.iteratorHasNext()) {
+      product *= vector._matrix[vector.iteratorNext()];
     }
 
     return product;
@@ -1561,12 +1609,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = prod(matrix.col(j));
+        result._matrix[j] = prod(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = prod(matrix.row(i));
+        result._matrix[i] = prod(matrix.rowInternal(i));
       }
     }
 
@@ -1694,7 +1742,7 @@ public class Arma {
    * @param vector The vector
    * @return The vector
    */
-  public static Mat sort(Mat vector) {
+  public static Mat sort(AbstractMat vector) {
     return sort(vector, 0);
   }
 
@@ -1705,7 +1753,7 @@ public class Arma {
    * @param sortType The sortType
    * @return The vector
    */
-  public static Mat sort(Mat vector, int sortType) {
+  public static Mat sort(AbstractMat vector, int sortType) {
     vector.isNonVectorDetection();
     Mat.isNotInSetDetection(sortType, 0, 1);
 
@@ -2277,7 +2325,7 @@ public class Arma {
     } else {
       result = new DenseMatrix64F();
     }
-    return Mat.convertEJMLToMat(result);
+    return AbstractMat.convertEJMLToMat(result);
   }
 
   /**
@@ -2308,11 +2356,27 @@ public class Arma {
   }
 
   /**
+   * @param vector
+   * @return
+   */
+  public static Mat cumsum(Mat vector) {
+    Mat result = new Mat();
+    result.copy_size(vector);
+    
+    result._matrix[0] = vector._matrix[0];
+    for(int n = 1; n < result.n_elem; n++) {
+      result._matrix[n] = result._matrix[n -1] + vector._matrix[n];
+    }
+    
+    return result;
+  }
+
+  /**
    * @param matrix
    * @return
    */
-  public static Mat cumsum(Mat matrix) {
-    return cumsum(matrix, 0);
+  public static Mat cumsumMat(Mat matrix) {
+    return cumsumMat(matrix, 0);
   }
 
   /**
@@ -2320,8 +2384,24 @@ public class Arma {
    * @param dimension
    * @return
    */
-  public static Mat cumsum(Mat matrix, int dimension) {
-    return null;
+  public static Mat cumsumMat(Mat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    Mat.isNotInSetDetection(dimension, 0, 1);
+
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, cumsum(matrix.col(j)));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, cumsum(matrix.row(i)));
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -2362,7 +2442,20 @@ public class Arma {
    * @return
    */
   public static Mat kron(Mat A, Mat B) {
-    return null;
+    Mat result = repmat(A, B.n_rows, B.n_cols);
+    
+    int position = 0;
+    int columnPointer = 0;
+    for(int j = 0; j < B.n_cols; j++) {
+      int rowPointer = 0;
+      for (int i = 0; i < B.n_rows; i++) {
+        result.submatInternal(rowPointer, rowPointer + A.n_cols - 1, columnPointer, columnPointer + A.n_cols - 1).inplace(Op.TIMES, B._matrix[position++]);
+        rowPointer++;
+      }
+      columnPointer++;
+    }
+    
+    return result;
   }
 
   /**
@@ -2401,8 +2494,9 @@ public class Arma {
    */
   public static Mat unique(Mat matrix) {
     HashSet<Double> set = new HashSet<Double>();
-    for (double element : matrix) {
-      set.add(element);
+    
+    for (int n = 0; n < matrix.n_elem; n++) {
+      set.add(matrix._matrix[n]);
     }
     
     Mat result;
@@ -2626,7 +2720,7 @@ public class Arma {
    */
   public static boolean qr(Mat q, Mat r, Mat x) {
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
-    qr.decompose(Mat.convertMatToEJMLMat(x));
+    qr.decompose(AbstractMat.convertMatToEJMLMat(x));
 
     DenseMatrix64F tempQ;
     DenseMatrix64F tempR;
@@ -2638,10 +2732,10 @@ public class Arma {
     }
 
     q.set_size(tempQ.numRows, tempQ.numCols);
-    q = Mat.convertEJMLToMat(tempQ);
+    q = AbstractMat.convertEJMLToMat(tempQ);
 
     r.set_size(tempR.numRows, tempR.numCols);
-    r = Mat.convertEJMLToMat(tempR);
+    r = AbstractMat.convertEJMLToMat(tempR);
 
     return true;
   }
@@ -2667,11 +2761,11 @@ public class Arma {
 
     DenseMatrix64F x = new DenseMatrix64F();
 
-    if (!CommonOps.solve(Mat.convertMatToEJMLMat(a), Mat.convertMatToEJMLMat(b), x)) {
+    if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(a), AbstractMat.convertMatToEJMLMat(b), x)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
     };
 
-    return Mat.convertEJMLToMat(x);
+    return AbstractMat.convertEJMLToMat(x);
   }
 
   /**
@@ -2712,9 +2806,9 @@ public class Arma {
    * 
    * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
    */
-  public static Mat svd(Mat x) throws RuntimeException {
+  public static Mat svd(AbstractMat x) throws RuntimeException {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
-    svd.decompose(Mat.convertMatToEJMLMat(x));
+    svd.decompose(AbstractMat.convertMatToEJMLMat(x));
 
     DenseMatrix64F s;
     try {
@@ -2724,7 +2818,7 @@ public class Arma {
       throw new RuntimeException("The algorithm was unable to decompose the matrix.");
     }
 
-    return Mat.convertEJMLToMat(s);
+    return AbstractMat.convertEJMLToMat(s);
   }
 
   /**
@@ -2766,7 +2860,7 @@ public class Arma {
    */
   public static boolean svd(Mat u, Mat s, Mat v, Mat x) {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, true, true, false);
-    svd.decompose(Mat.convertMatToEJMLMat(x));
+    svd.decompose(AbstractMat.convertMatToEJMLMat(x));
 
     DenseMatrix64F tempU;
     DenseMatrix64F tempS;
@@ -2780,13 +2874,13 @@ public class Arma {
     }
 
     u.set_size(tempU.numRows, tempU.numCols);
-    u = Mat.convertEJMLToMat(tempU);
+    u = AbstractMat.convertEJMLToMat(tempU);
 
     s.set_size(tempS.numRows, tempS.numCols);
-    s = Mat.convertEJMLToMat(tempS);
+    s = AbstractMat.convertEJMLToMat(tempS);
 
     v.set_size(tempV.numRows, tempV.numCols);
-    v = Mat.convertEJMLToMat(tempV);
+    v = AbstractMat.convertEJMLToMat(tempV);
 
     return true;
   }
