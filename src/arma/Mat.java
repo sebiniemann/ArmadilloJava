@@ -11,26 +11,14 @@
 package arma;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
-
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
 
 /**
  * Provides a real-valued dense matrix with double precision. Member functions as well as attributes are similar to the
