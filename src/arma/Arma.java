@@ -2322,19 +2322,31 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat fliplr(Mat A) {
-    return null;
+  public static Mat fliplr(AbstractMat matrix) {
+    Mat result = new Mat(matrix);
+    
+    for(int j = 0; j < result.n_cols / 2; j++) {
+      result.swap_cols(j, result.n_cols - (j + 1));
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat flipud(Mat A) {
-    return null;
+  public static Mat flipud(AbstractMat matrix) {
+    Mat result = new Mat(matrix);
+    
+    for(int i = 0; i < result.n_rows / 2; i++) {
+      result.swap_rows(i, result.n_rows - (i + 1));
+    }
+    
+    return result;
   }
 
   /**
