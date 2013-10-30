@@ -467,7 +467,7 @@ flipud(A)                  | flipud(A)                  | Arma.flipud(A)        
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-diag(A)                    | diagmat(A)                 | Arma.diagmat(A)                 | **Matlab:** Use diag(digag(A)) if A is not a vector.
+diag(A)                    | diagmat(A)                 | Arma.diagmat(A)                 | **Matlab:** Use diag(diag(A)) if A is not a vector.
 triu(A)                    | trimatu(A)                 | Arma.trimatu(A)                 | 
 tril(A)                    | trimatl(A)                 | Arma.trimatl(A)                 | 
                            | symmatu(A)                 | Arma.symmatu(A)                 | **Matlab:** B = triu(A); B + B' - diag(diag(A))
