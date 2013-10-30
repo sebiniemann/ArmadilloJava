@@ -16,10 +16,18 @@ import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 
 /**
- * Provides methods to iterate through a subview of a matrix.
+ * Provides a real-valued dense matrix with double precision. Member functions as well as attributes are similar to the
+ * Armadillo C++ Algebra Library (Armadillo) by Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles'
+ * Efficient Java Matrix Library (EJML) Version 0.23 from 21.06.2013.
  * <p>
- * 
- * The iteration should be reset at the beginning: <code>
+ * See also the <a href="https://github.com/SebastianNiemann/ArmadilloJava/blob/master/CONVERSION.md">syntax conversion
+ * table</a>.
+ * <p>
+ * If not stated otherwise (marked as non-canonical in case), the provided interfaces is identical to Armadillo (e.g.
+ * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
+ * solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
+ * <p>
+ * <b>Iteration:</b> The iteration should be reset at the beginning <code>
  * Subview A;
  * A.iteratorReset();
  * </code>
@@ -53,8 +61,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * The underlying matrix
    */
-  AbstractMat _underlyingMatrix;
-  
+  AbstractMat        _underlyingMatrix;
+
   /**
    * The internal data representation of the matrix
    */
@@ -180,7 +188,7 @@ abstract class AbstractMat implements Iterable<Double> {
   public double at(int n) {
     isElementOutOfBoundsDetection(n);
 
-    return _matrix[n];
+    return _matrix[getElementIndex(n)];
   }
 
   /**
@@ -223,7 +231,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of the {@code j}th column.
    * 
-   * @param j The column position
+   * @param j The column index
    * @return The submatrix
    */
   protected SubMat colInternal(int j) {
@@ -233,7 +241,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of the {@code j}th column.
    * 
-   * @param j The column position
+   * @param j The column index
    * @return The submatrix
    */
   public Mat col(int j) {
@@ -243,7 +251,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code j}th column.
    * 
-   * @param j The column position
+   * @param j The column index
    * @param operator The operator
    */
   public void col(int j, Op operator) {
@@ -253,35 +261,31 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code j}th column.
    * 
-   * @param j The column position
+   * @param j The column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void col(int j, Op operator, Mat operand) {
+  public void col(int j, Op operator, AbstractMat operand) {
     colInternal(j).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code j}th column.
    * 
-   * @param j The column position
+   * @param j The column index
    * @param operator The operator
    * @param operand The right-hand side operand
-   * 
-   * @throws ArrayIndexOutOfBoundsException The column position is out of bound. The matrix contains {@link #n_cols}
-   *           columns, but the column position was {@code j}.
-   * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
-  public void col(int j, Op operator, double operand) throws ArrayIndexOutOfBoundsException, UnsupportedOperationException {
+  public void col(int j, Op operator, double operand) {
     colInternal(j).inplace(operator, operand);
   }
 
   /**
    * Returns a shallow copy of all elements in the {@code j}th column and {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param j The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param j The column index
    * @return The submatrix
    */
   protected SubMat colInternal(int a, int b, int j) {
@@ -291,9 +295,9 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of all elements in the {@code j}th column and {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param j The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param j The column index
    * @return The submatrix
    */
   public Mat col(int a, int b, int j) {
@@ -304,9 +308,9 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code j}th column and
    * {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param j The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param j The column index
    * @param operator The operator
    */
   public void col(int a, int b, int j, Op operator) {
@@ -317,13 +321,13 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code j}th column and
    * {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param j The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param j The column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void col(int a, int b, int j, Op operator, Mat operand) {
+  public void col(int a, int b, int j, Op operator, AbstractMat operand) {
     colInternal(a, b, j).inplace(operator, operand);
   }
 
@@ -331,9 +335,9 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code j}th column and
    * {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param j The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param j The column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -344,7 +348,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of the {@code i}th row.
    * 
-   * @param i The row position
+   * @param i The row index
    * @return The submatrix
    */
   protected SubMat rowInternal(int i) {
@@ -354,7 +358,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of the {@code i}th row.
    * 
-   * @param i The row position
+   * @param i The row index
    * @return The submatrix
    */
   public Mat row(int i) {
@@ -364,7 +368,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code i}th row.
    * 
-   * @param i The row position
+   * @param i The row index
    * @param operator The operator
    */
   public void row(int i, Op operator) {
@@ -374,18 +378,18 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code i}th row.
    * 
-   * @param i The row position
+   * @param i The row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void row(int i, Op operator, Mat operand) {
+  public void row(int i, Op operator, AbstractMat operand) {
     rowInternal(i).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code i}th row.
    * 
-   * @param i The row position
+   * @param i The row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -396,9 +400,9 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of all elements in the {@code i}th row and {@code a}th to {@code b}th column.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param i The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param i The column index
    * @return The submatrix
    */
   protected SubMat rowInternal(int a, int b, int i) {
@@ -408,9 +412,9 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of all elements in the {@code i}th row and {@code a}th to {@code b}th column.
    * 
-   * @param a The first row position
-   * @param b The last row position
-   * @param i The column position
+   * @param a The first row index
+   * @param b The last row index
+   * @param i The column index
    * @return The submatrix
    */
   public Mat row(int a, int b, int i) {
@@ -421,9 +425,9 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code i}th row and
    * {@code a}th to {@code b}th column.
    * 
-   * @param a The first column position
-   * @param b The last column position
-   * @param i The row position
+   * @param a The first column index
+   * @param b The last column index
+   * @param i The row index
    * @param operator The operator
    */
   public void row(int a, int b, int i, Op operator) {
@@ -434,13 +438,13 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code i}th row and
    * {@code a}th to {@code b}th column.
    * 
-   * @param a The first column position
-   * @param b The last column position
-   * @param i The row position
+   * @param a The first column index
+   * @param b The last column index
+   * @param i The row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void row(int a, int b, int i, Op operator, Mat operand) {
+  public void row(int a, int b, int i, Op operator, AbstractMat operand) {
     rowInternal(a, b, i).inplace(operator, operand);
   }
 
@@ -448,9 +452,9 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code i}th row and
    * {@code a}th to {@code b}th column.
    * 
-   * @param a The first column position
-   * @param b The last column position
-   * @param i The row position
+   * @param a The first column index
+   * @param b The last column index
+   * @param i The row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -461,8 +465,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of all elements in the {@code a}th to {@code b}th column.
    * 
-   * @param a The first column position
-   * @param b The last column position
+   * @param a The first column index
+   * @param b The last column index
    * @return The submatrix
    */
   protected SubMat colsInternal(int a, int b) {
@@ -472,8 +476,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of all elements in the {@code a}th to {@code b}th column.
    * 
-   * @param a The first column position
-   * @param b The last column position
+   * @param a The first column index
+   * @param b The last column index
    * @return The submatrix
    */
   public Mat cols(int a, int b) {
@@ -484,8 +488,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * column.
    * 
-   * @param a The first column position
-   * @param b The last column position
+   * @param a The first column index
+   * @param b The last column index
    * @param operator The operator
    */
   public void cols(int a, int b, Op operator) {
@@ -496,12 +500,12 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * column.
    * 
-   * @param a The first column position
-   * @param b The last column position
+   * @param a The first column index
+   * @param b The last column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void cols(int a, int b, Op operator, Mat operand) {
+  public void cols(int a, int b, Op operator, AbstractMat operand) {
     colsInternal(a, b).inplace(operator, operand);
   }
 
@@ -509,8 +513,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * column.
    * 
-   * @param a The first column position
-   * @param b The last column position
+   * @param a The first column index
+   * @param b The last column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -521,8 +525,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of all elements in the {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * @return The submatrix
    */
   protected SubMat rowsInternal(int a, int b) {
@@ -532,8 +536,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of all elements in the {@code a}th to {@code b}th row.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * @return The submatrix
    */
   public Mat rows(int a, int b) {
@@ -544,8 +548,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * row.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * @param operator The operator
    */
   public void rows(int a, int b, Op operator) {
@@ -556,12 +560,12 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * row.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void rows(int a, int b, Op operator, Mat operand) {
+  public void rows(int a, int b, Op operator, AbstractMat operand) {
     rowsInternal(a, b).inplace(operator, operand);
   }
 
@@ -569,8 +573,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * row.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -593,7 +597,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void submat(Op operator, Mat operand) {
+  public void submat(Op operator, AbstractMat operand) {
     inplace(operator, operand);
   }
 
@@ -611,10 +615,10 @@ abstract class AbstractMat implements Iterable<Double> {
    * Returns a shallow copy of all elements in the {@code ai}th to {@code bi}th row and {@code aj}th to {@code bj}th
    * column.
    * 
-   * @param ai The first row position
-   * @param bi The last row position
-   * @param aj The first column position
-   * @param bj The last column position
+   * @param ai The first row index
+   * @param bi The last row index
+   * @param aj The first column index
+   * @param bj The last column index
    * @return The submatrix
    */
   protected SubMat submatInternal(int ai, int bi, int aj, int bj) {
@@ -625,10 +629,10 @@ abstract class AbstractMat implements Iterable<Double> {
    * Returns a deep copy of all elements in the {@code ai}th to {@code bi}th row and {@code aj}th to {@code bj}th
    * column.
    * 
-   * @param ai The first row position
-   * @param bi The last row position
-   * @param aj The first column position
-   * @param bj The last column position
+   * @param ai The first row index
+   * @param bi The last row index
+   * @param aj The first column index
+   * @param bj The last column index
    * @return The submatrix
    */
   public Mat submat(int ai, int bi, int aj, int bj) {
@@ -640,10 +644,10 @@ abstract class AbstractMat implements Iterable<Double> {
    * th
    * row and {@code aj}th to {@code bj}th column.
    * 
-   * @param ai The first row position
-   * @param bi The last row position
-   * @param aj The first column position
-   * @param bj The last column position
+   * @param ai The first row index
+   * @param bi The last row index
+   * @param aj The first column index
+   * @param bj The last column index
    * @param operator The operator
    */
   public void submat(int ai, int bi, int aj, int bj, Op operator) {
@@ -654,14 +658,14 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code ai}th to {@code bi}
    * th row and {@code aj}th to {@code bj}th column.
    * 
-   * @param ai The first row position
-   * @param bi The last row position
-   * @param aj The first column position
-   * @param bj The last column position
+   * @param ai The first row index
+   * @param bi The last row index
+   * @param aj The first column index
+   * @param bj The last column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void submat(int ai, int bi, int aj, int bj, Op operator, Mat operand) {
+  public void submat(int ai, int bi, int aj, int bj, Op operator, AbstractMat operand) {
     submatInternal(ai, bi, aj, bj).inplace(operator, operand);
   }
 
@@ -669,10 +673,10 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code ai}th to {@code bi}
    * th row and {@code aj}th to {@code bj}th column.
    * 
-   * @param ai The first row position
-   * @param bi The last row position
-   * @param aj The first column position
-   * @param bj The last column position
+   * @param ai The first row index
+   * @param bi The last row index
+   * @param aj The first column index
+   * @param bj The last column index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -683,8 +687,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of all elements in the {@code a}th to {@code b}th position.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * @return The submatrix
    */
   protected SubMat subvecInternal(int a, int b) {
@@ -694,8 +698,8 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a deep copy of all elements in the {@code a}th to {@code b}th position.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * @return The submatrix
    */
   public Mat subvec(int a, int b) {
@@ -706,8 +710,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise unary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * position.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * @param operator The operator
    */
   public void subvec(int a, int b, Op operator) {
@@ -718,12 +722,12 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * position.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void subvec(int a, int b, Op operator, Mat operand) {
+  public void subvec(int a, int b, Op operator, AbstractMat operand) {
     subvecInternal(a, b).inplace(operator, operand);
   }
 
@@ -731,8 +735,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * Performs an element-wise binary right-hand side inplace operation on all elements in the {@code a}th to {@code b}th
    * position.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * @param operator The operator
    * @param operand The right-hand side operand
    */
@@ -743,213 +747,213 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns a shallow copy of all elements specified in the selection as a column vector.
    * 
-   * @param selection The element positions
+   * @param selection The element indices
    * @return The elements
    */
-  protected SelectMat elemInternal(Mat selection) {
+  protected SelectMat elemInternal(AbstractMat selection) {
     return new SelectMat(this, selection);
   }
 
   /**
    * Returns a deep copy of all elements specified in the selection as a column vector.
    * 
-   * @param selection The element positions
+   * @param selection The element indices
    * @return The elements
    */
-  public Mat elem(Mat selection) {
+  public Mat elem(AbstractMat selection) {
     return new Mat(elemInternal(selection));
   }
 
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The element positions
+   * @param selection The element indices
    * @param operator The operator
    */
-  public void elem(Mat selection, Op operator) {
+  public void elem(AbstractMat selection, Op operator) {
     elemInternal(selection).inplace(operator);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The element positions
+   * @param selection The element indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void elem(Mat selection, Op operator, Mat operand) {
+  public void elem(AbstractMat selection, Op operator, AbstractMat operand) {
     elemInternal(selection).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The element positions
+   * @param selection The element indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void elem(Mat selection, Op operator, double operand) {
+  public void elem(AbstractMat selection, Op operator, double operand) {
     elemInternal(selection).inplace(operator, operand);
   }
 
   /**
    * Returns a shallow copy of all columns specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @return The elements
    */
-  protected SelectMat colsInternal(Mat selection) {
+  protected SelectMat colsInternal(AbstractMat selection) {
     return new SelectMat(this, null, selection);
   }
 
   /**
    * Returns a deep copy of all columns specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @return The elements
    */
-  public Mat cols(Mat selection) {
+  public Mat cols(AbstractMat selection) {
     return new Mat(colsInternal(selection));
   }
 
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    */
-  public void cols(Mat selection, Op operator) {
+  public void cols(AbstractMat selection, Op operator) {
     colsInternal(selection).inplace(operator);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void cols(Mat selection, Op operator, Mat operand) {
+  public void cols(AbstractMat selection, Op operator, AbstractMat operand) {
     colsInternal(selection).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void cols(Mat selection, Op operator, double operand) {
+  public void cols(AbstractMat selection, Op operator, double operand) {
     colsInternal(selection).inplace(operator, operand);
   }
 
   /**
    * Returns a shallow copy of all rows specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @return The elements
    */
-  protected SelectMat rowsInternal(Mat selection) {
+  protected SelectMat rowsInternal(AbstractMat selection) {
     return new SelectMat(this, selection, null);
   }
 
   /**
    * Returns a deep copy of all rows specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @return The elements
    */
-  public Mat rows(Mat selection) {
+  public Mat rows(AbstractMat selection) {
     return new Mat(rowsInternal(selection));
   }
 
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    */
-  public void rows(Mat selection, Op operator) {
+  public void rows(AbstractMat selection, Op operator) {
     rows(selection).inplace(operator);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void rows(Mat selection, Op operator, Mat operand) {
+  public void rows(AbstractMat selection, Op operator, AbstractMat operand) {
     rows(selection).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void rows(Mat selection, Op operator, double operand) {
+  public void rows(AbstractMat selection, Op operator, double operand) {
     rows(selection).inplace(operator, operand);
   }
 
   /**
    * Returns a shallow copy of all elements specified in the selection.
    * 
-   * @param rowSelection The row positions
-   * @param columnSelection The column positions
+   * @param rowSelection The row indices
+   * @param columnSelection The column indices
    * @return The elements
    */
-  protected SelectMat submatInternal(Mat rowSelection, Mat columnSelection) {
+  protected SelectMat submatInternal(AbstractMat rowSelection, AbstractMat columnSelection) {
     return new SelectMat(this, rowSelection, columnSelection);
   }
 
   /**
    * Returns a deep copy of all elements specified in the selection.
    * 
-   * @param rowSelection The row positions
-   * @param columnSelection The column positions
+   * @param rowSelection The row indices
+   * @param columnSelection The column indices
    * @return The elements
    */
-  public Mat submat(Mat rowSelection, Mat columnSelection) {
+  public Mat submat(AbstractMat rowSelection, AbstractMat columnSelection) {
     return new Mat(submatInternal(rowSelection, columnSelection));
   }
 
   /**
    * Performs an element-wise unary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param rowSelection The row positions
-   * @param columnSelection The column positions
+   * @param rowSelection The row indices
+   * @param columnSelection The column indices
    * @param operator The operator
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator) {
+  public void submat(AbstractMat rowSelection, AbstractMat columnSelection, Op operator) {
     submatInternal(rowSelection, columnSelection).inplace(operator);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param rowSelection The row positions
-   * @param columnSelection The column positions
+   * @param rowSelection The row indices
+   * @param columnSelection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator, Mat operand) {
+  public void submat(AbstractMat rowSelection, AbstractMat columnSelection, Op operator, AbstractMat operand) {
     submatInternal(rowSelection, columnSelection).inplace(operator, operand);
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on all elements specified in the selection.
    * 
-   * @param rowSelection The row positions
-   * @param columnSelection The column positions
+   * @param rowSelection The row indices
+   * @param columnSelection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void submat(Mat rowSelection, Mat columnSelection, Op operator, double operand) {
+  public void submat(AbstractMat rowSelection, AbstractMat columnSelection, Op operator, double operand) {
     submatInternal(rowSelection, columnSelection).inplace(operator, operand);
   }
 
@@ -977,7 +981,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void diag(Op operator, Mat operand) {
+  public void diag(Op operator, AbstractMat operand) {
     diag(0, operator, operand);
   }
 
@@ -1052,7 +1056,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void diag(int k, Op operator, Mat operand) {
+  public void diag(int k, Op operator, AbstractMat operand) {
     diagInternal(k).inplace(operator, operand);
   }
 
@@ -1090,7 +1094,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void each_col(Op operator, Mat operand) {
+  public void each_col(Op operator, AbstractMat operand) {
     for (int j = 0; j < n_cols; j++) {
       col(j, operator, operand);
     }
@@ -1111,47 +1115,50 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise unary right-hand side inplace operation on each column specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    */
-  public void each_col(Mat selection, Op operator) {
+  public void each_col(AbstractMat selection, Op operator) {
     selection.isNonVectorDetection();
     isInvalidColumnSelectionDetection(selection);
 
-    for (double element : selection) {
-      col((int) element, operator);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      col((int) selection._matrix[selection.iteratorNext()], operator);
     }
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on each column specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void each_col(Mat selection, Op operator, Mat operand) {
+  public void each_col(AbstractMat selection, Op operator, AbstractMat operand) {
     selection.isNonVectorDetection();
     isInvalidColumnSelectionDetection(selection);
 
-    for (double element : selection) {
-      col((int) element, operator, operand);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      col((int) selection._matrix[selection.iteratorNext()], operator, operand);
     }
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on each column specified in the selection.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void each_col(Mat selection, Op operator, double operand) {
+  public void each_col(AbstractMat selection, Op operator, double operand) {
     selection.isNonVectorDetection();
     isInvalidColumnSelectionDetection(selection);
 
-    for (double element : selection) {
-      col((int) element, operator, operand);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      col((int) selection._matrix[selection.iteratorNext()], operator, operand);
     }
   }
 
@@ -1193,47 +1200,50 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Performs an element-wise unary right-hand side inplace operation on each row specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    */
-  public void each_row(Mat selection, Op operator) {
+  public void each_row(AbstractMat selection, Op operator) {
     selection.isNonVectorDetection();
     isInvalidRowSelectionDetection(selection);
 
-    for (double element : selection) {
-      row((int) element, operator);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      row((int) selection._matrix[selection.iteratorNext()], operator);
     }
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on each row specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void each_row(Mat selection, Op operator, Mat operand) {
+  public void each_row(AbstractMat selection, Op operator, AbstractMat operand) {
     selection.isNonVectorDetection();
     isInvalidRowSelectionDetection(selection);
 
-    for (double element : selection) {
-      row((int) element, operator, operand);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      row((int) selection._matrix[selection.iteratorNext()], operator, operand);
     }
   }
 
   /**
    * Performs an element-wise binary right-hand side inplace operation on each row specified in the selection.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    * @param operator The operator
    * @param operand The right-hand side operand
    */
-  public void each_row(Mat selection, Op operator, double operand) {
+  public void each_row(AbstractMat selection, Op operator, double operand) {
     selection.isNonVectorDetection();
     isInvalidRowSelectionDetection(selection);
 
-    for (double element : selection) {
-      row((int) element, operator, operand);
+    selection.iteratorReset();
+    while (selection.iteratorHasNext()) {
+      row((int) selection._matrix[selection.iteratorNext()], operator, operand);
     }
   }
 
@@ -1243,7 +1253,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The addend
    * @return The matrix
    */
-  public Mat plus(Mat operand) {
+  public Mat plus(AbstractMat operand) {
     Mat result = new Mat(_matrix);
     result.inplace(Op.PLUS, operand);
     return result;
@@ -1267,7 +1277,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The subtrahend
    * @return The matrix
    */
-  public Mat minus(Mat operand) {
+  public Mat minus(AbstractMat operand) {
     Mat result = new Mat(_matrix);
     result.inplace(Op.MINUS, operand);
     return result;
@@ -1291,15 +1301,15 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The multiplier
    * @return The matrix
    */
-  public Mat times(Mat operand) {
+  public Mat times(AbstractMat operand) {
     isNonEqualNumberOfElementsDetection(n_cols, operand.n_rows);
 
     Mat result = new Mat(n_rows, operand.n_cols);
 
-    int position = 0;
+    int n = 0;
     for (int j = 0; j < operand.n_cols; j++) {
       for (int i = 0; i < n_rows; i++) {
-        result._matrix[position++] = Arma.dot(rowInternal(i), operand.colInternal(j));
+        result._matrix[n++] = Arma.dot(rowInternal(i), operand.colInternal(j));
       }
     }
 
@@ -1324,7 +1334,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The multiplier
    * @return The matrix
    */
-  public Mat elemTimes(Mat operand) {
+  public Mat elemTimes(AbstractMat operand) {
     Mat result = new Mat(_matrix);
     result.inplace(Op.ELEMTIMES, operand);
     return result;
@@ -1348,7 +1358,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The multiplier
    * @return The matrix
    */
-  public Mat elemDivide(Mat operand) {
+  public Mat elemDivide(AbstractMat operand) {
     Mat result = new Mat(_matrix);
     result.inplace(Op.ELEMDIVIDE, operand);
     return result;
@@ -1450,7 +1460,7 @@ abstract class AbstractMat implements Iterable<Double> {
    */
   public void fill(double value) {
     iteratorReset();
-    while(iteratorHasNext()) {
+    while (iteratorHasNext()) {
       _matrix[iteratorNext()] = value;
     }
   }
@@ -1460,7 +1470,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * 
    * @param matrix The matrix
    */
-  public void swap(Mat matrix) {
+  public void swap(AbstractMat matrix) {
     isNonEqualNumberOfElementsDetection(n_rows, matrix.n_rows);
     isNonEqualNumberOfElementsDetection(n_cols, matrix.n_cols);
 
@@ -1512,7 +1522,10 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return Whether the matrix is finite
    */
   public boolean is_finite() {
-    for (double element : this) {
+    
+    iteratorReset();
+    while (iteratorHasNext()) {
+      double element = _matrix[iteratorNext()];
       if (Double.isInfinite(element) || Double.isNaN(element)) {
         return false;
       }
@@ -1529,7 +1542,9 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return Whether the matrix contains only numbers
    */
   protected boolean is_number() {
-    for (double element : this) {
+    iteratorReset();
+    while (iteratorHasNext()) {
+      double element = _matrix[iteratorNext()];
       if (Double.isNaN(element)) {
         return false;
       }
@@ -1575,10 +1590,10 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns true if the element position is within the boundary
+   * Returns true if the element index is within the boundary
    * 
-   * @param n The element position
-   * @return Whether the element position is within the boundary
+   * @param n The element index
+   * @return Whether the element index is within the boundary
    */
   public boolean in_range(int n) {
     return (n > -1 && n < n_elem);
@@ -1595,11 +1610,11 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns true if the row position and column position are within the boundary
+   * Returns true if the row index and column index are within the boundary
    * 
-   * @param i The row position
-   * @param j The column position
-   * @return Whether the row position and column position are within the boundary
+   * @param i The row index
+   * @param j The column index
+   * @return Whether the row index and column index are within the boundary
    */
   public boolean in_range(int i, int j) {
     return (i > -1 && j > -1 && i < n_rows && j < n_cols);
@@ -1634,11 +1649,11 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the smallest value of all elements and stores its element position in {@code n}.
+   * Returns the smallest value of all elements and stores its element index in {@code n}.
    * <p>
    * Note: The position must be of the mutable type int[].
    * 
-   * @param n The element position
+   * @param n The element index
    * @return The minimum
    */
   public double min(int[] n) {
@@ -1660,13 +1675,13 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the smallest value of all elements and stores its row position in {@code j} and column position in
+   * Returns the smallest value of all elements and stores its row index in {@code j} and column index in
    * {@code j}.
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
-   * @param i The row position
-   * @param j The column position
+   * @param i The row index
+   * @param j The column index
    * @return The minimum
    */
   public double min(int[] i, int[] j) {
@@ -1706,11 +1721,11 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the largest value of all elements and stores its element position in {@code n}.
+   * Returns the largest value of all elements and stores its element index in {@code n}.
    * <p>
    * Note: The position must be of the mutable type int[].
    * 
-   * @param n The element position
+   * @param n The element index
    * @return The maximum
    */
   public double max(int[] n) {
@@ -1732,13 +1747,13 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the largest value of all elements and stores its row position in {@code j} and column position in {@code j}
+   * Returns the largest value of all elements and stores its row index in {@code j} and column index in {@code j}
    * .
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
-   * @param i The row position
-   * @param j The column position
+   * @param i The row index
+   * @param j The column index
    * @return The maximum
    */
   public double max(int[] i, int[] j) {
@@ -1977,7 +1992,7 @@ abstract class AbstractMat implements Iterable<Double> {
 
     return transpose;
   }
-  
+
   /**
    * Performs a element-wise unary right-hand side inplace operation on all elements.
    * 
@@ -2256,98 +2271,98 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Detects if the element position is invalid or out of bound and throws an exception if so.
+   * Detects if the element index is invalid or out of bound and throws an exception if so.
    * 
-   * @param n The element position
+   * @param n The element index
    * 
-   * @throws ArrayIndexOutOfBoundsException The element position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the element position range was ({@code n}, {@code n}).
+   * @throws ArrayIndexOutOfBoundsException The element index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the element index range was ({@code n}, {@code n}).
    */
   protected void isElementOutOfBoundsDetection(int n) throws ArrayIndexOutOfBoundsException {
     isElementRangeOutOfBoundsDetection(n, n);
   }
 
   /**
-   * Detects if the element position range is invalid or out of bound and throws an exception if so.
+   * Detects if the element index range is invalid or out of bound and throws an exception if so.
    * 
-   * @param a The first element position
-   * @param b The last element position
+   * @param a The first element index
+   * @param b The last element index
    * 
-   * @throws ArrayIndexOutOfBoundsException The element position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the element position range was ({@code a}, {@code b}).
+   * @throws ArrayIndexOutOfBoundsException The element index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the element index range was ({@code a}, {@code b}).
    */
   protected void isElementRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
 
     if (a < 0 || b > n_rows) {
-      throw new ArrayIndexOutOfBoundsException("The element position range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the element position range was (" + a + ", " + b + ")");
+      throw new ArrayIndexOutOfBoundsException("The element index range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the element index range was (" + a + ", " + b + ")");
     }
   }
 
   /**
-   * Detects if a column position is invalid or out of bound and throws an exception if so.
+   * Detects if a column index is invalid or out of bound and throws an exception if so.
    * 
-   * @param j The column position
+   * @param j The column index
    * 
-   * @throws ArrayIndexOutOfBoundsException The column position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the column position range was ({@code j}, {@code j}).
+   * @throws ArrayIndexOutOfBoundsException The column index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the column index range was ({@code j}, {@code j}).
    */
   protected void isColumnOutOfBoundsDetection(int j) throws ArrayIndexOutOfBoundsException {
     isColumnRangeOutOfBoundsDetection(j, j);
   }
 
   /**
-   * Detects if a column position range is invalid or out of bound and throws an exception if so.
+   * Detects if a column index range is invalid or out of bound and throws an exception if so.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * 
-   * @throws ArrayIndexOutOfBoundsException The column position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the column position range was ({@code a}, {@code b}).
+   * @throws ArrayIndexOutOfBoundsException The column index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the column index range was ({@code a}, {@code b}).
    */
   protected void isColumnRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
 
     if (a < 0 || b >= n_rows) {
-      throw new ArrayIndexOutOfBoundsException("The column position range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the column position range was (" + a + ", " + b + ")");
+      throw new ArrayIndexOutOfBoundsException("The column index range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the column index range was (" + a + ", " + b + ")");
     }
   }
 
   /**
-   * Detects if a row position is invalid or out of bound and throws an exception if so.
+   * Detects if a row index is invalid or out of bound and throws an exception if so.
    * 
-   * @param i The row position
+   * @param i The row index
    * 
-   * @throws ArrayIndexOutOfBoundsException The row position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the row position range was ({@code i}, {@code i}).
+   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the row index range was ({@code i}, {@code i}).
    */
   protected void isRowOutOfBoundsDetection(int i) throws ArrayIndexOutOfBoundsException {
     isRowRangeOutOfBoundsDetection(i, i);
   }
 
   /**
-   * Detects if a row position range is out of bound and throws an exception if so.
+   * Detects if a row index range is out of bound and throws an exception if so.
    * 
-   * @param a The first row position
-   * @param b The last row position
+   * @param a The first row index
+   * @param b The last row index
    * 
-   * @throws ArrayIndexOutOfBoundsException The row position range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the row position range was ({@code a}, {@code b}).
+   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size (
+   *           {@link #n_rows}, {@link #n_cols}) but the row index range was ({@code a}, {@code b}).
    */
   protected void isRowRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
 
     if (a < 0 || b >= n_rows) {
-      throw new ArrayIndexOutOfBoundsException("The row position range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the row position range was (" + a + ", " + b + ")");
+      throw new ArrayIndexOutOfBoundsException("The row index range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the row index range was (" + a + ", " + b + ")");
     }
   }
 
   /**
-   * Detects if any element position is invalid, out of bound or not an integer and throws an exception if so.
+   * Detects if any element index is invalid, out of bound or not an integer and throws an exception if so.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    */
-  protected void isInvalidElementSelectionDetection(Mat selection) {
+  protected void isInvalidElementSelectionDetection(AbstractMat selection) {
     for (double position : selection) {
       isNonIntergerPositionDetection(position);
       isElementOutOfBoundsDetection((int) position);
@@ -2355,11 +2370,11 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Detects if any column position is invalid, out of bound or not an integer and throws an exception if so.
+   * Detects if any column index is invalid, out of bound or not an integer and throws an exception if so.
    * 
-   * @param selection The column positions
+   * @param selection The column indices
    */
-  protected void isInvalidColumnSelectionDetection(Mat selection) {
+  protected void isInvalidColumnSelectionDetection(AbstractMat selection) {
     for (double position : selection) {
       isNonIntergerPositionDetection(position);
       isColumnOutOfBoundsDetection((int) position);
@@ -2367,11 +2382,11 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Detects if any row position is invalid, out of bound or not an integer and throws an exception if so.
+   * Detects if any row index is invalid, out of bound or not an integer and throws an exception if so.
    * 
-   * @param selection The row positions
+   * @param selection The row indices
    */
-  protected void isInvalidRowSelectionDetection(Mat selection) {
+  protected void isInvalidRowSelectionDetection(AbstractMat selection) {
     for (double position : selection) {
       isNonIntergerPositionDetection(position);
       isRowOutOfBoundsDetection((int) position);
@@ -2457,7 +2472,7 @@ abstract class AbstractMat implements Iterable<Double> {
 
     return matrix;
   }
-  
+
   @Override
   public String toString() {
     String output = "(" + n_rows + ", " + n_cols + ")-matrix: [\n";
