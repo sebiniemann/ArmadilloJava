@@ -292,9 +292,9 @@ public class Arma {
 
     Mat result = new Mat(numberOfElements, 1);
 
-    double stepLength = (endValue - startValue) / numberOfElements;
+    double stepLength = (endValue - startValue) / (result.n_elem - 1);
     for (int n = 0; n < result.n_elem; n++) {
-      // Increasing a value step by step by stepLength might be faster, but also reduces its precision
+      // Increasing a value step by step by stepLength might be faster, but also reduces precision
       result._matrix[n] = startValue + stepLength * n;
     }
 
@@ -2119,20 +2119,47 @@ public class Arma {
   }
 
   /**
-   * @param matrix
+   * @param vector
    * @return
    */
-  public static Mat hist(AbstractMat matrix) {
-    return hist(matrix, 10);
+  public static Mat hist(AbstractMat vector) {
+    return hist(vector, 10);
   }
 
   /**
-   * @param matrix
+   * @param vector
    * @param numberOfBins
    * @return
    */
-  public static Mat hist(AbstractMat matrix, int numberOfBins) {
-    return null;
+  public static Mat hist(AbstractMat vector, int numberOfBins) {
+    Mat edges = new Mat(numberOfBins, 1);
+    
+    vector.iteratorReset();
+    double element = vector._matrix[vector.iteratorNext()];
+    double minimum = element;
+    double maximum = element;
+    while (vector.iteratorHasNext()) {
+      element = vector._matrix[vector.iteratorNext()];
+      minimum = Math.min(maximum, element);
+      maximum = Math.max(maximum, element);
+    }
+    
+    if(Double.isInfinite(minimum)) {
+      minimum = -Double.MAX_VALUE;
+    }
+    
+    if(Double.isInfinite(maximum)) {
+      maximum = Double.MAX_VALUE;
+    }
+    
+    double stepLength = (maximum - minimum) / edges.n_elem;
+    for(int n = 0; n < edges.n_elem - 1; n++) {
+      // Increasing a value step by step by stepLength might be faster, but also reduces precision
+      edges._matrix[n] = minimum + stepLength * (n + 1);
+    }
+    edges._matrix[edges.n_elem] = Double.POSITIVE_INFINITY;
+    
+    return histc(vector, edges);
   }
 
   /**
@@ -2179,12 +2206,26 @@ public class Arma {
   }
 
   /**
-   * @param matrix
+   * @param vector
    * @param centers
    * @return
    */
-  public static Mat hist(AbstractMat matrix, AbstractMat centers) {
-    return null;
+  public static Mat hist(AbstractMat vector, AbstractMat centers) {
+    Mat edges = new Mat(centers.n_elem, 1);
+    
+    centers.iteratorReset();
+    int n = 0;
+    double lastElement = centers._matrix[centers.iteratorNext()];
+    while (centers.iteratorHasNext()) {
+      double currentElement = centers._matrix[centers.iteratorNext()];
+      
+      edges._matrix[n++] = lastElement + (currentElement - lastElement) / 2;
+      lastElement = currentElement;
+    }
+    // The last element of edges
+    edges._matrix[n] = Double.POSITIVE_INFINITY;
+    
+    return histc(vector, edges);
   }
 
   /**
@@ -2223,12 +2264,26 @@ public class Arma {
   }
 
   /**
-   * @param matrix
+   * @param vector
    * @param edges
    * @return
    */
-  public static Mat histc(AbstractMat matrix, AbstractMat edges) {
-    return null;
+  public static Mat histc(AbstractMat vector, AbstractMat edges) {
+    Mat result = new Mat(edges.n_elem, 1);
+    
+    vector.iteratorReset();
+    while (vector.iteratorHasNext()) {
+      double element = vector._matrix[vector.iteratorNext()];
+      
+      edges.iteratorReset();
+      for (int n = 0; n < edges.n_elem; n++) {
+        if(element <= edges._matrix[edges.iteratorNext()]) {
+          result._matrix[n]++;
+        }
+      }
+    }
+    
+    return result;
   }
 
   /**
