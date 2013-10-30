@@ -778,7 +778,7 @@ public class Mat extends AbstractMat {
    * 
    * @param matrix The matrix
    */
-  public void copy_size(Mat matrix) {
+  public void copy_size(AbstractMat matrix) {
     set_size(matrix.n_rows, matrix.n_cols);
   }
 

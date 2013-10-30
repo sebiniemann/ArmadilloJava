@@ -1981,10 +1981,10 @@ abstract class AbstractMat implements Iterable<Double> {
    */
   public Mat t() {
     Mat transpose = new Mat(n_cols, n_rows);
-    int position = 0;
+    int n = 0;
     for (int i = 0; i < n_rows; i++) {
       for (int j = 0; j < n_cols; j++) {
-        transpose._matrix[position++] = _matrix[getElementIndex(i, j)];
+        transpose._matrix[n++] = _matrix[getElementIndex(i, j)];
       }
     }
 
@@ -2442,10 +2442,10 @@ abstract class AbstractMat implements Iterable<Double> {
   protected static DenseMatrix64F convertMatToEJMLMat(AbstractMat matrix) {
     DenseMatrix64F ejmlMatrix = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
 
-    int position = 0;
+    int n = 0;
     for (int i = 0; i < matrix.n_rows; i++) {
       for (int j = 0; j < matrix.n_cols; j++) {
-        ejmlMatrix.set(position++, matrix._matrix[matrix.getElementIndex(i, j)]);
+        ejmlMatrix.set(n++, matrix._matrix[matrix.getElementIndex(i, j)]);
       }
     }
 
@@ -2461,10 +2461,10 @@ abstract class AbstractMat implements Iterable<Double> {
   protected static Mat convertEJMLToMat(DenseMatrix64F ejmlMatrix) {
     Mat matrix = new Mat(ejmlMatrix.numRows, ejmlMatrix.numCols);
 
-    int position = 0;
+    int n = 0;
     for (int i = 0; i < matrix.n_rows; i++) {
       for (int j = 0; j < matrix.n_cols; j++) {
-        matrix._matrix[matrix.getElementIndex(i, j)] = ejmlMatrix.get(position++);
+        matrix._matrix[matrix.getElementIndex(i, j)] = ejmlMatrix.get(n++);
       }
     }
 

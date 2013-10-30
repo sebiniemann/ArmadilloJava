@@ -157,10 +157,15 @@ public class Arma {
    * @param numberOfCopiesPerColumn The number of copies per column
    * @return The matrix
    */
-  public static Mat repmat(Mat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
-    Mat.isInvalidPositionDetection(numberOfCopiesPerRow);
-    Mat.isInvalidPositionDetection(numberOfCopiesPerColumn);
+  public static Mat repmat(AbstractMat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
+    AbstractMat.isInvalidPositionDetection(numberOfCopiesPerRow);
+    AbstractMat.isInvalidPositionDetection(numberOfCopiesPerColumn);
 
+    // This method uses System.arraycopy instead of iterating over each element
+    if(!(matrix instanceof Mat)) {
+      matrix = new Mat(matrix);
+    }
+    
     Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
 
     int srcColumnPointer = 0;
@@ -185,7 +190,7 @@ public class Arma {
    * @param vector The vector
    * @return The matrix
    */
-  public static Mat toeplitz(Mat vector) {
+  public static Mat toeplitz(AbstractMat vector) {
     vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
@@ -212,7 +217,7 @@ public class Arma {
    * @param vector2 The second vector
    * @return The matrix
    */
-  public static Mat toeplitz(Mat vector1, Mat vector2) {
+  public static Mat toeplitz(AbstractMat vector1, AbstractMat vector2) {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
 
@@ -243,7 +248,7 @@ public class Arma {
    * @param vector The vector
    * @return The matrix
    */
-  public static Mat circ_toeplitz(Mat vector) {
+  public static Mat circ_toeplitz(AbstractMat vector) {
     vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
@@ -283,7 +288,7 @@ public class Arma {
    * @return The matrix
    */
   public static Mat linspace(double startValue, double endValue, int numberOfElements) {
-    Mat.isInvalidPositionDetection(numberOfElements);
+    AbstractMat.isInvalidPositionDetection(numberOfElements);
 
     Mat result = new Mat(numberOfElements, 1);
 
@@ -302,7 +307,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sin(Mat matrix) {
+  public static Mat sin(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -321,7 +326,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat asin(Mat matrix) {
+  public static Mat asin(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -340,7 +345,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sinh(Mat matrix) {
+  public static Mat sinh(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -359,7 +364,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat asinh(Mat matrix) {
+  public static Mat asinh(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -379,7 +384,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat cos(Mat matrix) {
+  public static Mat cos(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -398,7 +403,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix.
    */
-  public static Mat acos(Mat matrix) {
+  public static Mat acos(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -417,7 +422,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat cosh(Mat matrix) {
+  public static Mat cosh(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -436,7 +441,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat acosh(Mat matrix) {
+  public static Mat acosh(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -456,7 +461,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat tan(Mat matrix) {
+  public static Mat tan(AbstractMat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     matrix.iteratorReset();
@@ -473,7 +478,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat atan(Mat matrix) {
+  public static Mat atan(AbstractMat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     matrix.iteratorReset();
@@ -490,7 +495,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat tanh(Mat matrix) {
+  public static Mat tanh(AbstractMat matrix) {
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
 
     matrix.iteratorReset();
@@ -507,7 +512,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat atanh(Mat matrix) {
+  public static Mat atanh(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -527,7 +532,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat abs(Mat matrix) {
+  public static Mat abs(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -547,7 +552,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat eps(Mat matrix) {
+  public static Mat eps(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -566,7 +571,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat exp(Mat matrix) {
+  public static Mat exp(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -585,7 +590,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat exp2(Mat matrix) {
+  public static Mat exp2(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -604,7 +609,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat exp10(Mat matrix) {
+  public static Mat exp10(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -625,7 +630,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat trunc_exp(Mat matrix) {
+  public static Mat trunc_exp(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -649,7 +654,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat log(Mat matrix) {
+  public static Mat log(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -668,7 +673,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat log2(Mat matrix) {
+  public static Mat log2(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -687,7 +692,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat log10(Mat matrix) {
+  public static Mat log10(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -710,7 +715,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat trunc_log(Mat matrix) {
+  public static Mat trunc_log(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -737,7 +742,7 @@ public class Arma {
    * @param power The power
    * @return The matrix
    */
-  public static Mat pow(Mat matrix, int power) {
+  public static Mat pow(AbstractMat matrix, int power) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -756,7 +761,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sqrt(Mat matrix) {
+  public static Mat sqrt(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -775,7 +780,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat square(Mat matrix) {
+  public static Mat square(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -794,7 +799,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat floor(Mat matrix) {
+  public static Mat floor(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -813,7 +818,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat ceil(Mat matrix) {
+  public static Mat ceil(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -832,7 +837,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat round(Mat matrix) {
+  public static Mat round(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -853,7 +858,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sign(Mat matrix) {
+  public static Mat sign(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -895,7 +900,7 @@ public class Arma {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
     vector1.isEmptyDetection();
-    Mat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
+    AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
     vector1.iteratorReset();
     vector2.iteratorReset();
@@ -914,7 +919,7 @@ public class Arma {
    * @param vector2 The second vector
    * @return The dot product
    */
-  public static double norm_dot(Mat vector1, Mat vector2) {
+  public static double norm_dot(AbstractMat vector1, AbstractMat vector2) {
     return dot(vector1, vector2) / Math.sqrt(dot(vector1, vector1) * dot(vector2, vector2));
   }
 
@@ -924,7 +929,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The determinant
    */
-  public static double det(Mat matrix) {
+  public static double det(AbstractMat matrix) {
     matrix.isNotSquareDetection();
     matrix.isEmptyDetection();
 
@@ -941,7 +946,7 @@ public class Arma {
    * @param sign The sign
    * @param matrix The matrix
    */
-  public static void log_det(double[] value, int[] sign, Mat matrix) {
+  public static void log_det(double[] value, int[] sign, AbstractMat matrix) {
     double determinant = det(matrix);
 
     value[0] = Math.log(Math.abs(determinant));
@@ -959,7 +964,7 @@ public class Arma {
    * 
    * @throws IllegalArgumentException For vectors, p must be strict greater than 0, but was {@code p}.
    */
-  public static double norm(Mat matrix, int p) throws IllegalArgumentException {
+  public static double norm(AbstractMat matrix, int p) throws IllegalArgumentException {
     if (matrix.is_vec()) {
       if (p < 0) {
         throw new IllegalArgumentException("For vectors, p must be strict greater than 0, but was " + p);
@@ -987,7 +992,7 @@ public class Arma {
    * @throws IllegalArgumentException For vectors, p must be one of '-inf', 'inf' or 'fro', but was {@code p}.
    * @throws IllegalArgumentException For non-vector matrices, p must be one of 'inf' or 'fro', but was {@code p}.
    */
-  public static double norm(Mat matrix, String p) throws IllegalArgumentException {
+  public static double norm(AbstractMat matrix, String p) throws IllegalArgumentException {
     if (matrix.is_vec()) {
       switch (p) {
         case "-inf":
@@ -1019,7 +1024,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The rank
    */
-  public static double rank(Mat matrix) {
+  public static double rank(AbstractMat matrix) {
     return rank(matrix, Math.max(matrix.n_rows, matrix.n_cols) * Math.ulp(norm(matrix, 2)));
   }
 
@@ -1032,7 +1037,7 @@ public class Arma {
    * @param tolerance The tolerance
    * @return The rank
    */
-  public static double rank(Mat matrix, double tolerance) {
+  public static double rank(AbstractMat matrix, double tolerance) {
     matrix.isEmptyDetection();
 
     return MatrixFeatures.rank(AbstractMat.convertMatToEJMLMat(matrix));
@@ -1044,7 +1049,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The trace
    */
-  public static double trace(Mat matrix) {
+  public static double trace(AbstractMat matrix) {
     matrix.isEmptyDetection();
 
     double trace = matrix._matrix[0];
@@ -1064,12 +1069,12 @@ public class Arma {
    * @throws IllegalArgumentException The matrices must be a (1,1)-matrix, but was a ({@link Mat#n_rows matrix.n_rows},
    *           {@link Mat#n_cols matrix.n_cols})-matrix.
    */
-  public static double as_scalar(Mat matrix) throws IllegalArgumentException {
+  public static double as_scalar(AbstractMat matrix) throws IllegalArgumentException {
     if (matrix.n_rows != 1 || matrix.n_cols != 1) {
       throw new IllegalArgumentException("The matrices must be a (1,1)-matrix, but was a (" + matrix.n_rows + ", " + matrix.n_cols + ")-matrix.");
     }
 
-    return matrix._matrix[0];
+    return matrix._matrix[matrix.getElementIndex(0)];
   }
 
   /**
@@ -1099,7 +1104,7 @@ public class Arma {
    * 
    * @throws UnsupportedOperationException The matrix must have at least one element.
    */
-  public static Mat minMat(Mat matrix) {
+  public static Mat minMat(AbstractMat matrix) {
     return minMat(matrix, 0);
   }
 
@@ -1111,9 +1116,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat minMat(Mat matrix, int dimension) {
+  public static Mat minMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
 
@@ -1157,7 +1162,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat maxMat(Mat matrix) {
+  public static Mat maxMat(AbstractMat matrix) {
     return maxMat(matrix, 0);
   }
 
@@ -1169,9 +1174,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat maxMat(Mat matrix, int dimension) {
+  public static Mat maxMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
 
@@ -1209,7 +1214,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat meanMat(Mat matrix) {
+  public static Mat meanMat(AbstractMat matrix) {
     return meanMat(matrix, 0);
   }
 
@@ -1221,9 +1226,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat meanMat(Mat matrix, int dimension) {
+  public static Mat meanMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result = sumMat(matrix, dimension);
 
@@ -1270,7 +1275,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat medianMat(Mat matrix) {
+  public static Mat medianMat(AbstractMat matrix) {
     return medianMat(matrix, 0);
   }
 
@@ -1282,9 +1287,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat medianMat(Mat matrix, int dimension) {
+  public static Mat medianMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1308,7 +1313,7 @@ public class Arma {
    * @param vector The vector
    * @return The standard deviation
    */
-  public static double stddev(Mat vector) {
+  public static double stddev(AbstractMat vector) {
     return stddev(vector, 0);
   }
 
@@ -1319,7 +1324,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The standard deviation
    */
-  public static double stddev(Mat vector, int normType) {
+  public static double stddev(AbstractMat vector, int normType) {
     return Math.sqrt(var(vector, normType));
   }
 
@@ -1330,7 +1335,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat stddevMat(Mat matrix) {
+  public static Mat stddevMat(AbstractMat matrix) {
     return stddevMat(matrix, 0, 0);
   }
 
@@ -1343,7 +1348,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The matrix
    */
-  public static Mat stddevMat(Mat matrix, int normType) {
+  public static Mat stddevMat(AbstractMat matrix, int normType) {
     return stddevMat(matrix, normType, 0);
   }
 
@@ -1358,7 +1363,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat stddevMat(Mat matrix, int normType, int dimension) {
+  public static Mat stddevMat(AbstractMat matrix, int normType, int dimension) {
     Mat result = varMat(matrix, dimension);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -1388,7 +1393,7 @@ public class Arma {
   public static double var(AbstractMat vector, int normType) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
-    Mat.isNotInSetDetection(normType, 0, 1);
+    AbstractMat.isNotInSetDetection(normType, 0, 1);
 
     double variance = sum(square(vector.minus(mean(vector))));
     if (normType == 0) {
@@ -1406,7 +1411,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat varMat(Mat matrix) {
+  public static Mat varMat(AbstractMat matrix) {
     return varMat(matrix, 0, 0);
   }
 
@@ -1419,7 +1424,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The matrix
    */
-  public static Mat varMat(Mat matrix, int normType) {
+  public static Mat varMat(AbstractMat matrix, int normType) {
     return varMat(matrix, normType, 0);
   }
 
@@ -1434,9 +1439,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat varMat(Mat matrix, int normType, int dimension) {
+  public static Mat varMat(AbstractMat matrix, int normType, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1479,7 +1484,7 @@ public class Arma {
    * @param matrix The matrix
    * @return Whether any element is non-zero
    */
-  public static Mat anyMat(Mat matrix) {
+  public static Mat anyMat(AbstractMat matrix) {
     return anyMat(matrix, 0);
   }
 
@@ -1488,9 +1493,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat anyMat(Mat matrix, int dimension) {
+  public static Mat anyMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1535,7 +1540,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat allMat(Mat matrix) {
+  public static Mat allMat(AbstractMat matrix) {
     return allMat(matrix, 0);
   }
 
@@ -1544,9 +1549,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat allMat(Mat matrix, int dimension) {
+  public static Mat allMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1589,7 +1594,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat prodMat(Mat matrix) {
+  public static Mat prodMat(AbstractMat matrix) {
     return prodMat(matrix, 0);
   }
 
@@ -1601,9 +1606,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat prodMat(Mat matrix, int dimension) {
+  public static Mat prodMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1627,7 +1632,7 @@ public class Arma {
    * @param vector The vector
    * @return The sum
    */
-  public static double sum(Mat vector) {
+  public static double sum(AbstractMat vector) {
     return accu(vector);
   }
 
@@ -1637,7 +1642,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sumMat(Mat matrix) {
+  public static Mat sumMat(AbstractMat matrix) {
     return sumMat(matrix, 0);
   }
 
@@ -1649,9 +1654,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat sumMat(Mat matrix, int dimension) {
+  public static Mat sumMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1678,8 +1683,8 @@ public class Arma {
    * @param matrix2 Second matrix
    * @return The matrix
    */
-  public static Mat join_cols(Mat matrix1, Mat matrix2) {
-    Mat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+  public static Mat join_cols(AbstractMat matrix1, AbstractMat matrix2) {
+    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
 
     Mat result = new Mat(matrix1.n_rows + matrix2.n_rows, matrix1.n_cols);
     result.submat(0, 0, matrix1.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix1);
@@ -1696,11 +1701,8 @@ public class Arma {
    * @param matrix1 First matrix
    * @param matrix2 Second matrix
    * @return The matrix
-   * 
-   * @throws IllegalArgumentException The provided matrices must have the same number of columns, but were
-   *           {@link Mat#n_cols matrix1.n_cols} and {@code matrix2.n_cols}.
    */
-  public static Mat join_vert(Mat matrix1, Mat matrix2) {
+  public static Mat join_vert(AbstractMat matrix1, AbstractMat matrix2) {
     return join_cols(matrix1, matrix2);
   }
 
@@ -1713,8 +1715,8 @@ public class Arma {
    * @param matrix2 Second matrix
    * @return The matrix
    */
-  public static Mat join_rows(Mat matrix1, Mat matrix2) {
-    Mat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
+  public static Mat join_rows(AbstractMat matrix1, AbstractMat matrix2) {
+    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
 
     Mat result = new Mat(matrix1.n_rows, matrix1.n_cols + matrix2.n_cols);
     result.submat(0, 0, result.n_rows - 1, matrix1.n_cols - 1, Op.EQUAL, matrix1);
@@ -1732,7 +1734,7 @@ public class Arma {
    * @param matrix2 Second matrix
    * @return The matrix
    */
-  public static Mat join_horiz(Mat matrix1, Mat matrix2) {
+  public static Mat join_horiz(AbstractMat matrix1, AbstractMat matrix2) {
     return join_rows(matrix1, matrix2);
   }
 
@@ -1755,7 +1757,7 @@ public class Arma {
    */
   public static Mat sort(AbstractMat vector, int sortType) {
     vector.isNonVectorDetection();
-    Mat.isNotInSetDetection(sortType, 0, 1);
+    AbstractMat.isNotInSetDetection(sortType, 0, 1);
 
     Mat result = new Mat(vector);
     Arrays.sort(result._matrix);
@@ -1778,7 +1780,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat sortMat(Mat matrix) {
+  public static Mat sortMat(AbstractMat matrix) {
     return sortMat(matrix, 0, 0);
   }
 
@@ -1789,7 +1791,7 @@ public class Arma {
    * @param sortType The sortType
    * @return The matrix
    */
-  public static Mat sortMat(Mat matrix, int sortType) {
+  public static Mat sortMat(AbstractMat matrix, int sortType) {
     return sortMat(matrix, sortType, 0);
   }
 
@@ -1802,9 +1804,9 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat sortMat(Mat matrix, int sortType, int dimension) {
+  public static Mat sortMat(AbstractMat matrix, int sortType, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -1828,7 +1830,7 @@ public class Arma {
    * @param vector The vector
    * @return The vector
    */
-  public static Mat sort_index(Mat vector) {
+  public static Mat sort_index(AbstractMat vector) {
     return sort_index(vector, 0);
   }
 
@@ -1839,7 +1841,7 @@ public class Arma {
    * @param sortType The sortType
    * @return The vector
    */
-  public static Mat sort_index(Mat vector, int sortType) {
+  public static Mat sort_index(AbstractMat vector, int sortType) {
     return stable_sort_index(vector, sortType);
   }
 
@@ -1849,7 +1851,7 @@ public class Arma {
    * @param vector The vector
    * @return The vector
    */
-  public static Mat stable_sort_index(Mat vector) {
+  public static Mat stable_sort_index(AbstractMat vector) {
     return stable_sort_index(vector, 0);
   }
 
@@ -1860,27 +1862,29 @@ public class Arma {
    * @param sortType The sortType
    * @return The vector
    */
-  public static Mat stable_sort_index(Mat vector, int sortType) {
+  public static Mat stable_sort_index(AbstractMat vector, int sortType) {
     vector.isNonVectorDetection();
-    Mat.isNotInSetDetection(sortType, 0, 1);
+    AbstractMat.isNotInSetDetection(sortType, 0, 1);
 
     // TreeMap will do the job, nothing to do here – great!
     TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
-    for (int i = 0; i < vector.n_elem; i++) {
-      List<Integer> index = map.get(vector._matrix[i]);
+    vector.iteratorReset();
+    for (int n = 0; n < vector.n_elem; n++) {
+      double element = vector._matrix[vector.iteratorNext()];
+      List<Integer> index = map.get(element);
       if (index == null) {
         index = new ArrayList<Integer>();
-        map.put(vector._matrix[i], index);
+        map.put(element, index);
       }
-      index.add(i);
+      index.add(n);
     }
 
     Mat result = new Mat();
     result.copy_size(vector);
-    int position = 0;
+    int nn = 0;
     for (List<Integer> indices : map.values()) {
-      for (int index : indices) {
-        result._matrix[position++] = index;
+      for (int n : indices) {
+        result._matrix[nn++] = n;
       }
     }
 
@@ -1932,11 +1936,60 @@ public class Arma {
   }
 
   /**
+   * @param vector The vector
+   * @return
+   */
+  public static double cor(AbstractMat vector) {
+    return cor(vector, 0);
+  }
+
+  /**
+   * @param vector
+   * @param normType
+   * @return
+   */
+  public static double cor(AbstractMat vector, int normType) {
+    return cor(vector, vector, normType);
+  }
+
+  /**
+   * @param vector1
+   * @param vector2
+   * @return
+   */
+  public static double cor(AbstractMat vector1, AbstractMat vector2) {
+    return cor(vector1, vector2, 0);
+  }
+
+  /**
+   * @param vector1
+   * @param vector2
+   * @param normType
+   * @return
+   */
+  public static double cor(AbstractMat vector1, AbstractMat vector2, int normType) {
+    vector1.isEmptyDetection();
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
+    AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
+    AbstractMat.isNotInSetDetection(normType, 0, 1);
+
+    double correlationCoefficient = accu(vector1.minus(mean(vector1)).elemDivide(stddev(vector1, normType)).elemTimes(vector2.minus(mean(vector2)).elemDivide(stddev(vector2, normType))));
+    if (normType == 0) {
+      correlationCoefficient /= (vector1.n_elem - 1);
+    } else {
+      correlationCoefficient /= vector1.n_elem;
+    }
+
+    return correlationCoefficient;
+  }
+
+  /**
    * @param matrix The matrix
    * @return
    */
-  public static Mat cor(Mat matrix) {
-    return cor(matrix, 0);
+  public static Mat corMat(AbstractMat matrix) {
+    return corMat(matrix, 0);
   }
 
   /**
@@ -1944,8 +1997,8 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cor(Mat matrix, int normType) {
-    return cor(matrix, matrix, normType);
+  public static Mat corMat(AbstractMat matrix, int normType) {
+    return corMat(matrix, matrix, normType);
   }
 
   /**
@@ -1953,8 +2006,8 @@ public class Arma {
    * @param matrix2
    * @return
    */
-  public static Mat cor(Mat matrix1, Mat matrix2) {
-    return cor(matrix1, matrix2, 0);
+  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2) {
+    return corMat(matrix1, matrix2, 0);
   }
 
   /**
@@ -1963,16 +2016,29 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cor(Mat matrix1, Mat matrix2, int normType) {
-    return null;
+  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {   
+    matrix1.isEmptyDetection();
+    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+    
+    Mat result = new Mat();
+    result.copy_size(matrix1);
+    
+    int n = 0;
+    for(int j = 0; j < matrix1.n_cols; j++) {
+      for(int jj = 0; jj < matrix1.n_cols; jj++) {
+        result._matrix[n++] = cor(matrix1.col(j), matrix2.col(jj));
+      }
+    }
+    
+    return result;
   }
 
   /**
    * @param matrix
    * @return
    */
-  public static Mat cov(Mat matrix) {
-    return cov(matrix, matrix, 0);
+  public static Mat cov(AbstractMat matrix) {
+    return cov(matrix, 0);
   }
 
   /**
@@ -1980,8 +2046,8 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cov(Mat matrix, int normType) {
-    return null;
+  public static Mat cov(AbstractMat matrix, int normType) {
+    return cov(matrix, matrix, normType);
   }
 
   /**
@@ -1989,7 +2055,7 @@ public class Arma {
    * @param matrix2
    * @return
    */
-  public static Mat cov(Mat matrix1, Mat matrix2) {
+  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2) {
     return cov(matrix1, matrix2, 0);
   }
 
@@ -1999,7 +2065,7 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cov(Mat matrix1, Mat matrix2, int normType) {
+  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     return null;
   }
 
@@ -2007,7 +2073,7 @@ public class Arma {
    * @param matrix
    * @return
    */
-  public static Mat hist(Mat matrix) {
+  public static Mat hist(AbstractMat matrix) {
     return hist(matrix, 10);
   }
 
@@ -2016,7 +2082,7 @@ public class Arma {
    * @param numberOfBins
    * @return
    */
-  public static Mat hist(Mat matrix, int numberOfBins) {
+  public static Mat hist(AbstractMat matrix, int numberOfBins) {
     return null;
   }
 
@@ -2024,7 +2090,7 @@ public class Arma {
    * @param matrix
    * @return
    */
-  public static Mat histMat(Mat matrix) {
+  public static Mat histMat(AbstractMat matrix) {
     return histMat(matrix, 10);
   }
 
@@ -2033,7 +2099,7 @@ public class Arma {
    * @param numberOfBins
    * @return
    */
-  public static Mat histMat(Mat matrix, int numberOfBins) {
+  public static Mat histMat(AbstractMat matrix, int numberOfBins) {
     return histMat(matrix, numberOfBins, 0);
   }
 
@@ -2043,9 +2109,9 @@ public class Arma {
    * @param dimension
    * @return
    */
-  public static Mat histMat(Mat matrix, int numberOfBins, int dimension) {
+  public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -2068,7 +2134,7 @@ public class Arma {
    * @param centers
    * @return
    */
-  public static Mat hist(Mat matrix, Mat centers) {
+  public static Mat hist(AbstractMat matrix, AbstractMat centers) {
     return null;
   }
 
@@ -2077,7 +2143,7 @@ public class Arma {
    * @param centers
    * @return
    */
-  public static Mat histMat(Mat matrix, Mat centers) {
+  public static Mat histMat(AbstractMat matrix, AbstractMat centers) {
     return histMat(matrix, centers, 0);
   }
 
@@ -2087,9 +2153,9 @@ public class Arma {
    * @param dimension
    * @return
    */
-  public static Mat histMat(Mat matrix, Mat centers, int dimension) {
+  public static Mat histMat(AbstractMat matrix, AbstractMat centers, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -2112,7 +2178,7 @@ public class Arma {
    * @param edges
    * @return
    */
-  public static Mat histc(Mat matrix, Mat edges) {
+  public static Mat histc(AbstractMat matrix, AbstractMat edges) {
     return null;
   }
 
@@ -2121,7 +2187,7 @@ public class Arma {
    * @param edges
    * @return
    */
-  public static Mat histcMat(Mat matrix, Mat edges) {
+  public static Mat histcMat(AbstractMat matrix, AbstractMat edges) {
     return histcMat(matrix, edges, 0);
   }
 
@@ -2131,9 +2197,9 @@ public class Arma {
    * @param dimension
    * @return
    */
-  public static Mat histcMat(Mat matrix, Mat edges, int dimension) {
+  public static Mat histcMat(AbstractMat matrix, AbstractMat edges, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -2386,7 +2452,7 @@ public class Arma {
    */
   public static Mat cumsumMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     Mat result;
     if (dimension == 0) {
@@ -2444,15 +2510,11 @@ public class Arma {
   public static Mat kron(Mat A, Mat B) {
     Mat result = repmat(A, B.n_rows, B.n_cols);
 
-    int position = 0;
-    int columnPointer = 0;
+    int n = 0;
     for (int j = 0; j < B.n_cols; j++) {
-      int rowPointer = 0;
       for (int i = 0; i < B.n_rows; i++) {
-        result.submatInternal(rowPointer, rowPointer + A.n_cols - 1, columnPointer, columnPointer + A.n_cols - 1).inplace(Op.TIMES, B._matrix[position++]);
-        rowPointer++;
+        result.submatInternal(i, i + A.n_cols - 1, j, j + A.n_cols - 1).inplace(Op.TIMES, B._matrix[n++]);
       }
-      columnPointer++;
     }
 
     return result;
@@ -2506,9 +2568,9 @@ public class Arma {
       result = new Mat(set.size(), 1);
     }
 
-    int position = 0;
+    int n = 0;
     for (double element : set) {
-      result._matrix[position++] = element;
+      result._matrix[n++] = element;
     }
 
     return result;
@@ -2528,7 +2590,7 @@ public class Arma {
    * @return The vector
    */
   public static Mat vectorise(Mat matrix, int dimension) {
-    Mat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNotInSetDetection(dimension, 0, 1);
 
     if (dimension == 0) {
       return reshape(matrix, matrix.n_elem, 1);
