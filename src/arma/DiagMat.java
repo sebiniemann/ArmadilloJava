@@ -66,7 +66,7 @@ class DiagMat extends AbstractMat {
     _underlyingMatrix = matrix;
     _matrix = _underlyingMatrix._matrix;
     
-    _step = n_rows + 1;
+    _step = _underlyingMatrix.n_rows + 1;
     _k = k;
   }
 
@@ -78,7 +78,7 @@ class DiagMat extends AbstractMat {
       _n = -_k;
     }
     
-    _n -= n_rows + 1;
+    _n -= _step;
   }
 
   @Override
