@@ -2350,43 +2350,120 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat diagmat(Mat A) {
-    return null;
+  public static Mat diagmat(AbstractMat matrix) {
+    Mat result;
+    if(matrix.is_vec()) {
+      result = new Mat(matrix.n_elem, matrix.n_elem);
+      result.diag(Op.EQUAL, matrix);
+    } else {
+      result = new Mat(matrix.n_elem, matrix.n_elem, Fill.ZEROS);
+      result.diag(Op.EQUAL, matrix.diagInternal(0));
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat trimatu(Mat A) {
-    return null;
+  public static Mat trimatu(AbstractMat matrix) {
+    matrix.isNotSquareDetection();
+    
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    
+    int n = 0;
+    for(int j = 0; j < matrix.n_cols; j++) {
+      for(int i = 0; i < matrix.n_rows; i++) {
+        if(i <= j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+        }
+        n++;
+      }
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat trimatl(Mat A) {
-    return null;
+  public static Mat trimatl(AbstractMat matrix) {
+    matrix.isNotSquareDetection();
+    
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    
+    int n = 0;
+    for(int j = 0; j < matrix.n_cols; j++) {
+      for(int i = 0; i < matrix.n_rows; i++) {
+        if(i >= j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+        }
+        n++;
+      }
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat simmatu(Mat A) {
-    return null;
+  public static Mat simmatu(AbstractMat matrix) {
+    matrix.isNotSquareDetection();
+    
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    
+    int n = 0;
+    for(int j = 0; j < matrix.n_cols; j++) {
+      for(int i = 0; i < matrix.n_rows; i++) {
+        if(i < j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+          result._matrix[n - (i-j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n - (i-j) * (matrix.n_rows - 1))];
+        } else if(i == j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+        }
+        
+        n++;
+      }
+    }
+    
+    return result;
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat simmatl(Mat A) {
-    return null;
+  public static Mat simmatl(AbstractMat matrix) {
+    matrix.isNotSquareDetection();
+    
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    
+    int n = 0;
+    for(int j = 0; j < matrix.n_cols; j++) {
+      for(int i = 0; i < matrix.n_rows; i++) {
+        if(i > j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+          result._matrix[n + (i-j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n + (i-j) * (matrix.n_rows - 1))];
+        } else if(i == j) {
+          result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
+        }
+        
+        n++;
+      }
+    }
+    
+    return result;
   }
 
   /**
@@ -2760,20 +2837,20 @@ public class Arma {
   }
 
   /**
-   * @param A
+   * @param matrix
    * @return
    */
-  public static Mat inv(Mat A) {
-    return null;
+  public static Mat inv(AbstractMat matrix) {
+    return matrix.i();
   }
 
   /**
-   * @param A
-   * @param B
+   * @param matrix1
+   * @param matrix2
    * @return
    */
-  public static Mat inv(Mat A, Mat B) {
-    return null;
+  public static void inv(AbstractMat matrix1, Mat matrix2) {
+    matrix2._matrix = inv(matrix1)._matrix;
   }
 
   /**
