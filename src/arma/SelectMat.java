@@ -30,17 +30,17 @@ class SelectMat extends AbstractMat {
   /**
    * The element positions
    */
-  Mat         _elementSelection;
+  AbstractMat _elementSelection;
 
   /**
    * The row positions
    */
-  Mat         _rowSelection;
+  AbstractMat _rowSelection;
 
   /**
    * The column positions
    */
-  Mat         _columnSelection;
+  AbstractMat _columnSelection;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to the elements specified in the selection.
@@ -48,7 +48,7 @@ class SelectMat extends AbstractMat {
    * @param matrix The matrix
    * @param selection The element positions
    */
-  protected SelectMat(AbstractMat matrix, Mat selection) {
+  protected SelectMat(AbstractMat matrix, AbstractMat selection) {
     selection.isNonVectorDetection();
     matrix.isInvalidElementSelectionDetection(selection);
 
@@ -73,7 +73,7 @@ class SelectMat extends AbstractMat {
    * 
    * @throws IllegalArgumentException At least one selection must not be null.
    */
-  protected SelectMat(AbstractMat matrix, Mat rowSelection, Mat columnSelection) throws IllegalArgumentException {
+  protected SelectMat(AbstractMat matrix, AbstractMat rowSelection, AbstractMat columnSelection) throws IllegalArgumentException {
     if (rowSelection == null && columnSelection == null) {
       throw new IllegalArgumentException("At least one selection must not be null.");
     } else if (rowSelection == null) {
@@ -124,13 +124,13 @@ class SelectMat extends AbstractMat {
   protected int getElementIndex(int i, int j) {
     int n;
     if (_elementSelection != null) {
-      n = (int) _elementSelection._matrix[i];
+      n = (int) _elementSelection._matrix[_elementSelection.getElementIndex(i)];
     } else if (_rowSelection == null) {
-      n = i + ((int) _rowSelection._matrix[j]) * n_rows;
+      n = i + ((int) _columnSelection._matrix[_columnSelection.getElementIndex(j)]) * n_rows;
     } else if (_columnSelection == null) {
-      n = ((int) _rowSelection._matrix[i]) + j * n_rows;
+      n = ((int) _rowSelection._matrix[_rowSelection.getElementIndex(i)]) + j * n_rows;
     } else {
-      n = ((int) _rowSelection._matrix[i]) + ((int) _rowSelection._matrix[j]) * n_rows;
+      n = ((int) _rowSelection._matrix[_rowSelection.getElementIndex(i)]) + ((int) _columnSelection._matrix[_columnSelection.getElementIndex(j)]) * n_rows;
     }
 
     return _underlyingMatrix.getElementIndex(n);
@@ -140,17 +140,17 @@ class SelectMat extends AbstractMat {
   protected int getElementIndex(int n) {
     int nn;
     if (_elementSelection != null) {
-      nn = (int) _elementSelection._matrix[n];
+      nn = (int) _elementSelection._matrix[_elementSelection.getElementIndex(n)];
     } else {
       int j = n / n_rows;
       int i = n - j * n_rows;
 
       if (_rowSelection == null) {
-        nn = i + ((int) _rowSelection._matrix[j]) * n_rows;
+        nn = i + ((int) _rowSelection._matrix[_elementSelection.getElementIndex(j)]) * n_rows;
       } else if (_columnSelection == null) {
-        nn = ((int) _rowSelection._matrix[i]) + j * n_rows;
+        nn = ((int) _rowSelection._matrix[_rowSelection.getElementIndex(i)]) + j * n_rows;
       } else {
-        nn = ((int) _rowSelection._matrix[i]) + ((int) _rowSelection._matrix[j]) * n_rows;
+        nn = ((int) _rowSelection._matrix[_rowSelection.getElementIndex(i)]) + ((int) _columnSelection._matrix[_columnSelection.getElementIndex(j)]) * n_rows;
       }
     }
 
