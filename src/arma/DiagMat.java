@@ -10,24 +10,23 @@
 
 package arma;
 
-
 /**
  * Used for shallow copies of diagonals of {@link Mat}.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 class DiagMat extends AbstractMat {
-  
+
   /**
    * The diagonal index
    */
-  int _k;
+  int           _k;
 
   /**
    * The current index
    */
-  protected int      _n;
-  
+  protected int _n;
+
   /**
    * The difference between the current and the next index
    */
@@ -58,33 +57,33 @@ class DiagMat extends AbstractMat {
 
       length = Math.min(matrix.n_rows + k, matrix.n_cols);
     }
-    
+
     n_rows = length;
     n_cols = 1;
     n_elem = n_rows * n_cols;
 
     _underlyingMatrix = matrix;
     _matrix = _underlyingMatrix._matrix;
-    
+
     _step = _underlyingMatrix.n_rows + 1;
     _k = k;
   }
 
   @Override
   public void iteratorReset() {
-    if(_k > 0) {
+    if (_k > 0) {
       _n = _k * n_rows;
     } else {
       _n = -_k;
     }
-    
+
     _n -= _step;
   }
 
   @Override
   public int iteratorNext() {
     super.iteratorNext();
-    
+
     _n += _step;
     return _underlyingMatrix.getElementIndex(_n);
   }
@@ -97,12 +96,12 @@ class DiagMat extends AbstractMat {
   @Override
   public int getElementIndex(int n) {
     int nn;
-    if(_k > 0) {
-      nn =  n * (n_rows + 1) + _k * n_rows;
+    if (_k > 0) {
+      nn = n * (n_rows + 1) + _k * n_rows;
     } else {
       nn = n * (n_rows + 1) - _k;
     }
-    
+
     return _underlyingMatrix.getElementIndex(nn);
   }
 }

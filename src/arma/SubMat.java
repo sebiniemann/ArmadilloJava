@@ -21,21 +21,21 @@ class SubMat extends AbstractMat {
    * The current index
    */
   private int _n;
-  
+
   /**
    * The first corresponding index
    */
-  int     _a;
-  
+  int         _a;
+
   /**
    * The remaining rows
    */
   private int _remainingRows;
-  
+
   /**
    * The difference between the last index of a row and the next index of the next row
    */
-  int     _stepRow;
+  int         _stepRow;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to a subvector from row {@code a} to {@code b}.
@@ -59,7 +59,7 @@ class SubMat extends AbstractMat {
 
     _underlyingMatrix = vector;
     _matrix = _underlyingMatrix._matrix;
-    
+
     _stepRow = vector.n_rows - n_rows;
     _a = a;
   }
@@ -84,58 +84,58 @@ class SubMat extends AbstractMat {
 
     _underlyingMatrix = matrix;
     _matrix = _underlyingMatrix._matrix;
-    
+
     _stepRow = matrix.n_rows - n_rows;
     _a = ai + aj * n_rows;
   }
-  
+
   @Override
   protected void iteratorReset() {
     _n = _a;
     _remainingRows = n_rows;
   }
-  
+
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
-    
-    if(_underlyingMatrix.is_vec()) {
+
+    if (_underlyingMatrix.is_vec()) {
       return _n++;
     } else {
-      if(_remainingRows < 1) {
+      if (_remainingRows < 1) {
         _remainingRows = n_rows;
         _n += _stepRow;
       }
-      
+
       _remainingRows--;
-      
+
       return _n++;
     }
-    
+
   }
 
   @Override
   protected int getElementIndex(int i, int j) {
     int n;
-    if(_underlyingMatrix.is_vec()) {
+    if (_underlyingMatrix.is_vec()) {
       n = i;
     } else {
       n = i + j * n_rows;
     }
-    
+
     return _underlyingMatrix.getElementIndex(n);
   }
-  
+
   @Override
   protected int getElementIndex(int n) {
     int nn;
-    if(_underlyingMatrix.is_vec()) {
+    if (_underlyingMatrix.is_vec()) {
       nn = n;
     } else {
       int j = (n / n_rows);
       nn = _a + n + j * (_stepRow + 1);
     }
-    
+
     return _underlyingMatrix.getElementIndex(nn);
   }
 }

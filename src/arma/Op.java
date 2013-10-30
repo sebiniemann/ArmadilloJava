@@ -10,7 +10,6 @@
 
 package arma;
 
-
 /**
  * Provides predefined constants to identify arithmetic or relational operators.
  * <p>

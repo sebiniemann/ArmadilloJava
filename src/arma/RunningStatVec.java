@@ -10,7 +10,6 @@
 
 package arma;
 
-
 /**
  * Provides statistical measures that are updated iterative per sample vector.
  * <p>

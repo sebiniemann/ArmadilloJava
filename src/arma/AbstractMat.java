@@ -1522,7 +1522,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return Whether the matrix is finite
    */
   public boolean is_finite() {
-    
+
     iteratorReset();
     while (iteratorHasNext()) {
       double element = _matrix[iteratorNext()];
@@ -1675,8 +1675,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the smallest value of all elements and stores its row index in {@code j} and column index in
-   * {@code j}.
+   * Returns the smallest value of all elements and stores its row index in {@code j} and column index in {@code j}.
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
@@ -1747,8 +1746,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Returns the largest value of all elements and stores its row index in {@code j} and column index in {@code j}
-   * .
+   * Returns the largest value of all elements and stores its row index in {@code j} and column index in {@code j} .
    * <p>
    * Note: The positions must be of the mutable type int[].
    * 
@@ -2333,8 +2331,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * 
    * @param i The row index
    * 
-   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the row index range was ({@code i}, {@code i}).
+   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size ( {@link #n_rows}
+   *           , {@link #n_cols}) but the row index range was ({@code i}, {@code i}).
    */
   protected void isRowOutOfBoundsDetection(int i) throws ArrayIndexOutOfBoundsException {
     isRowRangeOutOfBoundsDetection(i, i);
@@ -2346,8 +2344,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param a The first row index
    * @param b The last row index
    * 
-   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size (
-   *           {@link #n_rows}, {@link #n_cols}) but the row index range was ({@code a}, {@code b}).
+   * @throws ArrayIndexOutOfBoundsException The row index range is out of bound. The matrix is of size ( {@link #n_rows}
+   *           , {@link #n_cols}) but the row index range was ({@code a}, {@code b}).
    */
   protected void isRowRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
