@@ -1968,20 +1968,7 @@ public class Arma {
    * @return
    */
   public static double cor(AbstractMat vector1, AbstractMat vector2, int normType) {
-    vector1.isEmptyDetection();
-    vector1.isNonVectorDetection();
-    vector2.isNonVectorDetection();
-    AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
-    AbstractMat.isNotInSetDetection(normType, 0, 1);
-
-    double correlationCoefficient = accu(vector1.minus(mean(vector1)).elemDivide(stddev(vector1, normType)).elemTimes(vector2.minus(mean(vector2)).elemDivide(stddev(vector2, normType))));
-    if (normType == 0) {
-      correlationCoefficient /= (vector1.n_elem - 1);
-    } else {
-      correlationCoefficient /= vector1.n_elem;
-    }
-
-    return correlationCoefficient;
+    return cov(vector1, vector2, normType) / (stddev(vector1, normType) * stddev(vector2, normType));
   }
 
   /**
@@ -2034,11 +2021,60 @@ public class Arma {
   }
 
   /**
+   * @param vector
+   * @return
+   */
+  public static double cov(AbstractMat vector) {
+    return cov(vector, 0);
+  }
+
+  /**
+   * @param vector
+   * @param normType
+   * @return
+   */
+  public static double cov(AbstractMat vector, int normType) {
+    return cov(vector, vector, normType);
+  }
+
+  /**
+   * @param vector1
+   * @param vector2
+   * @return
+   */
+  public static double cov(AbstractMat vector1, AbstractMat vector2) {
+    return cov(vector1, vector2, 0);
+  }
+
+  /**
+   * @param vector1
+   * @param vector2
+   * @param normType
+   * @return
+   */
+  public static double cov(AbstractMat vector1, AbstractMat vector2, int normType) {
+    vector1.isEmptyDetection();
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
+    AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
+    AbstractMat.isNotInSetDetection(normType, 0, 1);
+
+    double covariance = accu(vector1.minus(mean(vector1)).elemDivide(stddev(vector1, normType)).elemTimes(vector2.minus(mean(vector2))));
+    if (normType == 0) {
+      covariance /= (vector1.n_elem - 1);
+    } else {
+      covariance /= vector1.n_elem;
+    }
+
+    return covariance;
+  }
+
+  /**
    * @param matrix
    * @return
    */
-  public static Mat cov(AbstractMat matrix) {
-    return cov(matrix, 0);
+  public static Mat covMat(AbstractMat matrix) {
+    return covMat(matrix, 0);
   }
 
   /**
@@ -2046,8 +2082,8 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cov(AbstractMat matrix, int normType) {
-    return cov(matrix, matrix, normType);
+  public static Mat covMat(AbstractMat matrix, int normType) {
+    return covMat(matrix, matrix, normType);
   }
 
   /**
@@ -2055,8 +2091,8 @@ public class Arma {
    * @param matrix2
    * @return
    */
-  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2) {
-    return cov(matrix1, matrix2, 0);
+  public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2) {
+    return covMat(matrix1, matrix2, 0);
   }
 
   /**
@@ -2065,8 +2101,21 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2, int normType) {
-    return null;
+  public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
+    matrix1.isEmptyDetection();
+    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+    
+    Mat result = new Mat();
+    result.copy_size(matrix1);
+    
+    int n = 0;
+    for(int j = 0; j < matrix1.n_cols; j++) {
+      for(int jj = 0; jj < matrix1.n_cols; jj++) {
+        result._matrix[n++] = cov(matrix1.col(j), matrix2.col(jj));
+      }
+    }
+    
+    return result;
   }
 
   /**
