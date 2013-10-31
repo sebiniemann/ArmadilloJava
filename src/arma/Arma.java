@@ -24,7 +24,6 @@ import org.ejml.factory.CholeskyDecomposition;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.EigenDecomposition;
 import org.ejml.factory.LUDecomposition;
-import org.ejml.factory.LinearSolver;
 import org.ejml.factory.LinearSolverFactory;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
