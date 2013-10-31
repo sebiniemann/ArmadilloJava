@@ -2441,16 +2441,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix in DenseMatrix64F format
    */
   protected static DenseMatrix64F convertMatToEJMLMat(AbstractMat matrix) {
-    if (!matrix.is_vec()) {
-      int n = 0;
-      for (int i = 0; i < matrix.n_rows; i++) {
-        for (int j = 0; j < matrix.n_cols; j++) {
-          matrix._matrix[n++] = matrix._matrix[matrix.getElementIndex(i, j)];
-        }
-      }
+    if (matrix.is_vec()) {
+      return new DenseMatrix64F(matrix.n_rows, matrix.n_cols, true, matrix._matrix);
+    } else {
+      return new DenseMatrix64F(matrix.n_rows, matrix.n_cols, false, matrix._matrix);
     }
-
-    return DenseMatrix64F.wrap(matrix.n_rows, matrix.n_cols, matrix._matrix);
   }
 
   /**

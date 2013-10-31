@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.CholeskyDecomposition;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
@@ -2815,7 +2816,9 @@ public class Arma {
    * @return
    */
   public static Mat chol(Mat X) {
-    return null;
+    CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(X.n_rows, true);
+    chol.decompose(AbstractMat.convertMatToEJMLMat(X));
+    return AbstractMat.convertEJMLToMat(chol.getT(null));
   }
 
   /**
@@ -2823,8 +2826,11 @@ public class Arma {
    * @param X
    * @return
    */
-  public static Mat chol(Mat R, Mat X) {
-    return null;
+  public static void chol(Mat R, Mat X) {
+    Mat temp = chol(X);
+
+    R.copy_size(temp);
+    R._matrix = temp._matrix;
   }
 
   /**
@@ -2855,40 +2861,41 @@ public class Arma {
   }
 
   /**
-   * @param matrix
+   * @param A
    * @return
    */
-  public static Mat inv(AbstractMat matrix) {
-    return matrix.i();
-  }
-
-  /**
-   * @param matrix1
-   * @param matrix2
-   * @return
-   */
-  public static void inv(AbstractMat matrix1, Mat matrix2) {
-    matrix2._matrix = inv(matrix1)._matrix;
+  public static Mat inv(AbstractMat A) {
+    return A.i();
   }
 
   /**
    * @param A
    * @param B
-   * @param C
    * @return
    */
-  public static Mat lu(Mat A, Mat B, Mat C) {
+  public static void inv(AbstractMat A, Mat B) {
+    B.copy_size(A);
+    B._matrix = inv(A)._matrix;
+  }
+
+  /**
+   * @param L
+   * @param U
+   * @param X
+   * @return
+   */
+  public static Mat lu(Mat L, Mat U, Mat X) {
     return null;
   }
 
   /**
-   * @param A
-   * @param B
-   * @param C
-   * @param D
+   * @param L
+   * @param U
+   * @param P
+   * @param X
    * @return
    */
-  public static Mat lu(Mat A, Mat B, Mat C, Mat D) {
+  public static Mat lu(Mat L, Mat U, Mat P, Mat X) {
     return null;
   }
 
@@ -2897,7 +2904,7 @@ public class Arma {
    * @return
    */
   public static Mat pinv(Mat A) {
-    return null;
+    return pinv(A, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
@@ -2914,8 +2921,8 @@ public class Arma {
    * @param B
    * @return
    */
-  public static Mat pinv(Mat A, Mat B) {
-    return null;
+  public static boolean pinv(Mat A, Mat B) {
+    return pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
@@ -2924,8 +2931,17 @@ public class Arma {
    * @param tolerance
    * @return
    */
-  public static Mat pinv(Mat A, Mat B, double tolerance) {
-    return null;
+  public static boolean pinv(Mat A, Mat B, double tolerance) {
+    Mat temp = pinv(A);
+    
+    if(temp.n_elem < 1) {
+      return false;
+    }
+    
+    B.copy_size(temp);
+    B._matrix = temp._matrix;
+      
+    return true;
   }
 
   /**
