@@ -318,7 +318,7 @@ A = reshape(A, size(B))    | A.copy_size(B)             | A.copy_size(B)        
 Non-member functions
 --------------------
 
-### Maxtrix-valued element-wise functions
+### Matrix-valued element-wise functions
 
 #### Trigonometric functions
 
