@@ -22,6 +22,7 @@ import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.CholeskyDecomposition;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.EigenDecomposition;
+import org.ejml.factory.LUDecomposition;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
@@ -2918,8 +2919,18 @@ public class Arma {
    * @param X
    * @return
    */
-  public static Mat lu(Mat L, Mat U, Mat X) {
-    return null;
+  public static void lu(Mat L, Mat U, Mat X) {
+    LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
+    lu.decompose(AbstractMat.convertMatToEJMLMat(X));
+    
+    Mat temp;
+    temp = AbstractMat.convertEJMLToMat(lu.getLower(null));
+    L.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, L._matrix, 0, temp.n_elem);
+
+    temp = AbstractMat.convertEJMLToMat(lu.getUpper(null));
+    U.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, U._matrix, 0, temp.n_elem);
   }
 
   /**
@@ -2929,8 +2940,22 @@ public class Arma {
    * @param X
    * @return
    */
-  public static Mat lu(Mat L, Mat U, Mat P, Mat X) {
-    return null;
+  public static void lu(Mat L, Mat U, Mat P, Mat X) {
+    LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
+    lu.decompose(AbstractMat.convertMatToEJMLMat(X));
+    
+    Mat temp;
+    temp = AbstractMat.convertEJMLToMat(lu.getLower(null));
+    L.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, L._matrix, 0, temp.n_elem);
+
+    temp = AbstractMat.convertEJMLToMat(lu.getUpper(null));
+    U.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, U._matrix, 0, temp.n_elem);
+
+    temp = AbstractMat.convertEJMLToMat(lu.getPivot(null));
+    P.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, P._matrix, 0, temp.n_elem);
   }
 
   /**
