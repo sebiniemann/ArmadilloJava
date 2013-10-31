@@ -2363,7 +2363,7 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void isInvalidElementSelectionDetection(AbstractMat selection) {
     for (int n = 0; n < selection.n_elem; n++) {
       double index = selection.at(n);
-      
+
       isNonIntergerPositionDetection(index);
       isElementOutOfBoundsDetection((int) index);
     }
@@ -2377,7 +2377,7 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void isInvalidColumnSelectionDetection(AbstractMat selection) {
     for (int n = 0; n < selection.n_elem; n++) {
       double index = selection.at(n);
-      
+
       isNonIntergerPositionDetection(index);
       isColumnOutOfBoundsDetection((int) index);
     }
@@ -2391,7 +2391,7 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void isInvalidRowSelectionDetection(AbstractMat selection) {
     for (int n = 0; n < selection.n_elem; n++) {
       double index = selection.at(n);
-      
+
       isNonIntergerPositionDetection(index);
       isRowOutOfBoundsDetection((int) index);
     }
@@ -2426,11 +2426,18 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
+   * Detects if the matrix is not symmetric and throws an exception if so.
    * 
+   * @throws UnsupportedOperationException The matrix must be symmetric.
    */
   protected void isNotSymmetricDetection() {
-    // TODO Auto-generated method stub
-    
+    for (int j = 0; j < n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        if (i != j && at(i) != at(j)) {
+          throw new IllegalArgumentException("The matrix must be symmetric.");
+        }
+      }
+    }
   }
 
   /**
@@ -2479,7 +2486,7 @@ abstract class AbstractMat implements Iterable<Double> {
         }
       }
     }
-    
+
     return matrix;
   }
 
