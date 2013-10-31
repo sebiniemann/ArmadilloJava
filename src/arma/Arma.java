@@ -2664,12 +2664,30 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @param B
+   * @param vector1
+   * @param vector2
    * @return
    */
-  public static Mat conv(Mat A, Mat B) {
-    return null;
+  public static Mat conv(AbstractMat vector1, AbstractMat vector2) {
+    Mat result;
+    
+    if(vector1.is_colvec()) {
+      result = new Mat(vector1.n_elem + vector2.n_elem - 1, 1);
+    } else {
+      result = new Mat(1, vector1.n_elem + vector2.n_elem - 1);
+    }
+    
+    for(int n = 0; n < result.n_elem; n++) {
+      int min = Math.max(0, n - vector2.n_elem + 1);
+      int max = Math.min(vector1.n_elem, n + 1);
+
+      for (int nn = min; nn < max; nn++)
+      {
+        result._matrix[n] += vector1._matrix[vector1.getElementIndex(nn)] * vector2._matrix[vector2.getElementIndex(n - nn)];
+      }
+    }
+    
+    return result;
   }
 
   /**
