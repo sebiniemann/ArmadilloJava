@@ -18,11 +18,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
+import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.CholeskyDecomposition;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.EigenDecomposition;
 import org.ejml.factory.LUDecomposition;
+import org.ejml.factory.LinearSolver;
+import org.ejml.factory.LinearSolverFactory;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
@@ -2972,7 +2975,13 @@ public class Arma {
    * @return
    */
   public static Mat pinv(Mat A, double tolerance) {
-    return null;
+    SolvePseudoInverseSvd pinv = (SolvePseudoInverseSvd) LinearSolverFactory.pseudoInverse(true);
+    pinv.setThreshold(tolerance);
+    
+    DenseMatrix64F result = new DenseMatrix64F();
+    pinv.invert(result);
+    
+    return AbstractMat.convertEJMLToMat(result);
   }
 
   /**
@@ -2980,8 +2989,8 @@ public class Arma {
    * @param B
    * @return
    */
-  public static boolean pinv(Mat A, Mat B) {
-    return pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
+  public static void pinv(Mat A, Mat B) {
+    pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
@@ -2990,17 +2999,10 @@ public class Arma {
    * @param tolerance
    * @return
    */
-  public static boolean pinv(Mat A, Mat B, double tolerance) {
+  public static void pinv(Mat A, Mat B, double tolerance) {
     Mat temp = pinv(A);
-    
-    if(temp.n_elem < 1) {
-      return false;
-    }
-    
     B.copy_size(temp);
     System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
-      
-    return true;
   }
 
   /**
