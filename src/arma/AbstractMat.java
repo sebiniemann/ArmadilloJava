@@ -2361,9 +2361,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param selection The column indices
    */
   protected void isInvalidElementSelectionDetection(AbstractMat selection) {
-    for (double position : selection) {
-      isNonIntergerPositionDetection(position);
-      isElementOutOfBoundsDetection((int) position);
+    for (int n = 0; n < selection.n_elem; n++) {
+      double index = selection.at(n);
+      
+      isNonIntergerPositionDetection(index);
+      isElementOutOfBoundsDetection((int) index);
     }
   }
 
@@ -2373,9 +2375,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param selection The column indices
    */
   protected void isInvalidColumnSelectionDetection(AbstractMat selection) {
-    for (double position : selection) {
-      isNonIntergerPositionDetection(position);
-      isColumnOutOfBoundsDetection((int) position);
+    for (int n = 0; n < selection.n_elem; n++) {
+      double index = selection.at(n);
+      
+      isNonIntergerPositionDetection(index);
+      isColumnOutOfBoundsDetection((int) index);
     }
   }
 
@@ -2385,9 +2389,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param selection The row indices
    */
   protected void isInvalidRowSelectionDetection(AbstractMat selection) {
-    for (double position : selection) {
-      isNonIntergerPositionDetection(position);
-      isRowOutOfBoundsDetection((int) position);
+    for (int n = 0; n < selection.n_elem; n++) {
+      double index = selection.at(n);
+      
+      isNonIntergerPositionDetection(index);
+      isRowOutOfBoundsDetection((int) index);
     }
   }
 
@@ -2417,6 +2423,14 @@ abstract class AbstractMat implements Iterable<Double> {
     if (!is_square()) {
       throw new IllegalArgumentException("The matrix must be square, but was a (" + n_rows + ", " + n_cols + ")-matrix.");
     }
+  }
+
+  /**
+   * 
+   */
+  protected void isNotSymmetricDetection() {
+    // TODO Auto-generated method stub
+    
   }
 
   /**
