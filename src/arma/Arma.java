@@ -3006,56 +3006,6 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @return
-   */
-  public static Mat princomp(Mat A) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @return
-   */
-  public static Mat princomp(Mat A, Mat B) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @param C
-   * @return
-   */
-  public static Mat princomp(Mat A, Mat B, Mat C) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @param C
-   * @param D
-   * @return
-   */
-  public static Mat princomp(Mat A, Mat B, Mat C, Mat D) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @param C
-   * @param D
-   * @param E
-   * @return
-   */
-  public static Mat princomp(Mat A, Mat B, Mat C, Mat D, Mat E) {
-    return null;
-  }
-
-  /**
    * Performs a <a href="http://en.wikipedia.org/wiki/QR_decomposition">QR decomposition</a> on the matrix {@code x}.
    * <p>
    * The matrix {@code x} is decomposed into a orthogonal matrix {@code q} and upper triangular matrix {@code r}, such
@@ -3063,29 +3013,29 @@ public class Arma {
    * <p>
    * The provided matrices {@code q} and {@code r} are not touched if the decomposition fails.
    * 
-   * @param q An orthogonal matrix.
-   * @param r An upper triangular matrix.
-   * @param x The matrix to be decomposed.
+   * @param Q An orthogonal matrix.
+   * @param R An upper triangular matrix.
+   * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean qr(Mat q, Mat r, Mat x) {
-    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(x.n_rows, x.n_cols);
-    qr.decompose(AbstractMat.convertMatToEJMLMat(x));
+  public static boolean qr(Mat Q, Mat R, Mat X) {
+    QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
+    qr.decompose(AbstractMat.convertMatToEJMLMat(X));
 
-    DenseMatrix64F tempQ;
-    DenseMatrix64F tempR;
+    Mat tempQ;
+    Mat tempR;
     try {
-      tempQ = qr.getQ(null, false);
-      tempR = qr.getR(null, false);
+      tempQ = AbstractMat.convertEJMLToMat(qr.getQ(null, false));
+      tempR = AbstractMat.convertEJMLToMat(qr.getR(null, false));
     } catch(IllegalArgumentException exception) {
       return false;
     }
-
-    q.set_size(tempQ.numRows, tempQ.numCols);
-    q = AbstractMat.convertEJMLToMat(tempQ);
-
-    r.set_size(tempR.numRows, tempR.numCols);
-    r = AbstractMat.convertEJMLToMat(tempR);
+    
+    Q.copy_size(tempQ);
+    System.arraycopy(tempQ._matrix, 0, Q._matrix, 0, tempQ.n_elem);
+    
+    R.copy_size(tempR);
+    System.arraycopy(tempR._matrix, 0, R._matrix, 0, tempR.n_elem);
 
     return true;
   }
@@ -3233,27 +3183,6 @@ public class Arma {
     v = AbstractMat.convertEJMLToMat(tempV);
 
     return true;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @param C
-   * @return
-   */
-  public static Mat syl(Mat A, Mat B, Mat C) {
-    return null;
-  }
-
-  /**
-   * @param A
-   * @param B
-   * @param C
-   * @param D
-   * @return
-   */
-  public static Mat syl(Mat A, Mat B, Mat C, Mat D) {
-    return null;
   }
 
   /**
