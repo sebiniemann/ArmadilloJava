@@ -1123,7 +1123,7 @@ public class Arma {
    */
   public static Mat minMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
 
@@ -1181,7 +1181,7 @@ public class Arma {
    */
   public static Mat maxMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
 
@@ -1233,7 +1233,7 @@ public class Arma {
    */
   public static Mat meanMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result = sumMat(matrix, dimension);
 
@@ -1294,7 +1294,7 @@ public class Arma {
    */
   public static Mat medianMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1398,7 +1398,7 @@ public class Arma {
   public static double var(AbstractMat vector, int normType) {
     vector.isEmptyDetection();
     vector.isNonVectorDetection();
-    AbstractMat.isNotInSetDetection(normType, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(normType);
 
     double variance = sum(square(vector.minus(mean(vector))));
     if (normType == 0) {
@@ -1446,7 +1446,7 @@ public class Arma {
    */
   public static Mat varMat(AbstractMat matrix, int normType, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1500,7 +1500,7 @@ public class Arma {
    */
   public static Mat anyMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1556,7 +1556,7 @@ public class Arma {
    */
   public static Mat allMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1613,7 +1613,7 @@ public class Arma {
    */
   public static Mat prodMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1661,7 +1661,7 @@ public class Arma {
    */
   public static Mat sumMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1762,7 +1762,7 @@ public class Arma {
    */
   public static Mat sort(AbstractMat vector, int sortType) {
     vector.isNonVectorDetection();
-    AbstractMat.isNotInSetDetection(sortType, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(sortType);
 
     Mat result = new Mat(vector);
     Arrays.sort(result._matrix);
@@ -1811,7 +1811,7 @@ public class Arma {
    */
   public static Mat sortMat(AbstractMat matrix, int sortType, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -1869,7 +1869,7 @@ public class Arma {
    */
   public static Mat stable_sort_index(AbstractMat vector, int sortType) {
     vector.isNonVectorDetection();
-    AbstractMat.isNotInSetDetection(sortType, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(sortType);
 
     // TreeMap will do the job, nothing to do here – great!
     TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
@@ -2062,7 +2062,7 @@ public class Arma {
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
     AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
-    AbstractMat.isNotInSetDetection(normType, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(normType);
 
     double covariance = accu(vector1.minus(mean(vector1)).elemDivide(stddev(vector1, normType)).elemTimes(vector2.minus(mean(vector2))));
     if (normType == 0) {
@@ -2192,7 +2192,7 @@ public class Arma {
    */
   public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -2250,7 +2250,7 @@ public class Arma {
    */
   public static Mat histMat(AbstractMat matrix, AbstractMat centers, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -2308,7 +2308,7 @@ public class Arma {
    */
   public static Mat histcMat(AbstractMat matrix, AbstractMat edges, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -2650,7 +2650,7 @@ public class Arma {
    */
   public static Mat cumsumMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
     if (dimension == 0) {
@@ -2806,7 +2806,7 @@ public class Arma {
    * @return The vector
    */
   public static Mat vectorise(Mat matrix, int dimension) {
-    AbstractMat.isNotInSetDetection(dimension, 0, 1);
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
     if (dimension == 0) {
       return reshape(matrix, matrix.n_elem, 1);

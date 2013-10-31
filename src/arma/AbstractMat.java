@@ -2421,16 +2421,15 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Detects if a value is not in a set and throws an exception if so.
+   * Detects if a parameter value is neither 0 nor 1 and throws an exception if so.
    * 
-   * @param value The value
-   * @param set The set
+   * @param value The parameter value
    * 
-   * @throws IllegalArgumentException The given value is not in the set, but were {@code value} and {@code set}.
+   * @throws IllegalArgumentException The parameter value must be either 0 or 1, but was {@code value}.
    */
-  protected static void isNotInSetDetection(int value, int... set) throws IllegalArgumentException {
-    if (!Arrays.asList(set).contains(value)) {
-      throw new IllegalArgumentException("The given value is not in the set, but were " + value + " and " + Arrays.toString(set) + ".");
+  protected static void isNonBinaryParameterDetection(int value) throws IllegalArgumentException {
+    if (value < 0 || value > 1) {
+      throw new IllegalArgumentException("The parameter value must be either 0 or 1, but was " + value + ".");
     }
   }
 

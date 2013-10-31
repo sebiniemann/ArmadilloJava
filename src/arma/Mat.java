@@ -591,7 +591,7 @@ public class Mat extends AbstractMat {
    * @param dimension The dimension
    */
   public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
-    isNotInSetDetection(dimension, 0, 1);
+    isNonBinaryParameterDetection(dimension);
 
     Mat temp = new Mat(_matrix);
     set_size(numberOfColumns, numberOfRows);
