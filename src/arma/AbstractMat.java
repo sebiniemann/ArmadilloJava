@@ -14,6 +14,7 @@ import java.util.Random;
 
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
+import org.ejml.ops.MatrixFeatures;
 
 /**
  * Provides a real-valued dense matrix with double precision. Member functions as well as attributes are similar to the
@@ -2440,16 +2441,16 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix in DenseMatrix64F format
    */
   protected static DenseMatrix64F convertMatToEJMLMat(AbstractMat matrix) {
-    DenseMatrix64F ejmlMatrix = new DenseMatrix64F(matrix.n_rows, matrix.n_cols);
-
-    int n = 0;
-    for (int i = 0; i < matrix.n_rows; i++) {
-      for (int j = 0; j < matrix.n_cols; j++) {
-        ejmlMatrix.set(n++, matrix._matrix[matrix.getElementIndex(i, j)]);
+    if (!matrix.is_vec()) {
+      int n = 0;
+      for (int i = 0; i < matrix.n_rows; i++) {
+        for (int j = 0; j < matrix.n_cols; j++) {
+          matrix._matrix[n++] = matrix._matrix[matrix.getElementIndex(i, j)];
+        }
       }
     }
 
-    return ejmlMatrix;
+    return DenseMatrix64F.wrap(matrix.n_rows, matrix.n_cols, matrix._matrix);
   }
 
   /**
@@ -2461,13 +2462,17 @@ abstract class AbstractMat implements Iterable<Double> {
   protected static Mat convertEJMLToMat(DenseMatrix64F ejmlMatrix) {
     Mat matrix = new Mat(ejmlMatrix.numRows, ejmlMatrix.numCols);
 
-    int n = 0;
-    for (int i = 0; i < matrix.n_rows; i++) {
-      for (int j = 0; j < matrix.n_cols; j++) {
-        matrix._matrix[matrix.getElementIndex(i, j)] = ejmlMatrix.get(n++);
+    if (MatrixFeatures.isVector(ejmlMatrix)) {
+      System.arraycopy(ejmlMatrix.data, 0, matrix._matrix, 0, matrix.n_elem);
+    } else {
+      int n = 0;
+      for (int i = 0; i < matrix.n_rows; i++) {
+        for (int j = 0; j < matrix.n_cols; j++) {
+          matrix._matrix[matrix.getElementIndex(i, j)] = ejmlMatrix.data[n++];
+        }
       }
     }
-
+    
     return matrix;
   }
 
