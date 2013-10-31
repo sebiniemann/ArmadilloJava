@@ -167,10 +167,10 @@ public class Arma {
     AbstractMat.isInvalidPositionDetection(numberOfCopiesPerColumn);
 
     // This method uses System.arraycopy instead of iterating over each element
-    if(!(matrix instanceof Mat)) {
+    if (!(matrix instanceof Mat)) {
       matrix = new Mat(matrix);
     }
-    
+
     Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
 
     int srcColumnPointer = 0;
@@ -937,6 +937,7 @@ public class Arma {
   public static double det(AbstractMat matrix) {
     matrix.isNotSquareDetection();
     matrix.isEmptyDetection();
+    matrix.isIllConditionedDectetion();
 
     return CommonOps.det(AbstractMat.convertMatToEJMLMat(matrix));
   }
@@ -970,6 +971,9 @@ public class Arma {
    * @throws IllegalArgumentException For vectors, p must be strict greater than 0, but was {@code p}.
    */
   public static double norm(AbstractMat matrix, int p) throws IllegalArgumentException {
+    matrix.isEmptyDetection();
+    matrix.isIllConditionedDectetion();
+
     if (matrix.is_vec()) {
       if (p < 0) {
         throw new IllegalArgumentException("For vectors, p must be strict greater than 0, but was " + p);
@@ -998,6 +1002,9 @@ public class Arma {
    * @throws IllegalArgumentException For non-vector matrices, p must be one of 'inf' or 'fro', but was {@code p}.
    */
   public static double norm(AbstractMat matrix, String p) throws IllegalArgumentException {
+    matrix.isEmptyDetection();
+    matrix.isIllConditionedDectetion();
+
     if (matrix.is_vec()) {
       switch (p) {
         case "-inf":
@@ -1044,6 +1051,7 @@ public class Arma {
    */
   public static double rank(AbstractMat matrix, double tolerance) {
     matrix.isEmptyDetection();
+    matrix.isIllConditionedDectetion();
 
     return MatrixFeatures.rank(AbstractMat.convertMatToEJMLMat(matrix));
   }
@@ -2008,20 +2016,20 @@ public class Arma {
    * @param normType
    * @return
    */
-  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {   
+  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
     AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
-    
+
     Mat result = new Mat();
     result.copy_size(matrix1);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix1.n_cols; j++) {
-      for(int jj = 0; jj < matrix1.n_cols; jj++) {
+    for (int j = 0; j < matrix1.n_cols; j++) {
+      for (int jj = 0; jj < matrix1.n_cols; jj++) {
         result._matrix[n++] = cor(matrix1.col(j), matrix2.col(jj));
       }
     }
-    
+
     return result;
   }
 
@@ -2109,17 +2117,17 @@ public class Arma {
   public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
     AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
-    
+
     Mat result = new Mat();
     result.copy_size(matrix1);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix1.n_cols; j++) {
-      for(int jj = 0; jj < matrix1.n_cols; jj++) {
+    for (int j = 0; j < matrix1.n_cols; j++) {
+      for (int jj = 0; jj < matrix1.n_cols; jj++) {
         result._matrix[n++] = cov(matrix1.col(j), matrix2.col(jj));
       }
     }
-    
+
     return result;
   }
 
@@ -2137,8 +2145,11 @@ public class Arma {
    * @return
    */
   public static Mat hist(AbstractMat vector, int numberOfBins) {
+    vector.isNonVectorDetection();
+    vector.isEmptyDetection();
+
     Mat edges = new Mat(numberOfBins, 1);
-    
+
     vector.iteratorReset();
     double element = vector._matrix[vector.iteratorNext()];
     double minimum = element;
@@ -2148,22 +2159,22 @@ public class Arma {
       minimum = Math.min(maximum, element);
       maximum = Math.max(maximum, element);
     }
-    
-    if(Double.isInfinite(minimum)) {
+
+    if (Double.isInfinite(minimum)) {
       minimum = -Double.MAX_VALUE;
     }
-    
-    if(Double.isInfinite(maximum)) {
+
+    if (Double.isInfinite(maximum)) {
       maximum = Double.MAX_VALUE;
     }
-    
+
     double stepLength = (maximum - minimum) / edges.n_elem;
-    for(int n = 0; n < edges.n_elem - 1; n++) {
+    for (int n = 0; n < edges.n_elem - 1; n++) {
       // Increasing a value step by step by stepLength might be faster, but also reduces precision
       edges._matrix[n] = minimum + stepLength * (n + 1);
     }
     edges._matrix[edges.n_elem] = Double.POSITIVE_INFINITY;
-    
+
     return histc(vector, edges);
   }
 
@@ -2216,20 +2227,23 @@ public class Arma {
    * @return
    */
   public static Mat hist(AbstractMat vector, AbstractMat centers) {
+    vector.isNonVectorDetection();
+    vector.isEmptyDetection();
+
     Mat edges = new Mat(centers.n_elem, 1);
-    
+
     centers.iteratorReset();
     int n = 0;
     double lastElement = centers._matrix[centers.iteratorNext()];
     while (centers.iteratorHasNext()) {
       double currentElement = centers._matrix[centers.iteratorNext()];
-      
+
       edges._matrix[n++] = lastElement + (currentElement - lastElement) / 2;
       lastElement = currentElement;
     }
     // The last element of edges
     edges._matrix[n] = Double.POSITIVE_INFINITY;
-    
+
     return histc(vector, edges);
   }
 
@@ -2274,20 +2288,23 @@ public class Arma {
    * @return
    */
   public static Mat histc(AbstractMat vector, AbstractMat edges) {
+    vector.isNonVectorDetection();
+    vector.isEmptyDetection();
+
     Mat result = new Mat(edges.n_elem, 1);
-    
+
     vector.iteratorReset();
     while (vector.iteratorHasNext()) {
       double element = vector._matrix[vector.iteratorNext()];
-      
+
       edges.iteratorReset();
       for (int n = 0; n < edges.n_elem; n++) {
-        if(element <= edges._matrix[edges.iteratorNext()]) {
+        if (element <= edges._matrix[edges.iteratorNext()]) {
           result._matrix[n]++;
         }
       }
     }
-    
+
     return result;
   }
 
@@ -2332,11 +2349,11 @@ public class Arma {
    */
   public static Mat fliplr(AbstractMat matrix) {
     Mat result = new Mat(matrix);
-    
-    for(int j = 0; j < result.n_cols / 2; j++) {
+
+    for (int j = 0; j < result.n_cols / 2; j++) {
       result.swap_cols(j, result.n_cols - (j + 1));
     }
-    
+
     return result;
   }
 
@@ -2346,11 +2363,11 @@ public class Arma {
    */
   public static Mat flipud(AbstractMat matrix) {
     Mat result = new Mat(matrix);
-    
-    for(int i = 0; i < result.n_rows / 2; i++) {
+
+    for (int i = 0; i < result.n_rows / 2; i++) {
       result.swap_rows(i, result.n_rows - (i + 1));
     }
-    
+
     return result;
   }
 
@@ -2360,14 +2377,14 @@ public class Arma {
    */
   public static Mat diagmat(AbstractMat matrix) {
     Mat result;
-    if(matrix.is_vec()) {
+    if (matrix.is_vec()) {
       result = new Mat(matrix.n_elem, matrix.n_elem);
       result.diag(Op.EQUAL, matrix);
     } else {
       result = new Mat(matrix.n_elem, matrix.n_elem, Fill.ZEROS);
       result.diag(Op.EQUAL, matrix.diagInternal(0));
     }
-    
+
     return result;
   }
 
@@ -2377,20 +2394,20 @@ public class Arma {
    */
   public static Mat trimatu(AbstractMat matrix) {
     matrix.isNotSquareDetection();
-    
+
     Mat result = new Mat();
     result.copy_size(matrix);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix.n_cols; j++) {
-      for(int i = 0; i < matrix.n_rows; i++) {
-        if(i <= j) {
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        if (i <= j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }
         n++;
       }
     }
-    
+
     return result;
   }
 
@@ -2400,20 +2417,20 @@ public class Arma {
    */
   public static Mat trimatl(AbstractMat matrix) {
     matrix.isNotSquareDetection();
-    
+
     Mat result = new Mat();
     result.copy_size(matrix);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix.n_cols; j++) {
-      for(int i = 0; i < matrix.n_rows; i++) {
-        if(i >= j) {
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        if (i >= j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }
         n++;
       }
     }
-    
+
     return result;
   }
 
@@ -2423,24 +2440,24 @@ public class Arma {
    */
   public static Mat simmatu(AbstractMat matrix) {
     matrix.isNotSquareDetection();
-    
+
     Mat result = new Mat();
     result.copy_size(matrix);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix.n_cols; j++) {
-      for(int i = 0; i < matrix.n_rows; i++) {
-        if(i < j) {
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        if (i < j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
-          result._matrix[n - (i-j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n - (i-j) * (matrix.n_rows - 1))];
-        } else if(i == j) {
+          result._matrix[n - (i - j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n - (i - j) * (matrix.n_rows - 1))];
+        } else if (i == j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }
-        
+
         n++;
       }
     }
-    
+
     return result;
   }
 
@@ -2450,24 +2467,24 @@ public class Arma {
    */
   public static Mat simmatl(AbstractMat matrix) {
     matrix.isNotSquareDetection();
-    
+
     Mat result = new Mat();
     result.copy_size(matrix);
-    
+
     int n = 0;
-    for(int j = 0; j < matrix.n_cols; j++) {
-      for(int i = 0; i < matrix.n_rows; i++) {
-        if(i > j) {
+    for (int j = 0; j < matrix.n_cols; j++) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        if (i > j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
-          result._matrix[n + (i-j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n + (i-j) * (matrix.n_rows - 1))];
-        } else if(i == j) {
+          result._matrix[n + (i - j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n + (i - j) * (matrix.n_rows - 1))];
+        } else if (i == j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }
-        
+
         n++;
       }
     }
-    
+
     return result;
   }
 
@@ -2487,13 +2504,8 @@ public class Arma {
    * 
    * @param matrix The provided matrix.
    * @return The created column vector.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
-   * 
-   * @see #find(Mat, int, String)
    */
-  public static Mat find(Mat matrix) throws IllegalArgumentException {
+  public static Mat find(Mat matrix) {
     return find(matrix, 0, "first");
   }
 
@@ -2504,13 +2516,8 @@ public class Arma {
    * @param matrix The provided matrix.
    * @param k The number of elements to be evaluated.
    * @return The created column vector.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
-   * 
-   * @see #find(Mat, int, String)
    */
-  public static Mat find(Mat matrix, int k) throws IllegalArgumentException {
+  public static Mat find(Mat matrix, int k) {
     return find(matrix, k, "first");
   }
 
@@ -2522,32 +2529,23 @@ public class Arma {
    * {@code s = "last"}) {@code k} indices at most.
    * <p>
    * Only relational operators are supported.
-   * <p>
-   * <b>Non-canonical:</b>
-   * <ul>
-   * <li>The stored indices are of type double.
-   * <li>The contained indices are either ordered from smallest to largest ({@code s = "first"}) or vice versa (
-   * {@code s = "last"}).
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code k} is negative or strict greater then
-   * {@code a.}{@link Mat#n_elem n_elem}.
-   * <li>An {@code IllegalArgumentException} exception is thrown if {@code s} is neither 'first' nor 'last'.
-   * </ul>
    * 
    * @param matrix The provided matrix.
    * @param k The number of elements to be evaluated.
    * @param s The element to to begin with.
    * @return The created column vector.
    * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if {@code k} is negative or strict greater then
-   *           {@code a.}{@link Mat#n_elem n_elem} as well as if {@code s} is neither 'first' nor 'last'.
+   * @throws IllegalArgumentException The parameter k must be non-negative and (non-strict) lower than n_elem, but was
+   *           {@link Mat#n_elem n_elem} and {@code k}.
+   * @throws IllegalArgumentException The parameter s needs to be either 'first' or 'last', but was {@code s}.
    */
   public static Mat find(Mat matrix, int k, String s) throws IllegalArgumentException {
     if (k < 0 || k > matrix.n_elem) {
-      throw new IllegalArgumentException("The parameter k must be non-negative and (non-strict) lower than n_elem = " + matrix.n_elem + ".");
+      throw new IllegalArgumentException("The parameter k must be non-negative and (non-strict) lower than n_elem, but was " + matrix.n_elem + " and " + k + ".");
     }
 
     if (!s.equals("first") && !s.equals("last")) {
-      throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last' but was " + s);
+      throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last', but was " + s);
     }
 
     DenseMatrix64F result = new DenseMatrix64F(matrix.n_elem, 1);
@@ -2624,6 +2622,9 @@ public class Arma {
    * @return
    */
   public static Mat cumsum(Mat vector) {
+    vector.isNonVectorDetection();
+    vector.isEmptyDetection();
+
     Mat result = new Mat();
     result.copy_size(vector);
 
@@ -2674,15 +2675,20 @@ public class Arma {
    * @return
    */
   public static Mat conv(AbstractMat vector1, AbstractMat vector2) {
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
+    vector1.isEmptyDetection();
+    vector2.isEmptyDetection();
+
     Mat result;
-    
-    if(vector1.is_colvec()) {
+
+    if (vector1.is_colvec()) {
       result = new Mat(vector1.n_elem + vector2.n_elem - 1, 1);
     } else {
       result = new Mat(1, vector1.n_elem + vector2.n_elem - 1);
     }
-    
-    for(int n = 0; n < result.n_elem; n++) {
+
+    for (int n = 0; n < result.n_elem; n++) {
       int min = Math.max(0, n - vector2.n_elem + 1);
       int max = Math.min(vector1.n_elem, n + 1);
 
@@ -2691,30 +2697,32 @@ public class Arma {
         result._matrix[n] += vector1._matrix[vector1.getElementIndex(nn)] * vector2._matrix[vector2.getElementIndex(n - nn)];
       }
     }
-    
+
     return result;
   }
 
   /**
-   * @param A
-   * @param B
+   * @param vector1
+   * @param vector2
    * @return
+   * 
+   * @throws IllegalArgumentException Both vectors must be 3-dimensional, but where {@link AbstractMat#n_elem
+   *           vector1.n_elem} and {@code vector2.n_elem}-dimensional.
    */
-  public static Mat cross(Mat A, Mat B) {
-    if (!A.is_vec() || !B.is_vec()) {
+  public static Mat cross(AbstractMat vector1, AbstractMat vector2) throws IllegalArgumentException {
+    vector1.isNonVectorDetection();
+    vector2.isNonVectorDetection();
 
-    }
-
-    if (A.n_elem != 3 || B.n_elem != 3) {
-
+    if (vector1.n_elem != 3 || vector2.n_elem != 3) {
+      throw new IllegalArgumentException("Both vectors must be 3-dimensional, but where " + vector1.n_elem + " and " + vector2.n_elem + "-dimensional.");
     }
 
     return new Mat(new double[][]{{
-      A.at(1) * B.at(2) - A.at(2) * B.at(1)
+      vector1.at(1) * vector2.at(2) - vector1.at(2) * vector2.at(1)
     }, {
-      A.at(2) * B.at(0) - A.at(0) * B.at(2)
+      vector1.at(2) * vector2.at(0) - vector1.at(0) * vector2.at(2)
     }, {
-      A.at(0) * B.at(1) - A.at(1) * B.at(0)
+      vector1.at(0) * vector2.at(1) - vector1.at(1) * vector2.at(0)
     }});
   }
 
@@ -2723,7 +2731,7 @@ public class Arma {
    * @param B
    * @return
    */
-  public static Mat kron(Mat A, Mat B) {
+  public static Mat kron(AbstractMat A, AbstractMat B) {
     Mat result = repmat(A, B.n_rows, B.n_cols);
 
     int n = 0;
@@ -2737,11 +2745,34 @@ public class Arma {
   }
 
   /**
+   * @param vector
+   * @return
+   */
+  public static Mat shuffle(AbstractMat vector) {
+    vector.isNonVectorDetection();
+    
+    Double[] array = new Double[vector.n_elem];
+    for (int n = 0; n < vector.n_elem; n++) {
+      array[n] = vector._matrix[n];
+    }
+
+    Collections.shuffle(Arrays.asList(array));
+
+    Mat result = new Mat();
+    result.copy_size(vector);
+    for (int n = 0; n < result.n_elem; n++) {
+      result._matrix[n] = array[n];
+    }
+    
+    return result;
+  }
+
+  /**
    * @param matrix
    * @return
    */
-  public static Mat shuffle(Mat matrix) {
-    return shuffle(matrix, 0);
+  public static Mat shuffleMat(AbstractMat matrix) {
+    return shuffleMat(matrix, 0);
   }
 
   /**
@@ -2749,18 +2780,21 @@ public class Arma {
    * @param dimension
    * @return
    */
-  public static Mat shuffle(Mat matrix, int dimension) {
-    Double[] array = new Double[matrix.n_elem];
-    for (int n = 0; n < matrix.n_elem; n++) {
-      array[n] = matrix._matrix[n];
-    }
+  public static Mat shuffleMat(AbstractMat matrix, int dimension) {
+    matrix.isEmptyDetection();
+    AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    Collections.shuffle(Arrays.asList(array));
-
-    Mat result = new Mat();
-    result.copy_size(matrix);
-    for (int n = 0; n < result.n_elem; n++) {
-      result._matrix[n] = array[n];
+    Mat result;
+    if (dimension == 0) {
+      result = new Mat(matrix.n_cols, 1);
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, shuffle(matrix.col(j)));
+      }
+    } else {
+      result = new Mat(matrix.n_rows, 1);
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, shuffle(matrix.row(i)));
+      }
     }
 
     return result;
@@ -2820,6 +2854,9 @@ public class Arma {
    * @return
    */
   public static Mat chol(Mat X) {
+    X.isNotSymmetricDetection();
+    X.isIllConditionedDectetion();
+    
     CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(X.n_rows, true);
     chol.decompose(AbstractMat.convertMatToEJMLMat(X));
     return AbstractMat.convertEJMLToMat(chol.getT(null));
@@ -2831,7 +2868,6 @@ public class Arma {
    */
   public static void chol(Mat R, Mat X) {
     Mat temp = chol(X);
-
     R.copy_size(temp);
     System.arraycopy(temp._matrix, 0, R._matrix, 0, temp.n_elem);
   }
@@ -2841,14 +2877,17 @@ public class Arma {
    * @return
    */
   public static Mat eig_sym(Mat X) {
+    X.isNotSymmetricDetection();
+    X.isIllConditionedDectetion();
+    
     EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, false);
     eig.decompose(AbstractMat.convertMatToEJMLMat(X));
-    
+
     Mat result = new Mat(eig.getNumberOfEigenvalues(), 1);
-    for(int n = 0; n < result.n_elem; n++) {
+    for (int n = 0; n < result.n_elem; n++) {
       result._matrix[n] = eig.getEigenvalue(n).real;
     }
-    
+
     return sort(result);
   }
 
@@ -2869,26 +2908,29 @@ public class Arma {
    * @return
    */
   public static void eig_sym(Mat eigenValue, Mat eigenVector, Mat X) {
+    X.isNotSymmetricDetection();
+    X.isIllConditionedDectetion();
+    
     EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, true);
     eig.decompose(AbstractMat.convertMatToEJMLMat(X));
-    
+
     Mat tempEigenValue = new Mat(eig.getNumberOfEigenvalues(), 1);
     Mat tempEigenVector = new Mat(eig.getNumberOfEigenvalues(), 1);
     int destColumnPointer = 0;
-    for(int n = 0; n < tempEigenValue.n_elem; n++) {
+    for (int n = 0; n < tempEigenValue.n_elem; n++) {
       tempEigenValue._matrix[n] = eig.getEigenvalue(n).real;
       System.arraycopy(eig.getEigenVector(0).data, 0, tempEigenVector._matrix, destColumnPointer, X.n_rows);
       destColumnPointer += X.n_rows;
     }
-    
+
     Mat indices = sort_index(tempEigenValue);
-    
+
     eigenValue.copy_size(tempEigenValue);
     eigenVector.copy_size(tempEigenVector);
     destColumnPointer = 0;
-    for(int n = 0; n < tempEigenValue.n_elem; n++) {
+    for (int n = 0; n < tempEigenValue.n_elem; n++) {
       int nn = (int) indices._matrix[n];
-      
+
       eigenValue._matrix[n] = tempEigenValue._matrix[nn];
       System.arraycopy(eigenVector._matrix, nn * X.n_rows, eigenVector._matrix, destColumnPointer, X.n_rows);
       destColumnPointer += X.n_rows;
@@ -2900,6 +2942,8 @@ public class Arma {
    * @return
    */
   public static Mat inv(AbstractMat A) {
+    A.isIllConditionedDectetion();
+    
     return A.i();
   }
 
@@ -2910,7 +2954,7 @@ public class Arma {
    */
   public static void inv(AbstractMat A, Mat B) {
     Mat temp = inv(A);
-    
+
     B.copy_size(A);
     System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
   }
@@ -2922,9 +2966,11 @@ public class Arma {
    * @return
    */
   public static void lu(Mat L, Mat U, Mat X) {
+    X.isIllConditionedDectetion();
+    
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
     lu.decompose(AbstractMat.convertMatToEJMLMat(X));
-    
+
     Mat temp;
     temp = AbstractMat.convertEJMLToMat(lu.getLower(null));
     L.copy_size(temp);
@@ -2943,9 +2989,11 @@ public class Arma {
    * @return
    */
   public static void lu(Mat L, Mat U, Mat P, Mat X) {
+    X.isIllConditionedDectetion();
+    
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
     lu.decompose(AbstractMat.convertMatToEJMLMat(X));
-    
+
     Mat temp;
     temp = AbstractMat.convertEJMLToMat(lu.getLower(null));
     L.copy_size(temp);
@@ -2974,12 +3022,14 @@ public class Arma {
    * @return
    */
   public static Mat pinv(Mat A, double tolerance) {
+    A.isIllConditionedDectetion();
+    
     SolvePseudoInverseSvd pinv = (SolvePseudoInverseSvd) LinearSolverFactory.pseudoInverse(true);
     pinv.setThreshold(tolerance);
-    
+
     DenseMatrix64F result = new DenseMatrix64F();
     pinv.invert(result);
-    
+
     return AbstractMat.convertEJMLToMat(result);
   }
 
@@ -3018,6 +3068,8 @@ public class Arma {
    * @return False if the decomposition fails and true otherwise.
    */
   public static boolean qr(Mat Q, Mat R, Mat X) {
+    X.isIllConditionedDectetion();
+    
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
     qr.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -3029,10 +3081,10 @@ public class Arma {
     } catch(IllegalArgumentException exception) {
       return false;
     }
-    
+
     Q.copy_size(tempQ);
     System.arraycopy(tempQ._matrix, 0, Q._matrix, 0, tempQ.n_elem);
-    
+
     R.copy_size(tempR);
     System.arraycopy(tempR._matrix, 0, R._matrix, 0, tempR.n_elem);
 
@@ -3041,30 +3093,24 @@ public class Arma {
 
   /**
    * Solves a system of linear equations {@code ax = b} with unknown {@code x}.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and
-   * {@code b} are unequal.
    * 
-   * @param a The matrix {@code a}.
-   * @param b The matrix {@code b}.
+   * @param A The matrix {@code a}.
+   * @param B The matrix {@code b}.
    * @return The matrix {@code x}.
    * 
-   * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the number of rows in {@code a} and {@code b} are
-   *           unequal.
+   * @throws RuntimeException The algorithm was unable to solve the matrix.
    */
-  public static Mat solve(Mat a, Mat b) throws RuntimeException, IllegalArgumentException {
-    if (a.n_rows != b.n_rows) {
-      throw new IllegalArgumentException("The provided matrices must have the same number of rows (" + a.n_rows + " != " + b.n_rows + ").");
-    }
+  public static Mat solve(Mat A, Mat B) throws RuntimeException {
+    AbstractMat.isNonEqualNumberOfElementsDetection(A.n_rows, B.n_rows);
+    A.isIllConditionedDectetion();
 
-    DenseMatrix64F x = new DenseMatrix64F();
+    DenseMatrix64F X = new DenseMatrix64F();
 
-    if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(a), AbstractMat.convertMatToEJMLMat(b), x)) {
+    if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(A), AbstractMat.convertMatToEJMLMat(B), X)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
     };
 
-    return AbstractMat.convertEJMLToMat(x);
+    return AbstractMat.convertEJMLToMat(X);
   }
 
   /**
@@ -3072,21 +3118,17 @@ public class Arma {
    * <p>
    * Return false if no solution was found and true otherwise. The provided matrices {@code x} is not touched if the
    * decomposition fails.
-   * <p>
-   * <b>Non-canonical:</b> A {@code IllegalArgumentException} exception is thrown if the number of rows in {@code a} and
-   * {@code b} are unequal.
    * 
-   * @param a The matrix {@code a}.
-   * @param b The matrix {@code b}.
-   * @param x The matrix {@code x}.
+   * @param A The matrix {@code a}.
+   * @param B The matrix {@code b}.
+   * @param X The matrix {@code x}.
    * @return The boolean value.
-   * 
-   * @throws IllegalArgumentException <b>Non-canonical:</b> Thrown if the number of rows in {@code a} and {@code b} are
-   *           unequal.
    */
-  public static boolean solve(Mat x, Mat a, Mat b) throws IllegalArgumentException {
+  public static boolean solve(Mat X, Mat A, Mat B) {
     try {
-      x = solve(a, b);
+      Mat temp = solve(A, B);
+      X.copy_size(temp);
+      System.arraycopy(temp._matrix, 0, X._matrix, 0, temp.n_elem);
     } catch(RuntimeException exception) {
       return false;
     }
@@ -3100,24 +3142,26 @@ public class Arma {
    * The matrix {@code x} is decomposed into vector {@code s} such that {@code x = u * diagmat(s) * v'}. The matrices
    * {@code u} and {@code v} are not returned.
    * 
-   * @param x The matrix to be decomposed.
+   * @param X The matrix to be decomposed.
    * @return The matrix {@code s}.
    * 
    * @throws RuntimeException Thrown if the algorithm was unable to solve the provided matrix.
    */
-  public static Mat svd(AbstractMat x) throws RuntimeException {
-    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, false, false, false);
-    svd.decompose(AbstractMat.convertMatToEJMLMat(x));
+  public static Mat svd(AbstractMat X) throws RuntimeException {
+    X.isIllConditionedDectetion();
+    
+    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, false, false, false);
+    svd.decompose(AbstractMat.convertMatToEJMLMat(X));
 
-    DenseMatrix64F s;
+    DenseMatrix64F S;
     try {
-      s = svd.getW(null);
+      S = svd.getW(null);
       // check catch
     } catch(IllegalArgumentException exception) {
       throw new RuntimeException("The algorithm was unable to decompose the matrix.");
     }
 
-    return AbstractMat.convertEJMLToMat(s);
+    return AbstractMat.convertEJMLToMat(S);
   }
 
   /**
@@ -3129,13 +3173,15 @@ public class Arma {
    * <p>
    * The provided matrix {@code s} is not touched if the decomposition fails.
    * 
-   * @param s The matrix {@code s}.
-   * @param x The matrix to be decomposed.
+   * @param S The matrix {@code s}.
+   * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean svd(Mat s, Mat x) {
+  public static boolean svd(Mat S, Mat X) {
     try {
-      s = svd(x);
+      Mat temp = svd(X);
+      X.copy_size(temp);
+      System.arraycopy(temp._matrix, 0, X._matrix, 0, temp.n_elem);
     } catch(RuntimeException exception) {
       return false;
     }
@@ -3151,15 +3197,17 @@ public class Arma {
    * <p>
    * The provided matrices {@code u}, {@code s} and {@code v} are not touched if the decomposition fails.
    * 
-   * @param u The matrix {@code u}.
-   * @param s The matrix {@code s}.
-   * @param v The matrix {@code v}.
-   * @param x The matrix to be decomposed.
+   * @param U The matrix {@code u}.
+   * @param S The matrix {@code s}.
+   * @param V The matrix {@code v}.
+   * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean svd(Mat u, Mat s, Mat v, Mat x) {
-    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(x.n_rows, x.n_cols, true, true, false);
-    svd.decompose(AbstractMat.convertMatToEJMLMat(x));
+  public static boolean svd(Mat U, Mat S, Mat V, Mat X) {
+    X.isIllConditionedDectetion();
+    
+    SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, true, true, false);
+    svd.decompose(AbstractMat.convertMatToEJMLMat(X));
 
     DenseMatrix64F tempU;
     DenseMatrix64F tempS;
@@ -3172,14 +3220,14 @@ public class Arma {
       return false;
     }
 
-    u.set_size(tempU.numRows, tempU.numCols);
-    u = AbstractMat.convertEJMLToMat(tempU);
+    U.set_size(tempU.numRows, tempU.numCols);
+    U = AbstractMat.convertEJMLToMat(tempU);
 
-    s.set_size(tempS.numRows, tempS.numCols);
-    s = AbstractMat.convertEJMLToMat(tempS);
+    S.set_size(tempS.numRows, tempS.numCols);
+    S = AbstractMat.convertEJMLToMat(tempS);
 
-    v.set_size(tempV.numRows, tempV.numCols);
-    v = AbstractMat.convertEJMLToMat(tempV);
+    V.set_size(tempV.numRows, tempV.numCols);
+    V = AbstractMat.convertEJMLToMat(tempV);
 
     return true;
   }
