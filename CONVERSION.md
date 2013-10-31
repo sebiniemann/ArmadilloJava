@@ -312,7 +312,7 @@ inv(A)                     | A.i([s])                   | A.i()                 
 A'                         | A.t()                      | A.t()                           | 
 A = []                     | A.reset()                  | A.reset()                       | 
 A = reshape(A, size(B))    | A.copy_size(B)             | A.copy_size(B)                  | 
-                           | A.eval()                   | A.eval()                        | *Not suppported*
+                           | A.eval()                   |                                 | *Not suppported*
 
 
 Non-member functions
@@ -505,21 +505,21 @@ B = inv(A)                 | inv(B, A)                  | Arma.inv(B, A)        
 [L, U, P] = lu(X)          | lu(L, U, P, X)             | Arma.lu(L, U, P, X)             | 
 pinv(A [, t])              | pinv(A [, t])              | Arma.pinv(A [, t])              | **Default:** t = max(size(A))*norm(A)*eps
 B = pinv(A [, t])          | pinv(B, A [, t])           | Arma.pinv(B, A [, t])           | **Default:** t = max(size(A))*norm(A)*eps
-princomp(X)                | princomp(X)                | Arma.princomp(X)                | 
-C = princomp(X)            | princomp(C, X)             | Arma.princomp(C, X)             | 
-[C, S] = princomp(X)       | princomp(C, S, X)          | Arma.princomp(C, S, X)          | 
-[C, S, L] = princomp(X)    | princomp(C, S, L, X)       | Arma.princomp(C, S, L, X)       | 
-[C, S, L, T] = princomp(X) | princomp(C, S, L, T, X)    | Arma.princomp(C, S, L, T, X)    | 
+princomp(X)                | princomp(X)                |                                 | *Not suppported*
+C = princomp(X)            | princomp(C, X)             |                                 | *Not suppported*
+[C, S] = princomp(X)       | princomp(C, S, X)          |                                 | *Not suppported*
+[C, S, L] = princomp(X)    | princomp(C, S, L, X)       |                                 | *Not suppported*
+[C, S, L, T] = princomp(X) | princomp(C, S, L, T, X)    |                                 | *Not suppported*
 [Q, R] = qr(X)             | qr(Q, R, X)                | Arma.qr(Q, R, X)                | 
-[Q, R] = qr(A, 0)          | qr_econ(Q, R, X)           | Arma.qr_econ(Q, R, X)           | 
+[Q, R] = qr(A, 0)          | qr_econ(Q, R, X)           |                                 | *Not suppported*
 A \ B                      | solve(A, B [, s])          | Arma.solve(A, B)                | 
 X = A \ B                  | solve(X, A, B [, s])       | Arma.solve(X, A, B)             | 
 svd(X)                     | svd(X)                     | Arma.svd(X)                     | 
 [~, S, ~] = svd(X)         | svd(S, X)                  | Arma.svd(S, X)                  | 
 [U, S, V] = svd(X)         | svd(U, X, V, X [, m])      | Arma.svd(U, X, V, X)            | 
-                           | svd_econ(U, X, V, X [, m]) | Arma.svd_econ(U, X, V, X)       | 
-                           | syl(A, B, C)               | Arma.syl(A, B, C)               | **Matlab:** See [Matlab solution 1-35X8UD](http://www.mathworks.com/support/solutions/en/data/1-35X8UD/?product=ML&solution=1-35X8UD)
-                           | syl(X, A, B, C)            | Arma.syl(X, A, B, C)            | **Matlab:** See [Matlab solution 1-35X8UD](http://www.mathworks.com/support/solutions/en/data/1-35X8UD/?product=ML&solution=1-35X8UD)
+                           | svd_econ(U, X, V, X [, m]) |                                 | *Not suppported*
+                           | syl(A, B, C)               |                                 | *Not suppported* **Matlab:** See [Matlab solution 1-35X8UD](http://www.mathworks.com/support/solutions/en/data/1-35X8UD/?product=ML&solution=1-35X8UD)
+                           | syl(X, A, B, C)            |                                 | *Not suppported* **Matlab:** See [Matlab solution 1-35X8UD](http://www.mathworks.com/support/solutions/en/data/1-35X8UD/?product=ML&solution=1-35X8UD)
 
                      
 Miscellaneous
