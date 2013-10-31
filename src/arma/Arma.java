@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.CholeskyDecomposition;
 import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.EigenDecomposition;
 import org.ejml.factory.QRDecomposition;
 import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
@@ -2824,40 +2825,71 @@ public class Arma {
   /**
    * @param R
    * @param X
-   * @return
    */
   public static void chol(Mat R, Mat X) {
     Mat temp = chol(X);
 
     R.copy_size(temp);
-    R._matrix = temp._matrix;
+    System.arraycopy(temp._matrix, 0, R._matrix, 0, temp.n_elem);
   }
 
   /**
-   * @param A
+   * @param X
    * @return
    */
-  public static Mat eig_sym(Mat A) {
-    return null;
+  public static Mat eig_sym(Mat X) {
+    EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, false);
+    eig.decompose(AbstractMat.convertMatToEJMLMat(X));
+    
+    Mat result = new Mat(eig.getNumberOfEigenvalues(), 1);
+    for(int n = 0; n < result.n_elem; n++) {
+      result._matrix[n] = eig.getEigenvalue(n).real;
+    }
+    
+    return sort(result);
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * @param eigenValue
+   * @param X
    */
-  public static Mat eig_sym(Mat A, Mat B) {
-    return null;
+  public static void eig_sym(Mat eigenValue, Mat X) {
+    Mat temp = eig_sym(X);
+    eigenValue.copy_size(temp);
+    System.arraycopy(temp._matrix, 0, eigenValue._matrix, 0, temp.n_elem);
   }
 
   /**
-   * @param A
-   * @param B
-   * @param C
+   * @param eigenValue
+   * @param eigenVector
+   * @param X
    * @return
    */
-  public static Mat eig_sym(Mat A, Mat B, Mat C) {
-    return null;
+  public static void eig_sym(Mat eigenValue, Mat eigenVector, Mat X) {
+    EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, true);
+    eig.decompose(AbstractMat.convertMatToEJMLMat(X));
+    
+    Mat tempEigenValue = new Mat(eig.getNumberOfEigenvalues(), 1);
+    Mat tempEigenVector = new Mat(eig.getNumberOfEigenvalues(), 1);
+    int destColumnPointer = 0;
+    for(int n = 0; n < tempEigenValue.n_elem; n++) {
+      tempEigenValue._matrix[n] = eig.getEigenvalue(n).real;
+      System.arraycopy(eig.getEigenVector(0).data, 0, tempEigenVector._matrix, destColumnPointer, X.n_rows);
+      destColumnPointer += X.n_rows;
+    }
+    
+    Mat indices = sort_index(tempEigenValue);
+    
+    eigenValue.copy_size(tempEigenValue);
+    eigenVector.copy_size(tempEigenVector);
+    destColumnPointer = 0;
+    for(int n = 0; n < tempEigenValue.n_elem; n++) {
+      int nn = (int) indices._matrix[n];
+      
+      eigenValue._matrix[n] = tempEigenValue._matrix[nn];
+      System.arraycopy(eigenVector._matrix, nn * X.n_rows, eigenVector._matrix, destColumnPointer, X.n_rows);
+      destColumnPointer += X.n_rows;
+    }
   }
 
   /**
@@ -2874,8 +2906,10 @@ public class Arma {
    * @return
    */
   public static void inv(AbstractMat A, Mat B) {
+    Mat temp = inv(A);
+    
     B.copy_size(A);
-    B._matrix = inv(A)._matrix;
+    System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
   }
 
   /**
@@ -2939,7 +2973,7 @@ public class Arma {
     }
     
     B.copy_size(temp);
-    B._matrix = temp._matrix;
+    System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
       
     return true;
   }
