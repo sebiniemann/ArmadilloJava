@@ -67,26 +67,22 @@ public class RunningStatVec {
    * 
    * @param samples The vector
    * 
-   * @throws IllegalArgumentException The sample vector must be a vector, but was a ( {@code samples.n_rows},
-   *           {@code samples.n_cols})-matrix.
-   * @throws IllegalArgumentException The sample vector must contain at least one element.
    * @throws IllegalArgumentException NaN is not valid sample value for any element.
-   * @throws IllegalArgumentException The sample vector must have the same number of elements as
-   *           the previous one. {@code samples.n_elem} was previously: {@code max.n_elem}, but was now:
-   *           {@code samples.n_elem}.
+   * @throws UnsupportedOperationException No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss
+   *           of precision.
    */
-  public void update(Mat samples) throws IllegalArgumentException {
-    if (!samples.is_vec()) {
-      throw new IllegalArgumentException("The sample vector must be a vector, but was a (" + samples.n_rows + ", " + samples.n_cols + ")-matrix.");
-    }
+  public void update(Mat samples) throws IllegalArgumentException, UnsupportedOperationException {
+    samples.isNonVectorDetection();
 
     if (!samples.is_number()) {
       throw new IllegalArgumentException("NaN is not valid sample value for any element.");
     }
 
     if (_count > 0) {
-      if (_max.n_elem != samples.n_elem) {
-        throw new IllegalArgumentException("The sample vector must have the same number of elements as the previous one. samples.n_elem was previously: " + _max.n_elem + ", but is now: " + samples.n_elem + ".");
+      AbstractMat.isNonEqualNumberOfElementsDetection(_max.n_elem, samples.n_elem);
+
+      if (_count >= 9007199254740992.0) { // 2^53
+        throw new UnsupportedOperationException("No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss of precision.");
       }
 
       if (_calculateCovariance) {
@@ -111,9 +107,7 @@ public class RunningStatVec {
       _mean = _mean.plus(samples.minus(_mean).elemDivide(_count + 1));
 
     } else {
-      if (samples.n_elem < 1) {
-        throw new IllegalArgumentException("The sample vector must contain at least one element.");
-      }
+      samples.isEmptyDetection();
 
       int numberOfRows = samples.n_rows;
       int numberOfColumns = samples.n_cols;

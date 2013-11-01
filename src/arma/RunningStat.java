@@ -51,13 +51,19 @@ public class RunningStat {
    * @param sample The sample
    * 
    * @throws IllegalArgumentException NaN is not valid sample.
+   * @throws UnsupportedOperationException No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss
+   *           of precision.
    */
-  public void update(double sample) throws IllegalArgumentException {
+  public void update(double sample) throws IllegalArgumentException, UnsupportedOperationException {
     if (Double.isNaN(sample)) {
       throw new IllegalArgumentException("NaN is not valid sample value.");
     }
 
     if (_count > 0) {
+      if (_count >= 9007199254740992.0) { // 2^53
+        throw new UnsupportedOperationException("No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss of precision.");
+      }
+
       _max = Math.max(_max, sample);
       _min = Math.min(_min, sample);
       _var = (_count - 1) / _count * _var + (Math.pow(sample - _mean, 2)) / (_count + 1);
