@@ -34,22 +34,24 @@ import org.ejml.ops.MatrixFeatures;
  * 
  * An example of useful loops: <b>While-loop:</b> <code>
  * while (iteratorHastNext()) { 
- * Something(_matrix[A.next()]);
+ * Something(_matrix[A.iteratorNext()]);
  * }
  * </code>
  * 
  * <b>For-loop over n_elem</b> <code>
  * for (int n = 0; n < A.n_elem; n++) {
- * Something(_matrix[A.iteratorNext()]);
- * Something(_matrix[A.getElementIndex(n)]); // The same
+ * Something(A._matrix[A.iteratorNext()]);
+ * Something(A._matrix[A.getElementIndex(n)]); // The same
+ * Something(A.at(n)); // The same
  * }
  * </code>
  * 
  * <b>For-loop over n_cols and n_rows</b> <code>
  * for (int j = 0; j < A.n_cols; j++) {
  *  for (int i = 0; i < A.n_rows; i++) {
- *    Something(_matrix[A.iteratorNext()]);
- *    Something(_matrix[A.getElementIndex(i, j)]); // The same, only if the order of the loops is not changed
+ *    Something(A._matrix[A.iteratorNext()]);
+ *    Something(A._matrix[A.getElementIndex(i, j)]); // Only the same if the order of both loops is unchanged
+ *    Something(A.at(i, j)); // Only the same if the order of both loops is unchanged
  *  }
  * }
  * </code>
