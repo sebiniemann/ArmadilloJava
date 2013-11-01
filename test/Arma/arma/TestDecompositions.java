@@ -20,7 +20,7 @@ import org.junit.Test;
 public class TestDecompositions {
 
   /**
-   * Test method for {@link arma.Arma#chol(arma.Mat)}.
+   * Test method for {@link arma.Arma#chol(AbstractMat)}.
    */
   @Test
   public void testCholMat() {
@@ -28,7 +28,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#chol(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#chol(Mat, AbstractMat)}.
    */
   @Test
   public void testCholMatMat() {
@@ -36,7 +36,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#eig_sym(arma.Mat)}.
+   * Test method for {@link arma.Arma#eig_sym(AbstractMat)}.
    */
   @Test
   public void testEig_symMat() {
@@ -44,7 +44,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#eig_sym(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#eig_sym(Mat, AbstractMat)}.
    */
   @Test
   public void testEig_symMatMat() {
@@ -52,7 +52,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#eig_sym(arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#eig_sym(Mat, Mat, AbstractMat)}.
    */
   @Test
   public void testEig_symMatMatMat() {
@@ -60,7 +60,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#inv(arma.Mat)}.
+   * Test method for {@link arma.Arma#inv(AbstractMat)}.
    */
   @Test
   public void testInvMat() {
@@ -68,7 +68,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#inv(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#inv(AbstractMat, Mat)}.
    */
   @Test
   public void testInvMatMat() {
@@ -76,7 +76,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#lu(arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#lu(Mat, Mat, AbstractMat)}.
    */
   @Test
   public void testLuMatMatMat() {
@@ -84,7 +84,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#lu(arma.Mat, arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#lu(Mat, Mat, Mat, AbstractMat)}.
    */
   @Test
   public void testLuMatMatMatMat() {
@@ -92,7 +92,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#pinv(arma.Mat)}.
+   * Test method for {@link arma.Arma#pinv(AbstractMat)}.
    */
   @Test
   public void testPinvMat() {
@@ -100,15 +100,15 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#pinv(arma.Mat, double)}.
+   * Test method for {@link arma.Arma#pinv(AbstractMat, double)}.
    */
   @Test
   public void testPinvMatDouble() {
     fail("Not yet implemented"); // TODO
   }
 
-  /**
-   * Test method for {@link arma.Arma#pinv(arma.Mat, arma.Mat)}.
+  /**Mat
+   * Test method for {@link arma.Arma#pinv(AbstractMat, Mat)}.
    */
   @Test
   public void testPinvMatMat() {
@@ -116,7 +116,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#pinv(arma.Mat, arma.Mat, double)}.
+   * Test method for {@link arma.Arma#pinv(AbstractMat, Mat, double)}.
    */
   @Test
   public void testPinvMatMatDouble() {
@@ -124,47 +124,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#princomp(arma.Mat)}.
-   */
-  @Test
-  public void testPrincompMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#princomp(arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testPrincompMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#princomp(arma.Mat, arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testPrincompMatMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#princomp(arma.Mat, arma.Mat, arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testPrincompMatMatMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#princomp(arma.Mat, arma.Mat, arma.Mat, arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testPrincompMatMatMatMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#qr(arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#qr(Mat, Mat, AbstractMat)}.
    */
   @Test
   public void testQr() {
@@ -172,7 +132,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#solve(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#solve(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testSolveMatMat() {
@@ -180,7 +140,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#solve(arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#solve(Mat, AbstractMat, AbstractMat)}.
    */
   @Test
   public void testSolveMatMatMat() {
@@ -188,7 +148,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#svd(arma.Mat)}.
+   * Test method for {@link arma.Arma#svd(AbstractMat)}.
    */
   @Test
   public void testSvdMat() {
@@ -196,7 +156,7 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#svd(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#svd(Mat, AbstractMat)}.
    */
   @Test
   public void testSvdMatMat() {
@@ -204,26 +164,10 @@ public class TestDecompositions {
   }
 
   /**
-   * Test method for {@link arma.Arma#svd(arma.Mat, arma.Mat, arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#svd(Mat, Mat, Mat, AbstractMat)}.
    */
   @Test
   public void testSvdMatMatMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#syl(arma.Mat, arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testSylMatMatMat() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#syl(arma.Mat, arma.Mat, arma.Mat, arma.Mat)}.
-   */
-  @Test
-  public void testSylMatMatMatMat() {
     fail("Not yet implemented"); // TODO
   }
 }

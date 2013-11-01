@@ -22,7 +22,7 @@ public class TestMatrixValuedElementWiseFunctions {
   // Trigonometric functions
 
   /**
-   * Test method for {@link arma.Arma#sign(arma.Mat)}.
+   * Test method for {@link arma.Arma#sign(AbstractMat)}.
    */
   @Test
   public void testSign() {
@@ -30,7 +30,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#sin(arma.Mat)}.
+   * Test method for {@link arma.Arma#sin(AbstractMat)}.
    */
   @Test
   public void testSin() {
@@ -38,7 +38,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#asin(arma.Mat)}.
+   * Test method for {@link arma.Arma#asin(AbstractMat)}.
    */
   @Test
   public void testAsin() {
@@ -46,7 +46,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#sinh(arma.Mat)}.
+   * Test method for {@link arma.Arma#sinh(AbstractMat)}.
    */
   @Test
   public void testSinh() {
@@ -54,7 +54,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#asinh(arma.Mat)}.
+   * Test method for {@link arma.Arma#asinh(AbstractMat)}.
    */
   @Test
   public void testAsinh() {
@@ -62,7 +62,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#cos(arma.Mat)}.
+   * Test method for {@link arma.Arma#cos(AbstractMat)}.
    */
   @Test
   public void testCos() {
@@ -70,7 +70,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#acos(arma.Mat)}.
+   * Test method for {@link arma.Arma#acos(AbstractMat)}.
    */
   @Test
   public void testAcos() {
@@ -78,7 +78,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#cosh(arma.Mat)}.
+   * Test method for {@link arma.Arma#cosh(AbstractMat)}.
    */
   @Test
   public void testCosh() {
@@ -86,7 +86,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#acosh(arma.Mat)}.
+   * Test method for {@link arma.Arma#acosh(AbstractMat)}.
    */
   @Test
   public void testAcosh() {
@@ -94,7 +94,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#tan(arma.Mat)}.
+   * Test method for {@link arma.Arma#tan(AbstractMat)}.
    */
   @Test
   public void testTan() {
@@ -102,7 +102,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#atan(arma.Mat)}.
+   * Test method for {@link arma.Arma#atan(AbstractMat)}.
    */
   @Test
   public void testAtan() {
@@ -110,7 +110,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#tanh(arma.Mat)}.
+   * Test method for {@link arma.Arma#tanh(AbstractMat)}.
    */
   @Test
   public void testTanh() {
@@ -118,7 +118,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#atanh(arma.Mat)}.
+   * Test method for {@link arma.Arma#atanh(AbstractMat)}.
    */
   @Test
   public void testAtanh() {
@@ -126,7 +126,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#abs(arma.Mat)}.
+   * Test method for {@link arma.Arma#abs(AbstractMat)}.
    */
 
   // Miscellaneous
@@ -137,7 +137,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#eps(arma.Mat)}.
+   * Test method for {@link arma.Arma#eps(AbstractMat)}.
    */
   @Test
   public void testEps() {
@@ -145,7 +145,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp(arma.Mat)}.
+   * Test method for {@link arma.Arma#exp(AbstractMat)}.
    */
   @Test
   public void testExp() {
@@ -153,7 +153,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp2(arma.Mat)}.
+   * Test method for {@link arma.Arma#exp2(AbstractMat)}.
    */
   @Test
   public void testExp2() {
@@ -161,7 +161,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp10(arma.Mat)}.
+   * Test method for {@link arma.Arma#exp10(AbstractMat)}.
    */
   @Test
   public void testExp10() {
@@ -169,7 +169,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#trunc_exp(arma.Mat)}.
+   * Test method for {@link arma.Arma#trunc_exp(AbstractMat)}.
    */
   @Test
   public void testTrunc_exp() {
@@ -177,7 +177,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#log(arma.Mat)}.
+   * Test method for {@link arma.Arma#log(AbstractMat)}.
    */
   @Test
   public void testLog() {
@@ -185,7 +185,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#log2(arma.Mat)}.
+   * Test method for {@link arma.Arma#log2(AbstractMat)}.
    */
   @Test
   public void testLog2() {
@@ -193,7 +193,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#log10(arma.Mat)}.
+   * Test method for {@link arma.Arma#log10(AbstractMat)}.
    */
   @Test
   public void testLog10() {
@@ -201,7 +201,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#trunc_log(arma.Mat)}.
+   * Test method for {@link arma.Arma#trunc_log(AbstractMat)}.
    */
   @Test
   public void testTrunc_log() {
@@ -209,7 +209,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#pow(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#pow(AbstractMat, int)}.
    */
   @Test
   public void testPow() {
@@ -217,7 +217,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#sqrt(arma.Mat)}.
+   * Test method for {@link arma.Arma#sqrt(AbstractMat)}.
    */
   @Test
   public void testSqrt() {
@@ -225,7 +225,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#square(arma.Mat)}.
+   * Test method for {@link arma.Arma#square(AbstractMat)}.
    */
   @Test
   public void testSquare() {
@@ -233,7 +233,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#floor(arma.Mat)}.
+   * Test method for {@link arma.Arma#floor(AbstractMat)}.
    */
   @Test
   public void testFloor() {
@@ -241,7 +241,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#ceil(arma.Mat)}.
+   * Test method for {@link arma.Arma#ceil(AbstractMat)}.
    */
   @Test
   public void testCeil() {
@@ -249,7 +249,7 @@ public class TestMatrixValuedElementWiseFunctions {
   }
 
   /**
-   * Test method for {@link arma.Arma#round(arma.Mat)}.
+   * Test method for {@link arma.Arma#round(AbstractMat)}.
    */
   @Test
   public void testRound() {

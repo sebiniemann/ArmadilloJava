@@ -22,7 +22,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Matrix joins
 
   /**
-   * Test method for {@link arma.Arma#join_cols(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#join_cols(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testJoin_cols() {
@@ -30,7 +30,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#join_vert(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#join_vert(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testJoin_vert() {
@@ -38,7 +38,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#join_rows(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#join_rows(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testJoin_rows() {
@@ -46,7 +46,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#join_horiz(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#join_horiz(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testJoin_horiz() {
@@ -56,7 +56,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Sort functions
 
   /**
-   * Test method for {@link arma.Arma#sort(arma.Mat)}.
+   * Test method for {@link arma.Arma#sort(AbstractMat)}.
    */
   @Test
   public void testSortMat() {
@@ -64,7 +64,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sort(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#sort(AbstractMat, int)}.
    */
   @Test
   public void testSortMatInt() {
@@ -72,15 +72,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sort(arma.Mat, int, int)}.
-   */
-  @Test
-  public void testSortMatIntInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#sort_index(arma.Mat)}.
+   * Test method for {@link arma.Arma#sort_index(AbstractMat)}.
    */
   @Test
   public void testSort_indexMat() {
@@ -88,7 +80,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sort_index(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#sort_index(AbstractMat, int)}.
    */
   @Test
   public void testSort_indexMatInt() {
@@ -96,15 +88,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sort_index(arma.Mat, int, int)}.
-   */
-  @Test
-  public void testSort_indexMatIntInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#stable_sort_index(arma.Mat)}.
+   * Test method for {@link arma.Arma#stable_sort_index(AbstractMat)}.
    */
   @Test
   public void testStable_sort_indexMat() {
@@ -112,25 +96,17 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stable_sort_index(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#stable_sort_index(AbstractMat, int)}.
    */
   @Test
   public void testStable_sort_indexMatInt() {
     fail("Not yet implemented"); // TODO
   }
 
-  /**
-   * Test method for {@link arma.Arma#stable_sort_index(arma.Mat, int, int)}.
-   */
-  @Test
-  public void testStable_sort_indexMatIntInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
   // Reshape/resize
 
   /**
-   * Test method for {@link arma.Arma#reshape(arma.Mat, int, int)}.
+   * Test method for {@link arma.Arma#reshape(Mat, int, int)}.
    */
   @Test
   public void testReshapeMatIntInt() {
@@ -138,7 +114,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#reshape(arma.Mat, int, int, int)}.
+   * Test method for {@link arma.Arma#reshape(Mat, int, int, int)}.
    */
   @Test
   public void testReshapeMatIntIntInt() {
@@ -146,7 +122,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#resize(arma.Mat, int, int)}.
+   * Test method for {@link arma.Arma#resize(Mat, int, int)}.
    */
   @Test
   public void testResize() {
@@ -156,7 +132,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Statistics
 
   /**
-   * Test method for {@link arma.Arma#cor(arma.Mat)}.
+   * Test method for {@link arma.Arma#cor(AbstractMat)}.
    */
   @Test
   public void testCorMat() {
@@ -164,7 +140,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cor(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#cor(AbstractMat, int)}.
    */
   @Test
   public void testCorMatInt() {
@@ -172,7 +148,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cor(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#cor(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testCorMatMat() {
@@ -180,7 +156,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cor(arma.Mat, arma.Mat, int)}.
+   * Test method for {@link arma.Arma#cor(AbstractMat, AbstractMat, int)}.
    */
   @Test
   public void testCorMatMatInt() {
@@ -188,7 +164,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cov(arma.Mat)}.
+   * Test method for {@link arma.Arma#cov(AbstractMat)}.
    */
   @Test
   public void testCovMat() {
@@ -196,7 +172,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cov(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#cov(AbstractMat, int)}.
    */
   @Test
   public void testCovMatInt() {
@@ -204,7 +180,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cov(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#cov(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testCovMatMat() {
@@ -212,7 +188,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cov(arma.Mat, arma.Mat, int)}.
+   * Test method for {@link arma.Arma#cov(AbstractMat, AbstractMat, int)}.
    */
   @Test
   public void testCovMatMatInt() {
@@ -222,7 +198,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Histogramm functions
 
   /**
-   * Test method for {@link arma.Arma#hist(arma.Mat)}.
+   * Test method for {@link arma.Arma#hist(AbstractMat)}.
    */
   @Test
   public void testHistMat() {
@@ -230,7 +206,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#hist(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#hist(AbstractMat, int)}.
    */
   @Test
   public void testHistMatInt() {
@@ -238,15 +214,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#hist(arma.Mat, int, int)}.
-   */
-  @Test
-  public void testHistMatIntInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#hist(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#hist(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testHistMatMat() {
@@ -254,33 +222,17 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#hist(arma.Mat, arma.Mat, int)}.
-   */
-  @Test
-  public void testHistMatMatInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#histc(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#histc(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testHistcMatMat() {
     fail("Not yet implemented"); // TODO
   }
 
-  /**
-   * Test method for {@link arma.Arma#histc(arma.Mat, arma.Mat, int)}.
-   */
-  @Test
-  public void testHistcMatMatInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
   // Swap functions
 
   /**
-   * Test method for {@link arma.Arma#fliplr(arma.Mat)}.
+   * Test method for {@link arma.Arma#fliplr(AbstractMat)}.
    */
   @Test
   public void testFliplr() {
@@ -288,7 +240,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#flipud(arma.Mat)}.
+   * Test method for {@link arma.Arma#flipud(AbstractMat)}.
    */
   @Test
   public void testFlipud() {
@@ -298,7 +250,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Reinterpret functions
 
   /**
-   * Test method for {@link arma.Arma#diagmat(arma.Mat)}.
+   * Test method for {@link arma.Arma#diagmat(AbstractMat)}.
    */
   @Test
   public void testDiagmat() {
@@ -306,7 +258,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#trimatu(arma.Mat)}.
+   * Test method for {@link arma.Arma#trimatu(AbstractMat)}.
    */
   @Test
   public void testTrimatu() {
@@ -314,7 +266,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#trimatl(arma.Mat)}.
+   * Test method for {@link arma.Arma#trimatl(AbstractMat)}.
    */
   @Test
   public void testTrimatl() {
@@ -322,7 +274,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#simmatu(arma.Mat)}.
+   * Test method for {@link arma.Arma#simmatu(AbstractMat)}.
    */
   @Test
   public void testSimmatu() {
@@ -330,7 +282,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#simmatl(arma.Mat)}.
+   * Test method for {@link arma.Arma#simmatl(AbstractMat)}.
    */
   @Test
   public void testSimmatl() {
@@ -340,7 +292,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   // Miscellaneous
 
   /**
-   * Test method for {@link arma.Arma#trans(arma.Mat)}.
+   * Test method for {@link arma.Arma#trans(AbstractMat)}.
    */
   @Test
   public void testTrans() {
@@ -348,7 +300,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#find(arma.Mat, int, java.lang.String)}.
+   * Test method for {@link arma.Arma#find(AbstractMat, int, java.lang.String)}.
    */
   @Test
   public void testFindMatIntString() {
@@ -356,7 +308,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#find(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#find(AbstractMat, int)}.
    */
   @Test
   public void testFindMatInt() {
@@ -364,15 +316,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#find(arma.Mat, java.lang.String)}.
-   */
-  @Test
-  public void testFindMatString() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#find(arma.Mat)}.
+   * Test method for {@link arma.Arma#find(AbstractMat)}.
    */
   @Test
   public void testFindMat() {
@@ -380,7 +324,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#diagvec(arma.Mat)}.
+   * Test method for {@link arma.Arma#diagvec(AbstractMat)}.
    */
   @Test
   public void testDiagvecMat() {
@@ -388,7 +332,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#diagvec(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#diagvec(AbstractMat, int)}.
    */
   @Test
   public void testDiagvecMatInt() {
@@ -396,7 +340,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cumsum(arma.Mat)}.
+   * Test method for {@link arma.Arma#cumsum(AbstractMat)}.
    */
   @Test
   public void testCumsumMat() {
@@ -404,15 +348,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cumsum(arma.Mat, int)}.
-   */
-  @Test
-  public void testCumsumMatInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#conv(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#conv(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testConv() {
@@ -420,7 +356,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#cross(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#cross(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testCross() {
@@ -428,7 +364,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#kron(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#kron(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testKron() {
@@ -436,7 +372,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#shuffle(arma.Mat)}.
+   * Test method for {@link arma.Arma#shuffle(AbstractMat)}.
    */
   @Test
   public void testShuffleMat() {
@@ -444,15 +380,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#shuffle(arma.Mat, int)}.
-   */
-  @Test
-  public void testShuffleMatInt() {
-    fail("Not yet implemented"); // TODO
-  }
-
-  /**
-   * Test method for {@link arma.Arma#unique(arma.Mat)}.
+   * Test method for {@link arma.Arma#unique(AbstractMat)}.
    */
   @Test
   public void testUnique() {
@@ -460,7 +388,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#vectorise(arma.Mat)}.
+   * Test method for {@link arma.Arma#vectorise(AbstractMat)}.
    */
   @Test
   public void testVectoriseMat() {
@@ -468,7 +396,7 @@ public class TestMatrixValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#vectorise(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#vectorise(AbstractMat, int)}.
    */
   @Test
   public void testVectoriseMatInt() {

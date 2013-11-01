@@ -92,7 +92,7 @@ public class TestMatrixGeneration {
   }
 
   /**
-   * Test method for {@link arma.Arma#repmat(arma.Mat, int, int)}.
+   * Test method for {@link arma.Arma#repmat(AbstractMat, int, int)}.
    */
   @Test
   public void testRepmat() {
@@ -100,7 +100,7 @@ public class TestMatrixGeneration {
   }
 
   /**
-   * Test method for {@link arma.Arma#toeplitz(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#toeplitz(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testToeplitzMatMat() {
@@ -108,7 +108,7 @@ public class TestMatrixGeneration {
   }
 
   /**
-   * Test method for {@link arma.Arma#circ_toeplitz(arma.Mat)}.
+   * Test method for {@link arma.Arma#circ_toeplitz(AbstractMat)}.
    */
   @Test
   public void testCirc_toeplitz() {

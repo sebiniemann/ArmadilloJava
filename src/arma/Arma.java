@@ -2545,7 +2545,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat trans(Mat matrix) {
+  public static Mat trans(AbstractMat matrix) {
     Mat temp = new Mat(matrix);
     temp.t();
     return temp;
@@ -2558,7 +2558,7 @@ public class Arma {
    * @param matrix The provided matrix.
    * @return The created column vector.
    */
-  public static Mat find(Mat matrix) {
+  public static Mat find(AbstractMat matrix) {
     return find(matrix, 0, "first");
   }
 
@@ -2570,7 +2570,7 @@ public class Arma {
    * @param k The number of elements to be evaluated.
    * @return The created column vector.
    */
-  public static Mat find(Mat matrix, int k) {
+  public static Mat find(AbstractMat matrix, int k) {
     return find(matrix, k, "first");
   }
 
@@ -2592,7 +2592,7 @@ public class Arma {
    *           {@link Mat#n_elem n_elem} and {@code k}.
    * @throws IllegalArgumentException The parameter s needs to be either 'first' or 'last', but was {@code s}.
    */
-  public static Mat find(Mat matrix, int k, String s) throws IllegalArgumentException {
+  public static Mat find(AbstractMat matrix, int k, String s) throws IllegalArgumentException {
     if (k < 0 || k > matrix.n_elem) {
       throw new IllegalArgumentException("The parameter k must be non-negative and (non-strict) lower than n_elem, but was " + matrix.n_elem + " and " + k + ".");
     }
@@ -2649,7 +2649,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The diagonal
    */
-  public static Mat diagvec(Mat matrix) {
+  public static Mat diagvec(AbstractMat matrix) {
     return diagvec(matrix, 0);
   }
 
@@ -2666,7 +2666,7 @@ public class Arma {
    * @param k The diagonal position
    * @return The diagonal
    */
-  public static Mat diagvec(Mat matrix, int k) {
+  public static Mat diagvec(AbstractMat matrix, int k) {
     return matrix.diag(k);
   }
 
@@ -2674,7 +2674,7 @@ public class Arma {
    * @param vector The vector
    * @return The cumulative sum
    */
-  public static Mat cumsum(Mat vector) {
+  public static Mat cumsum(AbstractMat vector) {
     vector.isNonVectorDetection();
     vector.isEmptyDetection();
 
@@ -2693,7 +2693,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The cumulative sum
    */
-  public static Mat cumsumMat(Mat matrix) {
+  public static Mat cumsumMat(AbstractMat matrix) {
     return cumsumMat(matrix, 0);
   }
 
@@ -2702,7 +2702,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat cumsumMat(Mat matrix, int dimension) {
+  public static Mat cumsumMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
@@ -2857,7 +2857,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat unique(Mat matrix) {
+  public static Mat unique(AbstractMat matrix) {
     HashSet<Double> set = new HashSet<Double>();
 
     for (int n = 0; n < matrix.n_elem; n++) {
@@ -2883,7 +2883,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The vector
    */
-  public static Mat vectorise(Mat matrix) {
+  public static Mat vectorise(AbstractMat matrix) {
     return vectorise(matrix, 0);
   }
 
@@ -2892,13 +2892,20 @@ public class Arma {
    * @param dimension The dimension
    * @return The vector
    */
-  public static Mat vectorise(Mat matrix, int dimension) {
+  public static Mat vectorise(AbstractMat matrix, int dimension) {
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    if (dimension == 0) {
-      return reshape(matrix, matrix.n_elem, 1);
+    Mat result;
+    if(matrix instanceof Mat) {
+      result = (Mat) matrix;
     } else {
-      return reshape(matrix, 1, matrix.n_elem);
+      result = new Mat(matrix);
+    }
+    
+    if (dimension == 0) {
+      return reshape(result, matrix.n_elem, 1);
+    } else {
+      return reshape(result, 1, matrix.n_elem);
     }
   }
 
@@ -2906,7 +2913,7 @@ public class Arma {
    * @param X The matrix
    * @return The matrix
    */
-  public static Mat chol(Mat X) {
+  public static Mat chol(AbstractMat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
 
@@ -2919,7 +2926,7 @@ public class Arma {
    * @param R The matrix
    * @param X The matrix
    */
-  public static void chol(Mat R, Mat X) {
+  public static void chol(Mat R, AbstractMat X) {
     Mat temp = chol(X);
     R.copy_size(temp);
     System.arraycopy(temp._matrix, 0, R._matrix, 0, temp.n_elem);
@@ -2929,7 +2936,7 @@ public class Arma {
    * @param X The matrix
    * @return The matrix
    */
-  public static Mat eig_sym(Mat X) {
+  public static Mat eig_sym(AbstractMat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
 
@@ -2948,7 +2955,7 @@ public class Arma {
    * @param eigenValue The matrix
    * @param X The matrix
    */
-  public static void eig_sym(Mat eigenValue, Mat X) {
+  public static void eig_sym(Mat eigenValue, AbstractMat X) {
     Mat temp = eig_sym(X);
     eigenValue.copy_size(temp);
     System.arraycopy(temp._matrix, 0, eigenValue._matrix, 0, temp.n_elem);
@@ -2959,7 +2966,7 @@ public class Arma {
    * @param eigenVector The matrix
    * @param X The matrix
    */
-  public static void eig_sym(Mat eigenValue, Mat eigenVector, Mat X) {
+  public static void eig_sym(Mat eigenValue, Mat eigenVector, AbstractMat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
 
@@ -3016,7 +3023,7 @@ public class Arma {
    * @param X The matrix
    * @returnThe matrix
    */
-  public static void lu(Mat L, Mat U, Mat X) {
+  public static void lu(Mat L, Mat U, AbstractMat X) {
     X.isIllConditionedDectetion();
 
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
@@ -3038,7 +3045,7 @@ public class Arma {
    * @param P The matrix
    * @param X The matrix
    */
-  public static void lu(Mat L, Mat U, Mat P, Mat X) {
+  public static void lu(Mat L, Mat U, Mat P, AbstractMat X) {
     X.isIllConditionedDectetion();
 
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
@@ -3062,7 +3069,7 @@ public class Arma {
    * @param A The matrix
    * @return The matrix
    */
-  public static Mat pinv(Mat A) {
+  public static Mat pinv(AbstractMat A) {
     return pinv(A, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
@@ -3071,7 +3078,7 @@ public class Arma {
    * @param tolerance The tolerance
    * @return The matrix
    */
-  public static Mat pinv(Mat A, double tolerance) {
+  public static Mat pinv(AbstractMat A, double tolerance) {
     A.isIllConditionedDectetion();
 
     SolvePseudoInverseSvd pinv = (SolvePseudoInverseSvd) LinearSolverFactory.pseudoInverse(true);
@@ -3087,7 +3094,7 @@ public class Arma {
    * @param A The matrix
    * @param B The matrix
    */
-  public static void pinv(Mat A, Mat B) {
+  public static void pinv(AbstractMat A, Mat B) {
     pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
@@ -3096,7 +3103,7 @@ public class Arma {
    * @param B The matrix
    * @param tolerance The tolerance
    */
-  public static void pinv(Mat A, Mat B, double tolerance) {
+  public static void pinv(AbstractMat A, Mat B, double tolerance) {
     Mat temp = pinv(A);
     B.copy_size(temp);
     System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
@@ -3115,7 +3122,7 @@ public class Arma {
    * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean qr(Mat Q, Mat R, Mat X) {
+  public static boolean qr(Mat Q, Mat R, AbstractMat X) {
     X.isIllConditionedDectetion();
 
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
@@ -3148,7 +3155,7 @@ public class Arma {
    * 
    * @throws RuntimeException The algorithm was unable to solve the matrix.
    */
-  public static Mat solve(Mat A, Mat B) throws RuntimeException {
+  public static Mat solve(AbstractMat A, AbstractMat B) throws RuntimeException {
     AbstractMat.isNonEqualNumberOfElementsDetection(A.n_rows, B.n_rows);
     A.isIllConditionedDectetion();
 
@@ -3172,7 +3179,7 @@ public class Arma {
    * @param X The matrix {@code x}.
    * @return The boolean value.
    */
-  public static boolean solve(Mat X, Mat A, Mat B) {
+  public static boolean solve(Mat X, AbstractMat A, AbstractMat B) {
     try {
       Mat temp = solve(A, B);
       X.copy_size(temp);
@@ -3225,11 +3232,11 @@ public class Arma {
    * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean svd(Mat S, Mat X) {
+  public static boolean svd(Mat S, AbstractMat X) {
     try {
       Mat temp = svd(X);
-      X.copy_size(temp);
-      System.arraycopy(temp._matrix, 0, X._matrix, 0, temp.n_elem);
+      S.copy_size(temp);
+      System.arraycopy(temp._matrix, 0, S._matrix, 0, temp.n_elem);
     } catch(RuntimeException exception) {
       return false;
     }
@@ -3251,7 +3258,7 @@ public class Arma {
    * @param X The matrix to be decomposed.
    * @return False if the decomposition fails and true otherwise.
    */
-  public static boolean svd(Mat U, Mat S, Mat V, Mat X) {
+  public static boolean svd(Mat U, Mat S, Mat V, AbstractMat X) {
     X.isIllConditionedDectetion();
 
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, true, true, false);
@@ -3286,7 +3293,7 @@ public class Arma {
    * @param matrix The matrix
    * @return Whether the matrix is finite
    */
-  public static boolean is_finite(Mat matrix) {
+  public static boolean is_finite(AbstractMat matrix) {
     return matrix.is_finite();
   }
 

@@ -22,7 +22,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   // Statistics
 
   /**
-   * Test method for {@link arma.Arma#min(arma.Mat)}.
+   * Test method for {@link arma.Arma#min(AbstractMat)}.
    */
   @Test
   public void testMinMat() {
@@ -30,7 +30,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#minMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#minMat(AbstractMat)}.
    */
   @Test
   public void testMinMatMat() {
@@ -38,7 +38,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#minMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#minMat(AbstractMat, int)}.
    */
   @Test
   public void testMinMatMatInt() {
@@ -46,7 +46,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#max(arma.Mat)}.
+   * Test method for {@link arma.Arma#max(AbstractMat)}.
    */
   @Test
   public void testMaxMat() {
@@ -54,7 +54,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#maxMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#maxMat(AbstractMat)}.
    */
   @Test
   public void testMaxMatMat() {
@@ -62,7 +62,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#maxMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#maxMat(AbstractMat, int)}.
    */
   @Test
   public void testMaxMatMatInt() {
@@ -70,7 +70,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#mean(arma.Mat)}.
+   * Test method for {@link arma.Arma#mean(AbstractMat)}.
    */
   @Test
   public void testMeanMat() {
@@ -78,7 +78,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#meanMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#meanMat(AbstractMat)}.
    */
   @Test
   public void testMeanMatMat() {
@@ -86,7 +86,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#meanMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#meanMat(AbstractMat, int)}.
    */
   @Test
   public void testMeanMatMatInt() {
@@ -94,7 +94,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#median(arma.Mat)}.
+   * Test method for {@link arma.Arma#median(AbstractMat)}.
    */
   @Test
   public void testMedianMat() {
@@ -102,7 +102,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#medianMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#medianMat(AbstractMat)}.
    */
   @Test
   public void testMedianMatMat() {
@@ -110,7 +110,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#medianMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#medianMat(AbstractMat, int)}.
    */
   @Test
   public void testMedianMatMatInt() {
@@ -118,7 +118,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stddev(arma.Mat)}.
+   * Test method for {@link arma.Arma#stddev(AbstractMat)}.
    */
   @Test
   public void testStddevMat() {
@@ -126,7 +126,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stddev(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#stddev(AbstractMat, int)}.
    */
   @Test
   public void testStddevMatInt() {
@@ -134,7 +134,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stddevMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#stddevMat(AbstractMat)}.
    */
   @Test
   public void testStddevMatMat() {
@@ -142,7 +142,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stddevMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#stddevMat(AbstractMat, int)}.
    */
   @Test
   public void testStddevMatMatInt() {
@@ -150,7 +150,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#stddevMat(arma.Mat, int, int)}.
+   * Test method for {@link arma.Arma#stddevMat(AbstractMat, int, int)}.
    */
   @Test
   public void testStddevMatMatIntInt() {
@@ -158,7 +158,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#var(arma.Mat)}.
+   * Test method for {@link arma.Arma#var(AbstractMat)}.
    */
   @Test
   public void testVarMat() {
@@ -166,7 +166,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#var(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#var(AbstractMat, int)}.
    */
   @Test
   public void testVarMatInt() {
@@ -174,7 +174,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#varMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#varMat(AbstractMat)}.
    */
   @Test
   public void testVarMatMat() {
@@ -182,7 +182,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#varMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#varMat(AbstractMat, int)}.
    */
   @Test
   public void testVarMatMatInt() {
@@ -190,7 +190,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#varMat(arma.Mat, int, int)}.
+   * Test method for {@link arma.Arma#varMat(AbstractMat, int, int)}.
    */
   @Test
   public void testVarMatMatIntInt() {
@@ -200,7 +200,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   // Logic operations
 
   /**
-   * Test method for {@link arma.Arma#any(arma.Mat)}.
+   * Test method for {@link arma.Arma#any(AbstractMat)}.
    */
   @Test
   public void testAnyMat() {
@@ -208,7 +208,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#anyMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#anyMat(AbstractMat)}.
    */
   @Test
   public void testAnyMatMat() {
@@ -216,7 +216,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#anyMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#anyMat(AbstractMat, int)}.
    */
   @Test
   public void testAnyMatMatInt() {
@@ -224,7 +224,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#all(arma.Mat)}.
+   * Test method for {@link arma.Arma#all(AbstractMat)}.
    */
   @Test
   public void testAllMat() {
@@ -232,7 +232,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#allMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#allMat(AbstractMat)}.
    */
   @Test
   public void testAllMatMat() {
@@ -240,7 +240,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#allMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#allMat(AbstractMat, int)}.
    */
   @Test
   public void testAllMatMatInt() {
@@ -250,7 +250,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   // Miscellaneous
 
   /**
-   * Test method for {@link arma.Arma#prod(arma.Mat)}.
+   * Test method for {@link arma.Arma#prod(AbstractMat)}.
    */
   @Test
   public void testProdMat() {
@@ -258,7 +258,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#prodMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#prodMat(AbstractMat)}.
    */
   @Test
   public void testProdMatMat() {
@@ -266,7 +266,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#prodMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#prodMat(AbstractMat, int)}.
    */
   @Test
   public void testProdMatMatInt() {
@@ -274,7 +274,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sum(arma.Mat)}.
+   * Test method for {@link arma.Arma#sum(AbstractMat)}.
    */
   @Test
   public void testSumMat() {
@@ -282,7 +282,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sumMat(arma.Mat)}.
+   * Test method for {@link arma.Arma#sumMat(AbstractMat)}.
    */
   @Test
   public void testSumMatMat() {
@@ -290,7 +290,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#sumMat(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#sumMat(AbstractMat, int)}.
    */
   @Test
   public void testSumMatMatInt() {

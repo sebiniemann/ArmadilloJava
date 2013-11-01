@@ -20,7 +20,7 @@ import org.junit.Test;
 public class TestScalarValuedFuctionsOfVectorsMatrices {
 
   /**
-   * Test method for {@link arma.Arma#accu(arma.Mat)}.
+   * Test method for {@link arma.Arma#accu(AbstractMat)}.
    */
   @Test
   public void testAccu() {
@@ -28,7 +28,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#dot(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#dot(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testDot() {
@@ -36,7 +36,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#norm_dot(arma.Mat, arma.Mat)}.
+   * Test method for {@link arma.Arma#norm_dot(AbstractMat, AbstractMat)}.
    */
   @Test
   public void testNorm_dot() {
@@ -44,7 +44,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#det(arma.Mat)}.
+   * Test method for {@link arma.Arma#det(AbstractMat)}.
    */
   @Test
   public void testDet() {
@@ -52,7 +52,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#log_det(double[], int[], arma.Mat)}.
+   * Test method for {@link arma.Arma#log_det(double[], int[], AbstractMat)}.
    */
   @Test
   public void testLog_det() {
@@ -60,7 +60,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#norm(arma.Mat, int)}.
+   * Test method for {@link arma.Arma#norm(AbstractMat, int)}.
    */
   @Test
   public void testNormMatInt() {
@@ -68,7 +68,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#norm(arma.Mat, java.lang.String)}.
+   * Test method for {@link arma.Arma#norm(AbstractMat, java.lang.String)}.
    */
   @Test
   public void testNormMatString() {
@@ -76,7 +76,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#rank(arma.Mat)}.
+   * Test method for {@link arma.Arma#rank(AbstractMat)}.
    */
   @Test
   public void testRankMat() {
@@ -84,7 +84,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#rank(arma.Mat, double)}.
+   * Test method for {@link arma.Arma#rank(AbstractMat, double)}.
    */
   @Test
   public void testRankMatDouble() {
@@ -92,7 +92,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#trace(arma.Mat)}.
+   * Test method for {@link arma.Arma#trace(AbstractMat)}.
    */
   @Test
   public void testTrace() {
@@ -100,7 +100,7 @@ public class TestScalarValuedFuctionsOfVectorsMatrices {
   }
 
   /**
-   * Test method for {@link arma.Arma#as_scalar(arma.Mat)}.
+   * Test method for {@link arma.Arma#as_scalar(AbstractMat)}.
    */
   @Test
   public void testAs_scalar() {

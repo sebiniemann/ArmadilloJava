@@ -20,7 +20,7 @@ import org.junit.Test;
 public class TestMiscellaneous {
 
   /**
-   * Test method for {@link arma.Arma#is_finite(arma.Mat)}.
+   * Test method for {@link arma.Arma#is_finite(AbstractMat)}.
    */
   @Test
   public void testIs_finite() {
