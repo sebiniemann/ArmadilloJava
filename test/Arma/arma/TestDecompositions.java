@@ -107,7 +107,8 @@ public class TestDecompositions {
     fail("Not yet implemented"); // TODO
   }
 
-  /**Mat
+  /**
+   * Mat
    * Test method for {@link arma.Arma#pinv(AbstractMat, Mat)}.
    */
   @Test

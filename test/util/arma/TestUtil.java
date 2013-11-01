@@ -8,23 +8,25 @@ import static org.junit.Assert.assertEquals;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class TestUtil {
-/**
+  /**
    * The maximal allowed numeric tolerances.
    */
   public static final double NUMERIC_TOLERANCE = 1e+15;
 
   /**
-   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The assertion is based on org.junit.Assert.assertEquals.
+   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
+   * assertion is based on org.junit.Assert.assertEquals.
    * 
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
-   * @param delta The maximum element-wise delta between expected and actual for which both matrices are still considered equal.
+   * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
+   *          considered equal.
    */
   public static void assertMatEquals(Mat A, Mat B, double delta) {
     assertEquals(A.n_rows, B.n_rows);
     assertEquals(A.n_cols, B.n_cols);
-    
-    for(int n = 0; n < A.n_elem; n++) {
+
+    for (int n = 0; n < A.n_elem; n++) {
       assertEquals(A.at(n), B.at(n), 0);
     }
   }

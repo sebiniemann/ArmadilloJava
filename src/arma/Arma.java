@@ -1858,7 +1858,8 @@ public class Arma {
   }
 
   /**
-   * Returns the corresponding indexes of the vector sorted in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order.
+   * Returns the corresponding indexes of the vector sorted in ascending ({@code sortType} = 0) or descending (
+   * {@code sortType} = 1) order.
    * <p>
    * **Note:** The vector remains unchanged.
    * 
@@ -1883,7 +1884,8 @@ public class Arma {
   }
 
   /**
-   * Returns the corresponding indexes of the vector stable sorted in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order.
+   * Returns the corresponding indexes of the vector stable sorted in ascending ({@code sortType} = 0) or descending (
+   * {@code sortType} = 1) order.
    * <p>
    * **Note:** The vector remains unchanged.
    * 
@@ -2896,12 +2898,12 @@ public class Arma {
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result;
-    if(matrix instanceof Mat) {
+    if (matrix instanceof Mat) {
       result = (Mat) matrix;
     } else {
       result = new Mat(matrix);
     }
-    
+
     if (dimension == 0) {
       return reshape(result, matrix.n_elem, 1);
     } else {
