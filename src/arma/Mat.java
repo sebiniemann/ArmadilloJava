@@ -521,7 +521,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the vector to contain {@code numberOfElements} elements.
+   * Sets the size of the vector to {@code numberOfElements} elements.
    * <p>
    * Neither guarantees to reuse the values of the elements nor their positions, except the number of elements is the
    * same as before.
@@ -544,7 +544,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * Sets the size of the matrix to {@link #n_rows} rows and {@link #n_cols} columns.
    * <p>
    * Neither guarantees to reuse the values of the elements nor their positions, except the number of elements is the
    * same as before.
@@ -565,7 +565,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * Sets the size of the matrix to {@link #n_rows} rows and {@link #n_cols} columns.
    * <p>
    * Elements are accessed column-wise, while the matrix is also filled column-wise.
    * <p>
@@ -579,7 +579,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * Sets the size of the matrix to {@link #n_rows} rows and {@link #n_cols} columns.
    * <p>
    * Elements can be accessed either column-wise ({@code dimension} = 0) or row-wise ({@code dimension} = 1), while the
    * matrix is always filled column-wise.
@@ -606,7 +606,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the vector to contain {@code numberOfElements} elements.
+   * Sets the size of the vector to {@code numberOfElements} elements.
    * <p>
    * Guarantees to reuse the values of the elements and their positions.
    * 
@@ -625,7 +625,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Sets the size of the contain {@link #n_rows} rows and {@link #n_cols} columns.
+   * Sets the size of the matrix to {@link #n_rows} rows and {@link #n_cols} columns.
    * <p>
    * Guarantees to reuse the values of the elements and their positions.
    * 

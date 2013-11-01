@@ -1321,7 +1321,7 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation of the vector.
+   * Returns the standard deviation of the vector with normalisation by {@code count} - 1.
    * 
    * @param vector The vector
    * @return The standard deviation
@@ -1332,6 +1332,8 @@ public class Arma {
 
   /**
    * Returns the standard deviation of the vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param vector The vector
    * @param normType The normalisation
@@ -1387,7 +1389,7 @@ public class Arma {
   }
 
   /**
-   * Returns the variance of the vector.
+   * Returns the variance of the vector with normalisation by {@code count} - 1.
    * 
    * @param vector The vector
    * @return The variance
@@ -1398,6 +1400,8 @@ public class Arma {
 
   /**
    * Returns the variance of the vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
    * @param vector The vector
    * @param normType The normalisation
@@ -1502,6 +1506,8 @@ public class Arma {
   }
 
   /**
+   * Returns for each column ({@code dimension} = 0) or row ({@code dimension} = 1) true if any element is non-zero.
+   * 
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
@@ -1558,6 +1564,8 @@ public class Arma {
   }
 
   /**
+   * Returns for each column ({@code dimension} = 0) or row ({@code dimension} = 1) true if all element are non-zero.
+   * 
    * @param matrix The matrix
    * @param dimension The dimension
    * @return The matrix
@@ -1810,7 +1818,7 @@ public class Arma {
 
   /**
    * Sorts the matrix either in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order either per
-   * column ({@code sortType} = 0) or row ({@code sortType} = 1).
+   * column ({@code dimension} = 0) or row ({@code dimension} = 1).
    * 
    * @param matrix The matrix
    * @param sortType The sortType
@@ -1838,7 +1846,9 @@ public class Arma {
   }
 
   /**
-   * 
+   * Returns the corresponding indexes of the vector sorted in ascending order.
+   * <p>
+   * **Note:** The vector remains unchanged.
    * 
    * @param vector The vector
    * @return The vector
@@ -1848,7 +1858,9 @@ public class Arma {
   }
 
   /**
-   * 
+   * Returns the corresponding indexes of the vector sorted in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order.
+   * <p>
+   * **Note:** The vector remains unchanged.
    * 
    * @param vector The vector
    * @param sortType The sortType
@@ -1859,7 +1871,9 @@ public class Arma {
   }
 
   /**
-   * 
+   * Returns the corresponding indexes of the vector stable sorted in ascending order.
+   * <p>
+   * **Note:** The vector remains unchanged.
    * 
    * @param vector The vector
    * @return The vector
@@ -1869,7 +1883,9 @@ public class Arma {
   }
 
   /**
-   * 
+   * Returns the corresponding indexes of the vector stable sorted in ascending ({@code sortType} = 0) or descending ({@code sortType} = 1) order.
+   * <p>
+   * **Note:** The vector remains unchanged.
    * 
    * @param vector The vector
    * @param sortType The sortType
@@ -1914,21 +1930,34 @@ public class Arma {
   }
 
   /**
+   * Returns a matrix with its size set to {@link Mat#n_rows} rows and {@link Mat#n_cols} columns.
+   * <p>
+   * Elements are accessed column-wise, while the matrix is also filled column-wise.
+   * <p>
+   * Guarantees to reuse the values of the elements but not their positions.
+   * 
    * @param matrix The matrix
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of rows
-   * @return
+   * @return The matrix
    */
   public static Mat reshape(Mat matrix, int numberOfRows, int numberOfColumns) {
     return reshape(matrix, numberOfRows, numberOfColumns, 0);
   }
 
   /**
+   * Returns a matrix with its size set to {@link Mat#n_rows} rows and {@link Mat#n_cols} columns.
+   * <p>
+   * Elements can be accessed either column-wise ({@code dimension} = 0) or row-wise ({@code dimension} = 1), while the
+   * matrix is always filled column-wise.
+   * <p>
+   * Guarantees to reuse the values of the elements but not their positions.
+   * 
    * @param matrix The matrix
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
    * @param dimension The dimension
-   * @return
+   * @return The matrix
    */
   public static Mat reshape(Mat matrix, int numberOfRows, int numberOfColumns, int dimension) {
     Mat temp = new Mat(matrix);
@@ -1937,10 +1966,16 @@ public class Arma {
   }
 
   /**
+   * Returns a matrix with its size set to {@link Mat#n_rows} rows and {@link Mat#n_cols} columns.
+   * <p>
+   * Elements are accessed column-wise, while the matrix is also filled column-wise.
+   * <p>
+   * Guarantees to reuse the values of the elements and their positions.
+   * 
    * @param matrix The matrix
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
-   * @return
+   * @return The matrix
    */
   public static Mat resize(Mat matrix, int numberOfRows, int numberOfColumns) {
     Mat temp = new Mat(matrix);
@@ -1949,72 +1984,90 @@ public class Arma {
   }
 
   /**
+   * Returns the autocorrelation of the vector with normalisation by {@code count} - 1.
+   * 
    * @param vector The vector
-   * @return
+   * @return The autocorrelation
    */
   public static double cor(AbstractMat vector) {
     return cor(vector, 0);
   }
 
   /**
-   * @param vector
-   * @param normType
-   * @return
+   * Returns the autocorrelation of the vector.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
+   * 
+   * @param vector The vector
+   * @param normType The normalisation
+   * @return The autocorrelation
    */
   public static double cor(AbstractMat vector, int normType) {
     return cor(vector, vector, normType);
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @return
+   * Returns the correlation of two vectors with normalisation by {@code count} - 1.
+   * 
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The correlation
    */
   public static double cor(AbstractMat vector1, AbstractMat vector2) {
     return cor(vector1, vector2, 0);
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @param normType
-   * @return
+   * Returns the correlation of two vectors.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
+   * 
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @param normType The normalisation
+   * @return The correlation
    */
   public static double cor(AbstractMat vector1, AbstractMat vector2, int normType) {
     return cov(vector1, vector2, normType) / (stddev(vector1, normType) * stddev(vector2, normType));
   }
 
   /**
+   * Returns the correlation matrix with normalisation by {@code count} - 1.
+   * 
    * @param matrix The matrix
-   * @return
+   * @return The correlation matrix
    */
   public static Mat corMat(AbstractMat matrix) {
     return corMat(matrix, 0);
   }
 
   /**
-   * @param matrix
-   * @param normType
-   * @return
+   * Returns the correlation matrix.
+   * <p>
+   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
+   * 
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @return The correlation matrix
    */
   public static Mat corMat(AbstractMat matrix, int normType) {
     return corMat(matrix, matrix, normType);
   }
 
   /**
-   * @param matrix1
-   * @param matrix2
-   * @return
+   * @param matrix1 The first matrix
+   * @param matrix2 The second matrix
+   * @return The correlation matrix
    */
   public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2) {
     return corMat(matrix1, matrix2, 0);
   }
 
   /**
-   * @param matrix1
-   * @param matrix2
-   * @param normType
-   * @return
+   * @param matrix1 The first matrix
+   * @param matrix2 The second matrix
+   * @param normType The normalisation
+   * @return The correlation matrix
    */
   public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
@@ -2034,36 +2087,36 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @return
+   * @param vector The vector
+   * @return The covariance
    */
   public static double cov(AbstractMat vector) {
     return cov(vector, 0);
   }
 
   /**
-   * @param vector
-   * @param normType
-   * @return
+   * @param vector The vector
+   * @param normType The normalisation
+   * @return The covariance
    */
   public static double cov(AbstractMat vector, int normType) {
     return cov(vector, vector, normType);
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @return
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The covariance
    */
   public static double cov(AbstractMat vector1, AbstractMat vector2) {
     return cov(vector1, vector2, 0);
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @param normType
-   * @return
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @param normType The normalisation
+   * @return The covariance
    */
   public static double cov(AbstractMat vector1, AbstractMat vector2, int normType) {
     vector1.isEmptyDetection();
@@ -2083,36 +2136,36 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The covariance matrix
    */
   public static Mat covMat(AbstractMat matrix) {
     return covMat(matrix, 0);
   }
 
   /**
-   * @param matrix
-   * @param normType
-   * @return
+   * @param matrix The matrix
+   * @param normType The normalisation
+   * @return The covariance matrix
    */
   public static Mat covMat(AbstractMat matrix, int normType) {
     return covMat(matrix, matrix, normType);
   }
 
   /**
-   * @param matrix1
-   * @param matrix2
-   * @return
+   * @param matrix1 The first matrix
+   * @param matrix2 The second matrix
+   * @return The covariance matrix
    */
   public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2) {
     return covMat(matrix1, matrix2, 0);
   }
 
   /**
-   * @param matrix1
-   * @param matrix2
-   * @param normType
-   * @return
+   * @param matrix1 The first matrix
+   * @param matrix2 The second matrix
+   * @param normType The normalisation
+   * @return The covariance matrix
    */
   public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
@@ -2132,17 +2185,17 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @return
+   * @param vector The vector
+   * @return The histogramm
    */
   public static Mat hist(AbstractMat vector) {
     return hist(vector, 10);
   }
 
   /**
-   * @param vector
-   * @param numberOfBins
-   * @return
+   * @param vector The vector
+   * @param numberOfBins The number of bins
+   * @return The histogramm
    */
   public static Mat hist(AbstractMat vector, int numberOfBins) {
     vector.isNonVectorDetection();
@@ -2179,27 +2232,27 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The histogramm
    */
   public static Mat histMat(AbstractMat matrix) {
     return histMat(matrix, 10);
   }
 
   /**
-   * @param matrix
-   * @param numberOfBins
-   * @return
+   * @param matrix The matrix
+   * @param numberOfBins The number of bins
+   * @return vThe histogramm
    */
   public static Mat histMat(AbstractMat matrix, int numberOfBins) {
     return histMat(matrix, numberOfBins, 0);
   }
 
   /**
-   * @param matrix
-   * @param numberOfBins
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param numberOfBins The number of bins
+   * @param dimension The dimension
+   * @return The histogramm
    */
   public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
     matrix.isEmptyDetection();
@@ -2222,9 +2275,9 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @param centers
-   * @return
+   * @param vector The vector
+   * @param centers The centers
+   * @return The histogramm
    */
   public static Mat hist(AbstractMat vector, AbstractMat centers) {
     vector.isNonVectorDetection();
@@ -2248,19 +2301,19 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @param centers
-   * @return
+   * @param matrix The matrix
+   * @param centers The centers
+   * @return The histogramm
    */
   public static Mat histMat(AbstractMat matrix, AbstractMat centers) {
     return histMat(matrix, centers, 0);
   }
 
   /**
-   * @param matrix
-   * @param centers
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param centers The centers
+   * @param dimension The dimension
+   * @return The histogramm
    */
   public static Mat histMat(AbstractMat matrix, AbstractMat centers, int dimension) {
     matrix.isEmptyDetection();
@@ -2283,9 +2336,9 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @param edges
-   * @return
+   * @param vector The vector
+   * @param edges The edges
+   * @return The histogramm
    */
   public static Mat histc(AbstractMat vector, AbstractMat edges) {
     vector.isNonVectorDetection();
@@ -2309,19 +2362,19 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @param edges
-   * @return
+   * @param matrix The matrix
+   * @param edges The edges
+   * @return The histogramm
    */
   public static Mat histcMat(AbstractMat matrix, AbstractMat edges) {
     return histcMat(matrix, edges, 0);
   }
 
   /**
-   * @param matrix
-   * @param edges
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param edges The edges
+   * @param dimension The dimension
+   * @return The histogramm
    */
   public static Mat histcMat(AbstractMat matrix, AbstractMat edges, int dimension) {
     matrix.isEmptyDetection();
@@ -2344,8 +2397,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat fliplr(AbstractMat matrix) {
     Mat result = new Mat(matrix);
@@ -2358,8 +2411,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat flipud(AbstractMat matrix) {
     Mat result = new Mat(matrix);
@@ -2372,8 +2425,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat diagmat(AbstractMat matrix) {
     Mat result;
@@ -2389,8 +2442,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat trimatu(AbstractMat matrix) {
     matrix.isNotSquareDetection();
@@ -2412,8 +2465,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat trimatl(AbstractMat matrix) {
     matrix.isNotSquareDetection();
@@ -2435,8 +2488,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat simmatu(AbstractMat matrix) {
     matrix.isNotSquareDetection();
@@ -2462,8 +2515,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat simmatl(AbstractMat matrix) {
     matrix.isNotSquareDetection();
@@ -2489,8 +2542,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat trans(Mat matrix) {
     Mat temp = new Mat(matrix);
@@ -2618,8 +2671,8 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @return
+   * @param vector The vector
+   * @return The cumulative sum
    */
   public static Mat cumsum(Mat vector) {
     vector.isNonVectorDetection();
@@ -2637,17 +2690,17 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The cumulative sum
    */
   public static Mat cumsumMat(Mat matrix) {
     return cumsumMat(matrix, 0);
   }
 
   /**
-   * @param matrix
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
    */
   public static Mat cumsumMat(Mat matrix, int dimension) {
     matrix.isEmptyDetection();
@@ -2670,9 +2723,9 @@ public class Arma {
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @return
+   * @param vector1 The sample vector
+   * @param vector2 The kernel vector
+   * @return The matrix
    */
   public static Mat conv(AbstractMat vector1, AbstractMat vector2) {
     vector1.isNonVectorDetection();
@@ -2702,9 +2755,9 @@ public class Arma {
   }
 
   /**
-   * @param vector1
-   * @param vector2
-   * @return
+   * @param vector1 The first vector
+   * @param vector2 The second vector
+   * @return The cross product
    * 
    * @throws IllegalArgumentException Both vectors must be 3-dimensional, but where {@link AbstractMat#n_elem
    *           vector1.n_elem} and {@code vector2.n_elem}-dimensional.
@@ -2727,9 +2780,9 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * @param A The first matrix
+   * @param B The second matrix
+   * @return The konecker product
    */
   public static Mat kron(AbstractMat A, AbstractMat B) {
     Mat result = repmat(A, B.n_rows, B.n_cols);
@@ -2745,12 +2798,12 @@ public class Arma {
   }
 
   /**
-   * @param vector
-   * @return
+   * @param vector The vector
+   * @return The vector
    */
   public static Mat shuffle(AbstractMat vector) {
     vector.isNonVectorDetection();
-    
+
     Double[] array = new Double[vector.n_elem];
     for (int n = 0; n < vector.n_elem; n++) {
       array[n] = vector._matrix[n];
@@ -2763,22 +2816,22 @@ public class Arma {
     for (int n = 0; n < result.n_elem; n++) {
       result._matrix[n] = array[n];
     }
-    
+
     return result;
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat shuffleMat(AbstractMat matrix) {
     return shuffleMat(matrix, 0);
   }
 
   /**
-   * @param matrix
-   * @param dimension
-   * @return
+   * @param matrix The matrix
+   * @param dimension The dimension
+   * @return The matrix
    */
   public static Mat shuffleMat(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
@@ -2801,8 +2854,8 @@ public class Arma {
   }
 
   /**
-   * @param matrix
-   * @return
+   * @param matrix The matrix
+   * @return The matrix
    */
   public static Mat unique(Mat matrix) {
     HashSet<Double> set = new HashSet<Double>();
@@ -2850,21 +2903,21 @@ public class Arma {
   }
 
   /**
-   * @param X
-   * @return
+   * @param X The matrix
+   * @return The matrix
    */
   public static Mat chol(Mat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
-    
+
     CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(X.n_rows, true);
     chol.decompose(AbstractMat.convertMatToEJMLMat(X));
     return AbstractMat.convertEJMLToMat(chol.getT(null));
   }
 
   /**
-   * @param R
-   * @param X
+   * @param R The matrix
+   * @param X The matrix
    */
   public static void chol(Mat R, Mat X) {
     Mat temp = chol(X);
@@ -2873,13 +2926,13 @@ public class Arma {
   }
 
   /**
-   * @param X
-   * @return
+   * @param X The matrix
+   * @return The matrix
    */
   public static Mat eig_sym(Mat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
-    
+
     EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, false);
     eig.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -2892,8 +2945,8 @@ public class Arma {
   }
 
   /**
-   * @param eigenValue
-   * @param X
+   * @param eigenValue The matrix
+   * @param X The matrix
    */
   public static void eig_sym(Mat eigenValue, Mat X) {
     Mat temp = eig_sym(X);
@@ -2902,15 +2955,14 @@ public class Arma {
   }
 
   /**
-   * @param eigenValue
-   * @param eigenVector
-   * @param X
-   * @return
+   * @param eigenValue The matrix
+   * @param eigenVector The matrix
+   * @param X The matrix
    */
   public static void eig_sym(Mat eigenValue, Mat eigenVector, Mat X) {
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
-    
+
     EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, true);
     eig.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -2938,19 +2990,18 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @return
+   * @param A The matrix
+   * @return The matrix
    */
   public static Mat inv(AbstractMat A) {
     A.isIllConditionedDectetion();
-    
+
     return A.i();
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * @param A The matrix
+   * @param B The matrix
    */
   public static void inv(AbstractMat A, Mat B) {
     Mat temp = inv(A);
@@ -2960,14 +3011,14 @@ public class Arma {
   }
 
   /**
-   * @param L
-   * @param U
-   * @param X
-   * @return
+   * @param L The matrix
+   * @param U The matrix
+   * @param X The matrix
+   * @returnThe matrix
    */
   public static void lu(Mat L, Mat U, Mat X) {
     X.isIllConditionedDectetion();
-    
+
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
     lu.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -2982,15 +3033,14 @@ public class Arma {
   }
 
   /**
-   * @param L
-   * @param U
-   * @param P
-   * @param X
-   * @return
+   * @param L The matrix
+   * @param U The matrix
+   * @param P The matrix
+   * @param X The matrix
    */
   public static void lu(Mat L, Mat U, Mat P, Mat X) {
     X.isIllConditionedDectetion();
-    
+
     LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(X.n_rows, X.n_rows);
     lu.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -3009,21 +3059,21 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @return
+   * @param A The matrix
+   * @return The matrix
    */
   public static Mat pinv(Mat A) {
     return pinv(A, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
-   * @param A
-   * @param tolerance
-   * @return
+   * @param A The matrix
+   * @param tolerance The tolerance
+   * @return The matrix
    */
   public static Mat pinv(Mat A, double tolerance) {
     A.isIllConditionedDectetion();
-    
+
     SolvePseudoInverseSvd pinv = (SolvePseudoInverseSvd) LinearSolverFactory.pseudoInverse(true);
     pinv.setThreshold(tolerance);
 
@@ -3034,19 +3084,17 @@ public class Arma {
   }
 
   /**
-   * @param A
-   * @param B
-   * @return
+   * @param A The matrix
+   * @param B The matrix
    */
   public static void pinv(Mat A, Mat B) {
     pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
-   * @param A
-   * @param B
-   * @param tolerance
-   * @return
+   * @param A The matrix
+   * @param B The matrix
+   * @param tolerance The tolerance
    */
   public static void pinv(Mat A, Mat B, double tolerance) {
     Mat temp = pinv(A);
@@ -3069,7 +3117,7 @@ public class Arma {
    */
   public static boolean qr(Mat Q, Mat R, Mat X) {
     X.isIllConditionedDectetion();
-    
+
     QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(X.n_rows, X.n_cols);
     qr.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -3149,7 +3197,7 @@ public class Arma {
    */
   public static Mat svd(AbstractMat X) throws RuntimeException {
     X.isIllConditionedDectetion();
-    
+
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, false, false, false);
     svd.decompose(AbstractMat.convertMatToEJMLMat(X));
 
@@ -3205,7 +3253,7 @@ public class Arma {
    */
   public static boolean svd(Mat U, Mat S, Mat V, Mat X) {
     X.isIllConditionedDectetion();
-    
+
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, true, true, false);
     svd.decompose(AbstractMat.convertMatToEJMLMat(X));
 
