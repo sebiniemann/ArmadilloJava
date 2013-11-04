@@ -13,10 +13,13 @@ package arma;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  */
+@RunWith(Parameterized.class)
 public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 
 	  /**
