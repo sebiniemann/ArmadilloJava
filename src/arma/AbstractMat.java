@@ -2049,6 +2049,8 @@ abstract class AbstractMat implements Iterable<Double> {
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   protected void inplace(Op operator, AbstractMat operand) throws IllegalArgumentException, UnsupportedOperationException {
+    System.out.println(this);
+    
     isNonEqualNumberOfElementsDetection(n_elem, operand.n_elem);
 
     iteratorReset();
@@ -2323,7 +2325,7 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void isColumnRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
 
-    if (a < 0 || b >= n_rows) {
+    if (a < 0 || b >= n_cols) {
       throw new ArrayIndexOutOfBoundsException("The column index range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the column index range was (" + a + ", " + b + ")");
     }
   }
