@@ -12,8 +12,12 @@ package arma;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.junit.Test;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 import org.junit.runner.RunWith;
 
 /**
@@ -21,7 +25,31 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Parameterized.class)
 public class TestMatrixValuedElementWiseFunctionsTrigonometric {
-
+	
+  /**
+   * Test data for trigonometric functions
+   * @return TestData
+   */
+  @Parameters
+  public static Collection<Object[]> getTestData (){
+	  Collection<Object[]> matrices = new ArrayList<Object[]>();
+	  
+	  double[][] testdata = new double[][] {{
+		   0, 1, 2, Datum.eps, Datum.inf, 1/12*Datum.pi, 1/10*Datum.pi, 1/8*Datum.pi, 1/6*Datum.pi, 1/4*Datum.pi, 1/2*Datum.pi,
+		  Datum.pi, 3/2*Datum.pi, 2*Datum.pi, 3*Datum.pi, 4*Datum.pi, 5*Datum.pi, 10*Datum.pi, 100*Datum.pi
+	  },{
+		  -0, -1, -2, -Datum.eps, -Datum.inf, -1/12*Datum.pi, -1/10*Datum.pi, -1/8*Datum.pi, -1/6*Datum.pi, -1/4*Datum.pi, -1/2*Datum.pi,
+		  -Datum.pi, -3/2*Datum.pi, -2*Datum.pi, -3*Datum.pi, -4*Datum.pi, -5*Datum.pi, -10*Datum.pi, -100*Datum.pi
+	  }};
+	  
+	  Object[] mat = new Object[]{new Mat(testdata)};
+	  matrices.add(mat);
+	  return matrices;
+  }
+  
+  @Parameter
+  public Mat _testData;
+  
   /**
    * Test method for {@link arma.Arma#sign(AbstractMat)}.
    */

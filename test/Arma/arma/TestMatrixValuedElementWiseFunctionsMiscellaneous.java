@@ -12,15 +12,43 @@ package arma;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  */
 @RunWith(Parameterized.class)
 public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
+	
+	/**
+	   * Test data for miscellaneous functions
+	   * @return TestData
+	   */
+	  @Parameters
+	  public static Collection<Object[]> getTestData (){
+		  Collection<Object[]> matrices = new ArrayList<Object[]>();
+		  
+		  double[][] testdata = new double[][] {{
+			   0, 1, 2, Datum.eps, Datum.inf, Datum.e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9,
+			   0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789
+		  },{
+			  -0, -1, -2, -Datum.eps, -Datum.inf, -Datum.e, -12, -123, -1234, -12345, -123456, -1234567, -12345678, -123456789, -0.9,
+			   -0.89, -0.789, -0.6789, -0.56789, -0.456789, -0.3456789, -0.23456789, -0.123456789
+		  }};
+		  
+		  Object[] mat = new Object[]{new Mat(testdata)};
+		  matrices.add(mat);
+		  return matrices;
+	  }
+	  
+	  @Parameter
+	  public Mat _testData;
 
 	  /**
 	   * Test method for {@link arma.Arma#abs(AbstractMat)}.
