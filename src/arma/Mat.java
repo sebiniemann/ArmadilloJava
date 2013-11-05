@@ -95,7 +95,8 @@ public class Mat extends AbstractMat {
    * @param matrix The matrix
    */
   public Mat(Mat matrix) {
-    this(matrix._matrix);
+    copy_size(matrix);
+    System.arraycopy(matrix._matrix, 0, _matrix, 0, matrix.n_elem);
   }
 
   /**
