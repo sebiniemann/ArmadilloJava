@@ -54,12 +54,12 @@ public class TestExpectedValues {
 				System.out.println("sin true");
 		
 		//Function asin()
-				/*for (int n = 0; n < testData.n_elem; n++){
+				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.asin(testData.at(n)));
 				}
 				expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.asin.mat");
 				System.out.println("asin true");
-				*/
+				
 		//Function sinh()
 				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.sinh(testData.at(n)));
@@ -82,12 +82,12 @@ public class TestExpectedValues {
 				System.out.println("cos true");
 				
 		//Function acos()
-				/*for (int n = 0; n < testData.n_elem; n++){
+				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.acos(testData.at(n)));
 				}
 				expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acos.mat");
 				System.out.println("acos true");
-				*/
+				
 		//Function cosh()
 				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.cosh(testData.at(n)));
@@ -96,12 +96,12 @@ public class TestExpectedValues {
 				System.out.println("cosh true");
 				
 		//Function acosh()
-				/*for (int n = 0; n < testData.n_elem; n++){
+				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.log((testData.at(n)) + Math.sqrt((testData.at(n))*(testData.at(n)) - 1.0)));
 				}
 				expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acosh.mat");
 				System.out.println("acosh true");
-				*/
+			 
 		//Function tan()
 				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, Math.tan(testData.at(n)));
@@ -124,12 +124,11 @@ public class TestExpectedValues {
 				System.out.println("tanh true");
 				
 		//Function atanh()
-				/*for (int n = 0; n < testData.n_elem; n++){
+				for (int n = 0; n < testData.n_elem; n++){
 					expected.at(n, Op.EQUAL, 0.5*Math.log( ((testData.at(n)) + 1.0) / ((testData.at(n)) - 1.0)));
 				}
 				expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atanh.mat");
 				System.out.println("atanh true");
-				*/
 	}
 	
 	/**
@@ -176,40 +175,40 @@ public class TestExpectedValues {
 			System.out.println("exp10 true");
 			
 		//Function trunc_exp
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, Math.exp(testData.at(n)));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_exp.mat");
 			System.out.println("exp trunc_exp");
-			*/
+			
 		//Function log()
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.log(testData.at(n))));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log.mat");
 			System.out.println("log true");
-			*/
+			
 		//Function log2()
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.log(testData.at(n))/Math.log(2)));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log2.mat");
 			System.out.println("log2 true");
-			*/
+			
 		//Function log10()
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.log10(testData.at(n))));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log10.mat");
 			System.out.println("log10 true");
-			*/
+			
 		//Function trunc_log()
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.log(testData.at(n))));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_log.mat");
 			System.out.println("trunc_log true");
-			*/
+			
 		//Function pow()
 			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.pow(testData.at(n),_pow)));
@@ -218,12 +217,12 @@ public class TestExpectedValues {
 			System.out.println("pow true");
 			
 		//Function sqrt()
-			/*for (int n = 0; n < testData.n_elem; n++){
+			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.sqrt(testData.at(n))));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.sqrt.mat");
 			System.out.println("sqrt true");
-			*/
+			
 		//Function square()
 			for (int n = 0; n < testData.n_elem; n++){
 				expected.at(n, Op.EQUAL, (Math.pow(testData.at(n),2)));
