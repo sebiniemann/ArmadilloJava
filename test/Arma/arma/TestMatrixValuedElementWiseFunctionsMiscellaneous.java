@@ -48,11 +48,10 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 		matrices.add(mat);
 		return matrices;
 	}
-
-	double _testTolerance = 0;
-	Mat expected = new Mat();
-	Mat actual;
-
+	
+	/**
+	 * 
+	 */
 	@Parameter
 	public Mat _testData;
 
@@ -62,11 +61,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testAbs() throws IOException {
-		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.abs.mat");
+	  Mat expected = new Mat();
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.abs.mat");
 
-		actual = Arma.abs(_testData);
+		Mat actual = Arma.abs(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -76,11 +76,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testEps() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.eps.mat");
 
-		actual = Arma.eps(_testData);
+		Mat actual = Arma.eps(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -90,11 +91,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testExp() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.exp.mat");
 
-		actual = Arma.exp(_testData);
+		Mat actual = Arma.exp(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -104,11 +106,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testExp2() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.exp2.mat");
 
-		actual = Arma.exp2(_testData);
+		Mat actual = Arma.exp2(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -118,11 +121,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testExp10() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.exp10.mat");
 
-		actual = Arma.exp10(_testData);
+		Mat actual = Arma.exp10(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -132,11 +136,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testTrunc_exp() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_exp.mat");
 
-		actual = Arma.trunc_exp(_testData);
+		Mat actual = Arma.trunc_exp(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -146,11 +151,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testLog() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log.mat");
 
-		actual = Arma.log(_testData);
+		Mat actual = Arma.log(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -160,11 +166,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testLog2() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log2.mat");
 
-		actual = Arma.log2(_testData);
+		Mat actual = Arma.log2(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -174,11 +181,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testLog10() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.log10.mat");
 
-		actual = Arma.log10(_testData);
+		Mat actual = Arma.log10(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -188,11 +196,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testTrunc_log() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_exp.mat");
 
-		actual = Arma.trunc_exp(_testData);
+		Mat actual = Arma.trunc_exp(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -202,11 +211,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testPow() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.pow.mat");
 
-		actual = Arma.pow(_testData,(int)TestExpectedValues._pow);
+		Mat actual = Arma.pow(_testData,(int)TestExpectedValues._pow);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -216,11 +226,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testSqrt() throws IOException{
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.sqrt.mat");
 
-		actual = Arma.sqrt(_testData);
+		Mat actual = Arma.sqrt(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -230,11 +241,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testSquare() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.square.mat");
 
-		actual = Arma.square(_testData);
+		Mat actual = Arma.square(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -244,11 +256,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testFloor() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.floor.mat");
 
-		actual = Arma.floor(_testData);
+		Mat actual = Arma.floor(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -258,11 +271,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testCeil() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.ceil.mat");
 
-		actual = Arma.ceil(_testData);
+		Mat actual = Arma.ceil(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 
@@ -272,11 +286,12 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	 */
 	@Test
 	public void testRound() throws IOException {
+    Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.round.mat");
 
-		actual = Arma.round(_testData);
+		Mat actual = Arma.round(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
-			assertEquals(expected.at(n), actual.at(n), _testTolerance);
+			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
 	}
 }

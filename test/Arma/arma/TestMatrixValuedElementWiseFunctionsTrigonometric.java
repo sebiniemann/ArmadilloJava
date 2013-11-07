@@ -48,10 +48,9 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
 	  return matrices;
   }
   
-  double _testTolerance = 0;
-  Mat expected = new Mat();
-  Mat actual;
-  
+  /**
+   * 
+   */
   @Parameter
   public Mat _testData;
   
@@ -61,11 +60,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testSign() throws IOException {
+    Mat expected = new Mat();
     expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sign.mat");
     
-    actual = Arma.sign(_testData);
+    Mat actual = Arma.sign(_testData);
     for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
     }
   }
 
@@ -75,11 +75,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testSin() throws IOException {
+    Mat expected = new Mat();
 	 expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sin.mat");
 	    
-	 actual = Arma.sin(_testData);
+	 Mat actual = Arma.sin(_testData);
 	 for (int n = 0; n< _testData.n_elem; n++){
-		 assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		 assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	 }
   }
 
@@ -89,11 +90,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAsin() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.asin.mat");
 	  
-	  actual = Arma.asin(_testData);
+	  Mat actual = Arma.asin(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -103,11 +105,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testSinh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sinh.mat");
 	  
-	  actual = Arma.sinh(_testData);
+	  Mat actual = Arma.sinh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -117,11 +120,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAsinh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.asinh.mat");
 	  
-	  actual = Arma.asinh(_testData);
+	  Mat actual = Arma.asinh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -131,11 +135,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testCos() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.cos.mat");
 	  
-	  actual = Arma.cos(_testData);
+	  Mat actual = Arma.cos(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -145,11 +150,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAcos() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acos.mat");
 	  
-	  actual = Arma.acos(_testData);
+	  Mat actual = Arma.acos(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -159,11 +165,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testCosh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.cosh.mat");
 	  
-	  actual = Arma.cosh(_testData);
+	  Mat actual = Arma.cosh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -173,11 +180,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAcosh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acosh.mat");
 	  
-	  actual = Arma.acosh(_testData);
+	  Mat actual = Arma.acosh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -187,11 +195,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testTan() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.tan.mat");
 	  
-	  actual = Arma.tan(_testData);
+	  Mat actual = Arma.tan(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -201,11 +210,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAtan() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atan.mat");
 	  
-	  actual = Arma.atan(_testData);
+	  Mat actual = Arma.atan(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -215,11 +225,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testTanh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.tanh.mat");
 	  
-	  actual = Arma.tanh(_testData);
+	  Mat actual = Arma.tanh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 
@@ -229,11 +240,12 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAtanh() throws IOException {
+    Mat expected = new Mat();
 	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atanh.mat");
 	  
-	  actual = Arma.atanh(_testData);
+	  Mat actual = Arma.atanh(_testData);
 	  for (int n = 0; n< _testData.n_elem; n++){
-		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+		assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 	  }
   }
 }
