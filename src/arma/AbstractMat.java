@@ -1923,9 +1923,9 @@ abstract class AbstractMat implements Iterable<Double> {
           if (value < 0) {
             sign = "-";
           }
-          writer.format("%24s", sign + "Inf");
+          writer.format("%30s", sign + "Inf");
         } else {
-          writer.format(Locale.ENGLISH, "%1$ 24.16e", value);
+          writer.format(Locale.ENGLISH, "%1$ 30.16e", value);
         }
       }
 
