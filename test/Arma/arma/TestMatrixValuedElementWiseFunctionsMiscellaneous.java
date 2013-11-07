@@ -197,9 +197,9 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
 	@Test
 	public void testTrunc_log() throws IOException {
     Mat expected = new Mat();
-		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_exp.mat");
+		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_log.mat");
 
-		Mat actual = Arma.trunc_exp(_testData);
+		Mat actual = Arma.trunc_log(_testData);
 		for (int n = 0; n < _testData.n_elem; n++) {
 			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}

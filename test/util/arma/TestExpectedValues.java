@@ -176,7 +176,12 @@ public class TestExpectedValues {
 			
 		//Function trunc_exp
 			for (int n = 0; n < testData.n_elem; n++){
-				expected.at(n, Op.EQUAL, Math.exp(testData.at(n)));
+			  double element = Math.exp(testData.at(n));
+			  if(Double.isInfinite(element)) {
+			    expected.at(n, Op.EQUAL, Double.MAX_VALUE);
+			  } else {
+			    expected.at(n, Op.EQUAL, element);
+			  }
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_exp.mat");
 			System.out.println("exp trunc_exp");
@@ -204,7 +209,13 @@ public class TestExpectedValues {
 			
 		//Function trunc_log()
 			for (int n = 0; n < testData.n_elem; n++){
-				expected.at(n, Op.EQUAL, (Math.log(testData.at(n))));
+        double element = testData.at(n);
+        if(Double.isInfinite(element)) {
+          element = Double.MAX_VALUE;
+        } else {
+          element = Double.MIN_NORMAL;
+        }
+        expected.at(n, Op.EQUAL, Math.log(element));
 			}
 			expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.trunc_log.mat");
 			System.out.println("trunc_log true");
