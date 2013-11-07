@@ -12,6 +12,7 @@ package arma;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.junit.Test;
@@ -35,10 +36,10 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
 	  Collection<Object[]> matrices = new ArrayList<Object[]>();
 	  
 	  double[][] testdata = new double[][] {{
-		   0, 1, 2, Datum.eps, Datum.inf, 1/12*Datum.pi, 1/10*Datum.pi, 1/8*Datum.pi, 1/6*Datum.pi, 1/4*Datum.pi, 1/2*Datum.pi,
+		   0, 1, 2, Datum.eps, 0 /*Datum.inf*/, 1/12*Datum.pi, 1/10*Datum.pi, 1/8*Datum.pi, 1/6*Datum.pi, 1/4*Datum.pi, 1/2*Datum.pi,
 		  Datum.pi, 3/2*Datum.pi, 2*Datum.pi, 3*Datum.pi, 4*Datum.pi, 5*Datum.pi, 10*Datum.pi, 100*Datum.pi
 	  },{
-		  -0, -1, -2, -Datum.eps, -Datum.inf, -1/12*Datum.pi, -1/10*Datum.pi, -1/8*Datum.pi, -1/6*Datum.pi, -1/4*Datum.pi, -1/2*Datum.pi,
+		  -0, -1, -2, -Datum.eps, 0 /*Datum.inf*/, -1/12*Datum.pi, -1/10*Datum.pi, -1/8*Datum.pi, -1/6*Datum.pi, -1/4*Datum.pi, -1/2*Datum.pi,
 		  -Datum.pi, -3/2*Datum.pi, -2*Datum.pi, -3*Datum.pi, -4*Datum.pi, -5*Datum.pi, -10*Datum.pi, -100*Datum.pi
 	  }};
 	  
@@ -47,110 +48,192 @@ public class TestMatrixValuedElementWiseFunctionsTrigonometric {
 	  return matrices;
   }
   
+  double _testTolerance = 0;
+  Mat expected = new Mat();
+  Mat actual;
+  
   @Parameter
   public Mat _testData;
   
   /**
    * Test method for {@link arma.Arma#sign(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testSign() {
-    fail("Not yet implemented"); // TODO
+  public void testSign() throws IOException {
+    expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sign.mat");
+    
+    actual = Arma.sign(_testData);
+    for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+    }
   }
 
   /**
    * Test method for {@link arma.Arma#sin(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testSin() {
-    fail("Not yet implemented"); // TODO
+  public void testSin() throws IOException {
+	 expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sin.mat");
+	    
+	 actual = Arma.sin(_testData);
+	 for (int n = 0; n< _testData.n_elem; n++){
+		 assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	 }
   }
 
   /**
    * Test method for {@link arma.Arma#asin(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAsin() {
-    fail("Not yet implemented"); // TODO
+  public void testAsin() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.asin.mat");
+	  
+	  actual = Arma.asin(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#sinh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testSinh() {
-    fail("Not yet implemented"); // TODO
+  public void testSinh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.sinh.mat");
+	  
+	  actual = Arma.sinh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#asinh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAsinh() {
-    fail("Not yet implemented"); // TODO
+  public void testAsinh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.asinh.mat");
+	  
+	  actual = Arma.asinh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#cos(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testCos() {
-    fail("Not yet implemented"); // TODO
+  public void testCos() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.cos.mat");
+	  
+	  actual = Arma.cos(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#acos(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAcos() {
-    fail("Not yet implemented"); // TODO
+  public void testAcos() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acos.mat");
+	  
+	  actual = Arma.acos(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#cosh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testCosh() {
-    fail("Not yet implemented"); // TODO
+  public void testCosh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.cosh.mat");
+	  
+	  actual = Arma.cosh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#acosh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAcosh() {
-    fail("Not yet implemented"); // TODO
+  public void testAcosh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.acosh.mat");
+	  
+	  actual = Arma.acosh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#tan(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testTan() {
-    fail("Not yet implemented"); // TODO
+  public void testTan() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.tan.mat");
+	  
+	  actual = Arma.tan(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#atan(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAtan() {
-    fail("Not yet implemented"); // TODO
+  public void testAtan() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atan.mat");
+	  
+	  actual = Arma.atan(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#tanh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testTanh() {
-    fail("Not yet implemented"); // TODO
+  public void testTanh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.tanh.mat");
+	  
+	  actual = Arma.tanh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 
   /**
    * Test method for {@link arma.Arma#atanh(AbstractMat)}.
+   * @throws IOException 
    */
   @Test
-  public void testAtanh() {
-    fail("Not yet implemented"); // TODO
+  public void testAtanh() throws IOException {
+	  expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atanh.mat");
+	  
+	  actual = Arma.atanh(_testData);
+	  for (int n = 0; n< _testData.n_elem; n++){
+		assertEquals(expected.at(n), actual.at(n), _testTolerance);
+	  }
   }
 }
