@@ -18,6 +18,9 @@ import java.io.*;
  */
 public class TestExpectedValues {
 
+	/**
+	 * 
+	 */
 	static double _pow = 100;
 	/**
 	 * @param args
@@ -29,6 +32,9 @@ public class TestExpectedValues {
 
 	}
 
+	/**
+	 * @throws FileNotFoundException
+	 */
 	protected static void testMatrixValuedElementWiseFunctionsTrigonometric() throws FileNotFoundException {
 		Mat testData = (Mat) TestMatrixValuedElementWiseFunctionsTrigonometric.getTestData().iterator().next()[0];
 		Mat expected = new Mat (testData.n_rows, testData.n_cols);
@@ -126,6 +132,9 @@ public class TestExpectedValues {
 				*/
 	}
 	
+	/**
+	 * @throws FileNotFoundException
+	 */
 	protected static void testMatrixValuedElementWiseFunctionsMiscellaneous() throws FileNotFoundException {
 		Mat testData = (Mat) TestMatrixValuedElementWiseFunctionsMiscellaneous.getTestData().iterator().next()[0];
 		Mat expected = new Mat (testData.n_rows, testData.n_cols);
