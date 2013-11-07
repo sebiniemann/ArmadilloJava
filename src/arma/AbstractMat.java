@@ -225,7 +225,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The right-hand side operand
    */
   public void at(int n, Op operator, double operand) {
-    isElementOutOfBoundsDetection(n);
+    isElementOutOfBoundsDetection(n); 
 
     inplace(n, operator, operand);
   }
@@ -2281,7 +2281,7 @@ abstract class AbstractMat implements Iterable<Double> {
    *           {@link #n_rows}, {@link #n_cols}) but the element index range was ({@code n}, {@code n}).
    */
   protected void isElementOutOfBoundsDetection(int n) throws ArrayIndexOutOfBoundsException {
-    isElementRangeOutOfBoundsDetection(n, n);
+    //isElementRangeOutOfBoundsDetection(n, n); Does not go for (m x n) Matrices  
   }
 
   /**
