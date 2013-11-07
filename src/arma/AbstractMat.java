@@ -2281,7 +2281,7 @@ abstract class AbstractMat implements Iterable<Double> {
    *           {@link #n_rows}, {@link #n_cols}) but the element index range was ({@code n}, {@code n}).
    */
   protected void isElementOutOfBoundsDetection(int n) throws ArrayIndexOutOfBoundsException {
-    //isElementRangeOutOfBoundsDetection(n, n); Does not go for (m x n) Matrices  
+    isElementRangeOutOfBoundsDetection(n, n);
   }
 
   /**
@@ -2296,7 +2296,7 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void isElementRangeOutOfBoundsDetection(int a, int b) throws ArrayIndexOutOfBoundsException {
     isInvalidRangeDetection(a, b);
 
-    if (a < 0 || b > n_rows) {
+    if (a < 0 || b > n_elem) {
       throw new ArrayIndexOutOfBoundsException("The element index range is out of bound. The matrix is of size (" + n_rows + ", " + n_cols + ") but the element index range was (" + a + ", " + b + ")");
     }
   }
