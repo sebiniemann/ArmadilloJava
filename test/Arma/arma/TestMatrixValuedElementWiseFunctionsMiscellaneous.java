@@ -214,7 +214,7 @@ public class TestMatrixValuedElementWiseFunctionsMiscellaneous {
     Mat expected = new Mat();
 		expected.load("test/data/Arma/TestMatrixValuedElementWiseFunctions/Miscellaneous.pow.mat");
 
-		Mat actual = Arma.pow(_testData,(int)TestExpectedValues._pow);
+		Mat actual = Arma.pow(_testData, 100);
 		for (int n = 0; n < _testData.n_elem; n++) {
 			assertEquals(expected.at(n), actual.at(n), TestUtil.NUMERIC_TOLERANCE);
 		}
