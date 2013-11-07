@@ -2083,7 +2083,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operator The operator
    * @param rightHandSideOperand The right-hand side operand
    * 
-   * @throws IllegalArgumentException NaN is not a valid operand.
+   * @throws IllegalArgumentException NaN is not a valid operand, expect the operator equals Op.EQUAL.
    * @throws ArithmeticException Division by zero.
    * @throws ArithmeticException Division by infinity.
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
@@ -2091,8 +2091,8 @@ abstract class AbstractMat implements Iterable<Double> {
   protected void inplace(int n, Op operator, double rightHandSideOperand) throws IllegalArgumentException, UnsupportedOperationException {
     double leftHandSideOperand = _matrix[n];
 
-    if (Double.isNaN(leftHandSideOperand) || Double.isNaN(rightHandSideOperand)) {
-      throw new IllegalArgumentException("NaN is not a valid operand.");
+    if (!operator.equals(Op.EQUAL) && (Double.isNaN(leftHandSideOperand) || Double.isNaN(rightHandSideOperand))) {
+      throw new IllegalArgumentException("NaN is not a valid operand, expect the operator equals Op.EQUAL.");
     }
 
     double result;
