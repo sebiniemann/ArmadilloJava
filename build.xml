@@ -1,69 +1,73 @@
 <!-- Used only for travis ci -->
 <project name="ArmadilloJava" default="test" basedir=".">
-  <!-- set global properties for this build -->
   <property name="src.dir" location="src"/>
+  
+  <property name="test.util.dir" location="test/util"/>
   <property name="test.Arma.dir" location="test/Arma"/>
   
   <property name="lib.dir" location="lib"/>
   
   <property name="build.dir"   location="build"/>
   <property name="build.src.dir" location="${build.dir}/src"/>
-  <property name="build.test.dir" location="${build.dir}/test"/>
+  <property name="build.test.util.dir" location="${build.dir}/test/util"/>
+  <property name="build.test.Arma.dir" location="${build.dir}/test/Arma"/>
 
   <path id="libs.src">
     <pathelement location="${lib.dir}/ejml/ejml-0.23.jar" />
   </path>
   
-  <path id="libs.test">
+  <path id="classpath.test.util">
     <path refid="libs.src" />
     <pathelement location="${lib.dir}/junit/junit-4.11.jar" />
     <pathelement location="${lib.dir}/junit/hamcrest-core-1.3.jar" />
-  </path>
-  
-  <path id="classpath.src">
-    <path refid="libs.src" />
+    <pathelement location="${build.src.dir}"/>
   </path>
   
   <path id="classpath.test">
-    <path refid="libs.test" />
-    <pathelement location="${build.src.dir}"/>
+    <path refid="classpath.test.util" />
+    <pathelement location="${build.test.util.dir}"/>
   </path>
   
   <target name="test" depends="run,clean" />
   
   <target name="clean">
-    <!-- Delete the ${build.dir} directory tree -->
     <delete dir="${build.dir}"/>
   </target>
   
   <target name="compile.src">
-    <!-- Create the directory structure used -->
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${build.src.dir}"/>
-    <!-- Compile the java code from ${src.dir} into ${build.src.dir} -->
     <javac srcdir="${src.dir}" destdir="${build.src.dir}" includeantruntime="false">
       <classpath>
-        <path refid="classpath.src"/>
+        <path refid="libs.src" />
       </classpath>
     </javac>
   </target>
   
-  <target name="compile.test">
-    <!-- Create the directory structure used -->
-    <mkdir dir="${build.test.dir}"/>
-    <!-- Compile the java code from ${test.Arma.dir} into ${build.test.dir} -->
-    <javac srcdir="${test.Arma.dir}" destdir="${build.test.dir}" includeantruntime="false">
+  <target name="compile.test.util">
+    <mkdir dir="${build.test.util.dir}"/>
+    <javac srcdir="${test.util.dir}" destdir="${build.test.util.dir}" includeantruntime="false">
+      <classpath>
+        <path refid="classpath.test.util"/>
+      </classpath>
+      <exclude name="**/TestExpectedValues.java" />
+    </javac>
+  </target>
+  
+  <target name="compile.test.Arma">
+    <mkdir dir="${build.test.Arma.dir}"/>
+    <javac srcdir="${test.Arma.dir}" destdir="${build.test.Arma.dir}" includeantruntime="false">
       <classpath>
         <path refid="classpath.test"/>
       </classpath>
     </javac>
   </target>
 
-  <target name="run" depends="compile.src,compile.test">
+  <target name="run" depends="compile.src, compile.test.util, compile.test.Arma">
     <junit printsummary="on" haltonerror="true">
       <classpath>
         <path refid="classpath.test" />
-        <pathelement location="${build.test.dir}"/>
+        <pathelement location="${build.test.Arma.dir}"/>
       </classpath>
       <formatter type="brief" usefile="false"/>
       <batchtest>
