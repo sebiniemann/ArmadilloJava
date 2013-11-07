@@ -125,7 +125,7 @@ public class TestExpectedValues {
 				
 		//Function atanh()
 				for (int n = 0; n < testData.n_elem; n++){
-					expected.at(n, Op.EQUAL, 0.5*Math.log( ((testData.at(n)) + 1.0) / ((testData.at(n)) - 1.0)));
+					expected.at(n, Op.EQUAL, 0.5*Math.log( (1 + testData.at(n)) / (1 - testData.at(n))));
 				}
 				expected.save("test/data/Arma/TestMatrixValuedElementWiseFunctions/Trigonometric.atanh.mat");
 				System.out.println("atanh true");
