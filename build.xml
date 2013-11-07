@@ -50,6 +50,7 @@
       <classpath>
         <path refid="classpath.test.util"/>
       </classpath>
+      <exclude name="**/TestExpectedValues.java" />
     </javac>
   </target>
   
