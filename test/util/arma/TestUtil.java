@@ -19,6 +19,17 @@ public class TestUtil {
    * 
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
+   */
+  public static void assertMatEquals(Mat A, Mat B) {
+    assertMatEquals(A, B, NUMERIC_TOLERANCE);
+  }
+
+  /**
+   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
+   * assertion is based on org.junit.Assert.assertEquals.
+   * 
+   * @param A The expected matrix.
+   * @param B The matrix to check against expected.
    * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
    *          considered equal.
    */
@@ -27,7 +38,7 @@ public class TestUtil {
     assertEquals(A.n_cols, B.n_cols);
 
     for (int n = 0; n < A.n_elem; n++) {
-      assertEquals(A.at(n), B.at(n), 0);
+      assertEquals(A.at(n), B.at(n), delta);
     }
   }
 }
