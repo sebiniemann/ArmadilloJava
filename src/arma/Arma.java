@@ -3266,25 +3266,25 @@ public class Arma {
     SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(X.n_rows, X.n_cols, true, true, false);
     svd.decompose(AbstractMat.convertMatToEJMLMat(X));
 
-    DenseMatrix64F tempU;
-    DenseMatrix64F tempS;
-    DenseMatrix64F tempV;
+    Mat tempU;
+    Mat tempS;
+    Mat tempV;
     try {
-      tempU = svd.getU(null, false);
-      tempS = svd.getW(null);
-      tempV = svd.getV(null, false);
+      tempU = AbstractMat.convertEJMLToMat(svd.getU(null, false));
+      tempS = AbstractMat.convertEJMLToMat(svd.getW(null)).diag();
+      tempV = AbstractMat.convertEJMLToMat(svd.getV(null, false));
     } catch(IllegalArgumentException exception) {
       return false;
     }
 
-    U.set_size(tempU.numRows, tempU.numCols);
-    U = AbstractMat.convertEJMLToMat(tempU);
-
-    S.set_size(tempS.numRows, tempS.numCols);
-    S = AbstractMat.convertEJMLToMat(tempS);
-
-    V.set_size(tempV.numRows, tempV.numCols);
-    V = AbstractMat.convertEJMLToMat(tempV);
+    U.copy_size(tempU);
+    System.arraycopy(tempU._matrix, 0, U._matrix, 0, tempU.n_elem);
+    
+    S.copy_size(tempS);
+    System.arraycopy(tempS._matrix, 0, S._matrix, 0, tempS.n_elem);
+    
+    V.copy_size(tempV);
+    System.arraycopy(tempV._matrix, 0, V._matrix, 0, tempV.n_elem);
 
     return true;
   }
