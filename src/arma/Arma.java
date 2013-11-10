@@ -3162,7 +3162,7 @@ public class Arma {
     A.isIllConditionedDectetion();
 
     DenseMatrix64F X = new DenseMatrix64F();
-
+    
     if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(A), AbstractMat.convertMatToEJMLMat(B), X)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
     };
@@ -3218,7 +3218,7 @@ public class Arma {
       throw new RuntimeException("The algorithm was unable to decompose the matrix.");
     }
 
-    return AbstractMat.convertEJMLToMat(S);
+    return AbstractMat.convertEJMLToMat(S).diag();
   }
 
   /**
