@@ -1256,7 +1256,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat plus(AbstractMat operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.PLUS, operand);
     return result;
   }
@@ -1268,7 +1268,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat plus(double operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.PLUS, operand);
     return result;
   }
@@ -1280,7 +1280,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat minus(AbstractMat operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.MINUS, operand);
     return result;
   }
@@ -1292,7 +1292,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat minus(double operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.MINUS, operand);
     return result;
   }
@@ -1325,7 +1325,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat times(double operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.TIMES, operand);
     return result;
   }
@@ -1337,7 +1337,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat elemTimes(AbstractMat operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.ELEMTIMES, operand);
     return result;
   }
@@ -1349,7 +1349,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat elemTimes(double operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.ELEMTIMES, operand);
     return result;
   }
@@ -1361,7 +1361,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat elemDivide(AbstractMat operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.ELEMDIVIDE, operand);
     return result;
   }
@@ -1373,7 +1373,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @return The matrix
    */
   public Mat elemDivide(double operand) {
-    Mat result = new Mat(_matrix);
+    Mat result = new Mat(this);
     result.inplace(Op.ELEMDIVIDE, operand);
     return result;
   }
@@ -2049,8 +2049,6 @@ abstract class AbstractMat implements Iterable<Double> {
    * @throws UnsupportedOperationException Only binary arithmetic operators and equality are supported.
    */
   protected void inplace(Op operator, AbstractMat operand) throws IllegalArgumentException, UnsupportedOperationException {
-    System.out.println(this);
-    
     isNonEqualNumberOfElementsDetection(n_elem, operand.n_elem);
 
     iteratorReset();
@@ -2203,12 +2201,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @throws UnsupportedOperationException The matrix is ill-conditioned: {@code conditionNumber}.
    */
   protected void isIllConditionedDectetion() {
-    Mat singularvalues = Arma.svd(this);
-    double conditionNumber = singularvalues.at(0) / singularvalues.at(singularvalues.n_elem - 1);
-
-    if (conditionNumber >= 1 / Math.max(n_cols, n_rows) * Datum.eps) {
-      throw new ArithmeticException("The matrix is ill-conditioned: " + conditionNumber);
-    }
+//    double conditionNumber = NormOps.normP(AbstractMat.convertMatToEJMLMat(this), 2);
+//
+//    if (conditionNumber >= 1 / Math.max(n_cols, n_rows) * Datum.eps) {
+//      throw new ArithmeticException("The matrix is ill-conditioned: " + conditionNumber);
+//    }
   }
 
   /**
@@ -2510,7 +2507,7 @@ abstract class AbstractMat implements Iterable<Double> {
           }
           output += String.format("%5s", sign + "Inf");
         } else {
-          output += String.format(Locale.ENGLISH, "%1$ 7.0f", value);
+          output += String.format(Locale.ENGLISH, "%1$ 7.5f", value);
         }
       }
 
