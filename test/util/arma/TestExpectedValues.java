@@ -298,7 +298,7 @@ public class TestExpectedValues {
 
 				expectedrows.at(i, Op.EQUAL, minimum);
 		    }
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.min.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.min.d1.mat");
 			System.out.println("minMat1 true");
 				
 		//Function max() and maxMat(..,0);
@@ -326,7 +326,7 @@ public class TestExpectedValues {
 
 				expectedrows.at(i, Op.EQUAL, maximum);
 		    }
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.max.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.max.d1.mat");
 			System.out.println("maxMat1 true");
 					
 		//Function mean() and meanMat(..,0);
@@ -355,7 +355,7 @@ public class TestExpectedValues {
 							
 				expectedrows.at(i, Op.EQUAL, mean);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.mean.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.mean.d1.mat");
 			System.out.println("meanMat1 true");
 			
 		//Function median() and medianMat(..,0);
@@ -385,7 +385,7 @@ public class TestExpectedValues {
 							
 				expectedrows.at(i, Op.EQUAL, median);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.median.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.median.d1.mat");
 			System.out.println("medianMat1 true");
 				
 		//Function stddev(), stddev(..,0), stddevMat(), stddevMat(..,0) and stddevMat(..,0,0)
@@ -450,7 +450,7 @@ public class TestExpectedValues {
 					
 				expectedrows.at(i, Op.EQUAL, stddev);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n0.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n0.d1.mat");
 			System.out.println("stddevMat(..,0,1) true");
 			
 		//Function stddevMat(..,1,1)
@@ -471,7 +471,7 @@ public class TestExpectedValues {
 					
 				expectedrows.at(i, Op.EQUAL, stddev);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n1.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n1.d1.mat");
 			System.out.println("stddevMat(..,1,1) true");
 			
 		//Function var(), var(..,0), varMat(), varMat(..,0) and varMat(..,0,0)
@@ -534,7 +534,7 @@ public class TestExpectedValues {
 					
 				expectedrows.at(i, Op.EQUAL, var);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.var.n0.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.var.n0.d1.mat");
 			System.out.println("varMat(..,0,1) true");
 			
 		//Function varMat(..,1,1)
@@ -555,7 +555,7 @@ public class TestExpectedValues {
 					
 				expectedrows.at(i, Op.EQUAL, var);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.var.n1.d1.mat");
+			expectedrows.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.var.n1.d1.mat");
 			System.out.println("varMat(..,1,1) true");
 	}
 	
