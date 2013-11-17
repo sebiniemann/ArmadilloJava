@@ -59,4 +59,181 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
 	 @Parameter
 	 public Mat _testData;
 
+
+	  /**
+	   * Test method for {@link arma.Arma#min(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMinMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#minMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMinMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#minMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testMinMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#max(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMaxMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#maxMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMaxMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#maxMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testMaxMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#mean(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMeanMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#meanMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMeanMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#meanMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testMeanMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#median(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMedianMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#medianMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testMedianMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#medianMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testMedianMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#stddev(AbstractMat)}.
+	   */
+	  @Test
+	  public void testStddevMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#stddev(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testStddevMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#stddevMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testStddevMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#stddevMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testStddevMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#stddevMat(AbstractMat, int, int)}.
+	   */
+	  @Test
+	  public void testStddevMatMatIntInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#var(AbstractMat)}.
+	   */
+	  @Test
+	  public void testVarMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#var(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testVarMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#varMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testVarMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#varMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testVarMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#varMat(AbstractMat, int, int)}.
+	   */
+	  @Test
+	  public void testVarMatMatIntInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
 }

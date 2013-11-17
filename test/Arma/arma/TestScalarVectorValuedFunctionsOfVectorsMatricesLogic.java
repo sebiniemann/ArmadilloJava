@@ -58,5 +58,54 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesLogic {
 	 */
 	 @Parameter
 	 public Mat _testData;
+	 
+	 /**
+	   * Test method for {@link arma.Arma#any(AbstractMat)}.
+	   */
+	  @Test
+	  public void testAnyMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#anyMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testAnyMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#anyMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testAnyMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#all(AbstractMat)}.
+	   */
+	  @Test
+	  public void testAllMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#allMat(AbstractMat)}.
+	   */
+	  @Test
+	  public void testAllMatMat() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
+	  /**
+	   * Test method for {@link arma.Arma#allMat(AbstractMat, int)}.
+	   */
+	  @Test
+	  public void testAllMatMatInt() {
+	    fail("Not yet implemented"); // TODO
+	  }
+
 
 }
