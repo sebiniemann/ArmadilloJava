@@ -363,10 +363,10 @@ public class TestExpectedValues {
 				Mat column = testData.col(j);
 				
 				double median;		
-				if(column.n_elem % 2 ==1){
+				if(column.n_elem % 2 == 1){
 					median = column.at(column.getElementIndex(column.n_elem / 2));
 				}else{
-					median = (((column.at(column.n_elem / 2))+(column.at((column.n_elem / 2)-1))) * 1/2);
+					median = (((column.at(column.n_elem / 2)) + (column.at((column.n_elem / 2) - 1))) * 1/2);
 				}
 				expectedcols.at(j, Op.EQUAL, median);
 			}
@@ -377,10 +377,10 @@ public class TestExpectedValues {
 			for(int i = 0; i < testData.n_rows; i++) {
 				Mat rows = testData.row(i);
 				double median;
-				if(rows.n_elem % 2 ==1){
+				if(rows.n_elem % 2 == 1){
 					median = rows.at(rows.getElementIndex(rows.n_elem / 2));
 				}else{
-					median = (((rows.at(rows.n_elem / 2))+(rows.at((rows.n_elem / 2)-1))) * 1/2);
+					median = (((rows.at(rows.n_elem / 2)) + (rows.at((rows.n_elem / 2) - 1))) * 1/2);
 				}
 							
 				expectedrows.at(i, Op.EQUAL, median);
@@ -393,19 +393,21 @@ public class TestExpectedValues {
 				Mat column = testData.col(j);
 						
 				double x = 0;
-				for (int i =0; i < column.n_elem; i++){
+				for (int i = 0; i < column.n_elem; i++){
 					x = x + column.at(i);
 				}
-				x = x / (1/column.n_elem);
+				x = x / column.n_elem; 
 				
 				double stddev = 0;
 				for(int n = 0; n < column.n_elem; n++){
-					stddev= (column.at(n)-x)*(column.at(n)-x);
+					stddev = stddev + Math.pow((column.at(n) - x),(2));
 				}
-				stddev = Math.sqrt(stddev*(1/(column.n_elem - 1)));
 				
+				stddev = Math.sqrt(stddev / (column.n_elem - 1));
+
 				expectedcols.at(j, Op.EQUAL, stddev);
 			}
+
 			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n0.d0.mat");
 			System.out.println("stddev(), stddev(..,0), stddevMat(), stddevMat(..,0) and stddevMat(..,0,0) true");
 			
@@ -414,16 +416,16 @@ public class TestExpectedValues {
 				Mat column = testData.col(j);
 				
 				double x = 0;
-				for (int i =0; i < column.n_elem; i++){
+				for (int i = 0; i < column.n_elem; i++){
 					x = x + column.at(i);
 				}
-				x = x / (1/column.n_elem);
+				x = x / column.n_elem;
 		
 				double stddev = 0;
 				for(int n = 0; n < column.n_elem; n++){
-					stddev= (column.at(n)-x)*(column.at(n)-x);
+					stddev = stddev + Math.pow((column.at(n) - x),(2));
 				}
-				stddev = Math.sqrt(stddev*(1/column.n_elem ));
+				stddev = Math.sqrt(stddev / column.n_elem);
 		
 				expectedcols.at(j, Op.EQUAL, stddev);
 			}
@@ -435,16 +437,16 @@ public class TestExpectedValues {
 				Mat rows = testData.row(i);
 				
 				double x = 0;
-				for (int j =0; j < rows.n_elem; j++){
+				for (int j = 0; j < rows.n_elem; j++){
 					x = x + rows.at(j);
 				}
-				x = x / (1/rows.n_elem);
+				x = x / rows.n_elem;
 		
 				double stddev = 0;
 				for(int n = 0; n < rows.n_elem; n++){
-					stddev= (rows.at(n)-x)*(rows.at(n)-x);
+					stddev = Math.pow((rows.at(n) - x),(2));
 				}
-				stddev = Math.sqrt(stddev*(1/(rows.n_elem - 1)));
+				stddev = stddev + Math.sqrt(stddev / (rows.n_elem - 1));
 					
 				expectedrows.at(i, Op.EQUAL, stddev);
 			}
@@ -456,20 +458,20 @@ public class TestExpectedValues {
 				Mat rows = testData.row(i);
 				
 				double x = 0;
-				for (int j =0; j < rows.n_elem; j++){
+				for (int j = 0; j < rows.n_elem; j++){
 					x = x + rows.at(j);
 				}
-				x = x / (1/rows.n_elem);
+				x = x / rows.n_elem;
 		
 				double stddev = 0;
 				for(int n = 0; n < rows.n_elem; n++){
-					stddev= (rows.at(n)-x)*(rows.at(n)-x);
+					stddev = stddev + Math.pow((rows.at(n) - x),(2));
 				}
-				stddev = Math.sqrt(stddev*(1/rows.n_elem));
+				stddev = Math.sqrt(stddev/rows.n_elem);
 					
 				expectedrows.at(i, Op.EQUAL, stddev);
 			}
-			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stdev.n1.d1.mat");
+			expectedcols.save("test/data/Arma/TestScalarVectorValuedFunctionsOfVectorsMatrices/Statistic.stddev.n1.d1.mat");
 			System.out.println("stddevMat(..,1,1) true");
 			
 		//Function var(), var(..,0), varMat(), varMat(..,0) and varMat(..,0,0)
@@ -477,16 +479,16 @@ public class TestExpectedValues {
 				Mat column = testData.col(j);
 						
 				double x = 0;
-				for (int i =0; i < column.n_elem; i++){
+				for (int i = 0; i < column.n_elem; i++){
 					x = x + column.at(i);
 				}
-				x = x / (1/column.n_elem);
+				x = x / column.n_elem;
 				
 				double var = 0;
 				for(int n = 0; n < column.n_elem; n++){
-					var= (column.at(n)-x)*(column.at(n)-x);
+					var = var + Math.pow((column.at(n) - x),(2));
 				}
-				var = Math.pow((Math.sqrt(var*(1/(column.n_elem - 1)))),(2));
+				var = Math.pow((Math.sqrt(var / (column.n_elem - 1))),(2));
 				
 				expectedcols.at(j, Op.EQUAL, var);
 			}
@@ -498,16 +500,16 @@ public class TestExpectedValues {
 				Mat column = testData.col(j);
 				
 				double x = 0;
-				for (int i =0; i < column.n_elem; i++){
+				for (int i = 0; i < column.n_elem; i++){
 					x = x + column.at(i);
 				}
-				x = x / (1/column.n_elem);
+				x = x / column.n_elem;
 		
 				double var = 0;
 				for(int n = 0; n < column.n_elem; n++){
-					var= (column.at(n)-x)*(column.at(n)-x);
+					var = var + Math.pow((column.at(n) - x),(2));
 				}
-				var = Math.pow((Math.sqrt(var*(1/column.n_elem ))),(2));
+				var = Math.pow((Math.sqrt(var / column.n_elem)),(2));
 		
 				expectedcols.at(j, Op.EQUAL, var);
 			}
@@ -519,16 +521,16 @@ public class TestExpectedValues {
 				Mat rows = testData.row(i);
 				
 				double x = 0;
-				for (int j =0; j < rows.n_elem; j++){
+				for (int j = 0; j < rows.n_elem; j++){
 					x = x + rows.at(j);
 				}
-				x = x / (1/rows.n_elem);
+				x = x / rows.n_elem;
 		
 				double var = 0;
 				for(int n = 0; n < rows.n_elem; n++){
-					var= (rows.at(n)-x)*(rows.at(n)-x);
+					var = Math.pow((rows.at(n) - x),(2));
 				}
-				var = Math.pow((Math.sqrt(var*(1/(rows.n_elem - 1)))),(2));
+				var = Math.pow((Math.sqrt(var / (rows.n_elem - 1))),(2));
 					
 				expectedrows.at(i, Op.EQUAL, var);
 			}
@@ -540,16 +542,16 @@ public class TestExpectedValues {
 				Mat rows = testData.row(i);
 				
 				double x = 0;
-				for (int j =0; j < rows.n_elem; j++){
+				for (int j = 0; j < rows.n_elem; j++){
 					x = x + rows.at(j);
 				}
-				x = x / (1/rows.n_elem);
+				x = x / rows.n_elem;
 		
 				double var = 0;
 				for(int n = 0; n < rows.n_elem; n++){
-					var= (rows.at(n)-x)*(rows.at(n)-x);
+					var = Math.pow((rows.at(n) - x),(2));
 				}
-				var = Math.pow((Math.sqrt(var*(1/rows.n_elem))),(2));
+				var = Math.pow((Math.sqrt(var / rows.n_elem)),(2));
 					
 				expectedrows.at(i, Op.EQUAL, var);
 			}
