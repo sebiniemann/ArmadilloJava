@@ -11,6 +11,7 @@
 package arma;
 
 import java.io.*;
+import java.util.Collections;
 
 /**
  * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
@@ -360,7 +361,7 @@ public class TestExpectedValues {
 			
 		//Function median() and medianMat(..,0);
 			for(int j = 0; j < testData.n_cols; j++) {
-				Mat column = testData.col(j);
+				Mat column = Arma.sort(testData.col(j));
 				
 				double median;		
 				if(column.n_elem % 2 == 1){
@@ -375,7 +376,7 @@ public class TestExpectedValues {
 					
 		//Function medianMat(..,1)
 			for(int i = 0; i < testData.n_rows; i++) {
-				Mat rows = testData.row(i);
+				Mat rows = Arma.sort(testData.row(i));
 				double median;
 				if(rows.n_elem % 2 == 1){
 					median = rows.at(rows.getElementIndex(rows.n_elem / 2));
