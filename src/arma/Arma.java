@@ -1265,7 +1265,11 @@ public class Arma {
       count = matrix.n_cols;
     }
 
+<<<<<<< HEAD
     for (int n = 0; n < result.n_elem; n++) {
+=======
+    for (int n = 0; n < result.n_elem; n++) { 
+>>>>>>> 0ffd099f52288b10dda53d06e5e5f8e1eac8ea58
       result._matrix[n] /= count;
     }
 
@@ -1910,7 +1914,11 @@ public class Arma {
     vector.isNonVectorDetection();
     AbstractMat.isNonBinaryParameterDetection(sortType);
 
+<<<<<<< HEAD
     // TreeMap will do the job, nothing to do here—great!
+=======
+    // TreeMap will do the job, nothing to do here - great!
+>>>>>>> 0ffd099f52288b10dda53d06e5e5f8e1eac8ea58
     TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
     vector.iteratorReset();
     for (int n = 0; n < vector.n_elem; n++) {
