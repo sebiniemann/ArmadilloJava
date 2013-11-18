@@ -733,10 +733,12 @@ public class Mat extends AbstractMat {
 
       double[] rowDouble = new double[numberOfColumns];
       for (int j = 0; j < numberOfColumns; j++) {
-        if (rowString[j].equals("Inf")) {
+        if (rowString[j].equals("Inf") || rowString[j].equals("inf")) {
           rowDouble[j] = Double.POSITIVE_INFINITY;
-        } else if (rowString[j].equals("-Inf")) {
+        } else if (rowString[j].equals("-Inf") || rowString[j].equals("-inf")) {
           rowDouble[j] = Double.NEGATIVE_INFINITY;
+        }  else if (rowString[j].equals("NaN") || rowString[j].equals("nan")) {
+          rowDouble[j] = Double.NaN;
         } else {
           rowDouble[j] = Double.valueOf(rowString[j]);
         }

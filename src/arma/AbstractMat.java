@@ -1565,6 +1565,33 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
+   * Returns true if the matrix is symmetric and false otherwise.
+   * 
+   * @return Whether the matrix is symmetric
+   */
+  protected boolean is_symmetric() {
+    return (is_square() && MatrixFeatures.isSymmetric(convertMatToEJMLMat(this)));
+  }
+
+  /**
+   * <b>Non-canonical:</b> Returns true if the matrix is invertable and false otherwise.
+   * 
+   * @return Whether the matrix is invertable
+   */
+  protected boolean is_invertable() {
+    return (is_square() && Arma.rank(this) == n_rows);
+  }
+
+  /**
+   * <b>Non-canonical:</b> Returns true if the matrix is positive-definite and false otherwise.
+   * 
+   * @return Whether the matrix is positive-definite
+   */
+  protected boolean is_positive_definite() {
+    return MatrixFeatures.isPositiveDefinite(convertMatToEJMLMat(this));
+  }
+
+  /**
    * Returns true if the matrix is a vector and false otherwise.
    * 
    * @return Whether the matrix is vector
@@ -1968,6 +1995,10 @@ abstract class AbstractMat implements Iterable<Double> {
     isNotSquareDetection();
     isIllConditionedDectetion();
 
+    if (Arma.rank(this) < n_rows) {
+      throw new UnsupportedOperationException("The matrix is not invertible.");
+    }
+    
     DenseMatrix64F inverse = new DenseMatrix64F(n_rows, n_cols);
     if (!CommonOps.invert(convertMatToEJMLMat(this), inverse)) {
       throw new UnsupportedOperationException("The matrix is not invertible.");
@@ -2227,7 +2258,7 @@ abstract class AbstractMat implements Iterable<Double> {
    *           )-vector.
    */
   protected void isVectorDetection() throws UnsupportedOperationException {
-    if (is_vec()) {
+    if (n_rows > 1 && n_cols > 1 && is_vec()) {
       throw new UnsupportedOperationException("The matrix must be a non-vector, but was a (" + n_rows + ", " + n_cols + ")-vector.");
     }
   }
@@ -2432,11 +2463,13 @@ abstract class AbstractMat implements Iterable<Double> {
    * @throws UnsupportedOperationException The matrix must be symmetric.
    */
   protected void isNotSymmetricDetection() {
+    int n = 0;
     for (int j = 0; j < n_cols; j++) {
       for (int i = 0; i < n_rows; i++) {
-        if (i != j && at(i) != at(j)) {
+        if (i != j && at(n) != at(j, i)) {
           throw new IllegalArgumentException("The matrix must be symmetric.");
         }
+        n++;
       }
     }
   }

@@ -377,7 +377,12 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double element = matrix._matrix[matrix.iteratorNext()];
-      result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) + 1));
+      
+      if(Double.isInfinite(element)) {
+        result._matrix[n] = element;
+      } else {
+        result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) + 1));
+      }
     }
 
     return result;
@@ -454,7 +459,14 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double element = matrix._matrix[matrix.iteratorNext()];
-      result._matrix[n] = Math.log(element + Math.sqrt(element + 1) * Math.sqrt(element - 1));
+      
+      if(element < 1) {
+        result._matrix[n] = Double.NaN;
+      } else if(Double.isInfinite(element)) {
+        result._matrix[n] = Double.NaN;
+      } else {
+        result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) - 1));
+      }
     }
 
     return result;
@@ -728,11 +740,12 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double value = matrix._matrix[matrix.iteratorNext()];
-      if (Double.isInfinite(value)) {
-        value = Double.MAX_VALUE;
-      } else if (value <= 0) {
+      
+      if (value <= 0) {
         value = Double.MIN_NORMAL;
-      }
+      } else if (Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      } 
 
       result._matrix[n] = Math.log(value);
     }
@@ -747,7 +760,7 @@ public class Arma {
    * @param power The power
    * @return The matrix
    */
-  public static Mat pow(AbstractMat matrix, int power) {
+  public static Mat pow(AbstractMat matrix, double power) {
     matrix.isEmptyDetection();
 
     Mat result = new Mat(matrix.n_rows, matrix.n_cols);
@@ -1252,7 +1265,7 @@ public class Arma {
       count = matrix.n_cols;
     }
 
-    for (int n = 0; n < matrix.n_elem; n++) {
+    for (int n = 0; n < result.n_elem; n++) {
       result._matrix[n] /= count;
     }
 
@@ -1897,7 +1910,7 @@ public class Arma {
     vector.isNonVectorDetection();
     AbstractMat.isNonBinaryParameterDetection(sortType);
 
-    // TreeMap will do the job, nothing to do here – great!
+    // TreeMap will do the job, nothing to do here—great!
     TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
     vector.iteratorReset();
     for (int n = 0; n < vector.n_elem; n++) {
@@ -2969,18 +2982,19 @@ public class Arma {
    * @param X The matrix
    */
   public static void eig_sym(Mat eigenValue, Mat eigenVector, AbstractMat X) {
+    X.isNotSquareDetection();
     X.isNotSymmetricDetection();
     X.isIllConditionedDectetion();
 
-    EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_rows, true);
+    EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(X.n_cols, true);
     eig.decompose(AbstractMat.convertMatToEJMLMat(X));
 
     Mat tempEigenValue = new Mat(eig.getNumberOfEigenvalues(), 1);
-    Mat tempEigenVector = new Mat(eig.getNumberOfEigenvalues(), 1);
+    Mat tempEigenVector = new Mat(eig.getNumberOfEigenvalues(), X.n_cols);
     int destColumnPointer = 0;
     for (int n = 0; n < tempEigenValue.n_elem; n++) {
       tempEigenValue._matrix[n] = eig.getEigenvalue(n).real;
-      System.arraycopy(eig.getEigenVector(0).data, 0, tempEigenVector._matrix, destColumnPointer, X.n_rows);
+      System.arraycopy(eig.getEigenVector(n).data, 0, tempEigenVector._matrix, destColumnPointer, X.n_rows);
       destColumnPointer += X.n_rows;
     }
 
@@ -2993,7 +3007,7 @@ public class Arma {
       int nn = (int) indices._matrix[n];
 
       eigenValue._matrix[n] = tempEigenValue._matrix[nn];
-      System.arraycopy(eigenVector._matrix, nn * X.n_rows, eigenVector._matrix, destColumnPointer, X.n_rows);
+      System.arraycopy(tempEigenVector._matrix, nn * X.n_cols, eigenVector._matrix, destColumnPointer, X.n_rows);
       destColumnPointer += X.n_rows;
     }
   }
@@ -3009,10 +3023,10 @@ public class Arma {
   }
 
   /**
-   * @param A The matrix
    * @param B The matrix
+   * @param A The matrix
    */
-  public static void inv(AbstractMat A, Mat B) {
+  public static void inv(Mat B, AbstractMat A) {
     Mat temp = inv(A);
 
     B.copy_size(A);
@@ -3085,18 +3099,19 @@ public class Arma {
 
     SolvePseudoInverseSvd pinv = (SolvePseudoInverseSvd) LinearSolverFactory.pseudoInverse(true);
     pinv.setThreshold(tolerance);
+    pinv.setA(AbstractMat.convertMatToEJMLMat(A));
 
-    DenseMatrix64F result = new DenseMatrix64F();
+    DenseMatrix64F result = new DenseMatrix64F(A.n_cols, A.n_rows);
     pinv.invert(result);
 
     return AbstractMat.convertEJMLToMat(result);
   }
 
   /**
-   * @param A The matrix
    * @param B The matrix
+   * @param A The matrix
    */
-  public static void pinv(AbstractMat A, Mat B) {
+  public static void pinv(Mat B, AbstractMat A) {
     pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
@@ -3158,10 +3173,12 @@ public class Arma {
    * @throws RuntimeException The algorithm was unable to solve the matrix.
    */
   public static Mat solve(AbstractMat A, AbstractMat B) throws RuntimeException {
+    A.isNotSquareDetection();
+    
     AbstractMat.isNonEqualNumberOfElementsDetection(A.n_rows, B.n_rows);
     A.isIllConditionedDectetion();
 
-    DenseMatrix64F X = new DenseMatrix64F();
+    DenseMatrix64F X = new DenseMatrix64F(A.n_cols, B.n_cols);
     
     if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(A), AbstractMat.convertMatToEJMLMat(B), X)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");

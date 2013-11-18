@@ -29,6 +29,9 @@ local.properties
 # PDT-specific
 .buildpath
 
+# external
+external/
+
 
 #################
 ## Visual Studio
