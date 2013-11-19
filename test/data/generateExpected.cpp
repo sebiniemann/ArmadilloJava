@@ -228,6 +228,27 @@ void testArmaDeomposition() {
 				  inverse.save("./expected/TestArmaDecomposition/testInv." + filename, raw_ascii);
 			  }
 
+			  // hankel
+			  filename = "hankel." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+			  input.load("./input/" + filename);
+
+			  pinv(pseudoInverse, input);
+			  pseudoInverse.save("./expected/TestArmaDecomposition/testPinv." + filename, raw_ascii);
+
+			  svd(singularValues, input);
+			  singularValues.save("./expected/TestArmaDecomposition/testSvd." + filename, raw_ascii);
+
+			  if(input.is_square() && isSymmetric(input)) {
+				  eig_sym(eigenValues, eigenVectors, input);
+				  eigenValues.save("./expected/TestArmaDecomposition/testEig_sym.eigenValues." + filename, raw_ascii);
+				  eigenVectors.save("./expected/TestArmaDecomposition/testEig_sym.eigenVectors." + filename, raw_ascii);
+			  }
+
+			  if(isInvertable(input)) {
+				  inv(inverse, input);
+				  inverse.save("./expected/TestArmaDecomposition/testInv." + filename, raw_ascii);
+			  }
+
 			  // hilbert
 			  if(numberOfRows < 10 && numberOfColumns < 10) {
 				  filename = "hilbert." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";

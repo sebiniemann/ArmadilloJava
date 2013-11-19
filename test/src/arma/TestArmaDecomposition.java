@@ -48,6 +48,10 @@ public class TestArmaDecomposition {
         input.load("./test/data/input/" + filename);
         testMatrices.add(new Object[]{filename, new Mat(input)});
 
+        filename = "hankel." + numberOfRows + "x" + numberOfColumns + ".mat";
+        input.load("./test/data/input/" + filename);
+        testMatrices.add(new Object[]{filename, new Mat(input)});
+
         if (numberOfRows < 10 && numberOfColumns < 10) {
           filename = "hilbert." + numberOfRows + "x" + numberOfColumns + ".mat";
           input.load("./test/data/input/" + filename);
@@ -225,7 +229,7 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testLuMatMatAbstractMat() {
-    if (_filename.startsWith("hilbert.")) {
+    if (_filename.startsWith("hilbert.") || _filename.startsWith("hankel.")) {
       return;
     }
 
@@ -237,7 +241,7 @@ public class TestArmaDecomposition {
     Mat U = new Mat();
 
     Arma.lu(L, U, _testMatrix);
-
+    
     assertMatEquals(_filename, _testMatrix, L.times(U));
   }
 
@@ -246,10 +250,6 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testLuMatMatMatAbstractMat() {
-    if (_filename.startsWith("hilbert.")) {
-      return;
-    }
-
     if (!_testMatrix.is_square()) {
       return;
     }

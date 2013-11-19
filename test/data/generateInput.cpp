@@ -17,6 +17,18 @@ using arma::endr;
 using arma::join_vert;
 using arma::datum;
 
+Mat<double> getHankelMatrix(int numberOfRows, int numberOfColumns) {
+	Mat<double> hankelMatrix(numberOfRows, numberOfColumns);
+
+	for(int j = 0; j < numberOfColumns; j++) {
+		for(int i = 0; i < numberOfRows; i++) {
+			hankelMatrix.at(i, j) = i + j + 1;
+		}
+	}
+
+	return hankelMatrix;
+}
+
 Mat<double> getHilbertMatrix(int numberOfRows, int numberOfColumns) {
 	Mat<double> hilbertMatrix(numberOfRows, numberOfColumns);
 
@@ -44,6 +56,9 @@ int main() {
 
 		  input = eye<Mat<double>>(numberOfRows, numberOfColumns);
 		  input.save("./input/eye." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat", raw_ascii);
+
+		  input = getHankelMatrix(numberOfRows, numberOfColumns);
+		  input.save("./input/hankel." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat", raw_ascii);
 
 		  if(numberOfRows < 10 && numberOfColumns < 10) {
 			  input = getHilbertMatrix(numberOfRows, numberOfColumns);
