@@ -1285,7 +1285,7 @@ public class Arma {
     Mat sort = sort(vector);
 
     double median;
-    if (vector.n_elem % 2 == 1) {
+    if (vector.n_elem % 2 == 0) {
       int middle = vector.n_elem / 2;
       median = (sort._matrix[sort.getElementIndex(middle - 1)] + sort._matrix[sort.getElementIndex(middle)]) / 2;
     } else {
