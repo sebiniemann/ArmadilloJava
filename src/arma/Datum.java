@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -16,32 +16,32 @@ package arma;
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class Datum {
-  
+
   /**
    * The ratio of a circle's circumference to its diameter (PI)
    */
   public static final double pi        = Math.PI;
-  
+
   /**
    * Infinity
    */
   public static final double inf       = Double.POSITIVE_INFINITY;
-  
+
   /**
    * Not a number
    */
   public static final double nan       = Double.NaN;
-  
+
   /**
    * The Euler number
    */
   public static final double e         = Math.E;
-  
+
   /**
    * The square root of 2
    */
   public static final double sqrt2     = Math.sqrt(2);
-  
+
   /**
    * The difference between the number 1.0 and the next larger representable number (also the machine epsilon)
    * <p>

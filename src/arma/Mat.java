@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -737,7 +737,7 @@ public class Mat extends AbstractMat {
           rowDouble[j] = Double.POSITIVE_INFINITY;
         } else if (rowString[j].equals("-Inf") || rowString[j].equals("-inf")) {
           rowDouble[j] = Double.NEGATIVE_INFINITY;
-        }  else if (rowString[j].equals("NaN") || rowString[j].equals("nan")) {
+        } else if (rowString[j].equals("NaN") || rowString[j].equals("nan")) {
           rowDouble[j] = Double.NaN;
         } else {
           rowDouble[j] = Double.valueOf(rowString[j]);

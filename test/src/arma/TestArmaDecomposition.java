@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -249,7 +249,7 @@ public class TestArmaDecomposition {
     Mat U = new Mat();
 
     Arma.lu(L, U, _testMatrix);
-    
+
     assertMatEquals(_filename, _testMatrix, L.times(U));
   }
 
@@ -364,7 +364,7 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -372,23 +372,23 @@ public class TestArmaDecomposition {
     if (_filename.startsWith("hilbert.5x5.")) {
       return;
     }
-    
+
     if (!_testMatrix.is_square()) {
       return;
     }
-    
-    for(Object[] object : getTestMatrices()) {
+
+    for (Object[] object : getTestMatrices()) {
       Mat B = (Mat) object[1];
-      
-      if(_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
+
+      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
         assertMatEquals(_filename, _testMatrix.i().times(B), Arma.solve(_testMatrix, B));
       }
     }
   }
 
   /**
-   * @throws IOException 
-   * @throws  
+   * @throws IOException
+   * @throws
    * 
    */
   @Test
@@ -396,18 +396,18 @@ public class TestArmaDecomposition {
     if (_filename.startsWith("hilbert.5x5.")) {
       return;
     }
-    
+
     if (!_testMatrix.is_square()) {
       return;
     }
-    
-    for(Object[] object : getTestMatrices()) {
+
+    for (Object[] object : getTestMatrices()) {
       Mat B = (Mat) object[1];
-      
-      if(_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
+
+      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
         Mat X = new Mat();
         Arma.solve(X, _testMatrix, B);
-        
+
         assertMatEquals(_filename, _testMatrix.i().times(B), X);
       }
     }

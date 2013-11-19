@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -377,8 +377,8 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double element = matrix._matrix[matrix.iteratorNext()];
-      
-      if(Double.isInfinite(element)) {
+
+      if (Double.isInfinite(element)) {
         result._matrix[n] = element;
       } else {
         result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) + 1));
@@ -459,10 +459,10 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double element = matrix._matrix[matrix.iteratorNext()];
-      
-      if(element < 1) {
+
+      if (element < 1) {
         result._matrix[n] = Double.NaN;
-      } else if(Double.isInfinite(element)) {
+      } else if (Double.isInfinite(element)) {
         result._matrix[n] = Double.NaN;
       } else {
         result._matrix[n] = Math.log(element + Math.sqrt(Math.pow(element, 2) - 1));
@@ -740,12 +740,12 @@ public class Arma {
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
       double value = matrix._matrix[matrix.iteratorNext()];
-      
+
       if (value <= 0) {
         value = Double.MIN_NORMAL;
       } else if (Double.isInfinite(value)) {
         value = Double.MAX_VALUE;
-      } 
+      }
 
       result._matrix[n] = Math.log(value);
     }
@@ -1262,7 +1262,7 @@ public class Arma {
       count = matrix.n_cols;
     }
 
-    for (int n = 0; n < result.n_elem; n++) { 
+    for (int n = 0; n < result.n_elem; n++) {
       result._matrix[n] /= count;
     }
 
@@ -1376,7 +1376,8 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
+   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the
+   * matrix.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
@@ -3167,12 +3168,12 @@ public class Arma {
    */
   public static Mat solve(AbstractMat A, AbstractMat B) throws RuntimeException {
     A.isNotSquareDetection();
-    
+
     AbstractMat.isNonEqualNumberOfElementsDetection(A.n_rows, B.n_rows);
     A.isIllConditionedDectetion();
 
     DenseMatrix64F X = new DenseMatrix64F(A.n_cols, B.n_cols);
-    
+
     if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(A), AbstractMat.convertMatToEJMLMat(B), X)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
     };
@@ -3289,10 +3290,10 @@ public class Arma {
 
     U.copy_size(tempU);
     System.arraycopy(tempU._matrix, 0, U._matrix, 0, tempU.n_elem);
-    
+
     S.copy_size(tempS);
     System.arraycopy(tempS._matrix, 0, S._matrix, 0, tempS.n_elem);
-    
+
     V.copy_size(tempV);
     System.arraycopy(tempV._matrix, 0, V._matrix, 0, tempV.n_elem);
 

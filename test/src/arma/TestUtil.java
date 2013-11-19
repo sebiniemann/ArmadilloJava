@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -22,7 +22,7 @@ public class TestUtil {
    * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
    * assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message 
+   * @param message
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
    */
@@ -34,7 +34,7 @@ public class TestUtil {
    * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
    * assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message 
+   * @param message
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
    * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
@@ -56,7 +56,7 @@ public class TestUtil {
    * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
    * assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message 
+   * @param message
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
    */
@@ -68,7 +68,7 @@ public class TestUtil {
    * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
    * assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message 
+   * @param message
    * @param A The expected matrix.
    * @param B The matrix to check against expected.
    * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
@@ -82,15 +82,15 @@ public class TestUtil {
     for (int n = 0; n < A.n_elem; n++) {
       double a = Math.abs(A.at(n));
 
-      if(absoluteMax < a) {
+      if (absoluteMax < a) {
         absoluteMax = a;
       }
     }
-    
-    if(absoluteMax == 0) {
+
+    if (absoluteMax == 0) {
       absoluteMax = 1;
     }
-    
+
     for (int n = 0; n < A.n_elem; n++) {
       assertEquals(message + " at position " + n, A.at(n), B.at(n), absoluteMax * delta);
     }

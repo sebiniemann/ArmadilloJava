@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -234,7 +234,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param operand The right-hand side operand
    */
   public void at(int n, Op operator, double operand) {
-    isElementOutOfBoundsDetection(n); 
+    isElementOutOfBoundsDetection(n);
 
     inplace(n, operator, operand);
   }
@@ -2007,7 +2007,7 @@ abstract class AbstractMat implements Iterable<Double> {
     if (Arma.rank(this) < n_rows) {
       throw new UnsupportedOperationException("The matrix is not invertible.");
     }
-    
+
     DenseMatrix64F inverse = new DenseMatrix64F(n_rows, n_cols);
     if (!CommonOps.invert(convertMatToEJMLMat(this), inverse)) {
       throw new UnsupportedOperationException("The matrix is not invertible.");
@@ -2241,11 +2241,11 @@ abstract class AbstractMat implements Iterable<Double> {
    * @throws UnsupportedOperationException The matrix is ill-conditioned: {@code conditionNumber}.
    */
   protected void isIllConditionedDectetion() {
-//    double conditionNumber = NormOps.normP(AbstractMat.convertMatToEJMLMat(this), 2);
-//
-//    if (conditionNumber >= 1 / Math.max(n_cols, n_rows) * Datum.eps) {
-//      throw new ArithmeticException("The matrix is ill-conditioned: " + conditionNumber);
-//    }
+    // double conditionNumber = NormOps.normP(AbstractMat.convertMatToEJMLMat(this), 2);
+    //
+    // if (conditionNumber >= 1 / Math.max(n_cols, n_rows) * Datum.eps) {
+    // throw new ArithmeticException("The matrix is ill-conditioned: " + conditionNumber);
+    // }
   }
 
   /**

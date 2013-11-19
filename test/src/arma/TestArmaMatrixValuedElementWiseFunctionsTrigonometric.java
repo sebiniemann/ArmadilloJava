@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -27,12 +27,13 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Parameterized.class)
 public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
-	
+
   /**
    * Test data for trigonometric functions
+   * 
    * @return TestData
    * 
-   * @throws IOException 
+   * @throws IOException
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -41,11 +42,11 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
     Mat input = new Mat();
 
     input.load("./test/data/input/elementwise.trigonometric.mat");
-    testMatrices.add(new Object[] {new Mat(input)});
-    
+    testMatrices.add(new Object[]{new Mat(input)});
+
     return testMatrices;
   }
-  
+
   /**
    * 
    */
@@ -54,7 +55,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#sin(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testSin() throws IOException {
@@ -65,7 +67,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#asin(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAsin() throws IOException {
@@ -76,7 +79,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#sinh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testSinh() throws IOException {
@@ -87,7 +91,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#asinh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAsinh() throws IOException {
@@ -98,7 +103,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#cos(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testCos() throws IOException {
@@ -109,7 +115,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#acos(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAcos() throws IOException {
@@ -120,7 +127,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#cosh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testCosh() throws IOException {
@@ -131,7 +139,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#acosh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAcosh() throws IOException {
@@ -142,7 +151,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#tan(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testTan() throws IOException {
@@ -153,7 +163,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#atan(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAtan() throws IOException {
@@ -164,7 +175,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#tanh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testTanh() throws IOException {
@@ -175,7 +187,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
    * Test method for {@link arma.Arma#atanh(AbstractMat)}.
-   * @throws IOException 
+   * 
+   * @throws IOException
    */
   @Test
   public void testAtanh() throws IOException {
