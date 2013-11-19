@@ -48,6 +48,12 @@ using arma::inv;
 using arma::eig_sym;
 using arma::pinv;
 using arma::svd;
+using arma::min;
+using arma::max;
+using arma::mean;
+using arma::median;
+using arma::stddev;
+using arma::var;
 
 bool isInvertable(const Mat<double>& matrix) {
 	return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -275,10 +281,51 @@ void testArmaDeomposition() {
 	  }
 }
 
+void testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic() {
+	Mat<double> input;
+	input.load("./input/statistics.mat");
+
+	Mat<double> expected;
+
+	expected = min(input, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat", raw_ascii);
+	expected = min(input, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d1.mat", raw_ascii);
+	expected = max(input, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat", raw_ascii);
+	expected = max(input, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d1.mat", raw_ascii);
+	expected = mean(input, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat", raw_ascii);
+	expected = mean(input, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d1.mat", raw_ascii);
+	expected = median(input, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat", raw_ascii);
+	expected = median(input, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d1.mat", raw_ascii);
+	expected = stddev(input, 0, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat", raw_ascii);
+	expected = stddev(input, 1, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat", raw_ascii);
+	expected = stddev(input, 0, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat", raw_ascii);
+	expected = stddev(input, 1, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d1.mat", raw_ascii);
+	expected = var(input, 0, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat", raw_ascii);
+	expected = var(input, 1, 0);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat", raw_ascii);
+	expected = var(input, 0, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat", raw_ascii);
+	expected = var(input, 1, 1);
+	expected.save("./expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat", raw_ascii);
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
   testArmaDeomposition();
+  testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;
 }

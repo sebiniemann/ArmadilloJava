@@ -14,6 +14,7 @@ using arma::ones;
 using arma::eye;
 using arma::raw_ascii;
 using arma::endr;
+using arma::join_horiz;
 using arma::join_vert;
 using arma::datum;
 
@@ -74,6 +75,14 @@ int main() {
   input = {0, 1, 2, datum::eps, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
   input = join_vert(input, -input);
   input.save("./input/elementwise.miscellaneous.mat", raw_ascii);
+
+  input << 0 << 1 << 2 << 10 <<   5 <<           0 << endr
+		<< 0 << 1 << 2 << 50 << -55 <<           1 << endr
+		<< 0 << 1 << 2 << 20 <<  15 <<          -1 << endr
+		<< 0 << 1 << 2 << 40 << -45 <<  datum::eps << endr
+		<< 0 << 1 << 2 << 30 <<  30 << -datum::eps << endr;
+  input = join_horiz(input, -input);
+  input.save("./input/statistics.mat", raw_ascii);
 
   return EXIT_SUCCESS;
 }

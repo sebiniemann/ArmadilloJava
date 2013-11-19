@@ -1,6 +1,5 @@
 package arma;
 
-import static org.junit.Assert.*;
 import static arma.TestUtil.assertMatEquals;
 
 import java.io.IOException;
