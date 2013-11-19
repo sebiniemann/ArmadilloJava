@@ -53,7 +53,7 @@
       </classpath>
       <formatter type="brief" usefile="false"/>
       <batchtest>
-        <fileset dir="${test.Arma.dir}">
+        <fileset dir="${test.dir}">
           <include name="**/Test*.java"/>
           <exclude name="**/TestUtil.java"/>
         </fileset>
