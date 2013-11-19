@@ -1123,7 +1123,7 @@ public class Arma {
   }
 
   /**
-   * Returns the smallest value for each column of the matrix as a column vector.
+   * Returns the smallest value for each column of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1135,8 +1135,7 @@ public class Arma {
   }
 
   /**
-   * Returns the smallest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as
-   * a column vector.
+   * Returns the smallest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * 
    * @param matrix The matrix
    * @param dimension The dimension
@@ -1149,7 +1148,7 @@ public class Arma {
     Mat result;
 
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = min(matrix.colInternal(j));
       }
@@ -1183,7 +1182,7 @@ public class Arma {
   }
 
   /**
-   * Returns the largest value for each column of the matrix as a column vector.
+   * Returns the largest value for each column of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1193,8 +1192,7 @@ public class Arma {
   }
 
   /**
-   * Returns the largest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a
-   * column vector.
+   * Returns the largest value for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * 
    * @param matrix The matrix
    * @param dimension The dimension
@@ -1207,7 +1205,7 @@ public class Arma {
     Mat result;
 
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = max(matrix.colInternal(j));
       }
@@ -1235,7 +1233,7 @@ public class Arma {
   }
 
   /**
-   * Returns the mean for each column of the matrix as a column vector.
+   * Returns the mean for each column of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1245,8 +1243,7 @@ public class Arma {
   }
 
   /**
-   * Returns the mean for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column
-   * vector.
+   * Returns the mean for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * 
    * @param matrix The matrix
    * @param dimension The dimension
@@ -1296,7 +1293,7 @@ public class Arma {
   }
 
   /**
-   * Returns the median for each column of the matrix as a column vector.
+   * Returns the median for each column of the matrix.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1306,8 +1303,7 @@ public class Arma {
   }
 
   /**
-   * Returns the median for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a column
-   * vector.
+   * Returns the median for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * 
    * @param matrix The matrix
    * @param dimension The dimension
@@ -1319,7 +1315,7 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = median(matrix.colInternal(j));
       }
@@ -1357,8 +1353,7 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1 as a column
-   * vector.
+   * Returns the standard deviation for each column of the matrix with normalisation by {@code count} - 1.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1368,7 +1363,7 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation for each column of the matrix as a column vector.
+   * Returns the standard deviation for each column of the matrix.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
@@ -1381,8 +1376,7 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix
-   * as a column vector.
+   * Returns the standard deviation for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
@@ -1436,7 +1430,7 @@ public class Arma {
   }
 
   /**
-   * Returns the variance for each column of the matrix with normalisation by {@code count} - 1 as a column vector.
+   * Returns the variance for each column of the matrix with normalisation by {@code count} - 1.
    * 
    * @param matrix The matrix
    * @return The matrix
@@ -1446,7 +1440,7 @@ public class Arma {
   }
 
   /**
-   * Returns the variance for each column of the matrix as a column vector.
+   * Returns the variance for each column of the matrix.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
@@ -1459,8 +1453,7 @@ public class Arma {
   }
 
   /**
-   * Returns the variance for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix as a
-   * column vector.
+   * Returns the variance for each column ({@code dimension} = 0) or row ({@code dimension} = 1) of the matrix.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
    * 
@@ -1475,7 +1468,7 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = var(matrix.colInternal(j));
       }
