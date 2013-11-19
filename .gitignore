@@ -29,7 +29,8 @@ local.properties
 # PDT-specific
 .buildpath
 
-#exe
+# Custom
+test/data/external/
 *.exe
 
 #################
