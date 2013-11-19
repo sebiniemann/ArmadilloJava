@@ -15,7 +15,7 @@
   
   <path id="classpath.test">
     <path refid="libs.src" />
-    <pathelement location="${lib.dir}/JUnit" />
+    <pathelement location="${lib.dir}/JUnit/junit-4.11.jar" />
     <pathelement location="${lib.dir}/JUnit/hamcrest-core-1.3.jar" />
     <pathelement location="${build.src.dir}"/>
   </path>
