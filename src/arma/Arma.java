@@ -1386,7 +1386,7 @@ public class Arma {
    * @return The matrix
    */
   public static Mat stddevMat(AbstractMat matrix, int normType, int dimension) {
-    Mat result = varMat(matrix, dimension);
+    Mat result = varMat(matrix, normType, dimension);
 
     for (int n = 0; n < result.n_elem; n++) {
       result._matrix[n] = Math.sqrt(result._matrix[n]);
