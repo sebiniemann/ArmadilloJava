@@ -41,29 +41,16 @@ public class TestArmaDecomposition {
     String filename;
 
     int dimensions[] = {1, 2, 3, 4, 5, 10, 100};
+    String matrices[] = {"zeros", "ones", "eye", "hankel", "hilbert"};
 
     for (int numberOfRows : dimensions) {
       for (int numberOfColumns : dimensions) {
-        filename = "zeros." + numberOfRows + "x" + numberOfColumns + ".mat";
-        input.load("./test/data/input/" + filename);
-        testMatrices.add(new Object[]{filename, new Mat(input)});
-
-        filename = "ones." + numberOfRows + "x" + numberOfColumns + ".mat";
-        input.load("./test/data/input/" + filename);
-        testMatrices.add(new Object[]{filename, new Mat(input)});
-
-        filename = "eye." + numberOfRows + "x" + numberOfColumns + ".mat";
-        input.load("./test/data/input/" + filename);
-        testMatrices.add(new Object[]{filename, new Mat(input)});
-
-        filename = "hankel." + numberOfRows + "x" + numberOfColumns + ".mat";
-        input.load("./test/data/input/" + filename);
-        testMatrices.add(new Object[]{filename, new Mat(input)});
-
-        if (numberOfRows < 10 && numberOfColumns < 10) {
-          filename = "hilbert." + numberOfRows + "x" + numberOfColumns + ".mat";
-          input.load("./test/data/input/" + filename);
-          testMatrices.add(new Object[]{filename, new Mat(input)});
+        for (String matrix : matrices) {
+          if (!matrix.equals("hilbert") || (numberOfRows < 10 && numberOfColumns < 10)) {
+            filename = matrix + "." + numberOfRows + "x" + numberOfColumns + ".mat";
+            input.load("./test/data/input/" + filename);
+            testMatrices.add(new Object[]{filename, new Mat(input)});
+          }
         }
       }
     }

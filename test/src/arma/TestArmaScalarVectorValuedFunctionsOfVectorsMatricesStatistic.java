@@ -27,7 +27,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 @RunWith(Parameterized.class)
-public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
+public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
 
   /**
    * Test data for trigonometric functions
@@ -62,12 +62,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMin() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.min(_testMatrix.col(j)), 1e-15);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.min(_testMatrix.row(i)), 1e-15);
     }
@@ -80,7 +80,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testMinMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix));
   }
 
@@ -92,10 +92,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMinMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMin.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 1));
   }
 
@@ -107,12 +107,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMax() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.max(_testMatrix.col(j)), 1e-15);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.max(_testMatrix.row(i)), 1e-15);
     }
@@ -125,7 +125,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testMaxMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.maxMat(_testMatrix));
   }
 
@@ -137,10 +137,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMaxMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.maxMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMax.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.maxMat(_testMatrix, 1));
   }
 
@@ -152,12 +152,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMean() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.mean(_testMatrix.col(j)), 1e-15);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.mean(_testMatrix.row(i)), 1e-15);
     }
@@ -170,7 +170,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testMeanMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.meanMat(_testMatrix));
   }
 
@@ -182,10 +182,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMeanMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.meanMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMean.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.meanMat(_testMatrix, 1));
   }
 
@@ -197,12 +197,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMedian() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.median(_testMatrix.col(j)), 1e-15);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.median(_testMatrix.row(i)), 1e-15);
     }
@@ -215,7 +215,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testMedianMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.medianMat(_testMatrix));
   }
 
@@ -227,10 +227,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testMedianMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.medianMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testMedian.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.medianMat(_testMatrix, 1));
   }
 
@@ -242,12 +242,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testStddevAbstractMat() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.stddev(_testMatrix.col(j)), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.stddev(_testMatrix.row(i)), 1e-9);
     }
@@ -261,22 +261,22 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testStddevAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.stddev(_testMatrix.col(j), 0), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.stddev(_testMatrix.col(j), 1), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.stddev(_testMatrix.row(i), 0), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.stddev(_testMatrix.row(i), 1), 1e-9);
     }
@@ -289,7 +289,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testStddevMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix));
   }
 
@@ -301,10 +301,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testStddevMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 1));
   }
 
@@ -316,16 +316,16 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testStddevMatAbstractMatIntInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 0, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 1, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n0.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 0, 1));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testStddev.n1.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.stddevMat(_testMatrix, 1, 1));
   }
 
@@ -337,12 +337,12 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testVarAbstractMat() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.var(_testMatrix.col(j)), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.var(_testMatrix.row(i)), 1e-9);
     }
@@ -356,22 +356,22 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testVarAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.var(_testMatrix.col(j), 0), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       assertEquals(j + "th column", expected.at(j), Arma.var(_testMatrix.col(j), 1), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.var(_testMatrix.row(i), 0), 1e-9);
     }
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
       assertEquals(i + "th row", expected.at(i), Arma.var(_testMatrix.row(i), 1), 1e-9);
     }
@@ -384,7 +384,7 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testVarMatAbstractMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix));
   }
 
@@ -396,10 +396,10 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testVarMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 1));
   }
 
@@ -411,16 +411,16 @@ public class TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   public void testVarMatAbstractMatIntInt() throws IOException {
     Mat expected = new Mat();
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 0, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 1, 0));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n0.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 0, 1));
 
-    expected.load("./test/data/expected/TestScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.varMat(_testMatrix, 1, 1));
   }
 
