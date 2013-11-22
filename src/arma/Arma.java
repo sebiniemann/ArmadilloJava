@@ -1066,7 +1066,7 @@ public class Arma {
     matrix.isEmptyDetection();
     matrix.isIllConditionedDectetion();
 
-    return MatrixFeatures.rank(AbstractMat.convertMatToEJMLMat(matrix));
+    return MatrixFeatures.rank(AbstractMat.convertMatToEJMLMat(matrix), tolerance);
   }
 
   /**
@@ -1077,10 +1077,13 @@ public class Arma {
    */
   public static double trace(AbstractMat matrix) {
     matrix.isEmptyDetection();
+    matrix.isNotSquareDetection();
 
-    double trace = matrix._matrix[0];
-    for (int n = 1; n < matrix.n_elem; n++) {
-      trace += matrix._matrix[matrix.getElementIndex(n, n)];
+    DiagMat diagonal = matrix.diagInternal(0);
+    diagonal.iteratorReset();
+    double trace = matrix._matrix[diagonal.iteratorNext()];
+    while (diagonal.iteratorHasNext()) {
+      trace += matrix._matrix[diagonal.iteratorNext()];
     }
 
     return trace;

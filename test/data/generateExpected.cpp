@@ -199,14 +199,21 @@ void testArmaScalarValuedFunctionsOfVectorsMatrices() {
             expected = {det(input)};
             expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDet." + filename, raw_ascii);
 
-            log_det(value, sign, input);
-            expected = {value};
-            expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testLog_det.value." + filename, raw_ascii);
-            expected = {sign};
-            expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testLog_det.sign." + filename, raw_ascii);
-
             expected = {trace(input)};
             expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testTrace." + filename, raw_ascii);
+          }
+
+          expected = {norm(input, 1)};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.p1." + filename, raw_ascii);
+          expected = {norm(input, 2)};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.p2." + filename, raw_ascii);
+          expected = {norm(input, "inf")};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.pinf." + filename, raw_ascii);
+          expected = {norm(input, "fro")};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.pfro." + filename, raw_ascii);
+          if (input.is_vec()) {
+            expected = {norm(input, "-inf")};
+            expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.p-inf." + filename, raw_ascii);
           }
 
 #pragma GCC diagnostic ignored "-Wnarrowing"
