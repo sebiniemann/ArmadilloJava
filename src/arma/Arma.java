@@ -920,11 +920,20 @@ public class Arma {
     vector1.isEmptyDetection();
     AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
 
-    vector1.iteratorReset();
-    vector2.iteratorReset();
     double dotProduct = 0;
-    while (vector1.iteratorHasNext()) {
-      dotProduct += vector1._matrix[vector1.iteratorNext()] * vector2._matrix[vector2.iteratorNext()];
+    if(vector1.equals(vector2)) {
+      vector1.iteratorReset();
+      dotProduct = 0;
+      while (vector1.iteratorHasNext()) {
+        dotProduct += Math.pow(vector1._matrix[vector1.iteratorNext()], 2);
+      }
+    } else {
+      vector1.iteratorReset();
+      vector2.iteratorReset();
+      dotProduct = 0;
+      while (vector1.iteratorHasNext()) {
+        dotProduct += vector1._matrix[vector1.iteratorNext()] * vector2._matrix[vector2.iteratorNext()];
+      }
     }
 
     return dotProduct;
@@ -938,7 +947,9 @@ public class Arma {
    * @return The dot product
    */
   public static double norm_dot(AbstractMat vector1, AbstractMat vector2) {
-    return dot(vector1, vector2) / Math.sqrt(dot(vector1, vector1) * dot(vector2, vector2));
+    return dot(vector1, vector2) 
+      / Math.sqrt(dot(vector1, vector1) 
+        * dot(vector2, vector2));
   }
 
   /**
