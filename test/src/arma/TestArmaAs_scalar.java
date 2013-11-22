@@ -33,9 +33,6 @@ public class TestArmaAs_scalar {
     for (double testValue : input) {
       testMatrix = new Mat(new double[]{testValue});
       assertEquals(testValue, Arma.as_scalar(testMatrix), 0);
-
-      testMatrix = new Mat(new double[]{-testValue});
-      assertEquals(-testValue, Arma.as_scalar(testMatrix), 0);
     }
   }
 }
