@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -70,10 +70,10 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
    * 
    */
   @Parameter(1)
-  public Mat _testMatrix;
-  
+  public Mat    _testMatrix;
+
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -84,7 +84,7 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -92,14 +92,14 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     if (!_testMatrix.is_square()) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDet." + _filename);
     assertEquals(_filename, expected.at(0), Arma.det(_testMatrix), 1e-11);
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -107,16 +107,16 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     if (!_testMatrix.is_square()) {
       return;
     }
-    
+
     double[] value = {0};
     int[] sign = {0};
     Arma.log_det(value, sign, _testMatrix);
-    
-    assertEquals(_filename, Arma.det(_testMatrix), sign[0]*Math.exp(value[0]), 1e-15);
+
+    assertEquals(_filename, Arma.det(_testMatrix), sign[0] * Math.exp(value[0]), 1e-15);
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -129,7 +129,7 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -139,15 +139,15 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     assertEquals(_filename, expected.at(0), Arma.norm(_testMatrix, "inf"), 1e-11);
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.pfro." + _filename);
     assertEquals(_filename, expected.at(0), Arma.norm(_testMatrix, "fro"), 1e-8);
-    
-    if(_testMatrix.is_vec()) {
+
+    if (_testMatrix.is_vec()) {
       expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.p-inf." + _filename);
       assertEquals(_filename, expected.at(0), Arma.norm(_testMatrix, "-inf"), 1e-11);
     }
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -155,14 +155,14 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     if (!_testMatrix.is_square()) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testRank." + _filename);
     assertEquals(_filename, expected.at(0), Arma.rank(_testMatrix), 1e-11);
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -170,14 +170,14 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     if (!_testMatrix.is_square()) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testRank." + _filename);
     assertEquals(_filename, expected.at(0), Arma.rank(_testMatrix), 1e-11);
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
@@ -185,7 +185,7 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
     if (!_testMatrix.is_square()) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testTrace." + _filename);
     assertEquals(_filename, expected.at(0), Arma.trace(_testMatrix), 1e-11);

@@ -28,7 +28,7 @@ public class TestArmaDotAndNorm_dot {
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
     Collection<Object[]> testMatrices = new ArrayList<Object[]>();
-   
+
     String matrixA;
     String matrixB;
     String filename;
@@ -49,7 +49,7 @@ public class TestArmaDotAndNorm_dot {
             filenameA = matrixA + "." + 1 + "x" + dimension + ".mat";
             filenameB = matrixB + "." + 1 + "x" + dimension + ".mat";
 
-            testMatrices.add(new Object[]{filename, filenameA, filenameB});        
+            testMatrices.add(new Object[]{filename, filenameA, filenameB});
           }
         }
       }
@@ -77,17 +77,17 @@ public class TestArmaDotAndNorm_dot {
   public String _filenameB;
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
   public void testDot() throws IOException {
     Mat inputA = new Mat();
     Mat inputB = new Mat();
-    
+
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDot." + _filename);
     assertEquals(_filename, expected.at(0), Arma.dot(inputA, inputB), 1e-11);
@@ -101,22 +101,22 @@ public class TestArmaDotAndNorm_dot {
   }
 
   /**
-   * @throws IOException 
+   * @throws IOException
    * 
    */
   @Test
   public void testNorm_dot() throws IOException {
     Mat inputA = new Mat();
     Mat inputB = new Mat();
-    
+
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm_dot." + _filename);
-    try{
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA, inputB), 1e-11);
-    } catch (Exception e) {
+    try {
+      assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA, inputB), 1e-11);
+    } catch(Exception e) {
       System.out.println("debug");
       System.out.println(inputA);
       System.out.println(inputB);
