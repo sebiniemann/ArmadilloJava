@@ -130,7 +130,7 @@ void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
   Mat<double> input;
   input.load("./input/elementwise.miscellaneous.mat");
 
-  double powers[] = {-10, -5, -4, -3, -2, -1, -1 / 2.0, -1 / 3.0, -1 / 4.0, -1 / 5.0, -1 / 10.0, 0, 1 / 10.0, 1 / 5.0, 1 / 4.0, 1 / 3.0, 1 / 2.0, 1, 2, 3, 4, 5, 10};
+  std::array<double, 23> powers = {-10, -5, -4, -3, -2, -1, -1 / 2.0, -1 / 3.0, -1 / 4.0, -1 / 5.0, -1 / 10.0, 0, 1 / 10.0, 1 / 5.0, 1 / 4.0, 1 / 3.0, 1 / 2.0, 1, 2, 3, 4, 5, 10};
 
   Mat<double> expected;
 
@@ -175,8 +175,8 @@ void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
 }
 
 void testArmaScalarValuedFunctionsOfVectorsMatrices() {
-  double dimensions[] = {1, 2, 3, 4, 5, 10, 100};
-  string matrices[] = {"zeros", "ones", "eye", "hankel", "hilbert"};
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 5> matrices = {"zeros", "ones", "eye", "hankel", "hilbert"};
 
   string filename;
   Mat<double> input;
@@ -217,27 +217,32 @@ void testArmaScalarValuedFunctionsOfVectorsMatrices() {
     }
   }
 
-//  Mat<double> inputA;
-//  Mat<double> inputB;
-//
-//  for (int dimension : dimensions) {
-//    for (string matrixA : matrices) {
-//      for (string matrixB : matrices) {
-//        if ((matrixA != "hilbert" && matrixB != "hilbert") || (dimension < 10)) {
-//          filename = matrixA + "." + to_string(1) + "x" + to_string(dimension) + ".mat";
-//          inputA.load("./input/" + filename);
-//
-//          filename = matrixB + "." + to_string(1) + "x" + to_string(dimension) + ".mat";
-//          inputB.load("./input/" + filename);
-//
-//          expected = {dot(inputA, inputB)};
-//          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDot." + matrixA + "." + matrixB + "." + to_string(dimension), raw_ascii);
-//          expected = {norm_dot(inputA, inputB)};
-//          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm_dot." + matrixA + "." + matrixB + "." + to_string(dimension), raw_ascii);
-//        }
-//      }
-//    }
-//  }
+  Mat<double> inputA;
+  Mat<double> inputB;
+  string matrixA;
+  string matrixB;
+
+  for (int dimension : dimensions) {
+    for (int a = 0; a < matrices.size(); a++) {
+      for (int b = a; b < matrices.size(); b++) {
+        matrixA = matrices.at(a);
+        matrixB = matrices.at(b);
+
+        if ((matrixA != "hilbert" && matrixB != "hilbert") || (dimension < 10)) {
+          filename = matrixA + "." + to_string(1) + "x" + to_string(dimension) + ".mat";
+          inputA.load("./input/" + filename);
+
+          filename = matrixB + "." + to_string(1) + "x" + to_string(dimension) + ".mat";
+          inputB.load("./input/" + filename);
+
+          expected = {dot(inputA, inputB)};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDot." + matrixA + "." + matrixB + ".1x" + to_string(dimension) + ".mat", raw_ascii);
+          expected = {norm_dot(inputA, inputB)};
+          expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm_dot." + matrixA + "." + matrixB + ".1x" + to_string(dimension) + ".mat", raw_ascii);
+        }
+      }
+    }
+  }
 }
 
 void testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic() {
@@ -281,8 +286,8 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic() {
 }
 
 void testArmaDeomposition() {
-  double dimensions[] = {1, 2, 3, 4, 5, 10, 100};
-  string matrices[] = {"zeros", "ones", "eye", "hankel", "hilbert"};
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 5> matrices = {"zeros", "ones", "eye", "hankel", "hilbert"};
 
   string filename;
   Mat<double> input;
