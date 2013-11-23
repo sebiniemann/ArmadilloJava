@@ -292,7 +292,7 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic() {
   expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic/testVar.n1.d1.mat", raw_ascii);
 }
 
-void testArmaDeomposition() {
+void testArmaDecomposition() {
   std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
   std::array<string, 5> matrices = {"zeros", "ones", "eye", "hankel", "hilbert"};
 
@@ -336,12 +336,29 @@ void testArmaDeomposition() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic() {
+  Mat<double> input;
+  input.load("./input/statistics.mat");
+
+  Mat<double> expected;
+
+  expected = cor(input, input, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCor.n0.mat", raw_ascii);
+  expected = cor(input, input, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCor.n1.mat", raw_ascii);
+  expected = cov(input, input, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n0.mat", raw_ascii);
+  expected = cov(input, input, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n1.mat", raw_ascii);
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
   testArmaScalarValuedFunctionsOfVectorsMatrices();
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic();
-  testArmaDeomposition();
+  testArmaDecomposition();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;
 }

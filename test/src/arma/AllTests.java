@@ -17,7 +17,24 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 @RunWith(Suite.class)
-@SuiteClasses({TestArmaAs_scalar.class, TestArmaDecomposition.class, TestArmaDotAndNorm_dot.class, TestArmaMatrixValuedElementWiseFunctionsMiscellaneous.class, TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class, TestArmaMiscellaneous.class, TestArmaScalarValuedFunctionsOfVectorsMatrices.class, TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class})
+@SuiteClasses({
+  TestArmaAs_scalar.class,
+  TestArmaDecomposition.class,
+  TestArmaDotAndNorm_dot.class,
+  TestArmaMatrixValuedElementWiseFunctionsMiscellaneous.class,
+  TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesSort.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap.class,
+  TestArmaMiscellaneous.class,
+  TestArmaScalarValuedFunctionsOfVectorsMatrices.class,
+  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class
+})
 public class AllTests {
 
 }

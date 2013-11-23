@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- * 
+ *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -2015,7 +2015,7 @@ public class Arma {
    * @return The correlation
    */
   public static double corInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
-    return covInternal(vector1, vector2, normType) / (stddev(vector1, normType) * stddev(vector2, normType));
+    return covInternal(vector1, vector2, normType) / Math.sqrt(covInternal(vector1, vector1, normType) * covInternal(vector2, vector2, normType));
   }
 
   /**
@@ -2059,21 +2059,30 @@ public class Arma {
   public static Mat cor(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
     matrix2.isEmptyDetection();
-
+    
     if (matrix1.is_vec() && matrix2.is_vec()) {
       AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_elem, matrix2.n_elem);
 
-      return new Mat(new double[]{corInternal(matrix1, matrix2, normType)});
+      return new Mat(new double[]{covInternal(matrix1, matrix2, normType) / Math.sqrt(covInternal(matrix1, matrix1, 0) * covInternal(matrix2, matrix2, 0))});
     } else {
       AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
       AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+
+      Mat covariance = cov(matrix1, matrix2, normType);
+      
+      Mat selfCovariance;
+      if(normType != 0) {
+        selfCovariance = cov(matrix1, matrix2, 0);
+      } else {
+        selfCovariance = covariance;
+      }
 
       Mat result = new Mat(matrix1.n_cols, matrix1.n_cols);
 
       int n = 0;
       for (int j = 0; j < matrix1.n_cols; j++) {
         for (int jj = 0; jj < matrix1.n_cols; jj++) {
-          result._matrix[n++] = corInternal(matrix1.colInternal(j), matrix2.colInternal(jj), normType);
+          result._matrix[n++] = covariance.at(j, jj) / Math.sqrt(selfCovariance.at(j, j) * selfCovariance.at(jj, jj));
         }
       }
 
@@ -2095,7 +2104,7 @@ public class Arma {
     AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
     AbstractMat.isNonBinaryParameterDetection(normType);
 
-    double covariance = accu(vector1.minus(mean(vector1)).elemDivide(stddev(vector1, normType)).elemTimes(vector2.minus(mean(vector2))));
+    double covariance = accu(vector1.minus(mean(vector1)).elemTimes(vector2.minus(mean(vector2))));
     if (normType == 0) {
       covariance /= (vector1.n_elem - 1);
     } else {
