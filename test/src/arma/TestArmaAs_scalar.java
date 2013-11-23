@@ -21,7 +21,9 @@ import org.junit.Test;
 public class TestArmaAs_scalar {
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#as_scalar(arma.AbstractMat)}.
+   * 
+   * @throws IOException An I/O error occured
    */
   @Test
   public void testAs_scalar() throws IOException {

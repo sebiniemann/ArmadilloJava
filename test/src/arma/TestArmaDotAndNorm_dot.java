@@ -13,17 +13,16 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * @author niemann
- * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 @RunWith(Parameterized.class)
 public class TestArmaDotAndNorm_dot {
 
   /**
-   * Test data for miscellaneous functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException An I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -31,9 +30,9 @@ public class TestArmaDotAndNorm_dot {
 
     String matrixA;
     String matrixB;
-    String filename;
     String filenameA;
     String filenameB;
+    String filenameExpected;
 
     int dimensions[] = {1, 2, 3, 4, 5, 10, 100};
     String matrices[] = {"zeros", "ones", "eye", "hankel", "hilbert"};
@@ -45,11 +44,11 @@ public class TestArmaDotAndNorm_dot {
           matrixB = matrices[b];
 
           if ((matrixA != "hilbert" && matrixB != "hilbert") || (dimension < 10)) {
-            filename = matrixA + "." + matrixB + ".1x" + dimension + ".mat";
             filenameA = matrixA + "." + 1 + "x" + dimension + ".mat";
             filenameB = matrixB + "." + 1 + "x" + dimension + ".mat";
+            filenameExpected = matrixA + "." + matrixB + ".1x" + dimension + ".mat";
 
-            testMatrices.add(new Object[]{filename, filenameA, filenameB});
+            testMatrices.add(new Object[]{filenameExpected, filenameA, filenameB});
           }
         }
       }
@@ -59,26 +58,27 @@ public class TestArmaDotAndNorm_dot {
   }
 
   /**
-   * 
+   * The filename of the expected matrix
    */
   @Parameter(0)
-  public String _filename;
+  public String _filenameExpected;
 
   /**
-   * 
+   * The filename of the first test matrix
    */
   @Parameter(1)
   public String _filenameA;
 
   /**
-   * 
+   * The filename of the second test matrix
    */
   @Parameter(2)
   public String _filenameB;
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#dot(arma.AbstractMat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testDot() throws IOException {
@@ -89,20 +89,21 @@ public class TestArmaDotAndNorm_dot {
     inputB.load("./test/data/input/" + _filenameB);
 
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDot." + _filename);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputA, inputB), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputA, inputB.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputA.t(), inputB), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputA.t(), inputB.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputB, inputA), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputB, inputA.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputB.t(), inputA), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.dot(inputB.t(), inputA.t()), 1e-11);
+    expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testDot." + _filenameExpected);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputA, inputB), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputA, inputB.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputA.t(), inputB), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputA.t(), inputB.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputB, inputA), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputB, inputA.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputB.t(), inputA), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.dot(inputB.t(), inputA.t()), 1e-11);
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#norm_dot(arma.AbstractMat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testNorm_dot() throws IOException {
@@ -113,21 +114,15 @@ public class TestArmaDotAndNorm_dot {
     inputB.load("./test/data/input/" + _filenameB);
 
     Mat expected = new Mat();
-    expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm_dot." + _filename);
-    try {
-      assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA, inputB), 1e-11);
-    } catch(Exception e) {
-      System.out.println("debug");
-      System.out.println(inputA);
-      System.out.println(inputB);
-    }
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA, inputB.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA.t(), inputB), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputA.t(), inputB.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputB, inputA), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputB, inputA.t()), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputB.t(), inputA), 1e-11);
-    assertEquals(_filename, expected.at(0), Arma.norm_dot(inputB.t(), inputA.t()), 1e-11);
+    expected.load("./test/data/expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm_dot." + _filenameExpected);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputA, inputB), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputA, inputB.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputA.t(), inputB), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputA.t(), inputB.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputB, inputA), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputB, inputA.t()), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputB.t(), inputA), 1e-11);
+    assertEquals(_filenameExpected, expected.at(0), Arma.norm_dot(inputB.t(), inputA.t()), 1e-11);
   }
 
 }

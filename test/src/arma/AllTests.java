@@ -14,8 +14,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author niemann
- * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 @RunWith(Suite.class)
 @SuiteClasses({TestArmaAs_scalar.class, TestArmaDecomposition.class, TestArmaDotAndNorm_dot.class, TestArmaMatrixValuedElementWiseFunctionsMiscellaneous.class, TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class, TestArmaMiscellaneous.class, TestArmaScalarValuedFunctionsOfVectorsMatrices.class, TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class})

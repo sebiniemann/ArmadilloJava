@@ -29,10 +29,10 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
 
   /**
-   * Test data for miscellaneous functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException n I/O error occured
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -47,20 +47,20 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-	 * 
-	 */
+   * The test matrix
+   */
   @Parameter
   public Mat    _testMatrix;
 
   /**
-	 * 
+	 * The powers
 	 */
   public double _powers[] = {-10, -5, -4, -3, -2, -1, -1 / 2.0, -1 / 3.0, -1 / 4.0, -1 / 5.0, -1 / 10.0, 0, 1 / 10.0, 1 / 5.0, 1 / 4.0, 1 / 3.0, 1 / 2.0, 1, 2, 3, 4, 5, 10};
 
   /**
-   * Test method for {@link arma.Arma#abs(AbstractMat)}.
+   * Test method for {@link arma.Arma#abs(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAbs() throws IOException {
@@ -70,9 +70,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#eps(AbstractMat)}.
+   * Test method for {@link arma.Arma#eps(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testEps() throws IOException {
@@ -82,9 +82,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp(AbstractMat)}.
+   * Test method for {@link arma.Arma#exp(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testExp() throws IOException {
@@ -94,9 +94,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp2(AbstractMat)}.
+   * Test method for {@link arma.Arma#exp2(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testExp2() throws IOException {
@@ -106,9 +106,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#exp10(AbstractMat)}.
+   * Test method for {@link arma.Arma#exp10(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testExp10() throws IOException {
@@ -118,9 +118,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#trunc_exp(AbstractMat)}.
+   * Test method for {@link arma.Arma#trunc_exp(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testTrunc_exp() throws IOException {
@@ -130,9 +130,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#log(AbstractMat)}.
+   * Test method for {@link arma.Arma#log(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testLog() throws IOException {
@@ -142,9 +142,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#log2(AbstractMat)}.
+   * Test method for {@link arma.Arma#log2(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testLog2() throws IOException {
@@ -154,9 +154,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#log10(AbstractMat)}.
+   * Test method for {@link arma.Arma#log10(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testLog10() throws IOException {
@@ -166,9 +166,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#trunc_log(AbstractMat)}.
+   * Test method for {@link arma.Arma#trunc_log(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testTrunc_log() throws IOException {
@@ -178,9 +178,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#pow(AbstractMat, int)}.
+   * Test method for {@link arma.Arma#pow(arma.AbstractMat, double)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testPow() throws IOException {
@@ -192,9 +192,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#sqrt(AbstractMat)}.
+   * Test method for {@link arma.Arma#sqrt(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSqrt() throws IOException {
@@ -204,9 +204,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#square(AbstractMat)}.
+   * Test method for {@link arma.Arma#square(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSquare() throws IOException {
@@ -216,9 +216,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#floor(AbstractMat)}.
+   * Test method for {@link arma.Arma#floor(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testFloor() throws IOException {
@@ -228,9 +228,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#ceil(AbstractMat)}.
+   * Test method for {@link arma.Arma#ceil(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testCeil() throws IOException {
@@ -240,9 +240,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
 
   /**
-   * Test method for {@link arma.Arma#round(AbstractMat)}.
+   * Test method for {@link arma.Arma#round(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testRound() throws IOException {

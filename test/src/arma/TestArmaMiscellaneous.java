@@ -7,14 +7,14 @@ import java.io.IOException;
 import org.junit.Test;
 
 /**
- * @author niemann
- *
+ * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 public class TestArmaMiscellaneous {
 
   /**
-   * @throws IOException 
+   * Test method for {@link arma.Arma#is_finite(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testIs_finiteAbstractMat() throws IOException {
@@ -30,8 +30,9 @@ public class TestArmaMiscellaneous {
   }
 
   /**
-   * @throws IOException 
+   * Test method for {@link arma.Arma#is_finite(double)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testIs_finiteDouble() throws IOException {

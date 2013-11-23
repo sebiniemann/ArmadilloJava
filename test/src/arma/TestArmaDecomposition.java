@@ -28,10 +28,10 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestArmaDecomposition {
 
   /**
-   * Test data for miscellaneous functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException An I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -59,19 +59,19 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * 
+   * The filename of the test matrix
    */
   @Parameter(0)
   public String _filename;
 
   /**
-   * 
+   * The test matrix
    */
   @Parameter(1)
   public Mat    _testMatrix;
 
   /**
-   * 
+   * Test method for {@link arma.Arma#chol(arma.AbstractMat)}.
    */
   @Test
   public void testCholAbstractMat() {
@@ -89,7 +89,7 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * 
+   * Test method for {@link arma.Arma#chol(arma.Mat, arma.AbstractMat)}.
    */
   @Test
   public void testCholMatAbstractMat() {
@@ -108,8 +108,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#eig_sym(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testEig_symAbstractMat() throws IOException {
@@ -124,8 +125,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#eig_sym(arma.Mat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testEig_symMatAbstractMat() throws IOException {
@@ -150,8 +152,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#eig_sym(arma.Mat, arma.Mat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testEig_symMatMatAbstractMat() throws IOException {
@@ -187,7 +190,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#inv(arma.AbstractMat)}.
+   * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testInvAbstractMat() throws IOException {
@@ -202,10 +207,12 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#inv(arma.Mat, arma.AbstractMat)}.
+   * 
+   * @throws IOException An I/O error occurred
    */
   @Test
-  public void testInvAbstractMatMat() throws IOException {
+  public void testInvMatAbstractMat() throws IOException {
     if (!_testMatrix.is_invertable()) {
       return;
     }
@@ -220,7 +227,7 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * 
+   * Test method for {@link arma.Arma#lu(arma.Mat, arma.Mat, arma.AbstractMat)}.
    */
   @Test
   public void testLuMatMatAbstractMat() {
@@ -241,7 +248,7 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * 
+   * Test method for {@link arma.Arma#lu(arma.Mat, arma.Mat, arma.Mat, arma.AbstractMat)}.
    */
   @Test
   public void testLuMatMatMatAbstractMat() {
@@ -262,8 +269,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#pinv(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testPinvAbstractMat() throws IOException {
@@ -278,8 +286,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#pinv(arma.AbstractMat, double)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testPinvAbstractMatDouble() throws IOException {
@@ -294,11 +303,12 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#pinv(arma.Mat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
-  public void testPinvAbstractMatMat() throws IOException {
+  public void testPinvMatAbstractMat() throws IOException {
     if (_filename.startsWith("zeros.")) {
       return;
     }
@@ -313,8 +323,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#pinv(arma.Mat, arma.AbstractMat, double)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testPinvAbstractMatMatDouble() throws IOException {
@@ -332,7 +343,7 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * 
+   * Test method for {@link arma.Arma#qr(arma.Mat, arma.Mat, arma.AbstractMat)}.
    */
   @Test
   public void testQr() {
@@ -351,8 +362,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#solve(arma.AbstractMat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSolveAbstractMatAbstractMat() throws IOException {
@@ -374,9 +386,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
-   * @throws
+   * Test method for {@link arma.Arma#solve(arma.Mat, arma.AbstractMat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSolveMatAbstractMatAbstractMat() throws IOException {
@@ -401,8 +413,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#svd(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSvdAbstractMat() throws IOException {
@@ -413,8 +426,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#svd(arma.Mat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSvdMatAbstractMat() throws IOException {
@@ -428,8 +442,9 @@ public class TestArmaDecomposition {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#svd(arma.Mat, arma.Mat, arma.Mat, arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSvdMatMatMatAbstractMat() throws IOException {

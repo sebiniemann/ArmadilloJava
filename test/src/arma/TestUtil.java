@@ -12,33 +12,34 @@ package arma;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Provides methods for often repeated tasks within tests.
+ * Provides methods for often repeated tasks within test cases.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
 public class TestUtil {
 
   /**
-   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
-   * assertion is based on org.junit.Assert.assertEquals.
+   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout.
+   * <p>
+   * The assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message
-   * @param A The expected matrix.
-   * @param B The matrix to check against expected.
+   * @param message The message
+   * @param A The expected matrix
+   * @param B The actual matrix
    */
   public static void assertMatElementWiseEquals(String message, Mat A, Mat B) {
     assertMatEquals(message, A, B, 1e-11);
   }
 
   /**
-   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
-   * assertion is based on org.junit.Assert.assertEquals.
+   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout.
+   * <p>
+   * The assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message
-   * @param A The expected matrix.
-   * @param B The matrix to check against expected.
-   * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
-   *          considered equal.
+   * @param message The message
+   * @param A The expected matrix
+   * @param B The actual matrix
+   * @param delta The maximum allowed element-wise delta
    */
   public static void assertMatElementWiseEquals(String message, Mat A, Mat B, double delta) {
     assertEquals(message + ". Number of rows", A.n_rows, B.n_rows);
@@ -53,26 +54,27 @@ public class TestUtil {
   }
 
   /**
-   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
-   * assertion is based on org.junit.Assert.assertEquals.
+   * Asserts that the provides matrices are equal to within a positive delta and have the same layout.
+   * <p>
+   * The assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message
-   * @param A The expected matrix.
-   * @param B The matrix to check against expected.
+   * @param message The message
+   * @param A The expected matrix
+   * @param B The actual matrix
    */
   public static void assertMatEquals(String message, Mat A, Mat B) {
     assertMatEquals(message, A, B, 1e-11);
   }
 
   /**
-   * Asserts that the provides Matrices are element-wise equal to within a positive delta and have the same layout. The
-   * assertion is based on org.junit.Assert.assertEquals.
+   * Asserts that the provides matrices are equal to within a positive delta and have the same layout.
+   * <p>
+   * The assertion is based on org.junit.Assert.assertEquals.
    * 
-   * @param message
-   * @param A The expected matrix.
-   * @param B The matrix to check against expected.
-   * @param delta The maximum element-wise delta between expected and actual for which both matrices are still
-   *          considered equal.
+   * @param message The message
+   * @param A The expected matrix
+   * @param B The actual matrix
+   * @param delta The maximum allowed delta
    */
   public static void assertMatEquals(String message, Mat A, Mat B, double delta) {
     assertEquals(message + ". Number of rows", A.n_rows, B.n_rows);

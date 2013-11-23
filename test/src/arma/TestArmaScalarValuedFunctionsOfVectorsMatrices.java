@@ -29,11 +29,10 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
 
   /**
-   * Test data for trigonometric functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * 
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException An I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -61,20 +60,21 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * 
+   * The filename of the test matrix
    */
   @Parameter(0)
   public String _filename;
 
   /**
-   * 
+   * The test matrix
    */
   @Parameter(1)
   public Mat    _testMatrix;
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#accu(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAccu() throws IOException {
@@ -84,8 +84,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#det(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testDet() throws IOException {
@@ -99,8 +100,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#log_det(double[], int[], arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testLog_det() throws IOException {
@@ -116,8 +118,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#norm(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testNormAbstractMatInt() throws IOException {
@@ -129,8 +132,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#norm(arma.AbstractMat, String)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testNormAbstractMatString() throws IOException {
@@ -147,8 +151,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#rank(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testRankAbstractMat() throws IOException {
@@ -162,8 +167,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#rank(arma.AbstractMat, double)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testRankAbstractMatDouble() throws IOException {
@@ -177,8 +183,9 @@ public class TestArmaScalarValuedFunctionsOfVectorsMatrices {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#trace(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testTrace() throws IOException {

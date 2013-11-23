@@ -30,11 +30,10 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
 
   /**
-   * Test data for trigonometric functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * 
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException An I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -49,14 +48,15 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * 
+   * The test matrix
    */
   @Parameter
   public Mat _testMatrix;
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#min(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMin() throws IOException {
@@ -74,8 +74,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#minMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMinMatAbstractMat() throws IOException {
@@ -85,8 +86,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#minMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMinMatAbstractMatInt() throws IOException {
@@ -100,8 +102,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#max(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMax() throws IOException {
@@ -119,8 +122,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#maxMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMaxMatAbstractMat() throws IOException {
@@ -130,8 +134,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#maxMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMaxMatAbstractMatInt() throws IOException {
@@ -145,8 +150,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#mean(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMean() throws IOException {
@@ -164,8 +170,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#meanMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMeanMatAbstractMat() throws IOException {
@@ -175,8 +182,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#meanMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMeanMatAbstractMatInt() throws IOException {
@@ -190,8 +198,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#median(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMedian() throws IOException {
@@ -209,8 +218,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#medianMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMedianMatAbstractMat() throws IOException {
@@ -220,8 +230,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#medianMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testMedianMatAbstractMatInt() throws IOException {
@@ -235,8 +246,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#stddev(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testStddevAbstractMat() throws IOException {
@@ -254,8 +266,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#stddev(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testStddevAbstractMatInt() throws IOException {
@@ -283,8 +296,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#stddevMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testStddevMatAbstractMat() throws IOException {
@@ -294,8 +308,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#stddevMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testStddevMatAbstractMatInt() throws IOException {
@@ -309,8 +324,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#stddevMat(arma.AbstractMat, int, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testStddevMatAbstractMatIntInt() throws IOException {
@@ -330,8 +346,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#var(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testVarAbstractMat() throws IOException {
@@ -349,8 +366,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#var(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testVarAbstractMatInt() throws IOException {
@@ -378,8 +396,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#varMat(arma.AbstractMat)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testVarMatAbstractMat() throws IOException {
@@ -389,8 +408,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#varMat(arma.AbstractMat, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testVarMatAbstractMatInt() throws IOException {
@@ -404,8 +424,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
   }
 
   /**
-   * @throws IOException
+   * Test method for {@link arma.Arma#varMat(arma.AbstractMat, int, int)}.
    * 
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testVarMatAbstractMatIntInt() throws IOException {

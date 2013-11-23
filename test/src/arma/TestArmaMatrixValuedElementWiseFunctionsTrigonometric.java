@@ -29,11 +29,10 @@ import org.junit.runner.RunWith;
 public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
   /**
-   * Test data for trigonometric functions
+   * Returns the matrices to be tested.
    * 
-   * @return TestData
-   * 
-   * @throws IOException
+   * @return The test matrices 
+   * @throws IOException An I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -48,15 +47,15 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * 
+   * The test matrix
    */
   @Parameter
   public Mat _testMatrix;
 
   /**
-   * Test method for {@link arma.Arma#sin(AbstractMat)}.
+   * Test method for {@link arma.Arma#sin(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSin() throws IOException {
@@ -66,9 +65,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#asin(AbstractMat)}.
+   * Test method for {@link arma.Arma#asin(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAsin() throws IOException {
@@ -78,9 +77,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#sinh(AbstractMat)}.
+   * Test method for {@link arma.Arma#sinh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testSinh() throws IOException {
@@ -90,9 +89,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#asinh(AbstractMat)}.
+   * Test method for {@link arma.Arma#asinh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAsinh() throws IOException {
@@ -102,9 +101,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#cos(AbstractMat)}.
+   * Test method for {@link arma.Arma#cos(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testCos() throws IOException {
@@ -114,9 +113,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#acos(AbstractMat)}.
+   * Test method for {@link arma.Arma#acos(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAcos() throws IOException {
@@ -126,9 +125,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#cosh(AbstractMat)}.
+   * Test method for {@link arma.Arma#cosh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testCosh() throws IOException {
@@ -138,9 +137,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#acosh(AbstractMat)}.
+   * Test method for {@link arma.Arma#acosh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAcosh() throws IOException {
@@ -150,9 +149,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#tan(AbstractMat)}.
+   * Test method for {@link arma.Arma#tan(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testTan() throws IOException {
@@ -162,9 +161,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#atan(AbstractMat)}.
+   * Test method for {@link arma.Arma#atan(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAtan() throws IOException {
@@ -174,9 +173,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#tanh(AbstractMat)}.
+   * Test method for {@link arma.Arma#tanh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testTanh() throws IOException {
@@ -186,9 +185,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   }
 
   /**
-   * Test method for {@link arma.Arma#atanh(AbstractMat)}.
+   * Test method for {@link arma.Arma#atanh(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAtanh() throws IOException {
