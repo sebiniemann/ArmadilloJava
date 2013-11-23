@@ -1893,7 +1893,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Store the element into a file with filetype {@code ascii} and returns true on succes.
+   * Store the element into a file with filetype {@code ascii} and returns true on success.
    * 
    * @param filename The filename
    * @return Whether the process was succesfully.
@@ -1905,7 +1905,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Store the element into a file with filetype {@code filetype} and returns true on succes.
+   * Store the element into a file with filetype {@code filetype} and returns true on success.
    * 
    * @param filename The filename
    * @param filetype The filetype
@@ -1918,7 +1918,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Store the element into a stream with filetype {@code ascii} and returns true on succes.
+   * Store the element into a stream with filetype {@code ascii} and returns true on success.
    * 
    * @param stream The stream
    * @return Whether the process was succesfully.
@@ -1928,7 +1928,7 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Store the element into a stream with filetype {@code filetype} and returns true on succes.
+   * Store the element into a stream with filetype {@code filetype} and returns true on success.
    * 
    * @param stream The stream
    * @param filetype The filetype

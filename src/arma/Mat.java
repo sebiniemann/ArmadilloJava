@@ -648,59 +648,59 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Fills the matrix with data from a file of filetype {@code ascii} and returns true on succes.
+   * Fills the matrix with data from a file of filetype {@code ascii} and returns true on success.
    * <p>
-   * Resets the matrix if an error occured.
+   * Resets the matrix if an error occurred.
    * 
    * @param filename The filename
-   * @return Whether the process was succesfully.
+   * @return Whether the process was successfully.
    * 
-   * @throws IOException An I/O error occured
+   * @throws IOException An I/O error occurred
    */
   public boolean load(String filename) throws IOException {
     return load(filename, "auto_detect");
   }
 
   /**
-   * Fills the matrix with data from a file of filetype {@code filetype} and returns true on succes.
+   * Fills the matrix with data from a file of filetype {@code filetype} and returns true on success.
    * <p>
-   * Resets the matrix if an error occured.
+   * Resets the matrix if an error occurred.
    * 
    * @param filename The filename
    * @param filetype The filetype
-   * @return Whether the process was succesfully.
+   * @return Whether the process was successfully.
    * 
-   * @throws IOException An I/O error occured
+   * @throws IOException An I/O error occurred
    */
   public boolean load(String filename, String filetype) throws IOException {
     return load(new FileInputStream(filename), filetype);
   }
 
   /**
-   * Fills the matrix with data from a stream of filetype {@code ascii} and returns true on succes.
+   * Fills the matrix with data from a stream of filetype {@code ascii} and returns true on success.
    * <p>
-   * Resets the matrix if an error occured.
+   * Resets the matrix if an error occurred.
    * 
    * @param stream The stream
-   * @return Whether the process was succesfully.
+   * @return Whether the process was successfully.
    * 
-   * @throws IOException An I/O error occured
+   * @throws IOException An I/O error occurred
    */
   public boolean load(InputStream stream) throws IOException {
     return load(stream, "auto_detect");
   }
 
   /**
-   * Fills the matrix with data from a stream of filetype {@code filetype} and returns true on succes.
+   * Fills the matrix with data from a stream of filetype {@code filetype} and returns true on success.
    * <p>
-   * Resets the matrix if an error occured.
+   * Resets the matrix if an error occurred.
    * 
    * @param stream The stream
    * @param filetype The filetype
-   * @return Whether the process was succesfully.
+   * @return Whether the process was successfully.
    * 
    * @throws IllegalArgumentException Only ascii and auto_detect is supported, but was {@code filetype}.
-   * @throws IOException An I/O error occured
+   * @throws IOException An I/O error occurred
    * @throws IllegalArgumentException All columns must have the same length.
    */
   public boolean load(InputStream stream, String filetype) throws IllegalArgumentException, IOException {
