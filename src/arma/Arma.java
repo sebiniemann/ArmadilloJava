@@ -3118,7 +3118,7 @@ public class Arma {
    * @param A The matrix
    */
   public static void pinv(Mat B, AbstractMat A) {
-    pinv(A, B, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
+    pinv(B, A, Math.max(A.n_rows, A.n_cols) * Math.ulp(norm(A, 2)));
   }
 
   /**
@@ -3126,7 +3126,7 @@ public class Arma {
    * @param B The matrix
    * @param tolerance The tolerance
    */
-  public static void pinv(AbstractMat A, Mat B, double tolerance) {
+  public static void pinv(Mat B, AbstractMat A, double tolerance) {
     Mat temp = pinv(A);
     B.copy_size(temp);
     System.arraycopy(temp._matrix, 0, B._matrix, 0, temp.n_elem);
