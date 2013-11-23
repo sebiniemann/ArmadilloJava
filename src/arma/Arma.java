@@ -1702,12 +1702,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = sum(matrix.col(j));
+        result._matrix[j] = sum(matrix.colInternal(j));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = sum(matrix.row(i));
+        result._matrix[i] = sum(matrix.rowInternal(i));
       }
     }
 
@@ -1852,12 +1852,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, sort(matrix.col(j), sortType));
+        result.col(j, Op.EQUAL, sort(matrix.colInternal(j), sortType));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, sort(matrix.row(i), sortType));
+        result.row(i, Op.EQUAL, sort(matrix.rowInternal(i), sortType));
       }
     }
 
@@ -2005,40 +2005,6 @@ public class Arma {
   }
 
   /**
-   * Returns the autocorrelation of the vector with normalisation by {@code count} - 1.
-   * 
-   * @param vector The vector
-   * @return The autocorrelation
-   */
-  public static double cor(AbstractMat vector) {
-    return cor(vector, 0);
-  }
-
-  /**
-   * Returns the autocorrelation of the vector.
-   * <p>
-   * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
-   * 
-   * @param vector The vector
-   * @param normType The normalisation
-   * @return The autocorrelation
-   */
-  public static double cor(AbstractMat vector, int normType) {
-    return cor(vector, vector, normType);
-  }
-
-  /**
-   * Returns the correlation of two vectors with normalisation by {@code count} - 1.
-   * 
-   * @param vector1 The first vector
-   * @param vector2 The second vector
-   * @return The correlation
-   */
-  public static double cor(AbstractMat vector1, AbstractMat vector2) {
-    return cor(vector1, vector2, 0);
-  }
-
-  /**
    * Returns the correlation of two vectors.
    * <p>
    * Performs either normalisation by {@code count} - 1 ({@code normType} = 0) or {@code count} ({@code normType} = 1).
@@ -2048,8 +2014,8 @@ public class Arma {
    * @param normType The normalisation
    * @return The correlation
    */
-  public static double cor(AbstractMat vector1, AbstractMat vector2, int normType) {
-    return cov(vector1, vector2, normType) / (stddev(vector1, normType) * stddev(vector2, normType));
+  public static double corInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
+    return covInternal(vector1, vector2, normType) / (stddev(vector1, normType) * stddev(vector2, normType));
   }
 
   /**
@@ -2058,8 +2024,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The correlation matrix
    */
-  public static Mat corMat(AbstractMat matrix) {
-    return corMat(matrix, 0);
+  public static Mat cor(AbstractMat matrix) {
+    return cor(matrix, 0);
   }
 
   /**
@@ -2071,8 +2037,8 @@ public class Arma {
    * @param normType The normalisation
    * @return The correlation matrix
    */
-  public static Mat corMat(AbstractMat matrix, int normType) {
-    return corMat(matrix, matrix, normType);
+  public static Mat cor(AbstractMat matrix, int normType) {
+    return cor(matrix, matrix, normType);
   }
 
   /**
@@ -2080,8 +2046,8 @@ public class Arma {
    * @param matrix2 The second matrix
    * @return The correlation matrix
    */
-  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2) {
-    return corMat(matrix1, matrix2, 0);
+  public static Mat cor(AbstractMat matrix1, AbstractMat matrix2) {
+    return cor(matrix1, matrix2, 0);
   }
 
   /**
@@ -2090,47 +2056,29 @@ public class Arma {
    * @param normType The normalisation
    * @return The correlation matrix
    */
-  public static Mat corMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
+  public static Mat cor(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
-    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+    matrix2.isEmptyDetection();
 
-    Mat result = new Mat();
-    result.copy_size(matrix1);
+    if (matrix1.is_vec() && matrix2.is_vec()) {
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_elem, matrix2.n_elem);
 
-    int n = 0;
-    for (int j = 0; j < matrix1.n_cols; j++) {
-      for (int jj = 0; jj < matrix1.n_cols; jj++) {
-        result._matrix[n++] = cor(matrix1.col(j), matrix2.col(jj));
+      return new Mat(new double[]{corInternal(matrix1, matrix2, normType)});
+    } else {
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+
+      Mat result = new Mat(matrix1.n_cols, matrix1.n_cols);
+
+      int n = 0;
+      for (int j = 0; j < matrix1.n_cols; j++) {
+        for (int jj = 0; jj < matrix1.n_cols; jj++) {
+          result._matrix[n++] = corInternal(matrix1.colInternal(j), matrix2.colInternal(jj), normType);
+        }
       }
+
+      return result;
     }
-
-    return result;
-  }
-
-  /**
-   * @param vector The vector
-   * @return The covariance
-   */
-  public static double cov(AbstractMat vector) {
-    return cov(vector, 0);
-  }
-
-  /**
-   * @param vector The vector
-   * @param normType The normalisation
-   * @return The covariance
-   */
-  public static double cov(AbstractMat vector, int normType) {
-    return cov(vector, vector, normType);
-  }
-
-  /**
-   * @param vector1 The first vector
-   * @param vector2 The second vector
-   * @return The covariance
-   */
-  public static double cov(AbstractMat vector1, AbstractMat vector2) {
-    return cov(vector1, vector2, 0);
   }
 
   /**
@@ -2139,8 +2087,9 @@ public class Arma {
    * @param normType The normalisation
    * @return The covariance
    */
-  public static double cov(AbstractMat vector1, AbstractMat vector2, int normType) {
+  public static double covInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
     vector1.isEmptyDetection();
+    vector2.isEmptyDetection();
     vector1.isNonVectorDetection();
     vector2.isNonVectorDetection();
     AbstractMat.isNonEqualNumberOfElementsDetection(vector1.n_elem, vector2.n_elem);
@@ -2160,8 +2109,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The covariance matrix
    */
-  public static Mat covMat(AbstractMat matrix) {
-    return covMat(matrix, 0);
+  public static Mat cov(AbstractMat matrix) {
+    return cov(matrix, 0);
   }
 
   /**
@@ -2169,8 +2118,8 @@ public class Arma {
    * @param normType The normalisation
    * @return The covariance matrix
    */
-  public static Mat covMat(AbstractMat matrix, int normType) {
-    return covMat(matrix, matrix, normType);
+  public static Mat cov(AbstractMat matrix, int normType) {
+    return cov(matrix, matrix, normType);
   }
 
   /**
@@ -2178,8 +2127,8 @@ public class Arma {
    * @param matrix2 The second matrix
    * @return The covariance matrix
    */
-  public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2) {
-    return covMat(matrix1, matrix2, 0);
+  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2) {
+    return cov(matrix1, matrix2, 0);
   }
 
   /**
@@ -2188,21 +2137,29 @@ public class Arma {
    * @param normType The normalisation
    * @return The covariance matrix
    */
-  public static Mat covMat(AbstractMat matrix1, AbstractMat matrix2, int normType) {
+  public static Mat cov(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
-    AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+    matrix2.isEmptyDetection();
 
-    Mat result = new Mat();
-    result.copy_size(matrix1);
+    if (matrix1.is_vec() && matrix2.is_vec()) {
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_elem, matrix2.n_elem);
 
-    int n = 0;
-    for (int j = 0; j < matrix1.n_cols; j++) {
-      for (int jj = 0; jj < matrix1.n_cols; jj++) {
-        result._matrix[n++] = cov(matrix1.col(j), matrix2.col(jj));
+      return new Mat(new double[]{covInternal(matrix1, matrix2, normType)});
+    } else {
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
+      AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
+
+      Mat result = new Mat(matrix1.n_cols, matrix1.n_cols);
+
+      int n = 0;
+      for (int j = 0; j < matrix1.n_cols; j++) {
+        for (int jj = 0; jj < matrix1.n_cols; jj++) {
+          result._matrix[n++] = covInternal(matrix1.colInternal(j), matrix2.colInternal(jj), normType);
+        }
       }
-    }
 
-    return result;
+      return result;
+    }
   }
 
   /**
@@ -2283,12 +2240,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, hist(matrix.col(j), numberOfBins));
+        result.col(j, Op.EQUAL, hist(matrix.colInternal(j), numberOfBins));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, hist(matrix.row(i), numberOfBins));
+        result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), numberOfBins));
       }
     }
 
@@ -2344,12 +2301,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, hist(matrix.col(j), centers));
+        result.col(j, Op.EQUAL, hist(matrix.colInternal(j), centers));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, hist(matrix.row(i), centers));
+        result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), centers));
       }
     }
 
@@ -2405,12 +2362,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, histc(matrix.col(j), edges));
+        result.col(j, Op.EQUAL, histc(matrix.colInternal(j), edges));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, histc(matrix.row(i), edges));
+        result.row(i, Op.EQUAL, histc(matrix.rowInternal(i), edges));
       }
     }
 
@@ -2731,12 +2688,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, cumsum(matrix.col(j)));
+        result.col(j, Op.EQUAL, cumsum(matrix.colInternal(j)));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, cumsum(matrix.row(i)));
+        result.row(i, Op.EQUAL, cumsum(matrix.rowInternal(i)));
       }
     }
 
@@ -2862,12 +2819,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, shuffle(matrix.col(j)));
+        result.col(j, Op.EQUAL, shuffle(matrix.colInternal(j)));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, shuffle(matrix.row(i)));
+        result.row(i, Op.EQUAL, shuffle(matrix.rowInternal(i)));
       }
     }
 
