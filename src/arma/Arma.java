@@ -2014,7 +2014,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The correlation
    */
-  public static double corInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
+  protected static double corInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
     return covInternal(vector1, vector2, normType) / Math.sqrt(covInternal(vector1, vector1, normType) * covInternal(vector2, vector2, normType));
   }
 
@@ -2096,7 +2096,7 @@ public class Arma {
    * @param normType The normalisation
    * @return The covariance
    */
-  public static double covInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
+  protected static double covInternal(AbstractMat vector1, AbstractMat vector2, int normType) {
     vector1.isEmptyDetection();
     vector2.isEmptyDetection();
     vector1.isNonVectorDetection();
@@ -2788,7 +2788,7 @@ public class Arma {
    * @param vector The vector
    * @return The vector
    */
-  public static Mat shuffle(AbstractMat vector) {
+  protected static Mat shuffleInternal(AbstractMat vector) {
     vector.isNonVectorDetection();
 
     Double[] array = new Double[vector.n_elem];
@@ -2811,8 +2811,8 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat shuffleMat(AbstractMat matrix) {
-    return shuffleMat(matrix, 0);
+  public static Mat shuffle(AbstractMat matrix) {
+    return shuffle(matrix, 0);
   }
 
   /**
@@ -2820,7 +2820,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The matrix
    */
-  public static Mat shuffleMat(AbstractMat matrix, int dimension) {
+  public static Mat shuffle(AbstractMat matrix, int dimension) {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
@@ -2828,12 +2828,12 @@ public class Arma {
     if (dimension == 0) {
       result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, shuffle(matrix.colInternal(j)));
+        result.col(j, Op.EQUAL, shuffleInternal(matrix.colInternal(j)));
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, shuffle(matrix.rowInternal(i)));
+        result.row(i, Op.EQUAL, shuffleInternal(matrix.rowInternal(i)));
       }
     }
 
