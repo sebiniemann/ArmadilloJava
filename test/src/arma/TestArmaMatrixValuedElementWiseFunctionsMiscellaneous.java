@@ -41,7 +41,7 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
 
     Mat input = new Mat();
 
-    input.load("./test/data/input/numbered.100x100.mat");
+    input.load("./test/data/input/elementwise.miscellaneous.mat");
     testMatrices.add(new Object[]{new Mat(input)});
 
     return testMatrices;
