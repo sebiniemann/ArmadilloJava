@@ -1727,8 +1727,8 @@ public class Arma {
     AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
 
     Mat result = new Mat(matrix1.n_rows + matrix2.n_rows, matrix1.n_cols);
-    result.submat(0, 0, matrix1.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix1);
-    result.submat(matrix1.n_rows, 0, result.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix2);
+    result.submat(0, matrix1.n_rows - 1, 0, result.n_cols - 1, Op.EQUAL, matrix1);
+    result.submat(matrix1.n_rows, result.n_rows - 1, 0, result.n_cols - 1, Op.EQUAL, matrix2);
 
     return result;
   }
@@ -1759,8 +1759,8 @@ public class Arma {
     AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_rows, matrix2.n_rows);
 
     Mat result = new Mat(matrix1.n_rows, matrix1.n_cols + matrix2.n_cols);
-    result.submat(0, 0, result.n_rows - 1, matrix1.n_cols - 1, Op.EQUAL, matrix1);
-    result.submat(0, matrix1.n_cols, result.n_rows - 1, result.n_cols - 1, Op.EQUAL, matrix2);
+    result.submat(0, result.n_rows - 1, 0, matrix1.n_cols - 1, Op.EQUAL, matrix1);
+    result.submat(0, result.n_rows - 1, matrix1.n_cols, result.n_cols - 1, Op.EQUAL, matrix2);
 
     return result;
   }

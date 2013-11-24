@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaMatrixValuedElementWiseFunctionsMiscellaneous.class,
   TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
-//  TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,

@@ -79,6 +79,8 @@ using arma::trimatu;
 using arma::trimatl;
 using arma::symmatu;
 using arma::symmatl;
+using arma::join_horiz;
+using arma::join_vert;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -404,6 +406,49 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 1> matrices = {"numbered"};
+
+  string filename;
+
+  string filenameA;
+  string filenameB;
+  Mat<double> inputA;
+  Mat<double> inputB;
+
+  Mat<double> expected;
+
+  for (int numberOfRowsA : dimensions) {
+    for (int numberOfColumnsA : dimensions) {
+      for (string matrix : matrices) {
+        filenameA = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsA) + ".mat";
+        inputA.load("./input/" + filenameA);
+
+        for (int numberOfColumnsB : dimensions) {
+          filenameB = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsB) + ".mat";
+          inputB.load("./input/" + filenameB);
+
+          filename = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsA) + "." + matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsB) + ".mat";
+
+          expected = join_horiz(inputA, inputB);
+          expected.save("./expected/testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_horiz." + filename, raw_ascii);
+        }
+
+        for (int numberOfRowsB : dimensions) {
+          filenameB = matrix + "." + to_string(numberOfRowsB) + "x" + to_string(numberOfColumnsA) + ".mat";
+          inputB.load("./input/" + filenameB);
+
+          filename = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsA) + "." + matrix + "." + to_string(numberOfRowsB) + "x" + to_string(numberOfColumnsA) + ".mat";
+
+          expected = join_vert(inputA, inputB);
+          expected.save("./expected/testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_vert." + filename, raw_ascii);
+        }
+      }
+    }
+  }
+}
+
 void testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic() {
   Mat<double> input;
   input.load("./input/statistics.mat");
@@ -428,6 +473,7 @@ int main() {
   testArmaDecomposition();
   testArmaMatrixValuedFunctionsOfVectorsMatricesSwap();
   testArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;

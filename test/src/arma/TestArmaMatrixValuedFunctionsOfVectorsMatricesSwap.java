@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -26,11 +26,11 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(Parameterized.class)
 public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap {
-  
+
   /**
    * Returns the matrices to be tested.
    * 
-   * @return The test matrices 
+   * @return The test matrices
    * @throws IOException An I/O error occurred
    */
   @Parameters
@@ -46,11 +46,9 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap {
     for (int numberOfRows : dimensions) {
       for (int numberOfColumns : dimensions) {
         for (String matrix : matrices) {
-          if (!matrix.equals("hilbert") || (numberOfRows < 10 && numberOfColumns < 10)) {
-            filename = matrix + "." + numberOfRows + "x" + numberOfColumns + ".mat";
-            input.load("./test/data/input/" + filename);
-            testMatrices.add(new Object[]{filename, new Mat(input)});
-          }
+          filename = matrix + "." + numberOfRows + "x" + numberOfColumns + ".mat";
+          input.load("./test/data/input/" + filename);
+          testMatrices.add(new Object[]{filename, new Mat(input)});
         }
       }
     }
@@ -69,7 +67,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap {
    */
   @Parameter(1)
   public Mat    _testMatrix;
-  
+
   /**
    * Test method for {@link arma.Arma#fliplr(arma.AbstractMat)}.
    * 
