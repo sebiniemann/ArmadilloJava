@@ -1498,8 +1498,8 @@ abstract class AbstractMat implements Iterable<Double> {
     isColumnOutOfBoundsDetection(j1);
     isColumnOutOfBoundsDetection(j2);
 
-    Mat temp = col(j1);
-    col(j2, Op.EQUAL, j1);
+    Mat temp = col(j2);
+    col(j2, Op.EQUAL, colInternal(j1));
     col(j1, Op.EQUAL, temp);
   }
 
@@ -1513,8 +1513,8 @@ abstract class AbstractMat implements Iterable<Double> {
     isRowOutOfBoundsDetection(i1);
     isRowOutOfBoundsDetection(i2);
 
-    Mat temp = row(i1);
-    row(i2, Op.EQUAL, i1);
+    Mat temp = row(i2);
+    row(i2, Op.EQUAL, rowInternal(i1));
     row(i1, Op.EQUAL, temp);
   }
 

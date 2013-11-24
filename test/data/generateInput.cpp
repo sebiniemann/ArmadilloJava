@@ -50,6 +50,18 @@ Mat<double> getHilbertMatrix(int numberOfRows, int numberOfColumns) {
   return hilbertMatrix;
 }
 
+Mat<double> getNumberedMatrix(int numberOfRows, int numberOfColumns) {
+  Mat<double> numberedMatrix(numberOfRows, numberOfColumns);
+
+  for (int j = 0; j < numberOfColumns; j++) {
+    for (int i = 0; i < numberOfRows; i++) {
+      numberedMatrix.at(i, j) = i + j * numberedMatrix.n_rows;
+    }
+  }
+
+  return numberedMatrix;
+}
+
 int main() {
   Mat<double> input;
 
@@ -65,6 +77,9 @@ int main() {
 
       input = eye<Mat<double>>(numberOfRows, numberOfColumns);
       input.save("./input/eye." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat", raw_ascii);
+
+      input = getNumberedMatrix(numberOfRows, numberOfColumns);
+      input.save("./input/numbered." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat", raw_ascii);
 
       input = getHankelMatrix(numberOfRows, numberOfColumns);
       input.save("./input/hankel." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat", raw_ascii);

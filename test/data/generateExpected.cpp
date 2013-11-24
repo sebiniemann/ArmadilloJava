@@ -70,6 +70,10 @@ using arma::inv;
 using arma::eig_sym;
 using arma::pinv;
 using arma::svd;
+using arma::cor;
+using arma::cov;
+using arma::fliplr;
+using arma::flipud;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -336,6 +340,30 @@ void testArmaDecomposition() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesSwap() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 1> matrices = {"numbered"};
+
+  string filename;
+  Mat<double> input;
+
+  Mat<double> expected;
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      for (string matrix : matrices) {
+        filename = matrix + "." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+          input.load("./input/" + filename);
+
+          expected = fliplr(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFliplr." + filename, raw_ascii);
+          expected = flipud(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFlipud." + filename, raw_ascii);
+      }
+    }
+  }
+}
+
 void testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic() {
   Mat<double> input;
   input.load("./input/statistics.mat");
@@ -358,6 +386,7 @@ int main() {
   testArmaScalarValuedFunctionsOfVectorsMatrices();
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic();
   testArmaDecomposition();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesSwap();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;

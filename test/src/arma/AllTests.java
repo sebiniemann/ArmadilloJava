@@ -30,7 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesSort.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic.class,
-//  TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap.class,
   TestArmaMiscellaneous.class,
   TestArmaScalarValuedFunctionsOfVectorsMatrices.class,
   TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class
