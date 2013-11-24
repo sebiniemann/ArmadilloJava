@@ -432,7 +432,7 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins() {
           filename = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsA) + "." + matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsB) + ".mat";
 
           expected = join_horiz(inputA, inputB);
-          expected.save("./expected/testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_horiz." + filename, raw_ascii);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_horiz." + filename, raw_ascii);
         }
 
         for (int numberOfRowsB : dimensions) {
@@ -442,7 +442,7 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins() {
           filename = matrix + "." + to_string(numberOfRowsA) + "x" + to_string(numberOfColumnsA) + "." + matrix + "." + to_string(numberOfRowsB) + "x" + to_string(numberOfColumnsA) + ".mat";
 
           expected = join_vert(inputA, inputB);
-          expected.save("./expected/testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_vert." + filename, raw_ascii);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_vert." + filename, raw_ascii);
         }
       }
     }
