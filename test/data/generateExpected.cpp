@@ -74,6 +74,11 @@ using arma::cor;
 using arma::cov;
 using arma::fliplr;
 using arma::flipud;
+using arma::diagmat;
+using arma::trimatu;
+using arma::trimatl;
+using arma::symmatu;
+using arma::symmatl;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -353,12 +358,47 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesSwap() {
     for (int numberOfColumns : dimensions) {
       for (string matrix : matrices) {
         filename = matrix + "." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
-          input.load("./input/" + filename);
+        input.load("./input/" + filename);
 
-          expected = fliplr(input);
-          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFliplr." + filename, raw_ascii);
-          expected = flipud(input);
-          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFlipud." + filename, raw_ascii);
+        expected = fliplr(input);
+        expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFliplr." + filename, raw_ascii);
+        expected = flipud(input);
+        expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap/testFlipud." + filename, raw_ascii);
+      }
+    }
+  }
+}
+
+void testArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 1> matrices = {"numbered"};
+
+  string filename;
+  Mat<double> input;
+
+  Mat<double> expected;
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      for (string matrix : matrices) {
+        filename = matrix + "." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+        input.load("./input/" + filename);
+
+        if (input.is_square() || input.is_vec()) {
+          expected = diagmat(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret/testDiagmat." + filename, raw_ascii);
+        }
+
+        if (input.is_square()) {
+          expected = trimatu(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret/testTrimatu." + filename, raw_ascii);
+          expected = trimatl(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret/testTrimatl." + filename, raw_ascii);
+          expected = symmatu(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret/testSymmatu." + filename, raw_ascii);
+          expected = symmatl(input);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret/testSymmatl." + filename, raw_ascii);
+        }
       }
     }
   }
@@ -387,6 +427,7 @@ int main() {
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic();
   testArmaDecomposition();
   testArmaMatrixValuedFunctionsOfVectorsMatricesSwap();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;

@@ -2418,10 +2418,10 @@ public class Arma {
   public static Mat diagmat(AbstractMat matrix) {
     Mat result;
     if (matrix.is_vec()) {
-      result = new Mat(matrix.n_elem, matrix.n_elem);
+      result = new Mat(matrix.n_elem, matrix.n_elem, Fill.ZEROS);
       result.diag(Op.EQUAL, matrix);
     } else {
-      result = new Mat(matrix.n_elem, matrix.n_elem, Fill.ZEROS);
+      result = new Mat(matrix.n_rows, matrix.n_cols, Fill.ZEROS);
       result.diag(Op.EQUAL, matrix.diagInternal(0));
     }
 
@@ -2478,7 +2478,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat simmatu(AbstractMat matrix) {
+  public static Mat symmatu(AbstractMat matrix) {
     matrix.isNotSquareDetection();
 
     Mat result = new Mat();
@@ -2489,7 +2489,7 @@ public class Arma {
       for (int i = 0; i < matrix.n_rows; i++) {
         if (i < j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
-          result._matrix[n - (i - j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n - (i - j) * (matrix.n_rows - 1))];
+          result._matrix[matrix.getElementIndex(j, i)] = matrix._matrix[matrix.getElementIndex(n)];
         } else if (i == j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }
@@ -2505,7 +2505,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The matrix
    */
-  public static Mat simmatl(AbstractMat matrix) {
+  public static Mat symmatl(AbstractMat matrix) {
     matrix.isNotSquareDetection();
 
     Mat result = new Mat();
@@ -2516,7 +2516,7 @@ public class Arma {
       for (int i = 0; i < matrix.n_rows; i++) {
         if (i > j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
-          result._matrix[n + (i - j) * (matrix.n_rows - 1)] = matrix._matrix[matrix.getElementIndex(n + (i - j) * (matrix.n_rows - 1))];
+          result._matrix[matrix.getElementIndex(j, i)] = matrix._matrix[matrix.getElementIndex(n)];
         } else if (i == j) {
           result._matrix[n] = matrix._matrix[matrix.getElementIndex(n)];
         }

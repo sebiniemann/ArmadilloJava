@@ -26,7 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
-//  TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,
 //  TestArmaMatrixValuedFunctionsOfVectorsMatricesSort.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic.class,
