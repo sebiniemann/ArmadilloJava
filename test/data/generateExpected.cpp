@@ -449,6 +449,30 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+
+  Mat<double> expected;
+
+  Mat<double> input;
+  input.load("./input/numbered.10x10.mat");
+
+  string filename;
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      filename = "numbered.10x10." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+
+      expected = reshape(input, numberOfRows, numberOfColumns, 0);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + filename, raw_ascii);
+      expected = reshape(input, numberOfRows, numberOfColumns, 0);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d1." + filename, raw_ascii);
+      expected = resize(input, numberOfRows, numberOfColumns);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testResize." + filename, raw_ascii);
+    }
+  }
+}
+
 void testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic() {
   Mat<double> input;
   input.load("./input/statistics.mat");
@@ -474,6 +498,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesSwap();
   testArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
 
   return EXIT_SUCCESS;

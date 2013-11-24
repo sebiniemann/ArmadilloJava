@@ -33,6 +33,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic {
    * Returns the matrices to be tested.
    * 
    * @return The test matrices 
+   * 
    * @throws IOException An I/O error occurred
    */
   @Parameters

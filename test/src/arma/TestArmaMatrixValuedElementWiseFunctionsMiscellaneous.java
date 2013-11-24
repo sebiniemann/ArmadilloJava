@@ -32,7 +32,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    * Returns the matrices to be tested.
    * 
    * @return The test matrices 
-   * @throws IOException n I/O error occured
+   * 
+   * @throws IOException n I/O error occurred
    */
   @Parameters
   public static Collection<Object[]> getTestMatrices() throws IOException {
@@ -40,7 +41,7 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
 
     Mat input = new Mat();
 
-    input.load("./test/data/input/elementwise.miscellaneous.mat");
+    input.load("./test/data/input/numbered.100x100.mat");
     testMatrices.add(new Object[]{new Mat(input)});
 
     return testMatrices;

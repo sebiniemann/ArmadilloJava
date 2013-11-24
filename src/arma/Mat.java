@@ -595,13 +595,18 @@ public class Mat extends AbstractMat {
     isNonBinaryParameterDetection(dimension);
 
     Mat temp = new Mat(_matrix);
-    set_size(numberOfColumns, numberOfRows);
+    set_size(numberOfRows, numberOfColumns);
 
     if (dimension == 0) {
-      System.arraycopy(temp, 0, _matrix, 0, temp.n_elem);
+      System.arraycopy(temp._matrix, 0, _matrix, 0, Math.min(temp.n_elem, n_elem));
     } else {
-      for (int n = 0; n < temp.n_elem; n++) {
-        _matrix[n] = temp._matrix[n];
+      int copiedNumberOfElements = Math.min(temp.n_elem, n_elem);
+      
+      int n = 0;
+      for(int j = 0; j < temp.n_cols && n < copiedNumberOfElements; j++) {
+        for(int i = 0; i < temp.n_rows && n < copiedNumberOfElements; i++) {
+          _matrix[n++] = temp._matrix[temp.getElementIndex(i, j)];
+        }
       }
     }
   }
@@ -634,16 +639,18 @@ public class Mat extends AbstractMat {
    * @param numberOfColumns The new number of columns
    */
   public void resize(int numberOfRows, int numberOfColumns) {
-    Mat temp = new Mat(_matrix);
-    set_size(numberOfColumns, numberOfRows);
+    Mat temp = new Mat(this);
+    set_size(numberOfRows, numberOfColumns);
 
     int srcColumnPointer = 0;
     int destColumnPointer = 0;
-    int length = Math.min(temp.n_rows, numberOfRows);
-    for (int j = 0; j < n_cols; j++) {
-      System.arraycopy(temp, srcColumnPointer, _matrix, destColumnPointer, length);
+    int length = Math.min(temp.n_rows, n_rows);
+    
+    int copiedNumberOfColumns = Math.min(temp.n_cols, n_cols);
+    for (int j = 0; j < copiedNumberOfColumns; j++) {
+      System.arraycopy(temp._matrix, srcColumnPointer, _matrix, destColumnPointer, length);
       srcColumnPointer += temp.n_rows;
-      destColumnPointer += numberOfRows;
+      destColumnPointer += n_rows;
     }
   }
 
