@@ -81,6 +81,8 @@ using arma::symmatu;
 using arma::symmatl;
 using arma::join_horiz;
 using arma::join_vert;
+using arma::sum;
+using arma::prod;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -489,6 +491,22 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic() {
   expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n1.mat", raw_ascii);
 }
 
+void testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous() {
+  Mat<double> input;
+  input.load("./input/series.mat");
+
+  Mat<double> expected;
+
+  expected = prod(input, 0);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testProd.d0.mat", raw_ascii);
+  expected = prod(input, 1);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testProd.d1.mat", raw_ascii);
+  expected = sum(input, 0);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testSum.d0.mat", raw_ascii);
+  expected = sum(input, 1);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testSum.d1.mat", raw_ascii);
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -500,6 +518,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins();
   testArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
+  testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous();
 
   return EXIT_SUCCESS;
 }

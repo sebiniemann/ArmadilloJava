@@ -1652,7 +1652,7 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result._matrix[j] = prod(matrix.colInternal(j));
       }

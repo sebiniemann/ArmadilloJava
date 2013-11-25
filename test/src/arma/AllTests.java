@@ -33,6 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap.class,
   TestArmaMiscellaneous.class,
   TestArmaScalarValuedFunctionsOfVectorsMatrices.class,
+  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous.class,
   TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class
 })
 public class AllTests {

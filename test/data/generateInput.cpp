@@ -8,9 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 // http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists
-#include <iostream>
-// EXIT_SUCCESS
+#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS
 
 #include <string>
 using std::to_string;
@@ -65,7 +63,7 @@ Mat<double> getNumberedMatrix(int numberOfRows, int numberOfColumns) {
 int main() {
   Mat<double> input;
 
-  double dimensions[] = { 1, 2, 3, 4, 5, 10, 100 };
+  double dimensions[] = {1, 2, 3, 4, 5, 10, 100};
 
   for (int numberOfRows : dimensions) {
     for (int numberOfColumns : dimensions) {
@@ -106,6 +104,16 @@ int main() {
       << 0 << 1 << 2 << 30 << 30 << -datum::eps << endr;
   input = join_horiz(input, -input);
   input.save("./input/statistics.mat", raw_ascii);
+
+  input << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << endr
+      << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << endr
+      << 1 << 2 << 4 << 16 << 32 << 64 << 128 << 256 << 512 << endr
+      << 0.9 << 0.89 << 0.789 << 0.6789 << 0.56789 << 0.456789 << 0.3456789 << 0.23456789 << 0.123456789 << endr
+      << 1 << 0.5 << 0.25 << 0.125 << 0.0625 << 0.03625 << 0.015625 << 0.0078125 << 0.00390625 << endr
+      << 0 << 1 << 0 << -1 << 0 << datum::eps << 0 << -datum::eps << 0 << endr
+      << 0 << 1 << 0 << -1 << 0 << datum::inf << 0 << -datum::inf << 0 << endr;
+  input = join_vert(input, -input);
+  input.save("./input/series.mat", raw_ascii);
 
   return EXIT_SUCCESS;
 }
