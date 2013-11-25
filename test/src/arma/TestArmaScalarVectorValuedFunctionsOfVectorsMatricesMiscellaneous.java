@@ -58,12 +58,12 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous {
 
     expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testProd.d0.mat");
     for (int j = 0; j < _testMatrix.n_cols; j++) {
-      assertEquals(j + "th column", expected.at(j), Arma.prod(_testMatrix.col(j)), 1e-15);
+      assertEquals(j + "th column", expected.at(j), Arma.prod(_testMatrix.col(j)), expected.at(j) * 1e-15);
     }
 
     expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testProd.d1.mat");
     for (int i = 0; i < _testMatrix.n_rows; i++) {
-      assertEquals(i + "th row", expected.at(i), Arma.prod(_testMatrix.row(i)), 1e-15);
+      assertEquals(i + "th row", expected.at(i), Arma.prod(_testMatrix.row(i)), expected.at(i) * 1e-12);
     }
   }
 

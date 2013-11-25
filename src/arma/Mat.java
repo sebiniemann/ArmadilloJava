@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -594,17 +594,17 @@ public class Mat extends AbstractMat {
   public void reshape(int numberOfRows, int numberOfColumns, int dimension) {
     isNonBinaryParameterDetection(dimension);
 
-    Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(numberOfRows, numberOfColumns);
 
     if (dimension == 0) {
       System.arraycopy(temp._matrix, 0, _matrix, 0, Math.min(temp.n_elem, n_elem));
     } else {
       int copiedNumberOfElements = Math.min(temp.n_elem, n_elem);
-      
+
       int n = 0;
-      for(int j = 0; j < temp.n_cols && n < copiedNumberOfElements; j++) {
-        for(int i = 0; i < temp.n_rows && n < copiedNumberOfElements; i++) {
+      for (int i = 0; i < temp.n_rows && n < copiedNumberOfElements; i++) {
+        for (int j = 0; j < temp.n_cols && n < copiedNumberOfElements; j++) {
           _matrix[n++] = temp._matrix[temp.getElementIndex(i, j)];
         }
       }
@@ -645,7 +645,7 @@ public class Mat extends AbstractMat {
     int srcColumnPointer = 0;
     int destColumnPointer = 0;
     int length = Math.min(temp.n_rows, n_rows);
-    
+
     int copiedNumberOfColumns = Math.min(temp.n_cols, n_cols);
     for (int j = 0; j < copiedNumberOfColumns; j++) {
       System.arraycopy(temp._matrix, srcColumnPointer, _matrix, destColumnPointer, length);

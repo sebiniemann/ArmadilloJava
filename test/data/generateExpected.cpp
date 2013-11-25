@@ -22,6 +22,7 @@ using std::to_string;
 #include <armadillo>
 using arma::Mat;
 using arma::Col;
+using arma::uword;
 using arma::raw_ascii;
 using arma::sin;
 using arma::asin;
@@ -83,6 +84,9 @@ using arma::join_horiz;
 using arma::join_vert;
 using arma::sum;
 using arma::prod;
+using arma::sort;
+using arma::stable_sort_index;
+using arma::is_finite;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -467,7 +471,7 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize() {
 
       expected = reshape(input, numberOfRows, numberOfColumns, 0);
       expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + filename, raw_ascii);
-      expected = reshape(input, numberOfRows, numberOfColumns, 0);
+      expected = reshape(input, numberOfRows, numberOfColumns, 1);
       expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d1." + filename, raw_ascii);
       expected = resize(input, numberOfRows, numberOfColumns);
       expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testResize." + filename, raw_ascii);
@@ -507,6 +511,60 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous() {
   expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testSum.d1.mat", raw_ascii);
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesSort() {
+  Mat<double> input;
+  input.load("./input/series.mat");
+  for(int n = 0; n < input.n_elem; n++) {
+    double value = input.at(n);
+    if(!is_finite(value)) {
+      input.at(n) = 0;
+    }
+  }
+
+  Mat<double> expected;
+
+  expected = sort(input, 0, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testSort.t0.d0.mat", raw_ascii);
+  expected = sort(input, 1, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testSort.t1.d0.mat", raw_ascii);
+  expected = sort(input, 0, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testSort.t0.d1.mat", raw_ascii);
+  expected = sort(input, 1, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testSort.t1.d1.mat", raw_ascii);
+
+  input = vectorise(input);
+
+  Col<uword> expectedVector;
+  expectedVector = stable_sort_index(input, 0);
+  expectedVector.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t0.mat", raw_ascii);
+  expectedVector = stable_sort_index(input, 1);
+  expectedVector.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t1.mat", raw_ascii);
+}
+
+void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+  std::array<string, 1> matrices = {"numbered"};
+
+  string filename;
+  Mat<double> input;
+
+  Mat<double> expected;
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      for (string matrix : matrices) {
+        filename = matrix + "." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+        input.load("./input/" + filename);
+
+        expected = vectorise(input, 0);
+        expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testVectorise.d0." + filename, raw_ascii);
+        expected = vectorise(input, 1);
+        expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testVectorise.d1." + filename, raw_ascii);
+      }
+    }
+  }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -519,6 +577,8 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize();
   testArmaMatrixValuedFunctionsOfVectorsMatricesStatistic();
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesSort();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised();
 
   return EXIT_SUCCESS;
 }

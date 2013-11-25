@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -13,10 +13,13 @@ package arma;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
-import java.util.TreeMap;
 
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
@@ -1848,14 +1851,13 @@ public class Arma {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    Mat result;
+    Mat result = new Mat();
+    result.copy_size(matrix);
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result.col(j, Op.EQUAL, sort(matrix.colInternal(j), sortType));
       }
     } else {
-      result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result.row(i, Op.EQUAL, sort(matrix.rowInternal(i), sortType));
       }
@@ -1916,35 +1918,50 @@ public class Arma {
     vector.isNonVectorDetection();
     AbstractMat.isNonBinaryParameterDetection(sortType);
 
-    // TreeMap will do the job, nothing to do here—great!
-    TreeMap<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
+    Map<Integer, Double> map = new HashMap<Integer, Double>(vector.n_elem);
     vector.iteratorReset();
     for (int n = 0; n < vector.n_elem; n++) {
-      double element = vector._matrix[vector.iteratorNext()];
-      List<Integer> index = map.get(element);
-      if (index == null) {
-        index = new ArrayList<Integer>();
-        map.put(element, index);
-      }
-      index.add(n);
+      map.put(n, vector._matrix[vector.iteratorNext()]);
+    }
+
+    List<Entry<Integer, Double>> list = new ArrayList<Entry<Integer, Double>>(map.entrySet());
+
+    if (sortType == 0) {
+      Collections.sort(list, new Comparator<Entry<Integer, Double>>() {
+        @Override
+        public int compare(Entry<Integer, Double> entry1, Entry<Integer, Double> entry2) {
+          Double value1 = entry1.getValue();
+          Double value2 = entry2.getValue();
+
+          if (value1.equals(value2) || (value1 == 0 && value2 == 0) ) {
+            return entry1.getKey().compareTo(entry2.getKey());
+          } else {
+            return value1.compareTo(value2);
+          }
+        }
+      });
+    } else {
+      Collections.sort(list, new Comparator<Entry<Integer, Double>>() {
+        @Override
+        public int compare(Entry<Integer, Double> entry1, Entry<Integer, Double> entry2) {
+          Double value1 = entry1.getValue();
+          Double value2 = entry2.getValue();
+
+          if (value1.equals(value2) || (value1 == 0 && value2 == 0) ) {
+            return entry1.getKey().compareTo(entry2.getKey());
+          } else {
+            return value2.compareTo(value1);
+          }
+        }
+      });
     }
 
     Mat result = new Mat();
     result.copy_size(vector);
-    int nn = 0;
-    for (List<Integer> indices : map.values()) {
-      for (int n : indices) {
-        result._matrix[nn++] = n;
-      }
-    }
 
-    if (sortType == 1) {
-      // Why is there no native implementation of a descending sort on primitives in Java ...
-      for (int n = 0; n < vector.n_elem / 2; n++) {
-        double temp = result._matrix[n];
-        result._matrix[n] = result._matrix[vector.n_elem - (n + 1)];
-        result._matrix[vector.n_elem - (n + 1)] = temp;
-      }
+    int n = 0;
+    for (Entry<Integer, Double> entry : list) {
+      result._matrix[n++] = entry.getKey();
     }
 
     return result;
@@ -2059,7 +2076,7 @@ public class Arma {
   public static Mat cor(AbstractMat matrix1, AbstractMat matrix2, int normType) {
     matrix1.isEmptyDetection();
     matrix2.isEmptyDetection();
-    
+
     if (matrix1.is_vec() && matrix2.is_vec()) {
       AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_elem, matrix2.n_elem);
 
@@ -2069,9 +2086,9 @@ public class Arma {
       AbstractMat.isNonEqualNumberOfElementsDetection(matrix1.n_cols, matrix2.n_cols);
 
       Mat covariance = cov(matrix1, matrix2, normType);
-      
+
       Mat selfCovariance;
-      if(normType != 0) {
+      if (normType != 0) {
         selfCovariance = cov(matrix1, matrix2, 0);
       } else {
         selfCovariance = covariance;
@@ -2882,18 +2899,15 @@ public class Arma {
   public static Mat vectorise(AbstractMat matrix, int dimension) {
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    Mat result;
-    if (matrix instanceof Mat) {
-      result = (Mat) matrix;
-    } else {
-      result = new Mat(matrix);
-    }
+    Mat result = new Mat(matrix);
 
     if (dimension == 0) {
-      return reshape(result, matrix.n_elem, 1);
+      result.updateAttributes(matrix.n_elem, 1);
     } else {
-      return reshape(result, 1, matrix.n_elem);
+      result.reshape(1, matrix.n_elem, 1);
     }
+
+    return result;
   }
 
   /**
