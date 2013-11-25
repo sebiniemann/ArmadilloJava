@@ -1933,7 +1933,7 @@ public class Arma {
           Double value1 = entry1.getValue();
           Double value2 = entry2.getValue();
 
-          if (value1.equals(value2) || (value1 == 0 && value2 == 0) ) {
+          if (value1.equals(value2) || (value1 == 0 && value2 == 0)) {
             return entry1.getKey().compareTo(entry2.getKey());
           } else {
             return value1.compareTo(value2);
@@ -1947,7 +1947,7 @@ public class Arma {
           Double value1 = entry1.getValue();
           Double value2 = entry2.getValue();
 
-          if (value1.equals(value2) || (value1 == 0 && value2 == 0) ) {
+          if (value1.equals(value2) || (value1 == 0 && value2 == 0)) {
             return entry1.getKey().compareTo(entry2.getKey());
           } else {
             return value2.compareTo(value1);
@@ -2800,29 +2800,6 @@ public class Arma {
   }
 
   /**
-   * @param vector The vector
-   * @return The vector
-   */
-  protected static Mat shuffleInternal(AbstractMat vector) {
-    vector.isNonVectorDetection();
-
-    Double[] array = new Double[vector.n_elem];
-    for (int n = 0; n < vector.n_elem; n++) {
-      array[n] = vector._matrix[n];
-    }
-
-    Collections.shuffle(Arrays.asList(array));
-
-    Mat result = new Mat();
-    result.copy_size(vector);
-    for (int n = 0; n < result.n_elem; n++) {
-      result._matrix[n] = array[n];
-    }
-
-    return result;
-  }
-
-  /**
    * @param matrix The matrix
    * @return The matrix
    */
@@ -2839,16 +2816,28 @@ public class Arma {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    Mat result;
+    Mat result = new Mat();
+    result.copy_size(matrix);
+    
+    Integer[] indicies;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, shuffleInternal(matrix.colInternal(j)));
+      indicies = new Integer[matrix.n_rows];
+    } else {
+      indicies = new Integer[matrix.n_cols];
+    }
+    
+    for (int n = 0; n < indicies.length; n++) {
+      indicies[n] = n;
+    }
+    Collections.shuffle(Arrays.asList(indicies));
+    
+    if (dimension == 0) {
+      for (int i = 0; i < matrix.n_rows; i++) {
+        result.row(i, Op.EQUAL, matrix.rowInternal(indicies[i]));
       }
     } else {
-      result = new Mat(matrix.n_rows, 1);
-      for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, shuffleInternal(matrix.rowInternal(i)));
+      for (int j = 0; j < matrix.n_cols; j++) {
+        result.col(j, Op.EQUAL, matrix.colInternal(indicies[j]));
       }
     }
 

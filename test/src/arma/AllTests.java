@@ -28,7 +28,7 @@ import org.junit.runners.Suite.SuiteClasses;
   // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
   // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised.class,
-  // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesSort.class,

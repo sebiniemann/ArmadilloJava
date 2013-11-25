@@ -50,6 +50,13 @@ public class RunningStatVec {
   private Mat     _cov;
 
   /**
+   * Initialises the statistical measures. Calculation of the covariance will be deactivated.
+   */
+  public RunningStatVec() {
+    this(false);
+  }
+
+  /**
    * Initialises the statistical measures.
    * <p>
    * {@code calculateCovariance} must be set to true to activate the calculation of the covariance.
