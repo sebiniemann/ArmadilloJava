@@ -87,6 +87,7 @@ using arma::prod;
 using arma::sort;
 using arma::stable_sort_index;
 using arma::is_finite;
+using arma::trans;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -514,9 +515,9 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous() {
 void testArmaMatrixValuedFunctionsOfVectorsMatricesSort() {
   Mat<double> input;
   input.load("./input/series.mat");
-  for(int n = 0; n < input.n_elem; n++) {
+  for (int n = 0; n < input.n_elem; n++) {
     double value = input.at(n);
-    if(!is_finite(value)) {
+    if (!is_finite(value)) {
       input.at(n) = 0;
     }
   }
@@ -555,6 +556,14 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised() 
       for (string matrix : matrices) {
         filename = matrix + "." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
         input.load("./input/" + filename);
+
+        expected = trans(input);
+        expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testTrans." + filename, raw_ascii);
+
+        for (int k = -numberOfRows + 1; k < numberOfColumns; k++) {
+          expected = diagvec(input, k);
+          expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testDiagvec.k" + to_string(k) + "." + filename, raw_ascii);
+        }
 
         expected = vectorise(input, 0);
         expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testVectorise.d0." + filename, raw_ascii);

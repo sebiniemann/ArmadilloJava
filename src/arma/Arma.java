@@ -2550,9 +2550,7 @@ public class Arma {
    * @return The matrix
    */
   public static Mat trans(AbstractMat matrix) {
-    Mat temp = new Mat(matrix);
-    temp.t();
-    return temp;
+    return matrix.t();
   }
 
   /**

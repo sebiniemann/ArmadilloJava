@@ -72,7 +72,7 @@ class DiagMat extends AbstractMat {
   @Override
   public void iteratorReset() {
     if (_k > 0) {
-      _n = _k * n_rows;
+      _n = _k * _underlyingMatrix.n_rows;
     } else {
       _n = -_k;
     }
