@@ -605,8 +605,8 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm() {
    }
 }
 
-void TestArmaMatrixGenerationMatrix() {
-  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+void testArmaMatrixGenerationMatrix() {
+  std::array<double, 6> dimensions = {1, 2, 3, 4, 5, 10};
 
   Mat<double> expected;
 
@@ -620,11 +620,7 @@ void TestArmaMatrixGenerationMatrix() {
       filename = "numbered.10x10." + to_string(10 * numberOfRows) + "x" + to_string(10 * numberOfColumns) + ".mat";
 
       expected = repmat(input, numberOfRows, numberOfColumns);
-      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + filename, raw_ascii);
-      expected = reshape(input, numberOfRows, numberOfColumns, 1);
-      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d1." + filename, raw_ascii);
-      expected = resize(input, numberOfRows, numberOfColumns);
-      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testResize." + filename, raw_ascii);
+      expected.save("./expected/TestArmaMatrixGenerationMatrix/testRepmat." + filename, raw_ascii);
     }
   }
 }
@@ -644,6 +640,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesSort();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised();
   testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm();
+  testArmaMatrixGenerationMatrix();
 
   return EXIT_SUCCESS;
 }

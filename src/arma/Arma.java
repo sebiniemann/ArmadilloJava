@@ -178,13 +178,12 @@ public class Arma {
 
     int srcColumnPointer = 0;
     for (int j = 0; j < matrix.n_cols; j++) {
-      int destColumnPointer = j * numberOfCopiesPerColumn * matrix.n_rows;
       for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
+        int destColumnPointer = (j + copyJ * matrix.n_cols) * result.n_rows;
         for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
-          System.arraycopy(matrix._matrix, srcColumnPointer, result, destColumnPointer, matrix.n_rows);
+          System.arraycopy(matrix._matrix, srcColumnPointer, result._matrix, destColumnPointer, matrix.n_rows);
           destColumnPointer += matrix.n_rows;
         }
-        destColumnPointer += numberOfCopiesPerColumn * matrix.n_rows * (matrix.n_cols - 1);
       }
       srcColumnPointer += matrix.n_rows;
     }
