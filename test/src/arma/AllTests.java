@@ -21,7 +21,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaAs_scalar.class,
   TestArmaDecomposition.class,
   TestArmaDotAndNorm_dot.class,
-  // TestArmaMatrixGenerationLinespace.class,
+  TestArmaMatrixGenerationLinspace.class,
   TestArmaMatrixGenerationMatrix.class,
   TestArmaMatrixGenerationToeplitz.class,
   TestArmaMatrixGenerationVector.class,

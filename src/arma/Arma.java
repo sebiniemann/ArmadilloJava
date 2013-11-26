@@ -299,10 +299,14 @@ public class Arma {
 
     Mat result = new Mat(numberOfElements, 1);
 
-    double stepLength = (endValue - startValue) / (result.n_elem - 1);
-    for (int n = 0; n < result.n_elem; n++) {
-      // Increasing a value step by step by stepLength might be faster, but also reduces precision
-      result._matrix[n] = startValue + stepLength * n;
+    if (result.n_elem > 1) {
+      double stepLength = (endValue - startValue) / (result.n_elem - 1);
+      for (int n = 0; n < result.n_elem; n++) {
+        // Increasing a value step by step by stepLength might be faster, but also reduces precision
+        result._matrix[n] = startValue + stepLength * n;
+      }
+    } else {
+      result._matrix[0] = endValue;
     }
 
     return result;
@@ -2219,7 +2223,7 @@ public class Arma {
     if (Double.isInfinite(minimum)) {
       minimum = -Double.MAX_VALUE;
     }
-    
+
     if (Double.isInfinite(maximum)) {
       maximum = Double.MAX_VALUE;
     }
@@ -2235,57 +2239,57 @@ public class Arma {
     Mat histc = histc(vector, edges);
     Mat result = histc.subvec(0, numberOfBins - 1);
     result._matrix[numberOfBins - 1] += histc._matrix[numberOfBins];
-    
+
     return result;
   }
 
-// Actually, this is not supported by Armadillo C++ despited notes in the API
-// Informed Conrad Sanderson about this.
-//  
-//  /**
-//   * @param matrix The matrix
-//   * @return The histogramm
-//   */
-//  public static Mat histMat(AbstractMat matrix) {
-//    return histMat(matrix, 10);
-//  }
-//
-//  /**
-//   * @param matrix The matrix
-//   * @param numberOfBins The number of bins
-//   * @return vThe histogramm
-//   */
-//  public static Mat histMat(AbstractMat matrix, int numberOfBins) {
-//    return histMat(matrix, numberOfBins, 0);
-//  }
-//
-//  
-//  
-//  /**
-//   * @param matrix The matrix
-//   * @param numberOfBins The number of bins
-//   * @param dimension The dimension
-//   * @return The histogramm
-//   */
-//  public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
-//    matrix.isEmptyDetection();
-//    AbstractMat.isNonBinaryParameterDetection(dimension);
-//
-//    Mat result;
-//    if (dimension == 0) {
-//      result = new Mat(matrix.n_cols, 1);
-//      for (int j = 0; j < matrix.n_cols; j++) {
-//        result.col(j, Op.EQUAL, hist(matrix.colInternal(j), numberOfBins));
-//      }
-//    } else {
-//      result = new Mat(matrix.n_rows, 1);
-//      for (int i = 0; i < matrix.n_rows; i++) {
-//        result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), numberOfBins));
-//      }
-//    }
-//
-//    return result;
-//  }
+  // Actually, this is not supported by Armadillo C++ despited notes in the API
+  // Informed Conrad Sanderson about this.
+  //
+  // /**
+  // * @param matrix The matrix
+  // * @return The histogramm
+  // */
+  // public static Mat histMat(AbstractMat matrix) {
+  // return histMat(matrix, 10);
+  // }
+  //
+  // /**
+  // * @param matrix The matrix
+  // * @param numberOfBins The number of bins
+  // * @return vThe histogramm
+  // */
+  // public static Mat histMat(AbstractMat matrix, int numberOfBins) {
+  // return histMat(matrix, numberOfBins, 0);
+  // }
+  //
+  //
+  //
+  // /**
+  // * @param matrix The matrix
+  // * @param numberOfBins The number of bins
+  // * @param dimension The dimension
+  // * @return The histogramm
+  // */
+  // public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
+  // matrix.isEmptyDetection();
+  // AbstractMat.isNonBinaryParameterDetection(dimension);
+  //
+  // Mat result;
+  // if (dimension == 0) {
+  // result = new Mat(matrix.n_cols, 1);
+  // for (int j = 0; j < matrix.n_cols; j++) {
+  // result.col(j, Op.EQUAL, hist(matrix.colInternal(j), numberOfBins));
+  // }
+  // } else {
+  // result = new Mat(matrix.n_rows, 1);
+  // for (int i = 0; i < matrix.n_rows; i++) {
+  // result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), numberOfBins));
+  // }
+  // }
+  //
+  // return result;
+  // }
 
   /**
    * @param vector The vector
@@ -2363,7 +2367,7 @@ public class Arma {
     vector.isEmptyDetection();
 
     Mat result;
-    if(vector.is_colvec()) {
+    if (vector.is_colvec()) {
       result = new Mat(edges.n_elem, 1);
     } else {
       result = new Mat(1, edges.n_elem);
@@ -2374,22 +2378,22 @@ public class Arma {
       double element = vector._matrix[vector.iteratorNext()];
 
       edges.iteratorReset();
-      double edge  = edges._matrix[edges.iteratorNext()];
-      
-      if(element < edge) {
+      double edge = edges._matrix[edges.iteratorNext()];
+
+      if (element < edge) {
         continue;
       }
-      
+
       for (int n = 1; n < edges.n_elem; n++) {
         edge = edges._matrix[edges.iteratorNext()];
-        
+
         if (element < edge) {
           result._matrix[n - 1]++;
           break;
         }
       }
-      
-      if(element == edge) {
+
+      if (element == edge) {
         result._matrix[edges.n_elem - 1]++;
       }
     }
@@ -2852,19 +2856,19 @@ public class Arma {
 
     Mat result = new Mat();
     result.copy_size(matrix);
-    
+
     Integer[] indicies;
     if (dimension == 0) {
       indicies = new Integer[matrix.n_rows];
     } else {
       indicies = new Integer[matrix.n_cols];
     }
-    
+
     for (int n = 0; n < indicies.length; n++) {
       indicies[n] = n;
     }
     Collections.shuffle(Arrays.asList(indicies), rng);
-    
+
     if (dimension == 0) {
       for (int i = 0; i < matrix.n_rows; i++) {
         result.row(i, Op.EQUAL, matrix.rowInternal(indicies[i]));

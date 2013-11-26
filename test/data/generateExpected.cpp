@@ -93,6 +93,7 @@ using arma::histc;
 using arma::repmat;
 using arma::toeplitz;
 using arma::circ_toeplitz;
+using arma::linspace;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -651,6 +652,17 @@ void testArmaMatrixGenerationToeplitz() {
   }
 }
 
+void testArmaMatrixGenerationLinspace() {
+  std::array<double, 9> elements = {1, 2, 3, 4, 5, 10, 100, 1000, 10000};
+
+  Mat<double> expected;
+
+  for (int numberOfElements : elements) {
+    expected = linspace(-12345.6789, 9876.54321, numberOfElements);
+    expected.save("./expected/TestArmaMatrixGenerationLinspace/testLinspace." + to_string(numberOfElements) + ".mat", raw_ascii);
+  }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -668,6 +680,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm();
   testArmaMatrixGenerationMatrix();
   testArmaMatrixGenerationToeplitz();
+  testArmaMatrixGenerationLinspace();
 
   return EXIT_SUCCESS;
 }
