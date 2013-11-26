@@ -485,7 +485,7 @@ cumsum(A [, d])            | cumsum(A [, d])            | Arma.cumsum(A [, d])  
 conv(A, B)                 | conv(A, B)                 | Arma.conv(A, B)                 | **Note:** A, B are vectors.
 cross(A, B)                | cross(A, B)                | Arma.cross(A, B)                | **Note:** A, B are 3-dimensional vectors.
 kron(A, B)                 | kron(A, B)                 | Arma.kron(A, B)                 | 
-                           | shuffle(A [, d])           | Arma.shuffle(A [, d])           | **Default:** d = 0 **Matlab:** A(randperm(size(A, 1)), :) (for d = 0)
+                           | shuffle(A [, d])           | Arma.shuffle(A [, d], rng)      | **Note:** rng is a random number generator. **Default:** d = 0 **Matlab:** A(randperm(size(A, 1)), :) (for d = 0)
 unique(A)                  | unique(A)                  | Arma.unique(A)                  | 
                            | vectorise(A [, d])         | Arma.vectorise(A [, d])         | **Default** d = 0 **Matlab:** Use A(:) for d = 0 and A(:)' otherwise.
                     
