@@ -2190,7 +2190,7 @@ public class Arma {
 
   /**
    * @param vector The vector
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat hist(AbstractMat vector) {
     return hist(vector, 10);
@@ -2199,13 +2199,13 @@ public class Arma {
   /**
    * @param vector The vector
    * @param numberOfBins The number of bins
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat hist(AbstractMat vector, int numberOfBins) {
     vector.isNonVectorDetection();
     vector.isEmptyDetection();
 
-    Mat edges = new Mat(numberOfBins, 1);
+    Mat edges = new Mat(numberOfBins + 1, 1);
 
     vector.iteratorReset();
     double element = vector._matrix[vector.iteratorNext()];
@@ -2220,77 +2220,88 @@ public class Arma {
     if (Double.isInfinite(minimum)) {
       minimum = -Double.MAX_VALUE;
     }
-
+    
     if (Double.isInfinite(maximum)) {
       maximum = Double.MAX_VALUE;
     }
 
+    edges._matrix[0] = Double.NEGATIVE_INFINITY;
     double stepLength = (maximum - minimum) / edges.n_elem;
-    for (int n = 0; n < edges.n_elem - 1; n++) {
+    for (int n = 1; n < edges.n_elem - 1; n++) {
       // Increasing a value step by step by stepLength might be faster, but also reduces precision
       edges._matrix[n] = minimum + stepLength * (n + 1);
     }
-    edges._matrix[edges.n_elem] = Double.POSITIVE_INFINITY;
+    edges._matrix[edges.n_elem - 1] = Double.POSITIVE_INFINITY;
 
-    return histc(vector, edges);
-  }
-
-  /**
-   * @param matrix The matrix
-   * @return The histogramm
-   */
-  public static Mat histMat(AbstractMat matrix) {
-    return histMat(matrix, 10);
-  }
-
-  /**
-   * @param matrix The matrix
-   * @param numberOfBins The number of bins
-   * @return vThe histogramm
-   */
-  public static Mat histMat(AbstractMat matrix, int numberOfBins) {
-    return histMat(matrix, numberOfBins, 0);
-  }
-
-  /**
-   * @param matrix The matrix
-   * @param numberOfBins The number of bins
-   * @param dimension The dimension
-   * @return The histogramm
-   */
-  public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
-    matrix.isEmptyDetection();
-    AbstractMat.isNonBinaryParameterDetection(dimension);
-
-    Mat result;
-    if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
-      for (int j = 0; j < matrix.n_cols; j++) {
-        result.col(j, Op.EQUAL, hist(matrix.colInternal(j), numberOfBins));
-      }
-    } else {
-      result = new Mat(matrix.n_rows, 1);
-      for (int i = 0; i < matrix.n_rows; i++) {
-        result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), numberOfBins));
-      }
-    }
-
+    Mat histc = histc(vector, edges);
+    Mat result = histc.subvec(0, numberOfBins - 1);
+    result._matrix[numberOfBins - 1] += histc._matrix[numberOfBins];
+    
     return result;
   }
 
+// Actually, this is not supported by Armadillo C++ despited notes in the API
+// Informed Conrad Sanderson about this.
+//  
+//  /**
+//   * @param matrix The matrix
+//   * @return The histogramm
+//   */
+//  public static Mat histMat(AbstractMat matrix) {
+//    return histMat(matrix, 10);
+//  }
+//
+//  /**
+//   * @param matrix The matrix
+//   * @param numberOfBins The number of bins
+//   * @return vThe histogramm
+//   */
+//  public static Mat histMat(AbstractMat matrix, int numberOfBins) {
+//    return histMat(matrix, numberOfBins, 0);
+//  }
+//
+//  
+//  
+//  /**
+//   * @param matrix The matrix
+//   * @param numberOfBins The number of bins
+//   * @param dimension The dimension
+//   * @return The histogramm
+//   */
+//  public static Mat histMat(AbstractMat matrix, int numberOfBins, int dimension) {
+//    matrix.isEmptyDetection();
+//    AbstractMat.isNonBinaryParameterDetection(dimension);
+//
+//    Mat result;
+//    if (dimension == 0) {
+//      result = new Mat(matrix.n_cols, 1);
+//      for (int j = 0; j < matrix.n_cols; j++) {
+//        result.col(j, Op.EQUAL, hist(matrix.colInternal(j), numberOfBins));
+//      }
+//    } else {
+//      result = new Mat(matrix.n_rows, 1);
+//      for (int i = 0; i < matrix.n_rows; i++) {
+//        result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), numberOfBins));
+//      }
+//    }
+//
+//    return result;
+//  }
+
   /**
    * @param vector The vector
-   * @param centers The centers
-   * @return The histogramm
+   * @param centers The centres
+   * @return The histogram
    */
   public static Mat hist(AbstractMat vector, AbstractMat centers) {
     vector.isNonVectorDetection();
     vector.isEmptyDetection();
 
-    Mat edges = new Mat(centers.n_elem, 1);
+    Mat edges = new Mat(centers.n_elem + 1, 1);
 
     centers.iteratorReset();
-    int n = 0;
+    edges._matrix[0] = Double.NEGATIVE_INFINITY;
+    int n = 1;
     double lastElement = centers._matrix[centers.iteratorNext()];
     while (centers.iteratorHasNext()) {
       double currentElement = centers._matrix[centers.iteratorNext()];
@@ -2299,15 +2310,19 @@ public class Arma {
       lastElement = currentElement;
     }
     // The last element of edges
-    edges._matrix[n] = Double.POSITIVE_INFINITY;
+    edges._matrix[centers.n_elem] = Double.POSITIVE_INFINITY;
 
-    return histc(vector, edges);
+    Mat histc = histc(vector, edges);
+    Mat result = histc.subvec(0, centers.n_elem - 1);
+    result._matrix[centers.n_elem - 1] += histc._matrix[centers.n_elem];
+
+    return result;
   }
 
   /**
    * @param matrix The matrix
-   * @param centers The centers
-   * @return The histogramm
+   * @param centers The centres
+   * @return The histogram
    */
   public static Mat histMat(AbstractMat matrix, AbstractMat centers) {
     return histMat(matrix, centers, 0);
@@ -2315,9 +2330,9 @@ public class Arma {
 
   /**
    * @param matrix The matrix
-   * @param centers The centers
+   * @param centers The centres
    * @param dimension The dimension
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat histMat(AbstractMat matrix, AbstractMat centers, int dimension) {
     matrix.isEmptyDetection();
@@ -2325,12 +2340,12 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(centers.n_elem, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result.col(j, Op.EQUAL, hist(matrix.colInternal(j), centers));
       }
     } else {
-      result = new Mat(matrix.n_rows, 1);
+      result = new Mat(matrix.n_rows, centers.n_elem);
       for (int i = 0; i < matrix.n_rows; i++) {
         result.row(i, Op.EQUAL, hist(matrix.rowInternal(i), centers));
       }
@@ -2342,23 +2357,41 @@ public class Arma {
   /**
    * @param vector The vector
    * @param edges The edges
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat histc(AbstractMat vector, AbstractMat edges) {
     vector.isNonVectorDetection();
     vector.isEmptyDetection();
 
-    Mat result = new Mat(edges.n_elem, 1);
+    Mat result;
+    if(vector.is_colvec()) {
+      result = new Mat(edges.n_elem, 1);
+    } else {
+      result = new Mat(1, edges.n_elem);
+    }
 
     vector.iteratorReset();
     while (vector.iteratorHasNext()) {
       double element = vector._matrix[vector.iteratorNext()];
 
       edges.iteratorReset();
-      for (int n = 0; n < edges.n_elem; n++) {
-        if (element <= edges._matrix[edges.iteratorNext()]) {
-          result._matrix[n]++;
+      double edge  = edges._matrix[edges.iteratorNext()];
+      
+      if(element < edge) {
+        continue;
+      }
+      
+      for (int n = 1; n < edges.n_elem; n++) {
+        edge = edges._matrix[edges.iteratorNext()];
+        
+        if (element < edge) {
+          result._matrix[n - 1]++;
+          break;
         }
+      }
+      
+      if(element == edge) {
+        result._matrix[edges.n_elem - 1]++;
       }
     }
 
@@ -2368,7 +2401,7 @@ public class Arma {
   /**
    * @param matrix The matrix
    * @param edges The edges
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat histcMat(AbstractMat matrix, AbstractMat edges) {
     return histcMat(matrix, edges, 0);
@@ -2378,7 +2411,7 @@ public class Arma {
    * @param matrix The matrix
    * @param edges The edges
    * @param dimension The dimension
-   * @return The histogramm
+   * @return The histogram
    */
   public static Mat histcMat(AbstractMat matrix, AbstractMat edges, int dimension) {
     matrix.isEmptyDetection();
@@ -2386,12 +2419,12 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(edges.n_elem, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
         result.col(j, Op.EQUAL, histc(matrix.colInternal(j), edges));
       }
     } else {
-      result = new Mat(matrix.n_rows, 1);
+      result = new Mat(matrix.n_rows, edges.n_elem);
       for (int i = 0; i < matrix.n_rows; i++) {
         result.row(i, Op.EQUAL, histc(matrix.rowInternal(i), edges));
       }

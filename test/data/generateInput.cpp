@@ -8,8 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 // http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS
-
+#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS
 #include <string>
 using std::to_string;
 
@@ -105,12 +104,11 @@ int main() {
   input = join_horiz(input, -input);
   input.save("./input/statistics.mat", raw_ascii);
 
-  input
-      << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << endr
+  input << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << endr
       << 5 << 6 << 7 << 2 << 3 << 5 << 6 << 3 << 1 << 4 << 8 << 9 << endr
       << 16 << 64 << 512 << 128 << 1 << 2 << 4 << 1 << 2 << 4 << 256 << 32 << endr
-      << 0.123456789<< 0.9 << 0.456789 << 0.3456789 << 0.89 << 0.789 << 0.6789 << 0.56789 << 0.23456789 << endr
-      << 1  << 0.00390625 << 0.5 << 0.125 << 0.015625 << 0.0625 << 0.125 << 0.015625 << 0.0625 << 0.25 << 0.03625 << 0.0078125 << endr
+      << 0.123456789 << 0.9 << 0.456789 << 0.3456789 << 0.89 << 0.789 << 0.6789 << 0.56789 << 0.23456789 << endr
+      << 1 << 0.00390625 << 0.5 << 0.125 << 0.015625 << 0.0625 << 0.125 << 0.015625 << 0.0625 << 0.25 << 0.03625 << 0.0078125 << endr
       << 0 << 1 << 0 << -1 << 0 << datum::eps << -1 << 0 << datum::eps << 0 << -datum::eps << 0 << endr
       << 0 << 1 << 0 << -1 << 0 << datum::inf << -1 << 0 << datum::inf << 0 << -datum::inf << 0 << endr;
   input = join_vert(input, -input);

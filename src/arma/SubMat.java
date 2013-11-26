@@ -48,12 +48,12 @@ class SubMat extends AbstractMat {
     vector.isNonVectorDetection();
     vector.isElementRangeOutOfBoundsDetection(a, b);
 
-    if (is_colvec()) {
-      n_rows = 1;
-      n_cols = b - a + 1;
-    } else {
+    if (vector.is_colvec()) {
       n_rows = b - a + 1;
       n_cols = 1;
+    } else {
+      n_rows = 1;
+      n_cols = b - a + 1;
     }
     n_elem = n_rows * n_cols;
 

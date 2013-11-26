@@ -165,11 +165,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testSort_indexAbstractMat() {
-    _testMatrix = Arma.vectorise(_testMatrix);
+    Mat testMatrix = Arma.vectorise(_testMatrix);
 
-    Mat indicies = Arma.stable_sort_index(_testMatrix);
+    Mat indicies = Arma.stable_sort_index(testMatrix);
     for (int n = 0; n < indicies.n_elem - 1; n++) {
-      assertTrue("At position " + n, _testMatrix.at((int) indicies.at(n)) <= _testMatrix.at((int) indicies.at(n + 1)));
+      assertTrue("At position " + n, testMatrix.at((int) indicies.at(n)) <= testMatrix.at((int) indicies.at(n + 1)));
     }
   }
 
@@ -178,18 +178,18 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testSort_indexAbstractMatInt() {
-    _testMatrix = Arma.vectorise(_testMatrix);
+    Mat testMatrix = Arma.vectorise(_testMatrix);
 
     Mat indicies;
 
-    indicies = Arma.stable_sort_index(_testMatrix, 0);
+    indicies = Arma.stable_sort_index(testMatrix, 0);
     for (int n = 0; n < indicies.n_elem - 1; n++) {
-      assertTrue("At position " + n, _testMatrix.at((int) indicies.at(n)) <= _testMatrix.at((int) indicies.at(n + 1)));
+      assertTrue("At position " + n, testMatrix.at((int) indicies.at(n)) <= testMatrix.at((int) indicies.at(n + 1)));
     }
 
-    indicies = Arma.stable_sort_index(_testMatrix, 1);
+    indicies = Arma.stable_sort_index(testMatrix, 1);
     for (int n = 0; n < indicies.n_elem - 1; n++) {
-      assertTrue("At position " + n, _testMatrix.at((int) indicies.at(n)) >= _testMatrix.at((int) indicies.at(n + 1)));
+      assertTrue("At position " + n, testMatrix.at((int) indicies.at(n)) >= testMatrix.at((int) indicies.at(n + 1)));
     }
   }
 
@@ -200,11 +200,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testStable_sort_indexAbstractMat() throws IOException {
-    _testMatrix = Arma.vectorise(_testMatrix);
+    Mat testMatrix = Arma.vectorise(_testMatrix);
 
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t0.mat");
-    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(_testMatrix));
+    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(testMatrix));
   }
 
   /**
@@ -214,15 +214,15 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testStable_sort_indexAbstractMatInt() throws IOException {
-    _testMatrix = Arma.vectorise(_testMatrix);
+    Mat testMatrix = Arma.vectorise(_testMatrix);
 
     Mat expected = new Mat();
 
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t0.mat");
-    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(_testMatrix, 0));
+    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(testMatrix, 0));
 
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t1.mat");
-    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(_testMatrix, 1));
+    assertMatElementWiseEquals("", expected, Arma.stable_sort_index(testMatrix, 1));
   }
 
 }

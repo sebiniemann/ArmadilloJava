@@ -88,6 +88,8 @@ using arma::sort;
 using arma::stable_sort_index;
 using arma::is_finite;
 using arma::trans;
+using arma::hist;
+using arma::histc;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -574,6 +576,34 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised() 
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm() {
+  Mat<double> input;
+  input.load("./input/series.mat");
+
+  std::array<int, 15> numberOfBins = {1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+  Mat<double> centers = {-90, -45, -22.5, -9, -4.5, -1.8, -0.9, -0.27, -0.009, 0, 0.01, 0.3, 1, 2, 5, 10, 25, 50, 100};
+
+  Mat<uword> expected;
+
+  expected = hist(input, centers, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHist.centers.d0.mat", raw_ascii);
+  expected = hist(input, centers, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHist.centers.d1.mat", raw_ascii);
+
+  // uses the matrix centers as edges
+  expected = histc(input, centers, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHistc.d0.mat", raw_ascii);
+  expected = histc(input, centers, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHistc.d1.mat", raw_ascii);
+
+  input = vectorise(input);
+
+  for (int bins : numberOfBins) {
+    expected = hist(input, bins);
+    expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHist.n" + to_string(bins) + ".mat", raw_ascii);
+   }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -588,6 +618,7 @@ int main() {
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous();
   testArmaMatrixValuedFunctionsOfVectorsMatricesSort();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm();
 
   return EXIT_SUCCESS;
 }
