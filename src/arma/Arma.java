@@ -234,13 +234,13 @@ public class Arma {
       vector1.iteratorReset();
       result.diag(Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
       for (int n = 1; n < vector1.n_elem; n++) {
-        result.diag(n, Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
+        result.diag(-n, Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
       }
 
       vector2.iteratorReset();
       vector2.iteratorNext(); // Skip this one
       for (int n = 1; n < vector2.n_elem; n++) {
-        result.diag(-n, Op.EQUAL, vector2._matrix[vector2.iteratorNext()]);
+        result.diag(n, Op.EQUAL, vector2._matrix[vector2.iteratorNext()]);
       }
 
       return result;

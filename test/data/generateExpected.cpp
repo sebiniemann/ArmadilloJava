@@ -91,6 +91,8 @@ using arma::trans;
 using arma::hist;
 using arma::histc;
 using arma::repmat;
+using arma::toeplitz;
+using arma::circ_toeplitz;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -625,6 +627,30 @@ void testArmaMatrixGenerationMatrix() {
   }
 }
 
+void testArmaMatrixGenerationToeplitz() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+
+  Mat<double> input;
+  Mat<double> expected;
+  string filename;
+
+  for (int numberOfElements : dimensions) {
+    filename = "numbered." +  to_string(numberOfElements) + "x" + to_string(1) + ".mat";
+    input.load("./input/" + filename);
+
+    expected = toeplitz(input);
+    expected.save("./expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename, raw_ascii);
+    expected = circ_toeplitz(input);
+    expected.save("./expected/TestArmaMatrixGenerationToeplitz/testCirc_toeplitz." + filename, raw_ascii);
+
+    filename = "numbered." +  to_string(numberOfElements) + "x" + to_string(2) + ".mat";
+    input.load("./input/" + filename);
+
+    expected = toeplitz(input.col(0), input.col(1));
+    expected.save("./expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename, raw_ascii);
+  }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -641,6 +667,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised();
   testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm();
   testArmaMatrixGenerationMatrix();
+  testArmaMatrixGenerationToeplitz();
 
   return EXIT_SUCCESS;
 }
