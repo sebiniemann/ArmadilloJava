@@ -90,6 +90,7 @@ using arma::is_finite;
 using arma::trans;
 using arma::hist;
 using arma::histc;
+using arma::repmat;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -602,6 +603,30 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm() {
     expected = hist(input, bins);
     expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHist.n" + to_string(bins) + ".mat", raw_ascii);
    }
+}
+
+void TestArmaMatrixGenerationMatrix() {
+  std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};
+
+  Mat<double> expected;
+
+  Mat<double> input;
+  input.load("./input/numbered.10x10.mat");
+
+  string filename;
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      filename = "numbered.10x10." + to_string(10 * numberOfRows) + "x" + to_string(10 * numberOfColumns) + ".mat";
+
+      expected = repmat(input, numberOfRows, numberOfColumns);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + filename, raw_ascii);
+      expected = reshape(input, numberOfRows, numberOfColumns, 1);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d1." + filename, raw_ascii);
+      expected = resize(input, numberOfRows, numberOfColumns);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testResize." + filename, raw_ascii);
+    }
+  }
 }
 
 int main() {

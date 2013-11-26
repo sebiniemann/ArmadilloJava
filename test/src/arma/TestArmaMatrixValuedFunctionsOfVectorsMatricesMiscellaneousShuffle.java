@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.Test;
@@ -73,20 +74,22 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
   public Mat    _testMatrix;
 
   /**
-   * Test method for {@link arma.Arma#shuffle(arma.AbstractMat)}.
+   * Test method for {@link arma.Arma#shuffle(arma.AbstractMat, java.util.Random)}.
    * 
    * @throws IOException An I/O error occurred
    */
   @Test
   public void testShuffleMatAbstractMat() throws IOException {
     RunningStatVec statistic = new RunningStatVec();
+    Random rng = new Random();
+    rng.setSeed(123456789);
 
     Mat actual;
 
     Set<Integer> indicies = new HashSet<Integer>();
 
     for (int n = 0; n < 1000; n++) {
-      actual = Arma.shuffle(_testMatrix);
+      actual = Arma.shuffle(_testMatrix, rng);
 
       for (int i = 0; i < _testMatrix.n_rows; i++) {
         indicies.add(i);
@@ -115,26 +118,28 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
     if (_testMatrix.n_rows > 1) {
       Mat mean = statistic.mean();
       for(int n = 0; n < mean.n_elem; n++) {
-        assertEquals("" + mean, 1, mean.at(n), 1e-1);
+        assertEquals("", 1, mean.at(n), 1e-1);
       }
     }
   }
 
   /**
-   * Test method for {@link arma.Arma#shuffle(arma.AbstractMat, int)}.
+   * Test method for {@link arma.Arma#shuffle(arma.AbstractMat, int, java.util.Random)}.
    * 
    * @throws IOException An I/O error occurred
    */
   @Test
   public void testShuffleMatAbstractMatInt() throws IOException {
     RunningStatVec statistic = new RunningStatVec();
-
+    Random rng = new Random();
+    rng.setSeed(123456789);
+    
     Mat actual;
 
     Set<Integer> indicies = new HashSet<Integer>();
 
     for (int n = 0; n < 1000; n++) {
-      actual = Arma.shuffle(_testMatrix, 0);
+      actual = Arma.shuffle(_testMatrix, 0, rng);
 
       for (int i = 0; i < _testMatrix.n_rows; i++) {
         indicies.add(i);
@@ -163,14 +168,15 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
     if (_testMatrix.n_rows > 1) {
       Mat mean = statistic.mean();
       for(int n = 0; n < mean.n_elem; n++) {
-        assertEquals("" + mean, 1, mean.at(n), 1e-1);
+        assertEquals("", 1, mean.at(n), 1e-1);
       }
     }
     
     statistic.reset();
+    rng.setSeed(123456789);
 
     for (int n = 0; n < 1000; n++) {
-      actual = Arma.shuffle(_testMatrix, 1);
+      actual = Arma.shuffle(_testMatrix, 1, rng);
 
       for (int i = 0; i < _testMatrix.n_rows; i++) {
         indicies.add(i);
@@ -197,7 +203,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
     if (_testMatrix.n_cols > 1) {
       Mat mean = statistic.mean();
       for(int n = 0; n < mean.n_elem; n++) {
-        assertEquals("" + mean, 1, mean.at(n), 1e-1);
+        assertEquals("", 1, mean.at(n), 1e-1);
       }
     }
   }

@@ -2834,18 +2834,20 @@ public class Arma {
 
   /**
    * @param matrix The matrix
+   * @param rng The pseudorandom generator
    * @return The matrix
    */
-  public static Mat shuffle(AbstractMat matrix) {
-    return shuffle(matrix, 0);
+  public static Mat shuffle(AbstractMat matrix, Random rng) {
+    return shuffle(matrix, 0, rng);
   }
 
   /**
    * @param matrix The matrix
    * @param dimension The dimension
+   * @param rng The pseudorandom generator
    * @return The matrix
    */
-  public static Mat shuffle(AbstractMat matrix, int dimension) {
+  public static Mat shuffle(AbstractMat matrix, int dimension, Random rng) {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
@@ -2862,7 +2864,7 @@ public class Arma {
     for (int n = 0; n < indicies.length; n++) {
       indicies[n] = n;
     }
-    Collections.shuffle(Arrays.asList(indicies));
+    Collections.shuffle(Arrays.asList(indicies), rng);
     
     if (dimension == 0) {
       for (int i = 0; i < matrix.n_rows; i++) {

@@ -10,7 +10,6 @@
 package arma;
 
 import static arma.TestUtil.assertMatElementWiseEquals;
-import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
