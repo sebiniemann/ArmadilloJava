@@ -2626,59 +2626,51 @@ public class Arma {
    * @param s The element to to begin with.
    * @return The created column vector.
    * 
-   * @throws IllegalArgumentException The parameter k must be non-negative and (non-strict) lower than n_elem, but was
-   *           {@link Mat#n_elem n_elem} and {@code k}.
    * @throws IllegalArgumentException The parameter s needs to be either 'first' or 'last', but was {@code s}.
    */
   public static Mat find(AbstractMat matrix, int k, String s) throws IllegalArgumentException {
-    if (k < 0 || k > matrix.n_elem) {
-      throw new IllegalArgumentException("The parameter k must be non-negative and (non-strict) lower than n_elem, but was " + matrix.n_elem + " and " + k + ".");
-    }
+    matrix.isElementOutOfBoundsDetection(k);
 
     if (!s.equals("first") && !s.equals("last")) {
       throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last', but was " + s);
     }
 
-    DenseMatrix64F result = new DenseMatrix64F(matrix.n_elem, 1);
+    Mat result = new Mat(matrix.n_elem, 1);
 
+    int limit;
+    if (k > 0) {
+      limit = k;
+    } else {
+      limit = matrix.n_elem;
+    }
+    
     int index = 0;
     if (s.equals("first")) {
-      int limit;
-      if (k > 0) {
-        limit = k;
-      } else {
-        limit = matrix.n_elem;
-      }
-
-      for (int i = 0; i < limit; i++) {
-        if (matrix.at(i) != 0) {
-          result.set(index, i);
-          index++;
+      for (int n = 0; n < matrix.n_elem && index < limit; n++) {
+        if (matrix.at(n) != 0) {
+          result._matrix[index++] = n;
         }
       }
     } else {
-      int limit;
-      if (k > 0) {
-        limit = matrix.n_elem - 1 - k;
-      } else {
-        limit = -1;
-      }
-
-      for (int i = matrix.n_elem - 1; i > limit; i--) {
-        if (matrix.at(i) != 0) {
-          result.set(index, i);
-          index++;
+      for (int n = matrix.n_elem - 1; n >= 0 && index < limit; n--) {
+        if (matrix.at(n) != 0) {
+          result._matrix[index++] = n;
         }
       }
     }
 
-    if (index > 0) {
-      // Saves current values of the elements since length <= n_elem
-      result.reshape(index, 1);
-    } else {
-      result = new DenseMatrix64F();
+    // Saves current values of the elements since length <= n_elem
+    result.reshape(index, 1);
+    
+    if (s.equals("last")) {
+      for (int n = 0; n < result.n_elem / 2; n++) {
+        double temp = result._matrix[n];
+        result._matrix[n] = result._matrix[result.n_elem - (n + 1)];
+        result._matrix[result.n_elem - (n + 1)] = temp;
+      }
     }
-    return AbstractMat.convertEJMLToMat(result);
+    
+    return result;
   }
 
   /**

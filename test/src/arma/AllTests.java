@@ -30,7 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
   // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
-  // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,

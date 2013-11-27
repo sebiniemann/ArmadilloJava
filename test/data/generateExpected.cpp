@@ -94,6 +94,7 @@ using arma::repmat;
 using arma::toeplitz;
 using arma::circ_toeplitz;
 using arma::linspace;
+using arma::find;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -663,6 +664,22 @@ void testArmaMatrixGenerationLinspace() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind() {
+  std::array<double, 9> elements = {0, 1, 2, 3, 4, 5, 10};
+
+  Mat<double> input;
+  input.load("./input/series.mat");
+
+  Mat<uword> expected;
+
+  for (int numberOfElements : elements) {
+    expected = find(input, numberOfElements, "first");
+    expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind/testFind.k" + to_string(numberOfElements) + ".first.mat", raw_ascii);
+    expected = find(input, numberOfElements, "last");
+    expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind/testFind.k" + to_string(numberOfElements) + ".last.mat", raw_ascii);
+  }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -681,6 +698,7 @@ int main() {
   testArmaMatrixGenerationMatrix();
   testArmaMatrixGenerationToeplitz();
   testArmaMatrixGenerationLinspace();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind();
 
   return EXIT_SUCCESS;
 }
