@@ -652,6 +652,7 @@ public class Mat extends AbstractMat {
       srcColumnPointer += temp.n_rows;
       destColumnPointer += n_rows;
     }
+    
   }
 
   /**

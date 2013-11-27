@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -868,7 +867,13 @@ public class Arma {
 
     matrix.iteratorReset();
     for (int n = 0; n < matrix.n_elem; n++) {
-      result._matrix[n] = Math.round(matrix._matrix[matrix.iteratorNext()]);
+      double element = matrix._matrix[matrix.iteratorNext()];
+
+      if (Double.isInfinite(element)) {
+        result._matrix[n] = element;
+      } else {
+        result._matrix[n] = Math.round(element);
+      }
     }
 
     return result;
@@ -2711,9 +2716,10 @@ public class Arma {
     Mat result = new Mat();
     result.copy_size(vector);
 
-    result._matrix[0] = vector._matrix[0];
+    vector.iteratorReset();
+    result._matrix[0] = vector._matrix[vector.iteratorNext()];
     for (int n = 1; n < result.n_elem; n++) {
-      result._matrix[n] = result._matrix[n - 1] + vector._matrix[n];
+      result._matrix[n] = result._matrix[n - 1] + vector._matrix[vector.iteratorNext()];
     }
 
     return result;
@@ -2736,14 +2742,13 @@ public class Arma {
     matrix.isEmptyDetection();
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
-    Mat result;
+    Mat result = new Mat();
+    result.copy_size(matrix);
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
       for (int j = 0; j < matrix.n_cols; j++) {
         result.col(j, Op.EQUAL, cumsum(matrix.colInternal(j)));
       }
     } else {
-      result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
         result.row(i, Op.EQUAL, cumsum(matrix.rowInternal(i)));
       }
@@ -2800,13 +2805,18 @@ public class Arma {
       throw new IllegalArgumentException("Both vectors must be 3-dimensional, but where " + vector1.n_elem + " and " + vector2.n_elem + "-dimensional.");
     }
 
-    return new Mat(new double[][]{{
-      vector1.at(1) * vector2.at(2) - vector1.at(2) * vector2.at(1)
-    }, {
-      vector1.at(2) * vector2.at(0) - vector1.at(0) * vector2.at(2)
-    }, {
-      vector1.at(0) * vector2.at(1) - vector1.at(1) * vector2.at(0)
-    }});
+    Mat result;
+    if (vector1.is_colvec()) {
+      result = new Mat(3, 1);
+    } else {
+      result = new Mat(1, 3);
+    }
+
+    result._matrix[0] = vector1._matrix[1] * vector2._matrix[2] - vector1._matrix[2] * vector2._matrix[1];
+    result._matrix[1] = vector1._matrix[2] * vector2._matrix[0] - vector1._matrix[0] * vector2._matrix[2];
+    result._matrix[2] = vector1._matrix[0] * vector2._matrix[1] - vector1._matrix[1] * vector2._matrix[0];
+
+    return result;
   }
 
   /**
@@ -2815,12 +2825,13 @@ public class Arma {
    * @return The konecker product
    */
   public static Mat kron(AbstractMat A, AbstractMat B) {
-    Mat result = repmat(A, B.n_rows, B.n_cols);
+    Mat result = repmat(B, A.n_rows, A.n_cols);
 
     int n = 0;
-    for (int j = 0; j < B.n_cols; j++) {
-      for (int i = 0; i < B.n_rows; i++) {
-        result.submatInternal(i, i + A.n_cols - 1, j, j + A.n_cols - 1).inplace(Op.TIMES, B._matrix[n++]);
+    A.iteratorReset();
+    for (int j = 0; j < A.n_cols; j++) {
+      for (int i = 0; i < A.n_rows; i++) {
+        result.submatInternal(i * B.n_rows, (i + 1) * B.n_rows - 1, j * B.n_cols, (j + 1) * B.n_cols - 1).inplace(Op.TIMES, A._matrix[n++]);
       }
     }
 
@@ -2879,24 +2890,34 @@ public class Arma {
    * @return The matrix
    */
   public static Mat unique(AbstractMat matrix) {
-    HashSet<Double> set = new HashSet<Double>();
 
-    for (int n = 0; n < matrix.n_elem; n++) {
-      set.add(matrix._matrix[n]);
-    }
-
-    Mat result;
-    if (matrix.is_rowvec()) {
-      result = new Mat(1, set.size());
+    Mat sorted;
+    if (!matrix.is_vec()) {
+      sorted = sort(vectorise(matrix));
     } else {
-      result = new Mat(set.size(), 1);
+      sorted = sort(matrix);
     }
 
-    int n = 0;
-    for (double element : set) {
-      result._matrix[n++] = element;
+    Mat result = new Mat();
+    result.copy_size(sorted);
+    int index = 0;
+    double lastElement = Datum.inf;
+    for (int n = 0; n < sorted.n_elem; n++) {
+      double element = sorted._matrix[n];
+
+      if (element > lastElement || Double.isInfinite(element)) {
+        result._matrix[index++] = element;
+      }
+
+      lastElement = element;
     }
 
+    if(matrix.is_rowvec()) {
+      result.reshape(1, index);
+    } else {
+      result.reshape(index, 1);
+    }
+    
     return result;
   }
 

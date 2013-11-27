@@ -86,7 +86,7 @@ class SubMat extends AbstractMat {
     _matrix = _underlyingMatrix._matrix;
 
     _stepRow = matrix.n_rows - n_rows;
-    _a = ai + aj * n_rows;
+    _a = ai + aj * matrix.n_rows;
   }
 
   @Override
@@ -123,7 +123,7 @@ class SubMat extends AbstractMat {
       n = i + j * n_rows;
     }
 
-    return _underlyingMatrix.getElementIndex(n);
+    return _underlyingMatrix.getElementIndex(_a + n);
   }
 
   @Override
@@ -133,9 +133,9 @@ class SubMat extends AbstractMat {
       nn = n;
     } else {
       int j = (n / n_rows);
-      nn = _a + n + j * (_stepRow + 1);
+      nn = n + j * (_stepRow + 1);
     }
 
-    return _underlyingMatrix.getElementIndex(nn);
+    return _underlyingMatrix.getElementIndex(_a + nn);
   }
 }

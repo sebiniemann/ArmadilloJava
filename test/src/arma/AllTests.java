@@ -29,7 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
-  // TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
+  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised.class,
   TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle.class,

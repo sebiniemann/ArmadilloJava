@@ -28,7 +28,7 @@ public class TestUtil {
    * @param B The actual matrix
    */
   public static void assertMatElementWiseEquals(String message, Mat A, Mat B) {
-    assertMatEquals(message, A, B, 1e-11);
+    assertMatElementWiseEquals(message, A, B, 1e-11);
   }
 
   /**
@@ -49,7 +49,11 @@ public class TestUtil {
       double a = A.at(n);
       double b = B.at(n);
 
-      assertEquals(message + " at position " + n, a, b, ((a == 0) ? 1 : Math.abs(a)) * delta);
+      if (Double.isInfinite(a)) {
+        assertEquals(message + " at position " + n, a, b, 0);
+      } else {
+        assertEquals(message + " at position " + n, a, b, ((a == 0) ? 1 : Math.abs(a)) * delta);
+      }
     }
   }
 
@@ -94,7 +98,14 @@ public class TestUtil {
     }
 
     for (int n = 0; n < A.n_elem; n++) {
-      assertEquals(message + " at position " + n, A.at(n), B.at(n), absoluteMax * delta);
+      double a = A.at(n);
+      double b = B.at(n);
+
+      if (Double.isInfinite(a)) {
+        assertEquals(message + " at position " + n, a, b, 0);
+      } else {
+        assertEquals(message + " at position " + n, a, b, absoluteMax * delta);
+      }
     }
   }
 }

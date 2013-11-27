@@ -95,6 +95,10 @@ using arma::toeplitz;
 using arma::circ_toeplitz;
 using arma::linspace;
 using arma::find;
+using arma::cumsum;
+using arma::conv;
+using arma::kron;
+using arma::unique;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -680,6 +684,58 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind() {
   }
 }
 
+void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous() {
+  Mat<double> input;
+  input.load("./input/series.mat");
+
+  Mat<double> expected;
+
+  expected = cumsum(input, 0);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testCumsum.d0.mat", raw_ascii);
+  expected = cumsum(input, 1);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testCumsum.d1.mat", raw_ascii);
+  expected = conv(input.col(0), input.col(1));
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testConv.mat", raw_ascii);
+  expected = unique(input);
+  expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testUnique.mat", raw_ascii);
+
+  Mat<double> inputA;
+  inputA.load("./input/numbered.10x10.mat");
+
+  Mat<double> inputB;
+  string filename;
+
+  int dimensions[] = {1, 2, 3, 4, 5, 10};
+
+  for (int numberOfRows : dimensions) {
+    for (int numberOfColumns : dimensions) {
+      filename = "numbered." + to_string(numberOfRows) + "x" + to_string(numberOfColumns) + ".mat";
+      inputB.load("./input/" + filename);
+
+      expected = kron(inputA, inputB);
+      expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testKron.numbered.10x10." + filename, raw_ascii);
+    }
+  }
+
+  std::array<string, 5> matrices = {"zeros", "ones", "eye", "hankel", "hilbert"};
+
+  string filenameA;
+  string filenameB;
+
+  for (string matrixA : matrices) {
+   for (string matrixB : matrices) {
+     filenameA = matrixA +".3x1.mat";
+     inputA.load("./input/" + filenameA);
+
+     filenameB = matrixB +".3x1.mat";
+     inputB.load("./input/" + filenameB);
+
+     expected = cross(inputA, inputB);
+     expected.save("./expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous/testCross." +  matrixA + "." +  matrixB + ".mat", raw_ascii);
+   }
+  }
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -699,6 +755,7 @@ int main() {
   testArmaMatrixGenerationToeplitz();
   testArmaMatrixGenerationLinspace();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind();
+  testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous();
 
   return EXIT_SUCCESS;
 }
