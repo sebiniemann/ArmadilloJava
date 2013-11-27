@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -105,10 +105,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParamete
   @Test
   public void testDiagvecAbstractMatInt() throws IOException {
     Mat expected = new Mat();
-    
-    for(int k = -_testMatrix.n_rows + 1; k < _testMatrix.n_cols; k++) {
-    expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testDiagvec.k" + k + "." + _filename);
-    assertMatElementWiseEquals(_filename + ", k = " + k, expected, Arma.diagvec(_testMatrix, k));
+
+    for (int k = -_testMatrix.n_rows + 1; k < _testMatrix.n_cols; k++) {
+      expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised/testDiagvec.k" + k + "." + _filename);
+      assertMatElementWiseEquals(_filename + ", k = " + k, expected, Arma.diagvec(_testMatrix, k));
     }
   }
 

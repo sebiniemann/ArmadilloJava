@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -31,7 +31,7 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   /**
    * Returns the matrices to be tested.
    * 
-   * @return The test matrices 
+   * @return The test matrices
    * 
    * @throws IOException n I/O error occurred
    */
@@ -54,8 +54,8 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   public Mat    _testMatrix;
 
   /**
-	 * The powers
-	 */
+   * The powers
+   */
   public double _powers[] = {-10, -5, -4, -3, -2, -1, -1 / 2.0, -1 / 3.0, -1 / 4.0, -1 / 5.0, -1 / 10.0, 0, 1 / 10.0, 1 / 5.0, 1 / 4.0, 1 / 3.0, 1 / 2.0, 1, 2, 3, 4, 5, 10};
 
   /**

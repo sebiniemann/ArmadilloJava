@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -55,12 +55,12 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins {
             filenameExpected = matrix + "." + numberOfRowsA + "x" + numberOfColumnsA + "." + matrix + "." + numberOfRowsA + "x" + numberOfColumnsB + ".mat";
 
             testMatrices.add(new Object[]{filenameExpected, filenameA, filenameB});
-           }
+          }
 
           for (int numberOfRowsB : dimensions) {
             filenameB = matrix + "." + numberOfRowsB + "x" + numberOfColumnsA + ".mat";
             filenameExpected = matrix + "." + numberOfRowsA + "x" + numberOfColumnsA + "." + matrix + "." + numberOfRowsB + "x" + numberOfColumnsA + ".mat";
-            
+
             testMatrices.add(new Object[]{filenameExpected, filenameA, filenameB});
           }
         }
@@ -100,11 +100,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins {
 
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
-    if(inputA.n_cols != inputB.n_cols) {
+
+    if (inputA.n_cols != inputB.n_cols) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_vert." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.join_cols(inputA, inputB));
@@ -122,11 +122,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins {
 
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
-    if(inputA.n_cols != inputB.n_cols) {
+
+    if (inputA.n_cols != inputB.n_cols) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_vert." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.join_vert(inputA, inputB));
@@ -144,11 +144,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins {
 
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
-    if(inputA.n_rows != inputB.n_rows) {
+
+    if (inputA.n_rows != inputB.n_rows) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_horiz." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.join_rows(inputA, inputB));
@@ -166,11 +166,11 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins {
 
     inputA.load("./test/data/input/" + _filenameA);
     inputB.load("./test/data/input/" + _filenameB);
-    
-    if(inputA.n_rows != inputB.n_rows) {
+
+    if (inputA.n_rows != inputB.n_rows) {
       return;
     }
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins/testJoin_horiz." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.join_horiz(inputA, inputB));

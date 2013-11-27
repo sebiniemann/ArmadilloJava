@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -60,10 +60,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind {
    */
   @Test
   public void testFindAbstractMat() throws IOException {
-    if(_numberOfElements != 0) {
+    if (_numberOfElements != 0) {
       return;
     }
-    
+
     Mat input = new Mat();
     input.load("./test/data/input/series.mat");
 
@@ -98,10 +98,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind {
     input.load("./test/data/input/series.mat");
 
     Mat expected = new Mat();
-    
+
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind/testFind.k" + _numberOfElements + ".first.mat");
     assertMatElementWiseEquals("", expected, Arma.find(input, _numberOfElements, "first"));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind/testFind.k" + _numberOfElements + ".last.mat");
     assertMatElementWiseEquals("Number of elements: " + _numberOfElements, expected, Arma.find(input, _numberOfElements, "last"));
   }

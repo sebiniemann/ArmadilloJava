@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 /**
@@ -113,31 +113,31 @@ public class TestArmaMatrixGenerationMatrix {
    */
   @Test
   public void testRanduIntIntRandom() {
-    if(_numberOfRows > 10 || _numberOfColumns > 10) {
+    if (_numberOfRows > 10 || _numberOfColumns > 10) {
       return;
     }
-    
+
     RunningStatVec statistic = new RunningStatVec();
     Random rng = new Random();
     rng.setSeed(123456789);
-    
+
     for (int n = 0; n < 1000; n++) {
       Mat actual = Arma.randu(_numberOfRows, _numberOfColumns, rng);
       assertEquals("Number of rows", _numberOfRows, actual.n_rows);
       assertEquals("Number of columns", _numberOfColumns, actual.n_cols);
-      
+
       statistic.update(Arma.vectorise(actual));
     }
-    
+
     Mat mean = statistic.mean();
     Mat max = statistic.max();
     Mat min = statistic.min();
     Mat var = statistic.var();
-    for(int n = 0; n < mean.n_elem; n++) {
+    for (int n = 0; n < mean.n_elem; n++) {
       assertEquals("", 0.5, mean.at(n), 0.25);
       assertTrue("", max.at(n) <= 1);
       assertTrue("", min.at(n) >= 0);
-      assertEquals("", 1.0/12, var.at(n), 0.025);
+      assertEquals("", 1.0 / 12, var.at(n), 0.025);
     }
   }
 
@@ -146,25 +146,25 @@ public class TestArmaMatrixGenerationMatrix {
    */
   @Test
   public void testRandnIntIntRandom() {
-    if(_numberOfRows > 10 || _numberOfColumns > 10) {
+    if (_numberOfRows > 10 || _numberOfColumns > 10) {
       return;
     }
-    
+
     RunningStatVec statistic = new RunningStatVec();
     Random rng = new Random();
     rng.setSeed(123456789);
-    
+
     for (int n = 0; n < 1000; n++) {
       Mat actual = Arma.randn(_numberOfRows, _numberOfColumns, rng);
       assertEquals("Number of rows", _numberOfRows, actual.n_rows);
       assertEquals("Number of columns", _numberOfColumns, actual.n_cols);
-      
+
       statistic.update(Arma.vectorise(actual));
     }
-    
+
     Mat mean = statistic.mean();
     Mat var = statistic.var();
-    for(int n = 0; n < mean.n_elem; n++) {
+    for (int n = 0; n < mean.n_elem; n++) {
       assertEquals("", 0, mean.at(n), 0.25);
       assertEquals("", 1, var.at(n), 0.25);
     }
@@ -177,13 +177,13 @@ public class TestArmaMatrixGenerationMatrix {
    */
   @Test
   public void testRepmat() throws IOException {
-    if(_numberOfRows > 10 || _numberOfColumns > 10) {
+    if (_numberOfRows > 10 || _numberOfColumns > 10) {
       return;
     }
-    
+
     Mat input = new Mat();
     input.load("./test/data/input/numbered.10x10.mat");
-    
+
     String filename = "numbered.10x10." + 10 * _numberOfRows + "x" + 10 * _numberOfColumns + ".mat";
 
     Mat expected = new Mat();

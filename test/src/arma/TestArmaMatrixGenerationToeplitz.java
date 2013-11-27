@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 /**
@@ -65,15 +65,15 @@ public class TestArmaMatrixGenerationToeplitz {
   @Test
   public void testToeplitzAbstractMat() throws IOException {
     String filename = "numbered." + _numberOfElements + "x" + 1 + ".mat";
-    
+
     Mat input = new Mat();
     input.load("./test/data/input/" + filename);
 
     Mat expected = new Mat();
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input.t()));
   }
@@ -86,21 +86,21 @@ public class TestArmaMatrixGenerationToeplitz {
   @Test
   public void testToeplitzAbstractMatAbstractMat() throws IOException {
     String filename = "numbered." + _numberOfElements + "x" + 2 + ".mat";
-    
+
     Mat input = new Mat();
     input.load("./test/data/input/" + filename);
 
     Mat expected = new Mat();
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input.col(0), input.col(1)));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input.col(0), input.col(1).t()));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input.col(0).t(), input.col(1)));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testToeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.toeplitz(input.col(0).t(), input.col(1).t()));
   }
@@ -113,15 +113,15 @@ public class TestArmaMatrixGenerationToeplitz {
   @Test
   public void testCirc_toeplitz() throws IOException {
     String filename = "numbered." + _numberOfElements + "x" + 1 + ".mat";
-    
+
     Mat input = new Mat();
     input.load("./test/data/input/" + filename);
 
     Mat expected = new Mat();
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testCirc_toeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.circ_toeplitz(input));
-    
+
     expected.load("./test/data/expected/TestArmaMatrixGenerationToeplitz/testCirc_toeplitz." + filename);
     assertMatElementWiseEquals(filename, expected, Arma.circ_toeplitz(input.t()));
   }

@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
@@ -2643,7 +2643,7 @@ public class Arma {
     } else {
       limit = matrix.n_elem;
     }
-    
+
     int index = 0;
     if (s.equals("first")) {
       for (int n = 0; n < matrix.n_elem && index < limit; n++) {
@@ -2661,7 +2661,7 @@ public class Arma {
 
     // Saves current values of the elements since length <= n_elem
     result.reshape(index, 1);
-    
+
     if (s.equals("last")) {
       for (int n = 0; n < result.n_elem / 2; n++) {
         double temp = result._matrix[n];
@@ -2669,7 +2669,7 @@ public class Arma {
         result._matrix[result.n_elem - (n + 1)] = temp;
       }
     }
-    
+
     return result;
   }
 

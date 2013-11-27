@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 /**
@@ -34,7 +34,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous {
   /**
    * Returns the matrices to be tested.
    * 
-   * @return The test matrices 
+   * @return The test matrices
    * 
    * @throws IOException An I/O error occurred
    */
@@ -55,7 +55,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous {
    */
   @Parameter
   public Mat _testMatrix;
-  
+
   /**
    * Test method for {@link arma.Arma#prod(arma.AbstractMat)}.
    * 
@@ -159,7 +159,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous {
     for (int n = 0; n < expected.n_elem; n++) {
       assertEquals("at position " + n, expected.at(n), actual.at(n), 1e-13);
     }
-    
+
     expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous/testSum.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.sumMat(_testMatrix, 1));
   }

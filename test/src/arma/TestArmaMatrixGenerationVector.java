@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 /**
@@ -86,7 +86,7 @@ public class TestArmaMatrixGenerationVector {
     assertMatElementWiseEquals(filename, expected, Arma.ones(_numberOfElements));
 
   }
-  
+
   /**
    * Test method for {@link arma.Arma#randu(int, java.util.Random)}.
    * 
@@ -97,24 +97,24 @@ public class TestArmaMatrixGenerationVector {
     RunningStatVec statistic = new RunningStatVec();
     Random rng = new Random();
     rng.setSeed(123456789);
-    
+
     for (int n = 0; n < 1000; n++) {
       Mat actual = Arma.randu(_numberOfElements, rng);
       assertEquals("Number of rows", _numberOfElements, actual.n_rows);
       assertEquals("Number of columns", 1, actual.n_cols);
-      
+
       statistic.update(actual);
     }
-    
+
     Mat mean = statistic.mean();
     Mat max = statistic.max();
     Mat min = statistic.min();
     Mat var = statistic.var();
-    for(int n = 0; n < mean.n_elem; n++) {
+    for (int n = 0; n < mean.n_elem; n++) {
       assertEquals("", 0.5, mean.at(n), 0.25);
       assertTrue("", max.at(n) <= 1);
       assertTrue("", min.at(n) >= 0);
-      assertEquals("", 1.0/12, var.at(n), 0.025);
+      assertEquals("", 1.0 / 12, var.at(n), 0.025);
     }
   }
 
@@ -128,18 +128,18 @@ public class TestArmaMatrixGenerationVector {
     RunningStatVec statistic = new RunningStatVec();
     Random rng = new Random();
     rng.setSeed(123456789);
-    
+
     for (int n = 0; n < 1000; n++) {
       Mat actual = Arma.randn(_numberOfElements, rng);
       assertEquals("Number of rows", _numberOfElements, actual.n_rows);
       assertEquals("Number of columns", 1, actual.n_cols);
-      
+
       statistic.update(actual);
     }
-    
+
     Mat mean = statistic.mean();
     Mat var = statistic.var();
-    for(int n = 0; n < mean.n_elem; n++) {
+    for (int n = 0; n < mean.n_elem; n++) {
       assertEquals("", 0, mean.at(n), 0.25);
       assertEquals("", 1, var.at(n), 0.25);
     }

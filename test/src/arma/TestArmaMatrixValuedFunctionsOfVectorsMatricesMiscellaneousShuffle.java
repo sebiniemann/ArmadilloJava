@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -114,10 +114,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
         statistic.update(actual.col(0).elemDivide((_testMatrix.n_rows - 1.0) / 2));
       }
     }
-    
+
     if (_testMatrix.n_rows > 1) {
       Mat mean = statistic.mean();
-      for(int n = 0; n < mean.n_elem; n++) {
+      for (int n = 0; n < mean.n_elem; n++) {
         assertEquals("", 1, mean.at(n), 1e-1);
       }
     }
@@ -133,7 +133,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
     RunningStatVec statistic = new RunningStatVec();
     Random rng = new Random();
     rng.setSeed(123456789);
-    
+
     Mat actual;
 
     Set<Integer> indicies = new HashSet<Integer>();
@@ -164,14 +164,14 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
         statistic.update(actual.col(0).elemDivide((_testMatrix.n_rows - 1.0) / 2));
       }
     }
-    
+
     if (_testMatrix.n_rows > 1) {
       Mat mean = statistic.mean();
-      for(int n = 0; n < mean.n_elem; n++) {
+      for (int n = 0; n < mean.n_elem; n++) {
         assertEquals("", 1, mean.at(n), 1e-1);
       }
     }
-    
+
     statistic.reset();
     rng.setSeed(123456789);
 
@@ -199,10 +199,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle 
         statistic.update(actual.row(0).elemDivide(_testMatrix.at(0, _testMatrix.n_cols - 1) / 2));
       }
     }
-    
+
     if (_testMatrix.n_cols > 1) {
       Mat mean = statistic.mean();
-      for(int n = 0; n < mean.n_elem; n++) {
+      for (int n = 0; n < mean.n_elem; n++) {
         assertEquals("", 1, mean.at(n), 1e-1);
       }
     }

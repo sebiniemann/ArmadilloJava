@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -39,7 +39,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize {
     Collection<Object[]> testMatrices = new ArrayList<Object[]>();
 
     int dimensions[] = {1, 2, 3, 4, 5, 10, 100};
-    
+
     for (int numberOfRows : dimensions) {
       for (int numberOfColumns : dimensions) {
         testMatrices.add(new Object[]{"numbered.10x10." + numberOfRows + "x" + numberOfColumns + ".mat", numberOfRows, numberOfColumns});
@@ -59,13 +59,13 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize {
    * The number of rows
    */
   @Parameter(1)
-  public int _numberOfRows;
+  public int    _numberOfRows;
 
   /**
    * The number of columns
    */
   @Parameter(2)
-  public int _numberOfColumns;
+  public int    _numberOfColumns;
 
   /**
    * Test method for {@link arma.Arma#reshape(arma.Mat, int, int)}.
@@ -76,7 +76,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize {
   public void testReshapeMatIntInt() throws IOException {
     Mat input = new Mat();
     input.load("./test/data/input/numbered.10x10.mat");
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.reshape(input, _numberOfRows, _numberOfColumns));
@@ -91,7 +91,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize {
   public void testReshapeMatIntIntInt() throws IOException {
     Mat input = new Mat();
     input.load("./test/data/input/numbered.10x10.mat");
-    
+
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize/testReshape.d0." + _filenameExpected);
     assertMatElementWiseEquals(_filenameExpected, expected, Arma.reshape(input, _numberOfRows, _numberOfColumns, 0));

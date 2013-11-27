@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
- *
+ * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 package arma;
@@ -169,7 +169,6 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic {
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n0.mat");
     assertMatElementWiseEquals("", expected, Arma.cov(_testMatrix, _testMatrix));
-    
 
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       for (int jj = 0; jj < _testMatrix.n_cols; jj++) {
@@ -189,7 +188,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic {
   @Test
   public void testCovAbstractMatAbstractMatInt() throws IOException {
     Mat expected = new Mat();
-    
+
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n0.mat");
     assertMatElementWiseEquals("", expected, Arma.cov(_testMatrix, _testMatrix, 0));
 
@@ -201,10 +200,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic {
         assertMatElementWiseEquals("", new Mat(new double[]{expected.at(j, jj)}), Arma.cov(_testMatrix.col(j).t(), _testMatrix.col(jj).t(), 0));
       }
     }
-    
+
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic/testCov.n1.mat");
     assertMatElementWiseEquals("", expected, Arma.cov(_testMatrix, _testMatrix, 1));
-    
+
     for (int j = 0; j < _testMatrix.n_cols; j++) {
       for (int jj = 0; jj < _testMatrix.n_cols; jj++) {
         assertMatElementWiseEquals("", new Mat(new double[]{expected.at(j, jj)}), Arma.cov(_testMatrix.col(j), _testMatrix.col(jj), 1));
