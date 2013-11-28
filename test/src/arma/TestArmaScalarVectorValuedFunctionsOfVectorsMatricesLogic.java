@@ -70,7 +70,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   @Test
   public void testAnyMatMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix));
   }
 
@@ -82,10 +82,10 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   @Test
   public void testAnyMatMatInt() throws IOException {
     Mat expected = new Mat();
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 0));
 
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 1));
   }
 
@@ -105,7 +105,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   @Test
   public void testAllMatMat() throws IOException {
     Mat expected = new Mat();
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix));
   }
 
@@ -117,10 +117,10 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   @Test
   public void testAllMatMatInt() throws IOException {
     Mat expected = new Mat();
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 0));
 
-    expected.load("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat");
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.minMat(_testMatrix, 1));
   }
 
