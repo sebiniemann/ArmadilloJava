@@ -119,11 +119,7 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
     assertMatElementWiseEquals("", expected, Arma.allMat(_testMatrix, 0));
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> bd3438b17828778acceea423ba932cb435d003a0
     expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat");
     assertMatElementWiseEquals("", expected, Arma.allMat(_testMatrix, 1));
   }
