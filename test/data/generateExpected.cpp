@@ -125,7 +125,7 @@ bool isSymmetric(const Mat<double>& matrix) {
 
 void testArmaMatrixValuedElementWiseFunctionsTrigonometric() {
   Mat<double> input;
-  input.load("./input/elementwise.trigonometric.mat");
+  input.load("./input/trigonometric.mat");
 
   Mat<double> expected;
 
@@ -162,7 +162,7 @@ void testArmaMatrixValuedElementWiseFunctionsTrigonometric() {
 
 void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
   Mat<double> input;
-  input.load("./input/elementwise.miscellaneous.mat");
+  input.load("./input/miscellaneous.mat");
 
   std::array<double, 23> powers = {-10, -5, -4, -3, -2, -1, -1 / 2.0, -1 / 3.0, -1 / 4.0, -1 / 5.0, -1 / 10.0, 0, 1 / 10.0, 1 / 5.0, 1 / 4.0, 1 / 3.0, 1 / 2.0, 1, 2, 3, 4, 5, 10};
 

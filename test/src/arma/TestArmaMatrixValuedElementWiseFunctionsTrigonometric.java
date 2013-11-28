@@ -41,7 +41,7 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
 
     Mat input = new Mat();
 
-    input.load("./test/data/input/elementwise.trigonometric.mat");
+    input.load("./test/data/input/trigonometric.mat");
     testMatrices.add(new Object[]{new Mat(input)});
 
     return testMatrices;
