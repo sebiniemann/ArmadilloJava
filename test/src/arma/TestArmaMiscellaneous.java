@@ -28,7 +28,7 @@ public class TestArmaMiscellaneous {
   @Test
   public void testIs_finiteAbstractMat() throws IOException {
     Mat input = new Mat();
-    input.load("./test/data/input/elementwise.miscellaneous.mat");
+    input.load("./test/data/input/miscellaneous.mat");
 
     Mat testMatrix;
 
@@ -46,7 +46,7 @@ public class TestArmaMiscellaneous {
   @Test
   public void testIs_finiteDouble() throws IOException {
     Mat input = new Mat();
-    input.load("./test/data/input/elementwise.miscellaneous.mat");
+    input.load("./test/data/input/miscellaneous.mat");
 
     for (double testValue : input) {
       assertEquals(!Double.isInfinite(testValue), Arma.is_finite(testValue));
