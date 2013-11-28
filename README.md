@@ -14,4 +14,4 @@ Distributed under [MIT license](http://opensource.org/licenses/MIT).
 
 Copyright (c) 2013 [Sebastian Niemann](mailto:niemann@sra.uni-hannover.de) and contributors.
 
-![piwik](https://sebastianniemann.net/piwik/piwik.php?idsite=2&amp;rec=1)
+![piwik](https://ssl-id.de/sebastianniemann.net/piwik/piwik.php?idsite=2&amp;rec=1)
