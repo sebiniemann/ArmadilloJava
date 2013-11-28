@@ -742,6 +742,7 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous() {
 }
 
 void testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic () {
+<<<<<<< HEAD
   Mat<double> input;
   input.load("./input/logic.mat");
 
@@ -758,6 +759,24 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic () {
 }
 
 int main() {
+=======
+	Mat<double> input;
+	input.load("./input/logic.mat");
+	
+	Mat<double> expected;
+	
+	expected = any(input, 0);
+	expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat", raw_ascii);
+	expected = any(input, 1);
+	expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d1.mat", raw_ascii);
+	expected = all(input, 0);
+	expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat", raw_ascii);
+	expected = all(input, 1);
+	expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat", raw_ascii);
+}
+
+int main() {/*
+>>>>>>> 3767e10660acd7f2eb5b648b189b52d2a105680d
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
   testArmaScalarValuedFunctionsOfVectorsMatrices();
@@ -776,7 +795,11 @@ int main() {
   testArmaMatrixGenerationToeplitz();
   testArmaMatrixGenerationLinspace();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind();
+<<<<<<< HEAD
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous();
+=======
+  testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous(); */
+>>>>>>> 3767e10660acd7f2eb5b648b189b52d2a105680d
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic();
 
   return EXIT_SUCCESS;
