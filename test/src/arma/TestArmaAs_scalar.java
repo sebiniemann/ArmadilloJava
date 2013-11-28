@@ -28,7 +28,7 @@ public class TestArmaAs_scalar {
   @Test
   public void testAs_scalar() throws IOException {
     Mat input = new Mat();
-    input.load("./test/data/input/elementwise.miscellaneous.mat");
+    input.load("./test/data/input/miscellaneous.mat");
 
     Mat testMatrix;
 
