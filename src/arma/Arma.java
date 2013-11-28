@@ -1548,14 +1548,14 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = any(matrix.colInternal(j)) ? 1 : 0;
+        result._matrix[j] = (any(matrix.colInternal(j)) ? 1 : 0);
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = any(matrix.rowInternal(i)) ? 1 : 0;
+        result._matrix[i] = (any(matrix.rowInternal(i)) ? 1 : 0);
       }
     }
 
@@ -1606,14 +1606,14 @@ public class Arma {
 
     Mat result;
     if (dimension == 0) {
-      result = new Mat(matrix.n_cols, 1);
+      result = new Mat(1, matrix.n_cols);
       for (int j = 0; j < matrix.n_cols; j++) {
-        result._matrix[j] = all(matrix.colInternal(j)) ? 1 : 0;
+        result._matrix[j] = (all(matrix.colInternal(j)) ? 1 : 0);
       }
     } else {
       result = new Mat(matrix.n_rows, 1);
       for (int i = 0; i < matrix.n_rows; i++) {
-        result._matrix[i] = all(matrix.rowInternal(i)) ? 1 : 0;
+        result._matrix[i] = (all(matrix.rowInternal(i)) ? 1 : 0);
       }
     }
 
