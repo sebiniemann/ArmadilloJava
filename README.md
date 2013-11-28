@@ -7,8 +7,11 @@ Provides pure Java based interfaces that are similar to the [Armadillo C++ Algeb
 
 If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g. same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
 
+License
+-------
+
 Distributed under [MIT license](http://opensource.org/licenses/MIT).
 
-Copyright 2013 Sebastian Niemann <niemann@sra.uni-hannover.de> and contributors.
+Copyright (c) 2013 [Sebastian Niemann](mailto:niemann@sra.uni-hannover.de) and contributors.
 
-[![piwik](http://sebastianniemann.net/piwik/piwik.php?idsite=2&amp;rec=1)]
+![piwik](http://sebastianniemann.net/piwik/piwik.php?idsite=2&amp;rec=1)
