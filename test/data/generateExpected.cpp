@@ -15,6 +15,9 @@
 using std::cout;
 using std::endl;
 
+#include <array>
+using std::array;
+
 #include <string>
 using std::string;
 using std::to_string;
@@ -99,6 +102,8 @@ using arma::cumsum;
 using arma::conv;
 using arma::kron;
 using arma::unique;
+using arma::any;
+using arma::all;
 
 bool isInvertable(const Mat<double>& matrix) {
   return (matrix.is_square() && rank(matrix) == matrix.n_rows);
@@ -736,6 +741,22 @@ void testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous() {
   }
 }
 
+void testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic () {
+  Mat<double> input;
+  input.load("./input/logic.mat");
+
+  Mat<uword> expected;
+
+  expected = any(input, 0);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat", raw_ascii);
+  expected = any(input, 1);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d1.mat", raw_ascii);
+  expected = all(input, 0);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat", raw_ascii);
+  expected = all(input, 1);
+  expected.save("./expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat", raw_ascii);
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -756,6 +777,7 @@ int main() {
   testArmaMatrixGenerationLinspace();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind();
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous();
+  testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic();
 
   return EXIT_SUCCESS;
 }

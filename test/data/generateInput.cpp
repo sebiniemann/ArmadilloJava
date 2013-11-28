@@ -90,11 +90,11 @@ int main() {
 
   input = {0, 1, 2, datum::eps, datum::inf, 1/12.0 * datum::pi, 1/10.0 * datum::pi, 1/8.0 * datum::pi, 1/6.0 * datum::pi, 1/4.0 * datum::pi, 1/2.0 * datum::pi, datum::pi, 3/2.0 * datum::pi, 2 * datum::pi, 3 * datum::pi, 4 * datum::pi, 5 * datum::pi, 10 * datum::pi, 100 * datum::pi};
   input = join_vert(input, -input);
-  input.save("./input/elementwise.trigonometric.mat", raw_ascii);
+  input.save("./input/trigonometric.mat", raw_ascii);
 
   input = {0, 1, 2, datum::eps, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
   input = join_vert(input, -input);
-  input.save("./input/elementwise.miscellaneous.mat", raw_ascii);
+  input.save("./input/miscellaneous.mat", raw_ascii);
 
   input << 0 << 1 << 2 << 10 << 5 << 0 << endr
       << 0 << 1 << 2 << 50 << -55 << 1 << endr
