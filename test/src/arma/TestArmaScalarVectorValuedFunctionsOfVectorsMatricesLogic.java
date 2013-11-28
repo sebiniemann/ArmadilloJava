@@ -10,6 +10,7 @@
 package arma;
 
 import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * @author Daniel Kiechle <kiechle@sra.uni-hannovr.de>
+ * @author Daniel Kiechle <kiechle@sra.uni-hannover.de>
  */
 @RunWith(Parameterized.class)
 public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
@@ -53,19 +54,28 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   public Mat _testMatrix;
 
   /**
-   * Test method for {@link arma.Arma#any(AbstractMat)}.
+   * Test method for {@link arma.Arma#any(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAnyMat() throws IOException {
+    Mat expected = new Mat();
 
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d0.mat");
+    for (int j = 0; j < _testMatrix.n_cols; j++) {
+      assertTrue(j + "th column", (expected.at(j) == 1) == Arma.any(_testMatrix.col(j)));
+    }
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAny.d1.mat");
+    for (int i = 0; i < _testMatrix.n_rows; i++) {
+      assertTrue(i + "th row", (expected.at(i) == 1) == Arma.any(_testMatrix.row(i)));
+    }
   }
 
   /**
-   * Test method for {@link arma.Arma#anyMat(AbstractMat)}.
+   * Test method for {@link arma.Arma#anyMat(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAnyMatMat() throws IOException {
@@ -75,9 +85,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   }
 
   /**
-   * Test method for {@link arma.Arma#anyMat(AbstractMat, int)}.
+   * Test method for {@link arma.Arma#anyMat(arma.AbstractMat, int)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAnyMatMatInt() throws IOException {
@@ -90,17 +100,28 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   }
 
   /**
-   * Test method for {@link arma.Arma#all(AbstractMat)}.
+   * Test method for {@link arma.Arma#all(arma.AbstractMat)}.
+   * 
+   * @throws IOException An I/O error occurred
    */
   @Test
-  public void testAllMat() {
+  public void testAllMat() throws IOException {
+    Mat expected = new Mat();
 
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d0.mat");
+    for (int j = 0; j < _testMatrix.n_cols; j++) {
+      assertTrue(j + "th column", (expected.at(j) == 1) == Arma.all(_testMatrix.col(j)));
+    }
+    expected.load("./test/data/expected/TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic/testAll.d1.mat");
+    for (int i = 0; i < _testMatrix.n_rows; i++) {
+      assertTrue(i + "th row", (expected.at(i) == 1) == Arma.all(_testMatrix.row(i)));
+    }
   }
 
   /**
-   * Test method for {@link arma.Arma#allMat(AbstractMat)}.
+   * Test method for {@link arma.Arma#allMat(arma.AbstractMat)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAllMatMat() throws IOException {
@@ -110,9 +131,9 @@ public class TestArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic {
   }
 
   /**
-   * Test method for {@link arma.Arma#allMat(AbstractMat, int)}.
+   * Test method for {@link arma.Arma#allMat(arma.AbstractMat, int)}.
    * 
-   * @throws IOException
+   * @throws IOException An I/O error occurred
    */
   @Test
   public void testAllMatMatInt() throws IOException {
