@@ -114,5 +114,13 @@ int main() {
   input = join_vert(input, -input);
   input.save("./input/series.mat", raw_ascii);
 
+  input << 0 << 1 << 0 << 123 << -1 << 0 << endr
+  << 0 << 1 << 1 << 234 << datum::eps << datum::inf << endr
+  << 0 << 1 << 0 << 345 << -1 << 0 << endr
+  << 0 << 1 << 1 << 456 << -datum::eps << -datum::inf << endr
+  << 0 << 1 << 0 << 567 << -1 << 0 << endr;
+  input = join_horiz(input, -input);
+  input.save("./input/logic.mat", raw_ascii);
+
   return EXIT_SUCCESS;
 }
