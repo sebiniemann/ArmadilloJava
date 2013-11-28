@@ -8,7 +8,10 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 // http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS
+#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists
+#include <iostream>
+// EXIT_SUCCESS
+
 #include <string>
 using std::to_string;
 
