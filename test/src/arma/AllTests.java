@@ -41,7 +41,8 @@ import org.junit.runners.Suite.SuiteClasses;
   TestArmaMiscellaneous.class,
   TestArmaScalarValuedFunctionsOfVectorsMatrices.class,
   TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous.class,
-  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class
+  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class,
+  TestWallClock.class
 })
 public class AllTests {
 

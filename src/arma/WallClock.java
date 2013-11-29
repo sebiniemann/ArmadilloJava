@@ -37,7 +37,9 @@ public class WallClock {
    * 
    * @return The elapsed time.
    */
-  public static long toc() {
-    return TimeUnit.SECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS);
+  public static double toc() {
+    // Conversions from finer to coarser granularities truncates information.
+    // Therefore, a direct conversion to seconds would result in a complete information loss of milliseconds.
+    return TimeUnit.MILLISECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS) / 1000.0;
   }
 }
