@@ -8,8 +8,7 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 // http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS
-#include <string>
+#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS#include <string>
 using std::to_string;
 
 #include <armadillo>
@@ -115,10 +114,10 @@ int main() {
   input.save("./input/series.mat", raw_ascii);
 
   input << 0 << 1 << 0 << 123 << -1 << 0 << endr
-  << 0 << 1 << 1 << 234 << datum::eps << datum::inf << endr
-  << 0 << 1 << 0 << 345 << -1 << 0 << endr
-  << 0 << 1 << 1 << 456 << -datum::eps << -datum::inf << endr
-  << 0 << 1 << 0 << 567 << -1 << 0 << endr;
+      << 0 << 1 << 1 << 234 << datum::eps << datum::inf << endr
+      << 0 << 1 << 0 << 345 << -1 << 0 << endr
+      << 0 << 1 << 1 << 456 << -datum::eps << -datum::inf << endr
+      << 0 << 1 << 0 << 567 << -1 << 0 << endr;
   input = join_horiz(input, -input);
   input.save("./input/logic.mat", raw_ascii);
 

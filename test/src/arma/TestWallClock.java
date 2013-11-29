@@ -10,8 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 /**
- * @author niemann
- * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
 public class TestWallClock {
 
