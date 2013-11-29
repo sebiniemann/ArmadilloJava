@@ -14,8 +14,5 @@ Distributed under [MIT license](http://opensource.org/licenses/MIT).
 
 Copyright (c) 2013 [Sebastian Niemann](mailto:niemann@sra.uni-hannover.de) and contributors.
 
-![piwik](https://ssl-id.de/sebastianniemann.net/piwik/piwik.php?idsite=2&amp;rec=1)
-
-
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/SebastianNiemann/armadillojava/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
