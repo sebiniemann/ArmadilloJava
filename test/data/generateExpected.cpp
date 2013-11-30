@@ -112,8 +112,8 @@ bool isInvertable(const Mat<double>& matrix) {
 
 bool isSymmetric(const Mat<double>& matrix) {
   int n = 0;
-  for (int j = 0; j < matrix.n_cols; j++) {
-    for (int i = 0; i < matrix.n_rows; i++) {
+  for (unsigned int j = 0; j < matrix.n_cols; j++) {
+    for (unsigned int i = 0; i < matrix.n_rows; i++) {
       if (i != j && matrix.at(n) != matrix.at(j, i)) {
         return false;
       }
@@ -217,8 +217,6 @@ void testArmaScalarValuedFunctionsOfVectorsMatrices() {
   Mat<double> input;
 
   Mat<double> expected;
-  double value;
-  double sign;
 
   for (int numberOfRows : dimensions) {
     for (int numberOfColumns : dimensions) {
@@ -265,8 +263,8 @@ void testArmaScalarValuedFunctionsOfVectorsMatrices() {
   string matrixB;
 
   for (int dimension : dimensions) {
-    for (int a = 0; a < matrices.size(); a++) {
-      for (int b = a; b < matrices.size(); b++) {
+    for (unsigned int a = 0; a < matrices.size(); a++) {
+      for (unsigned int b = a; b < matrices.size(); b++) {
         matrixA = matrices.at(a);
         matrixB = matrices.at(b);
 
@@ -532,7 +530,7 @@ void testArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous() {
 void testArmaMatrixValuedFunctionsOfVectorsMatricesSort() {
   Mat<double> input;
   input.load("./input/series.mat");
-  for (int n = 0; n < input.n_elem; n++) {
+  for (unsigned int n = 0; n < input.n_elem; n++) {
     double value = input.at(n);
     if (!is_finite(value)) {
       input.at(n) = 0;
