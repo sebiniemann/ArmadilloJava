@@ -2575,7 +2575,7 @@ abstract class AbstractMat implements Iterable<Double> {
        * @param matrix The matrix
        */
       public MatIterator(AbstractMat matrix) {
-        _matrix = matrix;
+        _matrix = new Mat(matrix);
         _matrix.iteratorReset();
       }
 
