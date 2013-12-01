@@ -249,8 +249,7 @@ void testArmaScalarValuedFunctionsOfVectorsMatrices() {
             expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testNorm.p-inf." + filename, raw_ascii);
           }
 
-#pragma GCC diagnostic ignored "-Wnarrowing"
-          expected = {rank(input)};
+          expected = {(double) rank(input)};
           expected.save("./expected/TestArmaScalarValuedFunctionsOfVectorsMatrices/testRank." + filename, raw_ascii);
         }
       }
