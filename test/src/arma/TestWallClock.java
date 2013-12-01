@@ -25,7 +25,7 @@ public class TestWallClock {
     for (int n = 100; n < 1000; n += 100) {
       WallClock.tic();
       TimeUnit.MILLISECONDS.sleep(n);
-      assertEquals(n / 1000.0, WallClock.toc(), 0.05);
+      assertEquals(n / 1000.0, WallClock.toc(), 0.1);
     }
   }
 }
