@@ -2549,7 +2549,7 @@ abstract class AbstractMat implements Iterable<Double> {
           }
           output += String.format("%5s", sign + "Inf");
         } else {
-          output += String.format(Locale.ENGLISH, "%1$ 7.5f", value);
+          output += String.format(Locale.ENGLISH, "%1$ 10.5f", value);
         }
       }
 
