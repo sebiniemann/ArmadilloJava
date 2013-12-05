@@ -93,14 +93,12 @@ public enum Op {
    * @throws UnsupportedOperationException Only relational operators are supported.
    */
   public static Mat evaluate(Mat a, Op operator, Mat b) throws IllegalArgumentException, UnsupportedOperationException {
-    if (a.n_elem != b.n_elem) {
-      throw new IllegalArgumentException("Both provided matrices must have the same number of elements, but had " + a.n_elem + " and " + b.n_elem + " elements.");
-    }
+    AbstractMat.isNonEqualNumberOfElementsDetection(a.n_elem, b.n_elem);
 
-    Mat result = new Mat(a.n_elem, 1);
+    Mat result = new Mat(a.n_elem, 1, Fill.ZEROS);
     for (int n = 0; n < a.n_elem; n++) {
       if (evaluate(a.at(n), operator, b.at(n))) {
-        result.at(n, Op.EQUAL, 1);
+        result._matrix[n] = 1;
       }
     }
 
@@ -123,7 +121,7 @@ public enum Op {
     Mat result = new Mat(a.n_elem, 1);
     for (int n = 0; n < a.n_elem; n++) {
       if (evaluate(a.at(n), operator, b)) {
-        result.at(n, Op.EQUAL, 1);
+        result._matrix[n] = 1;
       }
     }
 
@@ -178,39 +176,19 @@ public enum Op {
 
     switch (operator) {
       case STRICT_LESS:
-        if (a < b) {
-          return true;
-        }
-        break;
+        return (a < b);
       case LESS:
-        if (a <= b) {
-          return true;
-        }
-        break;
+        return (a <= b);
       case EQUAL:
-        if (a == b) {
-          return true;
-        }
-        break;
+        return (a == b);
       case NOT_EQUAL:
-        if (a != b) {
-          return true;
-        }
-        break;
+        return (a != b);
       case GREATER:
-        if (a >= b) {
-          return true;
-        }
-        break;
+        return (a >= b);
       case STRICT_GREATER:
-        if (a > b) {
-          return true;
-        }
-        break;
+        return (a > b);
       default:
         throw new UnsupportedOperationException("Only relational operators are supported.");
     }
-
-    return false;
   }
 }
