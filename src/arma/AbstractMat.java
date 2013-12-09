@@ -109,7 +109,7 @@ abstract class AbstractMat implements Iterable<Double> {
   /**
    * Returns true if iterator position has yet to reach the last position.
    * 
-   * @return Wheter the iterator position has reached its last position.
+   * @return Whether the iterator position has reached its last position.
    */
   protected final boolean iteratorHasNext() {
     return (_count < n_elem);
