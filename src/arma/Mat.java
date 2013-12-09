@@ -730,7 +730,7 @@ public class Mat extends AbstractMat {
     }
 
     int numberOfColumns = line.trim().split("\\s+").length;
-    List<double[]> matrix = new ArrayList<double[]>();
+    List<double[]> matrix = new ArrayList<>();
     do {
       String rowString[] = line.trim().split("\\s+");
 

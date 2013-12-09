@@ -1924,13 +1924,13 @@ public class Arma {
     vector.isNonVectorDetection();
     AbstractMat.isNonBinaryParameterDetection(sortType);
 
-    Map<Integer, Double> map = new HashMap<Integer, Double>(vector.n_elem);
+    Map<Integer, Double> map = new HashMap<>(vector.n_elem);
     vector.iteratorReset();
     for (int n = 0; n < vector.n_elem; n++) {
       map.put(n, vector._matrix[vector.iteratorNext()]);
     }
 
-    List<Entry<Integer, Double>> list = new ArrayList<Entry<Integer, Double>>(map.entrySet());
+    List<Entry<Integer, Double>> list = new ArrayList<>(map.entrySet());
 
     if (sortType == 0) {
       Collections.sort(list, new Comparator<Entry<Integer, Double>>() {
