@@ -741,15 +741,23 @@ public class Mat extends AbstractMat {
 
       double[] rowDouble = new double[numberOfColumns];
       for (int j = 0; j < numberOfColumns; j++) {
-        if (rowString[j].equals("Inf") || rowString[j].equals("inf")) {
-          rowDouble[j] = Double.POSITIVE_INFINITY;
-        } else if (rowString[j].equals("-Inf") || rowString[j].equals("-inf")) {
-          rowDouble[j] = Double.NEGATIVE_INFINITY;
-        } else if (rowString[j].equals("NaN") || rowString[j].equals("nan")) {
-          rowDouble[j] = Double.NaN;
-        } else {
-          rowDouble[j] = Double.valueOf(rowString[j]);
-        }
+          switch (rowString[j]) {
+              case "Inf":
+              case "inf":
+                  rowDouble[j] = Double.POSITIVE_INFINITY;
+                  break;
+              case "-Inf":
+              case "-inf":
+                  rowDouble[j] = Double.NEGATIVE_INFINITY;
+                  break;
+              case "NaN":
+              case "nan":
+                  rowDouble[j] = Double.NaN;
+                  break;
+              default:
+                  rowDouble[j] = Double.valueOf(rowString[j]);
+                  break;
+          }
       }
       matrix.add(rowDouble);
 
