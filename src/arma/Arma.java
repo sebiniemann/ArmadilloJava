@@ -974,7 +974,7 @@ public class Arma {
   }
 
   /**
-   * Sets {@code value} to the absolute value of the base-e logarithmic determinant and {@sign} to the sign of the
+   * Sets {@code value} to the absolute value of the base-e logarithmic determinant and {@code sign} to the sign of the
    * determinant of the matrix.
    * <p>
    * Note: The value must be of the mutable type double[] and the sign of the mutable type int[].
@@ -3059,7 +3059,7 @@ public class Arma {
    * @param L The matrix
    * @param U The matrix
    * @param X The matrix
-   * @returnThe matrix
+   * @return The matrix
    */
   public static void lu(Mat L, Mat U, AbstractMat X) {
     X.isIllConditionedDectetion();
