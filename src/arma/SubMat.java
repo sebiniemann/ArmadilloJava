@@ -25,7 +25,7 @@ class SubMat extends AbstractMat {
   /**
    * The first corresponding index
    */
-  int         _a;
+  final int         _a;
 
   /**
    * The remaining rows
@@ -35,7 +35,7 @@ class SubMat extends AbstractMat {
   /**
    * The difference between the last index of a row and the next index of the next row
    */
-  int         _stepRow;
+  final int         _stepRow;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to a subvector from row {@code a} to {@code b}.

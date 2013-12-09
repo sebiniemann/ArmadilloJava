@@ -23,31 +23,31 @@ public class RunningStatVec {
   /**
    * Whether to calculate the covariance
    */
-  private boolean _calculateCovariance;
+  protected final boolean _calculateCovariance;
   /**
    * The smallest value
    */
-  private Mat     _min;
+  protected Mat     _min;
   /**
    * The largest value
    */
-  private Mat     _max;
+  protected Mat     _max;
   /**
    * The amount of values
    */
-  private double  _count;
+  protected double  _count;
   /**
    * The mean of all values
    */
-  private Mat     _mean;
+  protected Mat     _mean;
   /**
    * The variance of all values
    */
-  private Mat     _var;
+  protected Mat     _var;
   /**
    * The covariance of all values
    */
-  private Mat     _cov;
+  protected Mat     _cov;
 
   /**
    * Initialises the statistical measures. Calculation of the covariance will be deactivated.

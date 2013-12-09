@@ -20,7 +20,7 @@ class DiagMat extends AbstractMat {
   /**
    * The diagonal index
    */
-  int           _k;
+  final int           _k;
 
   /**
    * The current index
@@ -30,7 +30,7 @@ class DiagMat extends AbstractMat {
   /**
    * The difference between the current and the next index
    */
-  int           _step;
+  final int           _step;
 
   /**
    * Creates a shallow copy of a matrix and restrict its access to its {@code k}th diagonal.

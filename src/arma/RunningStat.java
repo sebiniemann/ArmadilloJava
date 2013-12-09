@@ -20,23 +20,23 @@ public class RunningStat {
   /**
    * The smallest sample
    */
-  private double _min;
+  protected double _min;
   /**
    * The largest sample
    */
-  private double _max;
+  protected double _max;
   /**
    * The amount of samples
    */
-  private double _count;
+  protected double _count;
   /**
    * The mean of all samples
    */
-  private double _mean;
+  protected double _mean;
   /**
    * The variance of all samples
    */
-  private double _var;
+  protected double _var;
 
   /**
    * Initialises the statistical measures.
