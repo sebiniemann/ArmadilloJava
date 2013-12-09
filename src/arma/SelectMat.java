@@ -146,7 +146,7 @@ class SelectMat extends AbstractMat {
       int i = n - j * n_rows;
 
       if (_rowSelection == null) {
-        nn = i + ((int) _rowSelection._matrix[_elementSelection.getElementIndex(j)]) * n_rows;
+        nn = i + ((int) _columnSelection._matrix[_columnSelection.getElementIndex(j)]) * n_rows;
       } else if (_columnSelection == null) {
         nn = ((int) _rowSelection._matrix[_rowSelection.getElementIndex(i)]) + j * n_rows;
       } else {
