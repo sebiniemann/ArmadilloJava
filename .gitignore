@@ -3,6 +3,8 @@
 ##
 
 /.idea
+/out
+/ArmadilloJava.iml
 
 ##
 # Eclipse CDT
