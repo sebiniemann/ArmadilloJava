@@ -1838,7 +1838,7 @@ abstract class AbstractMat implements Iterable<Double> {
 
   /**
    * Prints the matrix to a Stream, with an additional header.
-   * 
+   *
    * @param stream The stream
    * @param header The header
    */
@@ -1893,55 +1893,25 @@ abstract class AbstractMat implements Iterable<Double> {
   }
 
   /**
-   * Store the element into a file with filetype {@code ascii} and returns true on success.
-   * 
+   * Store the element into a file with filetype {@code filetype} and returns true on success.
+   *
    * @param filename The filename
    * @return Whether the process was succesfully.
-   * 
+   *
    * @throws FileNotFoundException File not found.
    */
   public boolean save(String filename) throws FileNotFoundException {
-    return save(filename, "ascii");
-  }
-
-  /**
-   * Store the element into a file with filetype {@code filetype} and returns true on success.
-   * 
-   * @param filename The filename
-   * @param filetype The filetype
-   * @return Whether the process was succesfully.
-   * 
-   * @throws FileNotFoundException File not found.
-   */
-  public boolean save(String filename, String filetype) throws FileNotFoundException {
-    return save(new FileOutputStream(filename, false), filetype);
-  }
-
-  /**
-   * Store the element into a stream with filetype {@code ascii} and returns true on success.
-   * 
-   * @param stream The stream
-   * @return Whether the process was succesfully.
-   */
-  public boolean save(OutputStream stream) {
-    return save(stream, "ascii");
+    return save(new FileOutputStream(filename, false));
   }
 
   /**
    * Store the element into a stream with filetype {@code filetype} and returns true on success.
    * 
    * @param stream The stream
-   * @param filetype The filetype
    * @return Whether the process was succesfully.
-   * 
-   * @throws IllegalArgumentException Only ascii is supported, but was {@code filetype}.
    */
-  public boolean save(OutputStream stream, String filetype) throws IllegalArgumentException {
-    if (!filetype.equals("ascii")) {
-      throw new IllegalArgumentException("Only ascii is supported, but was " + filetype + ".");
-    }
-
-    PrintWriter writer;
+  public boolean save(OutputStream stream) throws IllegalArgumentException {
+   PrintWriter writer;
     try {
       writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
     } catch(UnsupportedEncodingException exception) {
