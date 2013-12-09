@@ -934,14 +934,12 @@ public class Arma {
     double dotProduct = 0;
     if (vector1.equals(vector2)) {
       vector1.iteratorReset();
-      dotProduct = 0;
       while (vector1.iteratorHasNext()) {
         dotProduct += Math.pow(vector1._matrix[vector1.iteratorNext()], 2);
       }
     } else {
       vector1.iteratorReset();
       vector2.iteratorReset();
-      dotProduct = 0;
       while (vector1.iteratorHasNext()) {
         dotProduct += vector1._matrix[vector1.iteratorNext()] * vector2._matrix[vector2.iteratorNext()];
       }
