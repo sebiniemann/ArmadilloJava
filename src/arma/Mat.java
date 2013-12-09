@@ -43,7 +43,7 @@ public class Mat extends AbstractMat {
    * Creates an empty matrix with zero elements.
    */
   public Mat() {
-    this(new double[]{});
+      set_size(0, 0);
   }
 
   /**
@@ -52,7 +52,7 @@ public class Mat extends AbstractMat {
    * @param matrix The array
    */
   public Mat(double[] matrix) {
-    if (matrix != null && matrix.length > 0) {
+    if (matrix.length > 0) {
       set_size(matrix.length, 1);
       System.arraycopy(matrix, 0, _matrix, 0, matrix.length);
     } else {
@@ -70,7 +70,7 @@ public class Mat extends AbstractMat {
    * @throws IllegalArgumentException All rows must have the same length.
    */
   public Mat(double[][] matrix) throws IllegalArgumentException {
-    if (matrix != null && matrix.length > 0 && matrix[0].length > 0) {
+    if (matrix.length > 0 && matrix[0].length > 0) {
       int numberOfRows = matrix.length;
       int numberOfColumns = matrix[0].length;
 
@@ -778,7 +778,7 @@ public class Mat extends AbstractMat {
    * Resets the matrix to an emtpy one.
    */
   public void reset() {
-    _matrix = new double[]{};
+    _matrix = null;
     updateAttributes(0, 0);
   }
 
