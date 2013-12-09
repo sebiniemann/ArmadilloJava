@@ -535,12 +535,12 @@ public class Mat extends AbstractMat {
     isNonVectorDetection();
     isInvalidPositionDetection(numberOfElements);
 
-    if (numberOfElements == n_elem) {
-      return;
-    } else if (is_colvec()) {
-      set_size(numberOfElements, 1);
-    } else {
-      set_size(1, numberOfElements);
+    if (numberOfElements != n_elem) {
+      if (is_colvec()) {
+        set_size(numberOfElements, 1);
+      } else {
+        set_size(1, numberOfElements);
+      }
     }
   }
 
