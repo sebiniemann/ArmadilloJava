@@ -3059,7 +3059,6 @@ public class Arma {
    * @param L The matrix
    * @param U The matrix
    * @param X The matrix
-   * @return The matrix
    */
   public static void lu(Mat L, Mat U, AbstractMat X) {
     X.isIllConditionedDectetion();
