@@ -3204,7 +3204,7 @@ public class Arma {
 
     if (!CommonOps.solve(AbstractMat.convertMatToEJMLMat(A), AbstractMat.convertMatToEJMLMat(B), X)) {
       throw new RuntimeException("The algorithm was unable to solve the matrix.");
-    };
+    }
 
     return AbstractMat.convertEJMLToMat(X);
   }
