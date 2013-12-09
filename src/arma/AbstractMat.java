@@ -1833,7 +1833,7 @@ abstract class AbstractMat implements Iterable<Double> {
    * @param stream The stream
    */
   public void print(OutputStream stream) {
-    print(stream);
+    print(stream, "");
   }
 
   /**
