@@ -752,6 +752,7 @@ public class Mat extends AbstractMat {
                   break;
               case "NaN":
               case "nan":
+              case "-nan":
                   rowDouble[j] = Double.NaN;
                   break;
               default:
