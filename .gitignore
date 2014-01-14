@@ -1,12 +1,4 @@
 ##
-# IntelliJ IDEA
-##
-
-/.idea
-/out
-/ArmadilloJava.iml
-
-##
 # Eclipse CDT
 ##
 
@@ -19,3 +11,4 @@
 
 /test/data/external
 
+/bin
