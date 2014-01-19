@@ -95,7 +95,7 @@ int main() {
   input = join_vert(input, -input);
   input.save("./input/trigonometric.mat", raw_ascii);
 
-  input = {1, 2, datum::inf, 1/2.0 * datum::pi, datum::pi, 3/2.0 * datum::pi, 2 * datum::pi, 3 * datum::pi, 4 * datum::pi, 5 * datum::pi, 10 * datum::pi, 100 * datum::pi};
+  input = {1, 2, 1/2.0 * datum::pi, datum::pi, 3/2.0 * datum::pi, 2 * datum::pi, 3 * datum::pi, 4 * datum::pi, 5 * datum::pi, 10 * datum::pi, 100 * datum::pi};
   input.save("./input/trigonometric.acosh.mat", raw_ascii);
 	
   input = {0, 1, datum::eps, 0.3, 0.6, 0.8, 0.9};
