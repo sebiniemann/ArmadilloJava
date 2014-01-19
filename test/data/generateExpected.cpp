@@ -133,8 +133,6 @@ void testArmaMatrixValuedElementWiseFunctionsTrigonometric() {
   // sine
   expected = sin(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testSin.mat", raw_ascii);
-  expected = asin(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAsin.mat", raw_ascii);
   expected = sinh(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testSinh.mat", raw_ascii);
   expected = asinh(input);
@@ -143,12 +141,8 @@ void testArmaMatrixValuedElementWiseFunctionsTrigonometric() {
   // cosine
   expected = cos(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testCos.mat", raw_ascii);
-  expected = acos(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcos.mat", raw_ascii);
   expected = cosh(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testCosh.mat", raw_ascii);
-  expected = acosh(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcosh.mat", raw_ascii);
 
   // tangent
   expected = tan(input);
@@ -157,8 +151,22 @@ void testArmaMatrixValuedElementWiseFunctionsTrigonometric() {
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAtan.mat", raw_ascii);
   expected = tanh(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testTanh.mat", raw_ascii);
+  
+  input.load("./input/trigonometric.acosh.mat");
+  expected = acosh(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcosh.mat", raw_ascii);
+
+  input.load("./input/trigonometric.acos.asin.mat");
+  expected = acos(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcos.mat", raw_ascii);
+  expected = asin(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAsin.mat", raw_ascii);
+
+  input.load("./input/trigonometric.atanh.mat");
   expected = atanh(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAtanh.mat", raw_ascii);
+
+
 }
 
 void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
@@ -181,6 +189,16 @@ void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testExp10.mat", raw_ascii);
   expected = trunc_exp(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testTrunc_exp.mat", raw_ascii);
+  expected = square(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSquare.mat", raw_ascii);
+  expected = floor(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testFloor.mat", raw_ascii);
+  expected = ceil(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testCeil.mat", raw_ascii);
+  expected = round(input);
+  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testRound.mat", raw_ascii);
+  
+  input.load("./input/miscellaneous.log.pow.mat");
   expected = log(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testLog.mat", raw_ascii);
   expected = log2(input);
@@ -195,16 +213,11 @@ void testArmaMatrixValuedElementWiseFunctionsMiscellaneous() {
     expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testPow.p" + to_string(power) + ".mat", raw_ascii);
   }
 
+  input.load("./input/miscellaneous.sqrt.mat");
   expected = sqrt(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSqrt.mat", raw_ascii);
-  expected = square(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSquare.mat", raw_ascii);
-  expected = floor(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testFloor.mat", raw_ascii);
-  expected = ceil(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testCeil.mat", raw_ascii);
-  expected = round(input);
-  expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testRound.mat", raw_ascii);
+  
+  input.load("./input/miscellaneous.sign.mat");
   expected = sign(input);
   expected.save("./expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSign.mat", raw_ascii);
 }
