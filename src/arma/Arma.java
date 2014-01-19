@@ -1190,16 +1190,9 @@ public class Arma {
    * @return The maximum
    */
   public static double max(AbstractMat vector) {
-    vector.isEmptyDetection();
     vector.isNonVectorDetection();
 
-    vector.iteratorReset();
-    double maximum = vector._matrix[vector.iteratorNext()];
-    while (vector.iteratorHasNext()) {
-      maximum = Math.max(maximum, vector._matrix[vector.iteratorNext()]);
-    }
-
-    return maximum;
+    return vector.max();
   }
 
   /**
