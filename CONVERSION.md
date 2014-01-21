@@ -118,7 +118,7 @@ A(I, J)                    | A(I, J)                    | A.submat(I, J)        
 
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
-                           | A.diag([k])                | A.diag([k])                     | **Default:** k = 0
+diag(A, [k])               | A.diag([k])                | A.diag([k])                     | **Default:** k = 0
                            | A.each_col([I])            | A.each_col([I])                 | **Note:** I is a vector. **Matlab:** Use bsxfun
                            | A.each_row([I])            | A.each_row([I])                 | **Note:** I is a vector. **Matlab:** Use bsxfun
                            

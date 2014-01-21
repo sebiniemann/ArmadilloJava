@@ -8,7 +8,12 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 // http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists#include <iostream>// EXIT_SUCCESS#include <string>using std::to_string;
+#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists
+#include <iostream>
+// EXIT_SUCCESS
+
+#include <string>
+using std::to_string;
 
 #include <armadillo>
 using arma::Mat;
@@ -90,9 +95,30 @@ int main() {
   input = join_vert(input, -input);
   input.save("./input/trigonometric.mat", raw_ascii);
 
-  input = {0, 1, 2, datum::eps, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
+  input = {1, 2, 1/2.0 * datum::pi, datum::pi, 3/2.0 * datum::pi, 2 * datum::pi, 3 * datum::pi, 4 * datum::pi, 5 * datum::pi, 10 * datum::pi, 100 * datum::pi};
+  input.save("./input/trigonometric.acosh.mat", raw_ascii);
+	
+  input = {0, 1, datum::eps, 0.3, 0.6, 0.8, 0.9};
+  input = join_vert(input, -input);
+  input.save("./input/trigonometric.acos.asin.mat", raw_ascii);
+	
+  input = {0, datum::eps, 0.3, 0.6, 0.8, 0.9};
+  input = join_vert(input, -input);
+  input.save("./input/trigonometric.atanh.mat", raw_ascii);
+	
+  input = {1, 2, datum::eps, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
   input = join_vert(input, -input);
   input.save("./input/miscellaneous.mat", raw_ascii);
+
+  input = {1, 2, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
+  input.save("./input/miscellaneous.log.pow.mat", raw_ascii);
+	
+  input = {0, 1, 2, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
+  input.save("./input/miscellaneous.sqrt.mat", raw_ascii);
+	
+  input = {1, 2, datum::eps, datum::inf, datum::e, 12, 123, 1234, 12345, 123456, 1234567, 12345678, 123456789, 0.9, 0.89, 0.789, 0.6789, 0.56789, 0.456789, 0.3456789, 0.23456789, 0.123456789};
+  input = join_vert(input, -input);
+  input.save("./input/miscellaneous.sign.mat", raw_ascii);
 
   input << 0 << 1 << 2 << 10 << 5 << 0 << endr
       << 0 << 1 << 2 << 50 << -55 << 1 << endr
