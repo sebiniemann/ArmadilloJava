@@ -1,4 +1,11 @@
 ##
+# Eclipse
+##
+
+.classpath
+.project
+
+##
 # Eclipse CDT
 ##
 
