@@ -1,4 +1,3 @@
-<!-- Used only for travis ci -->
 <project name="ArmadilloJava" default="test" basedir=".">
 	<property name="src.dir" location="src" />
 	<property name="test.dir" location="test/src" />
