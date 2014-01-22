@@ -736,7 +736,14 @@ abstract class AbstractMat {
      */
     inPlace(unary_operator);
   }
-
+  
+  /**
+   * Returns a deep copy of the {@code col_number}th column.
+   * 
+   * @param col_number The column position
+   * 
+   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
+   */
   abstract public AbstractMat col(int col_number);
 
   /**
@@ -778,7 +785,14 @@ abstract class AbstractMat {
      */
     inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Returns a deep copy of the {@code row_number}th row.
+   * 
+   * @param col_number The column position
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   */
   abstract public AbstractMat row(int row_number);
 
   /**
@@ -831,6 +845,15 @@ abstract class AbstractMat {
     new ViewSubRow(this, row_number).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the {@code first_col}th to {@code last_col} column.
+   * 
+   * @param first_col The first column position
+   * @param last_col The last column position
+   * 
+   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
+   */
   abstract public AbstractMat cols(int first_col, int last_col);
 
   /**
@@ -911,7 +934,16 @@ abstract class AbstractMat {
      */
     inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Returns a deep copy of the {@code first_row}th to {@code last_row} row.
+   * 
+   * @param first_row The first row position
+   * @param last_row The last row position
+   * 
+   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
+   */
   abstract public AbstractMat rows(int first_row, int last_row);
 
   /**
@@ -984,6 +1016,16 @@ abstract class AbstractMat {
     new ViewSubRows(this, first_row, last_row).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the {@code span._first}th to {@code span._last} row of the {@code col_number}th column.
+   * 
+   * @param span The span
+   * @param col_number The column position
+   * 
+   * @throws IndexOutOfBoundsException The first row position ({@code span._first}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
+   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
+   */
   abstract public AbstractMat col(Span span, int col_number);
 
   /**
@@ -1078,6 +1120,16 @@ abstract class AbstractMat {
     }
   }
 
+  /**
+   * Returns a deep copy of the {@code row_number}th row of the {@code span._first}th to {@code span._last} column.
+   * 
+   * @param row_number The row position
+   * @param span The span
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
+   */
   abstract public AbstractMat row(int row_number, Span span);
 
   /**
@@ -1163,6 +1215,20 @@ abstract class AbstractMat {
     row(row_number, binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the {@code first_row}th to {@code last_row} row of the {@code first_col}th to
+   * {@code last_col} column.
+   * 
+   * @param first_row The first row position
+   * @param first_col The first column position
+   * @param last_row The last row position
+   * @param last_col The last column position
+   * 
+   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
+   */
   abstract public AbstractMat submat(int first_row, int first_col, int last_row, int last_col);
 
   /**
@@ -1257,6 +1323,18 @@ abstract class AbstractMat {
     rows(first_row, last_row, binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the {@code row_span._first}th to {@code row_span._last} row of the {@code col_span._first}th
+   * to {@code col_span._last} column.
+   * 
+   * @param row_span The row span
+   * @param col_span The column span
+   * 
+   * @throws IndexOutOfBoundsException The first row position ({@code row_span._first}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last row position ({@code row_span._last}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
+   */
   abstract public AbstractMat submat(Span row_span, Span col_span);
 
   /**
@@ -1311,7 +1389,20 @@ abstract class AbstractMat {
   public void submat(Span row_span, Span col_span, Op binary_operator, AbstractMat operand) {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
   }
-
+  
+  /**
+   * Returns a deep copy starting at position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and
+   * {@code size.n_cols} columns.
+   * 
+   * @param first_row The first row position
+   * @param first_col The first column position
+   * @param size The size
+   * 
+   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last row position ({@code first_row + size.n_rows - 1}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
+   * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
+   */
   abstract public AbstractMat submat(int first_row, int first_col, Size size);
 
   /**
@@ -1369,7 +1460,14 @@ abstract class AbstractMat {
   public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
   }
-
+  
+  /**
+   * Returns a deep copy of the specified elements.
+   * <p>
+   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
+   * 
+   * @param vector_of_indices The positions
+   */
   abstract public Col elem(AbstractMat vector_of_indices);
 
   /**
@@ -1410,6 +1508,13 @@ abstract class AbstractMat {
     new ViewElemMat(this, vector_of_indices).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the specified columns.
+   * <p>
+   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
+   * 
+   * @param vector_of_column_indices The column positions
+   */
   abstract public AbstractMat cols(AbstractMat vector_of_column_indices);
 
   /**
@@ -1450,6 +1555,13 @@ abstract class AbstractMat {
     new ViewElemCols(this, vector_of_column_indices).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the specified rows.
+   * <p>
+   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
+   * 
+   * @param vector_of_row_indices The row positions
+   */
   abstract public AbstractMat rows(AbstractMat vector_of_row_indices);
 
   /**
@@ -1490,6 +1602,14 @@ abstract class AbstractMat {
     new ViewElemCols(this, vector_of_row_indices).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Returns a deep copy of the specified rows of the specified columns.
+   * <p>
+   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
+   * 
+   * @param vector_of_row_indices The row positions
+   * @param vector_of_column_indices The column positions
+   */
   abstract public AbstractMat submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices);
 
   /**
@@ -1535,10 +1655,25 @@ abstract class AbstractMat {
     new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
   }
 
+  /**
+   * Swaps the content of this matrix with another one.
+   * 
+   * @param X The matrix
+   */
   abstract public void swap(Mat X);
-  
+
+  /**
+   * Swaps the content of this matrix with another one.
+   * 
+   * @param X The matrix
+   */
   abstract public void swap(Col X);
-  
+
+  /**
+   * Swaps the content of this matrix with another one.
+   * 
+   * @param X The matrix
+   */
   abstract public void swap(Row X);
 
   /**
@@ -1582,8 +1717,18 @@ abstract class AbstractMat {
      */
   }
 
+  /**
+   * Returns the transpose.
+   */
   abstract public AbstractMat t();
 
+  /**
+   * Sets the size to be the same as {@code A}.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The specified matrix must be empty or have exactly one column.
+   */
   abstract public void copy_size(AbstractMat A);
 
   /**
