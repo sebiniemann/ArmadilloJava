@@ -2,8 +2,11 @@
 # Eclipse
 ##
 
+.settings
 .classpath
 .project
+
+/target
 
 ##
 # Eclipse CDT
