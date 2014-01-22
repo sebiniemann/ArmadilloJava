@@ -2,6 +2,18 @@ package org.armadillojava;
 
 import java.util.Arrays;
 
+/**
+ * Provides a real-valued dense column vector with interfaces similar to the Armadillo C++ Algebra Library (Armadillo)
+ * by Conrad Sanderson et al..
+ * <p>
+ * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo (e.g. same
+ * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
+ * Algebra Library.
+ * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * 
+ * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
+ */
 public class Col extends AbstractVector {
 
   /**
@@ -778,7 +790,7 @@ public class Col extends AbstractVector {
 
   @Override
   public void swap(Mat X) {
-    if(X.n_cols > 1) {
+    if (X.n_cols > 1) {
       throw new RuntimeException("The content of column vectors can only be swaped with matrices that have at most one column.");
     }
 
@@ -794,7 +806,7 @@ public class Col extends AbstractVector {
 
   @Override
   public void swap(Row X) {
-    if(X.n_elem > 1 || n_elem > 1) {
+    if (X.n_elem > 1 || n_elem > 1) {
       throw new RuntimeException("The content of column vectors can only be swaped with row vectors if both have at most one element.");
     }
 
@@ -803,7 +815,7 @@ public class Col extends AbstractVector {
 
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
-    
+
     X.set_size(temp_n_elem);
     System.arraycopy(temp, 0, X._data, 0, X.n_elem);
   }

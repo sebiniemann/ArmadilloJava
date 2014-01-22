@@ -1,221 +1,233 @@
 package org.armadillojava;
 
+/**
+ * Provides a real-valued dense matrix with interfaces similar to the Armadillo C++ Algebra Library (Armadillo) by
+ * Conrad Sanderson et al..
+ * <p>
+ * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo (e.g. same
+ * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
+ * Algebra Library.
+ * 
+ * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * 
+ * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
+ */
 public class Mat extends AbstractMat {
 
   public Mat() {
-    
+
   }
-  
+
   public Mat(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public Mat(int n_rows, int n_cols, FileType fill_type) {
-    
+
   }
-  
+
   public Mat(Mat mat) {
-    
+
   }
-  
+
   public Mat(Col vec) {
-    
+
   }
-  
+
   public Mat(Row row) {
-    
+
   }
-  
+
   public Mat(double[] array) {
-    
+
   }
 
   public Mat diag() {
-    
+
   }
 
   public void diag(Op unary_operator) {
-    
+
   }
 
   public void diag(Op binary_operator, double operand) {
-    
+
   }
 
   public void diag(Op binary_operator, AbstractMat operand) {
-    
+
   }
 
   public Mat diag(int k) {
-    
+
   }
 
   public void diag(int k, Op unary_operator) {
-    
+
   }
 
   public void diag(int k, Op binary_operator, double operand) {
-    
+
   }
 
   public void diag(int k, Op binary_operator, AbstractMat operand) {
-    
+
   }
 
   public void each_col(Op unary_operator) {
-    
+
   }
 
   public void each_col(Op binary_operator, double operand) {
-    
+
   }
 
   public void each_col(Op binary_operator, AbstractMat operand) {
-    
+
   }
 
   public void each_col(AbstractMat vector_of_indices, Op unary_operator) {
-    
+
   }
 
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, double operand) {
-    
+
   }
 
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-    
+
   }
 
   public void each_row(Op unary_operator) {
-    
+
   }
 
   public void each_row(Op binary_operator, double operand) {
-    
+
   }
 
   public void each_row(Op binary_operator, AbstractMat operand) {
-    
+
   }
 
   public void each_row(AbstractMat vector_of_indices, Op unary_operator) {
-    
+
   }
 
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, double operand) {
-    
+
   }
 
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-    
+
   }
-  
+
   public double at(int i, int j) {
-    
+
   }
-  
+
   public void eye() {
-    
+
   }
-  
+
   public void eye(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public Mat i() {
-    
+
   }
-  
+
   public boolean is_square() {
-    
+
   }
-  
+
   public boolean is_vec() {
-    
+
   }
-  
+
   public boolean is_colvec() {
-    
+
   }
-  
+
   public boolean is_rowvec() {
-    
+
   }
-  
+
   public void insert_rows(int row_number, AbstractMat X) {
-  
+
   }
-  
+
   public void insert_rows(int row_number, int number_of_rows) {
-  
+
   }
-  
+
   public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) {
-  
+
   }
-  
+
   public void insert_cols(int row_number, AbstractMat X) {
-  
+
   }
-  
+
   public void insert_cols(int row_number, int number_of_rows) {
-  
+
   }
-  
+
   public void insert_cols(int row_number, int number_of_rows, boolean set_to_zero) {
-  
+
   }
-  
+
   public double min(int[] row_of_min_val, int[] col_of_min_val) {
-    
+
   }
-  
+
   public double max(int[] row_of_max_val, int[] col_of_max_val) {
-    
+
   }
-  
+
   public void ones(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void randu(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void randn(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void zeros(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void reshape(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void resize(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void set_size(int n_rows, int n_cols) {
-    
+
   }
-  
+
   public void shed_row(int row_number) {
-    
+
   }
-  
+
   public void shed_rows(int first_row, int last_row) {
-    
+
   }
-  
+
   public void shed_col(int column_number) {
-    
+
   }
-  
+
   public void shed_cols(int first_column, int last_column) {
-    
+
   }
 
   @Override
@@ -299,19 +311,19 @@ public class Mat extends AbstractMat {
   @Override
   public void swap(Mat X) {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void swap(Col X) {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void swap(Row X) {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
@@ -323,7 +335,7 @@ public class Mat extends AbstractMat {
   @Override
   public void copy_size(AbstractMat A) {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
@@ -469,5 +481,5 @@ public class Mat extends AbstractMat {
     // TODO Auto-generated method stub
     return null;
   }
-  
+
 }
