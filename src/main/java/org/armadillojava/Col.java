@@ -777,22 +777,46 @@ public class Col extends AbstractVector {
   }
 
   @Override
-  public void swap(AbstractMat X) {
-    int temp_n_rows = n_rows;
-    int temp_n_cols = n_cols;
+  public void swap(Mat X) {
+    if(X.n_cols > 1) {
+      throw new RuntimeException("The content of column vectors can only be swaped with matrices that have at most one column.");
+    }
+
+    int temp_n_elem = n_elem;
     double[] temp = Arrays.copyOf(_data, n_elem);
 
-    copy_size(X);
+    set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    /*
-     * There is no set_size for both vectors and matrices. The previous copy_size(X) should ensure compatibility in both
-     * directions.
-     */
-    X.n_rows = temp_n_rows;
-    X.n_cols = temp_n_cols;
-    X.n_elem = temp.length;
-    X._data = new double[X.n_elem];
+    X.set_size(temp_n_elem, 1);
+    System.arraycopy(temp, 0, X._data, 0, X.n_elem);
+  }
+
+  @Override
+  public void swap(Row X) {
+    if(X.n_elem > 1 || n_elem > 1) {
+      throw new RuntimeException("The content of column vectors can only be swaped with row vectors if both have at most one element.");
+    }
+
+    int temp_n_elem = n_elem;
+    double[] temp = Arrays.copyOf(_data, n_elem);
+
+    set_size(X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    
+    X.set_size(temp_n_elem);
+    System.arraycopy(temp, 0, X._data, 0, X.n_elem);
+  }
+
+  @Override
+  public void swap(Col X) {
+    int temp_n_elem = n_elem;
+    double[] temp = Arrays.copyOf(_data, n_elem);
+
+    set_size(X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+
+    X.set_size(temp_n_elem);
     System.arraycopy(temp, 0, X._data, 0, X.n_elem);
   }
 

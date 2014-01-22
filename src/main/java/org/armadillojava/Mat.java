@@ -297,7 +297,19 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public void swap(AbstractMat X) {
+  public void swap(Mat X) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void swap(Col X) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void swap(Row X) {
     // TODO Auto-generated method stub
     
   }
@@ -448,6 +460,12 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat strictLessThan(AbstractMat X) throws RuntimeException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public AbstractMat times(double X) throws RuntimeException {
     // TODO Auto-generated method stub
     return null;
   }

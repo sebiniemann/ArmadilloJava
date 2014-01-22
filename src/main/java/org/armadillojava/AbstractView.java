@@ -233,7 +233,17 @@ abstract class AbstractView extends AbstractMat {
   }
 
   @Override
-  public void swap(AbstractMat X) {
+  public void swap(Mat X) {
+    throw new UnsupportedOperationException("Internal error: Call to unsupported method.");
+  }
+
+  @Override
+  public void swap(Col X) {
+    throw new UnsupportedOperationException("Internal error: Call to unsupported method.");
+  }
+
+  @Override
+  public void swap(Row X) {
     throw new UnsupportedOperationException("Internal error: Call to unsupported method.");
   }
 

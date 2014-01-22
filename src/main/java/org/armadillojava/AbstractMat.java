@@ -1535,7 +1535,11 @@ abstract class AbstractMat {
     new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
   }
 
-  abstract public void swap(AbstractMat X);
+  abstract public void swap(Mat X);
+  
+  abstract public void swap(Col X);
+  
+  abstract public void swap(Row X);
 
   /**
    * Swaps the content of the {@code row1}th row with the {@code row2}th.
