@@ -2,6 +2,7 @@
 # Eclipse
 ##
 
+.settings
 .classpath
 .project
 
