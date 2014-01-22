@@ -570,7 +570,7 @@ abstract class AbstractMat {
 
     return true;
   }
-  
+
   /**
    * Same as {@link #save(String)} but without error reporting.
    * <p>
@@ -681,7 +681,15 @@ abstract class AbstractMat {
     }
   }
 
-  abstract public void reset();
+  /**
+   * Causes the matrix to be empty.
+   */
+  public void reset() {
+    _data = new double[0];
+    n_rows = 0;
+    n_cols = 0;
+    n_elem = 0;
+  }
 
   /**
    * C++ STL-like function
@@ -729,6 +737,8 @@ abstract class AbstractMat {
     inPlace(unary_operator);
   }
 
+  abstract public AbstractMat col(int col_number);
+
   /**
    * Performs a in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
    * 
@@ -768,6 +778,8 @@ abstract class AbstractMat {
      */
     inPlace(binary_operator, operand);
   }
+
+  abstract public AbstractMat row(int row_number);
 
   /**
    * Performs a in-place unary operation on the {@code row_number}th row.
@@ -819,6 +831,8 @@ abstract class AbstractMat {
     new ViewSubRow(this, row_number).inPlace(binary_operator, operand);
   }
 
+  abstract public AbstractMat cols(int first_col, int last_col);
+
   /**
    * Performs a in-place unary operation on the {@code first_col}th to {@code last_col} column.
    * 
@@ -845,7 +859,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
+   * right-hand side operand.
    * 
    * @param first_col The first column position
    * @param last_col The last column position
@@ -871,7 +886,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
+   * right-hand side operand.
    * 
    * @param first_col The first column position
    * @param last_col The last column position
@@ -896,6 +912,8 @@ abstract class AbstractMat {
     inPlace(binary_operator, operand);
   }
 
+  abstract public AbstractMat rows(int first_row, int last_row);
+
   /**
    * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row.
    * 
@@ -919,7 +937,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
+   * right-hand side operand.
    * 
    * @param first_row The first row position
    * @param last_row The last row position
@@ -942,7 +961,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
+   * right-hand side operand.
    * 
    * @param first_row The first row position
    * @param last_row The last row position
@@ -964,8 +984,11 @@ abstract class AbstractMat {
     new ViewSubRows(this, first_row, last_row).inPlace(binary_operator, operand);
   }
 
+  abstract public AbstractMat col(Span span, int col_number);
+
   /**
-   * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} row of the {@code col_number}th column.
+   * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} row of the
+   * {@code col_number}th column.
    * 
    * @param span The span
    * @param col_number The column position
@@ -994,7 +1017,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the {@code col_number}th column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the
+   * {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param span The span
    * @param col_number The column position
@@ -1024,7 +1048,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the {@code col_number}th column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the
+   * {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param span The span
    * @param col_number The column position
@@ -1052,9 +1077,12 @@ abstract class AbstractMat {
       rows(span._first, span._last, binary_operator, operand);
     }
   }
-  
+
+  abstract public AbstractMat row(int row_number, Span span);
+
   /**
-   * Performs a in-place unary operation on the {@code row_number}th row of the {@code span._first}th to {@code span._last} column.
+   * Performs a in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
+   * {@code span._last} column.
    * 
    * @param row_number The row position
    * @param span The span
@@ -1078,9 +1106,10 @@ abstract class AbstractMat {
      */
     row(row_number, unary_operator);
   }
-  
+
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to {@code span._last} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
+   * {@code span._last} column with the specified right-hand side operand.
    * 
    * @param row_number The row position
    * @param span The span
@@ -1105,9 +1134,10 @@ abstract class AbstractMat {
      */
     row(row_number, binary_operator, operand);
   }
-  
+
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to {@code span._last} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
+   * {@code span._last} column with the specified right-hand side operand.
    * 
    * @param row_number The row position
    * @param span The span
@@ -1133,8 +1163,11 @@ abstract class AbstractMat {
     row(row_number, binary_operator, operand);
   }
 
+  abstract public AbstractMat submat(int first_row, int first_col, int last_row, int last_col);
+
   /**
-   * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th to {@code last_col} column.
+   * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * to {@code last_col} column.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1163,7 +1196,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th to {@code last_col} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * to {@code last_col} column with the specified right-hand side operand.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1193,7 +1227,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th to {@code last_col} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * to {@code last_col} column with the specified right-hand side operand.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1222,8 +1257,11 @@ abstract class AbstractMat {
     rows(first_row, last_row, binary_operator, operand);
   }
 
+  abstract public AbstractMat submat(Span row_span, Span col_span);
+
   /**
-   * Performs a in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the {@code col_span._first}th to {@code col_span._last} column.
+   * Performs a in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * {@code col_span._first}th to {@code col_span._last} column.
    * 
    * @param row_span The row span
    * @param col_span The column span
@@ -1239,7 +1277,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
    * 
    * @param row_span The row span
    * @param col_span The column span
@@ -1256,7 +1295,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
    * 
    * @param row_span The row span
    * @param col_span The column span
@@ -1272,8 +1312,11 @@ abstract class AbstractMat {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
   }
 
+  abstract public AbstractMat submat(int first_row, int first_col, Size size);
+
   /**
-   * Performs a in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and {@code size.n_cols} columns.
+   * Performs a in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * rows and {@code size.n_cols} columns.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1290,7 +1333,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and {@code size.n_cols} columns with the specified right-hand side operand.
+   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * rows and {@code size.n_cols} columns with the specified right-hand side operand.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1308,7 +1352,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and {@code size.n_cols} columns with the specified right-hand side operand.
+   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * rows and {@code size.n_cols} columns with the specified right-hand side operand.
    * 
    * @param first_row The first row position
    * @param first_col The first column position
@@ -1324,6 +1369,8 @@ abstract class AbstractMat {
   public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
   }
+
+  abstract public Col elem(AbstractMat vector_of_indices);
 
   /**
    * Performs a in-place unary operation on the specified elements.
@@ -1363,6 +1410,8 @@ abstract class AbstractMat {
     new ViewElemMat(this, vector_of_indices).inPlace(binary_operator, operand);
   }
 
+  abstract public AbstractMat cols(AbstractMat vector_of_column_indices);
+
   /**
    * Performs a in-place unary operation on the specified columns.
    * <p>
@@ -1400,6 +1449,8 @@ abstract class AbstractMat {
   public void cols(AbstractMat vector_of_column_indices, Op binary_operator, AbstractMat operand) {
     new ViewElemCols(this, vector_of_column_indices).inPlace(binary_operator, operand);
   }
+
+  abstract public AbstractMat rows(AbstractMat vector_of_row_indices);
 
   /**
    * Performs a in-place unary operation on the specified rows.
@@ -1439,6 +1490,8 @@ abstract class AbstractMat {
     new ViewElemCols(this, vector_of_row_indices).inPlace(binary_operator, operand);
   }
 
+  abstract public AbstractMat submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices);
+
   /**
    * Performs a in-place unary operation on the specified rows of the specified columns.
    * <p>
@@ -1453,7 +1506,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand side operand.
+   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand
+   * side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1467,7 +1521,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand side operand.
+   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand
+   * side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1479,6 +1534,8 @@ abstract class AbstractMat {
   public void submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices, Op binary_operator, AbstractMat operand) {
     new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
   }
+
+  abstract public void swap(AbstractMat X);
 
   /**
    * Swaps the content of the {@code row1}th row with the {@code row2}th.
@@ -1520,6 +1577,246 @@ abstract class AbstractMat {
      * Nothing to do here.
      */
   }
+
+  abstract public AbstractMat t();
+
+  abstract public void copy_size(AbstractMat A);
+
+  /**
+   * Returns the out-of-place addition with the specified right-hand side addend.
+   * 
+   * @param X The addend
+   */
+  abstract public AbstractMat plus(double X);
+
+  /**
+   * Returns the out-of-place addition with the specified right-hand side addend.
+   * 
+   * @param X The addend
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat plus(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
+   * 
+   * @param X The subtrahend
+   */
+  abstract public AbstractMat minus(double X);
+
+  /**
+   * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
+   * 
+   * @param X The subtrahend
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat minus(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise division with the specified right-hand side divisor.
+   * 
+   * @param operand The divisor
+   */
+  abstract public AbstractMat elemDivide(double X);
+
+  /**
+   * Returns the out-of-place element-wise division with the specified right-hand side divisor.
+   * 
+   * @param operand The divisor
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat elemDivide(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
+  abstract public AbstractMat times(double X) throws RuntimeException;
+
+  /**
+   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
+  abstract public AbstractMat times(Col X) throws RuntimeException;
+
+  /**
+   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
+  abstract public AbstractMat times(Row X) throws RuntimeException;
+
+  /**
+   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
+  abstract public AbstractMat times(Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
+   * 
+   * @param operand The multiplier
+   */
+  abstract public AbstractMat elemTimes(double X);
+
+  /**
+   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
+   * 
+   * @param operand The multiplier
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat elemTimes(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat equal(double X);
+
+  /**
+   * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat equal(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat nonEqual(double X);
+
+  /**
+   * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat nonEqual(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
+   * the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat greaterThan(double X);
+
+  /**
+   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
+   * the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat greaterThan(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat lessThan(double X);
+
+  /**
+   * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat lessThan(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
+   * operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
+   * greater than the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat strictGreaterThan(double X);
+
+  /**
+   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
+   * operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
+   * greater than the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat strictGreaterThan(AbstractMat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
+   * operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
+   * than the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   */
+  abstract public AbstractMat strictLessThan(double X);
+
+  /**
+   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
+   * operand.
+   * <p>
+   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
+   * than the right-hand side and 0 otherwise.
+   * 
+   * @param operand The operand
+   * 
+   * @throws RuntimeException Both operands must have the same size.
+   */
+  abstract public AbstractMat strictLessThan(AbstractMat X) throws RuntimeException;
 
   protected void inPlace(Op operator) {
     switch (operator) {

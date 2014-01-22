@@ -68,13 +68,6 @@ abstract class AbstractVector extends AbstractMat {
   }
 
   /**
-   * Causes the column vector to be empty.
-   */
-  public void reset() {
-    set_size(0);
-  }
-
-  /**
    * Resizes the vector to the specified number of elements.
    * <p>
    * Reuses the values of the elements and their positions.
@@ -85,6 +78,16 @@ abstract class AbstractVector extends AbstractMat {
     _data = Arrays.copyOf(_data, n_elem);
   }
 
+  /**
+   * Resizes the vector to the specified number of elements.
+   * <p>
+   * If the requested size is equal to the current size, the existing memory is reused. Otherwise, new memory will be
+   * allocated and left uninitialised.
+   * 
+   * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
+   */
   abstract public void set_size(int n_elem);
 
   public void subvec(int first_index, int last_index, Op unary_operator) {
@@ -110,4 +113,8 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(Span span, Op binary_operator, AbstractMat operand) {
     subvec(span._first, span._last, binary_operator, operand);
   }
+
+  abstract public AbstractVector subvec(int first_index, int last_index) throws IndexOutOfBoundsException;
+
+  abstract public AbstractVector subvec(Span span) throws IndexOutOfBoundsException;
 }

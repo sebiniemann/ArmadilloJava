@@ -94,13 +94,7 @@ public class Row extends AbstractVector {
     }
   }
 
-  /**
-   * Sets the size to be the same as {@code A}.
-   * 
-   * @param vec The row vector
-   * 
-   * @throws RuntimeException The specified matrix must be empty or have exactly one column.
-   */
+  @Override
   public void copy_size(AbstractMat vec) throws RuntimeException {
     if (vec.n_cols > 1) {
       throw new RuntimeException("The specified matrix must be empty or have excatly one column.");
@@ -184,24 +178,14 @@ public class Row extends AbstractVector {
     insert_rows(col_number, number_of_cols);
   }
 
-  /**
-   * Returns the out-of-place addition with the specified right-hand side addend.
-   * 
-   * @param X The addend
-   */
+  @Override
   public Row plus(double X) {
     Row result = new Row(_data);
     result.inPlacePlus(X);
     return result;
   }
 
-  /**
-   * Returns the out-of-place addition with the specified right-hand side addend.
-   * 
-   * @param X The addend
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row plus(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -212,24 +196,14 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
-   * 
-   * @param X The subtrahend
-   */
+  @Override
   public Row minus(double X) {
     Row result = new Row(_data);
     result.inPlaceMinus(X);
     return result;
   }
 
-  /**
-   * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
-   * 
-   * @param X The subtrahend
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row minus(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -240,24 +214,14 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise division with the specified right-hand side divisor.
-   * 
-   * @param operand The divisor
-   */
+  @Override
   public Row elemDivide(double X) {
     Row result = new Row(_data);
     result.inPlaceElemDivide(X);
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise division with the specified right-hand side divisor.
-   * 
-   * @param operand The divisor
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row elemDivide(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -268,18 +232,12 @@ public class Row extends AbstractVector {
     return result;
   }
 
+  @Override
   public Row times(double X) {
     return elemTimes(X);
   }
 
-  /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
+  @Override
   public Row times(Row X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -291,22 +249,8 @@ public class Row extends AbstractVector {
     return elemTimes(X._data[0]);
   }
 
-  /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
-   * <p>
-   * Handles the multiplication for matrices of type {@code Col} as well as {@code Mat}.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
-  public Mat times(AbstractMat X) {
-    /*
-     * Only (n, 1)-matrices can be right-hand side multiplied to column vectors. Therefore, it can be handled exactly
-     * the same as the right-hand side multiplication of column vectors.
-     */
-    
+  @Override
+  public Mat times(Mat X) {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -322,46 +266,36 @@ public class Row extends AbstractVector {
     return new Mat(new double[]{result});
   }
 
-  /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of row (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
-  public Mat times(Mat X) throws RuntimeException {
+  @Override
+  public Mat times(Col X) {
+    /*
+     * Only (n, 1)-matrices can be right-hand side multiplied to column vectors. Therefore, it can be handled exactly
+     * the same as the right-hand side multiplication of column vectors.
+     */
 
-    Mat result = new Mat(n_rows, X.n_cols);
-    int n = 0;
-    for (int i = 0; i < n_rows; i++) {
-      double rowValue = X._data[i];
-      for (int j = 0; j < n_rows; j++) {
-        result._data[n++] = rowValue * _data[j];
-      }
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    return result;
+    /*
+     * The right-hand side multiplication with a column vector will result in a single scalar value.
+     */
+    double result = 0;
+    for (int n = 0; n < n_elem; n++) {
+      result += _data[n] * X._data[n];
+    }
+
+    return new Mat(new double[]{result});
   }
 
-  /**
-   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
-   * 
-   * @param operand The multiplier
-   */
+  @Override
   public Row elemTimes(double X) {
     Row result = new Row(this);
     result.inPlaceElemTimes(X);
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
-   * 
-   * @param operand The multiplier
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row elemTimes(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -372,13 +306,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row equal(double X) {
     Row result = new Row(n_elem);
 
@@ -397,15 +325,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row equal(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -428,13 +348,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row nonEqual(double X) {
     Row result = new Row(n_elem);
 
@@ -453,15 +367,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row nonEqual(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -484,14 +390,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
-   * the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row greaterThan(double X) {
     Row result = new Row(n_elem);
 
@@ -510,16 +409,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
-   * the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row greaterThan(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -542,14 +432,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
-   * right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row lessThan(double X) {
     Row result = new Row(n_elem);
 
@@ -568,16 +451,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
-   * right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row lessThan(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -600,15 +474,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
-   * operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
-   * greater than the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row strictGreaterThan(double X) {
     Row result = new Row(n_elem);
 
@@ -627,17 +493,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
-   * operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
-   * greater than the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row strictGreaterThan(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -660,15 +516,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
-   * operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
-   * than the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   */
+  @Override
   public Row strictLessThan(double X) {
     Row result = new Row(n_elem);
 
@@ -687,17 +535,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
-   * operand.
-   * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
-   * than the right-hand side and 0 otherwise.
-   * 
-   * @param operand The operand
-   * 
-   * @throws RuntimeException Both operands must have the same size.
-   */
+  @Override
   public Row strictLessThan(AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both operands must have the same size.");
@@ -720,16 +558,7 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  /**
-   * Resizes the vector to the specified number of elements.
-   * <p>
-   * If the requested size is equal to the current size, the existing memory is reused. Otherwise, new memory will be
-   * allocated and left uninitialised.
-   * 
-   * @param n_elem The number of elements
-   * 
-   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
-   */
+  @Override
   public void set_size(int n_elem) throws NegativeArraySizeException {
     if (n_elem < 0) {
       throw new NegativeArraySizeException("The specified number of elements (" + n_elem + ") must be positive.");
@@ -792,13 +621,7 @@ public class Row extends AbstractVector {
     System.arraycopy(temp, last_col + 1, _data, first_col, n_elem - first_col);
   }
 
-  /**
-   * Returns a deep copy of the {@code col_number}th column.
-   * 
-   * @param col_number The column position
-   * 
-   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
-   */
+  @Override
   public Row col(int col_number) throws IndexOutOfBoundsException {
     if (!in_range(col_number)) {
       throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
@@ -810,13 +633,7 @@ public class Row extends AbstractVector {
     return new Row(new double[]{_data[col_number]});
   }
 
-  /**
-   * Returns a deep copy of the {@code row_number}th row.
-   * 
-   * @param col_number The column position
-   * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
-   */
+  @Override
   public Row row(int row_number) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
@@ -828,15 +645,7 @@ public class Row extends AbstractVector {
     return new Row(_data);
   }
 
-  /**
-   * Returns a deep copy of the {@code first_col}th to {@code last_col} column.
-   * 
-   * @param first_col The first column position
-   * @param last_col The last column position
-   * 
-   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
-   */
+  @Override
   public Row cols(int first_col, int last_col) throws IndexOutOfBoundsException {
     if (!in_range(first_col)) {
       throw new IndexOutOfBoundsException("The first column position (" + first_col + ") is out of bounds.");
@@ -852,15 +661,7 @@ public class Row extends AbstractVector {
     return new Row(Arrays.copyOfRange(_data, first_col, last_col));
   }
 
-  /**
-   * Returns a deep copy of the {@code first_row}th to {@code last_row} row.
-   * 
-   * @param first_row The first row position
-   * @param last_row The last row position
-   * 
-   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
-   */
+  @Override
   public Row rows(int first_row, int last_row) throws IndexOutOfBoundsException {
     if (!in_range(first_row)) {
       throw new IndexOutOfBoundsException("The first row position (" + first_row + ") is out of bounds.");
@@ -876,16 +677,7 @@ public class Row extends AbstractVector {
     return new Row(_data);
   }
 
-  /**
-   * Returns a deep copy of the {@code span._first}th to {@code span._last} row of the {@code col_number}th column.
-   * 
-   * @param span The span
-   * @param col_number The column position
-   * 
-   * @throws IndexOutOfBoundsException The first row position ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
-   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
-   */
+  @Override
   public Row col(Span span, int col_number) throws IndexOutOfBoundsException {
     if (!in_range(span._first)) {
       throw new IndexOutOfBoundsException("The first row position (" + span._first + ") is out of bounds.");
@@ -901,16 +693,7 @@ public class Row extends AbstractVector {
     return col(col_number);
   }
 
-  /**
-   * Returns a deep copy of the {@code row_number}th row of the {@code span._first}th to {@code span._last} column.
-   * 
-   * @param row_number The row position
-   * @param span The span
-   * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
-   */
+  @Override
   public Row row(int row_number, Span span) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
@@ -918,31 +701,18 @@ public class Row extends AbstractVector {
 
     if (span._isEntireRange) {
       /**
-     * The first and only row is the same as the whole row vector.
+       * The first and only row is the same as the whole row vector.
        */
       return new Row(this);
     } else {
       /**
-     * There is only one element per column.
+       * There is only one element per column.
        */
       return cols(span._first, span._last);
     }
   }
 
-  /**
-   * Returns a deep copy of the {@code first_row}th to {@code last_row} row of the {@code first_col}th to
-   * {@code last_col} column.
-   * 
-   * @param first_row The first row position
-   * @param first_col The first column position
-   * @param last_row The last row position
-   * @param last_col The last column position
-   * 
-   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
-   */
+  @Override
   public Row submat(int first_row, int first_col, int last_row, int last_col) throws IndexOutOfBoundsException {
     if (!in_range(first_row)) {
       throw new IndexOutOfBoundsException("The first row position (" + first_row + ") is out of bounds.");
@@ -958,114 +728,47 @@ public class Row extends AbstractVector {
     return cols(first_col, last_col);
   }
 
-  /**
-   * Returns a deep copy of the {@code row_span._first}th to {@code row_span._last} row of the {@code col_span._first}th
-   * to {@code col_span._last} column.
-   * 
-   * @param row_span The row span
-   * @param col_span The column span
-   * 
-   * @throws IndexOutOfBoundsException The first row position ({@code row_span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last row position ({@code row_span._last}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
-   */
+  @Override
   public Row submat(Span row_span, Span col_span) throws IndexOutOfBoundsException {
     return submat(row_span._first, col_span._first, row_span._last, col_span._last);
   }
 
-  /**
-   * Returns a deep copy of the {@code first_index}th to {@code last_index} element.
-   * 
-   * @param first_index The first position
-   * @param last_index The last position
-   * 
-   * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
-   */
+  @Override
   public Row subvec(int first_index, int last_index) throws IndexOutOfBoundsException {
     return rows(first_index, last_index);
   }
 
-  /**
-   * Returns a deep copy of the {@code span._first}th to {@code span._last} element.
-   * 
-   * @param span The span
-   * 
-   * @throws IndexOutOfBoundsException The first position ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last position ({@code span._last}) is out of bounds.
-   */
+  @Override
   public Row subvec(Span span) throws IndexOutOfBoundsException {
     return subvec(span._first, span._last);
   }
 
-  /**
-   * Returns a deep copy starting at position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and
-   * {@code size.n_cols} columns.
-   * 
-   * @param first_row The first row position
-   * @param first_col The first column position
-   * @param size The size
-   * 
-   * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last row position ({@code first_row + size.n_rows - 1}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
-   */
+  @Override
   public Row submat(int first_row, int first_col, Size size) throws IndexOutOfBoundsException {
     return submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1);
   }
 
-  /**
-   * Returns a deep copy of the specified elements.
-   * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
-   * 
-   * @param vector_of_indices The positions
-   */
+  @Override
   public Col elem(AbstractMat vector_of_indices) throws IndexOutOfBoundsException {
     return new Col(new ViewElemMat(this, vector_of_indices));
   }
 
-  /**
-   * Returns a deep copy of the specified columns.
-   * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
-   * 
-   * @param vector_of_column_indices The column positions
-   */
+  @Override
   public Row cols(AbstractMat vector_of_column_indices) throws IndexOutOfBoundsException {
     return new Row(new ViewElemCols(this, vector_of_column_indices));
   }
 
-  /**
-   * Returns a deep copy of the specified rows.
-   * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
-   * 
-   * @param vector_of_row_indices The row positions
-   */
+  @Override
   public Row rows(AbstractMat vector_of_row_indices) throws IndexOutOfBoundsException {
     return new Row(new ViewElemCols(this, vector_of_row_indices));
   }
 
-  /**
-   * Returns a deep copy of the specified rows of the specified columns.
-   * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
-   * 
-   * @param vector_of_row_indices The row positions
-   * @param vector_of_column_indices The column positions
-   */
+  @Override
   public Row submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices) throws IndexOutOfBoundsException {
     return new Row(new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices));
   }
 
-  /**
-   * Swaps the content of this column vector with another one.
-   * 
-   * @param X The column vector
-   */
+  @Override
   public void swap(AbstractMat X) {
     int temp_n_rows = n_rows;
     int temp_n_cols = n_cols;
@@ -1085,9 +788,7 @@ public class Row extends AbstractVector {
     System.arraycopy(temp, 0, X._data, 0, X.n_elem);
   }
 
-  /**
-   * Returns the transpose.
-   */
+  @Override
   public Col t() {
     return new Col(_data);
   }
