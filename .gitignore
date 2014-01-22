@@ -1,0 +1,25 @@
+##
+# Eclipse
+##
+
+.classpath
+.project
+
+##
+# Eclipse CDT
+##
+
+/test/data/.cproject
+/test/data/.project
+
+##
+# Maven
+##
+
+/target
+
+##
+# Machine dependent C++ libraries
+##
+
+/test/data/external
