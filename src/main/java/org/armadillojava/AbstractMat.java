@@ -1989,95 +1989,379 @@ abstract class AbstractMat {
     }
   }
 
-  protected void inPlace(Op operator, double operand) {
+  protected void inPlace(Op operator, double rightHandOperand) {
     switch (operator) {
       case EQUAL:
-        fill(operand);
+        fill(rightHandOperand);
         break;
       case PLUS:
-        inPlacePlus(operand);
+        inPlacePlus(rightHandOperand);
         break;
       case MINUS:
-        inPlaceMinus(operand);
+        inPlaceMinus(rightHandOperand);
         break;
       case ELEMTIMES:
-        inPlaceElemTimes(operand);
+        inPlaceElemTimes(rightHandOperand);
         break;
       case ELEMDIVIDE:
-        inPlaceElemDivide(operand);
+        inPlaceElemDivide(rightHandOperand);
         break;
       default:
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
 
-  protected void inPlace(Op operator, AbstractMat operand) {
+  protected void inPlace(Op operator, AbstractMat rightHandOperand) {
     switch (operator) {
       case EQUAL:
-        System.arraycopy(operand._data, 0, _data, 0, n_elem);
+        copy_size(rightHandOperand);
+        System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
         break;
       case PLUS:
-        inPlacePlus(operand);
+        inPlacePlus(rightHandOperand);
         break;
       case MINUS:
-        inPlaceMinus(operand);
+        inPlaceMinus(rightHandOperand);
         break;
       case ELEMTIMES:
-        inPlaceElemTimes(operand);
+        inPlaceElemTimes(rightHandOperand);
         break;
       case ELEMDIVIDE:
-        inPlaceElemDivide(operand);
+        inPlaceElemDivide(rightHandOperand);
         break;
       default:
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
 
-  protected void inPlacePlus(double operand) {
+  protected void inPlacePlus(double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] += operand;
+      _data[n] += rightHandOperand;
     }
   }
 
-  protected void inPlacePlus(AbstractMat operand) {
+  protected void inPlacePlus(AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] += operand._data[n];
+      _data[n] += rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceMinus(double operand) {
+  protected void inPlaceMinus(double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] -= operand;
+      _data[n] -= rightHandOperand;
     }
   }
 
-  protected void inPlaceMinus(AbstractMat operand) {
+  protected void inPlaceMinus(AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] -= operand._data[n];
+      _data[n] -= rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceElemTimes(double operand) {
+  protected void inPlaceElemTimes(double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] *= operand;
+      _data[n] *= rightHandOperand;
     }
   }
 
-  protected void inPlaceElemTimes(AbstractMat operand) {
+  protected void inPlaceElemTimes(AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] *= operand._data[n];
+      _data[n] *= rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceElemDivide(double operand) {
+  protected void inPlaceElemDivide(double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] /= operand;
+      _data[n] /= rightHandOperand;
     }
   }
 
-  protected void inPlaceElemDivide(AbstractMat operand) {
+  protected void inPlaceElemDivide(AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
-      _data[n] /= operand._data[n];
+      _data[n] /= rightHandOperand._data[n];
+    }
+  }
+  
+  protected void inPlace(AbstractMat leftHandOperand, Op operator) {
+    switch (operator) {
+      case NEGATE:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] = -leftHandOperand._data[n];
+        }
+        break;
+      case INCREMENT:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] = leftHandOperand._data[n] + 1;
+        }
+        break;
+      case DECREMENT:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] = leftHandOperand._data[n] - 1;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  protected void inPlace(AbstractMat leftHandOperand, Op operator, double rightHandOperand) {
+    switch (operator) {
+      case EQUAL:
+        fill(rightHandOperand);
+        break;
+      case PLUS:
+        inPlacePlus(leftHandOperand, rightHandOperand);
+        break;
+      case MINUS:
+        inPlaceMinus(leftHandOperand, rightHandOperand);
+        break;
+      case ELEMTIMES:
+        inPlaceElemTimes(leftHandOperand, rightHandOperand);
+        break;
+      case ELEMDIVIDE:
+        inPlaceElemDivide(leftHandOperand, rightHandOperand);
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  protected void inPlace(AbstractMat leftHandOperand, Op operator, AbstractMat rightHandOperand) {
+    switch (operator) {
+      case EQUAL:
+        copy_size(rightHandOperand);
+        System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
+        break;
+      case PLUS:
+        inPlacePlus(leftHandOperand, rightHandOperand);
+        break;
+      case MINUS:
+        inPlaceMinus(leftHandOperand, rightHandOperand);
+        break;
+      case ELEMTIMES:
+        inPlaceElemTimes(leftHandOperand, rightHandOperand);
+        break;
+      case ELEMDIVIDE:
+        inPlaceElemDivide(leftHandOperand, rightHandOperand);
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  protected void inPlacePlus(AbstractMat leftHandOperand, double rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] + rightHandOperand;
+    }
+  }
+
+  protected void inPlacePlus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] + rightHandOperand._data[n];
+    }
+  }
+
+  protected void inPlaceMinus(AbstractMat leftHandOperand, double rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] - rightHandOperand;
+    }
+  }
+
+  protected void inPlaceMinus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] - rightHandOperand._data[n];
+    }
+  }
+
+  protected void inPlaceElemTimes(AbstractMat leftHandOperand, double rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] * rightHandOperand;
+    }
+  }
+
+  protected void inPlaceElemTimes(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] * rightHandOperand._data[n];
+    }
+  }
+
+  protected void inPlaceElemDivide(AbstractMat leftHandOperand, double rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] / rightHandOperand;
+    }
+  }
+
+  protected void inPlaceElemDivide(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = leftHandOperand._data[n] / rightHandOperand._data[n];
+    }
+  }
+  
+  protected void inPlaceEqual(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] == rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] == rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceNonEqual(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] != rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceNonEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] != rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] >= rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] >= rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] <= rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] <= rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceStrictGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] > rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceStrictGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] >= rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceStrictLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] < rightHandOperand) {
+        _data[n] = 1;
+      }
+    }
+  }
+  
+  protected void inPlaceStrictLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] < rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
     }
   }
 
