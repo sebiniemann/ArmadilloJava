@@ -192,8 +192,8 @@ public class Col extends AbstractVector {
 
   @Override
   public Col plus(double X) {
-    Col result = new Col(_data);
-    result.inPlacePlus(X);
+    Col result = new Col(n_elem);
+    result.inPlacePlus(this, X);
     return result;
   }
 
@@ -203,15 +203,15 @@ public class Col extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Col result = new Col(_data);
-    result.inPlacePlus(X);
+    Col result = new Col(n_elem);
+    result.inPlacePlus(this, X);
     return result;
   }
 
   @Override
   public Col minus(double X) {
-    Col result = new Col(_data);
-    result.inPlaceMinus(X);
+    Col result = new Col(n_elem);
+    result.inPlaceMinus(this, X);
     return result;
   }
 
@@ -221,15 +221,15 @@ public class Col extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Col result = new Col(_data);
-    result.inPlaceMinus(X);
+    Col result = new Col(n_elem);
+    result.inPlaceMinus(this, X);
     return result;
   }
 
   @Override
   public Col elemDivide(double X) {
-    Col result = new Col(_data);
-    result.inPlaceElemDivide(X);
+    Col result = new Col(n_elem);
+    result.inPlaceElemDivide(this, X);
     return result;
   }
 
@@ -239,8 +239,8 @@ public class Col extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Col result = new Col(_data);
-    result.inPlaceElemDivide(X);
+    Col result = new Col(n_elem);
+    result.inPlaceElemDivide(this, X);
     return result;
   }
 
@@ -310,8 +310,8 @@ public class Col extends AbstractVector {
 
   @Override
   public Col elemTimes(double X) {
-    Col result = new Col(_data);
-    result.inPlaceElemTimes(X);
+    Col result = new Col(n_elem);
+    result.inPlaceElemTimes(this, X);
     return result;
   }
 
@@ -321,27 +321,15 @@ public class Col extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Col result = new Col(_data);
-    result.inPlaceElemTimes(X);
+    Col result = new Col(n_elem);
+    result.inPlaceElemTimes(this, X);
     return result;
   }
 
   @Override
   public Col equal(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] == X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceEqual(this, X);
     return result;
   }
 
@@ -352,38 +340,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] == X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceEqual(this, X);
     return result;
   }
 
   @Override
   public Col nonEqual(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] != X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceNonEqual(this, X);
     return result;
   }
 
@@ -394,38 +358,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] != X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceNonEqual(this, X);
     return result;
   }
 
   @Override
   public Col greaterThan(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] >= X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceGreaterThan(this, X);
     return result;
   }
 
@@ -436,38 +376,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] >= X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Col lessThan(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] <= X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceLessThan(this, X);
     return result;
   }
 
@@ -478,38 +394,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] <= X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceLessThan(this, X);
     return result;
   }
 
   @Override
   public Col strictGreaterThan(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] > X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceStrictGreaterThan(this, X);
     return result;
   }
 
@@ -520,38 +412,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] > X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceStrictGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Col strictLessThan(double X) {
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] < X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceStrictLessThan(this, X);
     return result;
   }
 
@@ -562,19 +430,7 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] < X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.inPlaceStrictLessThan(this, X);
     return result;
   }
 
