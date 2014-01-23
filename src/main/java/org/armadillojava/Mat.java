@@ -16,32 +16,71 @@ import com.github.fommil.netlib.BLAS;
  */
 public class Mat extends AbstractMat {
 
+  /**
+   * Creates an empty matrix.
+   */
   public Mat() {
-
+    set_size(0, 0);
   }
-
+  
+  /**
+   * Creates an uninitialised matrix with the specified number of rows and columns.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
   public Mat(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
+  }
+  
+  /**
+   * Creates a matrix with the specified number of rows and columns that is filled according to {@code fillType}.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * @param fill_type The fill type
+   * 
+   * @throws RuntimeException The fill type ({@code fill_type}) is not supported for column vectors.
+   * 
+   * @see Fill
+   */
+  public Mat(int n_rows, int n_cols, Fill fill_type) {
+    switch (fill_type) {
+      case NONE:
+      case ZEROS:
+        zeros(n_rows, n_cols);
+        break;
+      case ONES:
+        ones(n_rows, n_cols);
+        break;
+      case RANDU:
+        randu(n_rows, n_cols);
+        break;
+      case RANDN:
+        randn(n_rows, n_cols);
+      default:
+        throw new RuntimeException("The fill type (" + fill_type + ") is not supported for column vectors.");
+    }
+  }
+  
+  /**
+   * Creates a deep copy of a matrix.
+   * 
+   * @param mat The matrix
+   */
+  public Mat(AbstractMat mat) {
+    set_size(mat.n_rows, mat.n_cols);
+    System.arraycopy(mat._data, 0, _data, 0, mat.n_elem);
   }
 
-  public Mat(int n_rows, int n_cols, FileType fill_type) {
-
-  }
-
-  public Mat(Mat mat) {
-
-  }
-
-  public Mat(Col vec) {
-
-  }
-
-  public Mat(Row row) {
-
-  }
-
+  /**
+   * Creates a matrix in the shape of a column vector with the same number of elements and values as the provided array.
+   * 
+   * @param array The array
+   */
   public Mat(double[] array) {
-
+    set_size(array.length, 1);
+    System.arraycopy(array, 0, _data, 0, array.length);
   }
 
   public Mat diag() {
