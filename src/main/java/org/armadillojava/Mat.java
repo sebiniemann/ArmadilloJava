@@ -83,36 +83,53 @@ public class Mat extends AbstractMat {
     System.arraycopy(array, 0, _data, 0, array.length);
   }
 
-  public Mat diag() {
+  protected Mat(AbstractView view) {
+    copy_size(view);
 
+    view.iteratorReset();
+    for (int n = 1; n < n_elem; n++) {
+      _data[n] = view._data[view.iteratorNext()];
+    }
+  }
+
+  public Mat diag() {
+    return new Mat(new ViewDiag(this, 0));
   }
 
   public void diag(Op unary_operator) {
-
+    new Mat(new ViewDiag(this, 0)).inPlace(unary_operator);
   }
 
   public void diag(Op binary_operator, double operand) {
-
+    new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
 
   public void diag(Op binary_operator, AbstractMat operand) {
-
+    new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
 
   public Mat diag(int k) {
+    if (k > 0 && k >= n_cols) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+    
+    if (k < 0 && -k <= n_rows) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
 
+    return new Mat(new ViewDiag(this, k));
   }
 
   public void diag(int k, Op unary_operator) {
-
+    new Mat(new ViewDiag(this, k)).inPlace(unary_operator);
   }
 
   public void diag(int k, Op binary_operator, double operand) {
-
+    new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
 
   public void diag(int k, Op binary_operator, AbstractMat operand) {
-
+    new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
 
   public void each_col(Op unary_operator) {
@@ -180,19 +197,19 @@ public class Mat extends AbstractMat {
   }
 
   public boolean is_square() {
-
+    return (n_rows == n_cols);
   }
 
   public boolean is_vec() {
-
+    return (is_colvec() || is_rowvec());
   }
 
   public boolean is_colvec() {
-
+    return (n_cols == 1);
   }
 
   public boolean is_rowvec() {
-
+    return (n_rows == 1);
   }
 
   public void insert_rows(int row_number, AbstractMat X) {
@@ -228,19 +245,26 @@ public class Mat extends AbstractMat {
   }
 
   public void ones(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
+    fill(1);
   }
 
   public void randu(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = RNG._rng.nextDouble();
+    }
   }
-
+  
   public void randn(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
+    for (int n = 0; n < n_elem; n++) {
+      _data[n] = RNG._rng.nextGaussian();
+    }
   }
 
   public void zeros(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
   }
 
   public void reshape(int n_rows, int n_cols) {
