@@ -43,7 +43,7 @@ class ViewElemSubMat extends AbstractView {
   protected int         _col_shift;
 
   /**
-   * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
+   * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
    * @param first_row The first row position

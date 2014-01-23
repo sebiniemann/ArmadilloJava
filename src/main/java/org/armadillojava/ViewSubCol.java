@@ -23,7 +23,7 @@ class ViewSubCol extends AbstractView {
   protected int _firstPosition;
 
   /**
-   * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
+   * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
    * @param col_number The column position
