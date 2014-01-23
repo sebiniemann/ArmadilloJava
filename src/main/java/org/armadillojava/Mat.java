@@ -399,8 +399,7 @@ public class Mat extends AbstractMat {
 
   @Override
   public void copy_size(AbstractMat A) {
-    // TODO Auto-generated method stub
-
+    set_size(A.n_rows, A.n_cols);
   }
 
   @Override
