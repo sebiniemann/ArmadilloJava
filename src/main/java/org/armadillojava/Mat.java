@@ -1,5 +1,7 @@
 package org.armadillojava;
 
+import com.github.fommil.netlib.BLAS;
+
 /**
  * Provides a real-valued dense matrix with interfaces similar to the Armadillo C++ Algebra Library (Armadillo) by
  * Conrad Sanderson et al..
@@ -340,146 +342,224 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat plus(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlacePlus(this, X);
+    return result;
   }
 
   @Override
   public Mat plus(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlacePlus(this, X);
+    return result;
   }
 
   @Override
   public Mat minus(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceMinus(this, X);
+    return result;
   }
 
   @Override
   public Mat minus(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceMinus(this, X);
+    return result;
   }
 
   @Override
   public Mat elemDivide(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceElemDivide(this, X);
+    return result;
   }
 
   @Override
   public Mat elemDivide(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceElemDivide(this, X);
+    return result;
   }
 
   @Override
-  public AbstractMat times(Col X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+  public Mat times(double X) {
+    return elemTimes(X);
   }
 
   @Override
-  public AbstractMat times(Row X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+  public Mat times(Col X) throws RuntimeException {
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+    }
+
+    /*
+     * Only (1, m)-matrices can be left-hand side multiplied to column vectors.
+     */
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
   }
 
   @Override
-  public AbstractMat times(Mat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+  public Mat times(Row X) throws RuntimeException {
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+    }
+
+    /*
+     * Only (n, 1)-matrices can be left-hand side multiplied to row vectors.
+     */
+    Mat result = new Mat(n_rows, X.n_cols);
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+    return result;
+  }
+
+  @Override
+  public Mat times(Mat X) throws RuntimeException {
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+    }
+    
+    Mat result = new Mat(n_rows, X.n_cols);
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+    return result;
   }
 
   @Override
   public Mat elemTimes(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceElemTimes(this, X);
+    return result;
   }
 
   @Override
   public Mat elemTimes(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceElemTimes(this, X);
+    return result;
   }
 
   @Override
   public Mat equal(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceEqual(this, X);
+    return result;
   }
 
   @Override
   public Mat equal(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceEqual(this, X);
+    return result;
   }
 
   @Override
   public Mat nonEqual(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceNonEqual(this, X);
+    return result;
   }
 
   @Override
   public Mat nonEqual(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceNonEqual(this, X);
+    return result;
   }
 
   @Override
   public Mat greaterThan(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceGreaterThan(this, X);
+    return result;
   }
 
   @Override
   public Mat greaterThan(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceGreaterThan(this, X);
+    return result;
   }
 
   @Override
   public Mat lessThan(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceLessThan(this, X);
+    return result;
   }
 
   @Override
   public Mat lessThan(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceLessThan(this, X);
+    return result;
   }
 
   @Override
   public Mat strictGreaterThan(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceStrictGreaterThan(this, X);
+    return result;
   }
 
   @Override
   public Mat strictGreaterThan(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
+
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceStrictGreaterThan(this, X);
+    return result;
   }
 
   @Override
   public Mat strictLessThan(double X) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceStrictLessThan(this, X);
+    return result;
   }
 
   @Override
   public Mat strictLessThan(AbstractMat X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
-  }
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both operands must have the same size.");
+    }
 
-  @Override
-  public AbstractMat times(double X) throws RuntimeException {
-    // TODO Auto-generated method stub
-    return null;
+    Mat result = new Mat(n_rows, n_cols);
+    result.inPlaceStrictLessThan(this, X);
+    return result;
   }
 
 }
