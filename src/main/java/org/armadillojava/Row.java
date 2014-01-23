@@ -28,7 +28,7 @@ public class Row extends AbstractVector {
   /**
    * Creates an uninitialised row vector with the specified number of elements.
    * 
-   * @param n_elem
+   * @param n_elem The number of elements
    */
   public Row(int n_elem) {
     set_size(n_elem);
@@ -68,8 +68,8 @@ public class Row extends AbstractVector {
    * 
    * @param col The column vector
    */
-  public Row(AbstractMat vec) {
-    copy_size(vec);
+  public Row(Row vec) {
+    set_size(vec.n_elem);
     System.arraycopy(vec._data, 0, _data, 0, vec.n_elem);
   }
 
@@ -80,7 +80,7 @@ public class Row extends AbstractVector {
    * 
    * @throws RuntimeException The provided matrix must have exactly one row.
    */
-  public Row(Mat mat) throws RuntimeException {
+  public Row(AbstractMat mat) throws RuntimeException {
     if (mat.n_rows > 1) {
       throw new RuntimeException("The provided matrix must have exactly one row.");
     }

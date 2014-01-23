@@ -28,7 +28,7 @@ public class Col extends AbstractVector {
   /**
    * Creates an uninitialised column vector with the specified number of elements.
    * 
-   * @param n_elem
+   * @param n_elem The number of elements
    */
   public Col(int n_elem) {
     set_size(n_elem);
@@ -64,12 +64,12 @@ public class Col extends AbstractVector {
   }
 
   /**
-   * Creates a deep copy of a column vector.
+   * Creates a deep copy of a vector.
    * 
-   * @param col The column vector
+   * @param vec The vector
    */
-  public Col(AbstractMat vec) {
-    copy_size(vec);
+  public Col(Col vec) throws RuntimeException {
+    set_size(vec.n_elem);
     System.arraycopy(vec._data, 0, _data, 0, vec.n_elem);
   }
 
@@ -80,7 +80,7 @@ public class Col extends AbstractVector {
    * 
    * @throws RuntimeException The provided matrix must have exactly one column.
    */
-  public Col(Mat mat) throws RuntimeException {
+  public Col(AbstractMat mat) throws RuntimeException {
     if (mat.n_cols > 1) {
       throw new RuntimeException("The provided matrix must have exactly one column.");
     }
