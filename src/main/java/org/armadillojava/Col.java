@@ -2,6 +2,8 @@ package org.armadillojava;
 
 import java.util.Arrays;
 
+import com.github.fommil.netlib.BLAS;
+
 /**
  * Provides a real-valued dense column vector with interfaces similar to the Armadillo C++ Algebra Library (Armadillo)
  * by Conrad Sanderson et al..
@@ -273,14 +275,7 @@ public class Col extends AbstractVector {
      * iterates over the columns.
      */
     Mat result = new Mat(n_rows, X.n_cols);
-    int n = 0;
-    for (int i = 0; i < n_rows; i++) {
-      double rowValue = X._data[i];
-      for (int j = 0; j < n_rows; j++) {
-        result._data[n++] = rowValue * _data[j];
-      }
-    }
-
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
   }
 
@@ -297,14 +292,7 @@ public class Col extends AbstractVector {
      * See times(Row X)
      */
     Mat result = new Mat(n_rows, X.n_cols);
-    int n = 0;
-    for (int i = 0; i < n_rows; i++) {
-      double rowValue = X._data[i];
-      for (int j = 0; j < n_rows; j++) {
-        result._data[n++] = rowValue * _data[j];
-      }
-    }
-
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
   }
 

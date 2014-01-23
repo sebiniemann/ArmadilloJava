@@ -2,6 +2,8 @@ package org.armadillojava;
 
 import java.util.Arrays;
 
+import com.github.fommil.netlib.BLAS;
+
 /**
  * Provides a real-valued dense row vector with interfaces similar to the Armadillo C++ Algebra Library (Armadillo) by
  * Conrad Sanderson et al..
@@ -268,36 +270,18 @@ public class Row extends AbstractVector {
     }
 
     /*
-     * The right-hand side multiplication with a column vector will result in a single scalar value.
+     * Only (n, 1)-matrices can be right-hand side multiplied to row vectors.
      */
-    double result = 0;
-    for (int n = 0; n < n_elem; n++) {
-      result += _data[n] * X._data[n];
-    }
-
-    return new Mat(new double[]{result});
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
   }
 
   @Override
   public Mat times(Col X) {
-    /*
-     * Only (n, 1)-matrices can be right-hand side multiplied to column vectors. Therefore, it can be handled exactly
-     * the same as the right-hand side multiplication of column vectors.
-     */
-
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    /*
-     * The right-hand side multiplication with a column vector will result in a single scalar value.
-     */
-    double result = 0;
-    for (int n = 0; n < n_elem; n++) {
-      result += _data[n] * X._data[n];
-    }
-
-    return new Mat(new double[]{result});
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
   }
 
   @Override
