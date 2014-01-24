@@ -126,7 +126,7 @@ abstract class AbstractMat {
    */
   public double min() throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The vector must have at least one element.");
+      throw new RuntimeException("The matrix must have at least one element.");
     }
 
     double minimum = _data[0];
@@ -148,7 +148,7 @@ abstract class AbstractMat {
    */
   public double min(int[] index_of_min_val) throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The vector must have at least one element.");
+      throw new RuntimeException("The matrix must have at least one element.");
     }
 
     double minimum = _data[0];
@@ -172,7 +172,7 @@ abstract class AbstractMat {
    */
   public double max() throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The vector must have at least one element.");
+      throw new RuntimeException("The matrix must have at least one element.");
     }
 
     double maximum = _data[0];
@@ -194,7 +194,7 @@ abstract class AbstractMat {
    */
   public double max(int[] index_of_max_val) throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The vector must have at least one element.");
+      throw new RuntimeException("The matrix must have at least one element.");
     }
 
     double maximum = _data[0];

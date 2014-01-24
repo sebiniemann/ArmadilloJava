@@ -237,11 +237,53 @@ public class Mat extends AbstractMat {
   }
 
   public double min(int[] row_of_min_val, int[] col_of_min_val) {
+    if (is_empty()) {
+      throw new RuntimeException("The matrix must have at least one element.");
+    }
 
+    double minimum = _data[0];
+    row_of_min_val[0] = 0;
+    col_of_min_val[0] = 0;
+    
+    int n = 0;
+    for (int j = 1; j < n_cols; j++) {
+      for (int i = 1; i < n_rows; i++) {
+        double value = _data[n++];
+  
+        if (value < minimum) {
+          minimum = value;
+          row_of_min_val[0] = i;
+          col_of_min_val[0] = j;
+        }
+      }
+    }
+
+    return minimum;
   }
 
   public double max(int[] row_of_max_val, int[] col_of_max_val) {
+    if (is_empty()) {
+      throw new RuntimeException("The matrix must have at least one element.");
+    }
 
+    double maximum = _data[0];
+    row_of_max_val[0] = 0;
+    col_of_max_val[0] = 0;
+    
+    int n = 0;
+    for (int j = 1; j < n_cols; j++) {
+      for (int i = 1; i < n_rows; i++) {
+        double value = _data[n++];
+  
+        if (value > maximum) {
+          maximum = value;
+          row_of_max_val[0] = i;
+          col_of_max_val[0] = j;
+        }
+      }
+    }
+
+    return maximum;
   }
 
   public void ones(int n_rows, int n_cols) {
