@@ -181,7 +181,7 @@ public class Mat extends AbstractMat {
   }
 
   public double at(int i, int j) {
-
+    return _data[i + j * n_rows];
   }
 
   public void eye() {
