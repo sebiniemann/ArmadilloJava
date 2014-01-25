@@ -538,7 +538,7 @@ public class Col extends AbstractVector {
     /**
      * There is only one element per row.
      */
-    return new Col(Arrays.copyOfRange(_data, first_row, last_row));
+    return new Col(Arrays.copyOfRange(_data, first_row, last_row + 1));
   }
 
   @Override
