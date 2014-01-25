@@ -1,5 +1,7 @@
 package org.armadillojava;
 
+import java.util.Arrays;
+
 import com.github.fommil.netlib.BLAS;
 
 /**
@@ -339,20 +341,20 @@ public class Mat extends AbstractMat {
 
   @Override
   public Col col(int col_number) {
-    // TODO Auto-generated method stub
-    return null;
+    int n = col_number * n_rows;
+    return new Col(Arrays.copyOfRange(_data, n, n + n_rows));
   }
 
   @Override
   public Row row(int row_number) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Row(new ViewSubRow(this, row_number));
   }
 
   @Override
   public Mat cols(int first_col, int last_col) {
-    // TODO Auto-generated method stub
-    return null;
+    Mat cols = new Mat(n_rows, last_col - first_col + 1);
+    System.arraycopy(_data, first_col* n_rows, cols._data, 0, cols.n_elem);
+    return cols;
   }
 
   @Override
