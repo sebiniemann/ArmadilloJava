@@ -717,6 +717,15 @@ abstract class AbstractMat {
   public int size() {
     return n_elem;
   }
+  
+  /**
+   * Returns a deep copy of the {@code col_number}th column.
+   * 
+   * @param col_number The column position
+   * 
+   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
+   */
+  abstract public AbstractMat col(int col_number) throws IndexOutOfBoundsException;
 
   /**
    * Performs an unary operation on the {@code col_number}th column.
@@ -726,7 +735,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(int col_number, Op unary_operator) {
+  public void col(int col_number, Op unary_operator) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -736,15 +745,6 @@ abstract class AbstractMat {
      */
     inPlace(unary_operator);
   }
-  
-  /**
-   * Returns a deep copy of the {@code col_number}th column.
-   * 
-   * @param col_number The column position
-   * 
-   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
-   */
-  abstract public AbstractMat col(int col_number);
 
   /**
    * Performs a in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
@@ -755,7 +755,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(int col_number, Op binary_operator, double operand) {
+  public void col(int col_number, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -775,7 +775,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(int col_number, Op binary_operator, AbstractMat operand) {
+  public void col(int col_number, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -793,7 +793,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  abstract public AbstractMat row(int row_number);
+  abstract public AbstractMat row(int row_number) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code row_number}th row.
@@ -803,7 +803,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void row(int row_number, Op unary_operator) {
+  public void row(int row_number, Op unary_operator) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -820,7 +820,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void row(int row_number, Op binary_operator, double operand) {
+  public void row(int row_number, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -837,7 +837,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void row(int row_number, Op binary_operator, AbstractMat operand) {
+  public void row(int row_number, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -854,7 +854,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  abstract public AbstractMat cols(int first_col, int last_col);
+  abstract public AbstractMat cols(int first_col, int last_col) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code first_col}th to {@code last_col} column.
@@ -866,7 +866,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void cols(int first_col, int last_col, Op unary_operator) {
+  public void cols(int first_col, int last_col, Op unary_operator) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -893,7 +893,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void cols(int first_col, int last_col, Op binary_operator, double operand) {
+  public void cols(int first_col, int last_col, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -920,7 +920,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void cols(int first_col, int last_col, Op binary_operator, AbstractMat operand) {
+  public void cols(int first_col, int last_col, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -944,7 +944,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
    */
-  abstract public AbstractMat rows(int first_row, int last_row);
+  abstract public AbstractMat rows(int first_row, int last_row) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row.
@@ -956,7 +956,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
    */
-  public void rows(int first_row, int last_row, Op unary_operator) {
+  public void rows(int first_row, int last_row, Op unary_operator) throws IndexOutOfBoundsException {
     if (!in_range(first_row)) {
       throw new IndexOutOfBoundsException("The first row position (" + first_row + ") is out of bounds.");
     }
@@ -980,7 +980,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
    */
-  public void rows(int first_row, int last_row, Op binary_operator, double operand) {
+  public void rows(int first_row, int last_row, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (!in_range(first_row)) {
       throw new IndexOutOfBoundsException("The first row position (" + first_row + ") is out of bounds.");
     }
@@ -1004,7 +1004,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first row position ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last row position ({@code last_row}) is out of bounds.
    */
-  public void rows(int first_row, int last_row, Op binary_operator, AbstractMat operand) {
+  public void rows(int first_row, int last_row, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (!in_range(first_row)) {
       throw new IndexOutOfBoundsException("The first row position (" + first_row + ") is out of bounds.");
     }
@@ -1026,7 +1026,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  abstract public AbstractMat col(Span span, int col_number);
+  abstract public AbstractMat col(Span span, int col_number) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} row of the
@@ -1040,7 +1040,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(Span span, int col_number, Op unary_operator) {
+  public void col(Span span, int col_number, Op unary_operator) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -1071,7 +1071,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(Span span, int col_number, Op binary_operator, double operand) {
+  public void col(Span span, int col_number, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -1102,7 +1102,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last row position ({@code span._last}) is out of bounds.
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  public void col(Span span, int col_number, Op binary_operator, AbstractMat operand) {
+  public void col(Span span, int col_number, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (col_number != 0) {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
@@ -1130,7 +1130,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
    */
-  abstract public AbstractMat row(int row_number, Span span);
+  abstract public AbstractMat row(int row_number, Span span) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
@@ -1144,7 +1144,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
    */
-  public void row(int row_number, Span span, Op unary_operator) {
+  public void row(int row_number, Span span, Op unary_operator) throws IndexOutOfBoundsException {
     if (span._first != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + span._first + ") is out of bounds.");
     }
@@ -1172,7 +1172,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
    */
-  public void row(int row_number, Span span, Op binary_operator, double operand) {
+  public void row(int row_number, Span span, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (span._first != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + span._first + ") is out of bounds.");
     }
@@ -1200,7 +1200,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code span._last}) is out of bounds.
    */
-  public void row(int row_number, Span span, Op binary_operator, AbstractMat operand) {
+  public void row(int row_number, Span span, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (span._first != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + span._first + ") is out of bounds.");
     }
@@ -1229,7 +1229,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  abstract public AbstractMat submat(int first_row, int first_col, int last_row, int last_col);
+  abstract public AbstractMat submat(int first_row, int first_col, int last_row, int last_col) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
@@ -1246,7 +1246,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, int last_row, int last_col, Op unary_operator) {
+  public void submat(int first_row, int first_col, int last_row, int last_col, Op unary_operator) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -1277,7 +1277,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, int last_row, int last_col, Op binary_operator, double operand) {
+  public void submat(int first_row, int first_col, int last_row, int last_col, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -1308,7 +1308,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code last_col}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, int last_row, int last_col, Op binary_operator, AbstractMat operand) {
+  public void submat(int first_row, int first_col, int last_row, int last_col, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     if (first_col != 0) {
       throw new IndexOutOfBoundsException("The first col position (" + first_col + ") is out of bounds.");
     }
@@ -1335,7 +1335,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
-  abstract public AbstractMat submat(Span row_span, Span col_span);
+  abstract public AbstractMat submat(Span row_span, Span col_span) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
@@ -1350,7 +1350,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
-  public void submat(Span row_span, Span col_span, Op unary_operator) {
+  public void submat(Span row_span, Span col_span, Op unary_operator) throws IndexOutOfBoundsException {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
   }
 
@@ -1368,7 +1368,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
-  public void submat(Span row_span, Span col_span, Op binary_operator, double operand) {
+  public void submat(Span row_span, Span col_span, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
   }
 
@@ -1386,7 +1386,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code col_span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
-  public void submat(Span row_span, Span col_span, Op binary_operator, AbstractMat operand) {
+  public void submat(Span row_span, Span col_span, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
   }
   
@@ -1403,7 +1403,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
-  abstract public AbstractMat submat(int first_row, int first_col, Size size);
+  abstract public AbstractMat submat(int first_row, int first_col, Size size) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
@@ -1419,7 +1419,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, Size size, Op unary_operator) {
+  public void submat(int first_row, int first_col, Size size, Op unary_operator) throws IndexOutOfBoundsException {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, unary_operator);
   }
 
@@ -1438,7 +1438,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, Size size, Op binary_operator, double operand) {
+  public void submat(int first_row, int first_col, Size size, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
   }
 
@@ -1457,7 +1457,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The first column position ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
-  public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) {
+  public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
   }
   
