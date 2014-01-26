@@ -429,7 +429,21 @@ public class Mat extends AbstractMat {
   }
 
   public void set_size(int n_rows, int n_cols) {
-    // TODO Auto-generated method stub
+    if (n_rows < 0) {
+      throw new NegativeArraySizeException("The specified number of rows (" + n_rows + ") must be positive.");
+    }
+
+    if (n_cols < 0) {
+      throw new NegativeArraySizeException("The specified number of columns (" + n_cols + ") must be positive.");
+    }
+
+    if (n_rows != this.n_rows || n_cols != this.n_cols) {
+      this.n_rows = n_rows;
+      this.n_cols = n_cols;
+      this.n_elem = n_rows * n_cols;
+
+      _data = new double[this.n_elem];
+    }
   }
 
   public void shed_row(int row_number) {
@@ -441,11 +455,23 @@ public class Mat extends AbstractMat {
   }
 
   public void shed_col(int column_number) {
-    // TODO Auto-generated method stub
+    if (column_number < 0 || column_number > n_elem) {
+      throw new IndexOutOfBoundsException("The row position (" + column_number + ") is out of bounds.");
+    }
+
+    double[] temp = Arrays.copyOf(_data, n_elem);
+    set_size(n_rows, n_cols - 1);
+
+    System.arraycopy(temp, 0, _data, 0, column_number * n_rows);
+    System.arraycopy(temp, (column_number + 1) * n_rows, _data, 0, n_elem - (column_number + 1) * n_rows);
   }
 
   public void shed_cols(int first_column, int last_column) {
-    // TODO Auto-generated method stub
+    double[] temp = Arrays.copyOf(_data, n_elem);
+    set_size(n_rows, n_cols - (last_column - first_column + 1));
+
+    System.arraycopy(temp, 0, _data, 0, first_column * n_rows);
+    System.arraycopy(temp, (last_column + 1) * n_rows, _data, 0, n_elem - (last_column + 1) * n_rows);
   }
 
   @Override

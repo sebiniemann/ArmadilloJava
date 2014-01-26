@@ -428,10 +428,11 @@ public class Col extends AbstractVector {
     }
 
     if (n_elem != this.n_elem) {
-      _data = new double[n_elem];
       this.n_rows = n_elem;
       this.n_cols = 1;
       this.n_elem = n_elem;
+
+      _data = new double[this.n_elem];
     }
   }
 

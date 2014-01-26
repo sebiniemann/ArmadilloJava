@@ -560,10 +560,11 @@ public class Row extends AbstractVector {
     }
 
     if (n_elem != this.n_elem) {
-      _data = new double[n_elem];
       this.n_rows = 1;
       this.n_cols = n_elem;
       this.n_elem = n_elem;
+      
+      _data = new double[this.n_elem];
     }
   }
 
