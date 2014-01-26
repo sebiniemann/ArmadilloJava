@@ -154,7 +154,7 @@ public class Row extends AbstractVector {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_rows(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
+  public void number_of_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
     }
@@ -181,7 +181,7 @@ public class Row extends AbstractVector {
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
    */
-  public void insert_rows(int col_number, int number_of_cols, boolean set_to_zero) {
+  public void number_of_cols(int col_number, int number_of_cols, boolean set_to_zero) {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -189,7 +189,7 @@ public class Row extends AbstractVector {
      * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
-    insert_rows(col_number, number_of_cols);
+    number_of_cols(col_number, number_of_cols);
   }
 
   @Override
