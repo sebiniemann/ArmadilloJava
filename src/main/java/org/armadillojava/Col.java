@@ -132,8 +132,7 @@ public class Col extends AbstractVector {
 
     if (X.is_empty()) {
       return; // Nothing to do here.
-    }
-    else if (is_empty()) {
+    } else if (is_empty()) {
       set_size(X.n_elem);
       System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {

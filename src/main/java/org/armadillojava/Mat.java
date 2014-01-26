@@ -24,7 +24,7 @@ public class Mat extends AbstractMat {
   public Mat() {
     set_size(0, 0);
   }
-  
+
   /**
    * Creates an uninitialised matrix with the specified number of rows and columns.
    * 
@@ -34,7 +34,7 @@ public class Mat extends AbstractMat {
   public Mat(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
   }
-  
+
   /**
    * Creates a matrix with the specified number of rows and columns that is filled according to {@code fillType}.
    * 
@@ -64,7 +64,7 @@ public class Mat extends AbstractMat {
         throw new RuntimeException("The fill type (" + fill_type + ") is not supported for column vectors.");
     }
   }
-  
+
   /**
    * Creates a deep copy of a matrix.
    * 
@@ -114,7 +114,7 @@ public class Mat extends AbstractMat {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
-    
+
     if (k < 0 && -k <= n_rows) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -143,7 +143,7 @@ public class Mat extends AbstractMat {
   }
 
   public void each_col(Op binary_operator, AbstractMat operand) {
-    for(int j = 0; j < n_cols; j++) {
+    for (int j = 0; j < n_cols; j++) {
       col(j, binary_operator, operand);
     }
   }
@@ -157,7 +157,7 @@ public class Mat extends AbstractMat {
   }
 
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-    for(int n = 0; n < vector_of_indices.n_elem; n++) {
+    for (int n = 0; n < vector_of_indices.n_elem; n++) {
       col((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
@@ -171,7 +171,7 @@ public class Mat extends AbstractMat {
   }
 
   public void each_row(Op binary_operator, AbstractMat operand) {
-    for(int i = 0; i < n_rows; i++) {
+    for (int i = 0; i < n_rows; i++) {
       row(i, binary_operator, operand);
     }
   }
@@ -185,7 +185,7 @@ public class Mat extends AbstractMat {
   }
 
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-    for(int n = 0; n < vector_of_indices.n_elem; n++) {
+    for (int n = 0; n < vector_of_indices.n_elem; n++) {
       row((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
@@ -202,9 +202,9 @@ public class Mat extends AbstractMat {
      * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
-    
+
     int length = Math.min(n_rows, n_cols);
-    for(int n = 0; n < length; n++) {
+    for (int n = 0; n < length; n++) {
       _data[n + n * n_rows] = 1;
     }
   }
@@ -217,9 +217,9 @@ public class Mat extends AbstractMat {
      * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
-    
+
     int length = Math.min(n_rows, n_cols);
-    for(int n = 0; n < length; n++) {
+    for (int n = 0; n < length; n++) {
       _data[n + n * n_rows] = 1;
     }
   }
@@ -248,15 +248,14 @@ public class Mat extends AbstractMat {
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
-    
-    if(n_cols != X.n_cols) {
-   // TODO Add exception
+
+    if (n_cols != X.n_cols) {
+      // TODO Add exception
     }
 
     if (X.is_empty()) {
       return; // Nothing to do here.
-    }
-    else if (is_empty()) {
+    } else if (is_empty()) {
       set_size(X.n_rows, X.n_cols);
       System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {
@@ -300,11 +299,41 @@ public class Mat extends AbstractMat {
   }
 
   public void insert_cols(int col_number, AbstractMat X) {
+    if (col_number < 0 || col_number > n_elem) {
+      throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
+    }
 
+    if (X.is_empty()) {
+      return; // Nothing to do here.
+    } else if (is_empty()) {
+      set_size(n_rows, X.n_cols);
+      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    } else {
+      double[] temp = Arrays.copyOf(_data, n_elem);
+      set_size(n_rows, n_cols + X.n_cols);
+
+      System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
+      System.arraycopy(X._data, 0, _data, col_number * n_rows, X.n_elem);
+      System.arraycopy(temp, (X.n_cols + col_number) * n_rows, _data, 0, n_elem - col_number * n_rows);
+    }
   }
 
   public void insert_cols(int col_number, int number_of_cols) {
+    if (col_number < 0 || col_number > n_elem) {
+      throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
+    }
 
+    if (number_of_cols == 0) {
+      return; // Nothing to do here.
+    } else if (is_empty()) {
+      set_size(1, number_of_cols);
+    } else {
+      double[] temp = Arrays.copyOf(_data, n_elem);
+      set_size(n_rows, n_cols + number_of_cols);
+
+      System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
+      System.arraycopy(temp, (number_of_cols + col_number) * n_rows, _data, 0, n_elem - col_number * n_rows);
+    }
   }
 
   public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) {
@@ -315,7 +344,7 @@ public class Mat extends AbstractMat {
      * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
-    insert_cols(row_number, number_of_rows);
+    insert_cols(col_number, number_of_cols);
   }
 
   public double min(int[] row_of_min_val, int[] col_of_min_val) {
@@ -326,12 +355,12 @@ public class Mat extends AbstractMat {
     double minimum = _data[0];
     row_of_min_val[0] = 0;
     col_of_min_val[0] = 0;
-    
+
     int n = 0;
     for (int j = 1; j < n_cols; j++) {
       for (int i = 1; i < n_rows; i++) {
         double value = _data[n++];
-  
+
         if (value < minimum) {
           minimum = value;
           row_of_min_val[0] = i;
@@ -351,12 +380,12 @@ public class Mat extends AbstractMat {
     double maximum = _data[0];
     row_of_max_val[0] = 0;
     col_of_max_val[0] = 0;
-    
+
     int n = 0;
     for (int j = 1; j < n_cols; j++) {
       for (int i = 1; i < n_rows; i++) {
         double value = _data[n++];
-  
+
         if (value > maximum) {
           maximum = value;
           row_of_max_val[0] = i;
@@ -379,7 +408,7 @@ public class Mat extends AbstractMat {
       _data[n] = RNG._rng.nextDouble();
     }
   }
-  
+
   public void randn(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
@@ -432,10 +461,9 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat cols(int first_col, int last_col) {
-    
-    
+
     Mat cols = new Mat(n_rows, last_col - first_col + 1);
-    System.arraycopy(_data, first_col* n_rows, cols._data, 0, cols.n_elem);
+    System.arraycopy(_data, first_col * n_rows, cols._data, 0, cols.n_elem);
     return cols;
   }
 
@@ -529,7 +557,7 @@ public class Mat extends AbstractMat {
   @Override
   public AbstractMat t() {
     Mat transpose = new Mat(n_cols, n_rows);
-    
+
     int n = 0;
     for (int j = 0; j < n_cols; j++) {
       for (int i = 0; i < n_rows; i++) {
@@ -635,7 +663,7 @@ public class Mat extends AbstractMat {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
-    
+
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
