@@ -382,6 +382,8 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat cols(int first_col, int last_col) {
+    
+    
     Mat cols = new Mat(n_rows, last_col - first_col + 1);
     System.arraycopy(_data, first_col* n_rows, cols._data, 0, cols.n_elem);
     return cols;
@@ -406,8 +408,18 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat submat(int first_row, int first_col, int last_row, int last_col) {
-    // TODO Auto-generated method stub
-    return null;
+    if (!in_range(first_col)) {
+      throw new IndexOutOfBoundsException("The first column position (" + first_col + ") is out of bounds.");
+    }
+
+    if (!in_range(last_col)) {
+      throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
+    }
+
+    /**
+     * The first and only column is the same as the whole column vector.
+     */
+    return rows(first_row, last_row);
   }
 
   @Override
@@ -466,8 +478,16 @@ public class Mat extends AbstractMat {
 
   @Override
   public AbstractMat t() {
-    // TODO Auto-generated method stub
-    return null;
+    Mat transpose = new Mat(n_cols, n_rows);
+    
+    int n = 0;
+    for (int j = 0; j < n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
+        transpose._data[i + j * n_rows] = _data[n++];
+      }
+    }
+
+    return transpose;
   }
 
   @Override
