@@ -769,14 +769,13 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The content of row vectors can only be swaped with matrices that have at most one row.");
     }
 
-    int temp_n_elem = n_elem;
-    double[] temp = Arrays.copyOf(_data, n_elem);
+    Row temp = new Row(_data);
 
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    X.set_size(temp_n_elem, 1);
-    System.arraycopy(temp, 0, X._data, 0, X.n_elem);
+    X.set_size(temp.n_elem, 1);
+    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
@@ -785,26 +784,24 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The content of row vectors can only be swaped with column vectors if both have at most one element.");
     }
 
-    int temp_n_elem = n_elem;
-    double[] temp = Arrays.copyOf(_data, n_elem);
+    Row temp = new Row(_data);
 
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    X.set_size(temp_n_elem);
-    System.arraycopy(temp, 0, X._data, 0, X.n_elem);
+    X.set_size(temp.n_elem);
+    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
   public void swap(Row X) {
-    int temp_n_elem = n_elem;
-    double[] temp = Arrays.copyOf(_data, n_elem);
+    Row temp = new Row(_data);
 
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    X.set_size(temp_n_elem);
-    System.arraycopy(temp, 0, X._data, 0, X.n_elem);
+    X.set_size(temp.n_elem);
+    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
   }
 
   @Override

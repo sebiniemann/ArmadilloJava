@@ -1683,6 +1683,8 @@ abstract class AbstractMat {
    * @param row2 The second row position
    */
   public void swap_rows(int row1, int row2) {
+    // TODO Generalise to be used for matrices
+    
     if (!in_range(row1)) {
       throw new IndexOutOfBoundsException("The first row position (" + row1 + ") is out of bounds.");
     }
@@ -1703,6 +1705,8 @@ abstract class AbstractMat {
    * @param col2 The second column position
    */
   public void swap_cols(int col1, int col2) {
+    // TODO Generalise to be used for matrices
+    
     if (!in_range(col1)) {
       throw new IndexOutOfBoundsException("The first column position (" + col1 + ") is out of bounds.");
     }

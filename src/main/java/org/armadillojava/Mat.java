@@ -225,7 +225,7 @@ public class Mat extends AbstractMat {
   }
 
   public Mat i() {
-
+    // TODO Auto-generated method stub
   }
 
   public boolean is_square() {
@@ -421,31 +421,31 @@ public class Mat extends AbstractMat {
   }
 
   public void reshape(int n_rows, int n_cols) {
-
+    // TODO Auto-generated method stub
   }
 
   public void resize(int n_rows, int n_cols) {
-
+    // TODO Auto-generated method stub
   }
 
   public void set_size(int n_rows, int n_cols) {
-
+    // TODO Auto-generated method stub
   }
 
   public void shed_row(int row_number) {
-
+    // TODO Auto-generated method stub
   }
 
   public void shed_rows(int first_row, int last_row) {
-
+    // TODO Auto-generated method stub
   }
 
   public void shed_col(int column_number) {
-
+    // TODO Auto-generated method stub
   }
 
   public void shed_cols(int first_column, int last_column) {
-
+    // TODO Auto-generated method stub
   }
 
   @Override
@@ -538,20 +538,43 @@ public class Mat extends AbstractMat {
 
   @Override
   public void swap(Mat X) {
-    // TODO Auto-generated method stub
+    Mat temp = new Mat(this);
 
+    set_size(X.n_rows, X.n_cols);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+
+    X.set_size(temp.n_rows, temp.n_cols);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
   public void swap(Col X) {
-    // TODO Auto-generated method stub
+    if (n_cols > 1) {
+      throw new RuntimeException("The content of column vectors can only be swaped with matrices that have at most one column.");
+    }
 
+    Mat temp = new Mat(this);
+
+    set_size(X.n_elem, 1);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+
+    X.set_size(temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
   public void swap(Row X) {
-    // TODO Auto-generated method stub
+    if (n_rows > 1) {
+      throw new RuntimeException("The content of row vectors can only be swaped with matrices that have at most one row.");
+    }
 
+    Mat temp = new Mat(this);
+
+    set_size(X.n_elem, 1);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+
+    X.set_size(temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
