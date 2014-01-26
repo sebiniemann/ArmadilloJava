@@ -135,51 +135,59 @@ public class Mat extends AbstractMat {
   }
 
   public void each_col(Op unary_operator) {
-
+    inPlace(unary_operator);
   }
 
   public void each_col(Op binary_operator, double operand) {
-
+    inPlace(binary_operator, operand);
   }
 
   public void each_col(Op binary_operator, AbstractMat operand) {
-
+    for(int j = 0; j < n_cols; j++) {
+      col(j, binary_operator, operand);
+    }
   }
 
   public void each_col(AbstractMat vector_of_indices, Op unary_operator) {
-
+    cols(vector_of_indices, unary_operator);
   }
 
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, double operand) {
-
+    cols(vector_of_indices, binary_operator, operand);
   }
 
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-
+    for(int n = 0; n < vector_of_indices.n_elem; n++) {
+      col((int) vector_of_indices._data[n], binary_operator, operand);
+    }
   }
 
   public void each_row(Op unary_operator) {
-
+    inPlace(unary_operator);
   }
 
   public void each_row(Op binary_operator, double operand) {
-
+    inPlace(binary_operator, operand);
   }
 
   public void each_row(Op binary_operator, AbstractMat operand) {
-
+    for(int i = 0; i < n_rows; i++) {
+      row(i, binary_operator, operand);
+    }
   }
 
   public void each_row(AbstractMat vector_of_indices, Op unary_operator) {
-
+    rows(vector_of_indices, unary_operator);
   }
 
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, double operand) {
-
+    rows(vector_of_indices, binary_operator, operand);
   }
 
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
-
+    for(int n = 0; n < vector_of_indices.n_elem; n++) {
+      row((int) vector_of_indices._data[n], binary_operator, operand);
+    }
   }
 
   public double at(int i, int j) {
