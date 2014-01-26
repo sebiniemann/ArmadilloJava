@@ -195,11 +195,33 @@ public class Mat extends AbstractMat {
   }
 
   public void eye() {
-
+    _data = new double[n_elem];
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    
+    int length = Math.min(n_rows, n_cols);
+    for(int n = 0; n < length; n++) {
+      _data[n + n * n_rows] = 1;
+    }
   }
 
   public void eye(int n_rows, int n_cols) {
-
+    set_size(n_rows, n_cols);
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    
+    int length = Math.min(n_rows, n_cols);
+    for(int n = 0; n < length; n++) {
+      _data[n + n * n_rows] = 1;
+    }
   }
 
   public Mat i() {
@@ -367,8 +389,7 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat rows(int first_row, int last_row) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewSubRows(this, first_row, last_row));
   }
 
   @Override
