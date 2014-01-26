@@ -245,27 +245,77 @@ public class Mat extends AbstractMat {
   }
 
   public void insert_rows(int row_number, AbstractMat X) {
+    if (row_number < 0 || row_number > n_elem) {
+      throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
+    }
+    
+    if(n_cols != X.n_cols) {
+   // TODO Add exception
+    }
 
+    if (X.is_empty()) {
+      return; // Nothing to do here.
+    }
+    else if (is_empty()) {
+      set_size(X.n_rows, X.n_cols);
+      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    } else {
+      Mat temp = new Mat(this);
+      set_size(n_rows + X.n_rows, n_cols);
+
+      rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
+      rows(row_number, row_number + X.n_rows - 1, Op.EQUAL, X);
+      // n_rows has been updated by .set_size()
+      rows(row_number + X.n_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
+    }
   }
 
   public void insert_rows(int row_number, int number_of_rows) {
+    if (row_number < 0 || row_number > n_elem) {
+      throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
+    }
 
+    if (number_of_rows == 0) {
+      return; // Nothing to do here.
+    } else if (is_empty()) {
+      set_size(number_of_rows, 1);
+    } else {
+      Mat temp = new Mat(this);
+      set_size(n_rows + number_of_rows, n_cols);
+
+      rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
+      rows(row_number + number_of_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
+    }
   }
 
   public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * Therefore, set_to_zero will be ignored.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    insert_rows(row_number, number_of_rows);
+  }
+
+  public void insert_cols(int col_number, AbstractMat X) {
 
   }
 
-  public void insert_cols(int row_number, AbstractMat X) {
+  public void insert_cols(int col_number, int number_of_cols) {
 
   }
 
-  public void insert_cols(int row_number, int number_of_rows) {
-
-  }
-
-  public void insert_cols(int row_number, int number_of_rows, boolean set_to_zero) {
-
+  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * Therefore, set_to_zero will be ignored.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    insert_cols(row_number, number_of_rows);
   }
 
   public double min(int[] row_of_min_val, int[] col_of_min_val) {
