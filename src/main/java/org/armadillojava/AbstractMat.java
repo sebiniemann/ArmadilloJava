@@ -55,8 +55,20 @@ abstract class AbstractMat {
    * @param unary_operator The unary operator
    * @param operand The operand
    */
-  public double at(int n, Op unary_operator) {
-    return _data[n];
+  public void at(int n, Op unary_operator) {
+    switch (unary_operator) {
+      case NEGATE:
+        _data[n] = -_data[n];
+        break;
+      case INCREMENT:
+        _data[n]++;
+        break;
+      case DECREMENT:
+        _data[n]--;
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
 
   /**
@@ -66,19 +78,27 @@ abstract class AbstractMat {
    * @param binary_operator The binary operator
    * @param operand The operand
    */
-  public double at(int n, Op binary_operator, double operand) {
-    return _data[n];
-  }
-
-  /**
-   * Performs an in-place binary operation on the {@code n}th element with the specified right-hand side operand.
-   * 
-   * @param n The position
-   * @param binary_operator The binary operator
-   * @param operand The operand
-   */
-  public double at(int n, Op binary_operator, AbstractMat operand) {
-    return _data[n];
+  public void at(int n, Op binary_operator, double operand) {
+    switch (binary_operator) {
+      case EQUAL:
+        _data[n] = operand;
+        break;
+      case PLUS:
+        _data[n] += operand;
+        break;
+      case MINUS:
+        _data[n] -= operand;
+        break;
+      case TIMES:
+      case ELEMTIMES:
+        _data[n] *= operand;
+        break;
+      case ELEMDIVIDE:
+        _data[n] /= operand;
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
 
   /**
@@ -759,7 +779,7 @@ abstract class AbstractMat {
   public int size() {
     return n_elem;
   }
-  
+
   /**
    * Returns a deep copy of the {@code col_number}th column.
    * 
@@ -787,7 +807,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side
+   * operand.
    * 
    * @param col_number The column position
    * @param binary_operator The binary operator
@@ -805,7 +826,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side
+   * operand.
    * 
    * @param col_number The column position
    * @param binary_operator The binary operator
@@ -821,7 +843,7 @@ abstract class AbstractMat {
     // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy of the {@code row_number}th row.
    * 
@@ -964,7 +986,7 @@ abstract class AbstractMat {
     // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy of the {@code first_row}th to {@code last_row} row.
    * 
@@ -1395,7 +1417,7 @@ abstract class AbstractMat {
   public void submat(Span row_span, Span col_span, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy starting at position ({@code first_row}, {@code first_col}) of {@code size.n_rows} rows and
    * {@code size.n_cols} columns.
@@ -1466,7 +1488,7 @@ abstract class AbstractMat {
   public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy of the specified elements.
    * <p>
@@ -1711,7 +1733,7 @@ abstract class AbstractMat {
    */
   public void swap_cols(int col1, int col2) {
     // TODO Generalise to be used for matrices
-    
+
     if (!in_range(col1)) {
       throw new IndexOutOfBoundsException("The first column position (" + col1 + ") is out of bounds.");
     }
@@ -1719,7 +1741,7 @@ abstract class AbstractMat {
     if (!in_range(col2)) {
       throw new IndexOutOfBoundsException("The second column position (" + col2 + ") is out of bounds.");
     }
-    
+
     // TODO Generalise for matrices
   }
 
@@ -2006,6 +2028,7 @@ abstract class AbstractMat {
       case MINUS:
         inPlaceMinus(rightHandOperand);
         break;
+      case TIMES:
       case ELEMTIMES:
         inPlaceElemTimes(rightHandOperand);
         break;
@@ -2087,7 +2110,7 @@ abstract class AbstractMat {
       _data[n] /= rightHandOperand._data[n];
     }
   }
-  
+
   protected void outOfPlace(AbstractMat leftHandOperand, Op operator) {
     switch (operator) {
       case NEGATE:
@@ -2121,6 +2144,7 @@ abstract class AbstractMat {
       case MINUS:
         outOfPlaceMinus(leftHandOperand, rightHandOperand);
         break;
+      case TIMES:
       case ELEMTIMES:
         outOfPlaceElemTimes(leftHandOperand, rightHandOperand);
         break;
@@ -2202,7 +2226,7 @@ abstract class AbstractMat {
       _data[n] = leftHandOperand._data[n] / rightHandOperand._data[n];
     }
   }
-  
+
   protected void outOfPlaceEqual(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2216,7 +2240,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2230,7 +2254,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceNonEqual(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2244,7 +2268,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceNonEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2258,7 +2282,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2272,7 +2296,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2286,7 +2310,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2300,7 +2324,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2314,7 +2338,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceStrictGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2328,7 +2352,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceStrictGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2342,7 +2366,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceStrictLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -2356,7 +2380,7 @@ abstract class AbstractMat {
       }
     }
   }
-  
+
   protected void outOfPlaceStrictLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.

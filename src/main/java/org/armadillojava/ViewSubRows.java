@@ -32,7 +32,7 @@ class ViewSubRows extends AbstractView {
    * The current row number within the sub view
    */
   protected int _row_number;
-  
+
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 

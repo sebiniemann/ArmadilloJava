@@ -65,7 +65,7 @@ class ViewElemRows extends AbstractView {
     }
 
     _iterator = (int) _vector_of_row_indices._data[_row_number++] + _col_shift;
-    
+
     return _iterator;
   }
 }

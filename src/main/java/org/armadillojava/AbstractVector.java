@@ -96,7 +96,8 @@ abstract class AbstractVector extends AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified
+   * right-hand side operand.
    * 
    * @param first_index The first position
    * @param last_index The last position
@@ -111,7 +112,8 @@ abstract class AbstractVector extends AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified
+   * right-hand side operand.
    * 
    * @param first_index The first position
    * @param last_index The last position
@@ -139,7 +141,8 @@ abstract class AbstractVector extends AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified
+   * right-hand side operand.
    * 
    * @param span The span
    * @param binary_operator The binary operator
@@ -151,9 +154,10 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(Span span, Op binary_operator, double operand) {
     subvec(span._first, span._last, binary_operator, operand);
   }
-  
+
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified right-hand side operand.
+   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified
+   * right-hand side operand.
    * 
    * @param span The span
    * @param binary_operator The binary operator
@@ -165,7 +169,7 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(Span span, Op binary_operator, AbstractMat operand) {
     subvec(span._first, span._last, binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy of the {@code first_index}th to {@code last_index} element.
    * 
@@ -176,7 +180,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
   abstract public AbstractVector subvec(int first_index, int last_index) throws IndexOutOfBoundsException;
-  
+
   /**
    * Returns a deep copy of the {@code span._first}th to {@code span._last} element.
    * 

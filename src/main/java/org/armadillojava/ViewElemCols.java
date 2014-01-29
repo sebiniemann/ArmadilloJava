@@ -25,12 +25,12 @@ class ViewElemCols extends AbstractView {
   /**
    * The current row number within the sub view
    */
-  protected int _row_number;
+  protected int         _row_number;
 
   /**
    * The current column number within the sub view
    */
-  protected int _col_number;
+  protected int         _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -47,7 +47,7 @@ class ViewElemCols extends AbstractView {
     n_rows = matrix.n_rows;
     n_cols = vector_of_column_indices.n_elem;
     n_elem = n_rows * n_cols;
-    
+
     _vector_of_column_indices = vector_of_column_indices;
   }
 
@@ -59,7 +59,7 @@ class ViewElemCols extends AbstractView {
 
   @Override
   protected int iteratorNext() {
-    if(_row_number >= n_rows) {
+    if (_row_number >= n_rows) {
       _iterator = (int) _vector_of_column_indices._data[++_col_number] * n_rows;
       /**
        * The iterator will already point to the next element

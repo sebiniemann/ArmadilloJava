@@ -27,27 +27,27 @@ public class RunningStatVec {
   /**
    * The smallest value
    */
-  protected Mat     _min;
+  protected Mat           _min;
   /**
    * The largest value
    */
-  protected Mat     _max;
+  protected Mat           _max;
   /**
    * The amount of values
    */
-  protected double  _count;
+  protected double        _count;
   /**
    * The mean of all values
    */
-  protected Mat     _mean;
+  protected Mat           _mean;
   /**
    * The variance of all values
    */
-  protected Mat     _var;
+  protected Mat           _var;
   /**
    * The covariance of all values
    */
-  protected Mat     _cov;
+  protected Mat           _cov;
 
   /**
    * Initialises the statistical measures. Calculation of the covariance will be deactivated.
@@ -81,9 +81,9 @@ public class RunningStatVec {
   public void update(Mat samples) throws IllegalArgumentException, UnsupportedOperationException {
     // TODO add non vector detection
 
-//    if (!samples.is_number()) {
-//      throw new IllegalArgumentException("NaN is not valid sample value for any element.");
-//    }
+    // if (!samples.is_number()) {
+    // throw new IllegalArgumentException("NaN is not valid sample value for any element.");
+    // }
 
     if (_count > 0) {
       // AbstractMat.isNonEqualNumberOfElementsDetection(_max.n_elem, samples.n_elem);

@@ -95,11 +95,10 @@ public class Arma {
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
    * @param numberOfElements The number of elements
-   * @param rng The pseudorandom generator
    * @return The vector
    */
-  public static Mat randu(int numberOfElements, Random rng) {
-    return randu(numberOfElements, 1, rng);
+  public static Mat randu(int numberOfElements) {
+    return randu(numberOfElements, 1);
   }
 
   /**
@@ -110,11 +109,10 @@ public class Arma {
    * 
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
-   * @param rng The pseudorandom generator
    * @return The matrix
    */
-  public static Mat randu(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU, rng);
+  public static Mat randu(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU);
   }
 
   /**
@@ -122,11 +120,10 @@ public class Arma {
    * the standard normal distribution with mean 0.0 and standard deviation 1.0.
    * 
    * @param numberOfElements The number of elements
-   * @param rng The pseudorandom generator
    * @return The vector
    */
-  public static Mat randn(int numberOfElements, Random rng) {
-    return randn(numberOfElements, 1, rng);
+  public static Mat randn(int numberOfElements) {
+    return randn(numberOfElements, 1);
   }
 
   /**
@@ -135,11 +132,10 @@ public class Arma {
    * 
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
-   * @param rng The pseudorandom generator
    * @return The matrix
    */
-  public static Mat randn(int numberOfRows, int numberOfColumns, Random rng) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN, rng);
+  public static Mat randn(int numberOfRows, int numberOfColumns) {
+    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN);
   }
 
   /**
@@ -152,8 +148,9 @@ public class Arma {
    * @return The matrix
    */
   public static Mat repmat(AbstractMat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
-    AbstractMat.isInvalidPositionDetection(numberOfCopiesPerRow);
-    AbstractMat.isInvalidPositionDetection(numberOfCopiesPerColumn);
+    // TODO fix
+    // AbstractMat.isInvalidPositionDetection(numberOfCopiesPerRow);
+    // AbstractMat.isInvalidPositionDetection(numberOfCopiesPerColumn);
 
     // This method uses System.arraycopy instead of iterating over each element
     if (!(matrix instanceof Mat)) {
@@ -167,7 +164,7 @@ public class Arma {
       for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
         int destColumnPointer = (j + copyJ * matrix.n_cols) * result.n_rows;
         for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
-          System.arraycopy(matrix._matrix, srcColumnPointer, result._matrix, destColumnPointer, matrix.n_rows);
+          System.arraycopy(matrix._data, srcColumnPointer, result._matrix, destColumnPointer, matrix.n_rows);
           destColumnPointer += matrix.n_rows;
         }
       }
@@ -184,7 +181,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat toeplitz(AbstractMat vector) {
-    vector.isNonVectorDetection();
+    // TODO fix
+    // vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
@@ -211,8 +209,9 @@ public class Arma {
    * @return The matrix
    */
   public static Mat toeplitz(AbstractMat vector1, AbstractMat vector2) {
-    vector1.isNonVectorDetection();
-    vector2.isNonVectorDetection();
+    // TODO fix
+    // vector1.isNonVectorDetection();
+    // vector2.isNonVectorDetection();
 
     if (vector1.n_elem > 0 && vector2.n_elem > 0) {
       Mat result = new Mat(vector1.n_elem, vector2.n_elem);
@@ -242,7 +241,8 @@ public class Arma {
    * @return The matrix
    */
   public static Mat circ_toeplitz(AbstractMat vector) {
-    vector.isNonVectorDetection();
+    // TODO fix
+    // vector.isNonVectorDetection();
 
     if (vector.n_elem > 0) {
       Mat result = new Mat(vector.n_elem, vector.n_elem);
@@ -2897,12 +2897,12 @@ public class Arma {
       lastElement = element;
     }
 
-    if(matrix.is_rowvec()) {
+    if (matrix.is_rowvec()) {
       result.reshape(1, index);
     } else {
       result.reshape(index, 1);
     }
-    
+
     return result;
   }
 

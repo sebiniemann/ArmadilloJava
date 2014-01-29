@@ -74,9 +74,9 @@ class ViewElemSubMat extends AbstractView {
       _row_number = 0;
       _col_shift = (int) (_vector_of_column_indices._data[++_col_number] * n_rows);
     }
-    
+
     _iterator = (int) _vector_of_row_indices._data[++_row_number] + _col_shift;
-    
+
     return _iterator;
 
   }

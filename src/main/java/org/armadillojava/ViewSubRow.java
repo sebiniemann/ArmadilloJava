@@ -41,7 +41,7 @@ class ViewSubRow extends AbstractView {
     n_rows = 1;
     n_cols = last_col - first_col + 1;
     n_elem = n_cols;
-    
+
     _firstPosition = row_number + first_col * matrix.n_cols;
     _n_rows_skip = matrix.n_rows;
   }
@@ -58,7 +58,7 @@ class ViewSubRow extends AbstractView {
     n_rows = 1;
     n_cols = matrix.n_cols;
     n_elem = n_cols;
-    
+
     _firstPosition = row_number;
     _n_rows_skip = matrix.n_rows;
   }

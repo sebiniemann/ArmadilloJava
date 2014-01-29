@@ -98,7 +98,7 @@ public class Row extends AbstractVector {
     set_size(array.length);
     System.arraycopy(array, 0, _data, 0, array.length);
   }
-  
+
   /**
    * Creates a deep copy of a matrix sub view.
    * <p>
@@ -427,7 +427,7 @@ public class Row extends AbstractVector {
       this.n_rows = 1;
       this.n_cols = n_elem;
       this.n_elem = n_elem;
-      
+
       _data = new double[this.n_elem];
     }
   }

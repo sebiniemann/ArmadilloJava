@@ -37,7 +37,7 @@ class ViewElemMat extends AbstractView {
     n_rows = 1;
     n_cols = vector_of_indices.n_elem;
     n_elem = n_cols;
-    
+
     _vector_of_indices = vector_of_indices;
   }
 

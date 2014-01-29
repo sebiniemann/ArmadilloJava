@@ -97,7 +97,7 @@ public class Mat extends AbstractMat {
     set_size(array.length, 1);
     System.arraycopy(array, 0, _data, 0, array.length);
   }
-  
+
   /**
    * Creates a deep copy of a matrix sub view.
    * 
@@ -111,14 +111,14 @@ public class Mat extends AbstractMat {
       _data[n] = view._data[view.iteratorNext()];
     }
   }
-  
+
   /**
    * Returns a deep copy of the main diagonal.
    */
   public Mat diag() {
     return new Mat(new ViewDiag(this, 0));
   }
-  
+
   /**
    * Performs an in-place unary operation on the main diagonal.
    * 
@@ -127,7 +127,7 @@ public class Mat extends AbstractMat {
   public void diag(Op unary_operator) {
     new Mat(new ViewDiag(this, 0)).inPlace(unary_operator);
   }
-  
+
   /**
    * Performs an in-place binary operation on the main diagonal with the specified right-hand side operand.
    * 
@@ -137,7 +137,7 @@ public class Mat extends AbstractMat {
   public void diag(Op binary_operator, double operand) {
     new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Performs an in-place binary operation on the main diagonal with the specified right-hand side operand.
    * 
@@ -147,7 +147,7 @@ public class Mat extends AbstractMat {
   public void diag(Op binary_operator, AbstractMat operand) {
     new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Returns a deep copy of the {@code k}th diagonal.
    * <p>
@@ -168,7 +168,7 @@ public class Mat extends AbstractMat {
 
     return new Mat(new ViewDiag(this, k));
   }
-  
+
   /**
    * Performs an in-place unary operation on the {@code k}th diagonal.
    * <p>
@@ -188,10 +188,10 @@ public class Mat extends AbstractMat {
     if (k < 0 && -k <= n_rows) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
-    
+
     new Mat(new ViewDiag(this, k)).inPlace(unary_operator);
   }
-  
+
   /**
    * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
    * <p>
@@ -212,10 +212,10 @@ public class Mat extends AbstractMat {
     if (k < 0 && -k <= n_rows) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
-    
+
     new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
    * <p>
@@ -231,7 +231,7 @@ public class Mat extends AbstractMat {
   public void diag(int k, Op binary_operator, AbstractMat operand) {
     new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
-  
+
   /**
    * Performs an in-place unary operation on each column of the matrix individually.
    * 
@@ -240,19 +240,21 @@ public class Mat extends AbstractMat {
   public void each_col(Op unary_operator) {
     inPlace(unary_operator);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side operand.
-   *
+   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side
+   * operand.
+   * 
    * @param binary_operator The binary operator
    * @param operand The operand
    */
   public void each_col(Op binary_operator, double operand) {
     inPlace(binary_operator, operand);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side
+   * operand.
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
@@ -262,7 +264,7 @@ public class Mat extends AbstractMat {
       col(j, binary_operator, operand);
     }
   }
-  
+
   /**
    * Performs an in-place unary operation on each specified column of the matrix individually.
    * 
@@ -272,9 +274,10 @@ public class Mat extends AbstractMat {
   public void each_col(AbstractMat vector_of_indices, Op unary_operator) {
     cols(vector_of_indices, unary_operator);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each specified column of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each specified column of the matrix individually with the specified
+   * right-hand side operand.
    * 
    * @param vector_of_indices The column positions
    * @param binary_operator The binary operator
@@ -283,9 +286,10 @@ public class Mat extends AbstractMat {
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, double operand) {
     cols(vector_of_indices, binary_operator, operand);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each specified column of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each specified column of the matrix individually with the specified
+   * right-hand side operand.
    * 
    * @param vector_of_indices The column positions
    * @param binary_operator The binary operator
@@ -296,7 +300,7 @@ public class Mat extends AbstractMat {
       col((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
-  
+
   /**
    * Performs an in-place unary operation on each row of the matrix individually.
    * 
@@ -305,9 +309,10 @@ public class Mat extends AbstractMat {
   public void each_row(Op unary_operator) {
     inPlace(unary_operator);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side
+   * operand.
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
@@ -315,9 +320,10 @@ public class Mat extends AbstractMat {
   public void each_row(Op binary_operator, double operand) {
     inPlace(binary_operator, operand);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side
+   * operand.
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
@@ -327,7 +333,7 @@ public class Mat extends AbstractMat {
       row(i, binary_operator, operand);
     }
   }
-  
+
   /**
    * Performs an in-place unary operation on each specified row of the matrix individually.
    * 
@@ -337,9 +343,10 @@ public class Mat extends AbstractMat {
   public void each_row(AbstractMat vector_of_indices, Op unary_operator) {
     rows(vector_of_indices, unary_operator);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each specified row of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each specified row of the matrix individually with the specified
+   * right-hand side operand.
    * 
    * @param vector_of_indices The row positions
    * @param binary_operator The binary operator
@@ -348,9 +355,10 @@ public class Mat extends AbstractMat {
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, double operand) {
     rows(vector_of_indices, binary_operator, operand);
   }
-  
+
   /**
-   * Performs an in-place binary operation on each specified row of the matrix individually with the specified right-hand side operand.
+   * Performs an in-place binary operation on each specified row of the matrix individually with the specified
+   * right-hand side operand.
    * 
    * @param vector_of_indices The row positions
    * @param binary_operator The binary operator
@@ -361,7 +369,7 @@ public class Mat extends AbstractMat {
       row((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
-  
+
   /**
    * Returns the value of the element at the {@code i}th row and {@code j}th column.
    * 
@@ -371,7 +379,62 @@ public class Mat extends AbstractMat {
   public double at(int i, int j) {
     return _data[i + j * n_rows];
   }
-  
+
+  /**
+   * Performs an in-place unary operation on the element at the {@code i}th row and {@code j}th column.
+   * 
+   * @param n The position
+   * @param unary_operator The unary operator
+   * @param operand The operand
+   */
+  public void at(int i, int j, Op unary_operator) {
+    switch (unary_operator) {
+      case NEGATE:
+        int position = i + j * n_rows;
+        _data[position] = -_data[position];
+        break;
+      case INCREMENT:
+        _data[i + j * n_rows]++;
+        break;
+      case DECREMENT:
+        _data[i + j * n_rows]--;
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  /**
+   * Performs an in-place binary operation on the element at the {@code i}th row and {@code j}th column with the
+   * specified right-hand side operand.
+   * 
+   * @param n The position
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
+  public void at(int i, int j, Op binary_operator, double operand) {
+    switch (binary_operator) {
+      case EQUAL:
+        _data[i + j * n_rows] = operand;
+        break;
+      case PLUS:
+        _data[i + j * n_rows] += operand;
+        break;
+      case MINUS:
+        _data[i + j * n_rows] -= operand;
+        break;
+      case TIMES:
+      case ELEMTIMES:
+        _data[i + j * n_rows] *= operand;
+        break;
+      case ELEMDIVIDE:
+        _data[i + j * n_rows] /= operand;
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
   /**
    * Sets all elements along the main diagonal to 1 and all others to 0.
    */
@@ -389,9 +452,10 @@ public class Mat extends AbstractMat {
       _data[n + n * n_rows] = 1;
     }
   }
-  
+
   /**
-   * Resizes the matrix to the specified number of rows and columns and sets all elements along the main diagonal to 1 and all others to 0.
+   * Resizes the matrix to the specified number of rows and columns and sets all elements along the main diagonal to 1
+   * and all others to 0.
    */
   public void eye(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
@@ -415,25 +479,25 @@ public class Mat extends AbstractMat {
    * @throws RuntimeException The matrix appears to be singular.
    */
   public Mat i() throws RuntimeException {
-    if(!is_square()) {
+    if (!is_square()) {
       throw new RuntimeException("Only square matrices can be inverted.");
     }
-    
+
     Mat inverse = new Mat(this);
     int[] pivotIndices = new int[n_rows * n_cols];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgetrf(n_rows, n_cols, inverse._data, n_rows, pivotIndices, info);
-    if(info.val != 0) {
+    if (info.val != 0) {
       throw new RuntimeException("The matrix appears to be singular.");
     }
-    
+
     double[] temp = new double[n_cols];
     LAPACK.getInstance().dgetri(n_rows, inverse._data, n_rows, pivotIndices, temp, n_cols, info);
-    if(info.val != 0) {
+    if (info.val != 0) {
       throw new RuntimeException("The matrix appears to be singular.");
     }
-    
+
     return inverse;
   }
 
@@ -464,7 +528,7 @@ public class Mat extends AbstractMat {
   public boolean is_rowvec() {
     return (n_rows == 1);
   }
-  
+
   /**
    * Inserts the rows from {@code X} at row position {@code row_number}.
    * 
@@ -524,7 +588,7 @@ public class Mat extends AbstractMat {
       rows(row_number + number_of_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
     }
   }
-  
+
   /**
    * Inserts {@code number_of_rows} rows at row position {@code row_number}.
    * <p>
@@ -546,7 +610,7 @@ public class Mat extends AbstractMat {
      */
     insert_rows(row_number, number_of_rows);
   }
-  
+
   /**
    * Inserts the columns from {@code X} at column position {@code col_number}.
    * 
@@ -625,9 +689,10 @@ public class Mat extends AbstractMat {
      */
     insert_cols(col_number, number_of_cols);
   }
-  
+
   /**
-   * Returns the smallest value within the matrix and stores its row position in {@code row_of_min_val} and column position in {@code col_of_min_val}.
+   * Returns the smallest value within the matrix and stores its row position in {@code row_of_min_val} and column
+   * position in {@code col_of_min_val}.
    * <p>
    * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
    * 
@@ -660,9 +725,10 @@ public class Mat extends AbstractMat {
 
     return minimum;
   }
-  
+
   /**
-   * Returns the largest value within the matrix and stores its row position in {@code row_of_min_val} and column position in {@code col_of_min_val}.
+   * Returns the largest value within the matrix and stores its row position in {@code row_of_min_val} and column
+   * position in {@code col_of_min_val}.
    * <p>
    * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
    * 
@@ -695,7 +761,7 @@ public class Mat extends AbstractMat {
 
     return maximum;
   }
-  
+
   /**
    * Resizes the matrix to the specified number of rows and columns and sets all elements to 1.
    */
@@ -703,9 +769,10 @@ public class Mat extends AbstractMat {
     set_size(n_rows, n_cols);
     fill(1);
   }
-  
+
   /**
-   * Resizes the matrix to the specified number of rows and columns  and sets each element to a pseudo-random value drawn from the standard uniform distribution on the left-closed and right-open interval [0,1).
+   * Resizes the matrix to the specified number of rows and columns and sets each element to a pseudo-random value drawn
+   * from the standard uniform distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    */
@@ -715,9 +782,10 @@ public class Mat extends AbstractMat {
       _data[n] = RNG._rng.nextDouble();
     }
   }
-  
+
   /**
-   * Resizes the matrix to the specified number of rows and columns and sets each element to a pseudo-random value drawn from the standard normal distribution with mean 0.0 and standard deviation 1.0.
+   * Resizes the matrix to the specified number of rows and columns and sets each element to a pseudo-random value drawn
+   * from the standard normal distribution with mean 0.0 and standard deviation 1.0.
    */
   public void randn(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
@@ -725,14 +793,14 @@ public class Mat extends AbstractMat {
       _data[n] = RNG._rng.nextGaussian();
     }
   }
-  
+
   /**
    * Resizes the matrix to the specified number of rows and columns and sets all elements to 0.
    */
   public void zeros(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
   }
-  
+
   /**
    * Resizes the matrix to the specified number of rows and columns and reuses existing values in a column-wise manner.
    * 
@@ -754,12 +822,12 @@ public class Mat extends AbstractMat {
   public void resize(int n_rows, int n_cols) {
     Mat temp = new Mat(this);
     set_size(n_rows, n_cols);
-    
+
     int min_n_rows = Math.min(n_rows, temp.n_rows);
     int min_n_cols = Math.min(n_cols, temp.n_cols);
-    
-    for(int j = 0; j < min_n_cols; j++) {
-      for(int i = 0; i < min_n_rows; i++) {
+
+    for (int j = 0; j < min_n_cols; j++) {
+      for (int i = 0; i < min_n_rows; i++) {
         _data[i + j * n_rows] = temp._data[i + j * temp.n_rows];
       }
     }
@@ -785,7 +853,7 @@ public class Mat extends AbstractMat {
 
   public void shed_row(int row_number) {
     Mat temp = new Mat(this);
-    
+
     set_size(n_rows - 1, n_cols);
     rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
     // n_rows has been updated by set_size
@@ -794,7 +862,7 @@ public class Mat extends AbstractMat {
 
   public void shed_rows(int first_row, int last_row) {
     Mat temp = new Mat(this);
-    
+
     set_size(n_rows - (last_row - first_row + 1), n_cols);
     rows(0, first_row - 1, Op.EQUAL, temp.rows(0, first_row - 1));
     // n_rows has been updated by set_size
@@ -964,7 +1032,7 @@ public class Mat extends AbstractMat {
   @Override
   public Mat plus(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlacePlus(this, X);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
@@ -975,14 +1043,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlacePlus(this, X);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
   @Override
   public Mat minus(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceMinus(this, X);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
@@ -993,14 +1061,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceMinus(this, X);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
   @Override
   public Mat elemDivide(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceElemDivide(this, X);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -1011,7 +1079,7 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceElemDivide(this, X);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -1060,7 +1128,7 @@ public class Mat extends AbstractMat {
   @Override
   public Mat elemTimes(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceElemTimes(this, X);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
@@ -1071,14 +1139,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceElemTimes(this, X);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
   @Override
   public Mat equal(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceEqual(this, X);
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
@@ -1089,14 +1157,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceEqual(this, X);
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
   @Override
   public Mat nonEqual(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceNonEqual(this, X);
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
@@ -1107,14 +1175,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceNonEqual(this, X);
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
   @Override
   public Mat greaterThan(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceGreaterThan(this, X);
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
@@ -1125,14 +1193,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceGreaterThan(this, X);
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Mat lessThan(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceLessThan(this, X);
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
@@ -1143,14 +1211,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceLessThan(this, X);
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
   @Override
   public Mat strictGreaterThan(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceStrictGreaterThan(this, X);
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
@@ -1161,14 +1229,14 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceStrictGreaterThan(this, X);
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Mat strictLessThan(double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceStrictLessThan(this, X);
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 
@@ -1179,7 +1247,7 @@ public class Mat extends AbstractMat {
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.inPlaceStrictLessThan(this, X);
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 
