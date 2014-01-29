@@ -267,7 +267,7 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   }
   
   /**
-   * Test method for {@link arma.Arma#round(arma.AbstractMat)}.
+   * Test method for {@link arma.Arma#sign(arma.AbstractMat)}.
    * 
    * @throws IOException An I/O error occurred
    */
