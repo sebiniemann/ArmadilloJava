@@ -202,7 +202,7 @@ public class Col extends AbstractVector {
   @Override
   public Col plus(double X) {
     Col result = new Col(n_elem);
-    result.inPlacePlus(this, X);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
@@ -213,14 +213,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlacePlus(this, X);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
   @Override
   public Col minus(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceMinus(this, X);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
@@ -231,14 +231,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceMinus(this, X);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
   @Override
   public Col elemDivide(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceElemDivide(this, X);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -249,7 +249,7 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceElemDivide(this, X);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -272,15 +272,6 @@ public class Col extends AbstractVector {
 
   @Override
   public Mat times(Row X) {
-    /*
-     * Row vectors can always be right-hand side multiplied to column vectors.
-     * 
-     * Each element of the resulting matrix can be computed directly from one multiplication between two elements of the
-     * provided vectors.
-     * 
-     * Since the resulting matrix is column-major ordered, the outer loops iterates over the rows, while the inner loop
-     * iterates over the columns.
-     */
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
@@ -293,10 +284,7 @@ public class Col extends AbstractVector {
     }
 
     /*
-     * Only (1, m)-matrices can be right-hand side multiplied to column vectors. Therefore, it can be handled exactly
-     * the same as the right-hand side multiplication of row vectors.
-     * 
-     * See times(Row X)
+     * Only (1, m)-matrices can be right-hand side multiplied to column vectors.
      */
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
@@ -306,7 +294,7 @@ public class Col extends AbstractVector {
   @Override
   public Col elemTimes(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceElemTimes(this, X);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
@@ -317,14 +305,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceElemTimes(this, X);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
   @Override
   public Col equal(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceEqual(this, X);
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
@@ -335,14 +323,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceEqual(this, X);
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
   @Override
   public Col nonEqual(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceNonEqual(this, X);
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
@@ -353,14 +341,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceNonEqual(this, X);
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
   @Override
   public Col greaterThan(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceGreaterThan(this, X);
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
@@ -371,14 +359,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceGreaterThan(this, X);
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Col lessThan(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceLessThan(this, X);
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
@@ -389,14 +377,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceLessThan(this, X);
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
   @Override
   public Col strictGreaterThan(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceStrictGreaterThan(this, X);
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
@@ -407,14 +395,14 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceStrictGreaterThan(this, X);
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Col strictLessThan(double X) {
     Col result = new Col(n_elem);
-    result.inPlaceStrictLessThan(this, X);
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 
@@ -425,7 +413,7 @@ public class Col extends AbstractVector {
     }
 
     Col result = new Col(n_elem);
-    result.inPlaceStrictLessThan(this, X);
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 

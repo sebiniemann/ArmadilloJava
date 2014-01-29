@@ -201,8 +201,8 @@ public class Row extends AbstractVector {
 
   @Override
   public Row plus(double X) {
-    Row result = new Row(_data);
-    result.inPlacePlus(X);
+    Row result = new Row(n_elem);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
@@ -212,15 +212,15 @@ public class Row extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Row result = new Row(_data);
-    result.inPlacePlus(X);
+    Row result = new Row(n_elem);
+    result.outOfPlacePlus(this, X);
     return result;
   }
 
   @Override
   public Row minus(double X) {
-    Row result = new Row(_data);
-    result.inPlaceMinus(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
@@ -230,15 +230,15 @@ public class Row extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Row result = new Row(_data);
-    result.inPlaceMinus(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceMinus(this, X);
     return result;
   }
 
   @Override
   public Row elemDivide(double X) {
-    Row result = new Row(_data);
-    result.inPlaceElemDivide(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -248,8 +248,8 @@ public class Row extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Row result = new Row(_data);
-    result.inPlaceElemDivide(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceElemDivide(this, X);
     return result;
   }
 
@@ -265,7 +265,7 @@ public class Row extends AbstractVector {
     }
 
     /*
-     * Only (1, 1)-row vectors can be **left**-hand side multiplied to row vectors.
+     * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
      */
     return elemTimes(X._data[0]);
   }
@@ -293,8 +293,8 @@ public class Row extends AbstractVector {
 
   @Override
   public Row elemTimes(double X) {
-    Row result = new Row(this);
-    result.inPlaceElemTimes(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
@@ -304,27 +304,15 @@ public class Row extends AbstractVector {
       throw new RuntimeException("Both operands must have the same size.");
     }
 
-    Row result = new Row(this);
-    result.inPlaceElemTimes(X);
+    Row result = new Row(n_elem);
+    result.outOfPlaceElemTimes(this, X);
     return result;
   }
 
   @Override
   public Row equal(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] == X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
@@ -335,38 +323,14 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] == X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceEqual(this, X);
     return result;
   }
 
   @Override
   public Row nonEqual(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] != X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
@@ -377,38 +341,14 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] != X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceNonEqual(this, X);
     return result;
   }
 
   @Override
   public Row greaterThan(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] >= X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
@@ -419,38 +359,14 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] >= X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Row lessThan(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] <= X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
@@ -461,38 +377,14 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] <= X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceLessThan(this, X);
     return result;
   }
 
   @Override
   public Row strictGreaterThan(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] > X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
@@ -503,38 +395,14 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] > X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceStrictGreaterThan(this, X);
     return result;
   }
 
   @Override
   public Row strictLessThan(double X) {
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] < X) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 
@@ -545,19 +413,7 @@ public class Row extends AbstractVector {
     }
 
     Row result = new Row(n_elem);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (_data[n] < X._data[n]) {
-        result._data[n] = 1;
-      }
-    }
-
+    result.outOfPlaceStrictLessThan(this, X);
     return result;
   }
 
