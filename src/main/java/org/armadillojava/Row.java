@@ -98,7 +98,15 @@ public class Row extends AbstractVector {
     set_size(array.length);
     System.arraycopy(array, 0, _data, 0, array.length);
   }
-
+  
+  /**
+   * Creates a deep copy of a matrix sub view.
+   * <p>
+   * <b>Note:</b> Error checking in pure internal methods is only covered by unit tests. No checks are applied during
+   * run time.
+   * 
+   * @param mat The sub view
+   */
   protected Row(AbstractView view) {
     copy_size(view);
 
@@ -153,7 +161,7 @@ public class Row extends AbstractVector {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void number_of_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
+  public void insert_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
     }
@@ -174,13 +182,13 @@ public class Row extends AbstractVector {
   /**
    * Inserts {@code number_of_cols} columns at column position {@code col_number}.
    * <p>
-   * The will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
+   * All elements will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
    * 
    * @param col_number The column position
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
    */
-  public void number_of_cols(int col_number, int number_of_cols, boolean set_to_zero) {
+  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -188,7 +196,7 @@ public class Row extends AbstractVector {
      * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
-    number_of_cols(col_number, number_of_cols);
+    insert_cols(col_number, number_of_cols);
   }
 
   @Override

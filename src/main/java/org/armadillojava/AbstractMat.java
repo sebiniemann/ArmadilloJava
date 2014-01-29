@@ -90,14 +90,14 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if the vector has no elements.
+   * Returns true if the matrix has no elements.
    */
   public boolean is_empty() {
     return (n_elem == 0);
   }
 
   /**
-   * Returns true if the vector contains only finite values.
+   * Returns true if the matrix contains only finite values.
    */
   public boolean is_finite() {
 
@@ -113,16 +113,16 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns a reference to the memory internally representing the vector.
+   * Returns a reference to the memory internally representing the matrix.
    */
   public double[] memptr() {
     return _data;
   }
 
   /**
-   * Returns the smallest value within the vector.
+   * Returns the smallest value within the matrix.
    * 
-   * @throws RuntimeException The vector must have at least one element.
+   * @throws RuntimeException The matrix must have at least one element.
    */
   public double min() throws RuntimeException {
     if (is_empty()) {
@@ -138,13 +138,13 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the smallest value within the vector and stores its position in {@code index_of_min_val}.
+   * Returns the smallest value within the matrix and stores its position in {@code index_of_min_val}.
    * <p>
    * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
    * 
-   * @param index_of_min_val The position
+   * @param index_of_min_val The position storage
    * 
-   * @throws RuntimeException The vector must have at least one element.
+   * @throws RuntimeException The matrix must have at least one element.
    */
   public double min(int[] index_of_min_val) throws RuntimeException {
     if (is_empty()) {
@@ -166,9 +166,9 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the largest value within the vector.
+   * Returns the largest value within the matrix.
    * 
-   * @throws RuntimeException The vector must have at least one element.
+   * @throws RuntimeException The matrix must have at least one element.
    */
   public double max() throws RuntimeException {
     if (is_empty()) {
@@ -184,13 +184,13 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the largest value within the vector and stores its position in {@code index_of_max_val}.
+   * Returns the largest value within the matrix and stores its position in {@code index_of_max_val}.
    * <p>
    * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
    * 
-   * @param index_of_max_val The position
+   * @param index_of_max_val The position storage
    * 
-   * @throws RuntimeException The vector must have at least one element.
+   * @throws RuntimeException The matrix must have at least one element.
    */
   public double max(int[] index_of_max_val) throws RuntimeException {
     if (is_empty()) {
@@ -235,14 +235,14 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector to System.out.
+   * Prints the matrix to System.out.
    */
   public void print() {
     print("");
   }
 
   /**
-   * Prints the column vector unformatted to System.out, with a specified header.
+   * Prints the matrix unformatted to System.out, with a specified header.
    * 
    * @param header The header
    */
@@ -251,7 +251,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector to a specified stream.
+   * Prints the matrix to a specified stream.
    * 
    * @param OutputStream stream
    */
@@ -260,7 +260,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector to a specified stream, with a specified header.
+   * Prints the matrix to a specified stream, with a specified header.
    * 
    * @param OutputStream stream
    * @param header The header
@@ -282,14 +282,14 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector unformatted to System.out.
+   * Prints the matrix unformatted to System.out.
    */
   public void raw_print() {
     print("");
   }
 
   /**
-   * Prints the column vector unformatted to System.out, with a specified header.
+   * Prints the matrix unformatted to System.out, with a specified header.
    * 
    * @param header The header
    */
@@ -298,7 +298,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector unformatted to a specified stream.
+   * Prints the matrix unformatted to a specified stream.
    * 
    * @param OutputStream stream
    */
@@ -307,7 +307,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Prints the column vector unformatted to a specified stream, with a specified header.
+   * Prints the matrix unformatted to a specified stream, with a specified header.
    * 
    * @param OutputStream stream
    * @param header The header
@@ -374,7 +374,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the column vector at the specified file path and returns true on success.
+   * Stores the matrix at the specified file path and returns true on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -387,7 +387,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the column vector at the specified file path in the requested file format and returns true on success.
+   * Stores the matrix at the specified file path in the requested file format and returns true on success.
    * 
    * @param name The file path
    * @param file_type The file format
@@ -399,7 +399,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the column vector at the specified stream and returns true on success.
+   * Stores the matrix at the specified stream and returns true on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -412,7 +412,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the column vector at the specified stream in the requested file format and returns true on success.
+   * Stores the matrix at the specified stream in the requested file format and returns true on success.
    * 
    * @param stream The stream
    * @param file_type The file format
@@ -460,7 +460,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the column vector with data from the specified file path and returns true on success.
+   * Fills the matrix with data from the specified file path and returns true on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -471,7 +471,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the column vector with data expected to be in specified format from the specified file path and returns true
+   * Fills the matrix with data expected to be in specified format from the specified file path and returns true
    * on success.
    * 
    * @param name The file path
@@ -482,7 +482,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the column vector with data from the specified stream and returns true on success.
+   * Fills the matrix with data from the specified stream and returns true on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -493,7 +493,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the column vector with data expected to be in specified format from the specified stream and returns true on
+   * Fills the matrix with data expected to be in specified format from the specified stream and returns true on
    * success.
    * 
    * @param name The stream
@@ -694,7 +694,7 @@ abstract class AbstractMat {
   /**
    * C++ STL-like function
    * <p>
-   * Causes the column vector to be empty.
+   * Causes the matrix to be empty.
    */
   public void clear() {
     reset();
@@ -703,7 +703,7 @@ abstract class AbstractMat {
   /**
    * C++ STL-like function
    * <p>
-   * Returns true if the vector has no elements.
+   * Returns true if the matrix has no elements.
    */
   public boolean empty() {
     return is_empty();
@@ -728,7 +728,7 @@ abstract class AbstractMat {
   abstract public AbstractMat col(int col_number) throws IndexOutOfBoundsException;
 
   /**
-   * Performs an unary operation on the {@code col_number}th column.
+   * Performs an in-place unary operation on the {@code col_number}th column.
    * 
    * @param col_number The column position
    * @param unary_operator The unary operator
@@ -740,14 +740,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(unary_operator);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param col_number The column position
    * @param binary_operator The binary operator
@@ -760,14 +758,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param col_number The column position
    * @param binary_operator The binary operator
@@ -780,9 +776,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The col position (" + col_number + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
   
@@ -796,7 +790,7 @@ abstract class AbstractMat {
   abstract public AbstractMat row(int row_number) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code row_number}th row.
+   * Performs an in-place unary operation on the {@code row_number}th row.
    * 
    * @param row_number The row position
    * @param unary_operator The unary operator
@@ -812,7 +806,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code row_number}th row with the specified right-hand side operand.
    * 
    * @param row_number The row position
    * @param binary_operator The binary operator
@@ -829,7 +823,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row with the specified right-hand side operand.
+   * Performs an in-place binary operation on the {@code row_number}th row with the specified right-hand side operand.
    * 
    * @param row_number The row position
    * @param binary_operator The binary operator
@@ -857,7 +851,7 @@ abstract class AbstractMat {
   abstract public AbstractMat cols(int first_col, int last_col) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code first_col}th to {@code last_col} column.
+   * Performs an in-place unary operation on the {@code first_col}th to {@code last_col} column.
    * 
    * @param first_col The first column position
    * @param last_col The last column position
@@ -875,14 +869,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(unary_operator);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
+   * Performs an in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
    * right-hand side operand.
    * 
    * @param first_col The first column position
@@ -902,14 +894,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
+   * Performs an in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
    * right-hand side operand.
    * 
    * @param first_col The first column position
@@ -929,9 +919,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     inPlace(binary_operator, operand);
   }
   
@@ -947,7 +935,7 @@ abstract class AbstractMat {
   abstract public AbstractMat rows(int first_row, int last_row) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row.
+   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row.
    * 
    * @param first_row The first row position
    * @param last_row The last row position
@@ -969,7 +957,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
+   * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
    * right-hand side operand.
    * 
    * @param first_row The first row position
@@ -993,7 +981,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
+   * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
    * right-hand side operand.
    * 
    * @param first_row The first row position
@@ -1029,7 +1017,7 @@ abstract class AbstractMat {
   abstract public AbstractMat col(Span span, int col_number) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} row of the
+   * Performs an in-place unary operation on the {@code span._first}th to {@code span._last} row of the
    * {@code col_number}th column.
    * 
    * @param span The span
@@ -1046,20 +1034,16 @@ abstract class AbstractMat {
     }
 
     if (span._isEntireRange) {
-      /**
-       * The first and only column is the same as the whole column vector.
-       */
+      // TODO Generalise for matrices
       inPlace(unary_operator);
     } else {
-      /**
-       * There is only one element per row.
-       */
+      // TODO Generalise for matrices
       rows(span._first, span._last, unary_operator);
     }
   }
 
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the
+   * Performs an in-place binary operation on the {@code span._first}th to {@code span._last} row of the
    * {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param span The span
@@ -1077,20 +1061,16 @@ abstract class AbstractMat {
     }
 
     if (span._isEntireRange) {
-      /**
-       * The first and only column is the same as the whole column vector.
-       */
+      // TODO Generalise for matrices
       inPlace(binary_operator, operand);
     } else {
-      /**
-       * There is only one element per row
-       */
+      // TODO Generalise for matrices
       rows(span._first, span._last, binary_operator, operand);
     }
   }
 
   /**
-   * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} row of the
+   * Performs an in-place binary operation on the {@code span._first}th to {@code span._last} row of the
    * {@code col_number}th column with the specified right-hand side operand.
    * 
    * @param span The span
@@ -1108,14 +1088,10 @@ abstract class AbstractMat {
     }
 
     if (span._isEntireRange) {
-      /**
-       * The first and only column is the same as the whole column vector.
-       */
+      // TODO Generalise for matrices
       inPlace(binary_operator, operand);
     } else {
-      /**
-       * There is only one element per row
-       */
+      // TODO Generalise for matrices
       rows(span._first, span._last, binary_operator, operand);
     }
   }
@@ -1133,7 +1109,7 @@ abstract class AbstractMat {
   abstract public AbstractMat row(int row_number, Span span) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
+   * Performs an in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
    * {@code span._last} column.
    * 
    * @param row_number The row position
@@ -1153,14 +1129,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + span._last + ") is out of bounds.");
     }
 
-    /**
-     * There is only one element per row.
-     */
+    // TODO Generalise for matrices
     row(row_number, unary_operator);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
+   * Performs an in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
    * {@code span._last} column with the specified right-hand side operand.
    * 
    * @param row_number The row position
@@ -1181,14 +1155,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + span._last + ") is out of bounds.");
     }
 
-    /**
-     * There is only one element per row.
-     */
+    // TODO Generalise for matrices
     row(row_number, binary_operator, operand);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
+   * Performs an in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
    * {@code span._last} column with the specified right-hand side operand.
    * 
    * @param row_number The row position
@@ -1209,9 +1181,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + span._last + ") is out of bounds.");
     }
 
-    /**
-     * There is only one element per row.
-     */
+    // TODO Generalise for matrices
     row(row_number, binary_operator, operand);
   }
 
@@ -1232,7 +1202,7 @@ abstract class AbstractMat {
   abstract public AbstractMat submat(int first_row, int first_col, int last_row, int last_col) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
    * to {@code last_col} column.
    * 
    * @param first_row The first row position
@@ -1255,14 +1225,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     rows(first_row, last_row, unary_operator);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
    * to {@code last_col} column with the specified right-hand side operand.
    * 
    * @param first_row The first row position
@@ -1286,14 +1254,12 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     rows(first_row, last_row, binary_operator, operand);
   }
 
   /**
-   * Performs a in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+   * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
    * to {@code last_col} column with the specified right-hand side operand.
    * 
    * @param first_row The first row position
@@ -1317,9 +1283,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last col position (" + last_col + ") is out of bounds.");
     }
 
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
+    // TODO Generalise for matrices
     rows(first_row, last_row, binary_operator, operand);
   }
 
@@ -1338,7 +1302,7 @@ abstract class AbstractMat {
   abstract public AbstractMat submat(Span row_span, Span col_span) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * Performs an in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
    * {@code col_span._first}th to {@code col_span._last} column.
    * 
    * @param row_span The row span
@@ -1355,7 +1319,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * Performs an in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
    * {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
    * 
    * @param row_span The row span
@@ -1373,7 +1337,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+   * Performs an in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
    * {@code col_span._first}th to {@code col_span._last} column with the specified right-hand side operand.
    * 
    * @param row_span The row span
@@ -1406,7 +1370,7 @@ abstract class AbstractMat {
   abstract public AbstractMat submat(int first_row, int first_col, Size size) throws IndexOutOfBoundsException;
 
   /**
-   * Performs a in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * Performs an in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
    * rows and {@code size.n_cols} columns.
    * 
    * @param first_row The first row position
@@ -1424,7 +1388,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * Performs an in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
    * rows and {@code size.n_cols} columns with the specified right-hand side operand.
    * 
    * @param first_row The first row position
@@ -1443,7 +1407,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+   * Performs an in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
    * rows and {@code size.n_cols} columns with the specified right-hand side operand.
    * 
    * @param first_row The first row position
@@ -1471,7 +1435,7 @@ abstract class AbstractMat {
   abstract public Col elem(AbstractMat vector_of_indices);
 
   /**
-   * Performs a in-place unary operation on the specified elements.
+   * Performs an in-place unary operation on the specified elements.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1483,7 +1447,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified elements with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1496,7 +1460,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified elements with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1518,7 +1482,7 @@ abstract class AbstractMat {
   abstract public AbstractMat cols(AbstractMat vector_of_column_indices);
 
   /**
-   * Performs a in-place unary operation on the specified columns.
+   * Performs an in-place unary operation on the specified columns.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1530,7 +1494,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified columns with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1543,7 +1507,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified columns with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1565,7 +1529,7 @@ abstract class AbstractMat {
   abstract public AbstractMat rows(AbstractMat vector_of_row_indices);
 
   /**
-   * Performs a in-place unary operation on the specified rows.
+   * Performs an in-place unary operation on the specified rows.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1577,7 +1541,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1590,7 +1554,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows with the specified right-hand side operand.
+   * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1613,7 +1577,7 @@ abstract class AbstractMat {
   abstract public AbstractMat submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices);
 
   /**
-   * Performs a in-place unary operation on the specified rows of the specified columns.
+   * Performs an in-place unary operation on the specified rows of the specified columns.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
    * 
@@ -1626,7 +1590,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand
+   * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
@@ -1641,7 +1605,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Performs a in-place binary operation on the specified rows of the specified columns with the specified right-hand
+   * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
    * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exception upon errors.
@@ -1683,8 +1647,6 @@ abstract class AbstractMat {
    * @param row2 The second row position
    */
   public void swap_rows(int row1, int row2) {
-    // TODO Generalise to be used for matrices
-    
     if (!in_range(row1)) {
       throw new IndexOutOfBoundsException("The first row position (" + row1 + ") is out of bounds.");
     }
@@ -1693,6 +1655,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The second row position (" + row2 + ") is out of bounds.");
     }
 
+    // TODO Generalise for matrices
     double temp = _data[row1];
     _data[row1] = _data[row2];
     _data[row2] = temp;
@@ -1714,11 +1677,8 @@ abstract class AbstractMat {
     if (!in_range(col2)) {
       throw new IndexOutOfBoundsException("The second column position (" + col2 + ") is out of bounds.");
     }
-
-    /**
-     * The first and only column is the same as the whole column vector.
-     * Nothing to do here.
-     */
+    
+    // TODO Generalise for matrices
   }
 
   /**
@@ -1842,7 +1802,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
    * 
    * @param operand The operand
    */
@@ -1851,7 +1811,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
    * 
    * @param operand The operand
    * 
@@ -1862,7 +1822,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
    * 
    * @param operand The operand
    */
@@ -1871,7 +1831,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
    * 
    * @param operand The operand
    * 
@@ -1882,7 +1842,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
    * the right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1892,7 +1852,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is greater than
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
    * the right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1904,7 +1864,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
    * right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1914,7 +1874,7 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is less than the
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
    * right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1927,7 +1887,7 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
    * greater than the right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1938,7 +1898,7 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
    * greater than the right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1951,7 +1911,7 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
    * than the right-hand side and 0 otherwise.
    * 
    * @param operand The operand
@@ -1962,7 +1922,7 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned vector will be set to 1 at positions where the two corresponding left-hand side value is strict less
+   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
    * than the right-hand side and 0 otherwise.
    * 
    * @param operand The operand

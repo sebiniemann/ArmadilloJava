@@ -99,6 +99,14 @@ public class Col extends AbstractVector {
     System.arraycopy(array, 0, _data, 0, array.length);
   }
 
+  /**
+   * Creates a deep copy of a matrix sub view.
+   * <p>
+   * <b>Note:</b> Error checking in pure internal methods is only covered by unit tests. No checks are applied during
+   * run time.
+   * 
+   * @param mat The sub view
+   */
   protected Col(AbstractView view) {
     copy_size(view);
 
@@ -174,7 +182,7 @@ public class Col extends AbstractVector {
   /**
    * Inserts {@code number_of_rows} rows at row position {@code row_number}.
    * <p>
-   * The will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
+   * All elements will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
    * 
    * @param row_number The row position
    * @param number_of_rows The number of rows
@@ -639,7 +647,7 @@ public class Col extends AbstractVector {
     }
 
     Col temp = new Col(_data);
-    
+
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
@@ -654,7 +662,7 @@ public class Col extends AbstractVector {
     }
 
     Col temp = new Col(_data);
-    
+
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
@@ -665,7 +673,7 @@ public class Col extends AbstractVector {
   @Override
   public void swap(Col X) {
     Col temp = new Col(_data);
-    
+
     set_size(X.n_elem);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 

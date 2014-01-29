@@ -2,7 +2,10 @@ package org.armadillojava;
 
 import java.util.Arrays;
 
+import org.netlib.util.intW;
+
 import com.github.fommil.netlib.BLAS;
+import com.github.fommil.netlib.LAPACK;
 
 /**
  * Provides a real-valued dense matrix with interfaces similar to the Armadillo C++ Algebra Library (Armadillo) by
@@ -32,6 +35,7 @@ public class Mat extends AbstractMat {
    * @param n_cols The number of columns
    */
   public Mat(int n_rows, int n_cols) {
+    // n_rows and n_cols are validated in set_size
     set_size(n_rows, n_cols);
   }
 
@@ -49,19 +53,28 @@ public class Mat extends AbstractMat {
   public Mat(int n_rows, int n_cols, Fill fill_type) {
     switch (fill_type) {
       case NONE:
+        // n_rows and n_cols are validated in set_size
+        set_size(n_rows, n_cols);
+        break;
       case ZEROS:
+        // n_rows and n_cols are validated in zeros
         zeros(n_rows, n_cols);
         break;
       case ONES:
+        // n_rows and n_cols are validated in ones
         ones(n_rows, n_cols);
         break;
+      case EYE:
+        // n_rows and n_cols are validated in ones
+        eye(n_rows, n_cols);
+        break;
       case RANDU:
+        // n_rows and n_cols are validated in randu
         randu(n_rows, n_cols);
         break;
       case RANDN:
+        // n_rows and n_cols are validated in randn
         randn(n_rows, n_cols);
-      default:
-        throw new RuntimeException("The fill type (" + fill_type + ") is not supported for column vectors.");
     }
   }
 
@@ -84,7 +97,12 @@ public class Mat extends AbstractMat {
     set_size(array.length, 1);
     System.arraycopy(array, 0, _data, 0, array.length);
   }
-
+  
+  /**
+   * Creates a deep copy of a matrix sub view.
+   * 
+   * @param mat The sub view
+   */
   protected Mat(AbstractView view) {
     copy_size(view);
 
@@ -93,23 +111,52 @@ public class Mat extends AbstractMat {
       _data[n] = view._data[view.iteratorNext()];
     }
   }
-
+  
+  /**
+   * Returns a deep copy of the main diagonal.
+   */
   public Mat diag() {
     return new Mat(new ViewDiag(this, 0));
   }
-
+  
+  /**
+   * Performs an in-place unary operation on the main diagonal.
+   * 
+   * @param unary_operator The unary operator
+   */
   public void diag(Op unary_operator) {
     new Mat(new ViewDiag(this, 0)).inPlace(unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on the main diagonal with the specified right-hand side operand.
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void diag(Op binary_operator, double operand) {
     new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on the main diagonal with the specified right-hand side operand.
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void diag(Op binary_operator, AbstractMat operand) {
     new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Returns a deep copy of the {@code k}th diagonal.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * </ul>
+   */
   public Mat diag(int k) {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
@@ -121,79 +168,213 @@ public class Mat extends AbstractMat {
 
     return new Mat(new ViewDiag(this, k));
   }
-
+  
+  /**
+   * Performs an in-place unary operation on the {@code k}th diagonal.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * </ul>
+   * 
+   * @param unary_operator The unary operator
+   */
   public void diag(int k, Op unary_operator) {
+    if (k > 0 && k >= n_cols) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+
+    if (k < 0 && -k <= n_rows) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+    
     new Mat(new ViewDiag(this, k)).inPlace(unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * </ul>
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void diag(int k, Op binary_operator, double operand) {
+    if (k > 0 && k >= n_cols) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+
+    if (k < 0 && -k <= n_rows) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+    
     new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * </ul>
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void diag(int k, Op binary_operator, AbstractMat operand) {
     new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place unary operation on each column of the matrix individually.
+   * 
+   * @param unary_operator The unary operator
+   */
   public void each_col(Op unary_operator) {
     inPlace(unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side operand.
+   *
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_col(Op binary_operator, double operand) {
     inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_col(Op binary_operator, AbstractMat operand) {
     for (int j = 0; j < n_cols; j++) {
       col(j, binary_operator, operand);
     }
   }
-
+  
+  /**
+   * Performs an in-place unary operation on each specified column of the matrix individually.
+   * 
+   * @param vector_of_indices The column positions
+   * @param unary_operator The unary operator
+   */
   public void each_col(AbstractMat vector_of_indices, Op unary_operator) {
     cols(vector_of_indices, unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each specified column of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param vector_of_indices The column positions
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, double operand) {
     cols(vector_of_indices, binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each specified column of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param vector_of_indices The column positions
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_col(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
     for (int n = 0; n < vector_of_indices.n_elem; n++) {
       col((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
-
+  
+  /**
+   * Performs an in-place unary operation on each row of the matrix individually.
+   * 
+   * @param unary_operator The unary operator
+   */
   public void each_row(Op unary_operator) {
     inPlace(unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_row(Op binary_operator, double operand) {
     inPlace(binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_row(Op binary_operator, AbstractMat operand) {
     for (int i = 0; i < n_rows; i++) {
       row(i, binary_operator, operand);
     }
   }
-
+  
+  /**
+   * Performs an in-place unary operation on each specified row of the matrix individually.
+   * 
+   * @param vector_of_indices The row positions
+   * @param unary_operator The unary operator
+   */
   public void each_row(AbstractMat vector_of_indices, Op unary_operator) {
     rows(vector_of_indices, unary_operator);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each specified row of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param vector_of_indices The row positions
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, double operand) {
     rows(vector_of_indices, binary_operator, operand);
   }
-
+  
+  /**
+   * Performs an in-place binary operation on each specified row of the matrix individually with the specified right-hand side operand.
+   * 
+   * @param vector_of_indices The row positions
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
   public void each_row(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
     for (int n = 0; n < vector_of_indices.n_elem; n++) {
       row((int) vector_of_indices._data[n], binary_operator, operand);
     }
   }
-
+  
+  /**
+   * Returns the value of the element at the {@code i}th row and {@code j}th column.
+   * 
+   * @param i The row position
+   * @param j The column position
+   */
   public double at(int i, int j) {
     return _data[i + j * n_rows];
   }
-
+  
+  /**
+   * Sets all elements along the main diagonal to 1 and all others to 0.
+   */
   public void eye() {
     _data = new double[n_elem];
     /*
@@ -208,7 +389,10 @@ public class Mat extends AbstractMat {
       _data[n + n * n_rows] = 1;
     }
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns and sets all elements along the main diagonal to 1 and all others to 0.
+   */
   public void eye(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
     /*
@@ -224,33 +408,79 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public Mat i() {
-    // TODO Auto-generated method stub
+  /**
+   * Returns the inverse.
+   * 
+   * @throws RuntimeException Only square matrices can be inverted.
+   * @throws RuntimeException The matrix appears to be singular.
+   */
+  public Mat i() throws RuntimeException {
+    if(!is_square()) {
+      throw new RuntimeException("Only square matrices can be inverted.");
+    }
+    
+    Mat inverse = new Mat(this);
+    int[] pivotIndices = new int[n_rows * n_cols];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgetrf(n_rows, n_cols, inverse._data, n_rows, pivotIndices, info);
+    if(info.val != 0) {
+      throw new RuntimeException("The matrix appears to be singular.");
+    }
+    
+    double[] temp = new double[n_cols];
+    LAPACK.getInstance().dgetri(n_rows, inverse._data, n_rows, pivotIndices, temp, n_cols, info);
+    if(info.val != 0) {
+      throw new RuntimeException("The matrix appears to be singular.");
+    }
+    
+    return inverse;
   }
 
+  /**
+   * Returns true if the number of rows equals the number of columns.
+   */
   public boolean is_square() {
     return (n_rows == n_cols);
   }
 
+  /**
+   * Returns true if the matrix has only one row or column.
+   */
   public boolean is_vec() {
     return (is_colvec() || is_rowvec());
   }
 
+  /**
+   * Returns true if the matrix has only one column.
+   */
   public boolean is_colvec() {
     return (n_cols == 1);
   }
 
+  /**
+   * Returns true if the matrix has only one row.
+   */
   public boolean is_rowvec() {
     return (n_rows == 1);
   }
-
-  public void insert_rows(int row_number, AbstractMat X) {
+  
+  /**
+   * Inserts the rows from {@code X} at row position {@code row_number}.
+   * 
+   * @param row_number The row position
+   * @param X The column vector
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws RuntimeException Both matrices must have the same number of columns.
+   */
+  public void insert_rows(int row_number, AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
 
     if (n_cols != X.n_cols) {
-      // TODO Add exception
+      throw new RuntimeException("Both matrices must have the same number of columns.");
     }
 
     if (X.is_empty()) {
@@ -269,7 +499,15 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void insert_rows(int row_number, int number_of_rows) {
+  /**
+   * Inserts {@code number_of_rows} uninitialised rows at row position {@code row_number}.
+   * 
+   * @param row_number The row position
+   * @param number_of_rows The number of rows
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   */
+  public void insert_rows(int row_number, int number_of_rows) throws IndexOutOfBoundsException {
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -286,8 +524,19 @@ public class Mat extends AbstractMat {
       rows(row_number + number_of_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
     }
   }
-
-  public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) {
+  
+  /**
+   * Inserts {@code number_of_rows} rows at row position {@code row_number}.
+   * <p>
+   * All elements will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
+   * 
+   * @param row_number The row position
+   * @param number_of_rows The number of rows
+   * @param set_to_zero Whether the inserted elements are to be set to 0
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   */
+  public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) throws IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -297,10 +546,23 @@ public class Mat extends AbstractMat {
      */
     insert_rows(row_number, number_of_rows);
   }
-
-  public void insert_cols(int col_number, AbstractMat X) {
+  
+  /**
+   * Inserts the columns from {@code X} at column position {@code col_number}.
+   * 
+   * @param col_number The column position
+   * @param X The column vector
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws RuntimeException Both matrices must have the same number of columns.
+   */
+  public void insert_cols(int col_number, AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
+    }
+
+    if (n_rows != X.n_rows) {
+      throw new RuntimeException("Both matrices must have the same number of rows.");
     }
 
     if (X.is_empty()) {
@@ -318,7 +580,15 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void insert_cols(int col_number, int number_of_cols) {
+  /**
+   * Inserts {@code number_of_cols} uninitialised columns at column position {@code col_number}.
+   * 
+   * @param col_number The column position
+   * @param number_of_cols The number of columns
+   * 
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   */
+  public void insert_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
@@ -336,7 +606,16 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) {
+  /**
+   * Inserts {@code number_of_cols} columns at column position {@code col_number}.
+   * <p>
+   * All elements will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
+   * 
+   * @param col_number The column position
+   * @param number_of_cols The number of columns
+   * @param set_to_zero Whether the inserted elements are to be set to 0
+   */
+  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) throws IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -346,8 +625,18 @@ public class Mat extends AbstractMat {
      */
     insert_cols(col_number, number_of_cols);
   }
-
-  public double min(int[] row_of_min_val, int[] col_of_min_val) {
+  
+  /**
+   * Returns the smallest value within the matrix and stores its row position in {@code row_of_min_val} and column position in {@code col_of_min_val}.
+   * <p>
+   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * 
+   * @param index_of_min_val The row position storage
+   * @param index_of_min_val The column position storage
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public double min(int[] row_of_min_val, int[] col_of_min_val) throws RuntimeException {
     if (is_empty()) {
       throw new RuntimeException("The matrix must have at least one element.");
     }
@@ -371,8 +660,18 @@ public class Mat extends AbstractMat {
 
     return minimum;
   }
-
-  public double max(int[] row_of_max_val, int[] col_of_max_val) {
+  
+  /**
+   * Returns the largest value within the matrix and stores its row position in {@code row_of_min_val} and column position in {@code col_of_min_val}.
+   * <p>
+   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * 
+   * @param index_of_min_val The row position storage
+   * @param index_of_min_val The column position storage
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public double max(int[] row_of_max_val, int[] col_of_max_val) throws RuntimeException {
     if (is_empty()) {
       throw new RuntimeException("The matrix must have at least one element.");
     }
@@ -396,26 +695,40 @@ public class Mat extends AbstractMat {
 
     return maximum;
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns and sets all elements to 1.
+   */
   public void ones(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
     fill(1);
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns  and sets each element to a pseudo-random value drawn from the standard uniform distribution on the left-closed and right-open interval [0,1).
+   * <p>
+   * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
+   */
   public void randu(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
     }
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns and sets each element to a pseudo-random value drawn from the standard normal distribution with mean 0.0 and standard deviation 1.0.
+   */
   public void randn(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
     }
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns and sets all elements to 0.
+   */
   public void zeros(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
   }

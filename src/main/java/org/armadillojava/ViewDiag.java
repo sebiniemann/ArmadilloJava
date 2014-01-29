@@ -31,9 +31,9 @@ public class ViewDiag extends AbstractView {
    * Creates a shallow copy of a matrix and restrict the access to its {@code k}th diagonal.
    * <p>
    * <ul>
-   * <li>For {@code k} = 0, the main diagonal is used.
-   * <li>For {@code k} > 0, the {@code k}th super-diagonal is used.
-   * <li>For {@code k} < 0, the {@code k}th sub-diagonal is used.
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param matrix The matrix
