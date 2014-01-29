@@ -49,6 +49,39 @@ abstract class AbstractMat {
   }
 
   /**
+   * Performs an in-place unary operation on the {@code n}th element.
+   * 
+   * @param n The position
+   * @param unary_operator The unary operator
+   * @param operand The operand
+   */
+  public double at(int n, Op unary_operator) {
+    return _data[n];
+  }
+
+  /**
+   * Performs an in-place binary operation on the {@code n}th element with the specified right-hand side operand.
+   * 
+   * @param n The position
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
+  public double at(int n, Op binary_operator, double operand) {
+    return _data[n];
+  }
+
+  /**
+   * Performs an in-place binary operation on the {@code n}th element with the specified right-hand side operand.
+   * 
+   * @param n The position
+   * @param binary_operator The binary operator
+   * @param operand The operand
+   */
+  public double at(int n, Op binary_operator, AbstractMat operand) {
+    return _data[n];
+  }
+
+  /**
    * Returns true if the position is not out of bounds.
    * 
    * @param n The position
@@ -2055,7 +2088,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlace(AbstractMat leftHandOperand, Op operator) {
+  protected void outOfPlace(AbstractMat leftHandOperand, Op operator) {
     switch (operator) {
       case NEGATE:
         for (int n = 0; n < n_elem; n++) {
@@ -2077,100 +2110,100 @@ abstract class AbstractMat {
     }
   }
 
-  protected void inPlace(AbstractMat leftHandOperand, Op operator, double rightHandOperand) {
+  protected void outOfPlace(AbstractMat leftHandOperand, Op operator, double rightHandOperand) {
     switch (operator) {
       case EQUAL:
         fill(rightHandOperand);
         break;
       case PLUS:
-        inPlacePlus(leftHandOperand, rightHandOperand);
+        outOfPlacePlus(leftHandOperand, rightHandOperand);
         break;
       case MINUS:
-        inPlaceMinus(leftHandOperand, rightHandOperand);
+        outOfPlaceMinus(leftHandOperand, rightHandOperand);
         break;
       case ELEMTIMES:
-        inPlaceElemTimes(leftHandOperand, rightHandOperand);
+        outOfPlaceElemTimes(leftHandOperand, rightHandOperand);
         break;
       case ELEMDIVIDE:
-        inPlaceElemDivide(leftHandOperand, rightHandOperand);
+        outOfPlaceElemDivide(leftHandOperand, rightHandOperand);
         break;
       default:
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
 
-  protected void inPlace(AbstractMat leftHandOperand, Op operator, AbstractMat rightHandOperand) {
+  protected void outOfPlace(AbstractMat leftHandOperand, Op operator, AbstractMat rightHandOperand) {
     switch (operator) {
       case EQUAL:
         copy_size(rightHandOperand);
         System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
         break;
       case PLUS:
-        inPlacePlus(leftHandOperand, rightHandOperand);
+        outOfPlacePlus(leftHandOperand, rightHandOperand);
         break;
       case MINUS:
-        inPlaceMinus(leftHandOperand, rightHandOperand);
+        outOfPlaceMinus(leftHandOperand, rightHandOperand);
         break;
       case ELEMTIMES:
-        inPlaceElemTimes(leftHandOperand, rightHandOperand);
+        outOfPlaceElemTimes(leftHandOperand, rightHandOperand);
         break;
       case ELEMDIVIDE:
-        inPlaceElemDivide(leftHandOperand, rightHandOperand);
+        outOfPlaceElemDivide(leftHandOperand, rightHandOperand);
         break;
       default:
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
 
-  protected void inPlacePlus(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlacePlus(AbstractMat leftHandOperand, double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] + rightHandOperand;
     }
   }
 
-  protected void inPlacePlus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlacePlus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] + rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceMinus(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceMinus(AbstractMat leftHandOperand, double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] - rightHandOperand;
     }
   }
 
-  protected void inPlaceMinus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceMinus(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] - rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceElemTimes(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceElemTimes(AbstractMat leftHandOperand, double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] * rightHandOperand;
     }
   }
 
-  protected void inPlaceElemTimes(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceElemTimes(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] * rightHandOperand._data[n];
     }
   }
 
-  protected void inPlaceElemDivide(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceElemDivide(AbstractMat leftHandOperand, double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] / rightHandOperand;
     }
   }
 
-  protected void inPlaceElemDivide(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceElemDivide(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
       _data[n] = leftHandOperand._data[n] / rightHandOperand._data[n];
     }
   }
   
-  protected void inPlaceEqual(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceEqual(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2184,7 +2217,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2198,7 +2231,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceNonEqual(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceNonEqual(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2212,7 +2245,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceNonEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceNonEqual(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2226,7 +2259,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2240,7 +2273,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2254,7 +2287,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2268,7 +2301,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2282,7 +2315,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceStrictGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceStrictGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2296,7 +2329,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceStrictGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceStrictGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2310,7 +2343,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceStrictLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
+  protected void outOfPlaceStrictLessThan(AbstractMat leftHandOperand, double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2324,7 +2357,7 @@ abstract class AbstractMat {
     }
   }
   
-  protected void inPlaceStrictLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
+  protected void outOfPlaceStrictLessThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
