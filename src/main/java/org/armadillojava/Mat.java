@@ -494,7 +494,7 @@ public class Mat extends AbstractMat {
 
       rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
       rows(row_number, row_number + X.n_rows - 1, Op.EQUAL, X);
-      // n_rows has been updated by .set_size()
+      // n_rows has been updated by set_size
       rows(row_number + X.n_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
     }
   }
@@ -732,13 +732,37 @@ public class Mat extends AbstractMat {
   public void zeros(int n_rows, int n_cols) {
     set_size(n_rows, n_cols);
   }
-
+  
+  /**
+   * Resizes the matrix to the specified number of rows and columns and reuses existing values in a column-wise manner.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
   public void reshape(int n_rows, int n_cols) {
-    // TODO Auto-generated method stub
+    double[] temp = Arrays.copyOf(_data, n_elem);
+    set_size(n_rows, n_cols);
+    System.arraycopy(temp, 0, _data, 0, temp.length);
   }
 
+  /**
+   * Resizes the matrix to the specified number of rows and columns and preserves existing values at the same position.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
   public void resize(int n_rows, int n_cols) {
-    // TODO Auto-generated method stub
+    Mat temp = new Mat(this);
+    set_size(n_rows, n_cols);
+    
+    int min_n_rows = Math.min(n_rows, temp.n_rows);
+    int min_n_cols = Math.min(n_cols, temp.n_cols);
+    
+    for(int j = 0; j < min_n_cols; j++) {
+      for(int i = 0; i < min_n_rows; i++) {
+        _data[i + j * n_rows] = temp._data[i + j * temp.n_rows];
+      }
+    }
   }
 
   public void set_size(int n_rows, int n_cols) {
@@ -760,11 +784,21 @@ public class Mat extends AbstractMat {
   }
 
   public void shed_row(int row_number) {
-    // TODO Auto-generated method stub
+    Mat temp = new Mat(this);
+    
+    set_size(n_rows - 1, n_cols);
+    rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
+    // n_rows has been updated by set_size
+    rows(row_number, n_rows - 1, Op.EQUAL, temp.rows(row_number + 1, temp.n_rows - 1));
   }
 
   public void shed_rows(int first_row, int last_row) {
-    // TODO Auto-generated method stub
+    Mat temp = new Mat(this);
+    
+    set_size(n_rows - (last_row - first_row + 1), n_cols);
+    rows(0, first_row - 1, Op.EQUAL, temp.rows(0, first_row - 1));
+    // n_rows has been updated by set_size
+    rows(first_row, n_rows - 1, Op.EQUAL, temp.rows(last_row + 1, temp.n_rows - 1));
   }
 
   public void shed_col(int column_number) {
@@ -800,7 +834,6 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat cols(int first_col, int last_col) {
-
     Mat cols = new Mat(n_rows, last_col - first_col + 1);
     System.arraycopy(_data, first_col * n_rows, cols._data, 0, cols.n_elem);
     return cols;
@@ -813,14 +846,13 @@ public class Mat extends AbstractMat {
 
   @Override
   public Col col(Span span, int col_number) {
-    // TODO Auto-generated method stub
-    return null;
+    int n = col_number * n_rows;
+    return new Col(Arrays.copyOfRange(_data, n, n + n_rows));
   }
 
   @Override
   public Row row(int row_number, Span span) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Row(new ViewSubRow(this, row_number, span._first, span._last));
   }
 
   @Override
@@ -841,38 +873,32 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat submat(Span row_span, Span col_span) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewSubMat(this, row_span._first, row_span._last, col_span._first, col_span._last));
   }
 
   @Override
   public Mat submat(int first_row, int first_col, Size size) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewSubMat(this, first_row, first_row + size.n_rows - 1, first_col, first_col + size.n_cols - 1));
   }
 
   @Override
   public Col elem(AbstractMat vector_of_indices) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Col(new ViewElemMat(this, vector_of_indices));
   }
 
   @Override
   public Mat cols(AbstractMat vector_of_column_indices) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewElemCols(this, vector_of_column_indices));
   }
 
   @Override
   public Mat rows(AbstractMat vector_of_row_indices) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewElemRows(this, vector_of_row_indices));
   }
 
   @Override
   public Mat submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Mat(new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices));
   }
 
   @Override
@@ -917,7 +943,7 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public AbstractMat t() {
+  public Mat t() {
     Mat transpose = new Mat(n_cols, n_rows);
 
     int n = 0;

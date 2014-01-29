@@ -79,14 +79,15 @@ public class RunningStatVec {
    *           of precision.
    */
   public void update(Mat samples) throws IllegalArgumentException, UnsupportedOperationException {
-    samples.isNonVectorDetection();
+    // TODO add non vector detection
 
 //    if (!samples.is_number()) {
 //      throw new IllegalArgumentException("NaN is not valid sample value for any element.");
 //    }
 
     if (_count > 0) {
-      AbstractMat.isNonEqualNumberOfElementsDetection(_max.n_elem, samples.n_elem);
+      // AbstractMat.isNonEqualNumberOfElementsDetection(_max.n_elem, samples.n_elem);
+      // TODO fix
 
       if (_count >= 9007199254740992.0) { // 2^53
         throw new UnsupportedOperationException("No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss of precision.");
@@ -101,8 +102,8 @@ public class RunningStatVec {
           temp = temp.t().times(temp);
         }
 
-        _cov.submat(Op.ELEMTIMES, (_count - 1) / _count);
-        _cov.submat(Op.PLUS, temp.elemDivide(_count + 1));
+        _cov.inPlace(Op.ELEMTIMES, (_count - 1) / _count);
+        _cov.inPlace(Op.PLUS, temp.elemDivide(_count + 1));
       }
 
       for (int n = 0; n < samples.n_elem; n++) {
@@ -114,7 +115,8 @@ public class RunningStatVec {
       _mean = _mean.plus(samples.minus(_mean).elemDivide(_count + 1));
 
     } else {
-      samples.isEmptyDetection();
+      // samples.isEmptyDetection();
+      // TODO fix
 
       int numberOfRows = samples.n_rows;
       int numberOfColumns = samples.n_cols;

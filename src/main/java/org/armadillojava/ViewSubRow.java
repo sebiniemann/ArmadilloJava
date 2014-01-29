@@ -32,6 +32,25 @@ class ViewSubRow extends AbstractView {
    * 
    * @param matrix The matrix
    * @param row_number The row position
+   * @param first_col The first column position
+   * @param last_col The last column position
+   */
+  protected ViewSubRow(AbstractMat matrix, int row_number, int first_col, int last_col) {
+    super(matrix);
+
+    n_rows = 1;
+    n_cols = last_col - first_col + 1;
+    n_elem = n_cols;
+    
+    _firstPosition = row_number + first_col * matrix.n_cols;
+    _n_rows_skip = matrix.n_rows;
+  }
+
+  /**
+   * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
+   * 
+   * @param matrix The matrix
+   * @param row_number The row position
    */
   protected ViewSubRow(AbstractMat matrix, int row_number) {
     super(matrix);

@@ -40,6 +40,15 @@ abstract class AbstractMat {
   public int         n_elem;
 
   /**
+   * Returns the value of the {@code n}th element.
+   * 
+   * @param n The position
+   */
+  public double at(int n) {
+    return _data[n];
+  }
+
+  /**
    * Returns true if the position is not out of bounds.
    * 
    * @param n The position

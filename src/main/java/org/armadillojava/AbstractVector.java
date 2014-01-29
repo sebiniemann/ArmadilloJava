@@ -5,15 +5,6 @@ import java.util.Arrays;
 abstract class AbstractVector extends AbstractMat {
 
   /**
-   * Returns the value of the {@code n}th element.
-   * 
-   * @param n The position
-   */
-  public double at(int n) {
-    return _data[n];
-  }
-
-  /**
    * Resizes the vector to the specified number of elements and sets each element to a pseudo-random value drawn from
    * the standard uniform distribution on the left-closed and right-open interval [0,1).
    * <p>
