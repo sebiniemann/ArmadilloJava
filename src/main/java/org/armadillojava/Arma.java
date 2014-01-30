@@ -22,155 +22,132 @@ import java.util.Random;
 
 /**
  * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
- * Conrad Sanderson et al., based on DenseMatrix64F from Peter Abeles' Efficient Java Matrix Library (EJML) Version 0.23
- * from 21.06.2013.
+ * Conrad Sanderson et al..
  * <p>
- * If not stated otherwise (marked as non-canonical), the provided interfaces should be identical to Armadillo (e.g.
- * same ordering of arguments, accepted values, ...). However, this project is based on EJML to provide a pure Java
- * solution, which is why numeric results may slightly differ from the Armadillo C++ Algebra Library.
+ * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo (e.g. same
+ * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
+ * Algebra Library.
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
- * @see <a href="http://efficient-java-matrix-library.googlecode.com">Efficient Java Matrix Library</a>
  */
 public class Arma {
+
   /**
-   * Returns a zero column vector with {@code numberOfElements} elements.
+   * Returns a null column vector with the specified number of elements.
    * 
-   * @param numberOfElements The number of elements
-   * @return The vector
+   * @param n_elem The number of elements
    */
-  public static Mat zeros(int numberOfElements) {
-    return zeros(numberOfElements, 1);
+  public static Col zeros(int n_elem) {
+    return new Col(n_elem, Fill.ZEROS);
   }
 
   /**
-   * Creates a zero matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns.
+   * Returns a zero matrix with the specified number of rows and columns.
    * 
-   * @param numberOfRows The number of rows
-   * @param numberOfColumns The number of columns
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
+  public static Mat zeros(int n_rows, int n_cols) {
+    return new Mat(n_rows, n_cols, Fill.ZEROS);
+  }
+
+  /**
+   * Returns a column vector of ones with the specified number of elements.
+   * 
+   * @param n_elem The number of elements
+   */
+  public static Col ones(int n_elem) {
+    return new Col(n_elem, Fill.ONES);
+  }
+
+  /**
+   * Returns a matrix of ones with the specified number of rows and columns.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
+  public static Mat ones(int n_rows, int n_cols) {
+    return new Mat(n_rows, n_cols, Fill.ONES);
+  }
+
+  /**
+   * Returns an identity matrix with the specified number of rows and columns.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
    * @return The matrix
    */
-  public static Mat zeros(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
+  public static Mat eye(int n_rows, int n_cols) {
+    return new Mat(n_rows, n_cols, Fill.EYE);
   }
 
   /**
-   * Returns a column vector of ones with {@code numberOfElements} elements.
-   * 
-   * @param numberOfElements The number of elements
-   * @return The vector
-   */
-  public static Mat ones(int numberOfElements) {
-    return ones(numberOfElements, 1);
-  }
-
-  /**
-   * Creates a matrix of ones with {@code numberOfRows} rows and {@code numberOfColumns} columns.
-   * 
-   * @param numberOfRows The number of rows
-   * @param numberOfColumns The number of columns
-   * @return The matrix
-   */
-  public static Mat ones(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.ONES);
-  }
-
-  /**
-   * Creates a identity of ones with {@code numberOfRows} rows and {@code numberOfColumns} columns.
-   * 
-   * @param numberOfRows The number of rows
-   * @param numberOfColumns The number of columns
-   * @return The matrix
-   */
-  public static Mat eye(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.EYE);
-  }
-
-  /**
-   * Creates a column vector with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from
-   * the standard uniform distribution on the left-closed and right-open interval [0,1).
+   * Returns a column vector with the specified number of elements and values drawn from the standard uniform
+   * distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
-   * @param numberOfElements The number of elements
-   * @return The vector
+   * @param n_elem The number of elements
    */
-  public static Mat randu(int numberOfElements) {
-    return randu(numberOfElements, 1);
+  public static Col randu(int n_elem) {
+    return new Col(n_elem, Fill.RANDU);
   }
 
   /**
-   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from the
-   * standard uniform distribution on the left-closed and right-open interval [0,1).
+   * Returns an matrix with the specified number of rows and columns and values drawn from the standard uniform distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
-   * @param numberOfRows The number of rows
-   * @param numberOfColumns The number of columns
-   * @return The matrix
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
    */
-  public static Mat randu(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDU);
+  public static Mat randu(int n_rows, int n_cols) {
+    return new Mat(n_rows, n_cols, Fill.RANDU);
   }
 
   /**
-   * Creates a column vector with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from
-   * the standard normal distribution with mean 0.0 and standard deviation 1.0.
+   * Returns a column vector with the specified number of elements and values drawn from the standard normal distribution with mean 0.0 and standard deviation 1.0.
    * 
-   * @param numberOfElements The number of elements
+   * @param n_elem The number of elements
    * @return The vector
    */
-  public static Mat randn(int numberOfElements) {
-    return randn(numberOfElements, 1);
+  public static Col randn(int n_elem) {
+    return new Col(n_elem, Fill.RANDN);
   }
 
   /**
-   * Creates a matrix with {@code numberOfRows} rows and {@code numberOfColumns} columns and values drawn from the
-   * standard normal distribution with mean 0.0 and standard deviation 1.0.
+   * Returns an matrix with the specified number of rows and columns and values drawn from the standard normal distribution with mean 0.0 and standard deviation 1.0.
    * 
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
    * @return The matrix
    */
-  public static Mat randn(int numberOfRows, int numberOfColumns) {
-    return new Mat(numberOfRows, numberOfColumns, Fill.RANDN);
+  public static Mat randn(int n_rows, int n_cols) {
+    return new Mat(n_rows, n_cols, Fill.RANDN);
   }
 
   /**
-   * Creates a matrix by copying the matrix {@code numberOfCopiesPerRow} times per row and
-   * {@code numberOfCopiesPerColumn} per column.
+   * Creates a matrix by replicating the matrix by the specified times per row and column.
    * 
    * @param matrix The matrix
-   * @param numberOfCopiesPerRow The number of copies per row
-   * @param numberOfCopiesPerColumn The number of copies per column
-   * @return The matrix
+   * @param num_copies_per_row The number of copies per row
+   * @param num_copies_per_col  The number of copies per column
    */
-  public static Mat repmat(AbstractMat matrix, int numberOfCopiesPerRow, int numberOfCopiesPerColumn) {
-    // TODO fix
-    // AbstractMat.isInvalidPositionDetection(numberOfCopiesPerRow);
-    // AbstractMat.isInvalidPositionDetection(numberOfCopiesPerColumn);
+  public static Mat repmat(AbstractMat matrix, int num_copies_per_row, int num_copies_per_col ) {
+    Mat result = new Mat(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
 
-    // This method uses System.arraycopy instead of iterating over each element
-    if (!(matrix instanceof Mat)) {
-      matrix = new Mat(matrix);
+    // First, copy alongside the rows
+    for(int i = 0; i < num_copies_per_row; i++) {
+      result.rows(i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, Op.EQUAL, matrix);
     }
 
-    Mat result = new Mat(matrix.n_rows * numberOfCopiesPerRow, matrix.n_cols * numberOfCopiesPerColumn);
-
-    int srcColumnPointer = 0;
-    for (int j = 0; j < matrix.n_cols; j++) {
-      for (int copyJ = 0; copyJ < numberOfCopiesPerColumn; copyJ++) {
-        int destColumnPointer = (j + copyJ * matrix.n_cols) * result.n_rows;
-        for (int copyI = 0; copyI < numberOfCopiesPerRow; copyI++) {
-          System.arraycopy(matrix._data, srcColumnPointer, result._matrix, destColumnPointer, matrix.n_rows);
-          destColumnPointer += matrix.n_rows;
-        }
-      }
-      srcColumnPointer += matrix.n_rows;
+    // Secondly, copy alongside the columns
+    for(int j = 0; j < num_copies_per_row; j++) {
+      System.arraycopy(result._data, 0, result._data, j * result.n_rows * matrix.n_cols, result.n_rows * matrix.n_cols);
     }
-
+    
     return result;
   }
 
