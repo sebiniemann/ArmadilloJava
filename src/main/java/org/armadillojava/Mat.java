@@ -560,6 +560,7 @@ public class Mat extends AbstractMat {
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
+      // TODO use views
       rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
       rows(row_number, row_number + X.n_rows - 1, Op.EQUAL, X);
       // n_rows has been updated by set_size
@@ -860,6 +861,7 @@ public class Mat extends AbstractMat {
     Mat temp = new Mat(this);
 
     set_size(n_rows - 1, n_cols);
+    // TODO use views
     rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
     // n_rows has been updated by set_size
     rows(row_number, n_rows - 1, Op.EQUAL, temp.rows(row_number + 1, temp.n_rows - 1));
@@ -869,6 +871,7 @@ public class Mat extends AbstractMat {
     Mat temp = new Mat(this);
 
     set_size(n_rows - (last_row - first_row + 1), n_cols);
+    // TODO use views
     rows(0, first_row - 1, Op.EQUAL, temp.rows(0, first_row - 1));
     // n_rows has been updated by set_size
     rows(first_row, n_rows - 1, Op.EQUAL, temp.rows(last_row + 1, temp.n_rows - 1));
