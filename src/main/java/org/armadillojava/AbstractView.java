@@ -65,4 +65,8 @@ abstract class AbstractView {
   protected void inPlace(Op binary_operator, AbstractMat operand) {
     // TODO Auto-generated method stub
   }
+
+  protected void inPlace(Op binary_operator, AbstractView view) {
+    // TODO Auto-generated method stub
+  }
 }

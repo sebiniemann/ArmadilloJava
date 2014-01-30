@@ -1763,8 +1763,11 @@ abstract class AbstractMat {
    * 
    * @param row1 The first row position
    * @param row2 The second row position
+   * 
+   * @throws The first row position ({@code row1}) is out of bounds.
+   * @throws The first row position ({@code row2}) is out of bounds.
    */
-  public void swap_rows(int row1, int row2) {
+  public void swap_rows(int row1, int row2) throws IndexOutOfBoundsException {
     if (!in_range(row1)) {
       throw new IndexOutOfBoundsException("The first row position (" + row1 + ") is out of bounds.");
     }
@@ -1773,10 +1776,11 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The second row position (" + row2 + ") is out of bounds.");
     }
 
-    // TODO Generalise for matrices
-    double temp = _data[row1];
-    _data[row1] = _data[row2];
-    _data[row2] = temp;
+    AbstractMat copyOfRow1 = row(row1);
+    AbstractView viewOfRow2 = new ViewSubRow(this, row2);
+    
+    new ViewSubRow(this, row1).inPlace(Op.EQUAL, viewOfRow2);
+    viewOfRow2.inPlace(Op.EQUAL, copyOfRow1);
   }
 
   /**
@@ -1784,10 +1788,11 @@ abstract class AbstractMat {
    * 
    * @param col1 The first column position
    * @param col2 The second column position
+   * 
+   * @throws The first column position ({@code col1}) is out of bounds.
+   * @throws The first column position ({@code col2}) is out of bounds.
    */
-  public void swap_cols(int col1, int col2) {
-    // TODO Generalise to be used for matrices
-
+  public void swap_cols(int col1, int col2) throws IndexOutOfBoundsException {
     if (!in_range(col1)) {
       throw new IndexOutOfBoundsException("The first column position (" + col1 + ") is out of bounds.");
     }
@@ -1796,7 +1801,9 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The second column position (" + col2 + ") is out of bounds.");
     }
 
-    // TODO Generalise for matrices
+    double[] temp = Arrays.copyOfRange(_data, n_rows * col1, n_rows * (col1 + 1));
+    System.arraycopy(_data, n_rows * col2, _data, n_rows * col1, n_rows);
+    System.arraycopy(temp, 0, _data, n_rows * col2, n_rows);
   }
 
   /**
