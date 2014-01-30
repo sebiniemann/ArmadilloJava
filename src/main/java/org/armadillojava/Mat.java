@@ -112,6 +112,10 @@ public class Mat extends AbstractMat {
     }
   }
 
+  public void copy_size(AbstractView A) {
+    set_size(A.n_rows, A.n_cols);
+  }
+
   /**
    * Returns a deep copy of the main diagonal.
    */
@@ -584,6 +588,7 @@ public class Mat extends AbstractMat {
       Mat temp = new Mat(this);
       set_size(n_rows + number_of_rows, n_cols);
 
+      // TODO use views
       rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
       rows(row_number + number_of_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
     }

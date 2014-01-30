@@ -116,6 +116,10 @@ public class Col extends AbstractVector {
     }
   }
 
+  protected void copy_size(AbstractView vec) {
+    set_size(vec.n_elem);
+  }
+
   @Override
   public void copy_size(AbstractMat vec) throws RuntimeException {
     if (vec.n_cols > 1) {
