@@ -7,9 +7,9 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatEquals;
+import static org.armadillojava.TestUtil.assertMatEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,9 +80,10 @@ public class TestArmaDecomposition {
       return;
     }
 
-    if (!_testMatrix.is_symmetric() || !_testMatrix.is_positive_definite()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_symmetric() || !_testMatrix.is_positive_definite()) {
+//      return;
+//    }
 
     Mat R = Arma.chol(_testMatrix);
 
@@ -98,9 +99,10 @@ public class TestArmaDecomposition {
       return;
     }
 
-    if (!_testMatrix.is_symmetric() || !_testMatrix.is_positive_definite()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_symmetric() || !_testMatrix.is_positive_definite()) {
+//      return;
+//    }
 
     Mat R = new Mat();
     Arma.chol(R, _testMatrix);
@@ -115,9 +117,10 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testEig_symAbstractMat() throws IOException {
-    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
+//      return;
+//    }
 
     Mat expectedEigenValues = new Mat();
     expectedEigenValues.load("./test/data/expected/TestArmaDecomposition/testEig_sym.eigenValues." + _filename);
@@ -132,9 +135,10 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testEig_symMatAbstractMat() throws IOException {
-    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
+//      return;
+//    }
 
     Mat expectedEigenValues = new Mat();
     expectedEigenValues.load("./test/data/expected/TestArmaDecomposition/testEig_sym.eigenValues." + _filename);
@@ -159,9 +163,10 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testEig_symMatMatAbstractMat() throws IOException {
-    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_square() || !_testMatrix.is_symmetric()) {
+//      return;
+//    }
 
     Mat expectedEigenValues = new Mat();
     expectedEigenValues.load("./test/data/expected/TestArmaDecomposition/testEig_sym.eigenValues." + _filename);
@@ -197,9 +202,10 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testInvAbstractMat() throws IOException {
-    if (!_testMatrix.is_invertable()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_invertable()) {
+//      return;
+//    }
 
     Mat expectedInverse = new Mat();
     expectedInverse.load("./test/data/expected/TestArmaDecomposition/testInv." + _filename);
@@ -214,9 +220,10 @@ public class TestArmaDecomposition {
    */
   @Test
   public void testInvMatAbstractMat() throws IOException {
-    if (!_testMatrix.is_invertable()) {
-      return;
-    }
+    // TODO fix
+//    if (!_testMatrix.is_invertable()) {
+//      return;
+//    }
 
     Mat expectedInverse = new Mat();
     expectedInverse.load("./test/data/expected/TestArmaDecomposition/testInv." + _filename);
@@ -380,9 +387,10 @@ public class TestArmaDecomposition {
     for (Object[] object : getTestMatrices()) {
       Mat B = (Mat) object[1];
 
-      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
+      // TODO fix
+//      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
         assertMatEquals(_filename, _testMatrix.i().times(B), Arma.solve(_testMatrix, B));
-      }
+//      }
     }
   }
 
@@ -404,12 +412,13 @@ public class TestArmaDecomposition {
     for (Object[] object : getTestMatrices()) {
       Mat B = (Mat) object[1];
 
-      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
+      // TODO fix
+//      if (_testMatrix.n_rows == B.n_rows && _testMatrix.is_invertable()) {
         Mat X = new Mat();
         Arma.solve(X, _testMatrix, B);
 
         assertMatEquals(_filename, _testMatrix.i().times(B), X);
-      }
+//      }
     }
   }
 

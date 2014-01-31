@@ -8,9 +8,9 @@
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
 
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 
 import java.io.IOException;
 import java.util.*;

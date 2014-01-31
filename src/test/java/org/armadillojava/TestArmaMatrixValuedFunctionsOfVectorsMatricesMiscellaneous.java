@@ -7,9 +7,9 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 
 import java.io.IOException;
 
@@ -174,10 +174,10 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous {
 
     assertMatElementWiseEquals("", expected, Arma.unique(input));
 
-    input = Arma.vectorise(input);
+    Col inputCol = Arma.vectorise(input);
 
-    assertMatElementWiseEquals("", expected, Arma.unique(input));
-    assertMatElementWiseEquals("", expected.t(), Arma.unique(input).t());
+    assertMatElementWiseEquals("", expected, Arma.unique(inputCol));
+    assertMatElementWiseEquals("", expected.t(), Arma.unique(inputCol).t());
   }
 
 }

@@ -7,9 +7,9 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm {
   public void testHistAbstractMatInt() throws IOException {
     Mat expected = new Mat();
 
-    Mat testMatrix = Arma.vectorise(_testMatrix);
+    Col testMatrix = Arma.vectorise(_testMatrix);
 
     for (int bins : _numberOfBins) {
       expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm/testHist.n" + bins + ".mat");

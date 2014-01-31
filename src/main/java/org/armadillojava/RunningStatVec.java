@@ -78,7 +78,7 @@ public class RunningStatVec {
    * @throws UnsupportedOperationException No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss
    *           of precision.
    */
-  public void update(Mat samples) throws IllegalArgumentException, UnsupportedOperationException {
+  public void update(AbstractVector samples) throws IllegalArgumentException, UnsupportedOperationException {
     // TODO add non vector detection
 
     // if (!samples.is_number()) {
@@ -94,7 +94,7 @@ public class RunningStatVec {
       }
 
       if (_calculateCovariance) {
-        Mat temp = samples.minus(_mean);
+        AbstractMat temp = samples.minus(_mean);
 
         if (samples.is_colvec()) {
           temp = temp.times(temp.t());

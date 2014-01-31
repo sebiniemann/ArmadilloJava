@@ -7,7 +7,7 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,7 +32,8 @@ public class TestArmaAs_scalar {
 
     Mat testMatrix;
 
-    for (double testValue : input) {
+    for (int n = 0; n < input.n_elem; n++) {
+      double testValue = input.at(n);
       testMatrix = new Mat(new double[]{testValue});
       assertEquals(testValue, Arma.as_scalar(testMatrix), 0);
     }

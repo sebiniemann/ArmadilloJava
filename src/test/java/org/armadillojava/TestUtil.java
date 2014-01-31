@@ -7,7 +7,7 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +27,7 @@ public class TestUtil {
    * @param A The expected matrix
    * @param B The actual matrix
    */
-  public static void assertMatElementWiseEquals(String message, Mat A, Mat B) {
+  public static void assertMatElementWiseEquals(String message, AbstractMat A, AbstractMat B) {
     assertMatElementWiseEquals(message, A, B, 1e-11);
   }
 
@@ -41,7 +41,7 @@ public class TestUtil {
    * @param B The actual matrix
    * @param delta The maximum allowed element-wise delta
    */
-  public static void assertMatElementWiseEquals(String message, Mat A, Mat B, double delta) {
+  public static void assertMatElementWiseEquals(String message, AbstractMat A, AbstractMat B, double delta) {
     assertEquals(message + ". Number of rows", A.n_rows, B.n_rows);
     assertEquals(message + ". Number of columns", A.n_cols, B.n_cols);
 
@@ -66,7 +66,7 @@ public class TestUtil {
    * @param A The expected matrix
    * @param B The actual matrix
    */
-  public static void assertMatEquals(String message, Mat A, Mat B) {
+  public static void assertMatEquals(String message, AbstractMat A, AbstractMat B) {
     assertMatEquals(message, A, B, 1e-11);
   }
 
@@ -80,7 +80,7 @@ public class TestUtil {
    * @param B The actual matrix
    * @param delta The maximum allowed delta
    */
-  public static void assertMatEquals(String message, Mat A, Mat B, double delta) {
+  public static void assertMatEquals(String message, AbstractMat A, AbstractMat B, double delta) {
     assertEquals(message + ". Number of rows", A.n_rows, B.n_rows);
     assertEquals(message + ". Number of columns", A.n_cols, B.n_cols);
 

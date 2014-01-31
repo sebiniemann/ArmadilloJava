@@ -10,9 +10,9 @@
 /**
  * 
  */
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 import static org.junit.Assert.*;
 
 import java.io.IOException;

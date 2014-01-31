@@ -7,9 +7,9 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -165,7 +165,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testSort_indexAbstractMat() {
-    Mat testMatrix = Arma.vectorise(_testMatrix);
+    Col testMatrix = Arma.vectorise(_testMatrix);
 
     Mat indicies = Arma.stable_sort_index(testMatrix);
     for (int n = 0; n < indicies.n_elem - 1; n++) {
@@ -178,7 +178,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testSort_indexAbstractMatInt() {
-    Mat testMatrix = Arma.vectorise(_testMatrix);
+    Col testMatrix = Arma.vectorise(_testMatrix);
 
     Mat indicies;
 
@@ -200,7 +200,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testStable_sort_indexAbstractMat() throws IOException {
-    Mat testMatrix = Arma.vectorise(_testMatrix);
+    Col testMatrix = Arma.vectorise(_testMatrix);
 
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedFunctionsOfVectorsMatricesSort/testStable_sort_index.t0.mat");
@@ -214,7 +214,7 @@ public class TestArmaMatrixValuedFunctionsOfVectorsMatricesSort {
    */
   @Test
   public void testStable_sort_indexAbstractMatInt() throws IOException {
-    Mat testMatrix = Arma.vectorise(_testMatrix);
+    Col testMatrix = Arma.vectorise(_testMatrix);
 
     Mat expected = new Mat();
 

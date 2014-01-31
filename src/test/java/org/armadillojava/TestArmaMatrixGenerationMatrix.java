@@ -10,15 +10,14 @@
 /**
  * 
  */
-package arma;
+package org.armadillojava;
 
-import static arma.TestUtil.assertMatElementWiseEquals;
+import static org.armadillojava.TestUtil.assertMatElementWiseEquals;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -118,11 +117,9 @@ public class TestArmaMatrixGenerationMatrix {
     }
 
     RunningStatVec statistic = new RunningStatVec();
-    Random rng = new Random();
-    rng.setSeed(123456789);
 
     for (int n = 0; n < 1000; n++) {
-      Mat actual = Arma.randu(_numberOfRows, _numberOfColumns, rng);
+      Mat actual = Arma.randu(_numberOfRows, _numberOfColumns);
       assertEquals("Number of rows", _numberOfRows, actual.n_rows);
       assertEquals("Number of columns", _numberOfColumns, actual.n_cols);
 
@@ -151,11 +148,9 @@ public class TestArmaMatrixGenerationMatrix {
     }
 
     RunningStatVec statistic = new RunningStatVec();
-    Random rng = new Random();
-    rng.setSeed(123456789);
 
     for (int n = 0; n < 1000; n++) {
-      Mat actual = Arma.randn(_numberOfRows, _numberOfColumns, rng);
+      Mat actual = Arma.randn(_numberOfRows, _numberOfColumns);
       assertEquals("Number of rows", _numberOfRows, actual.n_rows);
       assertEquals("Number of columns", _numberOfColumns, actual.n_cols);
 

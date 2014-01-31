@@ -7,7 +7,7 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +32,8 @@ public class TestArmaMiscellaneous {
 
     Mat testMatrix;
 
-    for (double testValue : input) {
+    for (int n = 0; n < input.n_elem; n++) {
+      double testValue = input.at(n);
       testMatrix = new Mat(new double[]{testValue});
       assertEquals(!Double.isInfinite(testValue), Arma.is_finite(Arma.as_scalar(testMatrix)));
     }
@@ -48,7 +49,8 @@ public class TestArmaMiscellaneous {
     Mat input = new Mat();
     input.load("./test/data/input/miscellaneous.mat");
 
-    for (double testValue : input) {
+    for (int n = 0; n < input.n_elem; n++) {
+      double testValue = input.at(n);
       assertEquals(!Double.isInfinite(testValue), Arma.is_finite(testValue));
     }
   }

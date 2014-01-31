@@ -2887,7 +2887,7 @@ public class Arma {
    * @param matrix The matrix
    * @return The vector
    */
-  public static Mat vectorise(AbstractMat matrix) {
+  public static Col vectorise(AbstractMat matrix) {
     return vectorise(matrix, 0);
   }
 
@@ -2896,7 +2896,7 @@ public class Arma {
    * @param dimension The dimension
    * @return The vector
    */
-  public static Mat vectorise(AbstractMat matrix, int dimension) {
+  public static Col vectorise(AbstractMat matrix, int dimension) {
     AbstractMat.isNonBinaryParameterDetection(dimension);
 
     Mat result = new Mat(matrix);

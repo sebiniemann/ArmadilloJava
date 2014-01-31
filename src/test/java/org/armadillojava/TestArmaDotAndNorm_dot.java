@@ -7,7 +7,7 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
 import static org.junit.Assert.assertEquals;
 

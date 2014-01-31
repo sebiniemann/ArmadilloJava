@@ -1,7 +1,7 @@
 /**
  * 
  */
-package arma;
+package org.armadillojava;
 
 import static org.junit.Assert.*;
 
