@@ -7,7 +7,7 @@
  * 
  * http://opensource.org/licenses/MIT
  *******************************************************************************/
-package arma;
+package org.armadillojava;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
