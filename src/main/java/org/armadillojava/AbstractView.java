@@ -195,6 +195,13 @@ abstract class AbstractView {
     }
   }
 
+  protected void inPlaceEqual(double rightHandOperand) {
+    iteratorReset();
+    while (iteratorHasNext()) {
+      _data[iteratorNext()] = rightHandOperand;
+    }
+  }
+
   protected void inPlaceEqual(AbstractMat rightHandOperand) {
     iteratorReset();
     int n = 0;
