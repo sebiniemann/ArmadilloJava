@@ -512,23 +512,17 @@ public class Mat extends AbstractMat {
     return (n_rows == n_cols);
   }
 
-  /**
-   * Returns true if the matrix has only one row or column.
-   */
+  @Override
   public boolean is_vec() {
     return (is_colvec() || is_rowvec());
   }
 
-  /**
-   * Returns true if the matrix has only one column.
-   */
+  @Override
   public boolean is_colvec() {
     return (n_cols == 1);
   }
 
-  /**
-   * Returns true if the matrix has only one row.
-   */
+  @Override
   public boolean is_rowvec() {
     return (n_rows == 1);
   }
@@ -917,7 +911,7 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat rows(int first_row, int last_row) {
-    return new Mat(new ViewSubRows(this, first_row, last_row));
+    return new Mat(new ViewSubRows(this, first_row, last_row - first_row + 1));
   }
 
   @Override
@@ -928,7 +922,7 @@ public class Mat extends AbstractMat {
 
   @Override
   public Row row(int row_number, Span span) {
-    return new Row(new ViewSubRow(this, row_number, span._first, span._last));
+    return new Row(new ViewSubRow(this, row_number, span._first, span._last - span._first + 1));
   }
 
   @Override
@@ -949,12 +943,12 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat submat(Span row_span, Span col_span) {
-    return new Mat(new ViewSubMat(this, row_span._first, row_span._last, col_span._first, col_span._last));
+    return new Mat(new ViewSubMat(this, row_span._first, col_span._first, row_span._last - row_span._first + 1, col_span._last - col_span._first + 1));
   }
 
   @Override
   public Mat submat(int first_row, int first_col, Size size) {
-    return new Mat(new ViewSubMat(this, first_row, first_row + size.n_rows - 1, first_col, first_col + size.n_cols - 1));
+    return new Mat(new ViewSubMat(this, first_row, first_col, size.n_rows, size.n_cols));
   }
 
   @Override

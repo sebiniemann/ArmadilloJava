@@ -930,7 +930,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
 
-    new ViewSubCols(this, first_col, last_col).inPlace(unary_operator);
+    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(unary_operator);
   }
 
   /**
@@ -954,7 +954,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
 
-    new ViewSubCols(this, first_col, last_col).inPlace(binary_operator, operand);
+    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -978,7 +978,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
 
-    new ViewSubCols(this, first_col, last_col).inPlace(binary_operator, operand);
+    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1011,7 +1011,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last row position (" + last_row + ") is out of bounds.");
     }
 
-    new ViewSubRows(this, first_row, last_row).inPlace(unary_operator);
+    new ViewSubRows(this, first_row, last_row - first_row + 1).inPlace(unary_operator);
   }
 
   /**
@@ -1035,7 +1035,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last row position (" + last_row + ") is out of bounds.");
     }
 
-    new ViewSubRows(this, first_row, last_row).inPlace(binary_operator, operand);
+    new ViewSubRows(this, first_row, last_row - first_row + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1059,7 +1059,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last row position (" + last_row + ") is out of bounds.");
     }
 
-    new ViewSubRows(this, first_row, last_row).inPlace(binary_operator, operand);
+    new ViewSubRows(this, first_row, last_row - first_row + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1102,7 +1102,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last row position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubCol(this, col_number, span._first, span._last).inPlace(unary_operator);
+      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
     }
   }
 
@@ -1135,7 +1135,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last row position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubCol(this, col_number, span._first, span._last).inPlace(binary_operator, operand);
+      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
     }
   }
 
@@ -1168,7 +1168,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last row position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubCol(this, col_number, span._first, span._last).inPlace(binary_operator, operand);
+      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
     }
   }
 
@@ -1212,7 +1212,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last column position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubRow(this, row_number, span._first, span._last).inPlace(unary_operator);
+      new ViewSubRow(this, row_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
     }
   }
 
@@ -1245,7 +1245,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last column position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubRow(this, row_number, span._first, span._last).inPlace(binary_operator, operand);
+      new ViewSubRow(this, row_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
     }
   }
 
@@ -1278,7 +1278,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The last column position (" + span._last + ") is out of bounds.");
       }
       
-      new ViewSubRow(this, row_number, span._first, span._last).inPlace(binary_operator, operand);
+      new ViewSubRow(this, row_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
     }
   }
 
@@ -1330,7 +1330,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
     
-    new ViewSubMat(this, first_row, last_row, first_col, last_col).inPlace(unary_operator);
+    new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1).inPlace(unary_operator);
   }
 
   /**
@@ -1366,7 +1366,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
     
-    new ViewSubMat(this, first_row, last_row, first_col, last_col).inPlace(binary_operator, operand);
+    new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1402,7 +1402,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
     }
     
-    new ViewSubMat(this, first_row, last_row, first_col, last_col).inPlace(binary_operator, operand);
+    new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1433,7 +1433,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
   public void submat(Span row_span, Span col_span, Op unary_operator) throws IndexOutOfBoundsException {
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
+    submat(row_span._first, col_span._first, row_span._last - row_span._first + 1, col_span._last - col_span._first + 1, unary_operator);
   }
 
   /**
@@ -1451,7 +1451,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
   public void submat(Span row_span, Span col_span, Op binary_operator, double operand) throws IndexOutOfBoundsException {
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    submat(row_span._first, col_span._first, row_span._last - row_span._first + 1, col_span._last - col_span._first + 1, binary_operator, operand);
   }
 
   /**
@@ -1469,7 +1469,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code col_span._last}) is out of bounds.
    */
   public void submat(Span row_span, Span col_span, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    submat(row_span._first, col_span._first, row_span._last - row_span._first + 1, col_span._last - col_span._first + 1, binary_operator, operand);
   }
 
   /**
@@ -1502,7 +1502,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
   public void submat(int first_row, int first_col, Size size, Op unary_operator) throws IndexOutOfBoundsException {
-    submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, unary_operator);
+    submat(first_row, first_col, size.n_rows, size.n_cols, unary_operator);
   }
 
   /**
@@ -1521,7 +1521,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
   public void submat(int first_row, int first_col, Size size, Op binary_operator, double operand) throws IndexOutOfBoundsException {
-    submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
+    submat(first_row, first_col, size.n_rows, size.n_cols, binary_operator, operand);
   }
 
   /**
@@ -1540,7 +1540,7 @@ abstract class AbstractMat {
    * @throws IndexOutOfBoundsException The last column position ({@code first_col + size.n_cols - 1}) is out of bounds.
    */
   public void submat(int first_row, int first_col, Size size, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
-    submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, binary_operator, operand);
+    submat(first_row, first_col, size.n_rows, size.n_cols, binary_operator, operand);
   }
 
   /**
@@ -1863,8 +1863,8 @@ abstract class AbstractMat {
     AbstractMat copyOfRow1 = row(row1);
     AbstractView viewOfRow2 = new ViewSubRow(this, row2);
     
-    new ViewSubRow(this, row1).inPlace(Op.EQUAL, viewOfRow2);
-    viewOfRow2.inPlace(Op.EQUAL, copyOfRow1);
+    new ViewSubRow(this, row1).inPlaceEqual(viewOfRow2);
+    viewOfRow2.inPlaceEqual(copyOfRow1);
   }
 
   /**
@@ -2380,5 +2380,26 @@ abstract class AbstractMat {
     output += "]";
 
     return output;
+  }
+
+  /**
+   * Returns true if the matrix has only one row or column.
+   */
+  protected boolean is_vec() {
+    return (is_colvec() || is_rowvec());
+  }
+
+  /**
+   * Returns true if the matrix has only one column.
+   */
+  protected boolean is_colvec() {
+    return (n_cols == 1);
+  }
+
+  /**
+   * Returns true if the matrix has only one row.
+   */
+  protected boolean is_rowvec() {
+    return (n_rows == 1);
   }
 }
