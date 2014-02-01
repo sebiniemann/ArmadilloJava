@@ -55,18 +55,151 @@ abstract class AbstractView {
   abstract protected int iteratorNext();
 
   protected void inPlace(Op unary_operator) {
-    // TODO Auto-generated method stub
+    switch (unary_operator) {
+      case NEGATE:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          int n = iteratorNext();
+          _data[n] = -_data[n];
+        }
+        break;
+      case INCREMENT:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()]++;
+        }
+        break;
+      case DECREMENT:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()]--;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
   
-  protected void inPlace(Op binary_operator, double operand) {
-    // TODO Auto-generated method stub
+  protected void inPlace(Op binary_operator, double rightHandOperand) {
+    switch (binary_operator) {
+      case EQUAL:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] = rightHandOperand;
+        }
+        break;
+      case PLUS:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] += rightHandOperand;
+        }
+        break;
+      case MINUS:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] -= rightHandOperand;
+        }
+        break;
+      case TIMES:
+      case ELEMTIMES:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] *= rightHandOperand;
+        }
+        break;
+      case ELEMDIVIDE:
+        iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] /= rightHandOperand;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
   
-  protected void inPlace(Op binary_operator, AbstractMat operand) {
-    // TODO Auto-generated method stub
+  protected void inPlace(Op binary_operator, AbstractMat rightHandOperand) {
+    int n;
+    switch (binary_operator) {
+      case EQUAL:
+        iteratorReset();
+        n = 0;
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] = rightHandOperand._data[n++];
+        }
+        break;
+      case PLUS:
+        iteratorReset();
+        n = 0;
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] += rightHandOperand._data[n++];
+        }
+        break;
+      case MINUS:
+        iteratorReset();
+        n = 0;
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] -= rightHandOperand._data[n++];
+        }
+        break;
+      case ELEMTIMES:
+        iteratorReset();
+        n = 0;
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] *= rightHandOperand._data[n++];
+        }
+        break;
+      case ELEMDIVIDE:
+        iteratorReset();
+        n = 0;
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] /= rightHandOperand._data[n++];
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
 
-  protected void inPlace(Op binary_operator, AbstractView view) {
-    // TODO Auto-generated method stub
+  protected void inPlace(Op binary_operator, AbstractView rightHandOperand) {
+    switch (binary_operator) {
+      case EQUAL:
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
+        break;
+      case PLUS:
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] += rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
+        break;
+      case MINUS:
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] -= rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
+        break;
+      case ELEMTIMES:
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] *= rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
+        break;
+      case ELEMDIVIDE:
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while(iteratorHasNext()) {
+          _data[iteratorNext()] /= rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
   }
 }
