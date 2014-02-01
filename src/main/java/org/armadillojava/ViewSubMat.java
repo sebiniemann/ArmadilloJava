@@ -38,19 +38,19 @@ class ViewSubMat extends AbstractView {
    * 
    * @param matrix The matrix
    * @param first_row The first row position
-   * @param last_row The last row position
    * @param first_col The first column position
-   * @param last_col The last column position
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
    */
-  protected ViewSubMat(AbstractMat matrix, int first_row, int last_row, int first_col, int last_col) {
+  protected ViewSubMat(AbstractMat matrix, int first_row, int first_col, int n_rows, int n_cols) {
     super(matrix);
 
-    n_rows = last_row - first_row + 1;
-    n_cols = last_col - first_col + 1;
-    n_elem = n_rows * n_cols;
+    this.n_rows = n_rows;
+    this.n_cols = n_cols;
+    this.n_elem = this.n_rows * this.n_cols;
 
-    _firstPosition = first_row + first_col * n_rows;
-    _n_rows_skip = matrix.n_rows - last_row + first_row - 1;
+    _firstPosition = first_row + first_col * this.n_rows;
+    _n_rows_skip = matrix.n_rows - this.n_rows;
   }
 
   @Override

@@ -28,14 +28,14 @@ class ViewSubCol extends AbstractView {
    * @param matrix The matrix
    * @param col_number The column position
    * @param first_row The first row position
-   * @param last_row The last row position
+   * @param n_rows The number of rows
    */
-  protected ViewSubCol(AbstractMat matrix, int col_number, int first_row, int last_row) {
+  protected ViewSubCol(AbstractMat matrix, int col_number, int first_row, int n_rows) {
     super(matrix);
 
-    n_rows = last_row - first_row + 1;
-    n_cols = 1;
-    n_elem = n_rows;
+    this.n_rows = n_rows;
+    this.n_cols = 1;
+    this.n_elem = this.n_rows;
 
     _firstPosition = first_row + col_number * matrix.n_cols;
   }

@@ -38,17 +38,17 @@ class ViewSubRows extends AbstractView {
    * 
    * @param matrix The matrix
    * @param first_row The first row position
-   * @param last_row The last tow position
+   * @param n_rows The number of rows
    */
-  protected ViewSubRows(AbstractMat matrix, int first_row, int last_row) {
+  protected ViewSubRows(AbstractMat matrix, int first_row, int n_rows) {
     super(matrix);
 
-    n_rows = last_row - first_row + 1;
-    n_cols = matrix.n_cols;
-    n_elem = n_rows * n_cols;
+    this.n_rows = n_rows;
+    this.n_cols = matrix.n_cols;
+    this.n_elem = this.n_rows * this.n_cols;
 
     _firstPosition = first_row;
-    _n_rows_skip = matrix.n_rows - last_row + first_row - 1;
+    _n_rows_skip = matrix.n_rows - this.n_rows;
   }
 
   @Override
