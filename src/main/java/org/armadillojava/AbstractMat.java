@@ -1737,6 +1737,90 @@ abstract class AbstractMat {
     new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
   }
 
+  public void inPlace(Op unary_operator) {
+    switch (unary_operator) {
+      case NEGATE:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] = -_data[n];
+        }
+        break;
+      case INCREMENT:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n]++;
+        }
+        break;
+      case DECREMENT:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n]--;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  public void inPlace(Op binary_operator, double rightHandOperand) {
+    switch (binary_operator) {
+      case EQUAL:
+        fill(rightHandOperand);
+        break;
+      case PLUS:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] += rightHandOperand;
+        }
+        break;
+      case MINUS:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] -= rightHandOperand;
+        }
+        break;
+      case TIMES:
+      case ELEMTIMES:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] *= rightHandOperand;
+        }
+        break;
+      case ELEMDIVIDE:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] /= rightHandOperand;
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  public void inPlace(Op binary_operator, AbstractMat rightHandOperand) {
+    switch (binary_operator) {
+      case EQUAL:
+        copy_size(rightHandOperand);
+        System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
+        break;
+      case PLUS:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] += rightHandOperand._data[n];
+        }
+        break;
+      case MINUS:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] -= rightHandOperand._data[n];
+        }
+        break;
+      case ELEMTIMES:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] *= rightHandOperand._data[n];
+        }
+        break;
+      case ELEMDIVIDE:
+        for (int n = 0; n < n_elem; n++) {
+          _data[n] /= rightHandOperand._data[n];
+        }
+        break;
+      default:
+        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
   /**
    * Swaps the content of this matrix with another one.
    * 
@@ -2055,122 +2139,6 @@ abstract class AbstractMat {
    * @throws RuntimeException Both operands must have the same size.
    */
   abstract public AbstractMat strictLessThan(AbstractMat X) throws RuntimeException;
-
-  protected void inPlace(Op operator) {
-    switch (operator) {
-      case NEGATE:
-        for (int n = 0; n < n_elem; n++) {
-          _data[n] = -_data[n];
-        }
-        break;
-      case INCREMENT:
-        for (int n = 0; n < n_elem; n++) {
-          _data[n]++;
-        }
-        break;
-      case DECREMENT:
-        for (int n = 0; n < n_elem; n++) {
-          _data[n]--;
-        }
-        break;
-      default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
-    }
-  }
-
-  protected void inPlace(Op operator, double rightHandOperand) {
-    switch (operator) {
-      case EQUAL:
-        fill(rightHandOperand);
-        break;
-      case PLUS:
-        inPlacePlus(rightHandOperand);
-        break;
-      case MINUS:
-        inPlaceMinus(rightHandOperand);
-        break;
-      case TIMES:
-      case ELEMTIMES:
-        inPlaceElemTimes(rightHandOperand);
-        break;
-      case ELEMDIVIDE:
-        inPlaceElemDivide(rightHandOperand);
-        break;
-      default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
-    }
-  }
-
-  protected void inPlace(Op operator, AbstractMat rightHandOperand) {
-    switch (operator) {
-      case EQUAL:
-        copy_size(rightHandOperand);
-        System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
-        break;
-      case PLUS:
-        inPlacePlus(rightHandOperand);
-        break;
-      case MINUS:
-        inPlaceMinus(rightHandOperand);
-        break;
-      case ELEMTIMES:
-        inPlaceElemTimes(rightHandOperand);
-        break;
-      case ELEMDIVIDE:
-        inPlaceElemDivide(rightHandOperand);
-        break;
-      default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
-    }
-  }
-
-  protected void inPlacePlus(double rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] += rightHandOperand;
-    }
-  }
-
-  protected void inPlacePlus(AbstractMat rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] += rightHandOperand._data[n];
-    }
-  }
-
-  protected void inPlaceMinus(double rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] -= rightHandOperand;
-    }
-  }
-
-  protected void inPlaceMinus(AbstractMat rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] -= rightHandOperand._data[n];
-    }
-  }
-
-  protected void inPlaceElemTimes(double rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] *= rightHandOperand;
-    }
-  }
-
-  protected void inPlaceElemTimes(AbstractMat rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] *= rightHandOperand._data[n];
-    }
-  }
-
-  protected void inPlaceElemDivide(double rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] /= rightHandOperand;
-    }
-  }
-
-  protected void inPlaceElemDivide(AbstractMat rightHandOperand) {
-    for (int n = 0; n < n_elem; n++) {
-      _data[n] /= rightHandOperand._data[n];
-    }
-  }
 
   protected void outOfPlacePlus(AbstractMat leftHandOperand, double rightHandOperand) {
     for (int n = 0; n < n_elem; n++) {
