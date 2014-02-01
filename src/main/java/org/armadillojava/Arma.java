@@ -280,7 +280,7 @@ public class Arma {
 
     // First, copy alongside the rows
     for (int i = 0; i < num_copies_per_row; i++) {
-      new ViewSubMat(result, i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, 0, matrix.n_cols - 1)
+      new ViewSubMat(result, i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, 0, matrix.n_cols - 1).inPlaceEqual(matrix);
       result.rows(i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, Op.EQUAL, matrix);
     }
 
