@@ -262,26 +262,25 @@ public class Arma {
    * @param num_copies_per_row The number of copies per row
    * @param num_copies_per_col The number of copies per column
    * 
-   * @throws NegativeArraySizeException The specified number of copies per row ({@code num_copies_per_row}) must be positive.
-   * @throws NegativeArraySizeException The specified number of copies per column ({@code num_copies_per_col}) must be positive.
+   * @throws NegativeArraySizeException The specified number of copies per row ({@code num_copies_per_row}) must be
+   *           positive.
+   * @throws NegativeArraySizeException The specified number of copies per column ({@code num_copies_per_col}) must be
+   *           positive.
    */
-  public static Mat repmat(AbstractMat matrix, int num_copies_per_row, int num_copies_per_col) {
-    if(num_copies_per_row < 0) {
+  public static Mat repmat(AbstractMat matrix, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException {
+    if (num_copies_per_row < 0) {
       throw new NegativeArraySizeException("The specified number of copies per row (" + num_copies_per_row + ") must be positive.");
     }
-    
-    if(num_copies_per_col < 0) {
+
+    if (num_copies_per_col < 0) {
       throw new NegativeArraySizeException("The specified number of copies per column (" + num_copies_per_col + ") must be positive.");
     }
-    
-    Mat result = new Mat(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
 
-    // TODO use sub views
+    Mat result = new Mat(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
 
     // First, copy alongside the rows
     for (int i = 0; i < num_copies_per_row; i++) {
-      new ViewSubMat(result, i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, 0, matrix.n_cols - 1).inPlaceEqual(matrix);
-      result.rows(i * matrix.n_rows, (i + 1) * matrix.n_rows - 1, Op.EQUAL, matrix);
+      new ViewSubMat(result, i * matrix.n_rows, matrix.n_rows, 0, matrix.n_cols).inPlaceEqual(matrix);
     }
 
     // Secondly, copy alongside the columns
@@ -293,98 +292,97 @@ public class Arma {
   }
 
   /**
-   * Creates a toeplitz matrix with {@code The} as the first column of the matrix.
+   * Returns a toeplitz matrix with the provided vector as the first column of the matrix.
    * 
-   * @param vector The vector
-   * @return The matrix
+   * @param A The vector
+   * 
+   * @throws RuntimeException The provided matrix must be equivalent in size to a vector.
    */
-  public static Mat toeplitz(AbstractMat vector) {
-    // TODO fix
-    // vector.isNonVectorDetection();
-
-    if (vector.n_elem > 0) {
-      Mat result = new Mat(vector.n_elem, vector.n_elem);
-
-      vector.iteratorReset();
-      result.diag(Op.EQUAL, vector._matrix[vector.iteratorNext()]);
-      for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix[vector.iteratorNext()];
-        result.diag(n, Op.EQUAL, element);
-        result.diag(-n, Op.EQUAL, element);
-      }
-
-      return result;
-    } else {
-      return new Mat();
+  public static Mat toeplitz(AbstractMat A) throws RuntimeException {
+    if (!A.is_vec()) {
+      throw new RuntimeException("The provided matrix must be equivalent in size to a vector.");
     }
+
+    Mat result = new Mat(A.n_elem, A.n_elem);
+
+    new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
+    for (int n = 1; n < A.n_elem; n++) {
+      double value = A._data[n];
+
+      new ViewDiag(result, n).inPlaceEqual(value);
+      new ViewDiag(result, -n).inPlaceEqual(value);
+    }
+
+    return result;
   }
 
   /**
-   * Creates a toeplitz matrix with {@code vector1} as the first column and {@code vector2} the first row of the matrix.
+   * Returns a toeplitz matrix with the first provided vector as the first column and the second one as the first row of
+   * the matrix.
    * 
-   * @param vector1 The first vector
-   * @param vector2 The second vector
-   * @return The matrix
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The first provided matrix must be equivalent in size to a vector.
+   * @throws RuntimeException The second provided matrix must be equivalent in size to a vector.
    */
-  public static Mat toeplitz(AbstractMat vector1, AbstractMat vector2) {
-    // TODO fix
-    // vector1.isNonVectorDetection();
-    // vector2.isNonVectorDetection();
-
-    if (vector1.n_elem > 0 && vector2.n_elem > 0) {
-      Mat result = new Mat(vector1.n_elem, vector2.n_elem);
-
-      vector1.iteratorReset();
-      result.diag(Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
-      for (int n = 1; n < vector1.n_elem; n++) {
-        result.diag(-n, Op.EQUAL, vector1._matrix[vector1.iteratorNext()]);
-      }
-
-      vector2.iteratorReset();
-      vector2.iteratorNext(); // Skip this one
-      for (int n = 1; n < vector2.n_elem; n++) {
-        result.diag(n, Op.EQUAL, vector2._matrix[vector2.iteratorNext()]);
-      }
-
-      return result;
-    } else {
-      return new Mat();
+  public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException {
+    if (!A.is_vec()) {
+      throw new RuntimeException("The first provided matrix must be equivalent in size to a vector.");
     }
+    
+    if (!B.is_vec()) {
+      throw new RuntimeException("The second provided matrix must be equivalent in size to a vector.");
+    }
+
+    Mat result = new Mat(A.n_elem, B.n_elem);
+
+    new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
+    for (int n = 1; n < A.n_elem; n++) {
+      new ViewDiag(result, -n).inPlaceEqual(A._data[n]);
+    }
+    
+    for (int n = 1; n < B.n_elem; n++) {
+      new ViewDiag(result, n).inPlaceEqual(B._data[n]);
+    }
+
+    return result;
   }
 
   /**
-   * Creates a circulant toeplitz matrix with {@code The} as the first column of the matrix.
+   * Returns a circulant toeplitz matrix with the provided vector as the first column of the matrix.
    * 
    * @param vector The vector
-   * @return The matrix
+   * 
+   * @throws RuntimeException The provided matrix must be equivalent in size to a vector.
    */
-  public static Mat circ_toeplitz(AbstractMat vector) {
-    // TODO fix
-    // vector.isNonVectorDetection();
-
-    if (vector.n_elem > 0) {
-      Mat result = new Mat(vector.n_elem, vector.n_elem);
-
-      vector.iteratorReset();
-      result.diag(Op.EQUAL, vector._matrix[vector.iteratorNext()]);
-      for (int n = 1; n < vector.n_elem; n++) {
-        double element = vector._matrix[vector.iteratorNext()];
-        result.diag(vector.n_elem - n, Op.EQUAL, element);
-        result.diag(-n, Op.EQUAL, element);
-      }
-
-      return result;
-    } else {
-      return new Mat();
+  public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException {
+    if (!A.is_vec()) {
+      throw new RuntimeException("The provided matrix must be equivalent in size to a vector.");
     }
+    
+    Mat result = new Mat(A.n_elem, A.n_elem);
+
+    new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
+    for (int n = 1; n < A.n_elem; n++) {
+      double value = A._data[n];
+
+      new ViewDiag(result, A.n_elem - n).inPlaceEqual(value);
+      new ViewDiag(result, -n).inPlaceEqual(value);
+    }
+
+    return result;
   }
 
   /**
    * Returns a null column vector with the specified number of elements.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col zeros(int n_elem) {
+  public static Col zeros(int n_elem) throws NegativeArraySizeException {
+    // n_elem is validated within the constructor
     return new Col(n_elem, Fill.ZEROS);
   }
 
@@ -393,9 +391,13 @@ public class Arma {
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat zeros(int n_rows, int n_cols) {
+  public static Mat zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
+    // n_elem is validated within the constructor
     return new Mat(n_rows, n_cols, Fill.ZEROS);
   }
-  
+
 }
