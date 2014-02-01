@@ -10,23 +10,23 @@ abstract class AbstractView {
   /**
    * The internal data representation
    */
-  protected double[] _data;
+  protected double[]    _data;
 
   /**
    * The number of rows
    */
-  public int         n_rows;
+  public int            n_rows;
 
   /**
    * The number of columns
    */
-  public int         n_cols;
+  public int            n_cols;
 
   /**
    * The number of elements (same as {@code n_rows * n_cols}) .
    */
-  public int         n_elem;
-  
+  public int            n_elem;
+
   /**
    * The current iterator
    */
@@ -58,20 +58,20 @@ abstract class AbstractView {
     switch (unary_operator) {
       case NEGATE:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           int n = iteratorNext();
           _data[n] = -_data[n];
         }
         break;
       case INCREMENT:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()]++;
         }
         break;
       case DECREMENT:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()]--;
         }
         break;
@@ -79,37 +79,37 @@ abstract class AbstractView {
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
-  
+
   protected void inPlace(Op binary_operator, double rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] = rightHandOperand;
         }
         break;
       case PLUS:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] += rightHandOperand;
         }
         break;
       case MINUS:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] -= rightHandOperand;
         }
         break;
       case TIMES:
       case ELEMTIMES:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] *= rightHandOperand;
         }
         break;
       case ELEMDIVIDE:
         iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] /= rightHandOperand;
         }
         break;
@@ -117,42 +117,38 @@ abstract class AbstractView {
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
     }
   }
-  
+
   protected void inPlace(Op binary_operator, AbstractMat rightHandOperand) {
     int n;
     switch (binary_operator) {
       case EQUAL:
-        iteratorReset();
-        n = 0;
-        while(iteratorHasNext()) {
-          _data[iteratorNext()] = rightHandOperand._data[n++];
-        }
+        inPlaceEqual(rightHandOperand);
         break;
       case PLUS:
         iteratorReset();
         n = 0;
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] += rightHandOperand._data[n++];
         }
         break;
       case MINUS:
         iteratorReset();
         n = 0;
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] -= rightHandOperand._data[n++];
         }
         break;
       case ELEMTIMES:
         iteratorReset();
         n = 0;
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] *= rightHandOperand._data[n++];
         }
         break;
       case ELEMDIVIDE:
         iteratorReset();
         n = 0;
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] /= rightHandOperand._data[n++];
         }
         break;
@@ -164,42 +160,54 @@ abstract class AbstractView {
   protected void inPlace(Op binary_operator, AbstractView rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
-        iteratorReset();
-        rightHandOperand.iteratorReset();
-        while(iteratorHasNext()) {
-          _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
-        }
+        inPlaceEqual(rightHandOperand);
         break;
       case PLUS:
         iteratorReset();
         rightHandOperand.iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] += rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
         break;
       case MINUS:
         iteratorReset();
         rightHandOperand.iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] -= rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
         break;
       case ELEMTIMES:
         iteratorReset();
         rightHandOperand.iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] *= rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
         break;
       case ELEMDIVIDE:
         iteratorReset();
         rightHandOperand.iteratorReset();
-        while(iteratorHasNext()) {
+        while (iteratorHasNext()) {
           _data[iteratorNext()] /= rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
         break;
       default:
         throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+    }
+  }
+
+  protected void inPlaceEqual(AbstractMat rightHandOperand) {
+    iteratorReset();
+    int n = 0;
+    while (iteratorHasNext()) {
+      _data[iteratorNext()] = rightHandOperand._data[n++];
+    }
+  }
+
+  protected void inPlaceEqual(AbstractView rightHandOperand) {
+    iteratorReset();
+    rightHandOperand.iteratorReset();
+    while (iteratorHasNext()) {
+      _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
     }
   }
 }
