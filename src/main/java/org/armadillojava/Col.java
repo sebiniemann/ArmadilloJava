@@ -677,4 +677,5 @@ public class Col extends AbstractVector {
   public Row t() {
     return new Row(_data);
   }
+  
 }
