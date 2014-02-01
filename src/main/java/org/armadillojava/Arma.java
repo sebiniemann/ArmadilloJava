@@ -330,7 +330,7 @@ public class Arma {
     if (!A.is_vec()) {
       throw new RuntimeException("The first provided matrix must be equivalent in size to a vector.");
     }
-    
+
     if (!B.is_vec()) {
       throw new RuntimeException("The second provided matrix must be equivalent in size to a vector.");
     }
@@ -341,7 +341,7 @@ public class Arma {
     for (int n = 1; n < A.n_elem; n++) {
       new ViewDiag(result, -n).inPlaceEqual(A._data[n]);
     }
-    
+
     for (int n = 1; n < B.n_elem; n++) {
       new ViewDiag(result, n).inPlaceEqual(B._data[n]);
     }
@@ -360,7 +360,7 @@ public class Arma {
     if (!A.is_vec()) {
       throw new RuntimeException("The provided matrix must be equivalent in size to a vector.");
     }
-    
+
     Mat result = new Mat(A.n_elem, A.n_elem);
 
     new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
@@ -398,6 +398,1408 @@ public class Arma {
   public static Mat zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
     // n_elem is validated within the constructor
     return new Mat(n_rows, n_cols, Fill.ZEROS);
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed absolute values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col abs(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.abs(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed absolute values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row abs(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.abs(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed absolute values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat abs(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.abs(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed positive distances between each value and next larger
+   * representable of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col eps(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ulp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed positive distances between each value and next larger
+   * representable of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row eps(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ulp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed positive distances between each value and next larger
+   * representable of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat eps(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ulp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col exp(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.exp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row exp(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.exp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat exp(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.exp(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-2 exponential values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col exp2(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(2, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-2 exponential values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row exp2(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(2, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-2 exponential values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat exp2(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(2, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-10 exponential values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col exp10(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(10, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-10 exponential values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row exp10(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(10, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-10 exponential values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat exp10(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(10, X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the largest representable number.
+   * 
+   * @param X The column vector
+   */
+  public static Col trunc_exp(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double exp = Math.exp(X._data[n]);
+      
+      if (!Double.isInfinite(exp)) {
+        result._data[n] = exp;
+      } else {
+        result._data[n] = Double.MAX_VALUE;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the largest representable number.
+   * 
+   * @param X The row vector
+   */
+  public static Row trunc_exp(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double exp = Math.exp(X._data[n]);
+      
+      if (!Double.isInfinite(exp)) {
+        result._data[n] = exp;
+      } else {
+        result._data[n] = Double.MAX_VALUE;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the largest representable number.
+   * 
+   * @param X The matrix
+   */
+  public static Mat trunc_exp(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double exp = Math.exp(X._data[n]);
+      
+      if (!Double.isInfinite(exp)) {
+        result._data[n] = exp;
+      } else {
+        result._data[n] = Double.MAX_VALUE;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col log(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row log(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat log(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-2 logarithmic values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col log2(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-2 logarithmic values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row log2(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-2 logarithmic values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat log2(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-10 logarithmic values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col log10(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log10(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-10 logarithmic values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row log10(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log10(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-10 logarithmic values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat log10(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.log10(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
+   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
+   * representable number.
+   * 
+   * @param X The column vector
+   */
+  public static Col trunc_log(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+
+      if (value <= 0) {
+        value = Double.MIN_NORMAL;
+      } else if (Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      }
+
+      result._data[n] = Math.log(value);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
+   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
+   * representable number.
+   * 
+   * @param X The row vector
+   */
+  public static Row trunc_log(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+
+      if (value <= 0) {
+        value = Double.MIN_NORMAL;
+      } else if (Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      }
+
+      result._data[n] = Math.log(value);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
+   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
+   * representable number.
+   * 
+   * @param X The matrix
+   */
+  public static Mat trunc_log(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+
+      if (value <= 0) {
+        value = Double.MIN_NORMAL;
+      } else if (Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      }
+
+      result._data[n] = Math.log(value);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed raise to the specified power of the provided one.
+   * 
+   * @param X The column vector
+   * @param p The power
+   */
+  public static Col pow(Col X, int p) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], p);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed raise to the specified power of the provided one.
+   * 
+   * @param X The row vector
+   * @param p The power
+   */
+  public static Row pow(Row X, int p) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], p);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed raise to the specified power of the provided one.
+   * 
+   * @param X The matrix
+   * @param p The power
+   */
+  public static Mat pow(Mat X, int p) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], p);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed square root of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col sqrt(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sqrt(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed square root of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row sqrt(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sqrt(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed square root of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat sqrt(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sqrt(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed squared values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col square(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], 2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed squared values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row square(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], 2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed squared values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat square(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.pow(X._data[n], 2);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed floored values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col floor(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.floor(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed floored values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row floor(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.floor(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed floored values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat floor(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.floor(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed rounded up values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col ceil(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ceil(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed rounded up values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row ceil(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ceil(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed rounded up values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat ceil(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ceil(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed rounded values of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col round(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.round(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed rounded values of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row round(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.round(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed rounded values of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat round(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.round(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed sign values of the provided one.
+   * <p>
+   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
+   * 
+   * @param X The column vector
+   */
+  public static Col sign(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.signum(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed sign values of the provided one.
+   * <p>
+   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
+   * 
+   * @param X The row vector
+   */
+  public static Row sign(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.signum(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed sign values of the provided one.
+   * <p>
+   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
+   * 
+   * @param X The matrix
+   */
+  public static Mat sign(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.signum(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed sine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col sin(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed sine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row sin(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed sine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat sin(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse sine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col asin(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.asin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse sine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row asin(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.asin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse sine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat asin(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.asin(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed hyperbolic sine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col sinh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sinh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed hyperbolic sine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row sinh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sinh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed hyperbolic sine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat sinh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sinh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse hyperbolic sine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col asinh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      
+      if (Double.isInfinite(value)) {
+        result._data[n] = value;
+      } else {
+        result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse hyperbolic sine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row asinh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      
+      if (Double.isInfinite(value)) {
+        result._data[n] = value;
+      } else {
+        result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse hyperbolic sine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat asinh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      
+      if (Double.isInfinite(value)) {
+        // Otherwise, negative infinity would result in NaN
+        result._data[n] = value;
+      } else {
+        result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed cosine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col cos(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed cosine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row cos(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed cosine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat cos(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse cosine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col acos(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.acos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse cosine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row acos(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.acos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse cosine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat acos(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.acos(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed hyperbolic cosine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col cosh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cosh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed hyperbolic cosine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row cosh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cosh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed hyperbolic cosine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat cosh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cosh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col acosh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row acosh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse hyperbolic cosine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat acosh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed tangent of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col tan(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed tangent of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row tan(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed tangent of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat tan(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse tangent of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col atan(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.atan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse tangent of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row atan(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.atan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse tangent of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat atan(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.atan(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed hyperbolic tangent of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col tanh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tanh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed hyperbolic tangent of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row tanh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tanh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed hyperbolic tangent of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat tanh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tanh(X._data[n]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a column vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col atanh(Col X) {
+    Col result = new Col(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a row vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
+   * 
+   * @param X The row vector
+   */
+  public static Row atanh(Row X) {
+    Row result = new Row(X.n_elem);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix made of the element-wise computed inverse hyperbolic tangent of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static Mat atanh(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+    }
+
+    return result;
   }
 
 }
