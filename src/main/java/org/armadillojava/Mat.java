@@ -161,6 +161,8 @@ public class Mat extends AbstractMat {
    * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
+   * @param k The diagonal position
+   * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
   public Col diag(int k) throws IndexOutOfBoundsException {
@@ -184,6 +186,7 @@ public class Mat extends AbstractMat {
    * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
+   * @param k The diagonal position
    * @param unary_operator The unary operator
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
@@ -209,6 +212,7 @@ public class Mat extends AbstractMat {
    * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
+   * @param k The diagonal position
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
@@ -235,6 +239,7 @@ public class Mat extends AbstractMat {
    * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
+   * @param k The diagonal position
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
