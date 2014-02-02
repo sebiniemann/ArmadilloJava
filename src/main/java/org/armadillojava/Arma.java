@@ -407,6 +407,12 @@ public class Arma {
     return new Mat(n_rows, n_cols, Fill.ZEROS);
   }
 
+  protected static void abs(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.abs(X._data[n]);
+    }
+  }
+
   /**
    * Returns a column vector made of the element-wise computed absolute values of the provided one.
    * 
@@ -414,11 +420,7 @@ public class Arma {
    */
   public static Col abs(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.abs(X._data[n]);
-    }
-
+    abs(result, X);
     return result;
   }
 
@@ -429,11 +431,7 @@ public class Arma {
    */
   public static Row abs(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.abs(X._data[n]);
-    }
-
+    abs(result, X);
     return result;
   }
 
@@ -444,12 +442,14 @@ public class Arma {
    */
   public static Mat abs(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.abs(X._data[n]);
-    }
-
+    abs(result, X);
     return result;
+  }
+
+  protected static void eps(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ulp(X._data[n]);
+    }
   }
 
   /**
@@ -460,11 +460,7 @@ public class Arma {
    */
   public static Col eps(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ulp(X._data[n]);
-    }
-
+    eps(result, X);
     return result;
   }
 
@@ -476,11 +472,7 @@ public class Arma {
    */
   public static Row eps(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ulp(X._data[n]);
-    }
-
+    eps(result, X);
     return result;
   }
 
@@ -492,12 +484,14 @@ public class Arma {
    */
   public static Mat eps(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ulp(X._data[n]);
-    }
-
+    eps(result, X);
     return result;
+  }
+
+  protected static void exp(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.exp(A._data[n]);
+    }
   }
 
   /**
@@ -507,11 +501,7 @@ public class Arma {
    */
   public static Col exp(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.exp(A._data[n]);
-    }
-
+    exp(result, A);
     return result;
   }
 
@@ -522,11 +512,7 @@ public class Arma {
    */
   public static Row exp(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.exp(A._data[n]);
-    }
-
+    exp(result, A);
     return result;
   }
 
@@ -537,12 +523,14 @@ public class Arma {
    */
   public static Mat exp(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.exp(A._data[n]);
-    }
-
+    exp(result, A);
     return result;
+  }
+
+  protected static void exp2(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(2, A._data[n]);
+    }
   }
 
   /**
@@ -552,11 +540,7 @@ public class Arma {
    */
   public static Col exp2(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(2, A._data[n]);
-    }
-
+    exp2(result, A);
     return result;
   }
 
@@ -567,11 +551,7 @@ public class Arma {
    */
   public static Row exp2(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(2, A._data[n]);
-    }
-
+    exp2(result, A);
     return result;
   }
 
@@ -582,12 +562,14 @@ public class Arma {
    */
   public static Mat exp2(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(2, A._data[n]);
-    }
-
+    exp2(result, A);
     return result;
+  }
+
+  protected static void exp10(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(10, A._data[n]);
+    }
   }
 
   /**
@@ -597,11 +579,7 @@ public class Arma {
    */
   public static Col exp10(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(10, A._data[n]);
-    }
-
+    exp10(result, A);
     return result;
   }
 
@@ -612,11 +590,7 @@ public class Arma {
    */
   public static Row exp10(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(10, A._data[n]);
-    }
-
+    exp10(result, A);
     return result;
   }
 
@@ -627,12 +601,20 @@ public class Arma {
    */
   public static Mat exp10(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(10, A._data[n]);
-    }
-
+    exp10(result, A);
     return result;
+  }
+
+  protected static void trunc_exp(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      double exp = Math.exp(A._data[n]);
+
+      if (!Double.isInfinite(exp)) {
+        result._data[n] = exp;
+      } else {
+        result._data[n] = Double.MAX_VALUE;
+      }
+    }
   }
 
   /**
@@ -644,17 +626,7 @@ public class Arma {
    */
   public static Col trunc_exp(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double exp = Math.exp(A._data[n]);
-
-      if (!Double.isInfinite(exp)) {
-        result._data[n] = exp;
-      } else {
-        result._data[n] = Double.MAX_VALUE;
-      }
-    }
-
+    trunc_exp(result, A);
     return result;
   }
 
@@ -667,17 +639,7 @@ public class Arma {
    */
   public static Row trunc_exp(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double exp = Math.exp(A._data[n]);
-
-      if (!Double.isInfinite(exp)) {
-        result._data[n] = exp;
-      } else {
-        result._data[n] = Double.MAX_VALUE;
-      }
-    }
-
+    trunc_exp(result, A);
     return result;
   }
 
@@ -690,18 +652,14 @@ public class Arma {
    */
   public static Mat trunc_exp(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double exp = Math.exp(A._data[n]);
-
-      if (!Double.isInfinite(exp)) {
-        result._data[n] = exp;
-      } else {
-        result._data[n] = Double.MAX_VALUE;
-      }
-    }
-
+    trunc_exp(result, A);
     return result;
+  }
+
+  protected static void log(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]);
+    }
   }
 
   /**
@@ -711,11 +669,7 @@ public class Arma {
    */
   public static Col log(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]);
-    }
-
+    log(result, A);
     return result;
   }
 
@@ -726,11 +680,7 @@ public class Arma {
    */
   public static Row log(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]);
-    }
-
+    log(result, A);
     return result;
   }
 
@@ -741,12 +691,14 @@ public class Arma {
    */
   public static Mat log(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]);
-    }
-
+    log(result, A);
     return result;
+  }
+
+  protected static void log2(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]) / Math.log(2);
+    }
   }
 
   /**
@@ -756,11 +708,7 @@ public class Arma {
    */
   public static Col log2(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]) / Math.log(2);
-    }
-
+    log2(result, A);
     return result;
   }
 
@@ -771,11 +719,7 @@ public class Arma {
    */
   public static Row log2(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]) / Math.log(2);
-    }
-
+    log2(result, A);
     return result;
   }
 
@@ -786,12 +730,14 @@ public class Arma {
    */
   public static Mat log2(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]) / Math.log(2);
-    }
-
+    log2(result, A);
     return result;
+  }
+
+  protected static void log10(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log10(A._data[n]);
+    }
   }
 
   /**
@@ -801,11 +747,7 @@ public class Arma {
    */
   public static Col log10(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log10(A._data[n]);
-    }
-
+    log10(result, A);
     return result;
   }
 
@@ -816,11 +758,7 @@ public class Arma {
    */
   public static Row log10(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log10(A._data[n]);
-    }
-
+    log10(result, A);
     return result;
   }
 
@@ -831,12 +769,22 @@ public class Arma {
    */
   public static Mat log10(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log10(A._data[n]);
-    }
-
+    log10(result, A);
     return result;
+  }
+
+  protected static void trunc_log(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      double value = A._data[n];
+
+      if (value <= 0) {
+        value = Double.MIN_NORMAL;
+      } else if (Double.isInfinite(value)) {
+        value = Double.MAX_VALUE;
+      }
+
+      result._data[n] = Math.log(value);
+    }
   }
 
   /**
@@ -850,19 +798,7 @@ public class Arma {
    */
   public static Col trunc_log(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double value = A._data[n];
-
-      if (value <= 0) {
-        value = Double.MIN_NORMAL;
-      } else if (Double.isInfinite(value)) {
-        value = Double.MAX_VALUE;
-      }
-
-      result._data[n] = Math.log(value);
-    }
-
+    trunc_log(result, A);
     return result;
   }
 
@@ -877,19 +813,7 @@ public class Arma {
    */
   public static Row trunc_log(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double value = A._data[n];
-
-      if (value <= 0) {
-        value = Double.MIN_NORMAL;
-      } else if (Double.isInfinite(value)) {
-        value = Double.MAX_VALUE;
-      }
-
-      result._data[n] = Math.log(value);
-    }
-
+    trunc_log(result, A);
     return result;
   }
 
@@ -904,20 +828,14 @@ public class Arma {
    */
   public static Mat trunc_log(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      double value = A._data[n];
-
-      if (value <= 0) {
-        value = Double.MIN_NORMAL;
-      } else if (Double.isInfinite(value)) {
-        value = Double.MAX_VALUE;
-      }
-
-      result._data[n] = Math.log(value);
-    }
-
+    trunc_log(result, A);
     return result;
+  }
+
+  protected static void pow(AbstractMat result, AbstractMat A, int p) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], p);
+    }
   }
 
   /**
@@ -928,11 +846,7 @@ public class Arma {
    */
   public static Col pow(Col A, int p) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], p);
-    }
-
+    pow(result, A, p);
     return result;
   }
 
@@ -944,11 +858,7 @@ public class Arma {
    */
   public static Row pow(Row A, int p) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], p);
-    }
-
+    pow(result, A, p);
     return result;
   }
 
@@ -960,12 +870,14 @@ public class Arma {
    */
   public static Mat pow(Mat A, int p) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], p);
-    }
-
+    pow(result, A, p);
     return result;
+  }
+
+  protected static void sqrt(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.sqrt(A._data[n]);
+    }
   }
 
   /**
@@ -975,11 +887,7 @@ public class Arma {
    */
   public static Col sqrt(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.sqrt(A._data[n]);
-    }
-
+    sqrt(result, A);
     return result;
   }
 
@@ -990,11 +898,7 @@ public class Arma {
    */
   public static Row sqrt(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.sqrt(A._data[n]);
-    }
-
+    sqrt(result, A);
     return result;
   }
 
@@ -1005,12 +909,14 @@ public class Arma {
    */
   public static Mat sqrt(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.sqrt(A._data[n]);
-    }
-
+    sqrt(result, A);
     return result;
+  }
+
+  protected static void square(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], 2);
+    }
   }
 
   /**
@@ -1020,11 +926,7 @@ public class Arma {
    */
   public static Col square(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], 2);
-    }
-
+    square(result, A);
     return result;
   }
 
@@ -1035,11 +937,7 @@ public class Arma {
    */
   public static Row square(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], 2);
-    }
-
+    square(result, A);
     return result;
   }
 
@@ -1050,12 +948,14 @@ public class Arma {
    */
   public static Mat square(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], 2);
-    }
-
+    square(result, A);
     return result;
+  }
+
+  protected static void floor(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.floor(A._data[n]);
+    }
   }
 
   /**
@@ -1065,11 +965,7 @@ public class Arma {
    */
   public static Col floor(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.floor(A._data[n]);
-    }
-
+    floor(result, A);
     return result;
   }
 
@@ -1080,11 +976,7 @@ public class Arma {
    */
   public static Row floor(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.floor(A._data[n]);
-    }
-
+    floor(result, A);
     return result;
   }
 
@@ -1095,12 +987,14 @@ public class Arma {
    */
   public static Mat floor(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.floor(A._data[n]);
-    }
-
+    floor(result, A);
     return result;
+  }
+
+  protected static void ceil(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.ceil(A._data[n]);
+    }
   }
 
   /**
@@ -1110,11 +1004,7 @@ public class Arma {
    */
   public static Col ceil(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.ceil(A._data[n]);
-    }
-
+    ceil(result, A);
     return result;
   }
 
@@ -1125,11 +1015,7 @@ public class Arma {
    */
   public static Row ceil(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.ceil(A._data[n]);
-    }
-
+    ceil(result, A);
     return result;
   }
 
@@ -1140,12 +1026,14 @@ public class Arma {
    */
   public static Mat ceil(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.ceil(A._data[n]);
-    }
-
+    ceil(result, A);
     return result;
+  }
+
+  protected static void round(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.round(A._data[n]);
+    }
   }
 
   /**
@@ -1155,11 +1043,7 @@ public class Arma {
    */
   public static Col round(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.round(A._data[n]);
-    }
-
+    round(result, A);
     return result;
   }
 
@@ -1170,11 +1054,7 @@ public class Arma {
    */
   public static Row round(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.round(A._data[n]);
-    }
-
+    round(result, A);
     return result;
   }
 
@@ -1185,12 +1065,14 @@ public class Arma {
    */
   public static Mat round(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.round(A._data[n]);
-    }
-
+    round(result, A);
     return result;
+  }
+
+  protected static void sign(AbstractMat result, AbstractMat A) {
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.signum(A._data[n]);
+    }
   }
 
   /**
@@ -1202,11 +1084,7 @@ public class Arma {
    */
   public static Col sign(Col A) {
     Col result = new Col(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.signum(A._data[n]);
-    }
-
+    sign(result, A);
     return result;
   }
 
@@ -1219,11 +1097,7 @@ public class Arma {
    */
   public static Row sign(Row A) {
     Row result = new Row(A.n_elem);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.signum(A._data[n]);
-    }
-
+    sign(result, A);
     return result;
   }
 
@@ -1236,12 +1110,14 @@ public class Arma {
    */
   public static Mat sign(Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
-
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.signum(A._data[n]);
-    }
-
+    sign(result, A);
     return result;
+  }
+
+  protected static void sin(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sin(X._data[n]);
+    }
   }
 
   /**
@@ -1251,11 +1127,7 @@ public class Arma {
    */
   public static Col sin(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sin(X._data[n]);
-    }
-
+    sin(result, X);
     return result;
   }
 
@@ -1266,11 +1138,7 @@ public class Arma {
    */
   public static Row sin(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sin(X._data[n]);
-    }
-
+    sin(result, X);
     return result;
   }
 
@@ -1281,12 +1149,14 @@ public class Arma {
    */
   public static Mat sin(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sin(X._data[n]);
-    }
-
+    sin(result, X);
     return result;
+  }
+
+  protected static void asin(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.asin(X._data[n]);
+    }
   }
 
   /**
@@ -1296,11 +1166,7 @@ public class Arma {
    */
   public static Col asin(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.asin(X._data[n]);
-    }
-
+    asin(result, X);
     return result;
   }
 
@@ -1311,11 +1177,7 @@ public class Arma {
    */
   public static Row asin(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.asin(X._data[n]);
-    }
-
+    asin(result, X);
     return result;
   }
 
@@ -1326,12 +1188,14 @@ public class Arma {
    */
   public static Mat asin(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.asin(X._data[n]);
-    }
-
+    asin(result, X);
     return result;
+  }
+
+  protected static void sinh(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sinh(X._data[n]);
+    }
   }
 
   /**
@@ -1341,11 +1205,7 @@ public class Arma {
    */
   public static Col sinh(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sinh(X._data[n]);
-    }
-
+    sinh(result, X);
     return result;
   }
 
@@ -1356,11 +1216,7 @@ public class Arma {
    */
   public static Row sinh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sinh(X._data[n]);
-    }
-
+    sinh(result, X);
     return result;
   }
 
@@ -1371,22 +1227,11 @@ public class Arma {
    */
   public static Mat sinh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sinh(X._data[n]);
-    }
-
+    sinh(result, X);
     return result;
   }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse hyperbolic sine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col asinh(Col X) {
-    Col result = new Col(X.n_elem);
-
+  protected static void asinh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
       double value = X._data[n];
 
@@ -1396,7 +1241,16 @@ public class Arma {
         result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
       }
     }
+  }
 
+  /**
+   * Returns a column vector made of the element-wise computed inverse hyperbolic sine of the provided one.
+   * 
+   * @param X The column vector
+   */
+  public static Col asinh(Col X) {
+    Col result = new Col(X.n_elem);
+    asinh(result, X);
     return result;
   }
 
@@ -1407,17 +1261,7 @@ public class Arma {
    */
   public static Row asinh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-
-      if (Double.isInfinite(value)) {
-        result._data[n] = value;
-      } else {
-        result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
-      }
-    }
-
+    asinh(result, X);
     return result;
   }
 
@@ -1428,19 +1272,14 @@ public class Arma {
    */
   public static Mat asinh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-
-      if (Double.isInfinite(value)) {
-        // Otherwise, negative infinity would result in NaN
-        result._data[n] = value;
-      } else {
-        result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
-      }
-    }
-
+    asinh(result, X);
     return result;
+  }
+
+  protected static void cos(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cos(X._data[n]);
+    }
   }
 
   /**
@@ -1450,11 +1289,7 @@ public class Arma {
    */
   public static Col cos(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cos(X._data[n]);
-    }
-
+    cos(result, X);
     return result;
   }
 
@@ -1465,11 +1300,7 @@ public class Arma {
    */
   public static Row cos(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cos(X._data[n]);
-    }
-
+    cos(result, X);
     return result;
   }
 
@@ -1480,12 +1311,14 @@ public class Arma {
    */
   public static Mat cos(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cos(X._data[n]);
-    }
-
+    cos(result, X);
     return result;
+  }
+
+  protected static void acos(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.acos(X._data[n]);
+    }
   }
 
   /**
@@ -1495,11 +1328,7 @@ public class Arma {
    */
   public static Col acos(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.acos(X._data[n]);
-    }
-
+    acos(result, X);
     return result;
   }
 
@@ -1510,11 +1339,7 @@ public class Arma {
    */
   public static Row acos(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.acos(X._data[n]);
-    }
-
+    acos(result, X);
     return result;
   }
 
@@ -1525,12 +1350,14 @@ public class Arma {
    */
   public static Mat acos(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.acos(X._data[n]);
-    }
-
+    acos(result, X);
     return result;
+  }
+
+  protected static void cosh(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.cosh(X._data[n]);
+    }
   }
 
   /**
@@ -1540,11 +1367,7 @@ public class Arma {
    */
   public static Col cosh(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cosh(X._data[n]);
-    }
-
+    cosh(result, X);
     return result;
   }
 
@@ -1555,11 +1378,7 @@ public class Arma {
    */
   public static Row cosh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cosh(X._data[n]);
-    }
-
+    cosh(result, X);
     return result;
   }
 
@@ -1570,12 +1389,15 @@ public class Arma {
    */
   public static Mat cosh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cosh(X._data[n]);
-    }
-
+    cosh(result, X);
     return result;
+  }
+
+  protected static void acosh(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+    }
   }
 
   /**
@@ -1585,12 +1407,7 @@ public class Arma {
    */
   public static Col acosh(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
-    }
-
+    acosh(result, X);
     return result;
   }
 
@@ -1601,12 +1418,7 @@ public class Arma {
    */
   public static Row acosh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
-    }
-
+    acosh(result, X);
     return result;
   }
 
@@ -1617,13 +1429,14 @@ public class Arma {
    */
   public static Mat acosh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
-    }
-
+    acosh(result, X);
     return result;
+  }
+
+  protected static void tan(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tan(X._data[n]);
+    }
   }
 
   /**
@@ -1633,11 +1446,7 @@ public class Arma {
    */
   public static Col tan(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tan(X._data[n]);
-    }
-
+    tan(result, X);
     return result;
   }
 
@@ -1648,11 +1457,7 @@ public class Arma {
    */
   public static Row tan(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tan(X._data[n]);
-    }
-
+    tan(result, X);
     return result;
   }
 
@@ -1663,12 +1468,14 @@ public class Arma {
    */
   public static Mat tan(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tan(X._data[n]);
-    }
-
+    tan(result, X);
     return result;
+  }
+
+  protected static void atan(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.atan(X._data[n]);
+    }
   }
 
   /**
@@ -1678,11 +1485,7 @@ public class Arma {
    */
   public static Col atan(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.atan(X._data[n]);
-    }
-
+    atan(result, X);
     return result;
   }
 
@@ -1693,11 +1496,7 @@ public class Arma {
    */
   public static Row atan(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.atan(X._data[n]);
-    }
-
+    atan(result, X);
     return result;
   }
 
@@ -1708,12 +1507,14 @@ public class Arma {
    */
   public static Mat atan(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.atan(X._data[n]);
-    }
-
+    atan(result, X);
     return result;
+  }
+
+  protected static void tanh(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.tanh(X._data[n]);
+    }
   }
 
   /**
@@ -1723,11 +1524,7 @@ public class Arma {
    */
   public static Col tanh(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tanh(X._data[n]);
-    }
-
+    tanh(result, X);
     return result;
   }
 
@@ -1738,11 +1535,7 @@ public class Arma {
    */
   public static Row tanh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tanh(X._data[n]);
-    }
-
+    tanh(result, X);
     return result;
   }
 
@@ -1753,12 +1546,15 @@ public class Arma {
    */
   public static Mat tanh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tanh(X._data[n]);
-    }
-
+    tanh(result, X);
     return result;
+  }
+
+  protected static void atanh(AbstractMat result, AbstractMat X) {
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+    }
   }
 
   /**
@@ -1768,12 +1564,7 @@ public class Arma {
    */
   public static Col atanh(Col X) {
     Col result = new Col(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
-    }
-
+    atanh(result, X);
     return result;
   }
 
@@ -1784,12 +1575,7 @@ public class Arma {
    */
   public static Row atanh(Row X) {
     Row result = new Row(X.n_elem);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
-    }
-
+    atanh(result, X);
     return result;
   }
 
@@ -1800,12 +1586,7 @@ public class Arma {
    */
   public static Mat atanh(Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
-    }
-
+    atanh(result, X);
     return result;
   }
 
