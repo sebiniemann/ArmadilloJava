@@ -2227,6 +2227,17 @@ public class Arma {
     return V.min();
   }
 
+  protected static double min(AbstractView V) {
+    double minimum = V._data[V.iteratorNext()];
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      minimum = Math.min(minimum, V._data[V.iteratorNext()]);
+    }
+
+    return minimum;
+  }
+
   /**
    * Returns the smallest value for each column of the provided matrix.
    * 
@@ -2261,14 +2272,7 @@ public class Arma {
         result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double min = X._data[columnIndex];
-
-          for (int i = 1; i < X.n_rows; i++) {
-            min = Math.min(min, X._data[i + columnIndex]);
-          }
-
-          result._data[j] = min;
+          result._data[j] = min(new ViewSubCol(X, j));
         }
         break;
       case 1:
@@ -2279,13 +2283,7 @@ public class Arma {
         result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
-          double min = X._data[i];
-
-          for (int j = 1; j < X.n_cols; j++) {
-            min = Math.min(min, X._data[i + j * X.n_rows]);
-          }
-
-          result._data[i] = min;
+          result._data[i] = min(new ViewSubRow(X, i));
         }
         break;
       default:
@@ -2329,6 +2327,17 @@ public class Arma {
     return V.max();
   }
 
+  protected static double max(AbstractView V) {
+    double maximum = V._data[V.iteratorNext()];
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      maximum = Math.max(maximum, V._data[V.iteratorNext()]);
+    }
+
+    return maximum;
+  }
+
   /**
    * Returns the largest value for each column of the provided matrix.
    * 
@@ -2363,14 +2372,7 @@ public class Arma {
         result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double max = X._data[columnIndex];
-
-          for (int i = 1; i < X.n_rows; i++) {
-            max = Math.max(max, X._data[i + columnIndex]);
-          }
-
-          result._data[j] = max;
+          result._data[j] = max(new ViewSubCol(X, j));
         }
         break;
       case 1:
@@ -2381,13 +2383,7 @@ public class Arma {
         result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
-          double max = X._data[i];
-
-          for (int j = 1; j < X.n_cols; j++) {
-            max = Math.max(max, X._data[i + j * X.n_rows]);
-          }
-
-          result._data[i] = max;
+          result._data[i] = max(new ViewSubRow(X, i));
         }
         break;
       default:
@@ -2424,11 +2420,11 @@ public class Arma {
    * 
    * @param V The vector
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided vector must have at least one element.
    */
   public static double prod(AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided vector must have at least one element.");
     }
 
     double prod = V._data[0];
@@ -2438,6 +2434,17 @@ public class Arma {
     }
 
     return prod;
+  }
+
+  protected static double prod(AbstractView V) {
+    double product = 0;
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      product *= V._data[V.iteratorNext()];
+    }
+
+    return product;
   }
 
   /**
@@ -2474,14 +2481,7 @@ public class Arma {
         result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double prod = X._data[columnIndex];
-
-          for (int i = 1; i < X.n_rows; i++) {
-            prod *= X._data[i + columnIndex];
-          }
-
-          result._data[j] = prod;
+          result._data[j] = prod(new ViewSubCol(X, j));
         }
         break;
       case 1:
@@ -2492,13 +2492,7 @@ public class Arma {
         result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
-          double prod = X._data[i];
-
-          for (int j = 1; j < X.n_cols; j++) {
-            prod *= X._data[i + j * X.n_rows];
-          }
-
-          result._data[i] = prod;
+          result._data[i] = prod(new ViewSubRow(X, i));
         }
         break;
       default:
@@ -2518,6 +2512,17 @@ public class Arma {
   public static double sum(AbstractVector V) throws RuntimeException {
     // V is validated within accu
     return accu(V);
+  }
+
+  protected static double sum(AbstractView V) throws RuntimeException {
+    double sum = 0;
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      sum += V._data[V.iteratorNext()];
+    }
+
+    return sum;
   }
 
   /**
@@ -2554,14 +2559,7 @@ public class Arma {
         result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double sum = X._data[columnIndex];
-
-          for (int i = 1; i < X.n_rows; i++) {
-            sum += X._data[i + columnIndex];
-          }
-
-          result._data[j] = sum;
+          result._data[j] = sum(new ViewSubCol(X, j));
         }
         break;
       case 1:
@@ -2572,13 +2570,7 @@ public class Arma {
         result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
-          double sum = X._data[i];
-
-          for (int j = 1; j < X.n_cols; j++) {
-            sum += X._data[i + j * X.n_rows];
-          }
-
-          result._data[i] = sum;
+          result._data[i] = sum(new ViewSubRow(X, i));
         }
         break;
       default:
@@ -2597,7 +2589,11 @@ public class Arma {
    */
   public static double mean(AbstractVector V) throws RuntimeException {
     // V is validated within accu
-    return accu(V) / V.n_elem;
+    return sum(V) / V.n_elem;
+  }
+
+  protected static double mean(AbstractView V) throws RuntimeException {
+    return sum(V) / V.n_elem;
   }
 
   /**
@@ -2634,14 +2630,7 @@ public class Arma {
         result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double sum = X._data[columnIndex];
-
-          for (int i = 1; i < X.n_rows; i++) {
-            sum += X._data[i + columnIndex];
-          }
-
-          result._data[j] = sum / X.n_rows;
+          result._data[j] = mean(new ViewSubCol(X, j));
         }
         break;
       case 1:
@@ -2652,13 +2641,7 @@ public class Arma {
         result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
-          double sum = X._data[i];
-
-          for (int j = 1; j < X.n_cols; j++) {
-            sum += X._data[i + j * X.n_rows];
-          }
-
-          result._data[i] = sum / X.n_cols;
+          result._data[i] = mean(new ViewSubRow(X, i));
         }
         break;
       default:
@@ -2777,7 +2760,7 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
    */
   public static Mat stddev(Mat X) throws RuntimeException {
     // X is validated within stddev
@@ -2791,7 +2774,7 @@ public class Arma {
    * @param X The matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    */
   public static Mat stddev(Mat X, int norm_type) throws RuntimeException {
@@ -2810,7 +2793,8 @@ public class Arma {
    * @param norm_type The normalisation
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
@@ -2864,12 +2848,24 @@ public class Arma {
     return variance;
   }
 
+  protected static double var(AbstractView V, int norm_type) throws RuntimeException {
+    double mean = mean(V);
+    double variance = 0;
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);
+    }
+
+    return (norm_type == 0 ? variance / (V.n_elem - 1) : variance / V.n_elem);
+  }
+
   /**
    * Returns the variance for each column of the provided matrix with normalisation by {@code V.n_elem -1}.
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
    */
   public static Mat var(Mat X) throws RuntimeException {
     // X is validated within var
@@ -2883,7 +2879,7 @@ public class Arma {
    * @param X The matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    */
   public static Mat var(Mat X, int norm_type) throws RuntimeException {
@@ -2899,81 +2895,135 @@ public class Arma {
    * @param norm_type The normalisation
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
   public static Mat var(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = null;
 
-    Mat mean;
-    switch (dim) {
+    switch (norm_type) {
       case 0:
-        // X is validated within mean
-        mean = mean(X, 0);
-        
-        result = new Mat(1, X.n_cols);
-
-        switch (norm_type) {
+      case 1:
+        switch (dim) {
           case 0:
+            if (X.n_rows < 1) {
+              throw new RuntimeException("The provided matrix must have at least one row.");
+            }
+
+            result = new Mat(1, X.n_cols);
+
             for (int j = 0; j < X.n_cols; j++) {
-              int columnIndex = j * X.n_rows;
-              double variance = 0;
-
-              for (int i = 0; i < X.n_rows; i++) {
-                variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
-              }
-
-              result._data[j] = variance / (X.n_rows - 1);
+              result._data[j] = var(new ViewSubCol(X, j), norm_type);
             }
             break;
           case 1:
-            for (int j = 0; j < X.n_cols; j++) {
-              int columnIndex = j * X.n_rows;
-              double variance = 0;
+            if (X.n_cols < 1) {
+              throw new RuntimeException("The provided matrix must have at least one column.");
+            }
 
-              for (int i = 0; i < X.n_rows; i++) {
-                variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
-              }
+            result = new Mat(X.n_rows, 1);
 
-              result._data[j] = variance / X.n_rows;
+            for (int i = 0; i < X.n_rows; i++) {
+              result._data[i] = var(new ViewSubRow(X, i), norm_type);
             }
             break;
           default:
-            throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+            throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns true if all elements of the provided vector are non-zero.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   */
+  public static boolean all(AbstractVector V) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided vector must have at least one element.");
+    }
+
+    for (int n = 0; n < V.n_elem; n++) {
+      if (V._data[n] == 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  protected static boolean all(AbstractView V) throws RuntimeException {
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      if (V._data[V.iteratorNext()] == 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Mat all(Mat X) throws RuntimeException {
+    // X is validated within all
+    return all(X, 0);
+  }
+
+  /**
+   * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where all elements
+   * are non-zero and a 0 otherwise.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Mat all(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        // All uninitialised matrices are already set to zero
+        result = new Mat(1, X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          if (all(new ViewSubCol(X, j))) {
+            result._data[j] = 1;
+          }
         }
         break;
       case 1:
-        // X is validated within mean
-        mean = mean(X, 1);
-        
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        // All uninitialised matrices are already set to zero
         result = new Mat(X.n_rows, 1);
 
-        switch (norm_type) {
-          case 0:
-            for (int i = 0; i < X.n_rows; i++) {
-              double variance = 0;
-
-              for (int j = 0; j < X.n_cols; j++) {
-                variance += Math.pow(X._data[i + j * X.n_rows] - mean._data[j], 2);
-              }
-
-              result._data[i] = variance / (X.n_rows - 1);
-            }
-            break;
-          case 1:
-            for (int i = 0; i < X.n_rows; i++) {
-              double variance = 0;
-
-              for (int j = 0; j < X.n_cols; j++) {
-                variance += Math.pow(X._data[i + j * X.n_rows] - mean._data[j], 2);
-              }
-
-              result._data[i] = variance / X.n_cols;
-            }
-            break;
-          default:
-            throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+        for (int i = 0; i < X.n_rows; i++) {
+          if (all(new ViewSubRow(X, i))) {
+            result._data[i] = 1;
+          }
         }
         break;
       default:
@@ -2983,154 +3033,415 @@ public class Arma {
     return result;
   }
 
-  public static boolean all(AbstractVector V) {
-    
+  /**
+   * Returns true if any element of the provided vector is non-zero.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   */
+  public static boolean any(AbstractVector V) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided vector must have at least one element.");
+    }
+
+    for (int n = 0; n < V.n_elem; n++) {
+      if (V._data[n] != 0) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  public static Mat all(Mat X) {
-    // X is validated within all
-    return all(X, 0);
+  protected static boolean any(AbstractView V) throws RuntimeException {
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      if (V._data[V.iteratorNext()] != 0) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  public static Mat all(Mat X, int dim) {
-    
-  }
-
-  public static boolean any(AbstractVector V) {
-    
-  }
-
-  public static Mat any(Mat X) {
+  /**
+   * Returns a 1 for each column of the provided matrix where any element is non-zero and a 0 otherwise.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Mat any(Mat X) throws RuntimeException {
     // X is validated within any
     return any(X, 0);
-    
+
   }
 
-  public static Mat any(Mat X, int dim) {
-    
+  /**
+   * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where any element
+   * is non-zero and a 0 otherwise.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Mat any(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        // All uninitialised matrices are already set to zero
+        result = new Mat(1, X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          if (any(new ViewSubCol(X, j))) {
+            result._data[j] = 1;
+          }
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        // All uninitialised matrices are already set to zero
+        result = new Mat(X.n_rows, 1);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          if (any(new ViewSubRow(X, i))) {
+            result._data[i] = 1;
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static Col conv(Col A, AbstractVector B) {
-    
+
+  /**
+   * Returns the convolution between the first and second provided vector as a column vector.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   */
+  public static Col conv(Col A, AbstractVector B) throws RuntimeException {
+    if (!B.is_vec()) {
+      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+    }
+
+    Col result = new Col(A.n_elem + B.n_elem - 1);
+
+    for (int n = 0; n < result.n_elem; n++) {
+      int min = Math.max(0, n - B.n_elem + 1);
+      int max = Math.min(A.n_elem, n + 1);
+
+      for (int nn = min; nn < max; nn++)
+      {
+        result._data[n] += A._data[nn] * B._data[n - nn];
+      }
+    }
+
+    return result;
   }
-  
-  public static Row conv(Row A, AbstractVector B) {
-    
+
+  /**
+   * Returns the convolution between the first and second provided vector as a row vector.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   */
+  public static Row conv(Row A, AbstractVector B) throws RuntimeException {
+    if (!B.is_vec()) {
+      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+    }
+
+    Row result = new Row(A.n_elem + B.n_elem - 1);
+
+    for (int n = 0; n < result.n_elem; n++) {
+      int min = Math.max(0, n - B.n_elem + 1);
+      int max = Math.min(A.n_elem, n + 1);
+
+      for (int nn = min; nn < max; nn++)
+      {
+        result._data[n] += A._data[nn] * B._data[n - nn];
+      }
+    }
+
+    return result;
   }
-  
-  public static Mat conv(Mat A, AbstractVector B) {
-    
+
+  /**
+   * Returns the convolution between the first and second provided vector in tsame vector shape as the first provided
+   * one.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   */
+  public static Mat conv(Mat A, AbstractVector B) throws RuntimeException {
+    if (!A.is_vec()) {
+      throw new RuntimeException("The first provided matrix must be equivalent in shape to a vector.");
+    }
+
+    if (!B.is_vec()) {
+      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+    }
+
+    Mat result;
+    if (A.is_colvec()) {
+      result = new Mat(A.n_elem + B.n_elem - 1, 1);
+    } else {
+      result = new Mat(1, A.n_elem + B.n_elem - 1);
+    }
+
+    for (int n = 0; n < result.n_elem; n++) {
+      int min = Math.max(0, n - B.n_elem + 1);
+      int max = Math.min(A.n_elem, n + 1);
+
+      for (int nn = min; nn < max; nn++)
+      {
+        result._data[n] += A._data[nn] * B._data[n - nn];
+      }
+    }
+
+    return result;
   }
-  
+
   public static double cor(AbstractVector X, AbstractVector Y) {
     // X and Y are validated within cor
     return cor(X, Y, 0);
   }
-  
+
   public static double cor(AbstractVector X, AbstractVector Y, int norm_type) {
-    
+    // X, Y and norm_type are validated within cov
+    return cov(X, Y, norm_type) / Math.sqrt(cov(X, Y, norm_type) * cov(X, Y, norm_type));
   }
-  
+
   public static double cor(AbstractVector X) {
     // X is validated within cor
     return cor(X, 0);
   }
-  
+
   public static double cor(AbstractVector X, int norm_type) {
     // X and norm_type are validated within cor
     return cor(X, X, norm_type);
   }
-  
+
   public static Mat cor(Mat X, Mat Y) {
     // X and Y are validated within cor
     return cor(X, Y, 0);
   }
-  
+
   public static Mat cor(Mat X, Mat Y, int norm_type) {
-    
+    // X, Y and norm_type are validated within cov
+    Mat covariance = cov(X, Y, norm_type);
+
+    Mat selfCovariance;
+    if (norm_type != 0) {
+      selfCovariance = cov(X, Y, 0);
+    } else {
+      selfCovariance = covariance;
+    }
+
+    Mat result = new Mat(X.n_cols, X.n_cols);
+
+    int n = 0;
+    for (int j = 0; j < X.n_cols; j++) {
+      for (int jj = 0; jj < X.n_cols; jj++) {
+        result._data[n++] = covariance.at(j, jj) / Math.sqrt(selfCovariance.at(j, j) * selfCovariance.at(jj, jj));
+      }
+    }
+
+    return result;
   }
-  
+
   public static Mat cor(Mat X) {
     // X is validated within cor
     return cor(X, 0);
   }
-  
+
   public static Mat cor(Mat X, int norm_type) {
     // X and norm_type are validated within cor
     return cor(X, X, norm_type);
   }
-  
+
   public static double cov(AbstractVector X, AbstractVector Y) {
     // X and Y are validated within cov
     return cov(X, Y, 0);
   }
-  
+
   public static double cov(AbstractVector X, AbstractVector Y, int norm_type) {
-    
+    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
+      throw new RuntimeException("Both matrices must have the same size.");
+    }
+
+    // X is validated within mean
+    double meanX = mean(X);
+    // Y is validated within mean
+    double meanY = mean(Y);
+
+    double covariance = 0;
+    for (int n = 0; n < X.n_elem; n++) {
+      covariance += (X._data[n] - meanX) * (X._data[n] - meanY);
+    }
+
+    switch (norm_type) {
+      case 0:
+        covariance /= (X.n_elem - 1);
+        break;
+      case 1:
+        covariance /= X.n_elem;
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+    }
+
+    return covariance;
   }
-  
+
   public static double cov(AbstractVector X) {
     // X is validated within cov
     return cov(X, 0);
   }
-  
+
   public static double cov(AbstractVector X, int norm_type) {
     // X and norm_type are validated within cov
     return cov(X, X, norm_type);
   }
-  
+
   public static Mat cov(Mat X, Mat Y) {
     // X and Y are validated within cov
     return cov(X, Y, 0);
   }
-  
+
   public static Mat cov(Mat X, Mat Y, int norm_type) {
-    
+    // X and Y are validated within cov
+    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
+      throw new RuntimeException("Both matrices must have the same size.");
+    }
+
+    Mat result = new Mat(X.n_cols, X.n_cols);
+
+    int n = 0;
+    switch (norm_type) {
+      case 0:
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndexX = j * X.n_rows;
+
+          double meanX = 0;
+          for (int i = 0; i < X.n_rows; i++) {
+            meanX += X._data[i + columnIndexX];
+          }
+          meanX /= X.n_rows;
+
+          for (int jj = 0; jj < Y.n_cols; jj++) {
+            int columnIndexY = jj * Y.n_rows;
+
+            double meanY = 0;
+            for (int i = 0; i < X.n_rows; i++) {
+              meanY += Y._data[i + columnIndexY];
+            }
+            meanY /= Y.n_rows;
+
+            double covariance = 0;
+            for (int i = 0; i < X.n_rows; i++) {
+              covariance += (X._data[i + columnIndexX] - meanX) * (X._data[i + columnIndexY] - meanY);
+            }
+            result._data[n++] = covariance / (X.n_elem - 1);
+          }
+        }
+        break;
+      case 1:
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndexX = j * X.n_rows;
+
+          double meanX = 0;
+          for (int i = 0; i < X.n_rows; i++) {
+            meanX += X._data[i + columnIndexX];
+          }
+          meanX /= X.n_rows;
+
+          for (int jj = 0; jj < Y.n_cols; jj++) {
+            int columnIndexY = jj * Y.n_rows;
+
+            double meanY = 0;
+            for (int i = 0; i < X.n_rows; i++) {
+              meanY += Y._data[i + columnIndexY];
+            }
+            meanY /= Y.n_rows;
+
+            double covariance = 0;
+            for (int i = 0; i < X.n_rows; i++) {
+              covariance += (X._data[i + columnIndexX] - meanX) * (X._data[i + columnIndexY] - meanY);
+            }
+            result._data[n++] = covariance / X.n_elem;
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
+
   public static Mat cov(Mat X) {
     // X is validated within cov
     return cov(X, 0);
   }
-  
+
   public static Mat cov(Mat X, int norm_type) {
     // X and norm_type are validated within cov
     return cov(X, X, norm_type);
   }
-  
+
   public static Col cross(Col A, AbstractMat B) {
-    
+
   }
-  
+
   public static Row cross(Row A, AbstractMat B) {
-    
+
   }
-  
+
   public static Mat cross(Mat A, AbstractMat B) {
-    
+
   }
-  
+
   public static Col cumsum(Col V) {
-    
+
   }
-  
+
   public static Row cumsum(Row V) {
-    
+
   }
-  
+
   public static Mat cumsum(AbstractMat X) {
     // X is validated within cumsum
     return cumsum(X, 0);
   }
-  
+
   public static Mat cumsum(AbstractMat X, int dim) {
-    
+
   }
-  
+
   public static Mat diagmat(AbstractMat X) {
-    
+
   }
-  
+
   protected static Col sort(AbstractVector V) {
 
   }
