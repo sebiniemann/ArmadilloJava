@@ -2035,10 +2035,10 @@ public class Arma {
         case 1:
           norm = Double.NEGATIVE_INFINITY;
           for (int j = 0; j < X.n_cols; j++) {
-
+            int columnIndex = j * X.n_rows;
             double sum = 0;
             for (int i = 0; i < X.n_rows; i++) {
-              sum += Math.abs(X._data[i + j * X.n_rows]);
+              sum += Math.abs(X._data[i + columnIndex]);
             }
 
             norm = Math.max(norm, sum);
@@ -2151,14 +2151,14 @@ public class Arma {
     // X is validated within svd
     Col singularValues = svd(X);
     // TODO add exceptions from svd
-    
+
     int rank = 0;
-    for(int n = 0; n < singularValues.n_elem; n++) {
-      if(singularValues._data[n] > tolerance) {
+    for (int n = 0; n < singularValues.n_elem; n++) {
+      if (singularValues._data[n] > tolerance) {
         rank++;
       }
     }
-    
+
     return rank;
   }
 
@@ -2187,136 +2187,956 @@ public class Arma {
 
     return trace;
   }
-  
+
+  /**
+   * Returns a deep copy of the main diagonal of the provided matrix as a column vector.
+   * 
+   * @param A The matrix
+   */
   public static Col diagvec(Mat A) {
     return diagvec(A, 0);
   }
-  
-  public static Col diagvec(Mat A, int k) {
-    
+
+  /**
+   * Returns a deep copy of the {@code k}th diagonal of the provided matrix as a column vector.
+   * <p>
+   * <ul>
+   * <li>For {@code k} = 0, its the main diagonal.
+   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * </ul>
+   * 
+   * @param A The matrix
+   * @param k The diagonal position
+   * 
+   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   */
+  public static Col diagvec(Mat A, int k) throws IndexOutOfBoundsException {
+    return A.diag(k);
   }
-  
-  public static double min(AbstractVector V) {
-    
+
+  /**
+   * Returns the smallest value within the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public static double min(AbstractVector V) throws RuntimeException {
+    // V is validated within min
+    return V.min();
   }
-  
-  public static Row min(Mat X) {
-    
+
+  /**
+   * Returns the smallest value for each column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Row min(Mat X) throws RuntimeException {
+    if (X.n_rows < 1) {
+      throw new RuntimeException("The provided matrix must have at least one row.");
+    }
+
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      int columnIndex = j * X.n_rows;
+      double min = X._data[columnIndex];
+
+      for (int i = 1; i < X.n_rows; i++) {
+        min = Math.min(min, X._data[i + columnIndex]);
+      }
+
+      result._data[j] = min;
+    }
+
+    return result;
   }
-  
-  public static Col min(Mat X, int dim) {
-    
+
+  /**
+   * Returns the smallest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #min(Mat)} for this case to stay
+   * confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col min(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double min = X._data[columnIndex];
+
+          for (int i = 1; i < X.n_rows; i++) {
+            min = Math.min(min, X._data[i + columnIndex]);
+          }
+
+          result._data[j] = min;
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          double min = X._data[i];
+
+          for (int j = 1; j < X.n_cols; j++) {
+            min = Math.min(min, X._data[i + j * X.n_rows]);
+          }
+
+          result._data[i] = min;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static Mat min(Mat A, Mat B) {
-    
+
+  /**
+   * Returns the element-wise smallest values between the provided matrices the matrix.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same size.
+   */
+  public static Mat min(Mat A, Mat B) throws RuntimeException {
+    if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
+      throw new RuntimeException("Both matrices must have the same size.");
+    }
+
+    Mat result = new Mat(A.n_rows, A.n_cols);
+
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.min(A._data[n], B._data[n]);
+    }
+
+    return result;
   }
-  
-  public static double max(AbstractVector V) {
-    
+
+  /**
+   * Returns the largest value within the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public static double max(AbstractVector V) throws RuntimeException {
+    // V is validated within max
+    return V.max();
   }
-  
+
+  /**
+   * Returns the largest value for each column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
   public static Row max(Mat X) {
-    
+    if (X.n_rows < 1) {
+      throw new RuntimeException("The provided matrix must have at least one row.");
+    }
+
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      int columnIndex = j * X.n_rows;
+      double max = X._data[columnIndex];
+
+      for (int i = 1; i < X.n_rows; i++) {
+        max = Math.max(max, X._data[i + columnIndex]);
+      }
+
+      result._data[j] = max;
+    }
+
+    return result;
   }
-  
-  public static Col max(Mat X, int dim) {
-    
+
+  /**
+   * Returns the largest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #max(Mat)} for this case to stay
+   * confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col max(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double max = X._data[columnIndex];
+
+          for (int i = 1; i < X.n_rows; i++) {
+            max = Math.max(max, X._data[i + columnIndex]);
+          }
+
+          result._data[j] = max;
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          double max = X._data[i];
+
+          for (int j = 1; j < X.n_cols; j++) {
+            max = Math.max(max, X._data[i + j * X.n_rows]);
+          }
+
+          result._data[i] = max;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static Mat max(Mat A, Mat B) {
-    
+
+  /**
+   * Returns the element-wise largest values between the provided matrices the matrix.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same size.
+   */
+  public static Mat max(Mat A, Mat B) throws RuntimeException {
+    if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
+      throw new RuntimeException("Both matrices must have the same size.");
+    }
+
+    Mat result = new Mat(A.n_rows, A.n_cols);
+
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.max(A._data[n], B._data[n]);
+    }
+
+    return result;
   }
-  
-  public static double prod(AbstractVector V) {
-    
+
+  /**
+   * Returns the product of all elements of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static double prod(AbstractVector V) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    double prod = V._data[0];
+
+    for (int n = 1; n < V.n_elem; n++) {
+      prod *= V._data[n];
+    }
+
+    return prod;
   }
-  
-  public static Row prod(Mat X) {
-    
+
+  /**
+   * Returns the product of all elements per column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Row prod(Mat X) throws RuntimeException {
+    if (X.n_rows < 1) {
+      throw new RuntimeException("The provided matrix must have at least one row.");
+    }
+
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      int columnIndex = j * X.n_rows;
+      double prod = X._data[columnIndex];
+
+      for (int i = 1; i < X.n_rows; i++) {
+        prod *= X._data[i + columnIndex];
+      }
+
+      result._data[j] = prod;
+    }
+
+    return result;
   }
-  
-  public static Col prod(Mat X, int dim) {
-    
+
+  /**
+   * Returns the product of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #prod(Mat)} for this case to
+   * stay confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col prod(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double prod = X._data[columnIndex];
+
+          for (int i = 1; i < X.n_rows; i++) {
+            prod *= X._data[i + columnIndex];
+          }
+
+          result._data[j] = prod;
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          double prod = X._data[i];
+
+          for (int j = 1; j < X.n_cols; j++) {
+            prod *= X._data[i + j * X.n_rows];
+          }
+
+          result._data[i] = prod;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static double sum(AbstractVector V) {
-    
+
+  /**
+   * Returns the sum of all elements of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static double sum(AbstractVector V) throws RuntimeException {
+    // V is validated within accu
+    return accu(V);
   }
-  
-  public static Row sum(Mat X) {
-    
+
+  /**
+   * Returns the sum of all elements per column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Row sum(Mat X) throws RuntimeException {
+    if (X.n_rows < 1) {
+      throw new RuntimeException("The provided matrix must have at least one row.");
+    }
+
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      int columnIndex = j * X.n_rows;
+      double sum = X._data[columnIndex];
+
+      for (int i = 1; i < X.n_rows; i++) {
+        sum += X._data[i + columnIndex];
+      }
+
+      result._data[j] = sum;
+    }
+
+    return result;
   }
-  
-  public static Col sum(Mat X, int dim) {
-    
+
+  /**
+   * Returns the sum of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #sum(Mat)} for this case to stay
+   * confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col sum(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double sum = X._data[columnIndex];
+
+          for (int i = 1; i < X.n_rows; i++) {
+            sum += X._data[i + columnIndex];
+          }
+
+          result._data[j] = sum;
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          double sum = X._data[i];
+
+          for (int j = 1; j < X.n_cols; j++) {
+            sum += X._data[i + j * X.n_rows];
+          }
+
+          result._data[i] = sum;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static double mean(AbstractVector V) {
-    
+
+  /**
+   * Returns the mean of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public static double mean(AbstractVector V) throws RuntimeException {
+    // V is validated within accu
+    return accu(V) / V.n_elem;
   }
-  
-  public static Row mean(Mat X) {
-    
+
+  /**
+   * Returns the mean for each column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   */
+  public static Row mean(Mat X) throws RuntimeException {
+    if (X.n_rows < 1) {
+      throw new RuntimeException("The provided matrix must have at least one row.");
+    }
+
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      int columnIndex = j * X.n_rows;
+      double sum = X._data[columnIndex];
+
+      for (int i = 1; i < X.n_rows; i++) {
+        sum += X._data[i + columnIndex];
+      }
+
+      result._data[j] = sum / X.n_rows;
+    }
+
+    return result;
   }
-  
-  public static Col mean(Mat X, int dim) {
-    
+
+  /**
+   * Returns the mean for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #mean(Mat)} for this case to
+   * stay confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col mean(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double sum = X._data[columnIndex];
+
+          for (int i = 1; i < X.n_rows; i++) {
+            sum += X._data[i + columnIndex];
+          }
+
+          result._data[j] = sum / X.n_rows;
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          double sum = X._data[i];
+
+          for (int j = 1; j < X.n_cols; j++) {
+            sum += X._data[i + j * X.n_rows];
+          }
+
+          result._data[i] = sum / X.n_cols;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static double median(AbstractVector V) {
-    
+
+  /**
+   * Returns the median of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The vector must have at least one element.
+   */
+  public static double median(AbstractVector V) throws RuntimeException {
+    // This algorithm runs in O(n log n), a better, more complicated implementation could solve this problem in O(n).
+    // See ICS 161: Design and Analysis of Algorithms, Lecture notes for January 30, 1996:
+    // http://www.ics.uci.edu/~eppstein/161/960130.html
+    if (V.n_rows < 1) {
+      throw new RuntimeException("The provided vector must have at least one row.");
+    }
+
+    AbstractVector sort = sort(V);
+
+    double median;
+    if (V.n_elem % 2 == 0) {
+      int middle = V.n_elem / 2;
+      median = (sort._data[middle - 1] + sort._data[middle]) / 2;
+    } else {
+      median = sort._data[V.n_elem / 2];
+    }
+
+    return median;
   }
-  
-  public static Row median(Mat X) {
-    
+
+  /**
+   * Returns the median for each column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   */
+  public static Row median(Mat X) throws RuntimeException {
+    // X is validated within median
+    Row result = new Row(X.n_cols);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      // Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
+      result._data[j] = median(X.col(j));
+    }
+
+    return result;
   }
-  
-  public static Col median(Mat X, int dim) {
-    
+
+  /**
+   * Returns the median for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #median(Mat)} for this case to
+   * stay confirm to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col median(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    switch (dim) {
+      case 0:
+        // X is validated within median
+        result = new Col(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          // Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
+          result._data[j] = median(X.col(j));
+        }
+        break;
+      case 1:
+        // X is validated within median
+        result = new Col(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          // Creates a deep copy of each row, since sorting of shallow sub views is not yet implemented.
+          result._data[i] = median(X.row(i));
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  public static double stddev(AbstractVector V) {
-    
+
+  /**
+   * Returns the standard deviation of the provided vector with normalisation by {@code V.n_elem -1}.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The vector must have at least one element.
+   */
+  public static double stddev(AbstractVector V) throws RuntimeException {
+    // V is validated within stddev
+    return stddev(V, 0);
   }
-  
-  public static double stddev(AbstractVector V, int norm_type) {
-    
+
+  /**
+   * Returns the standard deviation of the provided vector with normalisation by {@code V.n_elem -1} ({@code norm_type}
+   * = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param V The vector
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The vector must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   */
+  public static double stddev(AbstractVector V, int norm_type) throws RuntimeException {
+    // V and norm_type are validated within var
+    return Math.sqrt(var(V, norm_type));
   }
-  
-  public static Row stddev(Mat X) {
-    
+
+  /**
+   * Returns the standard deviation for each column of the provided matrix with normalisation by {@code V.n_elem -1}.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public static Row stddev(Mat X) throws RuntimeException {
+    // X is validated within stddev
+    return stddev(X, 0);
   }
-  
-  public static Row stddev(Mat X, int norm_type) {
-    
+
+  /**
+   * Returns the standard deviation for each column of the provided matrix with normalisation by {@code V.n_elem -1} (
+   * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   */
+  public static Row stddev(Mat X, int norm_type) throws RuntimeException {
+    // X and norm_type are validated within var
+    return sqrt(var(X, norm_type));
   }
-  
-  public static Col stddev(Mat X, int norm_type, int dim) {
-    
+
+  /**
+   * Returns the standard deviation for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
+   * with normalisation by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #stddev(Mat)} or
+   * {@link #stddev(Mat, int)} for this case to stay compatible to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col stddev(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+    // X, norm_type and dim are validated within var
+    return sqrt(var(X, norm_type, dim));
   }
-  
-  public static double var(AbstractVector V) {
-    
+
+  /**
+   * Returns the variance of the provided vector with normalisation by {@code V.n_elem -1}.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The vector must have at least one element.
+   */
+  public static double var(AbstractVector V) throws RuntimeException {
+    // V is validated within var
+    return var(V, 0);
   }
-  
-  public static double var(AbstractVector V, int norm_type) {
-    
+
+  /**
+   * Returns the variance of the provided vector with normalisation by {@code V.n_elem -1} ({@code norm_type} = 0) or
+   * {@code V.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param V The vector
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The vector must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   */
+  public static double var(AbstractVector V, int norm_type) throws RuntimeException {
+    // V is validated within mean
+    double mean = mean(V);
+
+    double variance = 0;
+    for (int n = 0; n < V.n_elem; n++) {
+      variance += Math.pow(V._data[n] - mean, 2);
+    }
+
+    switch (norm_type) {
+      case 0:
+        variance /= (V.n_elem - 1);
+        break;
+      case 1:
+        variance /= V.n_elem;
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+    }
+
+    return variance;
   }
-  
-  public static Row var(Mat X) {
-    
+
+  /**
+   * Returns the variance for each column of the provided matrix with normalisation by {@code V.n_elem -1}.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   */
+  public static Row var(Mat X) throws RuntimeException {
+    // X is validated within var
+    return var(X, 0);
   }
-  
-  public static Row var(Mat X, int norm_type) {
-    
+
+  /**
+   * Returns the variance for each column of the provided matrix with normalisation by {@code V.n_elem -1} (
+   * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   */
+  public static Row var(Mat X, int norm_type) throws RuntimeException {
+    // X is validated within mean
+    Row mean = mean(X);
+
+    Row result = new Row(X.n_cols);
+
+    switch (norm_type) {
+      case 0:
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double variance = 0;
+
+          for (int i = 0; i < X.n_rows; i++) {
+            variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
+          }
+
+          result._data[j] = variance / (X.n_rows - 1);
+        }
+        break;
+      case 1:
+        for (int j = 0; j < X.n_cols; j++) {
+          int columnIndex = j * X.n_rows;
+          double variance = 0;
+
+          for (int i = 0; i < X.n_rows; i++) {
+            variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
+          }
+
+          result._data[j] = variance / X.n_rows;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+    }
+
+    return result;
+
   }
-  
-  public static Col var(Mat X, int norm_type, int dim) {
-    
+
+  /**
+   * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
+   * with normalisation by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #var(Mat)} or
+   * {@link #var(Mat, int)} for this case to stay compatible to Armadillo C++.
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
+   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   */
+  public static Col var(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+    Col result = null;
+
+    AbstractVector mean;
+    switch (dim) {
+      case 0:
+        // X is validated within mean
+        mean = mean(X);
+        
+        result = new Col(X.n_cols);
+
+        switch (norm_type) {
+          case 0:
+            for (int j = 0; j < X.n_cols; j++) {
+              int columnIndex = j * X.n_rows;
+              double variance = 0;
+
+              for (int i = 0; i < X.n_rows; i++) {
+                variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
+              }
+
+              result._data[j] = variance / (X.n_rows - 1);
+            }
+            break;
+          case 1:
+            for (int j = 0; j < X.n_cols; j++) {
+              int columnIndex = j * X.n_rows;
+              double variance = 0;
+
+              for (int i = 0; i < X.n_rows; i++) {
+                variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
+              }
+
+              result._data[j] = variance / X.n_rows;
+            }
+            break;
+          default:
+            throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+        }
+        break;
+      case 1:
+        // X is validated within mean
+        mean = mean(X, 1);
+        
+        result = new Col(X.n_rows);
+
+        switch (norm_type) {
+          case 0:
+            for (int i = 0; i < X.n_rows; i++) {
+              double variance = 0;
+
+              for (int j = 0; j < X.n_cols; j++) {
+                variance += Math.pow(X._data[i + j * X.n_rows] - mean._data[j], 2);
+              }
+
+              result._data[i] = variance / (X.n_rows - 1);
+            }
+            break;
+          case 1:
+            for (int i = 0; i < X.n_rows; i++) {
+              double variance = 0;
+
+              for (int j = 0; j < X.n_cols; j++) {
+                variance += Math.pow(X._data[i + j * X.n_rows] - mean._data[j], 2);
+              }
+
+              result._data[i] = variance / X.n_cols;
+            }
+            break;
+          default:
+            throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
-  
-  
+
+  protected static Col sort(AbstractVector V) {
+
+  }
+
+  public static Col sort(Col V) {
+
+  }
+
+  public static Col sort(Row V) {
+
+  }
 
   public static Col svd(Mat X) {
     if (X.empty()) {
