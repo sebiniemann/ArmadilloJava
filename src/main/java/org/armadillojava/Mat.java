@@ -119,8 +119,8 @@ public class Mat extends AbstractMat {
   /**
    * Returns a deep copy of the main diagonal.
    */
-  public Mat diag() {
-    return new Mat(new ViewDiag(this, 0));
+  public Col diag() {
+    return new Col(new ViewDiag(this, 0));
   }
 
   /**
@@ -129,7 +129,7 @@ public class Mat extends AbstractMat {
    * @param unary_operator The unary operator
    */
   public void diag(Op unary_operator) {
-    new Mat(new ViewDiag(this, 0)).inPlace(unary_operator);
+    new ViewDiag(this, 0).inPlace(unary_operator);
   }
 
   /**
@@ -139,7 +139,7 @@ public class Mat extends AbstractMat {
    * @param operand The operand
    */
   public void diag(Op binary_operator, double operand) {
-    new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
+    new ViewDiag(this, 0).inPlace(binary_operator, operand);
   }
 
   /**
@@ -149,7 +149,7 @@ public class Mat extends AbstractMat {
    * @param operand The operand
    */
   public void diag(Op binary_operator, AbstractMat operand) {
-    new Mat(new ViewDiag(this, 0)).inPlace(binary_operator, operand);
+    new ViewDiag(this, 0).inPlace(binary_operator, operand);
   }
 
   /**
@@ -160,8 +160,10 @@ public class Mat extends AbstractMat {
    * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
    * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
    * </ul>
+   * 
+   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public Mat diag(int k) {
+  public Col diag(int k) throws IndexOutOfBoundsException {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -170,7 +172,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
 
-    return new Mat(new ViewDiag(this, k));
+    return new Col(new ViewDiag(this, k));
   }
 
   /**
@@ -183,8 +185,10 @@ public class Mat extends AbstractMat {
    * </ul>
    * 
    * @param unary_operator The unary operator
+   * 
+   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public void diag(int k, Op unary_operator) {
+  public void diag(int k, Op unary_operator) throws IndexOutOfBoundsException {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -193,7 +197,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
 
-    new Mat(new ViewDiag(this, k)).inPlace(unary_operator);
+    new ViewDiag(this, k).inPlace(unary_operator);
   }
 
   /**
@@ -207,8 +211,10 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public void diag(int k, Op binary_operator, double operand) {
+  public void diag(int k, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -217,7 +223,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
 
-    new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
+    new ViewDiag(this, k).inPlace(binary_operator, operand);
   }
 
   /**
@@ -231,9 +237,19 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public void diag(int k, Op binary_operator, AbstractMat operand) {
-    new Mat(new ViewDiag(this, k)).inPlace(binary_operator, operand);
+  public void diag(int k, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
+    if (k > 0 && k >= n_cols) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+
+    if (k < 0 && -k <= n_rows) {
+      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+    }
+    
+    new ViewDiag(this, k).inPlace(binary_operator, operand);
   }
 
   /**
