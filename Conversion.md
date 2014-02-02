@@ -363,12 +363,12 @@ sign(A)                    | sign(A)                    | Arma.sign(A)          
 Matlab                     | Armadillo C++              | ArmadilloJava                   | Notes
 ---------------------------|----------------------------|---------------------------------|------
 sum(A(:))                  | accu(A)                    | Arma.accu(A)                    | 
-dot(A, B)                  | dot(A, B)                  | Arma.dot(A, B)                  | **Note:** A, B are vectors.
+dot(A, B)                  | dot(A, B)                  | Arma.dot(A, B)                  | 
                            | norm_dot(A, B)             | Arma.norm_dot(A, B)             | **Matlab:** dot(A, B) / sqrt(dot(A, A) * dot(B, B))
 det(A)                     | det(A)                     | Arma.det(A)                     | 
-                           | log_det(v, s, A)           | Arma.log_det(v, s, A)           | **Matlab:** d = det(A); v = log(abs(d)); s = sign(d) (very inefficient)
+                           | log_det(v, s, A)           | Arma.log_det(v, s, A)           | **Matlab:** d = det(A); v = log(abs(d)); s = sign(d) (inefficient example)
 norm(A, p)                 | norm(A, p)                 | Arma.norm(A, p)                 | 
-rank(A [, t])              | rank(A [, t])              | Arma.rank(A [, t])              | **Default:** t = max(size(A))*eps(norm(A))
+rank(A [, t])              | rank(A [, t])              | Arma.rank(A [, t])              | **Default:** t = max(size(A))*eps(max(A))
 trace(A)                   | trace(A)                   | Arma.trace(A)                   | 
                            | as_scalar(A)               | Arma.as_scalar(A)               | 
 
