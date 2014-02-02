@@ -2187,6 +2187,136 @@ public class Arma {
 
     return trace;
   }
+  
+  public static Col diagvec(Mat A) {
+    return diagvec(A, 0);
+  }
+  
+  public static Col diagvec(Mat A, int k) {
+    
+  }
+  
+  public static double min(AbstractVector V) {
+    
+  }
+  
+  public static Row min(Mat X) {
+    
+  }
+  
+  public static Col min(Mat X, int dim) {
+    
+  }
+  
+  public static Mat min(Mat A, Mat B) {
+    
+  }
+  
+  public static double max(AbstractVector V) {
+    
+  }
+  
+  public static Row max(Mat X) {
+    
+  }
+  
+  public static Col max(Mat X, int dim) {
+    
+  }
+  
+  public static Mat max(Mat A, Mat B) {
+    
+  }
+  
+  public static double prod(AbstractVector V) {
+    
+  }
+  
+  public static Row prod(Mat X) {
+    
+  }
+  
+  public static Col prod(Mat X, int dim) {
+    
+  }
+  
+  public static double sum(AbstractVector V) {
+    
+  }
+  
+  public static Row sum(Mat X) {
+    
+  }
+  
+  public static Col sum(Mat X, int dim) {
+    
+  }
+  
+  public static double mean(AbstractVector V) {
+    
+  }
+  
+  public static Row mean(Mat X) {
+    
+  }
+  
+  public static Col mean(Mat X, int dim) {
+    
+  }
+  
+  public static double median(AbstractVector V) {
+    
+  }
+  
+  public static Row median(Mat X) {
+    
+  }
+  
+  public static Col median(Mat X, int dim) {
+    
+  }
+  
+  public static double stddev(AbstractVector V) {
+    
+  }
+  
+  public static double stddev(AbstractVector V, int norm_type) {
+    
+  }
+  
+  public static Row stddev(Mat X) {
+    
+  }
+  
+  public static Row stddev(Mat X, int norm_type) {
+    
+  }
+  
+  public static Col stddev(Mat X, int norm_type, int dim) {
+    
+  }
+  
+  public static double var(AbstractVector V) {
+    
+  }
+  
+  public static double var(AbstractVector V, int norm_type) {
+    
+  }
+  
+  public static Row var(Mat X) {
+    
+  }
+  
+  public static Row var(Mat X, int norm_type) {
+    
+  }
+  
+  public static Col var(Mat X, int norm_type, int dim) {
+    
+  }
+  
+  
 
   public static Col svd(Mat X) {
     if (X.empty()) {
