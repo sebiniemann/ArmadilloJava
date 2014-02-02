@@ -2908,6 +2908,18 @@ public class Arma {
     return result;
   }
 
+  protected static void conv(AbstractMat result, AbstractMat A, AbstractMat B) {
+    for (int n = 0; n < result.n_elem; n++) {
+      int min = Math.max(0, n - B.n_elem + 1);
+      int max = Math.min(A.n_elem, n + 1);
+
+      for (int nn = min; nn < max; nn++)
+      {
+        result._data[n] += A._data[nn] * B._data[n - nn];
+      }
+    }
+  }
+
   /**
    * Returns the convolution between the first and second provided vector as a column vector.
    * 
@@ -2922,17 +2934,7 @@ public class Arma {
     }
 
     Col result = new Col(A.n_elem + B.n_elem - 1);
-
-    for (int n = 0; n < result.n_elem; n++) {
-      int min = Math.max(0, n - B.n_elem + 1);
-      int max = Math.min(A.n_elem, n + 1);
-
-      for (int nn = min; nn < max; nn++)
-      {
-        result._data[n] += A._data[nn] * B._data[n - nn];
-      }
-    }
-
+    conv(result, A, B);
     return result;
   }
 
@@ -2950,17 +2952,7 @@ public class Arma {
     }
 
     Row result = new Row(A.n_elem + B.n_elem - 1);
-
-    for (int n = 0; n < result.n_elem; n++) {
-      int min = Math.max(0, n - B.n_elem + 1);
-      int max = Math.min(A.n_elem, n + 1);
-
-      for (int nn = min; nn < max; nn++)
-      {
-        result._data[n] += A._data[nn] * B._data[n - nn];
-      }
-    }
-
+    conv(result, A, B);
     return result;
   }
 
@@ -2989,16 +2981,7 @@ public class Arma {
       result = new Mat(1, A.n_elem + B.n_elem - 1);
     }
 
-    for (int n = 0; n < result.n_elem; n++) {
-      int min = Math.max(0, n - B.n_elem + 1);
-      int max = Math.min(A.n_elem, n + 1);
-
-      for (int nn = min; nn < max; nn++)
-      {
-        result._data[n] += A._data[nn] * B._data[n - nn];
-      }
-    }
-
+    conv(result, A, B);
     return result;
   }
 
