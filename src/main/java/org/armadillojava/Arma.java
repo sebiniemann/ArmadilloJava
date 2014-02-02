@@ -2080,11 +2080,11 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
-   * @throws RuntimeException Both matrices must have the same size.
+   * @throws RuntimeException Both provided matrices must have the same size.
    */
   public static Mat min(Mat A, Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
-      throw new RuntimeException("Both matrices must have the same size.");
+      throw new RuntimeException("Both provided matrices must have the same size.");
     }
 
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -2180,11 +2180,11 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
-   * @throws RuntimeException Both matrices must have the same size.
+   * @throws RuntimeException Both provided matrices must have the same size.
    */
   public static Mat max(Mat A, Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
-      throw new RuntimeException("Both matrices must have the same size.");
+      throw new RuntimeException("Both provided matrices must have the same size.");
     }
 
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -3049,8 +3049,8 @@ public class Arma {
   }
 
   public static double cov(AbstractVector X, AbstractVector Y, int norm_type) {
-    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
-      throw new RuntimeException("Both matrices must have the same size.");
+    if (X.n_elem != Y.n_elem) {
+      throw new RuntimeException("Both provided vectors must have the same number of elements.");
     }
 
     // X is validated within mean
@@ -3095,7 +3095,7 @@ public class Arma {
   public static Mat cov(Mat X, Mat Y, int norm_type) {
     // X and Y are validated within cov
     if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
-      throw new RuntimeException("Both matrices must have the same size.");
+      throw new RuntimeException("Both provided matrices must have the same size.");
     }
 
     Mat result = new Mat(X.n_cols, X.n_cols);
@@ -3173,33 +3173,126 @@ public class Arma {
     return cov(X, X, norm_type);
   }
 
+  protected static void cross(AbstractMat result, AbstractMat A, AbstractMat B) {
+    result._data[0] = A._data[1] * B._data[2] - A._data[2] * B._data[1];
+    result._data[1] = A._data[2] * B._data[0] - A._data[0] * B._data[2];
+    result._data[2] = A._data[0] * B._data[1] - A._data[1] * B._data[0];
+  }
+  
   public static Col cross(Col A, AbstractMat B) {
+    if (A.n_elem != 3) {
+      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+    }
 
+    if (!B.is_vec() || B.n_elem != 3) {
+      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+    }
+
+    Col result = new Col(3);
+    conv(result, A, B);
+    return result;
   }
 
   public static Row cross(Row A, AbstractMat B) {
+    if (A.n_elem != 3) {
+      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+    }
 
+    if (!B.is_vec() || B.n_elem != 3) {
+      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+    }
+    
+    Row result = new Row(3);
+    conv(result, A, B);
+    return result;
   }
 
   public static Mat cross(Mat A, AbstractMat B) {
+    if (!A.is_vec() || A.n_elem != 3) {
+      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+    }
 
+    if (!B.is_vec() || B.n_elem != 3) {
+      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+    }
+
+    Mat result;
+    if (A.is_colvec()) {
+      result = new Mat(3, 1);
+    } else {
+      result = new Mat(1, 3);
+    }
+
+    cross(result, A, B);
+    return result;
   }
 
+  protected static void cumsum(AbstractVector result, AbstractVector V) {
+    result._data[0] = V._data[0];
+    for (int n = 1; n < result.n_elem; n++) {
+      result._data[n] = result._data[n - 1] + V._data[n];
+    }
+  }
+  
   public static Col cumsum(Col V) {
-
+    Col result = new Col(V.n_elem);
+    cumsum(result, V);
+    return result;
   }
 
   public static Row cumsum(Row V) {
-
+    Row result = new Row(V.n_elem);
+    cumsum(result, V);
+    return result;
   }
 
+  protected static Mat cumsum(AbstractView V) {
+    Mat result = new Mat();
+    result.copy_size(V);
+    
+    V.iteratorReset();
+    result._data[0] = V._data[V.iteratorNext()];
+    for (int n = 1; n < result.n_elem; n++) {
+      result._data[n] = result._data[n - 1] + V._data[V.iteratorNext()];
+    }
+    
+    return result;
+  }
+  
   public static Mat cumsum(AbstractMat X) {
     // X is validated within cumsum
     return cumsum(X, 0);
   }
 
   public static Mat cumsum(AbstractMat X, int dim) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
 
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided matrix must have at least one row.");
+        }
+
+        for (int j = 0; j < X.n_cols; j++) {
+          ViewSubCol subView = new ViewSubCol(X, j);
+          subView.inPlaceEqual(cumsum(subView));
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided matrix must have at least one column.");
+        }
+
+        for (int i = 0; i < X.n_rows; i++) {
+          ViewSubRow subView = new ViewSubRow(X, i);
+          subView.inPlaceEqual(cumsum(subView));
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+    }
+
+    return result;
   }
 
   public static Mat diagmat(AbstractMat X) {
