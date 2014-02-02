@@ -202,7 +202,7 @@ abstract class AbstractMat {
   /**
    * Returns the smallest value within the matrix and stores its position in {@code index_of_min_val}.
    * <p>
-   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
    * @param index_of_min_val The position storage
    * 
@@ -248,7 +248,7 @@ abstract class AbstractMat {
   /**
    * Returns the largest value within the matrix and stores its position in {@code index_of_max_val}.
    * <p>
-   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
    * @param index_of_max_val The position storage
    * 

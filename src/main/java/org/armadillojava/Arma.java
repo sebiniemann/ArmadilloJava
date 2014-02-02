@@ -10,6 +10,13 @@
 
 package org.armadillojava;
 
+import java.util.Arrays;
+
+import org.netlib.util.intW;
+
+import com.github.fommil.netlib.BLAS;
+import com.github.fommil.netlib.LAPACK;
+
 /**
  * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
  * Conrad Sanderson et al..
@@ -296,11 +303,11 @@ public class Arma {
    * 
    * @param A The vector
    * 
-   * @throws RuntimeException The provided matrix must be equivalent in size to a vector.
+   * @throws RuntimeException The provided matrix must be equivalent in shape to a vector.
    */
   public static Mat toeplitz(AbstractMat A) throws RuntimeException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The provided matrix must be equivalent in size to a vector.");
+      throw new RuntimeException("The provided matrix must be equivalent in shape to a vector.");
     }
 
     Mat result = new Mat(A.n_elem, A.n_elem);
@@ -323,16 +330,16 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
-   * @throws RuntimeException The first provided matrix must be equivalent in size to a vector.
-   * @throws RuntimeException The second provided matrix must be equivalent in size to a vector.
+   * @throws RuntimeException The first provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
    */
   public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The first provided matrix must be equivalent in size to a vector.");
+      throw new RuntimeException("The first provided matrix must be equivalent in shape to a vector.");
     }
 
     if (!B.is_vec()) {
-      throw new RuntimeException("The second provided matrix must be equivalent in size to a vector.");
+      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
     }
 
     Mat result = new Mat(A.n_elem, B.n_elem);
@@ -354,11 +361,11 @@ public class Arma {
    * 
    * @param vector The vector
    * 
-   * @throws RuntimeException The provided matrix must be equivalent in size to a vector.
+   * @throws RuntimeException The provided matrix must be equivalent in shape to a vector.
    */
   public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The provided matrix must be equivalent in size to a vector.");
+      throw new RuntimeException("The provided matrix must be equivalent in shape to a vector.");
     }
 
     Mat result = new Mat(A.n_elem, A.n_elem);
@@ -496,13 +503,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col exp(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col exp(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.exp(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.exp(A._data[n]);
     }
 
     return result;
@@ -511,13 +518,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row exp(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row exp(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.exp(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.exp(A._data[n]);
     }
 
     return result;
@@ -526,13 +533,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat exp(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat exp(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.exp(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.exp(A._data[n]);
     }
 
     return result;
@@ -541,13 +548,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-2 exponential values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col exp2(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col exp2(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(2, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(2, A._data[n]);
     }
 
     return result;
@@ -556,13 +563,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-2 exponential values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row exp2(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row exp2(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(2, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(2, A._data[n]);
     }
 
     return result;
@@ -571,13 +578,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-2 exponential values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat exp2(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat exp2(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(2, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(2, A._data[n]);
     }
 
     return result;
@@ -586,13 +593,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-10 exponential values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col exp10(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col exp10(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(10, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(10, A._data[n]);
     }
 
     return result;
@@ -601,13 +608,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-10 exponential values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row exp10(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row exp10(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(10, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(10, A._data[n]);
     }
 
     return result;
@@ -616,13 +623,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-10 exponential values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat exp10(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat exp10(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(10, X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(10, A._data[n]);
     }
 
     return result;
@@ -633,14 +640,14 @@ public class Arma {
    * <p>
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col trunc_exp(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col trunc_exp(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double exp = Math.exp(X._data[n]);
-      
+    for (int n = 0; n < A.n_elem; n++) {
+      double exp = Math.exp(A._data[n]);
+
       if (!Double.isInfinite(exp)) {
         result._data[n] = exp;
       } else {
@@ -656,14 +663,14 @@ public class Arma {
    * <p>
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row trunc_exp(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row trunc_exp(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double exp = Math.exp(X._data[n]);
-      
+    for (int n = 0; n < A.n_elem; n++) {
+      double exp = Math.exp(A._data[n]);
+
       if (!Double.isInfinite(exp)) {
         result._data[n] = exp;
       } else {
@@ -679,14 +686,14 @@ public class Arma {
    * <p>
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat trunc_exp(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat trunc_exp(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double exp = Math.exp(X._data[n]);
-      
+    for (int n = 0; n < A.n_elem; n++) {
+      double exp = Math.exp(A._data[n]);
+
       if (!Double.isInfinite(exp)) {
         result._data[n] = exp;
       } else {
@@ -700,13 +707,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col log(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col log(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]);
     }
 
     return result;
@@ -715,13 +722,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row log(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row log(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]);
     }
 
     return result;
@@ -730,13 +737,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat log(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat log(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]);
     }
 
     return result;
@@ -745,13 +752,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col log2(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col log2(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]) / Math.log(2);
     }
 
     return result;
@@ -760,13 +767,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row log2(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row log2(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]) / Math.log(2);
     }
 
     return result;
@@ -775,13 +782,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat log2(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat log2(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log(X._data[n]) / Math.log(2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log(A._data[n]) / Math.log(2);
     }
 
     return result;
@@ -790,13 +797,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col log10(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col log10(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log10(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log10(A._data[n]);
     }
 
     return result;
@@ -805,13 +812,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row log10(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row log10(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log10(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log10(A._data[n]);
     }
 
     return result;
@@ -820,13 +827,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat log10(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat log10(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.log10(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log10(A._data[n]);
     }
 
     return result;
@@ -839,13 +846,13 @@ public class Arma {
    * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
    * representable number.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col trunc_log(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col trunc_log(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
+    for (int n = 0; n < A.n_elem; n++) {
+      double value = A._data[n];
 
       if (value <= 0) {
         value = Double.MIN_NORMAL;
@@ -866,13 +873,13 @@ public class Arma {
    * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
    * representable number.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row trunc_log(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row trunc_log(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
+    for (int n = 0; n < A.n_elem; n++) {
+      double value = A._data[n];
 
       if (value <= 0) {
         value = Double.MIN_NORMAL;
@@ -893,13 +900,13 @@ public class Arma {
    * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
    * representable number.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat trunc_log(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat trunc_log(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
+    for (int n = 0; n < A.n_elem; n++) {
+      double value = A._data[n];
 
       if (value <= 0) {
         value = Double.MIN_NORMAL;
@@ -916,14 +923,14 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed raise to the specified power of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    * @param p The power
    */
-  public static Col pow(Col X, int p) {
-    Col result = new Col(X.n_elem);
+  public static Col pow(Col A, int p) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], p);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], p);
     }
 
     return result;
@@ -932,14 +939,14 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed raise to the specified power of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    * @param p The power
    */
-  public static Row pow(Row X, int p) {
-    Row result = new Row(X.n_elem);
+  public static Row pow(Row A, int p) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], p);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], p);
     }
 
     return result;
@@ -948,14 +955,14 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed raise to the specified power of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    * @param p The power
    */
-  public static Mat pow(Mat X, int p) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat pow(Mat A, int p) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], p);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], p);
     }
 
     return result;
@@ -964,13 +971,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed square root of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col sqrt(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col sqrt(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sqrt(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.sqrt(A._data[n]);
     }
 
     return result;
@@ -979,13 +986,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed square root of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row sqrt(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row sqrt(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sqrt(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.sqrt(A._data[n]);
     }
 
     return result;
@@ -994,13 +1001,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed square root of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat sqrt(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat sqrt(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sqrt(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.sqrt(A._data[n]);
     }
 
     return result;
@@ -1009,13 +1016,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed squared values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col square(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col square(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], 2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], 2);
     }
 
     return result;
@@ -1024,13 +1031,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed squared values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row square(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row square(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], 2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], 2);
     }
 
     return result;
@@ -1039,13 +1046,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed squared values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat square(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat square(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.pow(X._data[n], 2);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(A._data[n], 2);
     }
 
     return result;
@@ -1054,13 +1061,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed floored values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col floor(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col floor(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.floor(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.floor(A._data[n]);
     }
 
     return result;
@@ -1069,13 +1076,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed floored values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row floor(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row floor(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.floor(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.floor(A._data[n]);
     }
 
     return result;
@@ -1084,13 +1091,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed floored values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat floor(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat floor(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.floor(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.floor(A._data[n]);
     }
 
     return result;
@@ -1099,13 +1106,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed rounded up values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col ceil(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col ceil(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ceil(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.ceil(A._data[n]);
     }
 
     return result;
@@ -1114,13 +1121,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed rounded up values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row ceil(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row ceil(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ceil(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.ceil(A._data[n]);
     }
 
     return result;
@@ -1129,13 +1136,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed rounded up values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat ceil(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat ceil(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ceil(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.ceil(A._data[n]);
     }
 
     return result;
@@ -1144,13 +1151,13 @@ public class Arma {
   /**
    * Returns a column vector made of the element-wise computed rounded values of the provided one.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col round(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col round(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.round(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.round(A._data[n]);
     }
 
     return result;
@@ -1159,13 +1166,13 @@ public class Arma {
   /**
    * Returns a row vector made of the element-wise computed rounded values of the provided one.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row round(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row round(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.round(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.round(A._data[n]);
     }
 
     return result;
@@ -1174,13 +1181,13 @@ public class Arma {
   /**
    * Returns a matrix made of the element-wise computed rounded values of the provided one.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat round(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat round(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.round(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.round(A._data[n]);
     }
 
     return result;
@@ -1191,13 +1198,13 @@ public class Arma {
    * <p>
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
-   * @param X The column vector
+   * @param A The column vector
    */
-  public static Col sign(Col X) {
-    Col result = new Col(X.n_elem);
+  public static Col sign(Col A) {
+    Col result = new Col(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.signum(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.signum(A._data[n]);
     }
 
     return result;
@@ -1208,13 +1215,13 @@ public class Arma {
    * <p>
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
-   * @param X The row vector
+   * @param A The row vector
    */
-  public static Row sign(Row X) {
-    Row result = new Row(X.n_elem);
+  public static Row sign(Row A) {
+    Row result = new Row(A.n_elem);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.signum(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.signum(A._data[n]);
     }
 
     return result;
@@ -1225,13 +1232,13 @@ public class Arma {
    * <p>
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
-   * @param X The matrix
+   * @param A The matrix
    */
-  public static Mat sign(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
+  public static Mat sign(Mat A) {
+    Mat result = new Mat(A.n_rows, A.n_cols);
 
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.signum(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.signum(A._data[n]);
     }
 
     return result;
@@ -1382,7 +1389,7 @@ public class Arma {
 
     for (int n = 0; n < X.n_elem; n++) {
       double value = X._data[n];
-      
+
       if (Double.isInfinite(value)) {
         result._data[n] = value;
       } else {
@@ -1403,7 +1410,7 @@ public class Arma {
 
     for (int n = 0; n < X.n_elem; n++) {
       double value = X._data[n];
-      
+
       if (Double.isInfinite(value)) {
         result._data[n] = value;
       } else {
@@ -1424,7 +1431,7 @@ public class Arma {
 
     for (int n = 0; n < X.n_elem; n++) {
       double value = X._data[n];
-      
+
       if (Double.isInfinite(value)) {
         // Otherwise, negative infinity would result in NaN
         result._data[n] = value;
@@ -1800,6 +1807,392 @@ public class Arma {
     }
 
     return result;
+  }
+
+  /**
+   * Returns the sum of all elements of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static double accu(AbstractMat X) throws RuntimeException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    double sum = X._data[0];
+
+    for (int n = 1; n < X.n_elem; n++) {
+      sum += X._data[n];
+    }
+
+    return sum;
+  }
+
+  /**
+   * Returns the value of the provided (1,1)-matrix as a scalar.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have exactly one element.
+   */
+  public static double as_acalar(AbstractMat X) throws RuntimeException {
+    if (X.n_elem != 1) {
+      throw new RuntimeException("The provided matrix must have exactly one element.");
+    }
+
+    return X._data[0];
+  }
+
+  /**
+   * Returns the spectral condition number of the provided matrix.
+   * 
+   * @param A the matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static double cond(Mat A) throws RuntimeException {
+    // A is validated within svd
+    Col singularValues = svd(A);
+    // TODO add exceptions from svd
+    return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
+  }
+
+  /**
+   * Returns the determinant of the provided matrix.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must be square.
+   */
+  public static double det(Mat A) throws RuntimeException {
+    if (A.empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided matrix must be square.");
+    }
+
+    // The following computation is based on how its done by Armadillo C++ 4.100.0
+    double[] temp = Arrays.copyOf(A._data, A.n_elem);
+    int[] pivotIndices = new int[Math.min(A.n_rows, A.n_cols)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The matrix appears to be singular.");
+    }
+
+    double determinant = temp[0];
+    boolean positiveSign = true;
+
+    for (int i = 0; i < A.n_rows; i++) {
+      // Multiply all values alongside the main diagonal
+      determinant *= temp[i + i * A.n_rows];
+
+      if (i != pivotIndices[i] - 1) { // pivotIndices counts from 1
+        positiveSign = !positiveSign;
+      }
+    }
+
+    return (positiveSign ? determinant : -determinant);
+  }
+
+  /**
+   * Returns the dot product, assuming both provided matrices are vectors.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
+   *           {@code B.n_elem}).
+   */
+  public static double dot(AbstractMat A, AbstractMat B) throws RuntimeException {
+    if (A.n_elem != B.n_elem) {
+      throw new RuntimeException("Both provided matrices must have the same number of elements (" + A.n_elem + ", " + B.n_elem + ").");
+    }
+
+    return BLAS.getInstance().ddot(A.n_elem, A._data, 1, B._data, 1);
+  }
+
+  /**
+   * Returns the normalised dot product, assuming both provided matrices are vectors.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
+   *           {@code B.n_elem}).
+   */
+  public static double norm_dot(AbstractMat A, AbstractMat B) throws RuntimeException {
+    // A and B are validated within dot
+    return dot(A, B) / Math.sqrt(dot(A, A) * dot(B, B));
+  }
+
+  /**
+   * Calculates the base-e logarithmic determinant of the provided matrix and stores the value in {@code val} and sign
+   * in {@code sign}.
+   * <p>
+   * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type double[], respectively int[].
+   * 
+   * @param val The value storage
+   * @param sign The sign storage
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must be square.
+   */
+  public static void log_det(double[] val, int[] sign, Mat A) throws RuntimeException {
+    if (A.empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided matrix must be square.");
+    }
+
+    // The following computation is based on how its done by Armadillo C++ 4.100.0
+    double[] temp = Arrays.copyOf(A._data, A.n_elem);
+    int[] pivotIndices = new int[Math.min(A.n_rows, A.n_cols)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The matrix appears to be singular.");
+    }
+
+    double determinant = temp[0];
+    boolean positiveSign = true;
+
+    for (int i = 0; i < A.n_rows; i++) {
+      // Multiply all values alongside the main diagonal
+      double value = temp[i + i * A.n_rows];
+
+      determinant += Math.log(Math.abs(value));
+
+      if (i != pivotIndices[i] - 1 ^ value < 0) { // pivotIndices counts from 1
+        positiveSign = !positiveSign;
+      }
+    }
+
+    val[0] = determinant;
+    sign[0] = (positiveSign ? 1 : -1);
+  }
+
+  /**
+   * Returns the specified norm of the provided matrix.
+   * <p>
+   * If the provided matrix is not equivalent in shape to a vector, an induced matrix norm is computed.
+   * 
+   * @param matrix The matrix
+   * @param p The norm
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws IllegalArgumentException For vectors, {@code p} must be strict greater than 0.
+   * @throws IllegalArgumentException For non-vectors, {@code p} must be one of 1 or 2.
+   */
+  public static double norm(AbstractMat X, int p) throws RuntimeException, IllegalArgumentException {
+    if (X.empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    double norm = 0;
+
+    if (X.is_vec()) {
+      if (p < 0) {
+        throw new IllegalArgumentException("For vectors, p must be strict greater than 0.");
+      }
+
+      switch (p) {
+        case 1:
+          for (int n = 0; n < X.n_elem; n++) {
+            norm += Math.abs(X._data[n]);
+          }
+          break;
+        case 2:
+          for (int n = 0; n < X.n_elem; n++) {
+            norm += Math.pow(X._data[n], 2);
+          }
+          norm = Math.sqrt(norm);
+          break;
+        default:
+          for (int n = 0; n < X.n_elem; n++) {
+            norm += Math.pow(Math.abs(X._data[n]), p);
+          }
+          norm = Math.pow(norm, 1 / p);
+          break;
+      }
+
+    } else {
+      if (p != 1 && p != 2) {
+        throw new IllegalArgumentException("For non-vectors, p must be one of 1 or 2.");
+      }
+
+      switch (p) {
+        case 1:
+          norm = Double.NEGATIVE_INFINITY;
+          for (int j = 0; j < X.n_cols; j++) {
+
+            double sum = 0;
+            for (int i = 0; i < X.n_rows; i++) {
+              sum += Math.abs(X._data[i + j * X.n_rows]);
+            }
+
+            norm = Math.max(norm, sum);
+          }
+          break;
+        case 2:
+          Col singularValues = svd((Mat) X);
+          norm = singularValues._data[0];
+          break;
+      }
+    }
+
+    return norm;
+  }
+
+  /**
+   * Returns the specified norm of the provided matrix.
+   * <p>
+   * If the provided matrix is not equivalent in shape to a vector, an induced matrix norm is computed.
+   * 
+   * @param matrix The matrix
+   * @param p The norm
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws IllegalArgumentException For vectors, {@code p} must be one of '-inf', 'inf' or 'fro'.
+   * @throws IllegalArgumentException For non-vectors, {@code p} must be one of 'inf' or 'fro'.
+   */
+  public static double norm(AbstractMat X, String p) throws RuntimeException, IllegalArgumentException {
+    if (X.empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    double norm = 0;
+
+    if (X.is_vec()) {
+      switch (p) {
+        case "-inf":
+          for (int n = 0; n < X.n_elem; n++) {
+            norm = Math.max(norm, Math.abs(X._data[n]));
+          }
+          break;
+        case "inf":
+          for (int n = 0; n < X.n_elem; n++) {
+            norm = Math.min(norm, Math.abs(X._data[n]));
+          }
+          norm = Math.sqrt(norm);
+          break;
+        case "fro":
+          for (int n = 0; n < X.n_elem; n++) {
+            norm += Math.pow(X._data[n], 2);
+          }
+          norm = Math.sqrt(norm);
+          break;
+        default:
+          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro'.");
+      }
+
+    } else {
+      switch (p) {
+        case "inf":
+          norm = Double.NEGATIVE_INFINITY;
+          for (int i = 0; i < X.n_rows; i++) {
+
+            double sum = 0;
+            for (int j = 0; j < X.n_cols; j++) {
+              sum += Math.abs(X._data[i + j * X.n_rows]);
+            }
+
+            norm = Math.max(norm, sum);
+          }
+          break;
+        case "fro":
+          for (int n = 0; n < X.n_elem; n++) {
+            norm += Math.pow(X._data[n], 2);
+          }
+          norm = Math.sqrt(norm);
+          break;
+        default:
+          throw new IllegalArgumentException("For non-vectors, p must be one of 'inf' or 'fro'.");
+      }
+    }
+
+    return norm;
+  }
+
+  /**
+   * Returns the rank of the provided matrix based on singular value decomposition.
+   * <p>
+   * All singular values smaller than {@code Math.max(X.n_rows, X.n_cols) * Math.ulp(X.max())} are treated as zero.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static int rank(Mat X) throws RuntimeException {
+    return rank(X, Math.max(X.n_rows, X.n_cols) * Math.ulp(X.max()));
+  }
+
+  /**
+   * Returns the rank of the provided matrix based on singular value decomposition.
+   * <p>
+   * All singular values smaller than the specified tolerance are treated as zero.
+   * 
+   * @param X The matrix
+   * @param tolerance The tolerance
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   */
+  public static int rank(Mat X, double tolerance) throws RuntimeException {
+    // X is validated within svd
+    Col singularValues = svd(X);
+    // TODO add exceptions from svd
+    
+    int rank = 0;
+    for(int n = 0; n < singularValues.n_elem; n++) {
+      if(singularValues._data[n] > tolerance) {
+        rank++;
+      }
+    }
+    
+    return rank;
+  }
+
+  /**
+   * Returns the trace of the matrix.
+   * 
+   * @param matrix The matrix
+   * 
+   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided matrix must be square.
+   */
+  public static double trace(Mat X) throws RuntimeException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
+    if (!X.is_square()) {
+      throw new RuntimeException("The provided matrix must be square.");
+    }
+
+    double trace = X._data[0];
+
+    for (int i = 1; i < X.n_rows; i++) {
+      trace += X._data[i + i * X.n_rows];
+    }
+
+    return trace;
+  }
+
+  public static Col svd(Mat X) {
+    if (X.empty()) {
+      throw new RuntimeException("The provided matrix must have at least one element.");
+    }
+
   }
 
 }

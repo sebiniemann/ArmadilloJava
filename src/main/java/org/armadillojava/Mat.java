@@ -479,16 +479,16 @@ public class Mat extends AbstractMat {
   /**
    * Returns the inverse.
    * 
-   * @throws RuntimeException Only square matrices can be inverted.
+   * @throws RuntimeException The matrix must be square.
    * @throws RuntimeException The matrix appears to be singular.
    */
   public Mat i() throws RuntimeException {
     if (!is_square()) {
-      throw new RuntimeException("Only square matrices can be inverted.");
+      throw new RuntimeException("The matrix must be square.");
     }
 
     Mat inverse = new Mat(this);
-    int[] pivotIndices = new int[n_rows * n_cols];
+    int[] pivotIndices = new int[Math.min(n_rows, n_cols)];
     intW info = new intW(0);
 
     LAPACK.getInstance().dgetrf(n_rows, n_cols, inverse._data, n_rows, pivotIndices, info);
@@ -694,7 +694,7 @@ public class Mat extends AbstractMat {
    * Returns the smallest value within the matrix and stores its row position in {@code row_of_min_val} and column
    * position in {@code col_of_min_val}.
    * <p>
-   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
    * @param index_of_min_val The row position storage
    * @param index_of_min_val The column position storage
@@ -730,7 +730,7 @@ public class Mat extends AbstractMat {
    * Returns the largest value within the matrix and stores its row position in {@code row_of_min_val} and column
    * position in {@code col_of_min_val}.
    * <p>
-   * <b>Note:</b> Unfortunately, the position variable must be of the mutable type int[].
+   * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
    * @param index_of_min_val The row position storage
    * @param index_of_min_val The column position storage
@@ -1099,7 +1099,7 @@ public class Mat extends AbstractMat {
     /*
      * Only (1, m)-matrices can be left-hand side multiplied to column vectors.
      */
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
   }
 
   @Override

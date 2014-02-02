@@ -283,7 +283,7 @@ public class Row extends AbstractVector {
     /*
      * Only (n, 1)-matrices can be right-hand side multiplied to row vectors.
      */
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
   }
 
   @Override
@@ -292,7 +292,7 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_cols, _data, 1, X._data, 1)});
+    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
   }
 
   @Override
