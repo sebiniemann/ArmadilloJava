@@ -2234,32 +2234,13 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static Row min(Mat X) throws RuntimeException {
-    if (X.n_rows < 1) {
-      throw new RuntimeException("The provided matrix must have at least one row.");
-    }
-
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      int columnIndex = j * X.n_rows;
-      double min = X._data[columnIndex];
-
-      for (int i = 1; i < X.n_rows; i++) {
-        min = Math.min(min, X._data[i + columnIndex]);
-      }
-
-      result._data[j] = min;
-    }
-
-    return result;
+  public static Mat min(Mat X) throws RuntimeException {
+    // X is validated within min
+    return min(X, 0);
   }
 
   /**
    * Returns the smallest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #min(Mat)} for this case to stay
-   * confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2268,8 +2249,8 @@ public class Arma {
    * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col min(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat min(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
@@ -2277,7 +2258,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one row.");
         }
 
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndex = j * X.n_rows;
@@ -2295,7 +2276,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one column.");
         }
 
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           double min = X._data[i];
@@ -2355,32 +2336,13 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static Row max(Mat X) {
-    if (X.n_rows < 1) {
-      throw new RuntimeException("The provided matrix must have at least one row.");
-    }
-
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      int columnIndex = j * X.n_rows;
-      double max = X._data[columnIndex];
-
-      for (int i = 1; i < X.n_rows; i++) {
-        max = Math.max(max, X._data[i + columnIndex]);
-      }
-
-      result._data[j] = max;
-    }
-
-    return result;
+  public static Mat max(Mat X) {
+    // X is validated within max
+    return max(X, 0);
   }
 
   /**
    * Returns the largest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #max(Mat)} for this case to stay
-   * confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2389,8 +2351,8 @@ public class Arma {
    * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col max(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat max(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
@@ -2398,7 +2360,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one row.");
         }
 
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndex = j * X.n_rows;
@@ -2416,7 +2378,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one column.");
         }
 
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           double max = X._data[i];
@@ -2485,32 +2447,13 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static Row prod(Mat X) throws RuntimeException {
-    if (X.n_rows < 1) {
-      throw new RuntimeException("The provided matrix must have at least one row.");
-    }
-
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      int columnIndex = j * X.n_rows;
-      double prod = X._data[columnIndex];
-
-      for (int i = 1; i < X.n_rows; i++) {
-        prod *= X._data[i + columnIndex];
-      }
-
-      result._data[j] = prod;
-    }
-
-    return result;
+  public static Mat prod(Mat X) throws RuntimeException {
+    // X is validated within prod
+    return prod(X, 0);
   }
 
   /**
    * Returns the product of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #prod(Mat)} for this case to
-   * stay confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2519,8 +2462,8 @@ public class Arma {
    * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col prod(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat prod(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
@@ -2528,7 +2471,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one row.");
         }
 
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndex = j * X.n_rows;
@@ -2546,7 +2489,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one column.");
         }
 
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           double prod = X._data[i];
@@ -2584,32 +2527,13 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static Row sum(Mat X) throws RuntimeException {
-    if (X.n_rows < 1) {
-      throw new RuntimeException("The provided matrix must have at least one row.");
-    }
-
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      int columnIndex = j * X.n_rows;
-      double sum = X._data[columnIndex];
-
-      for (int i = 1; i < X.n_rows; i++) {
-        sum += X._data[i + columnIndex];
-      }
-
-      result._data[j] = sum;
-    }
-
-    return result;
+  public static Mat sum(Mat X) throws RuntimeException {
+    // X is validated within sum
+    return sum(X, 0);
   }
 
   /**
    * Returns the sum of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #sum(Mat)} for this case to stay
-   * confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2618,8 +2542,8 @@ public class Arma {
    * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col sum(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat sum(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
@@ -2627,7 +2551,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one row.");
         }
 
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndex = j * X.n_rows;
@@ -2645,7 +2569,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one column.");
         }
 
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           double sum = X._data[i];
@@ -2683,32 +2607,13 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static Row mean(Mat X) throws RuntimeException {
-    if (X.n_rows < 1) {
-      throw new RuntimeException("The provided matrix must have at least one row.");
-    }
-
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      int columnIndex = j * X.n_rows;
-      double sum = X._data[columnIndex];
-
-      for (int i = 1; i < X.n_rows; i++) {
-        sum += X._data[i + columnIndex];
-      }
-
-      result._data[j] = sum / X.n_rows;
-    }
-
-    return result;
+  public static Mat mean(Mat X) throws RuntimeException {
+    // X is validated within mean
+    return mean(X, 0);
   }
 
   /**
    * Returns the mean for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #mean(Mat)} for this case to
-   * stay confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2717,8 +2622,8 @@ public class Arma {
    * @throws RuntimeException The provided matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col mean(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat mean(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
@@ -2726,7 +2631,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one row.");
         }
 
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndex = j * X.n_rows;
@@ -2744,7 +2649,7 @@ public class Arma {
           throw new RuntimeException("The provided matrix must have at least one column.");
         }
 
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           double sum = X._data[i];
@@ -2798,23 +2703,12 @@ public class Arma {
    * 
    * @throws RuntimeException The provided vector must have at least one element.
    */
-  public static Row median(Mat X) throws RuntimeException {
-    // X is validated within median
-    Row result = new Row(X.n_cols);
-
-    for (int j = 0; j < X.n_cols; j++) {
-      // Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
-      result._data[j] = median(X.col(j));
-    }
-
-    return result;
+  public static Mat median(Mat X) throws RuntimeException {
+    return median(X, 0);
   }
 
   /**
    * Returns the median for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #median(Mat)} for this case to
-   * stay confirm to Armadillo C++.
    * 
    * @param X The matrix
    * @param dim The dimension
@@ -2822,13 +2716,13 @@ public class Arma {
    * @throws RuntimeException The provided vector must have at least one element.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col median(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat median(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
     switch (dim) {
       case 0:
         // X is validated within median
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           // Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
@@ -2837,7 +2731,7 @@ public class Arma {
         break;
       case 1:
         // X is validated within median
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         for (int i = 0; i < X.n_rows; i++) {
           // Creates a deep copy of each row, since sorting of shallow sub views is not yet implemented.
@@ -2885,7 +2779,7 @@ public class Arma {
    * 
    * @throws RuntimeException The matrix must have at least one element.
    */
-  public static Row stddev(Mat X) throws RuntimeException {
+  public static Mat stddev(Mat X) throws RuntimeException {
     // X is validated within stddev
     return stddev(X, 0);
   }
@@ -2900,9 +2794,9 @@ public class Arma {
    * @throws RuntimeException The matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    */
-  public static Row stddev(Mat X, int norm_type) throws RuntimeException {
-    // X and norm_type are validated within var
-    return sqrt(var(X, norm_type));
+  public static Mat stddev(Mat X, int norm_type) throws RuntimeException {
+    // X and norm_type are validated within stddev
+    return stddev(X, norm_type, 0);
   }
 
   /**
@@ -2920,7 +2814,7 @@ public class Arma {
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col stddev(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+  public static Mat stddev(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
     // X, norm_type and dim are validated within var
     return sqrt(var(X, norm_type, dim));
   }
@@ -2977,7 +2871,7 @@ public class Arma {
    * 
    * @throws RuntimeException The matrix must have at least one element.
    */
-  public static Row var(Mat X) throws RuntimeException {
+  public static Mat var(Mat X) throws RuntimeException {
     // X is validated within var
     return var(X, 0);
   }
@@ -2992,51 +2886,14 @@ public class Arma {
    * @throws RuntimeException The matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    */
-  public static Row var(Mat X, int norm_type) throws RuntimeException {
-    // X is validated within mean
-    Row mean = mean(X);
-
-    Row result = new Row(X.n_cols);
-
-    switch (norm_type) {
-      case 0:
-        for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double variance = 0;
-
-          for (int i = 0; i < X.n_rows; i++) {
-            variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
-          }
-
-          result._data[j] = variance / (X.n_rows - 1);
-        }
-        break;
-      case 1:
-        for (int j = 0; j < X.n_cols; j++) {
-          int columnIndex = j * X.n_rows;
-          double variance = 0;
-
-          for (int i = 0; i < X.n_rows; i++) {
-            variance += Math.pow(X._data[i + columnIndex] - mean._data[j], 2);
-          }
-
-          result._data[j] = variance / X.n_rows;
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
-    }
-
-    return result;
-
+  public static Mat var(Mat X, int norm_type) throws RuntimeException {
+    // X and norm_type are validated within var
+    return var(X, norm_type, 0);
   }
 
   /**
    * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
    * with normalisation by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
-   * <p>
-   * <b>Non-canonical:</b> {@code dim} = 0 will also return a column vector. Use {@link #var(Mat)} or
-   * {@link #var(Mat, int)} for this case to stay compatible to Armadillo C++.
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -3046,16 +2903,16 @@ public class Arma {
    * @throws IllegalArgumentException The specified normalisation must either be 0 or 1.
    * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
    */
-  public static Col var(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
-    Col result = null;
+  public static Mat var(Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+    Mat result = null;
 
-    AbstractVector mean;
+    Mat mean;
     switch (dim) {
       case 0:
         // X is validated within mean
-        mean = mean(X);
+        mean = mean(X, 0);
         
-        result = new Col(X.n_cols);
+        result = new Mat(1, X.n_cols);
 
         switch (norm_type) {
           case 0:
@@ -3090,7 +2947,7 @@ public class Arma {
         // X is validated within mean
         mean = mean(X, 1);
         
-        result = new Col(X.n_rows);
+        result = new Mat(X.n_rows, 1);
 
         switch (norm_type) {
           case 0:
@@ -3126,6 +2983,154 @@ public class Arma {
     return result;
   }
 
+  public static boolean all(AbstractVector V) {
+    
+  }
+
+  public static Mat all(Mat X) {
+    // X is validated within all
+    return all(X, 0);
+  }
+
+  public static Mat all(Mat X, int dim) {
+    
+  }
+
+  public static boolean any(AbstractVector V) {
+    
+  }
+
+  public static Mat any(Mat X) {
+    // X is validated within any
+    return any(X, 0);
+    
+  }
+
+  public static Mat any(Mat X, int dim) {
+    
+  }
+  
+  public static Col conv(Col A, AbstractVector B) {
+    
+  }
+  
+  public static Row conv(Row A, AbstractVector B) {
+    
+  }
+  
+  public static Mat conv(Mat A, AbstractVector B) {
+    
+  }
+  
+  public static double cor(AbstractVector X, AbstractVector Y) {
+    // X and Y are validated within cor
+    return cor(X, Y, 0);
+  }
+  
+  public static double cor(AbstractVector X, AbstractVector Y, int norm_type) {
+    
+  }
+  
+  public static double cor(AbstractVector X) {
+    // X is validated within cor
+    return cor(X, 0);
+  }
+  
+  public static double cor(AbstractVector X, int norm_type) {
+    // X and norm_type are validated within cor
+    return cor(X, X, norm_type);
+  }
+  
+  public static Mat cor(Mat X, Mat Y) {
+    // X and Y are validated within cor
+    return cor(X, Y, 0);
+  }
+  
+  public static Mat cor(Mat X, Mat Y, int norm_type) {
+    
+  }
+  
+  public static Mat cor(Mat X) {
+    // X is validated within cor
+    return cor(X, 0);
+  }
+  
+  public static Mat cor(Mat X, int norm_type) {
+    // X and norm_type are validated within cor
+    return cor(X, X, norm_type);
+  }
+  
+  public static double cov(AbstractVector X, AbstractVector Y) {
+    // X and Y are validated within cov
+    return cov(X, Y, 0);
+  }
+  
+  public static double cov(AbstractVector X, AbstractVector Y, int norm_type) {
+    
+  }
+  
+  public static double cov(AbstractVector X) {
+    // X is validated within cov
+    return cov(X, 0);
+  }
+  
+  public static double cov(AbstractVector X, int norm_type) {
+    // X and norm_type are validated within cov
+    return cov(X, X, norm_type);
+  }
+  
+  public static Mat cov(Mat X, Mat Y) {
+    // X and Y are validated within cov
+    return cov(X, Y, 0);
+  }
+  
+  public static Mat cov(Mat X, Mat Y, int norm_type) {
+    
+  }
+  
+  public static Mat cov(Mat X) {
+    // X is validated within cov
+    return cov(X, 0);
+  }
+  
+  public static Mat cov(Mat X, int norm_type) {
+    // X and norm_type are validated within cov
+    return cov(X, X, norm_type);
+  }
+  
+  public static Col cross(Col A, AbstractMat B) {
+    
+  }
+  
+  public static Row cross(Row A, AbstractMat B) {
+    
+  }
+  
+  public static Mat cross(Mat A, AbstractMat B) {
+    
+  }
+  
+  public static Col cumsum(Col V) {
+    
+  }
+  
+  public static Row cumsum(Row V) {
+    
+  }
+  
+  public static Mat cumsum(AbstractMat X) {
+    // X is validated within cumsum
+    return cumsum(X, 0);
+  }
+  
+  public static Mat cumsum(AbstractMat X, int dim) {
+    
+  }
+  
+  public static Mat diagmat(AbstractMat X) {
+    
+  }
+  
   protected static Col sort(AbstractVector V) {
 
   }
