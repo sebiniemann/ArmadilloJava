@@ -3178,7 +3178,7 @@ public class Arma {
     result._data[1] = A._data[2] * B._data[0] - A._data[0] * B._data[2];
     result._data[2] = A._data[0] * B._data[1] - A._data[1] * B._data[0];
   }
-  
+
   public static Col cross(Col A, AbstractMat B) {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
@@ -3201,7 +3201,7 @@ public class Arma {
     if (!B.is_vec() || B.n_elem != 3) {
       throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
     }
-    
+
     Row result = new Row(3);
     conv(result, A, B);
     return result;
@@ -3233,7 +3233,7 @@ public class Arma {
       result._data[n] = result._data[n - 1] + V._data[n];
     }
   }
-  
+
   public static Col cumsum(Col V) {
     Col result = new Col(V.n_elem);
     cumsum(result, V);
@@ -3249,16 +3249,16 @@ public class Arma {
   protected static Mat cumsum(AbstractView V) {
     Mat result = new Mat();
     result.copy_size(V);
-    
+
     V.iteratorReset();
     result._data[0] = V._data[V.iteratorNext()];
     for (int n = 1; n < result.n_elem; n++) {
       result._data[n] = result._data[n - 1] + V._data[V.iteratorNext()];
     }
-    
+
     return result;
   }
-  
+
   public static Mat cumsum(Mat X) {
     // X is validated within cumsum
     return cumsum(X, 0);
@@ -3306,115 +3306,172 @@ public class Arma {
     new ViewDiag(result, 0).inPlaceEqual(new ViewDiag(X, 0));
     return result;
   }
-  
+
   public static Col find(AbstractMat X) {
-    
+    return find(X, 0);
   }
-  
+
   public static Col find(AbstractMat X, int k) {
-    
+    return find(X, k, "first");
   }
-  
+
   public static Col find(AbstractMat X, int k, String s) {
-    
+    // matrix.isElementOutOfBoundsDetection(k);
+
+    Mat result = new Mat(X.n_elem, 1);
+
+    int limit;
+    if (k > 0) {
+      limit = k;
+    } else {
+      limit = X.n_elem;
+    }
+
+    int index = 0;
+    switch (s) {
+      case "first":
+        for (int n = 0; n < X.n_elem && index < limit; n++) {
+          if (X._data[n] != 0) {
+            result._data[index++] = n;
+          }
+        }
+        break;
+      case "last":
+        for (int n = X.n_elem - 1; n >= 0 && index < limit; n--) {
+          if (X._data[n] != 0) {
+            result._data[index++] = n;
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last', but was " + s);
+    }
+
+    // Saves current values of the elements since length <= n_elem
+    result.reshape(index, 1);
+
+    if (s.equals("last")) {
+      for (int n = 0; n < result.n_elem / 2; n++) {
+        // swap? Or better: protected void revert(AbstractVector result, AbstractVector X)
+        double temp = result._data[n];
+        result._data[n] = result._data[result.n_elem - (n + 1)];
+        result._data[result.n_elem - (n + 1)] = temp;
+      }
+    }
+
+    return result;
   }
-  
+
   public static Mat fliplr(Mat X) {
-    
+    // copy + swap is quite inefficient
+    Mat result = new Mat(matrix);
+
+    for (int j = 0; j < result.n_cols / 2; j++) {
+      result.swap_cols(j, result.n_cols - (j + 1));
+    }
+
+    return result;
   }
-  
+
   public static Mat flipud(Mat X) {
-    
+    // copy + swap is quite inefficient
+    Mat result = new Mat(matrix);
+
+    for (int i = 0; i < result.n_rows / 2; i++) {
+      result.swap_rows(i, result.n_rows - (i + 1));
+    }
+
+    return result;
   }
 
   protected static void hist(AbstractVector result, AbstractVector V) {
-    
+
   }
-  
+
   public static Col hist(Col V) {
     return hist(V, 10);
   }
-  
+
   public static Col hist(Col V, int n_bins) {
-    
+
   }
-  
+
   public static Row hist(Row V) {
     return hist(V, 10);
   }
-  
+
   public static Row hist(Row V, int n_bins) {
-    
+
   }
-  
+
   protected static Mat hist(AbstractView X, int n_bins) {
-    
+
   }
-  
+
   public static Mat hist(Mat X) {
     return hist(X, 10);
   }
-  
+
   public static Mat hist(Mat X, int n_bins) {
     return hist(X, n_bins, 0);
   }
-  
+
   public static Mat hist(Mat X, int n_bins, int dim) {
-    
+
   }
 
   protected static void hist(AbstractVector result, AbstractVector V, AbstractMat centers) {
-    
+
   }
-  
+
   public static Col hist(Col V, AbstractMat centers) {
-    
+
   }
-  
+
   public static Row hist(Row V, AbstractMat centers) {
-    
+
   }
-  
+
   protected static Mat hist(AbstractView X, AbstractMat centers) {
-    
+
   }
-  
+
   public static Mat hist(Mat X, AbstractMat centers) {
     return hist(X, centers, 0);
   }
-  
+
   public static Mat hist(Mat X, AbstractMat centers, int dim) {
-    
+
   }
 
   protected static void histc(AbstractVector result, AbstractVector V, AbstractMat edges) {
-    
+
   }
-  
+
   public static Col histc(Col V, AbstractMat edges) {
-    
+
   }
-  
+
   public static Row histc(Row V, AbstractMat edges) {
-    
+
   }
-  
+
   protected static Mat histc(AbstractView X, AbstractMat edges) {
-    
+
   }
-  
+
   public static Mat histc(Mat X, AbstractMat edges) {
     return hist(X, edges, 0);
   }
-  
+
   public static Mat histc(Mat X, AbstractMat edges, int dim) {
-    
+
   }
-  
+
   public static void inplace_trans(Mat X) {
-    
+
   }
-  
+
   protected static Col sort(AbstractVector V) {
 
   }
