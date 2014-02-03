@@ -3259,12 +3259,12 @@ public class Arma {
     return result;
   }
   
-  public static Mat cumsum(AbstractMat X) {
+  public static Mat cumsum(Mat X) {
     // X is validated within cumsum
     return cumsum(X, 0);
   }
 
-  public static Mat cumsum(AbstractMat X, int dim) {
+  public static Mat cumsum(Mat X, int dim) {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
@@ -3298,7 +3298,115 @@ public class Arma {
   public static Mat diagmat(AbstractMat X) {
 
   }
+  
+  public static Col find(AbstractMat X) {
+    
+  }
+  
+  public static Col find(AbstractMat X, int k) {
+    
+  }
+  
+  public static Col find(AbstractMat X, int k, String s) {
+    
+  }
+  
+  public static Mat fliplr(Mat X) {
+    
+  }
+  
+  public static Mat flipud(Mat X) {
+    
+  }
 
+  protected static void hist(AbstractVector result, AbstractVector V) {
+    
+  }
+  
+  public static Col hist(Col V) {
+    return hist(V, 10);
+  }
+  
+  public static Col hist(Col V, int n_bins) {
+    
+  }
+  
+  public static Row hist(Row V) {
+    return hist(V, 10);
+  }
+  
+  public static Row hist(Row V, int n_bins) {
+    
+  }
+  
+  protected static Mat hist(AbstractView X, int n_bins) {
+    
+  }
+  
+  public static Mat hist(Mat X) {
+    return hist(X, 10);
+  }
+  
+  public static Mat hist(Mat X, int n_bins) {
+    return hist(X, n_bins, 0);
+  }
+  
+  public static Mat hist(Mat X, int n_bins, int dim) {
+    
+  }
+
+  protected static void hist(AbstractVector result, AbstractVector V, AbstractMat centers) {
+    
+  }
+  
+  public static Col hist(Col V, AbstractMat centers) {
+    
+  }
+  
+  public static Row hist(Row V, AbstractMat centers) {
+    
+  }
+  
+  protected static Mat hist(AbstractView X, AbstractMat centers) {
+    
+  }
+  
+  public static Mat hist(Mat X, AbstractMat centers) {
+    return hist(X, centers, 0);
+  }
+  
+  public static Mat hist(Mat X, AbstractMat centers, int dim) {
+    
+  }
+
+  protected static void histc(AbstractVector result, AbstractVector V, AbstractMat edges) {
+    
+  }
+  
+  public static Col histc(Col V, AbstractMat edges) {
+    
+  }
+  
+  public static Row histc(Row V, AbstractMat edges) {
+    
+  }
+  
+  protected static Mat histc(AbstractView X, AbstractMat edges) {
+    
+  }
+  
+  public static Mat histc(Mat X, AbstractMat edges) {
+    return hist(X, edges, 0);
+  }
+  
+  public static Mat histc(Mat X, AbstractMat edges, int dim) {
+    
+  }
+  
+  public static void inplace_trans(Mat X) {
+    
+  }
+  
   protected static Col sort(AbstractVector V) {
 
   }
