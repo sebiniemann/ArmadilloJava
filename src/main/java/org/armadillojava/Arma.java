@@ -3295,8 +3295,16 @@ public class Arma {
     return result;
   }
 
-  public static Mat diagmat(AbstractMat X) {
+  public static Mat diagmat(AbstractVector X) {
+    Mat result = new Mat(X.n_elem, X.n_elem);
+    new ViewDiag(result, 0).inPlaceEqual(X);
+    return result;
+  }
 
+  public static Mat diagmat(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+    new ViewDiag(result, 0).inPlaceEqual(new ViewDiag(X, 0));
+    return result;
   }
   
   public static Col find(AbstractMat X) {
