@@ -43,12 +43,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public static <T extends Mat> T eye(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
     /*
      * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
      */
+
+    T result = return_type.newInstance();
     result.set_size(n_rows, n_cols);
     result.eye();
+
     return result;
   }
 
@@ -69,6 +71,7 @@ public class Arma {
     /*
      * The parameter "start" and "end" are validated within linspace(Class<T>, int, int, int).
      */
+
     return linspace(return_type, start, end, 100);
   }
 
@@ -88,21 +91,29 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
   public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end, int N) throws RuntimeException, NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "N" is validated within set_size(int).
+     */
+
     if (end < start) {
       throw new RuntimeException("The specified value to start with (" + start + ") must be less than or equal the specified value to end with (" + end + ").");
     }
 
     T result = return_type.newInstance();
-    // N is validated within set_size
     result.set_size(N);
 
     if (N > 0) {
       double stepLength = (end - start) / (result.n_elem - 1);
       for (int n = 0; n < result.n_elem - 1; n++) {
-        // Increasing the value step by step per stepLength is faster, but might reduce the precision
+        /*
+         * While increasing the value step by step per stepLength will be faster, it will also reduce the precision.
+         */
         result._data[n] = start + stepLength * n;
       }
-
+      /*
+       * This way, the first and last value will be exactly the same as provided, without any additional loss of
+       * precision.
+       */
       result._data[N] = end;
     }
 
@@ -118,10 +129,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
   public static <T extends AbstractVector> T ones(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_elem);
     result.fill(1);
+
     return result;
   }
 
@@ -136,10 +151,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public static <T extends Mat> T ones(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     T result = return_type.newInstance();
-    // n_rows and n_cols are validated within set_size
     result.set_size(n_rows, n_cols);
     result.ones();
+
     return result;
   }
 
@@ -153,7 +172,10 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
   public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
-    // n_elem is validated within randi
+    /*
+     * The parameter "n_elem" is validated within randi(Class<T>, int, DistrParam).
+     */
+
     return randi(return_type, n_elem, new DistrParam(0, Integer.MAX_VALUE - 1));
   }
 
@@ -172,6 +194,10 @@ public class Arma {
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
   public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+
     if (distr_param._b < distr_param._a) {
       throw new RuntimeException("The first end point (" + distr_param._a + ") of the interval must be less than or equal the last end point (" + distr_param._a + ").");
     }
@@ -181,7 +207,6 @@ public class Arma {
     }
 
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_elem);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -203,6 +228,10 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public static <T extends Mat> T randi(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within randi(Class<T>, int, int, DistrParam).
+     */
+
     return randi(return_type, n_rows, n_rows, new DistrParam(0, Integer.MAX_VALUE - 1));
   }
 
@@ -223,6 +252,10 @@ public class Arma {
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
   public static <T extends Mat> T randi(Class<T> return_type, int n_rows, int n_cols, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     if (distr_param._b < distr_param._a) {
       throw new RuntimeException("The first end point (" + distr_param._a + ") of the interval must be less than or equal the last end point (" + distr_param._a + ").");
     }
@@ -232,7 +265,6 @@ public class Arma {
     }
 
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_rows, n_cols);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -254,10 +286,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
   public static <T extends AbstractVector> T randu(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_elem);
     result.randu();
+
     return result;
   }
 
@@ -275,10 +311,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public static <T extends Mat> T randu(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_rows, n_cols);
     result.randu();
+
     return result;
   }
 
@@ -292,10 +332,14 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
   public static <T extends AbstractVector> T randn(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_elem);
     result.randn();
+
     return result;
   }
 
@@ -311,17 +355,21 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public static <T extends Mat> T randn(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     T result = return_type.newInstance();
-    // n_elem is validated within set_size
     result.set_size(n_rows, n_cols);
     result.randn();
+
     return result;
   }
 
   /**
    * Creates a matrix by replicating the matrix by the specified times per row and column.
    * 
-   * @param matrix The matrix
+   * @param A The matrix
    * @param num_copies_per_row The number of copies per row
    * @param num_copies_per_col The number of copies per column
    * 
@@ -330,7 +378,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of copies per column ({@code num_copies_per_col}) must be
    *           positive.
    */
-  public static <T extends Mat> T repmat(Class<T> return_type, AbstractMat matrix, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends Mat> T repmat(Class<T> return_type, AbstractMat A, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     if (num_copies_per_row < 0) {
       throw new NegativeArraySizeException("The specified number of copies per row (" + num_copies_per_row + ") must be positive.");
     }
@@ -340,16 +388,24 @@ public class Arma {
     }
 
     T result = return_type.newInstance();
-    result.set_size(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
+    result.set_size(A.n_rows * num_copies_per_row, A.n_cols * num_copies_per_col);
 
-    // First, copy alongside the rows
-    for (int i = 0; i < num_copies_per_row; i++) {
-      new ViewSubMat(result, i * matrix.n_rows, matrix.n_rows, 0, matrix.n_cols).inPlaceEqual(matrix);
-    }
+    if (!A.is_empty()) {
+      /*
+       * First, copy "A.n_cols" columns alongside the rows ...
+       */
+      for (int i = 0; i < num_copies_per_row; i++) {
+        new ViewSubMat(result, i * A.n_rows, A.n_rows, 0, A.n_cols).inPlaceEqual(A);
+      }
 
-    // Secondly, copy alongside the columns
-    for (int j = 0; j < num_copies_per_row; j++) {
-      System.arraycopy(result._data, 0, result._data, j * result.n_rows * matrix.n_cols, result.n_rows * matrix.n_cols);
+      /*
+       * ... Secondly, copy "A.n_rows * num_copies_per_row" rows alongside the columns.
+       * Copying alongside the columns is way faster and should therefore handle the largest amount of data to be
+       * copied.
+       */
+      for (int j = 0; j < num_copies_per_row; j++) {
+        System.arraycopy(result._data, 0, result._data, j * result.n_rows * A.n_cols, result.n_rows * A.n_cols);
+      }
     }
 
     return result;
@@ -360,10 +416,15 @@ public class Arma {
    * 
    * @param A The vector
    * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
   public static <T extends Mat> T toeplitz(Class<T> return_type, AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
+    if (A.is_empty()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    }
+
     if (!A.is_vec()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
@@ -389,12 +450,24 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   *           element.
+   * @throws RuntimeException The second provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   *           element.
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
    *           to a vector.
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in
    *           shape to a vector.
    */
   public static <T extends Mat> T toeplitz(Class<T> return_type, AbstractMat A, AbstractMat B) throws RuntimeException, InstantiationException, IllegalAccessException {
+    if (A.is_empty()) {
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    }
+
+    if (A.is_empty()) {
+      throw new RuntimeException("The second provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    }
+
     if (!A.is_vec()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
@@ -423,10 +496,15 @@ public class Arma {
    * 
    * @param vector The vector
    * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
   public static <T extends Mat> T circ_toeplitz(Class<T> return_type, AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
+    if (A.is_empty()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    }
+
     if (!A.is_vec()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
@@ -446,15 +524,22 @@ public class Arma {
   }
 
   /**
-   * Returns a null column vector with the specified number of elements.
+   * Returns a null vector with the specified number of elements.
    * 
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col zeros(int n_elem) throws NegativeArraySizeException {
-    // n_elem is validated within the constructor
-    return new Col(n_elem, Fill.ZEROS);
+  public static <T extends AbstractVector> T zeros(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
+
+    T result = return_type.newInstance();
+    result.set_size(n_elem);
+
+    return result;
   }
 
   /**
@@ -466,36 +551,15 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
-    // n_elem is validated within the constructor
-    return new Mat(n_rows, n_cols, Fill.ZEROS);
-  }
+  public static <T extends Mat> T zeros(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
 
-  protected static void abs(AbstractMat result, AbstractMat X) {
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.abs(X._data[n]);
-    }
-  }
+    T result = return_type.newInstance();
+    result.set_size(n_rows, n_cols);
 
-  /**
-   * Returns a column vector made of the element-wise computed absolute values of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col abs(Col X) {
-    Col result = new Col(X.n_elem);
-    abs(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed absolute values of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row abs(Row X) {
-    Row result = new Row(X.n_elem);
-    abs(result, X);
     return result;
   }
 
@@ -504,39 +568,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat abs(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    abs(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T abs(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void eps(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.ulp(X._data[n]);
+      result._data[n] = Math.abs(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed positive distances between each value and next larger
-   * representable of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col eps(Col X) {
-    Col result = new Col(X.n_elem);
-    eps(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed positive distances between each value and next larger
-   * representable of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row eps(Row X) {
-    Row result = new Row(X.n_elem);
-    eps(result, X);
     return result;
   }
 
@@ -546,76 +585,30 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat eps(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    eps(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T eps(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void exp(AbstractMat result, AbstractMat A) {
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.exp(A._data[n]);
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.ulp(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col exp(Col A) {
-    Col result = new Col(A.n_elem);
-    exp(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row exp(Row A) {
-    Row result = new Row(A.n_elem);
-    exp(result, A);
     return result;
   }
 
   /**
    * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
    * 
-   * @param A The matrix
+   * @param X The matrix
    */
-  public static Mat exp(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    exp(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T exp(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void exp2(AbstractMat result, AbstractMat A) {
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(2, A._data[n]);
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.exp(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-2 exponential values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col exp2(Col A) {
-    Col result = new Col(A.n_elem);
-    exp2(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-2 exponential values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row exp2(Row A) {
-    Row result = new Row(A.n_elem);
-    exp2(result, A);
     return result;
   }
 
@@ -624,37 +617,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat exp2(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    exp2(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T exp2(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void exp10(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(10, A._data[n]);
+      result._data[n] = Math.pow(2, A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-10 exponential values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col exp10(Col A) {
-    Col result = new Col(A.n_elem);
-    exp10(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-10 exponential values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row exp10(Row A) {
-    Row result = new Row(A.n_elem);
-    exp10(result, A);
     return result;
   }
 
@@ -663,13 +633,28 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat exp10(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    exp10(result, A);
+  public static <T extends AbstractMat> T exp10(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
+
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.pow(10, A._data[n]);
+    }
+
     return result;
   }
 
-  protected static void trunc_exp(AbstractMat result, AbstractMat A) {
+  /**
+   * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the largest representable number.
+   * 
+   * @param A The matrix
+   */
+  public static <T extends AbstractMat> T trunc_exp(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
+
     for (int n = 0; n < A.n_elem; n++) {
       double exp = Math.exp(A._data[n]);
 
@@ -679,72 +664,7 @@ public class Arma {
         result._data[n] = Double.MAX_VALUE;
       }
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the largest representable number.
-   * 
-   * @param A The column vector
-   */
-  public static Col trunc_exp(Col A) {
-    Col result = new Col(A.n_elem);
-    trunc_exp(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the largest representable number.
-   * 
-   * @param A The row vector
-   */
-  public static Row trunc_exp(Row A) {
-    Row result = new Row(A.n_elem);
-    trunc_exp(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the largest representable number.
-   * 
-   * @param A The matrix
-   */
-  public static Mat trunc_exp(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    trunc_exp(result, A);
-    return result;
-  }
-
-  protected static void log(AbstractMat result, AbstractMat A) {
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]);
-    }
-  }
-
-  /**
-   * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col log(Col A) {
-    Col result = new Col(A.n_elem);
-    log(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row log(Row A) {
-    Row result = new Row(A.n_elem);
-    log(result, A);
     return result;
   }
 
@@ -753,37 +673,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    log(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T log(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void log2(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log(A._data[n]) / Math.log(2);
+      result._data[n] = Math.log(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-2 logarithmic values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col log2(Col A) {
-    Col result = new Col(A.n_elem);
-    log2(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-2 logarithmic values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row log2(Row A) {
-    Row result = new Row(A.n_elem);
-    log2(result, A);
     return result;
   }
 
@@ -792,37 +689,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log2(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    log2(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T log2(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void log10(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.log10(A._data[n]);
+      result._data[n] = Math.log(A._data[n]) / Math.log(2);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-10 logarithmic values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col log10(Col A) {
-    Col result = new Col(A.n_elem);
-    log10(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-10 logarithmic values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row log10(Row A) {
-    Row result = new Row(A.n_elem);
-    log10(result, A);
     return result;
   }
 
@@ -831,13 +705,30 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log10(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    log10(result, A);
+  public static <T extends AbstractMat> T log10(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
+
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.log10(A._data[n]);
+    }
+
     return result;
   }
 
-  protected static void trunc_log(AbstractMat result, AbstractMat A) {
+  /**
+   * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
+   * <p>
+   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
+   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest,
+   * positive representable number.
+   * 
+   * @param A The matrix
+   */
+  public static <T extends AbstractMat> T trunc_log(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
+
     for (int n = 0; n < A.n_elem; n++) {
       double value = A._data[n];
 
@@ -849,80 +740,7 @@ public class Arma {
 
       result._data[n] = Math.log(value);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
-   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
-   * representable number.
-   * 
-   * @param A The column vector
-   */
-  public static Col trunc_log(Col A) {
-    Col result = new Col(A.n_elem);
-    trunc_log(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
-   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
-   * representable number.
-   * 
-   * @param A The row vector
-   */
-  public static Row trunc_log(Row A) {
-    Row result = new Row(A.n_elem);
-    trunc_log(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
-   * <p>
-   * Elements that would return a value of infinity are truncated to the base-e logarithmic of the largest representable
-   * number and values that would return a complex number are truncated to the base-e logarithmic of the smallest
-   * representable number.
-   * 
-   * @param A The matrix
-   */
-  public static Mat trunc_log(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    trunc_log(result, A);
-    return result;
-  }
-
-  protected static void pow(AbstractMat result, AbstractMat A, int p) {
-    for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], p);
-    }
-  }
-
-  /**
-   * Returns a column vector made of the element-wise computed raise to the specified power of the provided one.
-   * 
-   * @param A The column vector
-   * @param p The power
-   */
-  public static Col pow(Col A, int p) {
-    Col result = new Col(A.n_elem);
-    pow(result, A, p);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed raise to the specified power of the provided one.
-   * 
-   * @param A The row vector
-   * @param p The power
-   */
-  public static Row pow(Row A, int p) {
-    Row result = new Row(A.n_elem);
-    pow(result, A, p);
     return result;
   }
 
@@ -932,37 +750,14 @@ public class Arma {
    * @param A The matrix
    * @param p The power
    */
-  public static Mat pow(Mat A, int p) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    pow(result, A, p);
-    return result;
-  }
+  public static <T extends AbstractMat> T pow(Class<T> return_type, T A, int p) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void sqrt(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.sqrt(A._data[n]);
+      result._data[n] = Math.pow(A._data[n], p);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed square root of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col sqrt(Col A) {
-    Col result = new Col(A.n_elem);
-    sqrt(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed square root of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row sqrt(Row A) {
-    Row result = new Row(A.n_elem);
-    sqrt(result, A);
     return result;
   }
 
@@ -971,37 +766,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat sqrt(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    sqrt(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T sqrt(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void square(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.pow(A._data[n], 2);
+      result._data[n] = Math.sqrt(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed squared values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col square(Col A) {
-    Col result = new Col(A.n_elem);
-    square(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed squared values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row square(Row A) {
-    Row result = new Row(A.n_elem);
-    square(result, A);
     return result;
   }
 
@@ -1010,37 +782,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat square(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    square(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T square(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void floor(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.floor(A._data[n]);
+      result._data[n] = Math.pow(A._data[n], 2);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed floored values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col floor(Col A) {
-    Col result = new Col(A.n_elem);
-    floor(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed floored values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row floor(Row A) {
-    Row result = new Row(A.n_elem);
-    floor(result, A);
     return result;
   }
 
@@ -1049,37 +798,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat floor(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    floor(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T floor(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void ceil(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.ceil(A._data[n]);
+      result._data[n] = Math.floor(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed rounded up values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col ceil(Col A) {
-    Col result = new Col(A.n_elem);
-    ceil(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed rounded up values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row ceil(Row A) {
-    Row result = new Row(A.n_elem);
-    ceil(result, A);
     return result;
   }
 
@@ -1088,37 +814,14 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat ceil(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    ceil(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T ceil(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void round(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.round(A._data[n]);
+      result._data[n] = Math.ceil(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed rounded values of the provided one.
-   * 
-   * @param A The column vector
-   */
-  public static Col round(Col A) {
-    Col result = new Col(A.n_elem);
-    round(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed rounded values of the provided one.
-   * 
-   * @param A The row vector
-   */
-  public static Row round(Row A) {
-    Row result = new Row(A.n_elem);
-    round(result, A);
     return result;
   }
 
@@ -1127,82 +830,30 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat round(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    round(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T round(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void sign(AbstractMat result, AbstractMat A) {
     for (int n = 0; n < A.n_elem; n++) {
-      result._data[n] = Math.signum(A._data[n]);
+      result._data[n] = Math.round(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed sign values of the provided one.
-   * <p>
-   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
-   * 
-   * @param A The column vector
-   */
-  public static Col sign(Col A) {
-    Col result = new Col(A.n_elem);
-    sign(result, A);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed sign values of the provided one.
-   * <p>
-   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
-   * 
-   * @param A The row vector
-   */
-  public static Row sign(Row A) {
-    Row result = new Row(A.n_elem);
-    sign(result, A);
     return result;
   }
 
   /**
    * Returns a matrix made of the element-wise computed sign values of the provided one.
-   * <p>
-   * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
    * @param A The matrix
    */
-  public static Mat sign(Mat A) {
-    Mat result = new Mat(A.n_rows, A.n_cols);
-    sign(result, A);
-    return result;
-  }
+  public static <T extends AbstractMat> T sign(Class<T> return_type, T A) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(A);
 
-  protected static void sin(AbstractMat result, AbstractMat X) {
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sin(X._data[n]);
+    for (int n = 0; n < A.n_elem; n++) {
+      result._data[n] = Math.signum(A._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed sine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col sin(Col X) {
-    Col result = new Col(X.n_elem);
-    sin(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed sine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row sin(Row X) {
-    Row result = new Row(X.n_elem);
-    sin(result, X);
     return result;
   }
 
@@ -1211,37 +862,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat sin(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    sin(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T sin(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void asin(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.asin(X._data[n]);
+      result._data[n] = Math.sin(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse sine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col asin(Col X) {
-    Col result = new Col(X.n_elem);
-    asin(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse sine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row asin(Row X) {
-    Row result = new Row(X.n_elem);
-    asin(result, X);
     return result;
   }
 
@@ -1250,37 +878,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat asin(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    asin(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T asin(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void sinh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.sinh(X._data[n]);
+      result._data[n] = Math.asin(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed hyperbolic sine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col sinh(Col X) {
-    Col result = new Col(X.n_elem);
-    sinh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed hyperbolic sine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row sinh(Row X) {
-    Row result = new Row(X.n_elem);
-    sinh(result, X);
     return result;
   }
 
@@ -1289,13 +894,26 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat sinh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    sinh(result, X);
+  public static <T extends AbstractMat> T sinh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      result._data[n] = Math.sinh(X._data[n]);
+    }
+
     return result;
   }
 
-  protected static void asinh(AbstractMat result, AbstractMat X) {
+  /**
+   * Returns a matrix made of the element-wise computed inverse hyperbolic sine of the provided one.
+   * 
+   * @param X The matrix
+   */
+  public static <T extends AbstractMat> T asinh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
+
     for (int n = 0; n < X.n_elem; n++) {
       double value = X._data[n];
 
@@ -1305,66 +923,7 @@ public class Arma {
         result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) + 1));
       }
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse hyperbolic sine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col asinh(Col X) {
-    Col result = new Col(X.n_elem);
-    asinh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse hyperbolic sine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row asinh(Row X) {
-    Row result = new Row(X.n_elem);
-    asinh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a matrix made of the element-wise computed inverse hyperbolic sine of the provided one.
-   * 
-   * @param X The matrix
-   */
-  public static Mat asinh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    asinh(result, X);
-    return result;
-  }
-
-  protected static void cos(AbstractMat result, AbstractMat X) {
-    for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cos(X._data[n]);
-    }
-  }
-
-  /**
-   * Returns a column vector made of the element-wise computed cosine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col cos(Col X) {
-    Col result = new Col(X.n_elem);
-    cos(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed cosine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row cos(Row X) {
-    Row result = new Row(X.n_elem);
-    cos(result, X);
     return result;
   }
 
@@ -1373,37 +932,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat cos(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    cos(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T cos(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void acos(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.acos(X._data[n]);
+      result._data[n] = Math.cos(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse cosine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col acos(Col X) {
-    Col result = new Col(X.n_elem);
-    acos(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse cosine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row acos(Row X) {
-    Row result = new Row(X.n_elem);
-    acos(result, X);
     return result;
   }
 
@@ -1412,37 +948,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat acos(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    acos(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T acos(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void cosh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.cosh(X._data[n]);
+      result._data[n] = Math.acos(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed hyperbolic cosine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col cosh(Col X) {
-    Col result = new Col(X.n_elem);
-    cosh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed hyperbolic cosine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row cosh(Row X) {
-    Row result = new Row(X.n_elem);
-    cosh(result, X);
     return result;
   }
 
@@ -1451,38 +964,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat cosh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    cosh(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T cosh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void acosh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+      result._data[n] = Math.cosh(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col acosh(Col X) {
-    Col result = new Col(X.n_elem);
-    acosh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row acosh(Row X) {
-    Row result = new Row(X.n_elem);
-    acosh(result, X);
     return result;
   }
 
@@ -1491,37 +980,15 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat acosh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    acosh(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T acosh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void tan(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tan(X._data[n]);
+      double value = X._data[n];
+      result._data[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed tangent of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col tan(Col X) {
-    Col result = new Col(X.n_elem);
-    tan(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed tangent of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row tan(Row X) {
-    Row result = new Row(X.n_elem);
-    tan(result, X);
     return result;
   }
 
@@ -1530,37 +997,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat tan(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    tan(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T tan(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void atan(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.atan(X._data[n]);
+      result._data[n] = Math.tan(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse tangent of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col atan(Col X) {
-    Col result = new Col(X.n_elem);
-    atan(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse tangent of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row atan(Row X) {
-    Row result = new Row(X.n_elem);
-    atan(result, X);
     return result;
   }
 
@@ -1569,37 +1013,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat atan(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    atan(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T atan(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void tanh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      result._data[n] = Math.tanh(X._data[n]);
+      result._data[n] = Math.atan(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed hyperbolic tangent of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col tanh(Col X) {
-    Col result = new Col(X.n_elem);
-    tanh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed hyperbolic tangent of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row tanh(Row X) {
-    Row result = new Row(X.n_elem);
-    tanh(result, X);
     return result;
   }
 
@@ -1608,38 +1029,14 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat tanh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    tanh(result, X);
-    return result;
-  }
+  public static <T extends AbstractMat> T tanh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
 
-  protected static void atanh(AbstractMat result, AbstractMat X) {
     for (int n = 0; n < X.n_elem; n++) {
-      double value = X._data[n];
-      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+      result._data[n] = Math.tanh(X._data[n]);
     }
-  }
 
-  /**
-   * Returns a column vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
-   * 
-   * @param X The column vector
-   */
-  public static Col atanh(Col X) {
-    Col result = new Col(X.n_elem);
-    atanh(result, X);
-    return result;
-  }
-
-  /**
-   * Returns a row vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
-   * 
-   * @param X The row vector
-   */
-  public static Row atanh(Row X) {
-    Row result = new Row(X.n_elem);
-    atanh(result, X);
     return result;
   }
 
@@ -1648,9 +1045,15 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat atanh(Mat X) {
-    Mat result = new Mat(X.n_rows, X.n_cols);
-    atanh(result, X);
+  public static <T extends AbstractMat> T atanh(Class<T> return_type, T X) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.copy_size(X);
+
+    for (int n = 0; n < X.n_elem; n++) {
+      double value = X._data[n];
+      result._data[n] = 0.5 * Math.log((1 + value) / (1 - value));
+    }
+
     return result;
   }
 
@@ -1659,11 +1062,11 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static double accu(AbstractMat X) throws RuntimeException {
     if (X.is_empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
 
     double sum = X._data[0];
@@ -1680,11 +1083,11 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have exactly one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have exactly one element.
    */
   public static double as_acalar(AbstractMat X) throws RuntimeException {
     if (X.n_elem != 1) {
-      throw new RuntimeException("The provided matrix must have exactly one element.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have exactly one element.");
     }
 
     return X._data[0];
@@ -1695,12 +1098,15 @@ public class Arma {
    * 
    * @param A the matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    */
   public static double cond(Mat A) throws RuntimeException {
-    // A is validated within svd
+    /*
+     * The parameter "A" is validated within svd(AbstractMat).
+     */
+    // TODO Add exceptions thrown by svd(AbstractMat).
     Col singularValues = svd(A);
-    // TODO add exceptions from svd
+    
     return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
   }
 
@@ -1709,19 +1115,21 @@ public class Arma {
    * 
    * @param A The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
-   * @throws RuntimeException The provided matrix must be square.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static double det(Mat A) throws RuntimeException {
     if (A.empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
 
     if (!A.is_square()) {
-      throw new RuntimeException("The provided matrix must be square.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
 
-    // The following computation is based on how its done by Armadillo C++ 4.100.0
+    /*
+     *  The following computation is based on how its done in Armadillo C++ 4.100.0.
+     */
     double[] temp = Arrays.copyOf(A._data, A.n_elem);
     int[] pivotIndices = new int[Math.min(A.n_rows, A.n_cols)];
     intW info = new intW(0);
@@ -1735,10 +1143,9 @@ public class Arma {
     boolean positiveSign = true;
 
     for (int i = 0; i < A.n_rows; i++) {
-      // Multiply all values alongside the main diagonal
       determinant *= temp[i + i * A.n_rows];
 
-      if (i != pivotIndices[i] - 1) { // pivotIndices counts from 1
+      if (i != pivotIndices[i] - 1) {
         positiveSign = !positiveSign;
       }
     }
@@ -1773,7 +1180,9 @@ public class Arma {
    *           {@code B.n_elem}).
    */
   public static double norm_dot(AbstractMat A, AbstractMat B) throws RuntimeException {
-    // A and B are validated within dot
+    /*
+     * The parameter "A" and "B" are validated within dot(AbstractMat, AbstractMat).
+     */
     return dot(A, B) / Math.sqrt(dot(A, A) * dot(B, B));
   }
 
@@ -1787,19 +1196,21 @@ public class Arma {
    * @param sign The sign storage
    * @param A The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
-   * @throws RuntimeException The provided matrix must be square.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static void log_det(double[] val, int[] sign, Mat A) throws RuntimeException {
     if (A.empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
 
     if (!A.is_square()) {
-      throw new RuntimeException("The provided matrix must be square.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
 
-    // The following computation is based on how its done by Armadillo C++ 4.100.0
+    /*
+     *  The following computation is based on how its done in Armadillo C++ 4.100.0
+     */
     double[] temp = Arrays.copyOf(A._data, A.n_elem);
     int[] pivotIndices = new int[Math.min(A.n_rows, A.n_cols)];
     intW info = new intW(0);
@@ -1813,12 +1224,11 @@ public class Arma {
     boolean positiveSign = true;
 
     for (int i = 0; i < A.n_rows; i++) {
-      // Multiply all values alongside the main diagonal
       double value = temp[i + i * A.n_rows];
 
       determinant += Math.log(Math.abs(value));
 
-      if (i != pivotIndices[i] - 1 ^ value < 0) { // pivotIndices counts from 1
+      if (i != pivotIndices[i] - 1 ^ value < 0) {
         positiveSign = !positiveSign;
       }
     }
@@ -1832,23 +1242,23 @@ public class Arma {
    * <p>
    * If the provided matrix is not equivalent in shape to a vector, an induced matrix norm is computed.
    * 
-   * @param matrix The matrix
+   * @param X The matrix
    * @param p The norm
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
-   * @throws IllegalArgumentException For vectors, {@code p} must be strict greater than 0.
-   * @throws IllegalArgumentException For non-vectors, {@code p} must be one of 1 or 2.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException For vectors, the norm indicator ({@code p}) must be strict greater than 0.
+   * @throws IllegalArgumentException For non-vectors, the norm indicator ({@code p}) must be one of 1 or 2.
    */
   public static double norm(AbstractMat X, int p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
 
     double norm = 0;
 
     if (X.is_vec()) {
       if (p < 0) {
-        throw new IllegalArgumentException("For vectors, p must be strict greater than 0.");
+        throw new IllegalArgumentException("For vectors, the norm indicator (" + p + ") must be strict greater than 0.");
       }
 
       switch (p) {
@@ -1873,7 +1283,7 @@ public class Arma {
 
     } else {
       if (p != 1 && p != 2) {
-        throw new IllegalArgumentException("For non-vectors, p must be one of 1 or 2.");
+        throw new IllegalArgumentException("For non-vectors, the norm indicator (" + p + ") must be one of 1 or 2.");
       }
 
       switch (p) {
@@ -1904,12 +1314,12 @@ public class Arma {
    * <p>
    * If the provided matrix is not equivalent in shape to a vector, an induced matrix norm is computed.
    * 
-   * @param matrix The matrix
+   * @param X The matrix
    * @param p The norm
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
-   * @throws IllegalArgumentException For vectors, {@code p} must be one of '-inf', 'inf' or 'fro'.
-   * @throws IllegalArgumentException For non-vectors, {@code p} must be one of 'inf' or 'fro'.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException For vectors, the norm indicator ({@code p}) must be one of '-inf', 'inf' or 'fro'.
+   * @throws IllegalArgumentException For non-vectors, the norm indicator ({@code p}) must be one of 'inf' or 'fro'.
    */
   public static double norm(AbstractMat X, String p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
@@ -1938,7 +1348,7 @@ public class Arma {
           norm = Math.sqrt(norm);
           break;
         default:
-          throw new IllegalArgumentException("For vectors, p must be one of '-inf', 'inf' or 'fro'.");
+          throw new IllegalArgumentException("For vectors, the norm indicator (" + p + ") must be one of '-inf', 'inf' or 'fro'.");
       }
 
     } else {
@@ -1962,7 +1372,7 @@ public class Arma {
           norm = Math.sqrt(norm);
           break;
         default:
-          throw new IllegalArgumentException("For non-vectors, p must be one of 'inf' or 'fro'.");
+          throw new IllegalArgumentException("For non-vectors, the norm indicator (" + p + ") must be one of 'inf' or 'fro'.");
       }
     }
 
@@ -1976,9 +1386,12 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static int rank(Mat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within rank(AbstractMat, double).
+     */
     return rank(X, Math.max(X.n_rows, X.n_cols) * Math.ulp(X.max()));
   }
 
@@ -1990,12 +1403,14 @@ public class Arma {
    * @param X The matrix
    * @param tolerance The tolerance
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static int rank(Mat X, double tolerance) throws RuntimeException {
-    // X is validated within svd
+    /*
+     * The parameter "X" is validated within svd(AbstractMat).
+     */
+    // TODO Add exceptions thrown by svd(AbstractMat).
     Col singularValues = svd(X);
-    // TODO add exceptions from svd
 
     int rank = 0;
     for (int n = 0; n < singularValues.n_elem; n++) {
@@ -2012,20 +1427,19 @@ public class Arma {
    * 
    * @param matrix The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one element.
-   * @throws RuntimeException The provided matrix must be square.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    */
   public static double trace(Mat X) throws RuntimeException {
     if (X.is_empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
 
     if (!X.is_square()) {
-      throw new RuntimeException("The provided matrix must be square.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be square.");
     }
 
     double trace = X._data[0];
-
     for (int i = 1; i < X.n_rows; i++) {
       trace += X._data[i + i * X.n_rows];
     }
@@ -2038,7 +1452,7 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Col diagvec(Mat A) {
+  public static <T extends Col> T diagvec(Mat A) {
     return diagvec(A, 0);
   }
 

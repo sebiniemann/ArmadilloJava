@@ -53,7 +53,6 @@ abstract class AbstractMat {
    * 
    * @param n The position
    * @param unary_operator The unary operator
-   * @param operand The operand
    */
   public void at(int n, Op unary_operator) {
     switch (unary_operator) {
@@ -132,8 +131,8 @@ abstract class AbstractMat {
   /**
    * Returns true if neither position within the row and column span is out of bounds.
    * 
-   * @param rowSpan The row span
-   * @param colSpan The column span
+   * @param row_span The row span
+   * @param col_span The column span
    */
   public boolean in_range(Span row_span, Span col_span) {
     return ((row_span._isEntireRange || (row_span._first > -1 && row_span._last < n_rows)) && (col_span._isEntireRange || (col_span._first > -1 && col_span._last < n_cols)));
@@ -315,7 +314,7 @@ abstract class AbstractMat {
   /**
    * Prints the matrix to a specified stream.
    * 
-   * @param OutputStream stream
+   * @param stream The stream
    */
   public void print(OutputStream stream) {
     print(stream, "");
@@ -324,7 +323,7 @@ abstract class AbstractMat {
   /**
    * Prints the matrix to a specified stream, with a specified header.
    * 
-   * @param OutputStream stream
+   * @param stream The stream
    * @param header The header
    * 
    * @throws AssertionError UTF-8 not supported by your JVM.
@@ -362,7 +361,7 @@ abstract class AbstractMat {
   /**
    * Prints the matrix unformatted to a specified stream.
    * 
-   * @param OutputStream stream
+   * @param stream The stream
    */
   public void raw_print(OutputStream stream) {
     print(stream, "");
@@ -371,7 +370,7 @@ abstract class AbstractMat {
   /**
    * Prints the matrix unformatted to a specified stream, with a specified header.
    * 
-   * @param OutputStream stream
+   * @param stream The stream
    * @param header The header
    * 
    * @throws AssertionError UTF-8 not supported by your JVM.
@@ -441,6 +440,8 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param name The file path
+   * @return gd
+   * @throws FileNotFoundException fdg
    * 
    * @see FileType
    */
@@ -558,7 +559,7 @@ abstract class AbstractMat {
    * Fills the matrix with data expected to be in specified format from the specified stream and returns true on
    * success.
    * 
-   * @param name The stream
+   * @param stream The stream
    * @param file_type The file format
    * 
    * @throws AssertionError UTF-8 not supported by your JVM.
@@ -693,7 +694,6 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param name The file path
-   * @param file_type The file format
    */
   public boolean quiet_load(String name) {
     return quiet_load(name, FileType.RAW_ASCII);
@@ -721,7 +721,6 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param stream The stream
-   * @param file_type The file format
    */
   public boolean quiet_load(InputStream stream) {
     return quiet_load(stream, FileType.RAW_ASCII);
@@ -787,7 +786,7 @@ abstract class AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
-  abstract public AbstractMat col(int col_number) throws IndexOutOfBoundsException;
+  abstract public Col col(int col_number) throws IndexOutOfBoundsException;
 
   /**
    * Performs an in-place unary operation on the {@code col_number}th column.
@@ -844,7 +843,7 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the {@code row_number}th row.
    * 
-   * @param col_number The column position
+   * @param row_number The column position
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
@@ -1737,6 +1736,7 @@ abstract class AbstractMat {
     new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
   }
 
+  // TODO Add javadoc
   public void inPlace(Op unary_operator) {
     switch (unary_operator) {
       case NEGATE:
@@ -1755,10 +1755,11 @@ abstract class AbstractMat {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + unary_operator + ").");
     }
   }
 
+  // TODO Add javadoc
   public void inPlace(Op binary_operator, double rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
@@ -1786,10 +1787,11 @@ abstract class AbstractMat {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
     }
   }
 
+  // TODO Add javadoc
   public void inPlace(Op binary_operator, AbstractMat rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
@@ -1817,7 +1819,7 @@ abstract class AbstractMat {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
     }
   }
 
@@ -1848,8 +1850,8 @@ abstract class AbstractMat {
    * @param row1 The first row position
    * @param row2 The second row position
    * 
-   * @throws The first row position ({@code row1}) is out of bounds.
-   * @throws The first row position ({@code row2}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first row position ({@code row1}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first row position ({@code row2}) is out of bounds.
    */
   public void swap_rows(int row1, int row2) throws IndexOutOfBoundsException {
     if (!in_range(row1)) {
@@ -1873,8 +1875,8 @@ abstract class AbstractMat {
    * @param col1 The first column position
    * @param col2 The second column position
    * 
-   * @throws The first column position ({@code col1}) is out of bounds.
-   * @throws The first column position ({@code col2}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code col1}) is out of bounds.
+   * @throws IndexOutOfBoundsException The first column position ({@code col2}) is out of bounds.
    */
   public void swap_cols(int col1, int col2) throws IndexOutOfBoundsException {
     if (!in_range(col1)) {
@@ -1939,14 +1941,14 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise division with the specified right-hand side divisor.
    * 
-   * @param operand The divisor
+   * @param X The divisor
    */
   abstract public AbstractMat elemDivide(double X);
 
   /**
    * Returns the out-of-place element-wise division with the specified right-hand side divisor.
    * 
-   * @param operand The divisor
+   * @param X The divisor
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -1995,14 +1997,14 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
    * 
-   * @param operand The multiplier
+   * @param X The multiplier
    */
   abstract public AbstractMat elemTimes(double X);
 
   /**
    * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
    * 
-   * @param operand The multiplier
+   * @param X The multiplier
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2013,7 +2015,7 @@ abstract class AbstractMat {
    * <p>
    * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat equal(double X);
 
@@ -2022,7 +2024,7 @@ abstract class AbstractMat {
    * <p>
    * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2033,7 +2035,7 @@ abstract class AbstractMat {
    * <p>
    * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat nonEqual(double X);
 
@@ -2042,7 +2044,7 @@ abstract class AbstractMat {
    * <p>
    * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2054,7 +2056,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
    * the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat greaterThan(double X);
 
@@ -2064,7 +2066,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
    * the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2076,7 +2078,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
    * right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat lessThan(double X);
 
@@ -2086,7 +2088,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
    * right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2099,7 +2101,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
    * greater than the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat strictGreaterThan(double X);
 
@@ -2110,7 +2112,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
    * greater than the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2123,7 +2125,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
    * than the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    */
   abstract public AbstractMat strictLessThan(double X);
 
@@ -2134,7 +2136,7 @@ abstract class AbstractMat {
    * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
    * than the right-hand side and 0 otherwise.
    * 
-   * @param operand The operand
+   * @param X The operand
    * 
    * @throws RuntimeException Both operands must have the same size.
    */
@@ -2239,6 +2241,20 @@ abstract class AbstractMat {
      */
     for (int n = 0; n < n_elem; n++) {
       if (leftHandOperand._data[n] != rightHandOperand._data[n]) {
+        _data[n] = 1;
+      }
+    }
+  }
+
+  protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
+    /*
+     * All entries of an array are already set to 0 during creation.
+     * 
+     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
+     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
+     */
+    for (int n = 0; n < n_elem; n++) {
+      if (leftHandOperand._data[n] >= rightHandOperand) {
         _data[n] = 1;
       }
     }

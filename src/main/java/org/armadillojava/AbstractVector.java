@@ -11,9 +11,16 @@ abstract class AbstractVector extends AbstractMat {
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void randu(int n_elem) {
+  public void randu(int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+    
     set_size(n_elem);
+    
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
     }
@@ -24,9 +31,16 @@ abstract class AbstractVector extends AbstractMat {
    * the standard normal distribution with mean 0.0 and standard deviation 1.0.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void randn(int n_elem) {
+  public void randn(int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+    
     set_size(n_elem);
+    
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
     }
@@ -36,8 +50,14 @@ abstract class AbstractVector extends AbstractMat {
    * Resizes the vector to the specified number of elements and sets all elements to 1.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
   public void ones(int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+    
     set_size(n_elem);
     fill(1);
   }
@@ -46,8 +66,14 @@ abstract class AbstractVector extends AbstractMat {
    * Resizes the vector to the specified number of elements and sets all elements to 0.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void zeros(int n_elem) {
+  public void zeros(int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+    
     set_size(n_elem);
     /*
      * All entries of an array are already set to 0 during creation.
@@ -64,9 +90,17 @@ abstract class AbstractVector extends AbstractMat {
    * Reuses the values of the elements and their positions.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void resize(int n_elem) {
-    _data = Arrays.copyOf(_data, n_elem);
+  public void resize(int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
+    
+    double[] temp = Arrays.copyOf(_data, n_elem);
+    set_size(n_elem);
+    System.arraycopy(temp, 0, _data, 0, temp.length);
   }
 
   /**
@@ -79,7 +113,7 @@ abstract class AbstractVector extends AbstractMat {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  abstract public void set_size(int n_elem);
+  abstract public void set_size(int n_elem) throws NegativeArraySizeException;
 
   /**
    * Performs a in-place unary operation on the {@code first_index}th to {@code last_index} element.
@@ -91,7 +125,11 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  public void subvec(int first_index, int last_index, Op unary_operator) {
+  abstract public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
     rows(first_index, last_index, unary_operator);
   }
 
@@ -107,7 +145,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  public void subvec(int first_index, int last_index, Op binary_operator, double operand) {
+  abstract public void subvec(int first_index, int last_index, Op binary_operator, double operand) {
     rows(first_index, last_index, binary_operator, operand);
   }
 
@@ -123,7 +161,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) {
+  abstract public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) {
     rows(first_index, last_index, binary_operator, operand);
   }
 
