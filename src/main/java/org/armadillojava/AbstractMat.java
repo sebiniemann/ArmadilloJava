@@ -2382,6 +2382,8 @@ abstract class AbstractMat {
     return output;
   }
 
+  abstract protected void set_size(int n_elem);
+  
   /**
    * Returns true if the matrix has only one row or column.
    */

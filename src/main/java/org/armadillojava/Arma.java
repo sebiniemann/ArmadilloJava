@@ -18,12 +18,12 @@ import com.github.fommil.netlib.BLAS;
 import com.github.fommil.netlib.LAPACK;
 
 /**
- * Provides interfaces to non-member functions that are similar to the Armadillo C++ Algebra Library (Armadillo) by
- * Conrad Sanderson et al..
+ * Provides stand-alone linear algebra methods.
  * <p>
- * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo (e.g. same
- * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
- * Algebra Library.
+ * The interfaces are similar to the Armadillo C++ API by Conrad Sanderson et al., NICTA, Australia.
+ * <p>
+ * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo C++ (e.g. same
+ * ordering of arguments, accepted values, ...).
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  * 
@@ -32,51 +32,74 @@ import com.github.fommil.netlib.LAPACK;
 public class Arma {
 
   /**
-   * Returns an identity matrix with the specified number of rows and columns.
+   * Returns a matrix with the specified number of rows and columns and all elements along the main diagonal set to 1
+   * and all others to 0.
    * 
+   * @param return_type The matrix type to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat eye(int n_rows, int n_cols) throws NegativeArraySizeException {
-    // n_rows and n_cols are validated within the constructor
-    return new Mat(n_rows, n_cols, Fill.EYE);
+  public static <T extends Mat> T eye(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    /*
+     * The parameter "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+    result.set_size(n_rows, n_cols);
+    result.eye();
+    return result;
   }
 
   /**
-   * Returns a column vector with 100 elements linear increasing from value {@code start} to {@code end} (both
-   * including).
+   * Returns a vector/matrix with 100 elements linear increasing from the specified value to start with to the specified
+   * value to end with (both included).
+   * <p>
+   * If a non-vector type is to be returned, it will be in the shape of a column vector.
    * 
+   * @param return_type The type of vector/matrix to be returned
    * @param start The first value
    * @param end The last value
+   * 
+   * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
+   *           value to end with ({@code end}).
    */
-  public static Col linspace(int start, int end) {
-    return linspace(start, end, 100);
+  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end) throws RuntimeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "start" and "end" are validated within linspace(Class<T>, int, int, int).
+     */
+    return linspace(return_type, start, end, 100);
   }
 
   /**
-   * Returns a column vector with {@code N} elements linear increasing from value {@code start} to {@code end} (both
-   * including).
+   * Returns a vector/matrix with the specified number of elements linear increasing from the specified value to start
+   * with to the specified value to end with (both included).
+   * <p>
+   * If a matrix type is specified as return type, it will be in the shape of a column vector.
    * 
-   * @param start The first value
-   * @param end The last value
+   * @param return_type The type of vector/matrix to be returned
+   * @param start The value to start with
+   * @param end The value to end with
    * @param N The number of elements
    * 
+   * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
+   *           value to end with ({@code end}).
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
-  public static Col linspace(int start, int end, int N) throws NegativeArraySizeException {
-    if (N < 0) {
-      throw new NegativeArraySizeException("The specified number of elements (" + N + ") must be positive.");
+  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end, int N) throws RuntimeException, NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    if (end < start) {
+      throw new RuntimeException("The specified value to start with (" + start + ") must be less than or equal the specified value to end with (" + end + ").");
     }
 
-    Col result = new Col(N);
+    T result = return_type.newInstance();
+    // N is validated within set_size
+    result.set_size(N);
 
     if (N > 0) {
       double stepLength = (end - start) / (result.n_elem - 1);
       for (int n = 0; n < result.n_elem - 1; n++) {
-        // Increasing a value step by step per stepLength might be faster, but also reduces precision
+        // Increasing the value step by step per stepLength is faster, but might reduce the precision
         result._data[n] = start + stepLength * n;
       }
 
@@ -87,66 +110,79 @@ public class Arma {
   }
 
   /**
-   * Returns a column vector of ones with the specified number of elements.
+   * Returns a vector of ones with the specified number of elements.
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col ones(int n_elem) throws NegativeArraySizeException {
-    // n_elem is validated within the constructor
-    return new Col(n_elem, Fill.ONES);
+  public static <T extends AbstractVector> T ones(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_elem);
+    result.fill(1);
+    return result;
   }
 
   /**
    * Returns a matrix of ones with the specified number of rows and columns.
    * 
+   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat ones(int n_rows, int n_cols) throws NegativeArraySizeException {
-    // n_rows and n_cols are validated within the constructor
-    return new Mat(n_rows, n_cols, Fill.ONES);
+  public static <T extends Mat> T ones(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_rows and n_cols are validated within set_size
+    result.set_size(n_rows, n_cols);
+    result.ones();
+    return result;
   }
 
   /**
-   * Returns an matrix with the specified number of elements and values drawn from the discrete uniform distribution [0,
-   * Integer.MAX_VALUE - 1].
+   * Returns a vector with the specified number of elements and all values drawn from the discrete uniform distribution
+   * [0, Integer.MAX_VALUE - 1].
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col randi(int n_elem) throws NegativeArraySizeException {
-    return randi(n_elem, new DistrParam(0, Integer.MAX_VALUE - 1));
+  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    // n_elem is validated within randi
+    return randi(return_type, n_elem, new DistrParam(0, Integer.MAX_VALUE - 1));
   }
 
   /**
-   * Returns an matrix with the specified number of elements and values drawn from the discrete uniform distribution [
+   * Returns a vector with the specified number of elements and values drawn from the discrete uniform distribution [
    * {@code distr_param._a}, {@code distr_param._b}].
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * @param distr_param The distribution parameter
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
-   * @throws The first end point of the interval must be less than or equal the last end point.
+   * @throws The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
+   *           ({@code distr_param._b}).
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
-  public static Col randi(int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
-    if (distr_param._a > distr_param._b) {
-      throw new RuntimeException("The first end point of the interval must be less than or equal the last end point.");
+  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
+    if (distr_param._b < distr_param._a) {
+      throw new RuntimeException("The first end point (" + distr_param._a + ") of the interval must be less than or equal the last end point (" + distr_param._a + ").");
     }
 
     if (distr_param._b - distr_param._a > Integer.MAX_VALUE - 1) {
       throw new RuntimeException("The difference between the first end point (" + distr_param._a + ") and the last end point (" + distr_param._b + ") can be at most Integer.MAX_VALUE - 1.");
     }
 
-    // n_elem is validated within the constructor
-    Col result = new Col(n_elem);
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_elem);
 
     for (int n = 0; n < result.n_elem; n++) {
       result._data[n] = distr_param._a + RNG._rng.nextInt(distr_param._b - distr_param._a + 1);
@@ -156,44 +192,48 @@ public class Arma {
   }
 
   /**
-   * Returns an matrix with the specified number of rows and columns and values drawn from the discrete uniform
+   * Returns a matrix with the specified number of rows and columns and values drawn from the discrete uniform
    * distribution [0, Integer.MAX_VALUE - 1].
    * 
+   * @param return_type The type of vector to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randi(int n_rows, int n_cols) throws NegativeArraySizeException {
-    return randi(n_rows, n_rows, new DistrParam(0, Integer.MAX_VALUE - 1));
+  public static <T extends Mat> T randi(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    return randi(return_type, n_rows, n_rows, new DistrParam(0, Integer.MAX_VALUE - 1));
   }
 
   /**
-   * Returns an matrix with the specified number of rows and columns and values drawn from the discrete uniform
+   * Returns a matrix with the specified number of rows and columns and values drawn from the discrete uniform
    * distribution [{@code distr_param._a}, {@code distr_param._b}].
    * 
+   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * @param distr_param The distribution parameter
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
-   * @throws The first end point of the interval must be less than or equal the last end point.
+   * @throws The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
+   *           ({@code distr_param._b}).
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
-  public static Mat randi(int n_rows, int n_cols, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
-    if (distr_param._a > distr_param._b) {
-      throw new RuntimeException("The first end point of the interval must be less than or equal the last end point.");
+  public static <T extends Mat> T randi(Class<T> return_type, int n_rows, int n_cols, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
+    if (distr_param._b < distr_param._a) {
+      throw new RuntimeException("The first end point (" + distr_param._a + ") of the interval must be less than or equal the last end point (" + distr_param._a + ").");
     }
 
     if (distr_param._b - distr_param._a > Integer.MAX_VALUE - 1) {
       throw new RuntimeException("The difference between the first end point (" + distr_param._a + ") and the last end point (" + distr_param._b + ") can be at most Integer.MAX_VALUE - 1.");
     }
 
-    // n_rows and n_cols are validated within the constructor
-    Mat result = new Mat(n_rows, n_cols);
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_rows, n_cols);
 
     for (int n = 0; n < result.n_elem; n++) {
       result._data[n] = distr_param._a + RNG._rng.nextInt(distr_param._b - distr_param._a + 1);
@@ -203,63 +243,79 @@ public class Arma {
   }
 
   /**
-   * Returns a column vector with the specified number of elements and values drawn from the standard uniform
+   * Returns a vector with the specified number of elements and values drawn from the standard uniform
    * distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col randu(int n_elem) throws NegativeArraySizeException {
-    // n_elem is validated within the constructor
-    return new Col(n_elem, Fill.RANDU);
+  public static <T extends AbstractVector> T randu(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_elem);
+    result.randu();
+    return result;
   }
 
   /**
-   * Returns an matrix with the specified number of rows and columns and values drawn from the standard uniform
+   * Returns a matrix with the specified number of rows and columns and values drawn from the standard uniform
    * distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
+   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randu(int n_rows, int n_cols) throws NegativeArraySizeException {
-    // n_rows and n_cols are validated within the constructor
-    return new Mat(n_rows, n_cols, Fill.RANDU);
+  public static <T extends Mat> T randu(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_rows, n_cols);
+    result.randu();
+    return result;
   }
 
   /**
-   * Returns a column vector with the specified number of elements and values drawn from the standard normal
+   * Returns a vector with the specified number of elements and values drawn from the standard normal
    * distribution with mean 0.0 and standard deviation 1.0.
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static Col randn(int n_elem) throws NegativeArraySizeException {
-    // n_elem is validated within the constructor
-    return new Col(n_elem, Fill.RANDN);
+  public static <T extends AbstractVector> T randn(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_elem);
+    result.randn();
+    return result;
   }
 
   /**
-   * Returns an matrix with the specified number of rows and columns and values drawn from the standard normal
+   * Returns a matrix with the specified number of rows and columns and values drawn from the standard normal
    * distribution with mean 0.0 and standard deviation 1.0.
    * 
+   * @param return_type The type of matrix to be returned
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randn(int n_rows, int n_cols) throws NegativeArraySizeException {
-    // n_rows and n_cols are validated within the constructor
-    return new Mat(n_rows, n_cols, Fill.RANDN);
+  public static <T extends Mat> T randn(Class<T> return_type, int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    // n_elem is validated within set_size
+    result.set_size(n_rows, n_cols);
+    result.randn();
+    return result;
   }
 
   /**
@@ -274,7 +330,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of copies per column ({@code num_copies_per_col}) must be
    *           positive.
    */
-  public static Mat repmat(AbstractMat matrix, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException {
+  public static <T extends Mat> T repmat(Class<T> return_type, AbstractMat matrix, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     if (num_copies_per_row < 0) {
       throw new NegativeArraySizeException("The specified number of copies per row (" + num_copies_per_row + ") must be positive.");
     }
@@ -283,7 +339,8 @@ public class Arma {
       throw new NegativeArraySizeException("The specified number of copies per column (" + num_copies_per_col + ") must be positive.");
     }
 
-    Mat result = new Mat(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
+    T result = return_type.newInstance();
+    result.set_size(matrix.n_rows * num_copies_per_row, matrix.n_cols * num_copies_per_col);
 
     // First, copy alongside the rows
     for (int i = 0; i < num_copies_per_row; i++) {
@@ -303,14 +360,16 @@ public class Arma {
    * 
    * @param A The vector
    * 
-   * @throws RuntimeException The provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
+   *           vector.
    */
-  public static Mat toeplitz(AbstractMat A) throws RuntimeException {
+  public static <T extends Mat> T toeplitz(Class<T> return_type, AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The provided matrix must be equivalent in shape to a vector.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
 
-    Mat result = new Mat(A.n_elem, A.n_elem);
+    T result = return_type.newInstance();
+    result.set_size(A.n_elem, A.n_elem);
 
     new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
@@ -330,19 +389,22 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
-   * @throws RuntimeException The first provided matrix must be equivalent in shape to a vector.
-   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
+   *           to a vector.
+   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in
+   *           shape to a vector.
    */
-  public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException {
+  public static <T extends Mat> T toeplitz(Class<T> return_type, AbstractMat A, AbstractMat B) throws RuntimeException, InstantiationException, IllegalAccessException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The first provided matrix must be equivalent in shape to a vector.");
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
 
     if (!B.is_vec()) {
-      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
 
-    Mat result = new Mat(A.n_elem, B.n_elem);
+    T result = return_type.newInstance();
+    result.set_size(A.n_elem, B.n_elem);
 
     new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
@@ -361,14 +423,16 @@ public class Arma {
    * 
    * @param vector The vector
    * 
-   * @throws RuntimeException The provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
+   *           vector.
    */
-  public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException {
+  public static <T extends Mat> T circ_toeplitz(Class<T> return_type, AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
     if (!A.is_vec()) {
-      throw new RuntimeException("The provided matrix must be equivalent in shape to a vector.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
 
-    Mat result = new Mat(A.n_elem, A.n_elem);
+    T result = return_type.newInstance();
+    result.set_size(A.n_elem, A.n_elem);
 
     new ViewDiag(result, 0).inPlaceEqual(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
@@ -3364,9 +3428,10 @@ public class Arma {
 
   public static Mat fliplr(Mat X) {
     // copy + swap is quite inefficient
-    Mat result = new Mat(matrix);
+    Mat result = new Mat(X.);
 
     for (int j = 0; j < result.n_cols / 2; j++) {
+      
       result.swap_cols(j, result.n_cols - (j + 1));
     }
 
@@ -3469,6 +3534,30 @@ public class Arma {
   }
 
   public static void inplace_trans(Mat X) {
+
+  }
+
+  public static Col join_rows(Col A, AbstractMat B) {
+
+  }
+
+  public static Col join_rows(AbstractMat A, AbstractMat B) {
+
+  }
+
+  public static Mat join_rows(AbstractMat A, AbstractMat B) {
+
+  }
+
+  public static Mat join_horiz(AbstractMat A, AbstractMat B) {
+
+  }
+
+  public static Mat join_cols(AbstractMat A, AbstractMat B) {
+
+  }
+
+  public static Mat join_vert(AbstractMat A, AbstractMat B) {
 
   }
 

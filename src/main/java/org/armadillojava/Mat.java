@@ -40,17 +40,19 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Creates a matrix with the specified number of rows and columns that is filled according to {@code fillType}.
+   * Creates a matrix with the specified number of rows and columns that is filled according to {@code fill_type}.
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * @param fill_type The fill type
    * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    * @throws RuntimeException The fill type ({@code fill_type}) is not supported for column vectors.
    * 
    * @see Fill
    */
-  public Mat(int n_rows, int n_cols, Fill fill_type) {
+  public Mat(int n_rows, int n_cols, Fill fill_type) throws NegativeArraySizeException, RuntimeException {
     switch (fill_type) {
       case NONE:
         // n_rows and n_cols are validated in set_size
@@ -1272,6 +1274,11 @@ public class Mat extends AbstractMat {
     Mat result = new Mat(n_rows, n_cols);
     result.outOfPlaceStrictLessThan(this, X);
     return result;
+  }
+
+  @Override
+  protected void set_size(int n_elem) {
+    set_size(n_elem, 1);
   }
 
 }
