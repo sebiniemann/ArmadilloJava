@@ -677,5 +677,32 @@ public class Col extends AbstractVector {
   public Row t() {
     return new Row(_data);
   }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    rows(first_index, last_index, unary_operator);
+  }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op binary_operator, double operand) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    rows(first_index, last_index, binary_operator, operand);
+  }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    rows(first_index, last_index, binary_operator, operand);
+  }
   
 }

@@ -125,13 +125,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  abstract public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException {
-    /*
-     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
-     */
-    
-    rows(first_index, last_index, unary_operator);
-  }
+  abstract public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified
@@ -145,9 +139,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  abstract public void subvec(int first_index, int last_index, Op binary_operator, double operand) {
-    rows(first_index, last_index, binary_operator, operand);
-  }
+  abstract public void subvec(int first_index, int last_index, Op binary_operator, double operand) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified
@@ -161,9 +153,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code first_index}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code last_index}) is out of bounds.
    */
-  abstract public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) {
-    rows(first_index, last_index, binary_operator, operand);
-  }
+  abstract public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException;
 
   /**
    * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} element.
@@ -174,7 +164,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code span._last}) is out of bounds.
    */
-  public void subvec(Span span, Op unary_operator) {
+  public void subvec(Span span, Op unary_operator) throws IndexOutOfBoundsException {
     subvec(span._first, span._last, unary_operator);
   }
 
@@ -189,7 +179,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code span._last}) is out of bounds.
    */
-  public void subvec(Span span, Op binary_operator, double operand) {
+  public void subvec(Span span, Op binary_operator, double operand) throws IndexOutOfBoundsException {
     subvec(span._first, span._last, binary_operator, operand);
   }
 
@@ -204,7 +194,7 @@ abstract class AbstractVector extends AbstractMat {
    * @throws IndexOutOfBoundsException The first position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code span._last}) is out of bounds.
    */
-  public void subvec(Span span, Op binary_operator, AbstractMat operand) {
+  public void subvec(Span span, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
     subvec(span._first, span._last, binary_operator, operand);
   }
 

@@ -76,7 +76,7 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + unary_operator + ").");
     }
   }
 
@@ -114,7 +114,7 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
     }
   }
 
@@ -153,7 +153,7 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
     }
   }
 
@@ -191,7 +191,7 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
     }
   }
 

@@ -2260,20 +2260,6 @@ abstract class AbstractMat {
     }
   }
 
-  protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, double rightHandOperand) {
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
-    for (int n = 0; n < n_elem; n++) {
-      if (leftHandOperand._data[n] >= rightHandOperand) {
-        _data[n] = 1;
-      }
-    }
-  }
-
   protected void outOfPlaceGreaterThan(AbstractMat leftHandOperand, AbstractMat rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.

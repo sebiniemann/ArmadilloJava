@@ -486,7 +486,7 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row col(int col_number) throws IndexOutOfBoundsException {
+  public Col col(int col_number) throws IndexOutOfBoundsException {
     if (!in_range(col_number)) {
       throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
     }
@@ -494,7 +494,7 @@ public class Row extends AbstractVector {
     /**
      * There is only one element per column.
      */
-    return new Row(new double[]{_data[col_number]});
+    return new Col(new double[]{_data[col_number]});
   }
 
   @Override
@@ -542,7 +542,7 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row col(Span span, int col_number) throws IndexOutOfBoundsException {
+  public Col col(Span span, int col_number) throws IndexOutOfBoundsException {
     if (!in_range(span._first)) {
       throw new IndexOutOfBoundsException("The first row position (" + span._first + ") is out of bounds.");
     }
@@ -676,6 +676,33 @@ public class Row extends AbstractVector {
   @Override
   public Col t() {
     return new Col(_data);
+  }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    cols(first_index, last_index, unary_operator);
+  }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op binary_operator, double operand) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    cols(first_index, last_index, binary_operator, operand);
+  }
+
+  @Override
+  public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
+     */
+    
+    cols(first_index, last_index, binary_operator, operand);
   }
   
 }
