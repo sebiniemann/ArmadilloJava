@@ -3563,7 +3563,7 @@ public class Arma {
    *           element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static Mat cov(Mat X, Mat Y, int norm_type) {
+  public static Mat cov(Mat X, Mat Y, int norm_type) throws RuntimeException, IllegalArgumentException {
     if (X.n_elem != Y.n_elem) {
       throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
     }
@@ -3633,7 +3633,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat cov(Mat X) {
+  public static Mat cov(Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within cov(Mat, int).
      */
@@ -3650,12 +3650,13 @@ public class Arma {
    * @param norm_type The normalisation
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static Mat cov(Mat X, int norm_type) {
+  public static Mat cov(Mat X, int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The parameter "X" is validated within cov(Mat, Mat, int).
      */
-    
+
     return cov(X, X, norm_type);
   }
 
@@ -3665,7 +3666,18 @@ public class Arma {
     result._data[2] = A._data[0] * B._data[1] - A._data[1] * B._data[0];
   }
 
-  public static Col cross(Col A, AbstractMat B) {
+  /**
+   * Returns the cross product between the provided vectors.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   */
+  public static Col cross(Col A, AbstractMat B) throws RuntimeException {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3675,11 +3687,22 @@ public class Arma {
     }
 
     Col result = new Col(3);
-    
+
     cross(result, A, B);
     return result;
   }
 
+  /**
+   * Returns the cross product between the provided vectors.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   */
   public static Row cross(Row A, AbstractMat B) {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
@@ -3688,13 +3711,24 @@ public class Arma {
     if (!B.is_vec() || B.n_elem != 3) {
       throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
-    
+
     Row result = new Row(3);
-    
+
     cross(result, A, B);
     return result;
   }
 
+  /**
+   * Returns the cross product between the provided vectors.
+   * 
+   * @param A The first vector
+   * @param B The second vector
+   * 
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
+   *           to a 3-dimensional vector.
+   */
   public static Mat cross(Mat A, AbstractMat B) {
     if (!A.is_vec() || A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
