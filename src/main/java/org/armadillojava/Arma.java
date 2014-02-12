@@ -3941,7 +3941,7 @@ public class Arma {
    * @throws IllegalArgumentException The norm sorting order ({@code s}) must be one of 'first' or 'last'.
    */
   public static Col find(AbstractMat X, int k, String s) throws NegativeArraySizeException, IllegalArgumentException {
-    if(k < 0) {
+    if (k < 0) {
       throw new NegativeArraySizeException("The specified number of positions (" + k + ") must be positive.");
     }
 
@@ -3976,7 +3976,7 @@ public class Arma {
 
     Col result = new Col(X.n_elem);
     result._data = Arrays.copyOf(temp, index);
-    
+
     if (s.equals("last")) {
       revert(result, result);
     }
@@ -4126,15 +4126,83 @@ public class Arma {
 
   }
 
-  protected static Col sort(AbstractVector V) {
+  public static Mat kron(AbstractMat A, AbstractMat B) {
+
+  }
+
+  public static Mat reshape(Mat mat, int n_rows, int n_cols) {
+
+  }
+
+  public static Mat resize(Mat mat, int n_rows, int n_cols) {
+
+  }
+
+  protected static void shuffle(AbstractVector result, AbstractVector V) {
+
+  }
+
+  public static Col shuffle(Col V) {
+    Col result = new Col(V.n_elem);
+    shuffle(result, V);
+    return result;
+  }
+
+  public static Row shuffle(Row V) {
+    Row result = new Row(V.n_elem);
+    shuffle(result, V);
+    return result;
+  }
+
+  protected static Mat shuffle(AbstractView X) {
+
+  }
+
+  public static Mat shuffle(Mat X) {
+    return shuffle(X, 0);
+  }
+
+  public static Mat shuffle(Mat X, int dim) {
+
+  }
+
+  protected static Col sort(AbstractVector result, AbstractVector V, String sort_direction) {
 
   }
 
   public static Col sort(Col V) {
+    return sort(V, "ascend");
+  }
+
+  public static Col sort(Col V, String sort_direction) {
+    Col result = new Col(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  public static Row sort(Row V) {
+    return sort(V, "ascend");
+  }
+
+  public static Row sort(Row V, String sort_direction) {
+    Row result = new Row(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  protected static Mat sort(AbstractView X, String sort_direction) {
 
   }
 
-  public static Col sort(Row V) {
+  public static Mat sort(Mat X) {
+    return sort(X, "ascend");
+  }
+
+  public static Mat sort(Mat X, String sort_direction) {
+    return sort(X, sort_direction, 0);
+  }
+
+  public static Mat sort(Mat X, String sort_direction, int dim) {
 
   }
 
@@ -4142,6 +4210,102 @@ public class Arma {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
+
+  }
+
+  protected static Col sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
+
+  }
+
+  public static Col sort_index(Col V) {
+    return sort(V, "ascend");
+  }
+
+  public static Col sort_index(Col V, String sort_direction) {
+    Col result = new Col(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  public static Row sort_index(Row V) {
+    return sort(V, "ascend");
+  }
+
+  public static Row sort_index(Row V, String sort_direction) {
+    Row result = new Row(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  protected static Col stable_sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
+
+  }
+
+  public static Col stable_sort_index(Col V) {
+    return sort(V, "ascend");
+  }
+
+  public static Col stable_sort_index(Col V, String sort_direction) {
+    Col result = new Col(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  public static Row stable_sort_index(Row V) {
+    return sort(V, "ascend");
+  }
+
+  public static Row stable_sort_index(Row V, String sort_direction) {
+    Row result = new Row(V.n_elem);
+    sort(result, V, sort_direction);
+    return result;
+  }
+
+  public static Mat symmatu(Mat A) {
+
+  }
+
+  public static Mat symmatl(Mat A) {
+
+  }
+
+  public static Row trans(Col A) {
+    return A.t();
+  }
+
+  public static Col trans(Row A) {
+    return A.t();
+  }
+
+  public static Mat trans(Mat A) {
+    return A.t();
+  }
+
+  public static Mat trimatu(Mat A) {
+
+  }
+
+  public static Mat trimatl(Mat A) {
+
+  }
+
+  public static Col unique(Col A) {
+
+  }
+
+  public static Row unique(Row A) {
+
+  }
+
+  public static Col unique(Mat A) {
+
+  }
+
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) {
+    return vectorise(return_type, A, 0);
+  }
+
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) {
 
   }
 
