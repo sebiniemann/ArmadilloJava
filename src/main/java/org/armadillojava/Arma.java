@@ -3205,7 +3205,7 @@ public class Arma {
   }
 
   /**
-   * Returns the convolution between the first and second provided vector as a column vector.
+   * Returns the convolution between the first and second provided vector.
    * 
    * @param A The first vector
    * @param B The second vector
@@ -3230,7 +3230,7 @@ public class Arma {
   }
 
   /**
-   * Returns the convolution between the first and second provided vector as a row vector.
+   * Returns the convolution between the first and second provided vector.
    * 
    * @param A The first vector
    * @param B The second vector
@@ -3703,7 +3703,7 @@ public class Arma {
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    */
-  public static Row cross(Row A, AbstractMat B) {
+  public static Row cross(Row A, AbstractMat B) throws RuntimeException {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3729,7 +3729,7 @@ public class Arma {
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    */
-  public static Mat cross(Mat A, AbstractMat B) {
+  public static Mat cross(Mat A, AbstractMat B) throws RuntimeException {
     if (!A.is_vec() || A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3744,7 +3744,7 @@ public class Arma {
     cross(result, A, B);
     return result;
   }
-
+  
   protected static void cumsum(AbstractVector result, AbstractVector V) {
     result._data[0] = V._data[0];
     for (int n = 1; n < result.n_elem; n++) {
@@ -3752,13 +3752,35 @@ public class Arma {
     }
   }
 
-  public static Col cumsum(Col V) {
+  /**
+   * Returns the cumulative sum of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
+  public static Col cumsum(Col V) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+    
     Col result = new Col(V.n_elem);
     cumsum(result, V);
     return result;
   }
 
-  public static Row cumsum(Row V) {
+  /**
+   * Returns the cumulative sum of the provided vector.
+   * 
+   * @param V The vector
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
+  public static Row cumsum(Row V) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+    
     Row result = new Row(V.n_elem);
     cumsum(result, V);
     return result;
@@ -3777,18 +3799,40 @@ public class Arma {
     return result;
   }
 
-  public static Mat cumsum(Mat X) {
-    // X is validated within cumsum
+  /**
+   * Returns the cumulative sum for each column of the provided matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
+  public static Mat cumsum(Mat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within cumsum(Mat, int).
+     */
+    
     return cumsum(X, 0);
   }
 
-  public static Mat cumsum(Mat X, int dim) {
+  /**
+   * Returns the cumulative sum for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
+   * 
+   * @param X The matrix
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
+  public static Mat cumsum(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
       case 0:
         if (X.n_rows < 1) {
-          throw new RuntimeException("The provided matrix must have at least one row.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
         }
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -3798,7 +3842,7 @@ public class Arma {
         break;
       case 1:
         if (X.n_cols < 1) {
-          throw new RuntimeException("The provided matrix must have at least one column.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
         }
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -3807,7 +3851,7 @@ public class Arma {
         }
         break;
       default:
-        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
     }
 
     return result;
