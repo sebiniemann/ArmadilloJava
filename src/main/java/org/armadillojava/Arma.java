@@ -3667,47 +3667,45 @@ public class Arma {
 
   public static Col cross(Col A, AbstractMat B) {
     if (A.n_elem != 3) {
-      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
 
     if (!B.is_vec() || B.n_elem != 3) {
-      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
 
     Col result = new Col(3);
+    
     cross(result, A, B);
     return result;
   }
 
   public static Row cross(Row A, AbstractMat B) {
     if (A.n_elem != 3) {
-      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
 
     if (!B.is_vec() || B.n_elem != 3) {
-      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
-
+    
     Row result = new Row(3);
+    
     cross(result, A, B);
     return result;
   }
 
   public static Mat cross(Mat A, AbstractMat B) {
     if (!A.is_vec() || A.n_elem != 3) {
-      throw new RuntimeException("The first provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
 
     if (!B.is_vec() || B.n_elem != 3) {
-      throw new RuntimeException("The second provided matrix must be a 3-dimensional vector.");
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
 
-    Mat result;
-    if (A.is_colvec()) {
-      result = new Mat(3, 1);
-    } else {
-      result = new Mat(1, 3);
-    }
+    Mat result = new Mat();
+    result.copy_size(A);
 
     cross(result, A, B);
     return result;
