@@ -3744,7 +3744,7 @@ public class Arma {
     cross(result, A, B);
     return result;
   }
-  
+
   protected static void cumsum(AbstractVector result, AbstractVector V) {
     result._data[0] = V._data[0];
     for (int n = 1; n < result.n_elem; n++) {
@@ -3763,7 +3763,7 @@ public class Arma {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
-    
+
     Col result = new Col(V.n_elem);
     cumsum(result, V);
     return result;
@@ -3780,7 +3780,7 @@ public class Arma {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
-    
+
     Row result = new Row(V.n_elem);
     cumsum(result, V);
     return result;
@@ -3812,7 +3812,7 @@ public class Arma {
     /*
      * The parameter "X" is validated within cumsum(Mat, int).
      */
-    
+
     return cumsum(X, 0);
   }
 
@@ -3868,7 +3868,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
     }
-    
+
     Mat result = new Mat(X.n_elem, X.n_elem);
     new ViewDiag(result, 0).inPlaceEqual(X);
     return result;
@@ -3890,7 +3890,7 @@ public class Arma {
     if (!X.is_square()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be square.");
     }
-    
+
     /*
      * All uninitialised matrices are already equal to a zero matrix.
      */
@@ -3899,18 +3899,53 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a column vector containing the all positions of non-zero elements within the provided matrix.
+   * 
+   * @param X The matrix
+   */
   public static Col find(AbstractMat X) {
+    /*
+     * The parameter "X" is validated within find(AbstractMat, int).
+     */
+
     return find(X, 0);
   }
 
-  public static Col find(AbstractMat X, int k) {
+  /**
+   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} > 0) positions of the
+   * first non-zero elements within the provided matrix.
+   * 
+   * @param X The matrix
+   * @param k The number of positions
+   * 
+   * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
+   */
+  public static Col find(AbstractMat X, int k) throws NegativeArraySizeException {
+    /*
+     * The parameters "X" and "k" are validated within cumsum(AbstractMat, int, String).
+     */
+
     return find(X, k, "first");
   }
 
-  public static Col find(AbstractMat X, int k, String s) {
-    // matrix.isElementOutOfBoundsDetection(k);
+  /**
+   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} > 0) positions of the
+   * first ({@code s} = 'first') or last ({@code s} = 'last') non-zero elements within the provided matrix.
+   * 
+   * @param X The matrix
+   * @param k The number of positions
+   * @param s The search direction
+   * 
+   * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
+   * @throws IllegalArgumentException The norm sorting order ({@code s}) must be one of 'first' or 'last'.
+   */
+  public static Col find(AbstractMat X, int k, String s) throws NegativeArraySizeException, IllegalArgumentException {
+    if(k < 0) {
+      throw new NegativeArraySizeException("The specified number of positions (" + k + ") must be positive.");
+    }
 
-    Mat result = new Mat(X.n_elem, 1);
+    double[] temp = new double[X.n_elem];
 
     int limit;
     if (k > 0) {
@@ -3924,31 +3959,26 @@ public class Arma {
       case "first":
         for (int n = 0; n < X.n_elem && index < limit; n++) {
           if (X._data[n] != 0) {
-            result._data[index++] = n;
+            temp[index++] = n;
           }
         }
         break;
       case "last":
         for (int n = X.n_elem - 1; n >= 0 && index < limit; n--) {
           if (X._data[n] != 0) {
-            result._data[index++] = n;
+            temp[index++] = n;
           }
         }
         break;
       default:
-        throw new IllegalArgumentException("The parameter s needs to be either 'first' or 'last', but was " + s);
+        throw new IllegalArgumentException("The search direction (" + s + ") must be one of 'first' or 'last'.");
     }
 
-    // Saves current values of the elements since length <= n_elem
-    result.reshape(index, 1);
-
+    Col result = new Col(X.n_elem);
+    result._data = Arrays.copyOf(temp, index);
+    
     if (s.equals("last")) {
-      for (int n = 0; n < result.n_elem / 2; n++) {
-        // swap? Or better: protected void revert(AbstractVector result, AbstractVector X)
-        double temp = result._data[n];
-        result._data[n] = result._data[result.n_elem - (n + 1)];
-        result._data[result.n_elem - (n + 1)] = temp;
-      }
+      revert(result, result);
     }
 
     return result;
@@ -4106,6 +4136,14 @@ public class Arma {
       throw new RuntimeException("The provided matrix must have at least one element.");
     }
 
+  }
+
+  protected static void revert(AbstractVector result, AbstractVector X) {
+    for (int n = 0; n < X.n_elem / 2; n++) {
+      double temp = X._data[n];
+      result._data[n] = X._data[X.n_elem - (n + 1)];
+      result._data[X.n_elem - (n + 1)] = temp;
+    }
   }
 
 }
