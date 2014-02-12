@@ -2092,7 +2092,7 @@ public class Arma {
   }
 
   /**
-   * Returns the trace of the matrix.
+   * Returns the trace of the provided square matrix.
    * 
    * @param matrix The matrix
    * 
@@ -3857,13 +3857,43 @@ public class Arma {
     return result;
   }
 
-  public static Mat diagmat(AbstractVector X) {
+  /**
+   * Returns a diagonal matrix with the provided vector set as the main diagonal.
+   * 
+   * @param X The vector
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
+   */
+  public static Mat diagmat(AbstractVector X) throws RuntimeException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
+    }
+    
     Mat result = new Mat(X.n_elem, X.n_elem);
     new ViewDiag(result, 0).inPlaceEqual(X);
     return result;
   }
 
-  public static Mat diagmat(Mat X) {
+  /**
+   * Returns a diagonal matrix with all elements of the provided square matrix besides the main diagonal set to zero.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
+   */
+  public static Mat diagmat(Mat X) throws RuntimeException {
+    if (X.empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+
+    if (!X.is_square()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be square.");
+    }
+    
+    /*
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
     Mat result = new Mat(X.n_rows, X.n_cols);
     new ViewDiag(result, 0).inPlaceEqual(new ViewDiag(X, 0));
     return result;
