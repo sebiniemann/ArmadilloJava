@@ -3984,24 +3984,31 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a deep copy of the matrix with reverse order of its columns.
+   * 
+   * @param X The matrix
+   */
   public static Mat fliplr(Mat X) {
-    // copy + swap is quite inefficient
-    Mat result = new Mat(X.);
+    Mat result = new Mat(X.n_rows, X.n_cols);
 
     for (int j = 0; j < result.n_cols / 2; j++) {
-      
-      result.swap_cols(j, result.n_cols - (j + 1));
+      System.arraycopy(X._data, result.n_cols - (j + 1) * X.n_rows, result._data, j * X.n_rows, X.n_rows);
     }
 
     return result;
   }
 
+  /**
+   * Returns a deep copy of the matrix with reverse order of its rows.
+   * 
+   * @param X The matrix
+   */
   public static Mat flipud(Mat X) {
-    // copy + swap is quite inefficient
-    Mat result = new Mat(matrix);
+    Mat result = new Mat(X.n_rows, X.n_cols);
 
     for (int i = 0; i < result.n_rows / 2; i++) {
-      result.swap_rows(i, result.n_rows - (i + 1));
+      new ViewSubRow(result, i).inPlaceEqual(new ViewSubRow(X, X.n_rows - (i + 1)));
     }
 
     return result;
@@ -4133,7 +4140,7 @@ public class Arma {
 
   public static Col svd(Mat X) {
     if (X.empty()) {
-      throw new RuntimeException("The provided matrix must have at least one element.");
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
 
   }
