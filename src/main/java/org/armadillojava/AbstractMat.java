@@ -1796,7 +1796,7 @@ abstract class AbstractMat {
     switch (binary_operator) {
       case EQUAL:
         copy_size(rightHandOperand);
-        System.arraycopy(rightHandOperand._data, 0, _data, 0, n_elem);
+        _data = Arrays.copyOf(rightHandOperand._data, rightHandOperand.n_elem);
         break;
       case PLUS:
         for (int n = 0; n < n_elem; n++) {

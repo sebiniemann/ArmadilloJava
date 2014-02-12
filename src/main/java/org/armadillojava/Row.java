@@ -69,8 +69,8 @@ public class Row extends AbstractVector {
    * @param col The column vector
    */
   public Row(Row vec) {
-    set_size(vec.n_elem);
-    System.arraycopy(vec._data, 0, _data, 0, vec.n_elem);
+    copy_size(vec);
+    _data = Arrays.copyOf(vec._data, vec.n_elem);
   }
 
   /**
@@ -85,8 +85,8 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The provided matrix must have exactly one row.");
     }
 
-    set_size(mat.n_elem);
-    System.arraycopy(mat._data, 0, _data, 0, mat.n_elem);
+    copy_size(mat);
+    _data = Arrays.copyOf(mat._data, mat.n_elem);
   }
 
   /**
@@ -96,7 +96,7 @@ public class Row extends AbstractVector {
    */
   public Row(double[] array) {
     set_size(array.length);
-    System.arraycopy(array, 0, _data, 0, array.length);
+    _data = Arrays.copyOf(array, array.length);
   }
 
   /**
@@ -145,8 +145,8 @@ public class Row extends AbstractVector {
     if (X.is_empty()) {
       return; // Nothing to do here.
     } else if (is_empty()) {
-      set_size(X.n_elem);
-      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+      copy_size(X);
+      _data = Arrays.copyOf(X._data, X.n_elem);
     } else {
       double[] temp = Arrays.copyOf(_data, n_elem);
       set_size(n_elem + X.n_elem);
@@ -640,11 +640,11 @@ public class Row extends AbstractVector {
 
     Row temp = new Row(_data);
 
-    set_size(X.n_elem);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_elem, 1);
-    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override
@@ -655,22 +655,22 @@ public class Row extends AbstractVector {
 
     Row temp = new Row(_data);
 
-    set_size(X.n_elem);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_elem);
-    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override
   public void swap(Row X) {
     Row temp = new Row(_data);
 
-    set_size(X.n_elem);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_elem);
-    System.arraycopy(temp, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override

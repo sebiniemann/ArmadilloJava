@@ -88,8 +88,8 @@ public class Mat extends AbstractMat {
    * @param mat The matrix
    */
   public Mat(AbstractMat mat) {
-    set_size(mat.n_rows, mat.n_cols);
-    System.arraycopy(mat._data, 0, _data, 0, mat.n_elem);
+    copy_size(mat);
+    _data = Arrays.copyOf(mat._data, mat.n_elem);
   }
 
   /**
@@ -99,7 +99,7 @@ public class Mat extends AbstractMat {
    */
   public Mat(double[] array) {
     set_size(array.length, 1);
-    System.arraycopy(array, 0, _data, 0, array.length);
+    _data = Arrays.copyOf(array, array.length);
   }
 
   /**
@@ -566,16 +566,16 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
 
-    if (n_cols != X.n_cols) {
-      throw new RuntimeException("Both matrices must have the same number of columns.");
-    }
-
     if (X.is_empty()) {
       return; // Nothing to do here.
     } else if (is_empty()) {
-      set_size(X.n_rows, X.n_cols);
-      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+      copy_size(X);
+      _data = Arrays.copyOf(X._data, X.n_elem);
     } else {
+      if (n_cols != X.n_cols) {
+        throw new RuntimeException("Both matrices must have the same number of columns.");
+      }
+      
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
@@ -650,16 +650,16 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
 
-    if (n_rows != X.n_rows) {
-      throw new RuntimeException("Both matrices must have the same number of rows.");
-    }
-
     if (X.is_empty()) {
       return; // Nothing to do here.
     } else if (is_empty()) {
-      set_size(n_rows, X.n_cols);
-      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+      copy_size(X);
+      _data = Arrays.copyOf(X._data, X.n_elem);
     } else {
+      if (n_rows != X.n_rows) {
+        throw new RuntimeException("Both matrices must have the same number of rows.");
+      }
+      
       double[] temp = Arrays.copyOf(_data, n_elem);
       set_size(n_rows, n_cols + X.n_cols);
 
@@ -833,7 +833,7 @@ public class Mat extends AbstractMat {
    * @param n_cols The number of columns
    */
   public void reshape(int n_rows, int n_cols) {
-    double[] temp = Arrays.copyOf(_data, n_elem);
+    double[] temp = Arrays.copyOf(_data, Math.min(n_elem, n_rows * n_cols));
     set_size(n_rows, n_cols);
     System.arraycopy(temp, 0, _data, 0, temp.length);
   }
@@ -1000,11 +1000,11 @@ public class Mat extends AbstractMat {
   public void swap(Mat X) {
     Mat temp = new Mat(this);
 
-    set_size(X.n_rows, X.n_cols);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_rows, temp.n_cols);
-    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override
@@ -1015,11 +1015,11 @@ public class Mat extends AbstractMat {
 
     Mat temp = new Mat(this);
 
-    set_size(X.n_elem, 1);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_elem);
-    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override
@@ -1030,11 +1030,11 @@ public class Mat extends AbstractMat {
 
     Mat temp = new Mat(this);
 
-    set_size(X.n_elem, 1);
-    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
 
-    X.set_size(temp.n_elem);
-    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
+    copy_size(temp);
+    X._data = Arrays.copyOf(temp._data, temp.n_elem);
   }
 
   @Override

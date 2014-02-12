@@ -2634,14 +2634,15 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    AbstractVector sort = sort(V);
+    double[] temp = Arrays.copyOf(V._data, V.n_elem);
+    Arrays.sort(temp);
 
     double median;
     if (V.n_elem % 2 == 0) {
       int middle = V.n_elem / 2;
-      median = (sort._data[middle - 1] + sort._data[middle]) / 2;
+      median = (temp[middle - 1] + temp[middle]) / 2;
     } else {
-      median = sort._data[V.n_elem / 2];
+      median = temp[V.n_elem / 2];
     }
 
     return median;
@@ -4014,7 +4015,7 @@ public class Arma {
     return result;
   }
 
-  protected static void hist(AbstractVector result, AbstractVector V) {
+  protected static void hist(AbstractVector result, AbstractVector V, int n_bins) {
 
   }
 
@@ -4023,7 +4024,9 @@ public class Arma {
   }
 
   public static Col hist(Col V, int n_bins) {
-
+    Col result = new Col(V.n_elem);
+    hist(result, V, n_bins);
+    return result;
   }
 
   public static Row hist(Row V) {
@@ -4031,7 +4034,9 @@ public class Arma {
   }
 
   public static Row hist(Row V, int n_bins) {
-
+    Row result = new Row(V.n_elem);
+    hist(result, V, n_bins);
+    return result;
   }
 
   protected static Mat hist(AbstractView X, int n_bins) {
@@ -4055,11 +4060,15 @@ public class Arma {
   }
 
   public static Col hist(Col V, AbstractMat centers) {
-
+    Col result = new Col(V.n_elem);
+    hist(result, V, centers);
+    return result;
   }
 
   public static Row hist(Row V, AbstractMat centers) {
-
+    Row result = new Row(V.n_elem);
+    hist(result, V, centers);
+    return result;
   }
 
   protected static Mat hist(AbstractView X, AbstractMat centers) {
@@ -4079,11 +4088,15 @@ public class Arma {
   }
 
   public static Col histc(Col V, AbstractMat edges) {
-
+    Col result = new Col(V.n_elem);
+    histc(result, V, edges);
+    return result;
   }
 
   public static Row histc(Row V, AbstractMat edges) {
-
+    Row result = new Row(V.n_elem);
+    histc(result, V, edges);
+    return result;
   }
 
   protected static Mat histc(AbstractView X, AbstractMat edges) {
@@ -4099,19 +4112,24 @@ public class Arma {
   }
 
   public static void inplace_trans(Mat X) {
+    int n = 0;
+    for (int j = 0; j < X.n_cols; j++) {
+      for (int i = 0; i < X.n_rows; i++) {
+        if (i < j) {
+          double temp = X._data[i + j * X.n_rows];
+          X._data[i + j * X.n_rows] = X._data[n];
+          X._data[n] = temp;
+        } else if (i == j) {
+          X._data[n] = X._data[n];
+        }
 
-  }
-
-  public static Col join_rows(Col A, AbstractMat B) {
-
-  }
-
-  public static Col join_rows(AbstractMat A, AbstractMat B) {
-
+        n++;
+      }
+    }
   }
 
   public static Mat join_rows(AbstractMat A, AbstractMat B) {
-
+    return join_horiz(A, B);
   }
 
   public static Mat join_horiz(AbstractMat A, AbstractMat B) {
@@ -4119,7 +4137,7 @@ public class Arma {
   }
 
   public static Mat join_cols(AbstractMat A, AbstractMat B) {
-
+    return join_vert(A, B);
   }
 
   public static Mat join_vert(AbstractMat A, AbstractMat B) {
@@ -4131,15 +4149,31 @@ public class Arma {
   }
 
   public static Mat reshape(Mat mat, int n_rows, int n_cols) {
-
+    Mat result = new Mat(mat);
+    result.reshape(n_rows, n_cols);
+    return result;
   }
 
   public static Mat resize(Mat mat, int n_rows, int n_cols) {
-
+    Mat result = new Mat(mat);
+    result.resize(n_rows, n_cols);
+    return result;
   }
 
   protected static void shuffle(AbstractVector result, AbstractVector V) {
+    // Inside-out version of the Fisher-Yates shuffle
+    result.copy_size(V);
+    result._data[0] = V._data[0];
+    for (int n = 1; n < V.n_elem; n++)
+    {
+      int nn = RNG._rng.nextInt(n + 1);
 
+      if (n != nn) {
+        result._data[n] = result._data[nn];
+      }
+
+      result._data[nn] = V._data[n];
+    }
   }
 
   public static Col shuffle(Col V) {
@@ -4154,19 +4188,50 @@ public class Arma {
     return result;
   }
 
-  protected static Mat shuffle(AbstractView X) {
-
-  }
-
   public static Mat shuffle(Mat X) {
     return shuffle(X, 0);
   }
 
   public static Mat shuffle(Mat X, int dim) {
+    Mat result = new Mat();
 
+    switch (dim) {
+      case 0:
+        if (X.n_rows < 1) {
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
+        }
+
+        result.set_size(X.n_cols);
+
+        for (int j = 0; j < X.n_cols; j++) {
+          /*
+           * Creates a deep copy of each column, since shuffling of shallow sub views is not yet implemented.
+           */
+          new ViewSubCol(result, j).inPlaceEqual(shuffle(X.col(j)));
+        }
+        break;
+      case 1:
+        if (X.n_cols < 1) {
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
+        }
+
+        result.set_size(X.n_rows);
+
+        for (int i = 0; i < X.n_rows; i++) {
+          /*
+           * Creates a deep copy of each row, since shuffling of shallow sub views is not yet implemented.
+           */
+          new ViewSubRow(result, i).inPlaceEqual(shuffle(X.row(i)));
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+    }
+
+    return result;
   }
 
-  protected static Col sort(AbstractVector result, AbstractVector V, String sort_direction) {
+  protected static void sort(AbstractVector result, AbstractVector V, String sort_direction) {
 
   }
 
@@ -4213,7 +4278,7 @@ public class Arma {
 
   }
 
-  protected static Col sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
+  protected static void sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
 
   }
 
@@ -4237,7 +4302,7 @@ public class Arma {
     return result;
   }
 
-  protected static Col stable_sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
+  protected static void stable_sort_index(AbstractVector result, AbstractVector V, String sort_direction) {
 
   }
 
@@ -4261,12 +4326,58 @@ public class Arma {
     return result;
   }
 
-  public static Mat symmatu(Mat A) {
+  public static Mat symmatu(Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
 
+    Mat result = new Mat();
+    result.copy_size(A);
+
+    int n = 0;
+    for (int j = 0; j < A.n_cols; j++) {
+      for (int i = 0; i < A.n_rows; i++) {
+        double value = A._data[n];
+
+        if (i < j) {
+          result._data[n] = value;
+          result._data[i + j * result.n_rows] = value;
+        } else if (i == j) {
+          result._data[n] = value;
+        }
+
+        n++;
+      }
+    }
+
+    return result;
   }
 
-  public static Mat symmatl(Mat A) {
+  public static Mat symmatl(Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
 
+    Mat result = new Mat();
+    result.copy_size(A);
+
+    int n = 0;
+    for (int j = 0; j < A.n_cols; j++) {
+      for (int i = 0; i < A.n_rows; i++) {
+        double value = A._data[n];
+
+        if (i > j) {
+          result._data[n] = value;
+          result._data[i + j * result.n_rows] = value;
+        } else if (i == j) {
+          result._data[n] = value;
+        }
+
+        n++;
+      }
+    }
+
+    return result;
   }
 
   public static Row trans(Col A) {
@@ -4281,32 +4392,101 @@ public class Arma {
     return A.t();
   }
 
-  public static Mat trimatu(Mat A) {
+  public static Mat trimatu(Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
 
+    /*
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
+    Mat result = new Mat();
+    result.copy_size(A);
+
+    int n = 0;
+    for (int j = 0; j < A.n_cols; j++) {
+      for (int i = 0; i < A.n_rows; i++) {
+        if (i <= j) {
+          result._data[n] = A._data[n];
+        }
+        n++;
+      }
+    }
+
+    return result;
   }
 
-  public static Mat trimatl(Mat A) {
+  public static Mat trimatl(Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
 
+    /*
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
+    Mat result = new Mat();
+    result.copy_size(A);
+
+    int n = 0;
+    for (int j = 0; j < A.n_cols; j++) {
+      for (int i = 0; i < A.n_rows; i++) {
+        if (i >= j) {
+          result._data[n] = A._data[n];
+        }
+        n++;
+      }
+    }
+
+    return result;
   }
 
+  protected static void unique(AbstractMat result, AbstractMat A) {
+    
+  }
+  
   public static Col unique(Col A) {
-
+    Col result = new Col();
+    unique(result, A);
+    return result;
   }
 
   public static Row unique(Row A) {
-
+    Row result = new Row();
+    unique(result, A);
+    return result;
   }
 
   public static Col unique(Mat A) {
-
+    Col result = new Col();
+    unique(result, A);
+    return result;
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) {
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) throws InstantiationException, IllegalAccessException {
     return vectorise(return_type, A, 0);
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) {
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) throws InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
+    result.set_size(A.n_elem);
 
+    switch (dim) {
+      case 0:
+        result._data = Arrays.copyOf(A._data, A.n_elem);
+        break;
+      case 1:
+        int n = 0;
+        for (int i = 0; i < A.n_rows; i++) {
+          for (int j = 0; j < A.n_cols; j++) {
+            result._data[n++] = A._data[i + j * A.n_rows];
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+    }
+
+    return result;
   }
 
   protected static void revert(AbstractVector result, AbstractVector X) {
