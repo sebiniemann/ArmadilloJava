@@ -44,7 +44,7 @@ public class Arma {
    */
   public static Mat eye(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
 
     return new Mat(n_rows, n_cols, Fill.EYE);
@@ -65,7 +65,7 @@ public class Arma {
    */
   public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end) throws RuntimeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "start" and "end" are validated within linspace(Class<T>, int, int, int).
+     * The parameters "start" and "end" are validated within linspace(Class<T>, int, int, int).
      */
 
     return linspace(return_type, start, end, 100);
@@ -148,7 +148,7 @@ public class Arma {
    */
   public static Mat ones(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
 
     return new Mat(n_rows, n_cols, Fill.ONES);
@@ -221,7 +221,7 @@ public class Arma {
    */
   public static Mat randi(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within randi(Class<T>, int, int, DistrParam).
+     * The parameters "n_rows" and "n_cols" are validated within randi(Class<T>, int, int, DistrParam).
      */
 
     return randi(n_rows, n_rows, new DistrParam(0, Integer.MAX_VALUE - 1));
@@ -245,7 +245,7 @@ public class Arma {
    */
   public static Mat randi(int n_rows, int n_cols, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      */
 
     if (distr_param._b < distr_param._a) {
@@ -303,7 +303,7 @@ public class Arma {
    */
   public static Mat randu(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
 
     return new Mat(n_rows, n_cols, Fill.RANDU);
@@ -343,7 +343,7 @@ public class Arma {
    */
   public static Mat randn(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      */
 
     return new Mat(n_rows, n_cols, Fill.RANDN);
@@ -433,7 +433,7 @@ public class Arma {
    * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
    *           element.
-   * @throws RuntimeException The second provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
    *           element.
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
    *           to a vector.
@@ -445,8 +445,8 @@ public class Arma {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
 
-    if (A.is_empty()) {
-      throw new RuntimeException("The second provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    if (B.is_empty()) {
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-matrix must have at least one element.");
     }
 
     if (!A.is_vec()) {
@@ -532,7 +532,7 @@ public class Arma {
    */
   public static Mat zeros(int n_rows, int n_cols) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
     /*
-     * The parameter "n_rows" and "n_cols" are validated within Mat(int, int).
+     * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      * All uninitialised matrices are already equal to a zero matrix.
      */
 
@@ -1847,7 +1847,7 @@ public class Arma {
    */
   public static double norm_dot(AbstractMat A, AbstractMat B) throws RuntimeException {
     /*
-     * The parameter "A" and "B" are validated within dot(AbstractMat, AbstractMat).
+     * The parameters "A" and "B" are validated within dot(AbstractMat, AbstractMat).
      */
 
     return dot(A, B) / Math.sqrt(dot(A, A) * dot(B, B));
@@ -2658,7 +2658,7 @@ public class Arma {
     /*
      * The parameter "X" is validated within median(Class<T>, Mat, int).
      */
-    
+
     return median(return_type, X, 0);
   }
 
@@ -2680,7 +2680,7 @@ public class Arma {
         if (X.n_rows < 1) {
           throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
         }
-        
+
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2694,7 +2694,7 @@ public class Arma {
         if (X.n_cols < 1) {
           throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
         }
-        
+
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2712,7 +2712,7 @@ public class Arma {
   }
 
   /**
-   * Returns the standard deviation of the provided vector with normalisation by {@code V.n_elem -1}.
+   * Returns the standard deviation of the provided vector normalised by {@code V.n_elem -1}.
    * 
    * @param V The vector
    * 
@@ -2722,13 +2722,13 @@ public class Arma {
     /*
      * The parameter "V" is validated within stddev(AbstractVector, int).
      */
-    
+
     return stddev(V, 0);
   }
 
   /**
-   * Returns the standard deviation of the provided vector with normalisation by {@code V.n_elem -1} ({@code norm_type}
-   * = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * Returns the standard deviation of the provided vector normalised by {@code V.n_elem -1} ({@code norm_type} = 0) or
+   * {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param V The vector
    * @param norm_type The normalisation
@@ -2740,12 +2740,24 @@ public class Arma {
     /*
      * The parameter "V" is validated within var(AbstractVector, int).
      */
-    
+
     return Math.sqrt(var(V, norm_type));
   }
 
+  protected static double stddev(AbstractView V, int norm_type) throws RuntimeException {
+    double mean = mean(V);
+    double variance = 0;
+
+    V.iteratorReset();
+    while (V.iteratorHasNext()) {
+      variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);
+    }
+
+    return Math.sqrt((norm_type == 0 ? variance / (V.n_elem - 1) : variance / V.n_elem));
+  }
+
   /**
-   * Returns the standard deviation for each column of the provided matrix with normalisation by {@code V.n_elem -1}.
+   * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
    * @param X The matrix
    * 
@@ -2755,12 +2767,12 @@ public class Arma {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int).
      */
-    
+
     return stddev(return_type, X, 0);
   }
 
   /**
-   * Returns the standard deviation for each column of the provided matrix with normalisation by {@code V.n_elem -1} (
+   * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1} (
    * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param X The matrix
@@ -2773,13 +2785,13 @@ public class Arma {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int, int).
      */
-    
+
     return stddev(return_type, X, norm_type, 0);
   }
 
   /**
    * Returns the standard deviation for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
-   * with normalisation by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * normalised by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -2791,20 +2803,47 @@ public class Arma {
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    /*
-     * The parameter "X" is validated within var(Class<T>, Mat, int, int).
-     */
-    
-    T result = var(return_type, X, norm_type, dim);
-    /*
-     * This will calculates the square root of each value in-place.
-     */
-    sqrt(result, result);
+    T result = return_type.newInstance();
+
+    switch (norm_type) {
+      case 0:
+      case 1:
+        switch (dim) {
+          case 0:
+            if (X.n_rows < 1) {
+              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
+            }
+
+            result.set_size(X.n_cols);
+
+            for (int j = 0; j < X.n_cols; j++) {
+              result._data[j] = stddev(new ViewSubCol(X, j), norm_type);
+            }
+            break;
+          case 1:
+            if (X.n_cols < 1) {
+              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
+            }
+
+            result.set_size(X.n_rows);
+
+            for (int i = 0; i < X.n_rows; i++) {
+              result._data[i] = stddev(new ViewSubRow(X, i), norm_type);
+            }
+            break;
+          default:
+            throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+    }
+
     return result;
   }
 
   /**
-   * Returns the variance of the provided vector with normalisation by {@code V.n_elem -1}.
+   * Returns the variance of the provided vector normalised by {@code V.n_elem -1}.
    * 
    * @param V The vector
    * 
@@ -2814,12 +2853,12 @@ public class Arma {
     /*
      * The parameter "V" is validated within var(AbstractVector, int).
      */
-    
+
     return var(V, 0);
   }
 
   /**
-   * Returns the variance of the provided vector with normalisation by {@code V.n_elem -1} ({@code norm_type} = 0) or
+   * Returns the variance of the provided vector normalised by {@code V.n_elem -1} ({@code norm_type} = 0) or
    * {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param V The vector
@@ -2832,7 +2871,7 @@ public class Arma {
     /*
      * The parameter "V" is validated within mean(AbstractVector).
      */
-    
+
     double mean = mean(V);
 
     double variance = 0;
@@ -2867,7 +2906,7 @@ public class Arma {
   }
 
   /**
-   * Returns the variance for each column of the provided matrix with normalisation by {@code V.n_elem -1}.
+   * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
    * @param X The matrix
    * 
@@ -2877,13 +2916,13 @@ public class Arma {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int).
      */
-    
+
     return var(return_type, X, 0);
   }
 
   /**
-   * Returns the variance for each column of the provided matrix with normalisation by {@code V.n_elem -1} (
-   * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1} ( {@code norm_type} =
+   * 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -2895,13 +2934,13 @@ public class Arma {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int, int).
      */
-    
+
     return var(return_type, X, norm_type, 0);
   }
 
   /**
-   * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
-   * with normalisation by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
+   * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix normalised
+   * by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -2957,11 +2996,11 @@ public class Arma {
    * 
    * @param V The vector
    * 
-   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static boolean all(AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
-      throw new RuntimeException("The provided vector must have at least one element.");
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
     for (int n = 0; n < V.n_elem; n++) {
@@ -2989,11 +3028,14 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat all(Mat X) throws RuntimeException {
-    // X is validated within all
-    return all(X, 0);
+  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "X" is validated within all(Class<T>, Mat, int).
+     */
+
+    return all(return_type, X, 0);
   }
 
   /**
@@ -3002,21 +3044,23 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one row.
-   * @throws RuntimeException The provided matrix must have at least one column.
-   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat all(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Mat result = null;
+  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
 
     switch (dim) {
       case 0:
         if (X.n_rows < 1) {
-          throw new RuntimeException("The provided matrix must have at least one row.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
         }
 
-        // All uninitialised matrices are already set to zero
-        result = new Mat(1, X.n_cols);
+        /*
+         * All uninitialised matrices are already equal to a zero matrix.
+         */
+        result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           if (all(new ViewSubCol(X, j))) {
@@ -3026,11 +3070,13 @@ public class Arma {
         break;
       case 1:
         if (X.n_cols < 1) {
-          throw new RuntimeException("The provided matrix must have at least one column.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
         }
 
-        // All uninitialised matrices are already set to zero
-        result = new Mat(X.n_rows, 1);
+        /*
+         * All uninitialised matrices are already equal to a zero matrix.
+         */
+        result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
           if (all(new ViewSubRow(X, i))) {
@@ -3039,7 +3085,7 @@ public class Arma {
         }
         break;
       default:
-        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
     }
 
     return result;
@@ -3050,11 +3096,11 @@ public class Arma {
    * 
    * @param V The vector
    * 
-   * @throws RuntimeException The provided vector must have at least one element.
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static boolean any(AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
-      throw new RuntimeException("The provided vector must have at least one element.");
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
     for (int n = 0; n < V.n_elem; n++) {
@@ -3082,11 +3128,14 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat any(Mat X) throws RuntimeException {
-    // X is validated within any
-    return any(X, 0);
+  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+    /*
+     * The parameter "X" is validated within any(Class<T>, Mat, int).
+     */
+
+    return any(return_type, X, 0);
 
   }
 
@@ -3096,21 +3145,23 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one row.
-   * @throws RuntimeException The provided matrix must have at least one column.
-   * @throws IllegalArgumentException The specified dimension must either be 0 or 1.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat any(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
-    Mat result = null;
+  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
+    T result = return_type.newInstance();
 
     switch (dim) {
       case 0:
         if (X.n_rows < 1) {
-          throw new RuntimeException("The provided matrix must have at least one row.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
         }
 
-        // All uninitialised matrices are already set to zero
-        result = new Mat(1, X.n_cols);
+        /*
+         * All uninitialised matrices are already equal to a zero matrix.
+         */
+        result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
           if (any(new ViewSubCol(X, j))) {
@@ -3120,11 +3171,13 @@ public class Arma {
         break;
       case 1:
         if (X.n_cols < 1) {
-          throw new RuntimeException("The provided matrix must have at least one column.");
+          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
         }
 
-        // All uninitialised matrices are already set to zero
-        result = new Mat(X.n_rows, 1);
+        /*
+         * All uninitialised matrices are already equal to a zero matrix.
+         */
+        result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
           if (any(new ViewSubRow(X, i))) {
@@ -3133,13 +3186,13 @@ public class Arma {
         }
         break;
       default:
-        throw new IllegalArgumentException("The specified dimension must either be 0 or 1.");
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
     }
 
     return result;
   }
 
-  protected static void conv(AbstractMat result, AbstractMat A, AbstractMat B) {
+  protected static void conv(AbstractVector result, AbstractVector A, AbstractVector B) {
     for (int n = 0; n < result.n_elem; n++) {
       int min = Math.max(0, n - B.n_elem + 1);
       int max = Math.min(A.n_elem, n + 1);
@@ -3157,11 +3210,18 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
-   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   *           element.
+   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
+   *           element.
    */
   public static Col conv(Col A, AbstractVector B) throws RuntimeException {
-    if (!B.is_vec()) {
-      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+    if (A.empty()) {
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
+    }
+
+    if (B.empty()) {
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-vector must have at least one element.");
     }
 
     Col result = new Col(A.n_elem + B.n_elem - 1);
@@ -3175,11 +3235,18 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
-   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   *           element.
+   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
+   *           element.
    */
   public static Row conv(Row A, AbstractVector B) throws RuntimeException {
-    if (!B.is_vec()) {
-      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
+    if (A.empty()) {
+      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
+    }
+
+    if (B.empty()) {
+      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-vector must have at least one element.");
     }
 
     Row result = new Row(A.n_elem + B.n_elem - 1);
@@ -3188,105 +3255,213 @@ public class Arma {
   }
 
   /**
-   * Returns the convolution between the first and second provided vector in tsame vector shape as the first provided
-   * one.
+   * Returns the correlation between the first and second provided vector normalised by {@code X.n_elem} - 1.
    * 
-   * @param A The first vector
-   * @param B The second vector
+   * @param X The first vector
+   * @param Y The second vector
    * 
-   * @throws RuntimeException The second provided matrix must be equivalent in shape to a vector.
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
+   *           {@code Y.n_elem}).
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
-  public static Mat conv(Mat A, AbstractVector B) throws RuntimeException {
-    if (!A.is_vec()) {
-      throw new RuntimeException("The first provided matrix must be equivalent in shape to a vector.");
-    }
+  public static double cor(AbstractVector X, AbstractVector Y) throws RuntimeException {
+    /*
+     * The parameters "X" and "Y" are validated within cor(AbstractVector, AbstractVector, int).
+     */
 
-    if (!B.is_vec()) {
-      throw new RuntimeException("The second provided matrix must be equivalent in shape to a vector.");
-    }
-
-    Mat result;
-    if (A.is_colvec()) {
-      result = new Mat(A.n_elem + B.n_elem - 1, 1);
-    } else {
-      result = new Mat(1, A.n_elem + B.n_elem - 1);
-    }
-
-    conv(result, A, B);
-    return result;
-  }
-
-  public static double cor(AbstractVector X, AbstractVector Y) {
-    // X and Y are validated within cor
     return cor(X, Y, 0);
   }
 
-  public static double cor(AbstractVector X, AbstractVector Y, int norm_type) {
-    // X, Y and norm_type are validated within cov
-    return cov(X, Y, norm_type) / Math.sqrt(cov(X, Y, norm_type) * cov(X, Y, norm_type));
+  /**
+   * Returns the correlation between the first and second provided vector normalised by {@code X.n_elem -1} (
+   * {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The first vector
+   * @param Y The second vector
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
+   *           {@code Y.n_elem}).
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
+   */
+  public static double cor(AbstractVector X, AbstractVector Y, int norm_type) throws RuntimeException, IllegalArgumentException {
+    /*
+     * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
+     */
+
+    return cov(X, Y, norm_type) / (stddev(X, norm_type) * stddev(Y, norm_type));
   }
 
-  public static double cor(AbstractVector X) {
-    // X is validated within cor
-    return cor(X, 0);
+  /**
+   * Returns the autocorrelation of the provided vector normalised by {@code X.n_elem} - 1.
+   * <p>
+   * <b>Note:</b> The result will always be 1.
+   * 
+   * @param X The vector
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   */
+  public static double cor(AbstractVector X) throws RuntimeException {
+    /*
+     * The autocorrelation of a vector is always 1.
+     */
+    return 1;
   }
 
-  public static double cor(AbstractVector X, int norm_type) {
-    // X and norm_type are validated within cor
-    return cor(X, X, norm_type);
+  /**
+   * Returns the autocorrelation of the provided vector normalised by {@code X.n_elem -1} ({@code norm_type} = 0) or
+   * {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> The result will always be 1.
+   * 
+   * @param X The vector
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
+   */
+  public static double cor(AbstractVector X, int norm_type) throws RuntimeException, IllegalArgumentException {
+    /*
+     * The autocorrelation of a vector is always 1.
+     */
+    return 1;
   }
 
-  public static Mat cor(Mat X, Mat Y) {
-    // X and Y are validated within cor
+  /**
+   * Returns the correlation between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the correlation between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
+   * normalised by {@code X.n_elem -1}.
+   * 
+   * @param X The first matrix
+   * @param Y The second matrix
+   * 
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
+   */
+  public static Mat cor(Mat X, Mat Y) throws RuntimeException {
+    /*
+     * The parameters "X" and "Y" are validated within cor(AbstractVector, AbstractVector, int).
+     */
+
     return cor(X, Y, 0);
   }
 
-  public static Mat cor(Mat X, Mat Y, int norm_type) {
-    // X, Y and norm_type are validated within cov
-    Mat covariance = cov(X, Y, norm_type);
-
-    Mat selfCovariance;
-    if (norm_type != 0) {
-      selfCovariance = cov(X, Y, 0);
-    } else {
-      selfCovariance = covariance;
-    }
+  /**
+   * Returns the correlation between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the correlation between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
+   * normalised by {@code X.n_elem -1} ( {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The first matrix
+   * @param Y The second matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
+   */
+  public static Mat cor(Mat X, Mat Y, int norm_type) throws RuntimeException {
+    /*
+     * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
+     */
 
     Mat result = new Mat(X.n_cols, X.n_cols);
 
+    Mat covariance = cov(X, Y, norm_type);
     int n = 0;
     for (int j = 0; j < X.n_cols; j++) {
-      for (int jj = 0; jj < X.n_cols; jj++) {
-        result._data[n++] = covariance.at(j, jj) / Math.sqrt(selfCovariance.at(j, j) * selfCovariance.at(jj, jj));
+      double stddevX = stddev(new ViewSubCol(X, j), 0);
+
+      for (int jj = 0; jj < Y.n_cols; jj++) {
+        result._data[n++] = covariance.at(j, jj) / (stddevX * stddev(new ViewSubCol(Y, jj), 0));
       }
     }
 
     return result;
   }
 
-  public static Mat cor(Mat X) {
-    // X is validated within cor
+  /**
+   * Returns the autocorrelation of the provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the correlation between the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1}.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   */
+  public static Mat cor(Mat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within cor(Mat, int).
+     */
+
     return cor(X, 0);
   }
 
-  public static Mat cor(Mat X, int norm_type) {
-    // X and norm_type are validated within cor
+  /**
+   * Returns the autocorrelation of the provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the correlation between the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1} (
+   * {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   */
+  public static Mat cor(Mat X, int norm_type) throws RuntimeException {
+    /*
+     * The parameters "X" and "norm_type" are validated within cor(Mat, Mat, int).
+     */
+
     return cor(X, X, norm_type);
   }
 
-  public static double cov(AbstractVector X, AbstractVector Y) {
-    // X and Y are validated within cov
+  /**
+   * Returns the covariance between the first and second provided vector normalised by {@code X.n_elem} - 1.
+   * 
+   * @param X The first vector
+   * @param Y The second vector
+   * 
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
+   *           {@code Y.n_elem}).
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
+   */
+  public static double cov(AbstractVector X, AbstractVector Y) throws RuntimeException {
+    /*
+     * The parameters "X" and "Y" are validated within cov(AbstractVector, AbstractVector, int).
+     */
+
     return cov(X, Y, 0);
   }
 
-  public static double cov(AbstractVector X, AbstractVector Y, int norm_type) {
+  /**
+   * Returns the covariance between the first and second provided vector normalised by {@code X.n_elem -1} (
+   * {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The first vector
+   * @param Y The second vector
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
+   *           {@code Y.n_elem}).
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
+   */
+  public static double cov(AbstractVector X, AbstractVector Y, int norm_type) throws RuntimeException, IllegalArgumentException {
+    /*
+     * The parameters "X" and "Y" are validated within mean(AbstractVector).
+     */
+
     if (X.n_elem != Y.n_elem) {
-      throw new RuntimeException("Both provided vectors must have the same number of elements.");
+      throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
     }
 
-    // X is validated within mean
     double meanX = mean(X);
-    // Y is validated within mean
     double meanY = mean(Y);
 
     double covariance = 0;
@@ -3302,31 +3477,103 @@ public class Arma {
         covariance /= X.n_elem;
         break;
       default:
-        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
     }
 
     return covariance;
   }
 
-  public static double cov(AbstractVector X) {
-    // X is validated within cov
+  /**
+   * Returns the covariance of the provided vector with itself normalised by {@code X.n_elem} - 1.
+   * <p>
+   * <b>Note:</b> This is better known as the variance of provided vector.
+   * 
+   * @param X The vector
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * 
+   * @see var(AbstractVector)
+   */
+  public static double cov(AbstractVector X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within cov(AbstractVector, int).
+     */
+
     return cov(X, 0);
   }
 
-  public static double cov(AbstractVector X, int norm_type) {
-    // X and norm_type are validated within cov
-    return cov(X, X, norm_type);
+  /**
+   * Returns the covariance of the provided vector with itself normalised by {@code X.n_elem -1} ({@code norm_type} = 0)
+   * or {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> This is better known as the variance of provided vector.
+   * 
+   * @param X The vector
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
+   * 
+   * @see var(AbstractVector, int)
+   */
+  public static double cov(AbstractVector X, int norm_type) throws RuntimeException, IllegalArgumentException {
+    /*
+     * The parameter "X" is validated within var(AbstractVector, int).
+     */
+
+    return var(X, norm_type);
   }
 
+  /**
+   * Returns the covariance between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the covariance between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
+   * normalised by {@code X.n_elem -1}.
+   * 
+   * @param X The first matrix
+   * @param Y The second matrix
+   * 
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException The first provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one
+   *           element.
+   * @throws RuntimeException The second provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one
+   *           element.
+   */
   public static Mat cov(Mat X, Mat Y) {
-    // X and Y are validated within cov
+    /*
+     * The parameters "X" and "Y" are validated within cov(Mat, Mat, int).
+     */
+
     return cov(X, Y, 0);
   }
 
+  /**
+   * Returns the covariance between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
+   * the covariance between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
+   * normalised by {@code X.n_elem -1} ({@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The first matrix
+   * @param Y The second matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException The first provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one
+   *           element.
+   * @throws RuntimeException The second provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one
+   *           element.
+   * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
+   */
   public static Mat cov(Mat X, Mat Y, int norm_type) {
-    // X and Y are validated within cov
-    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
-      throw new RuntimeException("Both provided matrices must have the same size.");
+    if (X.n_elem != Y.n_elem) {
+      throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
+    }
+
+    if (X.is_empty()) {
+      throw new RuntimeException("The first provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+
+    if (Y.is_empty()) {
+      throw new RuntimeException("The second provided (" + Y.n_rows + ", " + Y.n_cols + ")-matrix must have at least one element.");
     }
 
     Mat result = new Mat(X.n_cols, X.n_cols);
@@ -3337,20 +3584,12 @@ public class Arma {
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndexX = j * X.n_rows;
 
-          double meanX = 0;
-          for (int i = 0; i < X.n_rows; i++) {
-            meanX += X._data[i + columnIndexX];
-          }
-          meanX /= X.n_rows;
+          double meanX = mean(new ViewSubCol(X, j));
 
           for (int jj = 0; jj < Y.n_cols; jj++) {
             int columnIndexY = jj * Y.n_rows;
 
-            double meanY = 0;
-            for (int i = 0; i < X.n_rows; i++) {
-              meanY += Y._data[i + columnIndexY];
-            }
-            meanY /= Y.n_rows;
+            double meanY = mean(new ViewSubCol(Y, jj));
 
             double covariance = 0;
             for (int i = 0; i < X.n_rows; i++) {
@@ -3364,20 +3603,12 @@ public class Arma {
         for (int j = 0; j < X.n_cols; j++) {
           int columnIndexX = j * X.n_rows;
 
-          double meanX = 0;
-          for (int i = 0; i < X.n_rows; i++) {
-            meanX += X._data[i + columnIndexX];
-          }
-          meanX /= X.n_rows;
+          double meanX = mean(new ViewSubCol(X, j));
 
           for (int jj = 0; jj < Y.n_cols; jj++) {
             int columnIndexY = jj * Y.n_rows;
 
-            double meanY = 0;
-            for (int i = 0; i < X.n_rows; i++) {
-              meanY += Y._data[i + columnIndexY];
-            }
-            meanY /= Y.n_rows;
+            double meanY = mean(new ViewSubCol(Y, jj));
 
             double covariance = 0;
             for (int i = 0; i < X.n_rows; i++) {
@@ -3388,19 +3619,43 @@ public class Arma {
         }
         break;
       default:
-        throw new IllegalArgumentException("The specified normalisation must either be 0 or 1.");
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
     }
 
     return result;
   }
 
+  /**
+   * Returns the covariance of the provided matrix, where the ({@code i}, {@code j})-th entry is the correlation between
+   * the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1}.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   */
   public static Mat cov(Mat X) {
-    // X is validated within cov
+    /*
+     * The parameter "X" is validated within cov(Mat, int).
+     */
+
     return cov(X, 0);
   }
 
+  /**
+   * Returns the covariance of the provided matrix, where the ({@code i}, {@code j})-th entry is the correlation between
+   * the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1} ({@code norm_type} = 0) or
+   * {@code X.n_elem} ({@code norm_type} = 1).
+   * 
+   * @param X The matrix
+   * @param norm_type The normalisation
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   */
   public static Mat cov(Mat X, int norm_type) {
-    // X and norm_type are validated within cov
+    /*
+     * The parameter "X" is validated within cov(Mat, Mat, int).
+     */
+    
     return cov(X, X, norm_type);
   }
 
@@ -3420,7 +3675,7 @@ public class Arma {
     }
 
     Col result = new Col(3);
-    conv(result, A, B);
+    cross(result, A, B);
     return result;
   }
 
@@ -3434,7 +3689,7 @@ public class Arma {
     }
 
     Row result = new Row(3);
-    conv(result, A, B);
+    cross(result, A, B);
     return result;
   }
 
