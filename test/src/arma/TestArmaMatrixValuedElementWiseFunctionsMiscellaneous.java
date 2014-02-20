@@ -39,20 +39,34 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
   public static Collection<Object[]> getTestMatrices() throws IOException {
     Collection<Object[]> testMatrices = new ArrayList<Object[]>();
 
-    Mat input = new Mat();
-
-    input.load("./test/data/input/miscellaneous.mat");
-    testMatrices.add(new Object[]{new Mat(input)});
+    Mat without = new Mat();
+    Mat logPow = new Mat();
+    Mat sqrt = new Mat();
+    Mat sign = new Mat();
+    
+    without.load("./test/data/input/miscellaneous.mat");
+    logPow.load("./test/data/input/miscellaneous.log.pow.mat");
+    sqrt.load("./test/data/input/miscellaneous.sqrt.mat");
+    sign.load("./test/data/input/miscellaneous.sign.mat");
+    
+    testMatrices.add(new Object[]{new Mat(without),new Mat(logPow),new Mat(sqrt),new Mat(sign)});
 
     return testMatrices;
   }
 
   /**
-   * The test matrix
+   * The test matrices
    */
-  @Parameter
+  @Parameter(value = 0)
   public Mat    _testMatrix;
+  
+  @Parameter(value = 1)
+  public Mat	_testLogPow;
+  
+  @Parameter(value = 2)
   public Mat	_testSqrt;
+  
+  @Parameter(value = 3)
   public Mat	_testSign;
  
   /**
@@ -139,8 +153,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testLog() throws IOException {
-	Mat	_testLogPow = new Mat(); 
-	_testLogPow.load("./test/data/input/miscellaneous.log.pow.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testLog.mat");
     assertMatElementWiseEquals("", expected, Arma.log(_testLogPow));
@@ -153,8 +165,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testLog2() throws IOException {
-	Mat	_testLogPow = new Mat(); 
-	_testLogPow.load("./test/data/input/miscellaneous.log.pow.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testLog2.mat");
     assertMatElementWiseEquals("", expected, Arma.log2(_testLogPow));
@@ -167,8 +177,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testLog10() throws IOException {
-	Mat	_testLogPow = new Mat(); 
-	_testLogPow.load("./test/data/input/miscellaneous.log.pow.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testLog10.mat");
     assertMatElementWiseEquals("", expected, Arma.log10(_testLogPow));
@@ -181,8 +189,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testTrunc_log() throws IOException {
-	Mat	_testLogPow = new Mat(); 
-	_testLogPow.load("./test/data/input/miscellaneous.log.pow.mat");
     Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testTrunc_log.mat");
     assertMatElementWiseEquals("", expected, Arma.trunc_log(_testLogPow));
@@ -195,8 +201,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testPow() throws IOException {
-	Mat	_testLogPow = new Mat(); 
-	_testLogPow.load("./test/data/input/miscellaneous.log.pow.mat");    
 	for (double power : _powers) {
       Mat expected = new Mat();
       expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testPow.p" + String.format(Locale.ENGLISH, "%1$1.6f", power) + ".mat");
@@ -211,8 +215,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testSqrt() throws IOException {
-	Mat	_testSqrt = new Mat(); 
-	_testSqrt.load("./test/data/input/miscellaneous.sqrt.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSqrt.mat");
     assertMatElementWiseEquals("", expected, Arma.sqrt(_testSqrt));
@@ -273,8 +275,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsMiscellaneous {
    */
   @Test
   public void testSign() throws IOException {
-	Mat	_testSign = new Mat(); 
-	_testSign.load("./test/data/input/miscellaneous.sign.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsMiscellaneous/testSign.mat");
     assertMatElementWiseEquals("", expected, Arma.sign(_testSign));

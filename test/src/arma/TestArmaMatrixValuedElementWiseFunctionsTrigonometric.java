@@ -39,19 +39,35 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
   public static Collection<Object[]> getTestMatrices() throws IOException {
     Collection<Object[]> testMatrices = new ArrayList<Object[]>();
 
-    Mat input = new Mat();
-
-    input.load("./test/data/input/trigonometric.mat");
-    testMatrices.add(new Object[]{new Mat(input)});
+    Mat without = new Mat();
+    Mat acosAsin = new Mat();
+    Mat acosh = new Mat();
+    Mat atanh = new Mat();
+    
+    without.load("./test/data/input/trigonometric.mat");
+    acosAsin.load("./test/data/input/trigonometric.acos.asin.mat");
+    acosh.load("./test/data/input/trigonometric.acosh.mat");
+    atanh.load("./test/data/input/trigonometric.atanh.mat");
+ 
+    testMatrices.add(new Object[]{new Mat(without),new Mat(acosAsin),new Mat(acosh),new Mat(atanh)});
 
     return testMatrices;
   }
 
   /**
-   * The test matrix
+   * The test matrices
    */
-  @Parameter
+  @Parameter(value = 0)
   public Mat _testMatrix;
+  
+  @Parameter(value = 1)
+  public Mat _testAcosAsin;
+  
+  @Parameter(value = 2)
+  public Mat _testAcosh;
+  
+  @Parameter(value = 3)
+  public Mat _testAtanh;
 
   /**
    * Test method for {@link arma.Arma#sin(arma.AbstractMat)}.
@@ -72,11 +88,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAsin() throws IOException {
-	Mat	_testAsin = new Mat(); 
-	_testAsin.load("./test/data/input/trigonometric.acos.asin.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAsin.mat");
-    assertMatElementWiseEquals("", expected, Arma.asin(_testAsin));
+    assertMatElementWiseEquals("", expected, Arma.asin(_testAcosAsin));
   }
 
   /**
@@ -122,11 +136,9 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAcos() throws IOException {
-	Mat	_testAcos = new Mat(); 
-	_testAcos.load("./test/data/input/trigonometric.acos.asin.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcos.mat");
-    assertMatElementWiseEquals("", expected, Arma.acos(_testAcos));
+    assertMatElementWiseEquals("", expected, Arma.acos(_testAcosAsin));
   }
 
   /**
@@ -148,8 +160,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAcosh() throws IOException {
-	Mat	_testAcosh = new Mat(); 
-	_testAcosh.load("./test/data/input/trigonometric.acosh.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAcosh.mat");
     assertMatElementWiseEquals("", expected, Arma.acosh(_testAcosh));
@@ -198,8 +208,6 @@ public class TestArmaMatrixValuedElementWiseFunctionsTrigonometric {
    */
   @Test
   public void testAtanh() throws IOException {
-	Mat	_testAtanh = new Mat(); 
-	_testAtanh.load("./test/data/input/trigonometric.atanh.mat");
 	Mat expected = new Mat();
     expected.load("./test/data/expected/TestArmaMatrixValuedElementWiseFunctionsTrigonometric/testAtanh.mat");
     assertMatElementWiseEquals("", expected, Arma.atanh(_testAtanh));
