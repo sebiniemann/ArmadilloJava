@@ -3045,6 +3045,7 @@ public class Arma {
    * are non-zero and a 0 otherwise.
    * 
    * @param X The matrix
+   * @param dim The dimension
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
@@ -3146,6 +3147,7 @@ public class Arma {
    * is non-zero and a 0 otherwise.
    * 
    * @param X The matrix
+   * @param dim The dimension
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
@@ -4070,7 +4072,7 @@ public class Arma {
    * @param V The vector
    * @param n_bins The number of bins
    * 
-   * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
+   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static Col hist(Col V, int n_bins) throws RuntimeException, IllegalArgumentException {
@@ -4106,7 +4108,7 @@ public class Arma {
    * @param V The vector
    * @param n_bins The number of bins
    * 
-   * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
+   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static Row hist(Row V, int n_bins) throws RuntimeException, IllegalArgumentException {
@@ -4123,15 +4125,50 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns the histogramm for each column of the provided matrix by using 10 uniformly distributed bins placed in
+   * regards to the range of values within the matrix.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
   public static Mat hist(Mat X) {
     return hist(X, 10);
   }
 
+  /**
+   * Returns the histogramm for each column of the provided matrix by using the specified number of uniformly
+   * distributed bins placed in regards to the range of values within the matrix.
+   * 
+   * @param X The matrix
+   * @param n_bins The number of bins
+   * 
+   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
   public static Mat hist(Mat X, int n_bins) {
     return hist(X, n_bins, 0);
   }
 
+  /**
+   * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix by using
+   * the specified number of uniformly distributed bins placed in regards to the range of values within the matrix.
+   * 
+   * @param X The matrix
+   * @param n_bins The number of bins
+   * @param dim The dimension
+   * 
+   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
   public static Mat hist(Mat X, int n_bins, int dim) {
+    if (n_bins < 0) {
+      throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
+    }
+
     Mat result = new Mat();
 
     switch (dim) {
@@ -4186,22 +4223,67 @@ public class Arma {
     result[result.length - 1] += temp[temp.length - 1];
   }
 
+  /**
+   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin centers.
+   * 
+   * @param V The vector
+   * @param centers The bin centers
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
   public static Col hist(Col V, AbstractMat centers) {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+
     Col result = new Col(V.n_elem);
     hist(result._data, V._data, centers._data);
     return result;
   }
 
+  /**
+   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin centers.
+   * 
+   * @param V The vector
+   * @param centers The bin centers
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
   public static Row hist(Row V, AbstractMat centers) {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+
     Row result = new Row(V.n_elem);
     hist(result._data, V._data, centers._data);
     return result;
   }
 
+  /**
+   * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin
+   * centers.
+   * 
+   * @param X The matrix
+   * @param centers The bin centers
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
   public static Mat hist(Mat X, AbstractMat centers) {
     return hist(X, centers, 0);
   }
 
+  /**
+   * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix for the
+   * provided, monotonically increasing bin centers.
+   * 
+   * @param X The matrix
+   * @param centers The bin centers
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
   public static Mat hist(Mat X, AbstractMat centers, int dim) {
     Mat result = new Mat();
 
@@ -4236,7 +4318,7 @@ public class Arma {
   }
 
   protected static void histc(double[] result, double[] V, double[] edges) {
-    for(int n = 0; n < V.length; n++) {
+    for (int n = 0; n < V.length; n++) {
       double element = V[n];
 
       double edge = edges[0];
@@ -4566,18 +4648,18 @@ public class Arma {
 
   protected static void stable_sort_index(double[] result, final double[] V, String sort_direction) {
     Integer[] temp = new Integer[result.length];
-    for(int n = 0; n < temp.length; n++) {
+    for (int n = 0; n < temp.length; n++) {
       temp[n] = n;
     }
-    
+
     Arrays.sort(temp, new Comparator<Integer>() {
       @Override
       public int compare(final Integer a, final Integer b) {
         return Double.compare(V[a], V[b]);
       }
     });
-    
-    for(int n = 0; n < temp.length; n++) {
+
+    for (int n = 0; n < temp.length; n++) {
       result[n] = temp[n];
     }
 
@@ -4727,7 +4809,7 @@ public class Arma {
     double[] temp = new double[sortedA.length];
     double currentValue = sortedA[0];
     temp[0] = currentValue;
-    
+
     int n = 0;
     for (int nn = 0; nn < sortedA.length; nn++) {
       double value = sortedA[n];
@@ -4919,7 +5001,7 @@ public class Arma {
   public static boolean is_finite(AbstractMat X) {
     return X.is_finite();
   }
-  
+
   /**
    * Returns true if the value is neither NaN nor +/-infinity.
    * 
