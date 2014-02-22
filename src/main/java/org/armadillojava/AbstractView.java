@@ -82,12 +82,9 @@ abstract class AbstractView {
 
   protected void inPlace(Op binary_operator, double rightHandOperand) {
     switch (binary_operator) {
-      case EQUAL:
-        iteratorReset();
-        while (iteratorHasNext()) {
-          _data[iteratorNext()] = rightHandOperand;
-        }
-        break;
+      /*
+       * EQUAL is unsupported, since each scalar is view as a 1x1 matrix for these kind of operations.
+       */
       case PLUS:
         iteratorReset();
         while (iteratorHasNext()) {
@@ -122,7 +119,7 @@ abstract class AbstractView {
     int n;
     switch (binary_operator) {
       case EQUAL:
-        inPlaceEqual(rightHandOperand);
+        replaceWith(rightHandOperand);
         break;
       case PLUS:
         iteratorReset();
@@ -160,7 +157,7 @@ abstract class AbstractView {
   protected void inPlace(Op binary_operator, AbstractView rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
-        inPlaceEqual(rightHandOperand);
+        replaceWith(rightHandOperand);
         break;
       case PLUS:
         iteratorReset();
@@ -195,14 +192,14 @@ abstract class AbstractView {
     }
   }
 
-  protected void inPlaceEqual(double rightHandOperand) {
+  protected void replaceWith(double rightHandOperand) {
     iteratorReset();
     while (iteratorHasNext()) {
       _data[iteratorNext()] = rightHandOperand;
     }
   }
 
-  protected void inPlaceEqual(AbstractMat rightHandOperand) {
+  protected void replaceWith(AbstractMat rightHandOperand) {
     iteratorReset();
     int n = 0;
     while (iteratorHasNext()) {
@@ -210,7 +207,7 @@ abstract class AbstractView {
     }
   }
 
-  protected void inPlaceEqual(AbstractView rightHandOperand) {
+  protected void replaceWith(AbstractView rightHandOperand) {
     iteratorReset();
     rightHandOperand.iteratorReset();
     while (iteratorHasNext()) {

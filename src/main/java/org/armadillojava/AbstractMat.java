@@ -1763,7 +1763,8 @@ abstract class AbstractMat {
   public void inPlace(Op binary_operator, double rightHandOperand) {
     switch (binary_operator) {
       case EQUAL:
-        fill(rightHandOperand);
+        set_size(1);
+        _data[0] = rightHandOperand;
         break;
       case PLUS:
         for (int n = 0; n < n_elem; n++) {
@@ -1865,8 +1866,8 @@ abstract class AbstractMat {
     AbstractMat copyOfRow1 = row(row1);
     AbstractView viewOfRow2 = new ViewSubRow(this, row2);
     
-    new ViewSubRow(this, row1).inPlaceEqual(viewOfRow2);
-    viewOfRow2.inPlaceEqual(copyOfRow1);
+    new ViewSubRow(this, row1).replaceWith(viewOfRow2);
+    viewOfRow2.replaceWith(copyOfRow1);
   }
 
   /**
