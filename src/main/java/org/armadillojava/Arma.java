@@ -97,13 +97,13 @@ public class Arma {
     }
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(N);
 
     if (N > 0) {
@@ -138,13 +138,13 @@ public class Arma {
      */
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(n_elem);
     result.fill(1);
 
@@ -214,13 +214,13 @@ public class Arma {
     }
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(n_elem);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -304,13 +304,13 @@ public class Arma {
      */
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(n_elem);
     result.randu();
 
@@ -353,13 +353,13 @@ public class Arma {
      */
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(n_elem);
     result.randn();
 
@@ -551,13 +551,13 @@ public class Arma {
      */
 
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     /*
      * All uninitialised matrices are already equal to a zero matrix.
      */
@@ -2297,7 +2297,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T min(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2340,12 +2340,12 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
   public static Mat min(Mat A, Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
-      throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + B.n_cols + " and " + A.n_rows + ", " + B.n_cols + ") must have the same shape.");
+      throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -2410,7 +2410,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T max(Class<T> return_type, Mat X, int dim) throws RuntimeException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2453,12 +2453,12 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
+   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
   public static Mat max(Mat A, Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
-      throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + B.n_cols + " and " + A.n_rows + ", " + B.n_cols + ") must have the same shape.");
+      throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -2529,7 +2529,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2619,7 +2619,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X, int dim) throws RuntimeException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2702,7 +2702,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2797,7 +2797,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T median(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -2933,7 +2933,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -3088,7 +3088,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -3165,21 +3165,6 @@ public class Arma {
   }
 
   /**
-   * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
-   * 
-   * @param X The matrix
-   * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   */
-  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException {
-    /*
-     * The parameter "X" is validated within all(Class<T>, Mat, int).
-     */
-
-    return all(return_type, X, 0);
-  }
-
-  /**
    * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where all elements
    * are non-zero and a 0 otherwise.
    * 
@@ -3192,7 +3177,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T all(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -3260,6 +3245,21 @@ public class Arma {
     return false;
   }
 
+  /**
+   * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
+  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within all(Class<T>, Mat, int).
+     */
+
+    return all(return_type, X, 0);
+  }
+
   protected static boolean any(AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
@@ -3300,7 +3300,7 @@ public class Arma {
    */
   public static <T extends AbstractVector> T any(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
@@ -3493,8 +3493,8 @@ public class Arma {
    * @param X The first matrix
    * @param Y The second matrix
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
-   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
+   *           {@code Y.n_cols}) must have the same shape.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
@@ -3515,8 +3515,8 @@ public class Arma {
    * @param Y The second matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
-   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
+   *           {@code Y.n_cols}) must have the same shape.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
@@ -3686,8 +3686,8 @@ public class Arma {
    * @param X The first matrix
    * @param Y The second matrix
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
-   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
+   *           {@code Y.n_cols}) must have the same shape.
    * @throws RuntimeException The first provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one
    *           element.
    * @throws RuntimeException The second provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one
@@ -3710,8 +3710,8 @@ public class Arma {
    * @param Y The second matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code B.n_cols} and {@code A.n_rows},
-   *           {@code B.n_cols}) must have the same shape.
+   * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
+   *           {@code Y.n_cols}) must have the same shape.
    * @throws RuntimeException The first provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one
    *           element.
    * @throws RuntimeException The second provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one
@@ -3719,8 +3719,8 @@ public class Arma {
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static Mat cov(Mat X, Mat Y, int norm_type) throws RuntimeException, IllegalArgumentException {
-    if (X.n_elem != Y.n_elem) {
-      throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
+    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
+      throw new RuntimeException("Both provided matrices (" + X.n_rows + ", " + X.n_cols + " and " + Y.n_rows + ", " + Y.n_cols + ") must have the same shape.");
     }
 
     if (X.is_empty()) {
@@ -4586,6 +4586,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Replaces the matrix with its tranpose in-place.
+   * 
+   * @param X The matrix
+   */
   public static void inplace_trans(Mat X) {
     int n = 0;
     for (int j = 0; j < X.n_cols; j++) {
@@ -4603,12 +4608,36 @@ public class Arma {
     }
   }
 
+  /**
+   * Returns the concatenation of the provided matrices along their rows.
+   * <p>
+   * The first provided matrix will be placed left and second one right.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
+   */
   public static Mat join_rows(AbstractMat A, AbstractMat B) {
     return join_horiz(A, B);
   }
 
+  /**
+   * Returns the concatenation of the provided matrices along their rows.
+   * <p>
+   * The first provided matrix will be placed left and second one right.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
+   */
   public static Mat join_horiz(AbstractMat A, AbstractMat B) {
-    Mat result = new Mat(A.n_rows + B.n_rows, A.n_cols);
+    if (A.n_rows != B.n_rows) {
+      throw new RuntimeException("Both matrices must have the same number of rows (" + A.n_rows + " and " + B.n_rows + ").");
+    }
+
+    Mat result = new Mat(A.n_rows, A.n_cols + B.n_cols);
 
     System.arraycopy(A._data, 0, result._data, 0, A.n_elem);
     System.arraycopy(B._data, 0, result._data, A.n_elem, B.n_elem);
@@ -4616,11 +4645,37 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns the concatenation of the provided matrices along their columns.
+   * <p>
+   * The first provided matrix will be placed above and second one below.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
+   *           ).
+   */
   public static Mat join_cols(AbstractMat A, AbstractMat B) {
     return join_vert(A, B);
   }
 
+  /**
+   * Returns the concatenation of the provided matrices along their columns.
+   * <p>
+   * The first provided matrix will be placed above and second one below.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
+   *           ).
+   */
   public static Mat join_vert(AbstractMat A, AbstractMat B) {
+    if (A.n_cols != B.n_cols) {
+      throw new RuntimeException("Both matrices must have the same number of columns (" + A.n_cols + " and " + B.n_cols + ").");
+    }
+
     Mat result = new Mat(A.n_rows + B.n_rows, A.n_cols);
 
     new ViewSubRows(result, 0, A.n_rows - 1).replaceWith(A);
@@ -4629,6 +4684,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns the kronecker product of the provided matrices.
+   * 
+   * @param A The left-hand matrix
+   * @param B The right-hand matrix
+   */
   public static Mat kron(AbstractMat A, AbstractMat B) {
     Mat result = repmat(B, A.n_rows, A.n_cols);
 
@@ -4648,12 +4709,28 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Resizes the provided matrix to the specified number of rows and columns and reuses existing values in a column-wise
+   * manner.
+   * 
+   * @param mat The matrix
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
   public static Mat reshape(Mat mat, int n_rows, int n_cols) {
     Mat result = new Mat(mat);
     result.reshape(n_rows, n_cols);
     return result;
   }
 
+  /**
+   * Resizes the matrix to the specified number of rows and columns and preserves existing values at their current
+   * position.
+   * 
+   * @param mat The matrix
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   */
   public static Mat resize(Mat mat, int n_rows, int n_cols) {
     Mat result = new Mat(mat);
     result.resize(n_rows, n_cols);
@@ -5035,13 +5112,13 @@ public class Arma {
 
   public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) throws IllegalArgumentException {
     T result;
-    
+
     try {
       result = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
       throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
     }
-    
+
     result.set_size(A.n_elem);
 
     switch (dim) {

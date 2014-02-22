@@ -255,7 +255,7 @@ public class Mat extends AbstractMat {
     if (k < 0 && -k <= n_rows) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
-    
+
     new ViewDiag(this, k).inPlace(binary_operator, operand);
   }
 
@@ -573,7 +573,7 @@ public class Mat extends AbstractMat {
       if (n_cols != X.n_cols) {
         throw new RuntimeException("Both matrices must have the same number of columns.");
       }
-      
+
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
@@ -591,9 +591,14 @@ public class Mat extends AbstractMat {
    * @param row_number The row position
    * @param number_of_rows The number of rows
    * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code number_of_rows}) must be positive.
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_rows(int row_number, int number_of_rows) throws IndexOutOfBoundsException {
+  public void insert_rows(int row_number, int number_of_rows) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    if (number_of_rows < 0) {
+      throw new NegativeArraySizeException("The specified number of rows (" + number_of_rows + ") must be positive.");
+    }
+    
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -623,7 +628,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) throws IndexOutOfBoundsException {
+  public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -657,7 +662,7 @@ public class Mat extends AbstractMat {
       if (n_rows != X.n_rows) {
         throw new RuntimeException("Both matrices must have the same number of rows.");
       }
-      
+
       double[] temp = Arrays.copyOf(_data, n_elem);
       set_size(n_rows, n_cols + X.n_cols);
 
@@ -673,9 +678,14 @@ public class Mat extends AbstractMat {
    * @param col_number The column position
    * @param number_of_cols The number of columns
    * 
+   * @throws NegativeArraySizeException The specified number of columns ({@code number_of_cols}) must be positive.
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
+  public void insert_cols(int col_number, int number_of_cols) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    if (number_of_cols < 0) {
+      throw new NegativeArraySizeException("The specified number of columns (" + number_of_cols + ") must be positive.");
+    }
+    
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
@@ -702,7 +712,7 @@ public class Mat extends AbstractMat {
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
    */
-  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) throws IndexOutOfBoundsException {
+  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -787,8 +797,14 @@ public class Mat extends AbstractMat {
 
   /**
    * Resizes the matrix to the specified number of rows and columns and sets all elements to 1.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void ones(int n_rows, int n_cols) {
+  public void ones(int n_rows, int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     fill(1);
   }
@@ -798,8 +814,14 @@ public class Mat extends AbstractMat {
    * from the standard uniform distribution on the left-closed and right-open interval [0,1).
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void randu(int n_rows, int n_cols) {
+  public void randu(int n_rows, int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
@@ -809,8 +831,14 @@ public class Mat extends AbstractMat {
   /**
    * Resizes the matrix to the specified number of rows and columns and sets each element to a pseudo-random value drawn
    * from the standard normal distribution with mean 0.0 and standard deviation 1.0.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void randn(int n_rows, int n_cols) {
+  public void randn(int n_rows, int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
@@ -819,8 +847,14 @@ public class Mat extends AbstractMat {
 
   /**
    * Resizes the matrix to the specified number of rows and columns and sets all elements to 0.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void zeros(int n_rows, int n_cols) {
+  public void zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
   }
 
@@ -829,20 +863,27 @@ public class Mat extends AbstractMat {
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void reshape(int n_rows, int n_cols) {
+  public void reshape(int n_rows, int n_cols) throws NegativeArraySizeException {
     double[] temp = Arrays.copyOf(_data, Math.min(n_elem, n_rows * n_cols));
     set_size(n_rows, n_cols);
     System.arraycopy(temp, 0, _data, 0, temp.length);
   }
 
   /**
-   * Resizes the matrix to the specified number of rows and columns and preserves existing values at the same position.
+   * Resizes the matrix to the specified number of rows and columns and preserves existing values at their current
+   * position.
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void resize(int n_rows, int n_cols) {
+  public void resize(int n_rows, int n_cols) throws NegativeArraySizeException {
     Mat temp = new Mat(this);
     set_size(n_rows, n_cols);
 
@@ -856,7 +897,19 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void set_size(int n_rows, int n_cols) {
+  /**
+   * Resizes the vector to the specified number of rows and columns.
+   * <p>
+   * If the requested size is equal to the current size, the existing memory is reused. Otherwise, new memory will be
+   * allocated and left uninitialised.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
+   */
+  public void set_size(int n_rows, int n_cols) throws NegativeArraySizeException {
     if (n_rows < 0) {
       throw new NegativeArraySizeException("The specified number of rows (" + n_rows + ") must be positive.");
     }
