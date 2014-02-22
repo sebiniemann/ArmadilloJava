@@ -4530,11 +4530,10 @@ public class Arma {
   }
 
   /**
-   * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin
-   * centers.
+   * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin edges.
    * 
    * @param X The matrix
-   * @param centers The bin centers
+   * @param centers The bin edges
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
@@ -4542,6 +4541,18 @@ public class Arma {
     return hist(X, edges, 0);
   }
 
+  /**
+   * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix for the
+   * provided, monotonically increasing bin edges.
+   * 
+   * @param X The matrix
+   * @param centers The bin edges
+   * @param dim The dimension
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
   public static Mat histc(Mat X, AbstractMat edges, int dim) {
     Mat result = new Mat();
 
