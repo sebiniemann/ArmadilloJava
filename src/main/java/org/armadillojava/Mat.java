@@ -1,7 +1,5 @@
 package org.armadillojava;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 import org.netlib.util.intW;
@@ -123,8 +121,8 @@ public class Mat extends AbstractMat {
   /**
    * Returns a deep copy of the main diagonal.
    */
-  public <T extends Col> T diag(Constructor<T> return_type) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    return return_type.newInstance(new ViewDiag(this, 0));
+  public Col diag() {
+    return new Col(new ViewDiag(this, 0));
   }
 
   /**
@@ -169,7 +167,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public <T extends Col> T diag(int k) throws IndexOutOfBoundsException {
+  public Col diag(int k) throws IndexOutOfBoundsException {
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
