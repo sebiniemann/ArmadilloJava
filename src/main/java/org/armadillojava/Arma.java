@@ -64,7 +64,7 @@ public class Arma {
    * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
    *           value to end with ({@code end}).
    */
-  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end) throws RuntimeException {
     /*
      * The parameters "start" and "end" are validated within linspace(Class<T>, int, int, int).
      */
@@ -87,7 +87,7 @@ public class Arma {
    *           value to end with ({@code end}).
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
-  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end, int N) throws RuntimeException, NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end, int N) throws RuntimeException, NegativeArraySizeException {
     /*
      * The parameter "N" is validated within set_size(int).
      */
@@ -96,7 +96,14 @@ public class Arma {
       throw new RuntimeException("The specified value to start with (" + start + ") must be less than or equal the specified value to end with (" + end + ").");
     }
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(N);
 
     if (N > 0) {
@@ -125,12 +132,19 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T ones(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T ones(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(n_elem);
     result.fill(1);
 
@@ -164,7 +178,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within randi(Class<T>, int, DistrParam).
      */
@@ -186,7 +200,7 @@ public class Arma {
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
-  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -199,7 +213,14 @@ public class Arma {
       throw new RuntimeException("The difference between the first end point (" + distr_param._a + ") and the last end point (" + distr_param._b + ") can be at most Integer.MAX_VALUE - 1.");
     }
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(n_elem);
 
     for (int n = 0; n < result.n_elem; n++) {
@@ -277,12 +298,19 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randu(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T randu(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(n_elem);
     result.randu();
 
@@ -319,12 +347,19 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randn(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T randn(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(n_elem);
     result.randn();
 
@@ -403,7 +438,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat toeplitz(AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static Mat toeplitz(AbstractMat A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -441,7 +476,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in
    *           shape to a vector.
    */
-  public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -481,7 +516,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -510,13 +545,22 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T zeros(Class<T> return_type, int n_elem) throws NegativeArraySizeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T zeros(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
-     * All uninitialised matrices are already equal to a zero matrix.
      */
 
-    T result = return_type.newInstance();
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
+    /*
+     * All uninitialised matrices are already equal to a zero matrix.
+     */
     result.set_size(n_elem);
 
     return result;
@@ -1772,8 +1816,8 @@ public class Arma {
      */
 
     // TODO Add exceptions thrown by svd(AbstractMat).
-    Col singularValues = svd(A);
-
+    AbstractVector singularValues = new Col();
+    svd(singularValues, A);
     return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
   }
 
@@ -1906,6 +1950,49 @@ public class Arma {
   }
 
   /**
+   * Returns the specified norm of the provided vector.
+   * 
+   * @param X The vector
+   * @param p The norm
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
+   * @throws IllegalArgumentException The norm indicator ({@code p}) must be strict greater than 0.
+   */
+  public static double norm(AbstractVector X, int p) throws RuntimeException, IllegalArgumentException {
+    if (X.empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
+    }
+
+    double norm = 0;
+
+    if (p < 0) {
+      throw new IllegalArgumentException("The norm indicator (" + p + ") must be strict greater than 0.");
+    }
+
+    switch (p) {
+      case 1:
+        for (int n = 0; n < X.n_elem; n++) {
+          norm += Math.abs(X._data[n]);
+        }
+        break;
+      case 2:
+        for (int n = 0; n < X.n_elem; n++) {
+          norm += Math.pow(X._data[n], 2);
+        }
+        norm = Math.sqrt(norm);
+        break;
+      default:
+        for (int n = 0; n < X.n_elem; n++) {
+          norm += Math.pow(Math.abs(X._data[n]), p);
+        }
+        norm = Math.pow(norm, 1 / p);
+        break;
+    }
+
+    return norm;
+  }
+
+  /**
    * Returns the specified norm of the provided matrix.
    * <p>
    * If the provided matrix is not equivalent in shape to a vector, an induced matrix norm is computed.
@@ -1914,10 +2001,12 @@ public class Arma {
    * @param p The norm
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
-   * @throws IllegalArgumentException For vectors, the norm indicator ({@code p}) must be strict greater than 0.
-   * @throws IllegalArgumentException For non-vectors, the norm indicator ({@code p}) must be one of 1 or 2.
+   * @throws IllegalArgumentException For matrices in vector shape, the norm indicator ({@code p}) must be strict
+   *           greater than 0.
+   * @throws IllegalArgumentException For matrices in non-vector shape, the norm indicator ({@code p}) must be one of 1
+   *           or 2.
    */
-  public static double norm(AbstractMat X, int p) throws RuntimeException, IllegalArgumentException {
+  public static double norm(Mat X, int p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -1926,7 +2015,7 @@ public class Arma {
 
     if (X.is_vec()) {
       if (p < 0) {
-        throw new IllegalArgumentException("For vectors, the norm indicator (" + p + ") must be strict greater than 0.");
+        throw new IllegalArgumentException("For matrices in vector shape, the norm indicator (" + p + ") must be strict greater than 0.");
       }
 
       switch (p) {
@@ -1951,7 +2040,7 @@ public class Arma {
 
     } else {
       if (p != 1 && p != 2) {
-        throw new IllegalArgumentException("For non-vectors, the norm indicator (" + p + ") must be one of 1 or 2.");
+        throw new IllegalArgumentException("For matrices in non-vector shape, the norm indicator (" + p + ") must be one of 1 or 2.");
       }
 
       switch (p) {
@@ -1968,7 +2057,8 @@ public class Arma {
           }
           break;
         case 2:
-          Col singularValues = svd((Mat) X);
+          AbstractVector singularValues = new Col();
+          svd(singularValues, X);
           norm = singularValues._data[0];
           break;
       }
@@ -2050,7 +2140,7 @@ public class Arma {
   /**
    * Returns the rank of the provided matrix based on singular value decomposition.
    * <p>
-   * All singular values smaller than {@code Math.max(X.n_rows, X.n_cols) * Math.ulp(X.max())} are treated as zero.
+   * All singular values smaller than {@code Math.max(X.n_rows, X.n_cols) * Math.ulp(norm(X, 2))} are treated as zero.
    * 
    * @param X The matrix
    * 
@@ -2061,7 +2151,7 @@ public class Arma {
      * The parameter "X" is validated within rank(AbstractMat, double).
      */
 
-    return rank(X, Math.max(X.n_rows, X.n_cols) * Math.ulp(X.max()));
+    return rank(X, Math.max(X.n_rows, X.n_cols) * Math.ulp(norm(X, 2)));
   }
 
   /**
@@ -2080,7 +2170,8 @@ public class Arma {
      */
 
     // TODO Add exceptions thrown by svd(AbstractMat).
-    Col singularValues = svd(X);
+    AbstractVector singularValues = new Col();
+    svd(singularValues, X);
 
     int rank = 0;
     for (int n = 0; n < singularValues.n_elem; n++) {
@@ -2186,7 +2277,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "V" is validated within min(Class<T>, Mat, int).
      */
@@ -2204,8 +2295,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2293,7 +2390,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "V" is validated within max(Class<T>, Mat, int).
      */
@@ -2311,8 +2408,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X, int dim) throws RuntimeException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2406,7 +2509,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within prod(Class<T>, Mat, int).
      */
@@ -2424,8 +2527,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2490,7 +2599,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within sum(Class<T>, Mat, int).
      */
@@ -2508,8 +2617,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X, int dim) throws RuntimeException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2567,7 +2682,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within mean(Class<T>, Mat, int).
      */
@@ -2585,8 +2700,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2656,7 +2777,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within median(Class<T>, Mat, int).
      */
@@ -2674,8 +2795,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -2765,7 +2892,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int).
      */
@@ -2783,7 +2910,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type) throws RuntimeException {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int, int).
      */
@@ -2804,8 +2931,14 @@ public class Arma {
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (norm_type) {
       case 0:
@@ -2914,7 +3047,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int).
      */
@@ -2932,7 +3065,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type) throws RuntimeException {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int, int).
      */
@@ -2953,8 +3086,14 @@ public class Arma {
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (norm_type) {
       case 0:
@@ -3032,7 +3171,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within all(Class<T>, Mat, int).
      */
@@ -3051,8 +3190,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -3133,7 +3278,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X) throws RuntimeException, InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within any(Class<T>, Mat, int).
      */
@@ -3153,8 +3298,14 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException, InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
 
     switch (dim) {
       case 0:
@@ -4133,7 +4284,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X) {
+  public static Mat hist(Mat X) throws RuntimeException {
     return hist(X, 10);
   }
 
@@ -4147,7 +4298,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X, int n_bins) {
+  public static Mat hist(Mat X, int n_bins) throws NegativeArraySizeException, RuntimeException {
     return hist(X, n_bins, 0);
   }
 
@@ -4164,7 +4315,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(Mat X, int n_bins, int dim) {
+  public static Mat hist(Mat X, int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
@@ -4231,7 +4382,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col hist(Col V, AbstractMat centers) {
+  public static Col hist(Col V, AbstractMat centers) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4249,7 +4400,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row hist(Row V, AbstractMat centers) {
+  public static Row hist(Row V, AbstractMat centers) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4268,7 +4419,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X, AbstractMat centers) {
+  public static Mat hist(Mat X, AbstractMat centers) throws RuntimeException {
     return hist(X, centers, 0);
   }
 
@@ -4284,7 +4435,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(Mat X, AbstractMat centers, int dim) {
+  public static Mat hist(Mat X, AbstractMat centers, int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4342,18 +4493,51 @@ public class Arma {
     }
   }
 
-  public static Col histc(Col V, AbstractMat edges) {
+  /**
+   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin edges.
+   * 
+   * @param V The vector
+   * @param centers The bin edges
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
+  public static Col histc(Col V, AbstractMat edges) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+
     Col result = new Col(V.n_elem);
     histc(result._data, V._data, edges._data);
     return result;
   }
 
-  public static Row histc(Row V, AbstractMat edges) {
+  /**
+   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin edges.
+   * 
+   * @param V The vector
+   * @param centers The bin edges
+   * 
+   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   */
+  public static Row histc(Row V, AbstractMat edges) throws RuntimeException {
+    if (V.is_empty()) {
+      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
+    }
+
     Row result = new Row(V.n_elem);
     histc(result._data, V._data, edges._data);
     return result;
   }
 
+  /**
+   * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin
+   * centers.
+   * 
+   * @param X The matrix
+   * @param centers The bin centers
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
   public static Mat histc(Mat X, AbstractMat edges) {
     return hist(X, edges, 0);
   }
@@ -4614,14 +4798,6 @@ public class Arma {
     return result;
   }
 
-  public static Col svd(Mat X) {
-    if (X.empty()) {
-      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
-    }
-
-    // TODO add
-  }
-
   protected static void sort_index(double[] result, double[] V, String sort_direction) {
     stable_sort_index(result, V, sort_direction);
   }
@@ -4842,12 +5018,19 @@ public class Arma {
     return result;
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) throws InstantiationException, IllegalAccessException {
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) {
     return vectorise(return_type, A, 0);
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) throws InstantiationException, IllegalAccessException {
-    T result = return_type.newInstance();
+  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) throws IllegalArgumentException {
+    T result;
+    
+    try {
+      result = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+    
     result.set_size(A.n_elem);
 
     switch (dim) {
@@ -4870,7 +5053,9 @@ public class Arma {
   }
 
   public static Mat chol(Mat X) {
-    // TODO add
+    Mat R = new Mat();
+    inv_sympd(R, X);
+    return R;
   }
 
   public static void chol(Mat R, Mat X) {
@@ -4878,7 +5063,16 @@ public class Arma {
   }
 
   public static <T extends AbstractVector> T eig_sym(Class<T> return_type, Mat X) {
-    // TODO add
+    T eigval;
+
+    try {
+      eigval = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+
+    eig_sym(eigval, X);
+    return eigval;
   }
 
   public static void eig_sym(AbstractVector eigval, Mat X) {
@@ -4890,7 +5084,9 @@ public class Arma {
   }
 
   public static Mat inv(Mat A) {
-    // TODO add
+    Mat B = new Mat();
+    inv(B, A);
+    return B;
   }
 
   public static void inv(Mat B, Mat A) {
@@ -4898,7 +5094,9 @@ public class Arma {
   }
 
   public static Mat inv_sympd(Mat A) {
-    // TODO add
+    Mat B = new Mat();
+    inv_sympd(B, A);
+    return B;
   }
 
   public static void inv_sympd(Mat B, Mat A) {
@@ -4914,15 +5112,17 @@ public class Arma {
   }
 
   public static Mat pinv(Mat A) {
-    // TODO add
+    return pinv(A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
   public static Mat pinv(Mat A, double tolerance) {
-    // TODO add
+    Mat B = new Mat();
+    pinv(B, A, tolerance);
+    return B;
   }
 
   public static void pinv(Mat B, Mat A) {
-    // TODO add
+    pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
   public static void pinv(Mat B, Mat A, double tolerance) {
@@ -4930,7 +5130,9 @@ public class Arma {
   }
 
   public static Mat princomp(Mat X) {
-    // TODO add
+    Mat coeff = new Mat();
+    solve(coeff, X);
+    return coeff;
   }
 
   public static void princomp(Mat coeff, Mat X) {
@@ -4958,7 +5160,9 @@ public class Arma {
   }
 
   public static Mat solve(Mat A, Mat B) {
-    // TODO add
+    Mat X = new Mat();
+    solve(X, A, B);
+    return X;
   }
 
   public static void solve(Mat X, Mat A, Mat B) {
@@ -4966,10 +5170,23 @@ public class Arma {
   }
 
   public static <T extends AbstractVector> T svd(Class<T> return_type, Mat X) {
-    // TODO add
+    T s;
+
+    try {
+      s = return_type.newInstance();
+    } catch(InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+    }
+
+    svd(s, X);
+    return s;
   }
 
   public static void svd(AbstractVector s, Mat X) {
+    if (X.empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+
     // TODO add
   }
 
@@ -4986,7 +5203,9 @@ public class Arma {
   }
 
   public static Mat syl(Mat A, Mat B, Mat C) {
-    // TODO add
+    Mat X = new Mat();
+    syl(X, A, B, C);
+    return X;
   }
 
   public static void syl(Mat X, Mat A, Mat B, Mat C) {
