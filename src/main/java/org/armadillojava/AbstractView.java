@@ -192,26 +192,26 @@ abstract class AbstractView {
     }
   }
 
-  protected void replaceWith(double rightHandOperand) {
+  protected void replaceWith(double X) {
     iteratorReset();
     while (iteratorHasNext()) {
-      _data[iteratorNext()] = rightHandOperand;
+      _data[iteratorNext()] = X;
     }
   }
 
-  protected void replaceWith(AbstractMat rightHandOperand) {
+  protected void replaceWith(AbstractMat X) {
     iteratorReset();
     int n = 0;
     while (iteratorHasNext()) {
-      _data[iteratorNext()] = rightHandOperand._data[n++];
+      _data[iteratorNext()] = X._data[n++];
     }
   }
 
-  protected void replaceWith(AbstractView rightHandOperand) {
+  protected void replaceWith(AbstractView X) {
     iteratorReset();
-    rightHandOperand.iteratorReset();
+    X.iteratorReset();
     while (iteratorHasNext()) {
-      _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
+      _data[iteratorNext()] = X._data[X.iteratorNext()];
     }
   }
 }

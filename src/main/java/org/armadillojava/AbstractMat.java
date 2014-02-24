@@ -2407,4 +2407,9 @@ abstract class AbstractMat {
   protected boolean is_rowvec() {
     return (n_rows == 1);
   }
+
+  protected void replaceWith(AbstractMat X) {
+    copy_size(X);
+    _data = Arrays.copyOf(X._data, X.n_elem);
+  }
 }

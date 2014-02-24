@@ -1816,7 +1816,7 @@ public class Arma {
      */
 
     // TODO Add exceptions thrown by svd(AbstractMat).
-    AbstractVector singularValues = new Col();
+    Col singularValues = new Col();
     svd(singularValues, A);
     return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
   }
@@ -1828,6 +1828,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   * @throws RuntimeException The factorisation could not be completed. The provided matrix appears to be singular.
    */
   public static double det(Mat A) throws RuntimeException {
     if (A.empty()) {
@@ -1838,16 +1839,13 @@ public class Arma {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
 
-    /*
-     * The following computation is based on how its done in Armadillo C++ 4.100.0.
-     */
     double[] temp = Arrays.copyOf(A._data, A.n_elem);
     int[] pivotIndices = new int[Math.min(A.n_rows, A.n_cols)];
     intW info = new intW(0);
 
     LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
     if (info.val != 0) {
-      throw new RuntimeException("The matrix appears to be singular.");
+      throw new RuntimeException("The factorisation could not be completed. The provided matrix appears to be singular.");
     }
 
     double determinant = temp[0];
@@ -1910,6 +1908,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   * @throws RuntimeException The factorisation could not be completed. The provided matrix appears to be singular.
    */
   public static void log_det(double[] val, int[] sign, Mat A) throws RuntimeException {
     if (A.empty()) {
@@ -1929,7 +1928,7 @@ public class Arma {
 
     LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
     if (info.val != 0) {
-      throw new RuntimeException("The matrix appears to be singular.");
+      throw new RuntimeException("The factorisation could not be completed. The provided matrix appears to be singular.");
     }
 
     double determinant = temp[0];
@@ -2057,7 +2056,7 @@ public class Arma {
           }
           break;
         case 2:
-          AbstractVector singularValues = new Col();
+          Col singularValues = new Col();
           svd(singularValues, X);
           norm = singularValues._data[0];
           break;
@@ -2170,7 +2169,7 @@ public class Arma {
      */
 
     // TODO Add exceptions thrown by svd(AbstractMat).
-    AbstractVector singularValues = new Col();
+    Col singularValues = new Col();
     svd(singularValues, X);
 
     int rank = 0;
@@ -5147,7 +5146,14 @@ public class Arma {
   }
 
   public static void chol(Mat R, Mat X) {
-    // TODO add
+    R.replaceWith(X);
+
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dpotrf("U", X.n_rows, R._data, X.n_rows, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is positive-definite.");
+    }
   }
 
   public static <T extends AbstractVector> T eig_sym(Class<T> return_type, Mat X) {
@@ -5164,11 +5170,31 @@ public class Arma {
   }
 
   public static void eig_sym(AbstractVector eigval, Mat X) {
-    // TODO add
+    /*
+     * The size of this arrays is defined by the specification of the LAPACK routine.
+     */
+    double[] work = new double[3 * (X.n_rows - 1)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dsyev("N", "U", X.n_rows, X._data, X.n_rows, eigval._data, work, work.length, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+    }
   }
 
   public static void eig_sym(AbstractVector eigval, Mat eigvec, Mat X) {
-    // TODO add
+    eigvec.replaceWith(X);
+
+    /*
+     * The size of this arrays is defined by the specification of the LAPACK routine.
+     */
+    double[] work = new double[3 * (X.n_rows - 1)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, X.n_rows, eigval._data, work, work.length, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+    }
   }
 
   public static Mat inv(Mat A) {
@@ -5178,7 +5204,7 @@ public class Arma {
   }
 
   public static void inv(Mat B, Mat A) {
-    // TODO add
+    B.replaceWith(A.i());
   }
 
   public static Mat inv_sympd(Mat A) {
@@ -5188,15 +5214,132 @@ public class Arma {
   }
 
   public static void inv_sympd(Mat B, Mat A) {
-    // TODO add
+    B.replaceWith(A);
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dpotrf("U", A.n_rows, B._data, 0, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is positive-definite.");
+    }
+
+    LAPACK.getInstance().dpotri("U", A.n_rows, B._data, 0, info);
+    if (info.val != 0) {
+      throw new RuntimeException("The inverse could not be computed. The provided matrix appears to be singular.");
+    }
   }
 
-  public static void lu(Mat L, Mat U, Mat P, Mat X) {
-    // TODO add
+  public static boolean lu(Mat L, Mat U, Mat P, Mat X) {
+    U.replaceWith(X);
+
+    int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dgetrf(X.n_rows, X.n_cols, U._data, X.n_rows, pivotIndices, info);
+    if (info.val != 0) {
+      return false;
+    }
+
+    L.copy_size(U);
+
+    for (int j = 0; j < X.n_cols; j++) {
+      for (int i = 0; i < X.n_rows; i++) {
+        if (i < j) {
+          /*
+           * strict upper triangle
+           */
+          L._data[i + j * L.n_rows] = 0;
+        } else if (i == j) {
+          /*
+           * main diagonal
+           */
+          L._data[i + j * L.n_rows] = 1;
+        } else {
+          /*
+           * strict lower triangle
+           */
+          L._data[i + j * L.n_rows] = U._data[i + j * U.n_rows];
+          U._data[i + j * U.n_rows] = 0;
+        }
+      }
+    }
+
+    int[] pivotVector = new int[pivotIndices.length];
+    for (int n = 0; n < pivotVector.length; n++) {
+      pivotVector[n] = n;
+    }
+
+    for (int n = 0; n < pivotVector.length; n++) {
+      int nn = pivotIndices[n] - 1;
+
+      if (pivotVector[n] != pivotVector[nn]) {
+        int temp = pivotVector[n];
+        pivotVector[n] = pivotVector[nn];
+        pivotVector[nn] = temp;
+      }
+    }
+
+    P.zeros(X.n_rows, X.n_rows);
+    for (int i = 0; i < P.n_rows; i++) {
+      P._data[i + pivotIndices[i] * P.n_rows] = 1;
+    }
+
+    if (L.n_cols > U.n_rows) {
+      L.shed_cols(U.n_rows, L.n_cols - 1);
+    }
+
+    if (U.n_rows > L.n_cols) {
+      U.shed_rows(L.n_cols, U.n_rows - 1);
+    }
+
+    return true;
   }
 
-  public static void lu(Mat L, Mat U, Mat X) {
-    // TODO add
+  public static boolean lu(Mat L, Mat U, Mat X) {
+    U.replaceWith(X);
+
+    int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dgetrf(X.n_rows, X.n_cols, U._data, X.n_rows, pivotIndices, info);
+    if (info.val != 0) {
+      return false;
+    }
+
+    L.copy_size(U);
+
+    for (int j = 0; j < X.n_cols; j++)
+    {
+      for (int i = 0; i < X.n_rows; i++)
+      {
+        if (i < j) {
+          /*
+           * strict upper triangle
+           */
+          L._data[i + j * L.n_rows] = 0;
+        } else if (i == j) {
+          /*
+           * main diagonal
+           */
+          L._data[i + j * L.n_rows] = 1;
+        } else {
+          /*
+           * strict lower triangle
+           */
+          L._data[i + j * L.n_rows] = U._data[i + j * U.n_rows];
+          U._data[i + j * U.n_rows] = 0;
+        }
+      }
+    }
+
+    if (L.n_cols > U.n_rows) {
+      L.shed_cols(U.n_rows, L.n_cols - 1);
+    }
+
+    if (U.n_rows > L.n_cols) {
+      U.shed_rows(L.n_cols, U.n_rows - 1);
+    }
+
+    return true;
   }
 
   public static Mat pinv(Mat A) {
@@ -5206,15 +5349,68 @@ public class Arma {
   public static Mat pinv(Mat A, double tolerance) {
     Mat B = new Mat();
     pinv(B, A, tolerance);
+    // TODO add exception is pinv returns false
     return B;
   }
 
-  public static void pinv(Mat B, Mat A) {
-    pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
+  public static boolean pinv(Mat B, Mat A) {
+    return pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
-  public static void pinv(Mat B, Mat A, double tolerance) {
-    // TODO add
+  public static boolean pinv(Mat B, Mat A, double tolerance) {
+    Mat U = new Mat();
+    Col s = new Col();
+    Mat V = new Mat();
+
+    boolean status;
+
+    if (A.n_cols > A.n_rows) {
+      status = svd_econ(U, s, V, A.t());
+    } else {
+      status = svd_econ(U, s, V, A);
+    }
+
+    if (status == false) {
+      return  false;
+    }
+
+    int count = 0;
+    for (int n = 0; n < s.n_elem; n++) {
+      if (s._data[n] > tolerance) {
+        count++;
+      }
+    }
+    
+    if(count > 0) {
+      /*
+       * Contains all singular values that are larger than the specififed tolerance.
+       */
+      Col singularValues = new Col(count);
+      
+      int n = 0;
+      for (int nn = 0; nn < s.n_elem; nn++) {
+        double value = s._data[nn];
+        if (value > tolerance) {
+          singularValues._data[n++] = 1 / value;
+        }
+      }
+      
+      if(V.n_cols > count) {
+        V = V.cols(0, count - 1);
+      }
+      
+      if(U.n_cols > count) {
+        U = U.cols(0, count - 1);
+      }
+      
+      if(A.n_rows >= A.n_cols) {
+        B.replaceWith(V.times(diagmat(singularValues).times(U.t())));
+      } else {
+        B.replaceWith(U.times(diagmat(singularValues).times(V.t())));
+      }
+    }
+    
+    return true;
   }
 
   public static Mat princomp(Mat X) {
@@ -5282,11 +5478,11 @@ public class Arma {
     // TODO add
   }
 
-  public static void svd_econ(Mat U, AbstractVector s, Mat V, Mat X) {
+  public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X) {
     // TODO add
   }
 
-  public static void svd_econ(Mat U, AbstractVector s, Mat V, Mat X, String side) {
+  public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X, String side) {
     // TODO add
   }
 
