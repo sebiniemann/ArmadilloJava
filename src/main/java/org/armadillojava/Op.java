@@ -26,10 +26,6 @@ package org.armadillojava;
  */
 public enum Op {
   /**
-   * Negate (unary arithmetic operator)
-   */
-  NEGATE,
-  /**
    * Pre-increment (unary arithmetic operator)
    */
   INCREMENT,

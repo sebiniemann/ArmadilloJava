@@ -413,13 +413,11 @@ public class Mat extends AbstractMat {
    * @param n The position
    * @param unary_operator The unary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unsupported operator {@code unary_operator}.
    */
-  public void at(int i, int j, Op unary_operator) {
+  public void at(int i, int j, Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
-      case NEGATE:
-        int position = i + j * n_rows;
-        _data[position] = -_data[position];
-        break;
       case INCREMENT:
         _data[i + j * n_rows]++;
         break;
@@ -427,7 +425,7 @@ public class Mat extends AbstractMat {
         _data[i + j * n_rows]--;
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operator " + unary_operator +".");
     }
   }
 
@@ -438,8 +436,10 @@ public class Mat extends AbstractMat {
    * @param n The position
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unsupported operator {@code binary_operator}.
    */
-  public void at(int i, int j, Op binary_operator, double operand) {
+  public void at(int i, int j, Op binary_operator, double operand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case EQUAL:
         _data[i + j * n_rows] = operand;
@@ -458,7 +458,7 @@ public class Mat extends AbstractMat {
         _data[i + j * n_rows] /= operand;
         break;
       default:
-        throw new UnsupportedOperationException("Internal Error: Unsupported operation.");
+        throw new UnsupportedOperationException("Unsupported operator " + binary_operator +".");
     }
   }
 
@@ -965,86 +965,6 @@ public class Mat extends AbstractMat {
 
     System.arraycopy(temp, 0, _data, 0, first_column * n_rows);
     System.arraycopy(temp, (last_column + 1) * n_rows, _data, 0, n_elem - (last_column + 1) * n_rows);
-  }
-
-  @Override
-  public Col col(int col_number) {
-    int n = col_number * n_rows;
-    return new Col(Arrays.copyOfRange(_data, n, n + n_rows));
-  }
-
-  @Override
-  public Row row(int row_number) {
-    return new Row(new ViewSubRow(this, row_number));
-  }
-
-  @Override
-  public Mat cols(int first_col, int last_col) {
-    Mat cols = new Mat(n_rows, last_col - first_col + 1);
-    System.arraycopy(_data, first_col * n_rows, cols._data, 0, cols.n_elem);
-    return cols;
-  }
-
-  @Override
-  public Mat rows(int first_row, int last_row) {
-    return new Mat(new ViewSubRows(this, first_row, last_row - first_row + 1));
-  }
-
-  @Override
-  public Col col(Span span, int col_number) {
-    int n = col_number * n_rows;
-    return new Col(Arrays.copyOfRange(_data, n, n + n_rows));
-  }
-
-  @Override
-  public Row row(int row_number, Span span) {
-    return new Row(new ViewSubRow(this, row_number, span._first, span._last - span._first + 1));
-  }
-
-  @Override
-  public Mat submat(int first_row, int first_col, int last_row, int last_col) {
-    if (!in_range(first_col)) {
-      throw new IndexOutOfBoundsException("The first column position (" + first_col + ") is out of bounds.");
-    }
-
-    if (!in_range(last_col)) {
-      throw new IndexOutOfBoundsException("The last column position (" + last_col + ") is out of bounds.");
-    }
-
-    /**
-     * The first and only column is the same as the whole column vector.
-     */
-    return rows(first_row, last_row);
-  }
-
-  @Override
-  public Mat submat(Span row_span, Span col_span) {
-    return new Mat(new ViewSubMat(this, row_span._first, col_span._first, row_span._last - row_span._first + 1, col_span._last - col_span._first + 1));
-  }
-
-  @Override
-  public Mat submat(int first_row, int first_col, Size size) {
-    return new Mat(new ViewSubMat(this, first_row, first_col, size.n_rows, size.n_cols));
-  }
-
-  @Override
-  public Col elem(AbstractMat vector_of_indices) {
-    return new Col(new ViewElemMat(this, vector_of_indices));
-  }
-
-  @Override
-  public Mat cols(AbstractMat vector_of_column_indices) {
-    return new Mat(new ViewElemCols(this, vector_of_column_indices));
-  }
-
-  @Override
-  public Mat rows(AbstractMat vector_of_row_indices) {
-    return new Mat(new ViewElemRows(this, vector_of_row_indices));
-  }
-
-  @Override
-  public Mat submat(AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices) {
-    return new Mat(new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices));
   }
 
   @Override

@@ -43,11 +43,10 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat eye(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat eye(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
-
     return new Mat(n_rows, n_cols, Fill.EYE);
   }
 
@@ -64,11 +63,10 @@ public class Arma {
    * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
    *           value to end with ({@code end}).
    */
-  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end) throws RuntimeException {
+  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final int start, final int end) throws RuntimeException {
     /*
      * The parameters "start" and "end" are validated within linspace(Class<T>, int, int, int).
      */
-
     return linspace(return_type, start, end, 100);
   }
 
@@ -87,11 +85,10 @@ public class Arma {
    *           value to end with ({@code end}).
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
-  public static <T extends AbstractMat> T linspace(Class<T> return_type, int start, int end, int N) throws RuntimeException, NegativeArraySizeException {
+  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final int start, final int end, final int N) throws RuntimeException, NegativeArraySizeException {
     /*
      * The parameter "N" is validated within set_size(int).
      */
-
     if (end < start) {
       throw new RuntimeException("The specified value to start with (" + start + ") must be less than or equal the specified value to end with (" + end + ").");
     }
@@ -5419,20 +5416,69 @@ public class Arma {
     return coeff;
   }
 
-  public static void princomp(Mat coeff, Mat X) {
+  public static boolean princomp(Mat coeff, Mat X) {
     // TODO add
   }
 
-  public static void princomp(Mat coeff, Mat score, Mat X) {
+  public static boolean princomp(Mat coeff, Mat score, Mat X) {
     // TODO add
   }
 
-  public static void princomp(Mat coeff, Mat score, AbstractVector latent, Mat X) {
+  public static boolean princomp(Mat coeff, Mat score, AbstractVector latent, Mat X) {
     // TODO add
   }
 
-  public static void princomp(Mat coeff, Mat score, AbstractVector latent, AbstractVector tsquared, Mat X) {
-    // TODO add
+  public static boolean princomp(Mat coeff, Mat score, AbstractVector latent, AbstractVector tsquared, Mat X) {
+    if(X.n_rows > 1) {
+      score.replaceWith(X);
+      score.each_row(Op.MINUS, mean(Row.class, X));
+      
+      Mat U = new Mat();
+      Col s = new Col();
+      
+      if(!svd(U, s, coeff, X)) {
+        return false;
+      }
+      
+      s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
+      
+      score.inPlace(Op.ELEMTIMES, coeff);
+      
+      if(X.n_rows <= X.n_cols) {
+        score.cols(X.n_rows - 1, X.n_cols - 1).zeros();
+      
+        
+        
+        Col temp = new Col(X.n_cols, Fill.ZEROS);
+        temp.rows(0, X.n_rows - 2, Op.EQUAL, s.rows(0, X.n_rows - 2));
+        s.inPlace(Op.EQUAL, temp);
+          
+        
+        temp.rows(0, X.n_rows - 2) = eT(1) / s_tmp.rows(0,n_rows-2);
+//      
+//      const Mat<eT> S = score_out * diagmat(Col<eT>(s_tmp));   
+//      tsquared_out = sum(S%S,1); 
+      } else {
+//      // compute the Hotelling's T-squared   
+//      const Mat<eT> S = score_out * diagmat(Col<eT>( eT(1) / s));
+//      tsquared_out = sum(S%S,1);
+      }
+      
+      // latent_out = s%s;
+    } else {
+//      coeff_out.eye(n_cols, n_cols);
+//      
+//      score_out.copy_size(in);
+//      score_out.zeros();
+//      
+//      latent_out.set_size(n_cols);
+//      latent_out.zeros();
+//      
+//      tsquared_out.set_size(n_rows);
+//      tsquared_out.zeros();
+    }
+
+    return true;
   }
 
   public static void qr(Mat Q, Mat R, Mat X) {
@@ -5459,14 +5505,14 @@ public class Arma {
     try {
       s = return_type.newInstance();
     } catch(InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+      throw new RuntimeException("An internal error occured. I would greatly appreciate an e-mail containing some information about this problem.");
     }
 
     svd(s, X);
     return s;
   }
 
-  public static void svd(AbstractVector s, Mat X) {
+  public static boolean svd(AbstractVector s, Mat X) {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -5474,7 +5520,7 @@ public class Arma {
     // TODO add
   }
 
-  public static void svd(Mat U, AbstractVector s, Mat V, Mat X) {
+  public static boolean svd(Mat U, AbstractVector s, Mat V, Mat X) {
     // TODO add
   }
 

@@ -54,15 +54,8 @@ abstract class AbstractView {
    */
   abstract protected int iteratorNext();
 
-  protected void inPlace(Op unary_operator) {
+  protected void inPlace(Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
-      case NEGATE:
-        iteratorReset();
-        while (iteratorHasNext()) {
-          int n = iteratorNext();
-          _data[n] = -_data[n];
-        }
-        break;
       case INCREMENT:
         iteratorReset();
         while (iteratorHasNext()) {
@@ -76,15 +69,12 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operation (" + unary_operator + ").");
+        throw new UnsupportedOperationException("Unexpected operator (" + unary_operator + ").");
     }
   }
 
-  protected void inPlace(Op binary_operator, double rightHandOperand) {
+  protected void inPlace(Op binary_operator, double rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
-      /*
-       * EQUAL is unsupported, since each scalar is view as a 1x1 matrix for these kind of operations.
-       */
       case PLUS:
         iteratorReset();
         while (iteratorHasNext()) {
@@ -111,53 +101,56 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
+        throw new UnsupportedOperationException("Unexpected operator (" + binary_operator + ").");
     }
   }
 
-  protected void inPlace(Op binary_operator, AbstractMat rightHandOperand) {
-    int n;
+  protected void inPlace(Op binary_operator, AbstractMat rightHandOperand) throws UnsupportedOperationException {
+    int n = 0;
     switch (binary_operator) {
       case EQUAL:
-        replaceWith(rightHandOperand);
+        iteratorReset();
+        while (iteratorHasNext()) {
+          _data[iteratorNext()] = rightHandOperand._data[n++];
+        }
         break;
       case PLUS:
         iteratorReset();
-        n = 0;
         while (iteratorHasNext()) {
           _data[iteratorNext()] += rightHandOperand._data[n++];
         }
         break;
       case MINUS:
         iteratorReset();
-        n = 0;
         while (iteratorHasNext()) {
           _data[iteratorNext()] -= rightHandOperand._data[n++];
         }
         break;
       case ELEMTIMES:
         iteratorReset();
-        n = 0;
         while (iteratorHasNext()) {
           _data[iteratorNext()] *= rightHandOperand._data[n++];
         }
         break;
       case ELEMDIVIDE:
         iteratorReset();
-        n = 0;
         while (iteratorHasNext()) {
           _data[iteratorNext()] /= rightHandOperand._data[n++];
         }
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
+        throw new UnsupportedOperationException("Unexpected operator (" + binary_operator + ").");
     }
   }
 
-  protected void inPlace(Op binary_operator, AbstractView rightHandOperand) {
+  protected void inPlace(Op binary_operator, AbstractView rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case EQUAL:
-        replaceWith(rightHandOperand);
+        iteratorReset();
+        rightHandOperand.iteratorReset();
+        while (iteratorHasNext()) {
+          _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
+        }
         break;
       case PLUS:
         iteratorReset();
@@ -188,30 +181,7 @@ abstract class AbstractView {
         }
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operation (" + binary_operator + ").");
-    }
-  }
-
-  protected void replaceWith(double X) {
-    iteratorReset();
-    while (iteratorHasNext()) {
-      _data[iteratorNext()] = X;
-    }
-  }
-
-  protected void replaceWith(AbstractMat X) {
-    iteratorReset();
-    int n = 0;
-    while (iteratorHasNext()) {
-      _data[iteratorNext()] = X._data[n++];
-    }
-  }
-
-  protected void replaceWith(AbstractView X) {
-    iteratorReset();
-    X.iteratorReset();
-    while (iteratorHasNext()) {
-      _data[iteratorNext()] = X._data[X.iteratorNext()];
+        throw new UnsupportedOperationException("Unexpected operator (" + binary_operator + ").");
     }
   }
 }
