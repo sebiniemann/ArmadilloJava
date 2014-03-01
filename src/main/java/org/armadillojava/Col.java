@@ -88,11 +88,12 @@ public class Col extends AbstractVector {
    * 
    * @param mat The matrix
    * 
-   * @throws RuntimeException The provided ({@code mat.n_rows}, {@code mat.n_cols})-matrix must have exactly one column.
+   * @throws RuntimeException The provided ({@code mat.n_rows}, {@code mat.n_cols})-matrix must be equivalent in shape
+   *           to a column vector.
    */
   public Col(final AbstractMat mat) throws RuntimeException {
-    if (mat.n_cols > 1) {
-      throw new RuntimeException("The provided (" + mat.n_rows + ", " + mat.n_cols + ")-matrix must have exactly one column.");
+    if (!mat.is_colvec()) {
+      throw new RuntimeException("The provided (" + mat.n_rows + ", " + mat.n_cols + ")-matrix must be equivalent in shape to a column vector.");
     }
 
     copy_size(mat);
@@ -144,13 +145,13 @@ public class Col extends AbstractVector {
    * 
    * @throws IndexOutOfBoundsException The row ({@code row_number}) is out of bounds.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
-   *           vector.
+   *           column vector.
    */
   public void insert_rows(final int row_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row (" + row_number + ") is out of bounds.");
     }
-    
+
     if (!X.is_colvec()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be equivalent in shape to a vector.");
     }
@@ -183,7 +184,7 @@ public class Col extends AbstractVector {
     /*
      * The parameter "number_of_rows" is validated within set_size(int).
      */
-    
+
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row (" + row_number + ") is out of bounds.");
     }
@@ -213,7 +214,11 @@ public class Col extends AbstractVector {
    * @throws IndexOutOfBoundsException The row ({@code row_number}) is out of bounds.
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void insert_rows(final int row_number, final int number_of_rows, final boolean set_to_zero)  throws IndexOutOfBoundsException, NegativeArraySizeException {
+  public void insert_rows(final int row_number, final int number_of_rows, final boolean set_to_zero) throws IndexOutOfBoundsException, NegativeArraySizeException {
+    /*
+     * The parameter "number_of_rows" is validated within set_size(int).
+     */
+
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -482,21 +487,22 @@ public class Col extends AbstractVector {
    * @param first_row The first row
    * @param last_row The last row
    * 
+   * @throws RuntimeException The first row ({@code first_row}) must be less than or equal the last row ({@code last_row}
+   *           ).
    * @throws RuntimeException The first row ({@code first_row}) is out of bound.
    * @throws RuntimeException The last row ({@code last_row}) is out of bound.
-   * @throws RuntimeException The first row must be less than or equal the last row.
    */
   public void shed_rows(final int first_row, final int last_row) throws RuntimeException {
+    if (first_row > last_row) {
+      throw new RuntimeException("The first row (" + first_row + ") must be less than or equal the last row (" + last_row + ") .");
+    }
+
     if (!in_range(first_row)) {
       throw new RuntimeException("The first row (" + first_row + ") is out of bound.");
     }
 
     if (!in_range(last_row)) {
       throw new RuntimeException("The last row (" + last_row + ") is out of bound.");
-    }
-
-    if (first_row > last_row) {
-      throw new RuntimeException("The first row must be less than or equal the last row.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
@@ -528,7 +534,8 @@ public class Col extends AbstractVector {
   @Override
   public Col subvec(final Span span) throws IndexOutOfBoundsException {
     /*
-     * The parameter "span" is already validated during its instantiation.
+     * The parameter "span" is already validated during its instantiation and further validated in the context of this
+     * vector in subvec(int, int).
      */
     return subvec(span._first, span._last);
   }
@@ -536,7 +543,7 @@ public class Col extends AbstractVector {
   @Override
   public void swap(final Mat X) throws RuntimeException {
     if (!X.is_colvec()) {
-      throw new RuntimeException("The content of column vectors can only be swaped with matrices that have at most one column.");
+      throw new RuntimeException("The content of column vectors can only be swapped with matrices that are equivalent in shape to a column vector.");
     }
 
     Col temp = new Col(_data);
@@ -551,7 +558,7 @@ public class Col extends AbstractVector {
   @Override
   public void swap(final Row X) throws RuntimeException {
     if (!X.is_colvec()) {
-      throw new RuntimeException("The content of column vectors can only be swaped with row vectors if both have at most one element.");
+      throw new RuntimeException("The content of column vectors can only be swapped with matrices that are equivalent in shape to a column vector.");
     }
 
     Col temp = new Col(_data);

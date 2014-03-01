@@ -20,7 +20,7 @@ class ViewSubCols extends AbstractView {
   /**
    * The first position of the sub view within the underlying matrix
    */
-  protected int _firstPosition;
+  protected final int _firstPosition;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -29,7 +29,7 @@ class ViewSubCols extends AbstractView {
    * @param first_col The first column position
    * @param n_cols The number of columns
    */
-  protected ViewSubCols(AbstractMat matrix, int first_col, int n_cols) {
+  protected ViewSubCols(final AbstractMat matrix, final int first_col, final int n_cols) {
     super(matrix);
 
     this.n_rows = matrix.n_rows;

@@ -1931,7 +1931,7 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified elements.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_indices The positions
    */
@@ -1942,7 +1942,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified elements.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_indices The positions
    * @param unary_operator The unary operator
@@ -1956,7 +1956,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_indices The positions
    * @param binary_operator The binary operator
@@ -1971,7 +1971,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_indices The positions
    * @param binary_operator The binary operator
@@ -1986,7 +1986,7 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified columns.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_column_indices The columns
    */
@@ -1997,7 +1997,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified columns.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_column_indices The columns
    * @param unary_operator The unary operator
@@ -2011,7 +2011,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_column_indices The columns
    * @param binary_operator The binary operator
@@ -2026,7 +2026,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_column_indices The columns
    * @param binary_operator The binary operator
@@ -2041,7 +2041,7 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified rows.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    */
@@ -2052,7 +2052,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified rows.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param unary_operator The unary operator
@@ -2066,7 +2066,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param binary_operator The binary operator
@@ -2081,7 +2081,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param binary_operator The binary operator
@@ -2096,7 +2096,7 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified rows of the specified columns.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2108,7 +2108,7 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified rows of the specified columns.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2124,7 +2124,7 @@ abstract class AbstractMat {
    * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2141,7 +2141,7 @@ abstract class AbstractMat {
    * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
-   * No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2262,10 +2262,10 @@ abstract class AbstractMat {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The content of column vectors can only be swapped with matrices equivalent in shape to a
-   *           column vector.
-   * @throws RuntimeException The content of row vectors can only be swapped with matrices equivalent in shape to a row
-   *           vector.
+   * @throws RuntimeException The content of column vectors can only be swapped with matrices that are equivalent in
+   *           shape to a column vector.
+   * @throws RuntimeException The content of row vectors can only be swapped with matrices that are equivalent in shape
+   *           to a row vector.
    */
   abstract public void swap(final Mat X) throws RuntimeException;
 
@@ -2274,10 +2274,10 @@ abstract class AbstractMat {
    * 
    * @param X The column vector
    * 
-   * @throws RuntimeException The content of column vectors can only be swapped with matrices equivalent in shape to a
-   *           column vector.
-   * @throws RuntimeException The content of row vectors can only be swapped with matrices equivalent in shape to a row
-   *           vector.
+   * @throws RuntimeException The content of column vectors can only be swapped with matrices that are equivalent in
+   *           shape to a column vector.
+   * @throws RuntimeException The content of row vectors can only be swapped with matrices that are equivalent in shape
+   *           to a row vector.
    */
   abstract public void swap(final Col X) throws RuntimeException;
 
@@ -2286,10 +2286,10 @@ abstract class AbstractMat {
    * 
    * @param X The row vector
    * 
-   * @throws RuntimeException The content of column vectors can only be swapped with matrices equivalent in shape to a
-   *           column vector.
-   * @throws RuntimeException The content of row vectors can only be swapped with matrices equivalent in shape to a row
-   *           vector.
+   * @throws RuntimeException The content of column vectors can only be swapped with matrices that are equivalent in
+   *           shape to a column vector.
+   * @throws RuntimeException The content of row vectors can only be swapped with matrices that are equivalent in shape
+   *           to a row vector.
    */
   abstract public void swap(final Row X) throws RuntimeException;
 
@@ -2376,7 +2376,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place addition with the specified right-hand side addend.
+   * Returns the out-of-place addition with the provided right-hand side addend.
    * 
    * @param X The addend
    * 
@@ -2405,7 +2405,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
+   * Returns the out-of-place subtraction with the provided right-hand side subtrahend.
    * 
    * @param X The subtrahend
    * 
@@ -2434,7 +2434,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise division with the specified right-hand side divisor.
+   * Returns the out-of-place element-wise division with the provided right-hand side divisor.
    * 
    * @param X The divisor
    * 
@@ -2454,7 +2454,7 @@ abstract class AbstractMat {
   abstract public AbstractMat times(final double X) throws RuntimeException;
 
   /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
    * 
@@ -2464,7 +2464,7 @@ abstract class AbstractMat {
   abstract public AbstractMat times(final Col X) throws RuntimeException;
 
   /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
    * 
@@ -2474,7 +2474,7 @@ abstract class AbstractMat {
   abstract public AbstractMat times(final Row X) throws RuntimeException;
 
   /**
-   * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
    * 
@@ -2503,7 +2503,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
+   * Returns the out-of-place element-wise multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
    * 
@@ -2529,7 +2529,8 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is equal to the right-hand
+   * side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2550,9 +2551,10 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise equality evaluation with the specified right-hand side operand.
+   * Returns the out-of-place element-wise equality evaluation with the provided right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding values are equal and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is equal to the right-hand
+   * side and 0 otherwise.
    * 
    * @param X The operand
    * 
@@ -2578,7 +2580,8 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is non-equal to the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2599,9 +2602,10 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise non-equality evaluation with the specified right-hand side operand.
+   * Returns the out-of-place element-wise non-equality evaluation with the provided right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding values are non-equal and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is non-equal to the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    * 
@@ -2627,8 +2631,8 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
-   * the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is greater than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2649,10 +2653,10 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the specified right-hand side operand.
+   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the provided right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is greater than
-   * the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is greater than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    * 
@@ -2678,8 +2682,8 @@ abstract class AbstractMat {
   /**
    * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
-   * right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is less than the right-hand
+   * side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2700,10 +2704,10 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise <em>less than</em> evaluation with the specified right-hand side operand.
+   * Returns the out-of-place element-wise <em>less than</em> evaluation with the provided right-hand side operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is less than the
-   * right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is less than the right-hand
+   * side and 0 otherwise.
    * 
    * @param X The operand
    * 
@@ -2730,8 +2734,8 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
-   * greater than the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict greater than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2752,11 +2756,11 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the specified right-hand side
+   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the provided right-hand side
    * operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict
-   * greater than the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict greater than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    * 
@@ -2783,8 +2787,8 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
    * operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
-   * than the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict less than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    */
@@ -2805,11 +2809,11 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the specified right-hand side
+   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the provided right-hand side
    * operand.
    * <p>
-   * The returned matrix will be set to 1 at positions where the two corresponding left-hand side value is strict less
-   * than the right-hand side and 0 otherwise.
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict less than the
+   * right-hand side and 0 otherwise.
    * 
    * @param X The operand
    * 

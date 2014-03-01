@@ -20,12 +20,12 @@ public class ViewDiag extends AbstractView {
   /**
    * The first position of the sub view within the underlying matrix
    */
-  protected int _firstPosition;
+  protected final int _firstPosition;
 
   /**
    * The rows to skip within the underlying matrix to move one position to another within the sub view.
    */
-  protected int _n_rows_skip;
+  protected final int _n_rows_skip;
 
   /**
    * Creates a shallow copy of a matrix and restrict the access to its {@code k}th diagonal.
@@ -39,7 +39,7 @@ public class ViewDiag extends AbstractView {
    * @param matrix The matrix
    * @param k The diagonal position
    */
-  public ViewDiag(AbstractMat matrix, int k) {
+  public ViewDiag(final AbstractMat matrix, final int k) {
     super(matrix);
 
     if (k > 0) {

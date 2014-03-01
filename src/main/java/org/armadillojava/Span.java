@@ -19,15 +19,15 @@ public class Span {
   /**
    * First position of the span
    */
-  protected int     _first;
+  protected final int     _first;
   /**
    * Last position of the span
    */
-  protected int     _last;
+  protected final int     _last;
   /**
    * Whether the span includes the entire range
    */
-  protected boolean _isEntireRange;
+  protected final boolean _isEntireRange;
 
   /**
    * Creates a span similar to Matlab's index expression range a:b, but without creating a vector.
@@ -39,7 +39,7 @@ public class Span {
    *           {@code last}.
    * @throws IllegalArgumentException All position must be non-negative.
    */
-  public Span(int first, int last) throws IllegalArgumentException {
+  public Span(final int first, final int last) throws IllegalArgumentException {
     if (last < first) {
       throw new IllegalArgumentException("The first position needs to be less than equal the last but were " + first + " and " + last + ".");
     }
@@ -62,7 +62,7 @@ public class Span {
    * @throws IllegalArgumentException All position must be non-negative.
    * @throws IllegalArgumentException NaN and infinity are not valid element positions.
    */
-  public Span(int position) throws IllegalArgumentException {
+  public Span(final int position) throws IllegalArgumentException {
     this(position, position);
   }
 

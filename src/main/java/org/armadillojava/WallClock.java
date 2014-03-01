@@ -38,8 +38,10 @@ public class WallClock {
    * @return The elapsed time.
    */
   public static double toc() {
-    // Conversions from finer to coarser granularities truncates information.
-    // Therefore, a direct conversion to seconds would result in a complete information loss of milliseconds.
+    /*
+     * Conversions from finer to coarser granularities via TimeUnit.X.convert(int, TimeUnit) truncates information.
+     * Therefore, a direct conversion to seconds would result in a complete information loss of the milliseconds.
+     */
     return TimeUnit.MILLISECONDS.convert(System.nanoTime() - _tic, TimeUnit.NANOSECONDS) / 1000.0;
   }
 }

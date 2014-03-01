@@ -18,9 +18,9 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
-    
+
     set_size(n_elem);
-    
+
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
     }
@@ -38,9 +38,9 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
-    
+
     set_size(n_elem);
-    
+
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
     }
@@ -57,7 +57,7 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
-    
+
     set_size(n_elem);
     fill(1);
   }
@@ -73,7 +73,7 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
-    
+
     set_size(n_elem);
     /*
      * All entries of an array are already set to 0 during creation.
@@ -145,7 +145,7 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
      */
-    
+
     if (last_index < first_index) {
       throw new RuntimeException("The first specified position (" + first_index + ") must be less than or equal the last specified position (" + last_index + ").");
     }
@@ -157,8 +157,8 @@ abstract class AbstractVector extends AbstractMat {
     if (last_index > n_elem - 1) {
       throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
     }
-    
-    if(is_colvec()) {
+
+    if (is_colvec()) {
       new ViewSubCol(this, 0, first_index, last_index).inPlace(unary_operator);
     } else {
       new ViewSubRow(this, 0, first_index, last_index).inPlace(unary_operator);
@@ -184,7 +184,7 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, double).
      */
-    
+
     if (last_index < first_index) {
       throw new RuntimeException("The first specified position (" + first_index + ") must be less than or equal the last specified position (" + last_index + ").");
     }
@@ -196,8 +196,8 @@ abstract class AbstractVector extends AbstractMat {
     if (last_index > n_elem - 1) {
       throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
     }
-    
-    if(is_colvec()) {
+
+    if (is_colvec()) {
       new ViewSubCol(this, 0, first_index, last_index).inPlace(binary_operator, operand);
     } else {
       new ViewSubRow(this, 0, first_index, last_index).inPlace(binary_operator, operand);
@@ -223,7 +223,7 @@ abstract class AbstractVector extends AbstractMat {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
-    
+
     if (last_index < first_index) {
       throw new RuntimeException("The first specified position (" + first_index + ") must be less than or equal the last specified position (" + last_index + ").");
     }
@@ -235,8 +235,8 @@ abstract class AbstractVector extends AbstractMat {
     if (last_index > n_elem - 1) {
       throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
     }
-    
-    if(is_colvec()) {
+
+    if (is_colvec()) {
       new ViewSubCol(this, 0, first_index, last_index).inPlace(binary_operator, operand);
     } else {
       new ViewSubRow(this, 0, first_index, last_index).inPlace(binary_operator, operand);
@@ -266,6 +266,7 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(final Span span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
     /*
      * The parameter "span" was already validated during its instantiation.
+     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
      */
     subvec(span._first, span._last, unary_operator);
   }
@@ -285,6 +286,7 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(final Span span, final Op binary_operator, final double operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
     /*
      * The parameter "span" was already validated during its instantiation.
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, double).
      */
     subvec(span._first, span._last, binary_operator, operand);
   }
@@ -304,8 +306,9 @@ abstract class AbstractVector extends AbstractMat {
   public void subvec(final Span span, final Op binary_operator, final AbstractMat operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
     /*
      * The parameter "span" was already validated during its instantiation.
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
     subvec(span._first, span._last, binary_operator, operand);
   }
-  
+
 }

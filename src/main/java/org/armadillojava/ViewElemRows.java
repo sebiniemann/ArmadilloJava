@@ -20,7 +20,7 @@ class ViewElemRows extends AbstractView {
   /**
    * The vector of specified indices
    */
-  protected AbstractMat _vector_of_row_indices;
+  protected final AbstractMat _vector_of_row_indices;
 
   /**
    * The current row number within the sub view
@@ -41,7 +41,7 @@ class ViewElemRows extends AbstractView {
    * @param first_col The first column position
    * @param last_col The last column position
    */
-  protected ViewElemRows(AbstractMat matrix, AbstractMat vector_of_row_indices) {
+  protected ViewElemRows(final AbstractMat matrix, final AbstractMat vector_of_row_indices) {
     super(matrix);
 
     n_rows = vector_of_row_indices.n_elem;

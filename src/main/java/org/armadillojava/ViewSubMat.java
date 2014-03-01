@@ -20,13 +20,13 @@ class ViewSubMat extends AbstractView {
   /**
    * The first position of the sub view within the underlying matrix
    */
-  protected int _firstPosition;
+  protected final int _firstPosition;
 
   /**
    * The rows to skip within the underlying matrix to move from the last position of a column to one position before
    * the first element in the following column.
    */
-  protected int _n_rows_skip;
+  protected final int _n_rows_skip;
 
   /**
    * The current row number within the sub view
@@ -42,7 +42,7 @@ class ViewSubMat extends AbstractView {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    */
-  protected ViewSubMat(AbstractMat matrix, int first_row, int first_col, int n_rows, int n_cols) {
+  protected ViewSubMat(final AbstractMat matrix, final int first_row, final int first_col, final int n_rows, final int n_cols) {
     super(matrix);
 
     this.n_rows = n_rows;

@@ -20,12 +20,12 @@ class ViewElemSubMat extends AbstractView {
   /**
    * The vector of specified row indices
    */
-  protected AbstractMat _vector_of_row_indices;
+  protected final AbstractMat _vector_of_row_indices;
 
   /**
    * The vector of specified column indices
    */
-  protected AbstractMat _vector_of_column_indices;
+  protected final AbstractMat _vector_of_column_indices;
 
   /**
    * The current row number within the sub view
@@ -51,7 +51,7 @@ class ViewElemSubMat extends AbstractView {
    * @param first_col The first column position
    * @param last_col The last column position
    */
-  protected ViewElemSubMat(AbstractMat matrix, AbstractMat vector_of_row_indices, AbstractMat vector_of_column_indices) {
+  protected ViewElemSubMat(final AbstractMat matrix, final AbstractMat vector_of_row_indices, final AbstractMat vector_of_column_indices) {
     super(matrix);
 
     n_rows = vector_of_row_indices.n_elem;

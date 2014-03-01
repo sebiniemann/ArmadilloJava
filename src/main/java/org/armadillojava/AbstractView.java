@@ -32,7 +32,7 @@ abstract class AbstractView {
    */
   protected int         _iterator;
 
-  public AbstractView(AbstractMat matrix) {
+  public AbstractView(final AbstractMat matrix) {
     _matrix = matrix;
     _data = matrix._data;
   }
@@ -54,7 +54,7 @@ abstract class AbstractView {
    */
   abstract protected int iteratorNext();
 
-  protected void inPlace(Op unary_operator) throws UnsupportedOperationException {
+  protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
       case INCREMENT:
         iteratorReset();
@@ -73,7 +73,7 @@ abstract class AbstractView {
     }
   }
 
-  protected void inPlace(Op binary_operator, double rightHandOperand) throws UnsupportedOperationException {
+  protected void inPlace(final Op binary_operator, final double rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case PLUS:
         iteratorReset();
@@ -105,7 +105,7 @@ abstract class AbstractView {
     }
   }
 
-  protected void inPlace(Op binary_operator, AbstractMat rightHandOperand) throws UnsupportedOperationException {
+  protected void inPlace(final Op binary_operator, final AbstractMat rightHandOperand) throws UnsupportedOperationException {
     int n = 0;
     switch (binary_operator) {
       case EQUAL:
@@ -143,7 +143,7 @@ abstract class AbstractView {
     }
   }
 
-  protected void inPlace(Op binary_operator, AbstractView rightHandOperand) throws UnsupportedOperationException {
+  protected void inPlace(final Op binary_operator, final AbstractView rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case EQUAL:
         iteratorReset();

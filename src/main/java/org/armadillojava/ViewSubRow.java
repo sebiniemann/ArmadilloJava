@@ -20,12 +20,12 @@ class ViewSubRow extends AbstractView {
   /**
    * The first position of the sub view within the underlying matrix
    */
-  protected int _firstPosition;
+  protected final int _firstPosition;
 
   /**
    * The rows to skip within the underlying matrix to move one position to another within the sub view.
    */
-  protected int _n_rows_skip;
+  protected final int _n_rows_skip;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
@@ -35,7 +35,7 @@ class ViewSubRow extends AbstractView {
    * @param first_col The first column position
    * @param n_cols The number of columns
    */
-  protected ViewSubRow(AbstractMat matrix, int row_number, int first_col, int n_cols) {
+  protected ViewSubRow(final AbstractMat matrix, final int row_number, final int first_col, final int n_cols) {
     super(matrix);
 
     this.n_rows = 1;
@@ -52,7 +52,7 @@ class ViewSubRow extends AbstractView {
    * @param matrix The matrix
    * @param row_number The row position
    */
-  protected ViewSubRow(AbstractMat matrix, int row_number) {
+  protected ViewSubRow(final AbstractMat matrix, final int row_number) {
     super(matrix);
 
     n_rows = 1;

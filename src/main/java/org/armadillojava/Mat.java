@@ -33,9 +33,14 @@ public class Mat extends AbstractMat {
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public Mat(int n_rows, int n_cols) {
-    // n_rows and n_cols are validated in set_size
+  public Mat(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
     set_size(n_rows, n_cols);
   }
 
@@ -52,30 +57,29 @@ public class Mat extends AbstractMat {
    * 
    * @see Fill
    */
-  public Mat(int n_rows, int n_cols, Fill fill_type) throws NegativeArraySizeException, RuntimeException {
+  public Mat(final int n_rows, final int n_cols, final Fill fill_type) throws NegativeArraySizeException, RuntimeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within zeros(int, int), ones(int, int), randu(int, int) and
+     * randn(int, int).
+     */
+
     switch (fill_type) {
       case NONE:
-        // n_rows and n_cols are validated in set_size
         set_size(n_rows, n_cols);
         break;
       case ZEROS:
-        // n_rows and n_cols are validated in zeros
         zeros(n_rows, n_cols);
         break;
       case ONES:
-        // n_rows and n_cols are validated in ones
         ones(n_rows, n_cols);
         break;
       case EYE:
-        // n_rows and n_cols are validated in ones
         eye(n_rows, n_cols);
         break;
       case RANDU:
-        // n_rows and n_cols are validated in randu
         randu(n_rows, n_cols);
         break;
       case RANDN:
-        // n_rows and n_cols are validated in randn
         randn(n_rows, n_cols);
     }
   }
@@ -85,7 +89,7 @@ public class Mat extends AbstractMat {
    * 
    * @param mat The matrix
    */
-  public Mat(AbstractMat mat) {
+  public Mat(final AbstractMat mat) {
     copy_size(mat);
     _data = Arrays.copyOf(mat._data, mat.n_elem);
   }
@@ -95,8 +99,8 @@ public class Mat extends AbstractMat {
    * 
    * @param array The array
    */
-  public Mat(double[] array) {
-    set_size(array.length, 1);
+  public Mat(final double[] array) {
+    set_size(array.length);
     _data = Arrays.copyOf(array, array.length);
   }
 
@@ -105,7 +109,7 @@ public class Mat extends AbstractMat {
    * 
    * @param mat The sub view
    */
-  protected Mat(AbstractView view) {
+  protected Mat(final AbstractView view) {
     copy_size(view);
 
     view.iteratorReset();
@@ -114,7 +118,7 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void copy_size(AbstractView A) {
+  public void copy_size(final AbstractView A) {
     set_size(A.n_rows, A.n_cols);
   }
 
@@ -129,8 +133,13 @@ public class Mat extends AbstractMat {
    * Performs an in-place unary operation on the main diagonal.
    * 
    * @param unary_operator The unary operator
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void diag(Op unary_operator) {
+  public void diag(final Op unary_operator) throws UnsupportedOperationException {
+    /*
+     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+     */
     new ViewDiag(this, 0).inPlace(unary_operator);
   }
 
@@ -139,8 +148,13 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void diag(Op binary_operator, double operand) {
+  public void diag(final Op binary_operator, final double operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, double).
+     */
     new ViewDiag(this, 0).inPlace(binary_operator, operand);
   }
 
@@ -149,8 +163,13 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void diag(Op binary_operator, AbstractMat operand) {
+  public void diag(final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     new ViewDiag(this, 0).inPlace(binary_operator, operand);
   }
 
@@ -167,7 +186,11 @@ public class Mat extends AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public Col diag(int k) throws IndexOutOfBoundsException {
+  public Col diag(final int k) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -192,8 +215,13 @@ public class Mat extends AbstractMat {
    * @param unary_operator The unary operator
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void diag(int k, Op unary_operator) throws IndexOutOfBoundsException {
+  public void diag(final int k, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -219,8 +247,13 @@ public class Mat extends AbstractMat {
    * @param operand The operand
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void diag(int k, Op binary_operator, double operand) throws IndexOutOfBoundsException {
+  public void diag(final int k, final Op binary_operator, final double operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -246,8 +279,13 @@ public class Mat extends AbstractMat {
    * @param operand The operand
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void diag(int k, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
+  public void diag(final int k, final Op binary_operator, final AbstractMat operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     if (k > 0 && k >= n_cols) {
       throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
     }
@@ -263,8 +301,13 @@ public class Mat extends AbstractMat {
    * Performs an in-place unary operation on each column of the matrix individually.
    * 
    * @param unary_operator The unary operator
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_col(Op unary_operator) {
+  public void each_col(final Op unary_operator) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     inPlace(unary_operator);
   }
 
@@ -274,8 +317,13 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(Op binary_operator, double operand) {
+  public void each_col(final Op binary_operator, final double operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     inPlace(binary_operator, operand);
   }
 
@@ -285,8 +333,14 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(Op binary_operator, AbstractMat operand) {
+  public void each_col(final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     for (int j = 0; j < n_cols; j++) {
       col(j, binary_operator, operand);
     }
@@ -294,35 +348,60 @@ public class Mat extends AbstractMat {
 
   /**
    * Performs an in-place unary operation on each specified column of the matrix individually.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The column positions
    * @param unary_operator The unary operator
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_col(AbstractMat vector_of_indices, Op unary_operator) {
+  public void each_col(final AbstractMat vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     cols(vector_of_indices, unary_operator);
   }
 
   /**
    * Performs an in-place binary operation on each specified column of the matrix individually with the specified
    * right-hand side operand.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The column positions
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(AbstractMat vector_of_indices, Op binary_operator, double operand) {
+  public void each_col(final AbstractMat vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     cols(vector_of_indices, binary_operator, operand);
   }
 
   /**
    * Performs an in-place binary operation on each specified column of the matrix individually with the specified
    * right-hand side operand.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The column positions
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
+  public void each_col(final AbstractMat vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     for (int n = 0; n < vector_of_indices.n_elem; n++) {
       col((int) vector_of_indices._data[n], binary_operator, operand);
     }
@@ -332,8 +411,13 @@ public class Mat extends AbstractMat {
    * Performs an in-place unary operation on each row of the matrix individually.
    * 
    * @param unary_operator The unary operator
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_row(Op unary_operator) {
+  public void each_row(final Op unary_operator) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     inPlace(unary_operator);
   }
 
@@ -343,8 +427,13 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_row(Op binary_operator, double operand) {
+  public void each_row(final Op binary_operator, final double operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     inPlace(binary_operator, operand);
   }
 
@@ -354,8 +443,15 @@ public class Mat extends AbstractMat {
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).ry operator
+   * @param operand The operand
    */
-  public void each_row(Op binary_operator, AbstractMat operand) {
+  public void each_row(final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     for (int i = 0; i < n_rows; i++) {
       row(i, binary_operator, operand);
     }
@@ -363,35 +459,60 @@ public class Mat extends AbstractMat {
 
   /**
    * Performs an in-place unary operation on each specified row of the matrix individually.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The row positions
    * @param unary_operator The unary operator
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_row(AbstractMat vector_of_indices, Op unary_operator) {
+  public void each_row(final AbstractMat vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     rows(vector_of_indices, unary_operator);
   }
 
   /**
    * Performs an in-place binary operation on each specified row of the matrix individually with the specified
    * right-hand side operand.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The row positions
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_row(AbstractMat vector_of_indices, Op binary_operator, double operand) {
+  public void each_row(final AbstractMat vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
     rows(vector_of_indices, binary_operator, operand);
   }
 
   /**
    * Performs an in-place binary operation on each specified row of the matrix individually with the specified
    * right-hand side operand.
+   * <p>
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The row positions
    * @param binary_operator The binary operator
    * @param operand The operand
+   * 
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_row(AbstractMat vector_of_indices, Op binary_operator, AbstractMat operand) {
+  public void each_row(final AbstractMat vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+    /*
+     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+     */
+
     for (int n = 0; n < vector_of_indices.n_elem; n++) {
       row((int) vector_of_indices._data[n], binary_operator, operand);
     }
@@ -403,12 +524,15 @@ public class Mat extends AbstractMat {
    * @param i The row position
    * @param j The column position
    */
-  public double at(int i, int j) {
+  public double at(final int i, final int j) {
     return _data[i + j * n_rows];
   }
 
   /**
    * Performs an in-place unary operation on the element at the {@code i}th row and {@code j}th column.
+   * <p>
+   * <b>Note:</b> Index checking is not enforced. However, the JVM should throw IndexOutOfBoundsException exceptions
+   * upon errors.
    * 
    * @param n The position
    * @param unary_operator The unary operator
@@ -416,7 +540,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unsupported operator {@code unary_operator}.
    */
-  public void at(int i, int j, Op unary_operator) throws UnsupportedOperationException {
+  public void at(final int i, final int j, final Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
       case INCREMENT:
         _data[i + j * n_rows]++;
@@ -425,13 +549,16 @@ public class Mat extends AbstractMat {
         _data[i + j * n_rows]--;
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operator " + unary_operator +".");
+        throw new UnsupportedOperationException("Unsupported operator " + unary_operator + ".");
     }
   }
 
   /**
    * Performs an in-place binary operation on the element at the {@code i}th row and {@code j}th column with the
    * specified right-hand side operand.
+   * <p>
+   * <b>Note:</b> Index checking is not enforced. However, the JVM should throw IndexOutOfBoundsException exceptions
+   * upon errors.
    * 
    * @param n The position
    * @param binary_operator The binary operator
@@ -439,7 +566,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unsupported operator {@code binary_operator}.
    */
-  public void at(int i, int j, Op binary_operator, double operand) throws UnsupportedOperationException {
+  public void at(final int i, final int j, final Op binary_operator, double operand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case EQUAL:
         _data[i + j * n_rows] = operand;
@@ -458,7 +585,7 @@ public class Mat extends AbstractMat {
         _data[i + j * n_rows] /= operand;
         break;
       default:
-        throw new UnsupportedOperationException("Unsupported operator " + binary_operator +".");
+        throw new UnsupportedOperationException("Unsupported operator " + binary_operator + ".");
     }
   }
 
@@ -483,9 +610,20 @@ public class Mat extends AbstractMat {
   /**
    * Resizes the matrix to the specified number of rows and columns and sets all elements along the main diagonal to 1
    * and all others to 0.
+   * 
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void eye(int n_rows, int n_cols) {
+  public void eye(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     set_size(n_rows, n_cols);
+
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -557,9 +695,10 @@ public class Mat extends AbstractMat {
    * @param X The column vector
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
-   * @throws RuntimeException Both matrices must have the same number of columns.
+   * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
+   *           ).
    */
-  public void insert_rows(int row_number, AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
+  public void insert_rows(final int row_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -571,9 +710,11 @@ public class Mat extends AbstractMat {
       _data = Arrays.copyOf(X._data, X.n_elem);
     } else {
       if (n_cols != X.n_cols) {
-        throw new RuntimeException("Both matrices must have the same number of columns.");
+        throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
       }
 
+      // TODO go on!
+      
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
@@ -594,11 +735,11 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code number_of_rows}) must be positive.
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_rows(int row_number, int number_of_rows) throws NegativeArraySizeException, IndexOutOfBoundsException {
+  public void insert_rows(final int row_number, final int number_of_rows) throws NegativeArraySizeException, IndexOutOfBoundsException {
     if (number_of_rows < 0) {
       throw new NegativeArraySizeException("The specified number of rows (" + number_of_rows + ") must be positive.");
     }
-    
+
     if (row_number < 0 || row_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
     }
@@ -628,7 +769,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_rows(int row_number, int number_of_rows, boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
+  public void insert_rows(final int row_number, final int number_of_rows, final boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -648,7 +789,7 @@ public class Mat extends AbstractMat {
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    * @throws RuntimeException Both matrices must have the same number of columns.
    */
-  public void insert_cols(int col_number, AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
+  public void insert_cols(final int col_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
@@ -681,11 +822,11 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code number_of_cols}) must be positive.
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
-  public void insert_cols(int col_number, int number_of_cols) throws NegativeArraySizeException, IndexOutOfBoundsException {
+  public void insert_cols(final int col_number, final int number_of_cols) throws NegativeArraySizeException, IndexOutOfBoundsException {
     if (number_of_cols < 0) {
       throw new NegativeArraySizeException("The specified number of columns (" + number_of_cols + ") must be positive.");
     }
-    
+
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
@@ -712,7 +853,7 @@ public class Mat extends AbstractMat {
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
    */
-  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
+  public void insert_cols(final int col_number, final int number_of_cols, final boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -734,7 +875,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws RuntimeException The matrix must have at least one element.
    */
-  public double min(int[] row_of_min_val, int[] col_of_min_val) throws RuntimeException {
+  public double min(final int[] row_of_min_val, final int[] col_of_min_val) throws RuntimeException {
     if (is_empty()) {
       throw new RuntimeException("The matrix must have at least one element.");
     }
@@ -770,7 +911,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws RuntimeException The matrix must have at least one element.
    */
-  public double max(int[] row_of_max_val, int[] col_of_max_val) throws RuntimeException {
+  public double max(final int[] row_of_max_val, final int[] col_of_max_val) throws RuntimeException {
     if (is_empty()) {
       throw new RuntimeException("The matrix must have at least one element.");
     }
@@ -804,7 +945,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void ones(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void ones(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     fill(1);
   }
@@ -821,7 +962,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void randu(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void randu(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
@@ -838,7 +979,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void randn(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void randn(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
@@ -854,7 +995,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void zeros(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     set_size(n_rows, n_cols);
   }
 
@@ -867,7 +1008,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void reshape(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void reshape(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     double[] temp = Arrays.copyOf(_data, Math.min(n_elem, n_rows * n_cols));
     set_size(n_rows, n_cols);
     System.arraycopy(temp, 0, _data, 0, temp.length);
@@ -883,7 +1024,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void resize(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void resize(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     Mat temp = new Mat(this);
     set_size(n_rows, n_cols);
 
@@ -909,7 +1050,7 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public void set_size(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public void set_size(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     if (n_rows < 0) {
       throw new NegativeArraySizeException("The specified number of rows (" + n_rows + ") must be positive.");
     }
@@ -927,7 +1068,7 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void shed_row(int row_number) {
+  public void shed_row(final int row_number) {
     Mat temp = new Mat(this);
 
     set_size(n_rows - 1, n_cols);
@@ -937,7 +1078,7 @@ public class Mat extends AbstractMat {
     rows(row_number, n_rows - 1, Op.EQUAL, temp.rows(row_number + 1, temp.n_rows - 1));
   }
 
-  public void shed_rows(int first_row, int last_row) {
+  public void shed_rows(final int first_row, final int last_row) {
     Mat temp = new Mat(this);
 
     set_size(n_rows - (last_row - first_row + 1), n_cols);
@@ -947,7 +1088,7 @@ public class Mat extends AbstractMat {
     rows(first_row, n_rows - 1, Op.EQUAL, temp.rows(last_row + 1, temp.n_rows - 1));
   }
 
-  public void shed_col(int column_number) {
+  public void shed_col(final int column_number) throws IndexOutOfBoundsException {
     if (column_number < 0 || column_number > n_elem) {
       throw new IndexOutOfBoundsException("The row position (" + column_number + ") is out of bounds.");
     }
@@ -959,7 +1100,7 @@ public class Mat extends AbstractMat {
     System.arraycopy(temp, (column_number + 1) * n_rows, _data, 0, n_elem - (column_number + 1) * n_rows);
   }
 
-  public void shed_cols(int first_column, int last_column) {
+  public void shed_cols(final int first_column, final int last_column) throws IndexOutOfBoundsException {
     double[] temp = Arrays.copyOf(_data, n_elem);
     set_size(n_rows, n_cols - (last_column - first_column + 1));
 
@@ -968,7 +1109,7 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public void swap(Mat X) {
+  public void swap(final Mat X) throws RuntimeException {
     Mat temp = new Mat(this);
 
     copy_size(X);
@@ -979,9 +1120,9 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public void swap(Col X) {
-    if (n_cols > 1) {
-      throw new RuntimeException("The content of column vectors can only be swaped with matrices that have at most one column.");
+  public void swap(final Col X) throws RuntimeException {
+    if (!is_colvec()) {
+      throw new RuntimeException("The content of column vectors can only be swapped with matrices that are equivalent in shape to a column vector.");
     }
 
     Mat temp = new Mat(this);
@@ -994,9 +1135,9 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public void swap(Row X) {
-    if (n_rows > 1) {
-      throw new RuntimeException("The content of row vectors can only be swaped with matrices that have at most one row.");
+  public void swap(final Row X) throws RuntimeException {
+    if (!is_rowvec()) {
+      throw new RuntimeException("The content of row vectors can only be swapped with matrices that are equivalent in shape to a row vector.");
     }
 
     Mat temp = new Mat(this);
@@ -1023,71 +1164,71 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public void copy_size(AbstractMat A) {
+  public void copy_size(final AbstractMat A) {
     set_size(A.n_rows, A.n_cols);
   }
 
   @Override
-  public Mat plus(double X) {
+  public Mat plus(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlacePlus(this, X);
+    plus(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat plus(AbstractMat X) throws RuntimeException {
+  public Mat plus(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlacePlus(this, X);
+    plus(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat minus(double X) {
+  public Mat minus(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceMinus(this, X);
+    minus(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat minus(AbstractMat X) throws RuntimeException {
+  public Mat minus(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceMinus(this, X);
+    minus(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat elemDivide(double X) {
+  public Mat elemDivide(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceElemDivide(this, X);
+    elemDivide(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat elemDivide(AbstractMat X) throws RuntimeException {
+  public Mat elemDivide(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceElemDivide(this, X);
+    elemDivide(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat times(double X) {
+  public Mat times(final double X) {
     return elemTimes(X);
   }
 
   @Override
-  public Mat times(Col X) throws RuntimeException {
+  public Mat times(final Col X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -1099,7 +1240,7 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public Mat times(Row X) throws RuntimeException {
+  public Mat times(final Row X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -1113,7 +1254,7 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public Mat times(Mat X) throws RuntimeException {
+  public Mat times(final Mat X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -1124,133 +1265,133 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public Mat elemTimes(double X) {
+  public Mat elemTimes(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceElemTimes(this, X);
+    elemTimes(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat elemTimes(AbstractMat X) throws RuntimeException {
+  public Mat elemTimes(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceElemTimes(this, X);
+    elemTimes(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat equal(double X) {
+  public Mat equal(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceEqual(this, X);
+    equal(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat equal(AbstractMat X) throws RuntimeException {
+  public Mat equal(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceEqual(this, X);
+    equal(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat nonEqual(double X) {
+  public Mat nonEqual(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceNonEqual(this, X);
+    nonEqual(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat nonEqual(AbstractMat X) throws RuntimeException {
+  public Mat nonEqual(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceNonEqual(this, X);
+    nonEqual(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat greaterThan(double X) {
+  public Mat greaterThan(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceGreaterThan(this, X);
+    greaterThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat greaterThan(AbstractMat X) throws RuntimeException {
+  public Mat greaterThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceGreaterThan(this, X);
+    greaterThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat lessThan(double X) {
+  public Mat lessThan(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceLessThan(this, X);
+    lessThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat lessThan(AbstractMat X) throws RuntimeException {
+  public Mat lessThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceLessThan(this, X);
+    lessThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat strictGreaterThan(double X) {
+  public Mat strictGreaterThan(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceStrictGreaterThan(this, X);
+    strictGreaterThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat strictGreaterThan(AbstractMat X) throws RuntimeException {
+  public Mat strictGreaterThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceStrictGreaterThan(this, X);
+    strictGreaterThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat strictLessThan(double X) {
+  public Mat strictLessThan(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceStrictLessThan(this, X);
+    strictLessThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat strictLessThan(AbstractMat X) throws RuntimeException {
+  public Mat strictLessThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    result.outOfPlaceStrictLessThan(this, X);
+    strictLessThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  protected void set_size(int n_elem) {
+  protected void set_size(final int n_elem) throws NegativeArraySizeException {
     set_size(n_elem, 1);
   }
 

@@ -20,7 +20,7 @@ class ViewElemMat extends AbstractView {
   /**
    * The vector of specified indices
    */
-  protected AbstractMat _vector_of_indices;
+  protected final AbstractMat _vector_of_indices;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -31,7 +31,7 @@ class ViewElemMat extends AbstractView {
    * @param first_col The first column position
    * @param last_col The last column position
    */
-  protected ViewElemMat(AbstractMat matrix, AbstractMat vector_of_indices) {
+  protected ViewElemMat(final AbstractMat matrix, final AbstractMat vector_of_indices) {
     super(matrix);
 
     n_rows = 1;

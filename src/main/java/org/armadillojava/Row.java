@@ -29,8 +29,13 @@ public class Row extends AbstractVector {
    * Creates an uninitialised row vector with the specified number of elements.
    * 
    * @param n_elem The number of elements
+   * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public Row(int n_elem) {
+  public Row(final int n_elem) throws NegativeArraySizeException {
+    /*
+     * The parameter "n_elem" is validated within set_size(int).
+     */
     set_size(n_elem);
   }
 
@@ -40,11 +45,16 @@ public class Row extends AbstractVector {
    * @param n_elem The number of elements
    * @param fill_type The fill type
    * 
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    * @throws RuntimeException The fill type ({@code fill_type}) is not supported for row vectors.
    * 
    * @see Fill
    */
-  public Row(int n_elem, Fill fill_type) throws RuntimeException {
+  public Row(final int n_elem, final Fill fill_type) throws NegativeArraySizeException, RuntimeException {
+    /*
+     * The parameter "n_elem" is validated within zeros(int), ones(int), randu(int) and randn(int).
+     */
+
     switch (fill_type) {
       case NONE:
       case ZEROS:
@@ -68,7 +78,7 @@ public class Row extends AbstractVector {
    * 
    * @param col The column vector
    */
-  public Row(Row vec) {
+  public Row(final Row vec) {
     copy_size(vec);
     _data = Arrays.copyOf(vec._data, vec.n_elem);
   }
@@ -78,11 +88,12 @@ public class Row extends AbstractVector {
    * 
    * @param mat The matrix
    * 
-   * @throws RuntimeException The provided matrix must have exactly one row.
+   * @throws RuntimeException The provided ({@code mat.n_rows}, {@code mat.n_cols})-matrix must be equivalent in shape
+   *           to a row vector.
    */
-  public Row(AbstractMat mat) throws RuntimeException {
-    if (mat.n_rows > 1) {
-      throw new RuntimeException("The provided matrix must have exactly one row.");
+  public Row(final AbstractMat mat) throws RuntimeException {
+    if (!mat.is_rowvec()) {
+      throw new RuntimeException("The provided (" + mat.n_rows + ", " + mat.n_cols + ")-matrix must be equivalent in shape to a row vector.");
     }
 
     copy_size(mat);
@@ -94,20 +105,17 @@ public class Row extends AbstractVector {
    * 
    * @param array The array
    */
-  public Row(double[] array) {
+  public Row(final double[] array) {
     set_size(array.length);
     _data = Arrays.copyOf(array, array.length);
   }
 
   /**
    * Creates a deep copy of a matrix sub view.
-   * <p>
-   * <b>Note:</b> Error checking in pure internal methods is only covered by unit tests. No checks are applied during
-   * run time.
    * 
-   * @param mat The sub view
+   * @param view The sub view
    */
-  protected Row(AbstractView view) {
+  protected Row(final AbstractView view) {
     copy_size(view);
 
     view.iteratorReset();
@@ -116,30 +124,36 @@ public class Row extends AbstractVector {
     }
   }
 
-  public void copy_size(AbstractView vec) {
+  public void copy_size(final AbstractView vec) {
     set_size(vec.n_elem);
   }
 
   @Override
-  public void copy_size(AbstractMat vec) throws RuntimeException {
-    if (vec.n_cols > 1) {
-      throw new RuntimeException("The specified matrix must be empty or have excatly one column.");
+  public void copy_size(final AbstractMat vec) throws RuntimeException {
+    if (!vec.is_rowvec()) {
+      throw new RuntimeException("Row vectors can only copy the size of matrices equivalent in shape to a row vector.");
     }
 
     set_size(vec.n_elem);
   }
 
   /**
-   * Inserts the columns from {@code X} at column position {@code col_number}.
+   * Inserts the columns from {@code X} between column {@code col_number} - 1 and {@code col_number}.
    * 
-   * @param col_number The column position
+   * @param col_number The column
    * @param X The column vector
    * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The row ({@code row_number}) is out of bounds.
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
+   *           row vector.
    */
-  public void insert_cols(int col_number, Row X) throws IndexOutOfBoundsException {
+  public void insert_cols(final int col_number, final Row X) throws IndexOutOfBoundsException, RuntimeException {
     if (col_number < 0 || col_number > n_elem) {
-      throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The column (" + col_number + ") is out of bounds.");
+    }
+
+    if (!X.is_rowvec()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be equivalent in shape to a row vector.");
     }
 
     if (X.is_empty()) {
@@ -158,16 +172,21 @@ public class Row extends AbstractVector {
   }
 
   /**
-   * Inserts {@code number_of_cols} uninitialised columns at column position {@code col_number}.
+   * Inserts {@code number_of_cols} uninitialised columns between column {@code col_number} - 1 and {@code col_number}.
    * 
-   * @param col_number The column position
+   * @param col_number The column
    * @param number_of_cols The number of columns
    * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The row ({@code row_number}) is out of bounds.
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void insert_cols(int col_number, int number_of_cols) throws IndexOutOfBoundsException {
+  public void insert_cols(final int col_number, final int number_of_cols) throws IndexOutOfBoundsException, NegativeArraySizeException {
+    /*
+     * The parameter "number_of_cols" is validated within set_size(int).
+     */
+
     if (col_number < 0 || col_number > n_elem) {
-      throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The column (" + col_number + ") is out of bounds.");
     }
 
     if (number_of_cols == 0) {
@@ -184,15 +203,22 @@ public class Row extends AbstractVector {
   }
 
   /**
-   * Inserts {@code number_of_cols} columns at column position {@code col_number}.
+   * Inserts {@code number_of_cols} columns between column {@code col_number} - 1 and {@code col_number}.
    * <p>
    * All elements will be set to 0 ({@code set_to_zero} = true) or left uninitialised.
    * 
-   * @param col_number The column position
+   * @param col_number The column
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
+   * 
+   * @throws IndexOutOfBoundsException The row ({@code row_number}) is out of bounds.
+   * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public void insert_cols(int col_number, int number_of_cols, boolean set_to_zero) {
+  public void insert_cols(final int col_number, final int number_of_cols, final boolean set_to_zero) throws IndexOutOfBoundsException, NegativeArraySizeException {
+    /*
+     * The parameter "number_of_cols" is validated within set_size(int).
+     */
+
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -204,66 +230,66 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row plus(double X) {
+  public Row plus(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlacePlus(this, X);
+    plus(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row plus(AbstractMat X) throws RuntimeException {
+  public Row plus(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlacePlus(this, X);
+    plus(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row minus(double X) {
+  public Row minus(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceMinus(this, X);
+    minus(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row minus(AbstractMat X) throws RuntimeException {
+  public Row minus(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceMinus(this, X);
+    minus(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row elemDivide(double X) {
+  public Row elemDivide(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceElemDivide(this, X);
+    elemDivide(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row elemDivide(AbstractMat X) throws RuntimeException {
+  public Row elemDivide(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceElemDivide(this, X);
+    elemDivide(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row times(double X) {
+  public Row times(final double X) {
     return elemTimes(X);
   }
 
   @Override
-  public Row times(Row X) throws RuntimeException {
+  public Row times(final Row X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -275,7 +301,7 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Mat times(Mat X) {
+  public Mat times(final Mat X) {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -287,7 +313,7 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Mat times(Col X) {
+  public Mat times(final Col X) {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
@@ -296,133 +322,133 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row elemTimes(double X) {
+  public Row elemTimes(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceElemTimes(this, X);
+    elemTimes(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row elemTimes(AbstractMat X) throws RuntimeException {
+  public Row elemTimes(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceElemTimes(this, X);
+    elemTimes(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row equal(double X) {
+  public Row equal(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceEqual(this, X);
+    equal(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row equal(AbstractMat X) throws RuntimeException {
+  public Row equal(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceEqual(this, X);
+    equal(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row nonEqual(double X) {
+  public Row nonEqual(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceNonEqual(this, X);
+    nonEqual(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row nonEqual(AbstractMat X) throws RuntimeException {
+  public Row nonEqual(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceNonEqual(this, X);
+    nonEqual(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row greaterThan(double X) {
+  public Row greaterThan(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceGreaterThan(this, X);
+    greaterThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row greaterThan(AbstractMat X) throws RuntimeException {
+  public Row greaterThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceGreaterThan(this, X);
+    greaterThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row lessThan(double X) {
+  public Row lessThan(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceLessThan(this, X);
+    lessThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row lessThan(AbstractMat X) throws RuntimeException {
+  public Row lessThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceLessThan(this, X);
+    lessThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row strictGreaterThan(double X) {
+  public Row strictGreaterThan(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceStrictGreaterThan(this, X);
+    strictGreaterThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row strictGreaterThan(AbstractMat X) throws RuntimeException {
+  public Row strictGreaterThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceStrictGreaterThan(this, X);
+    strictGreaterThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Row strictLessThan(double X) {
+  public Row strictLessThan(final double X) {
     Row result = new Row(n_elem);
-    result.outOfPlaceStrictLessThan(this, X);
+    strictLessThan(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Row strictLessThan(AbstractMat X) throws RuntimeException {
+  public Row strictLessThan(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
-      throw new RuntimeException("Both operands must have the same size.");
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Row result = new Row(n_elem);
-    result.outOfPlaceStrictLessThan(this, X);
+    strictLessThan(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public void set_size(int n_elem) throws NegativeArraySizeException {
+  public void set_size(final int n_elem) throws NegativeArraySizeException {
     if (n_elem < 0) {
       throw new NegativeArraySizeException("The specified number of elements (" + n_elem + ") must be positive.");
     }
@@ -439,13 +465,13 @@ public class Row extends AbstractVector {
   /**
    * Removes the specified column.
    * 
-   * @param col_number The column position
+   * @param col_number The column
    * 
-   * @throws RuntimeException The column position ({@code row_number}) is out of bound.
+   * @throws RuntimeException The column ({@code row_number}) is out of bound.
    */
-  public void shed_col(int col_number) {
+  public void shed_col(final int col_number) throws RuntimeException {
     if (!in_range(col_number)) {
-      throw new RuntimeException("The column position (" + col_number + ") is out of bound.");
+      throw new RuntimeException("The column (" + col_number + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
@@ -458,24 +484,25 @@ public class Row extends AbstractVector {
   /**
    * Removes all columns from {@code first_col} to {@code last_col}.
    * 
-   * @param first_col The first column position
-   * @param last_col The last column position
+   * @param first_col The first column
+   * @param last_col The last column
    * 
-   * @throws RuntimeException The first column position ({@code first_col}) is out of bound.
-   * @throws RuntimeException The last column position ({@code last_col}) is out of bound.
-   * @throws RuntimeException The first column must be less than or equal the last column.
+   * @throws RuntimeException The first column ({@code first_col}) must be less than or equal the last column (
+   *           {@code last_col}).
+   * @throws RuntimeException The first column ({@code first_col}) is out of bound.
+   * @throws RuntimeException The last column ({@code last_col}) is out of bound.
    */
-  public void shed_cols(int first_col, int last_col) throws RuntimeException {
+  public void shed_cols(final int first_col, int last_col) throws RuntimeException {
+    if (first_col > last_col) {
+      throw new RuntimeException("The first column (" + first_col + ") must be less than or equal the last column (" + last_col + ") .");
+    }
+
     if (!in_range(first_col)) {
-      throw new RuntimeException("The first column position (" + first_col + ") is out of bound.");
+      throw new RuntimeException("The first column (" + first_col + ") is out of bound.");
     }
 
     if (!in_range(last_col)) {
-      throw new RuntimeException("The last column position (" + last_col + ") is out of bound.");
-    }
-
-    if (first_col > last_col) {
-      throw new RuntimeException("The first column must be less than or equal the last column.");
+      throw new RuntimeException("The last column (" + last_col + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
@@ -484,21 +511,39 @@ public class Row extends AbstractVector {
     System.arraycopy(temp, 0, _data, 0, first_col);
     System.arraycopy(temp, last_col + 1, _data, first_col, n_elem - first_col);
   }
-  
+
   @Override
-  public Row subvec(int first_index, int last_index) throws IndexOutOfBoundsException {
-    return rows(first_index, last_index);
+  public Row subvec(final int first_index, final int last_index) throws RuntimeException, IndexOutOfBoundsException {
+    if (last_index < first_index) {
+      throw new RuntimeException("The first specified column (" + first_index + ") must be less than or equal the last specified column (" + last_index + ").");
+    }
+
+    if (first_index < 0) {
+      throw new IndexOutOfBoundsException("The first specified column (" + first_index + ") is out of bounds.");
+    }
+
+    if (last_index > n_cols - 1) {
+      throw new IndexOutOfBoundsException("The last specified column (" + last_index + ") is out of bounds.");
+    }
+
+    Row row = new Row(last_index - first_index + 1);
+    row._data = Arrays.copyOfRange(_data, first_index, last_index + 1);
+    return row;
   }
 
   @Override
-  public Row subvec(Span span) throws IndexOutOfBoundsException {
+  public Row subvec(final Span span) throws IndexOutOfBoundsException {
+    /*
+     * The parameter "span" is already validated during its instantiation and further validated in the context of this
+     * vector in subvec(int, int).
+     */
     return subvec(span._first, span._last);
   }
 
   @Override
-  public void swap(Mat X) {
-    if (X.n_rows > 1) {
-      throw new RuntimeException("The content of row vectors can only be swaped with matrices that have at most one row.");
+  public void swap(final Mat X) throws RuntimeException {
+    if (!X.is_rowvec()) {
+      throw new RuntimeException("The content of row vectors can only be swapped with matrices that are equivalent in shape to a row vector.");
     }
 
     Row temp = new Row(_data);
@@ -511,9 +556,9 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public void swap(Col X) {
-    if (X.n_elem > 1 || n_elem > 1) {
-      throw new RuntimeException("The content of row vectors can only be swaped with column vectors if both have at most one element.");
+  public void swap(final Col X) throws RuntimeException {
+    if (!X.is_rowvec()) {
+      throw new RuntimeException("The content of row vectors can only be swapped with matrices that are equivalent in shape to a row vector.");
     }
 
     Row temp = new Row(_data);
@@ -526,7 +571,7 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public void swap(Row X) {
+  public void swap(final Row X) {
     Row temp = new Row(_data);
 
     copy_size(X);
@@ -541,31 +586,4 @@ public class Row extends AbstractVector {
     return new Col(_data);
   }
 
-  @Override
-  public void subvec(int first_index, int last_index, Op unary_operator) throws IndexOutOfBoundsException {
-    /*
-     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
-     */
-    
-    cols(first_index, last_index, unary_operator);
-  }
-
-  @Override
-  public void subvec(int first_index, int last_index, Op binary_operator, double operand) throws IndexOutOfBoundsException {
-    /*
-     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
-     */
-    
-    cols(first_index, last_index, binary_operator, operand);
-  }
-
-  @Override
-  public void subvec(int first_index, int last_index, Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException {
-    /*
-     * The parameter "first_index", "last_index" and "unary_operator" are validated within set_size(int).
-     */
-    
-    cols(first_index, last_index, binary_operator, operand);
-  }
-  
 }
