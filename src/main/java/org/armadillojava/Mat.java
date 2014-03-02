@@ -53,7 +53,6 @@ public class Mat extends AbstractMat {
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
-   * @throws RuntimeException The fill type ({@code fill_type}) is not supported for column vectors.
    * 
    * @see Fill
    */
@@ -184,7 +183,7 @@ public class Mat extends AbstractMat {
    * 
    * @param k The diagonal position
    * 
-   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified diagonal index ({@code k}) is out of bounds.
    */
   public Col diag(final int k) throws IndexOutOfBoundsException {
     /*
@@ -192,11 +191,11 @@ public class Mat extends AbstractMat {
      */
 
     if (k > 0 && k >= n_cols) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     if (k < 0 && -k <= n_rows) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     return new Col(new ViewDiag(this, k));
@@ -214,7 +213,7 @@ public class Mat extends AbstractMat {
    * @param k The diagonal position
    * @param unary_operator The unary operator
    * 
-   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified diagonal index ({@code k}) is out of bounds.
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
   public void diag(final int k, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
@@ -223,11 +222,11 @@ public class Mat extends AbstractMat {
      */
 
     if (k > 0 && k >= n_cols) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     if (k < 0 && -k <= n_rows) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     new ViewDiag(this, k).inPlace(unary_operator);
@@ -246,7 +245,7 @@ public class Mat extends AbstractMat {
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
-   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified diagonal index ({@code k}) is out of bounds.
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void diag(final int k, final Op binary_operator, final double operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
@@ -255,11 +254,11 @@ public class Mat extends AbstractMat {
      */
 
     if (k > 0 && k >= n_cols) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     if (k < 0 && -k <= n_rows) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     new ViewDiag(this, k).inPlace(binary_operator, operand);
@@ -278,7 +277,7 @@ public class Mat extends AbstractMat {
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
-   * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified diagonal index ({@code k}) is out of bounds.
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void diag(final int k, final Op binary_operator, final AbstractMat operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
@@ -287,11 +286,11 @@ public class Mat extends AbstractMat {
      */
 
     if (k > 0 && k >= n_cols) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     if (k < 0 && -k <= n_rows) {
-      throw new IndexOutOfBoundsException("The diagonal index (" + k + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
     new ViewDiag(this, k).inPlace(binary_operator, operand);
@@ -640,12 +639,12 @@ public class Mat extends AbstractMat {
   /**
    * Returns the inverse.
    * 
-   * @throws RuntimeException The matrix must be square.
+   * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must be square.
    * @throws RuntimeException The matrix appears to be singular.
    */
   public Mat i() throws RuntimeException {
     if (!is_square()) {
-      throw new RuntimeException("The matrix must be square.");
+      throw new RuntimeException("The (" + n_rows + ", " + n_cols + ")-matrix must be square.");
     }
 
     Mat inverse = new Mat(this);
@@ -694,13 +693,13 @@ public class Mat extends AbstractMat {
    * @param row_number The row position
    * @param X The column vector
    * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified row position ({@code row_number}) is out of bounds.
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
   public void insert_rows(final int row_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (row_number < 0 || row_number > n_elem) {
-      throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified row position (" + row_number + ") is out of bounds.");
     }
 
     if (X.is_empty()) {
@@ -713,16 +712,15 @@ public class Mat extends AbstractMat {
         throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
       }
 
-      // TODO go on!
-      
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
-      // TODO use views
-      rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
-      rows(row_number, row_number + X.n_rows - 1, Op.EQUAL, X);
-      // n_rows has been updated by set_size
-      rows(row_number + X.n_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
+      new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
+      new ViewSubRows(this, row_number, row_number + X.n_rows - 1).inPlace(Op.EQUAL, X);
+      /*
+       * The attribute "n_rows" has been updated by set_size(int, int).
+       */
+      new ViewSubRows(this, row_number + X.n_rows, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - 1));
     }
   }
 
@@ -733,15 +731,19 @@ public class Mat extends AbstractMat {
    * @param number_of_rows The number of rows
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code number_of_rows}) must be positive.
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The specified row position ({@code row_number}) is out of bounds.
    */
   public void insert_rows(final int row_number, final int number_of_rows) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    /*
+     * The parameter "number_of_rows" is validated within set_size(int, int).
+     */
+
     if (number_of_rows < 0) {
       throw new NegativeArraySizeException("The specified number of rows (" + number_of_rows + ") must be positive.");
     }
 
     if (row_number < 0 || row_number > n_elem) {
-      throw new IndexOutOfBoundsException("The row position (" + row_number + ") is out of bounds.");
+      throw new IndexOutOfBoundsException("The specified row position (" + row_number + ") is out of bounds.");
     }
 
     if (number_of_rows == 0) {
@@ -752,9 +754,11 @@ public class Mat extends AbstractMat {
       Mat temp = new Mat(this);
       set_size(n_rows + number_of_rows, n_cols);
 
-      // TODO use views
-      rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
-      rows(row_number + number_of_rows, n_rows - 1, Op.EQUAL, rows(row_number, n_rows - 1));
+      new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
+      /*
+       * The attribute "n_rows" has been updated by set_size(int, int).
+       */
+      new ViewSubRows(this, row_number + number_of_rows, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - 1));
     }
   }
 
@@ -767,9 +771,14 @@ public class Mat extends AbstractMat {
    * @param number_of_rows The number of rows
    * @param set_to_zero Whether the inserted elements are to be set to 0
    * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws NegativeArraySizeException The specified number of rows ({@code number_of_rows}) must be positive.
+   * @throws IndexOutOfBoundsException The specified row position ({@code row_number}) is out of bounds.
    */
   public void insert_rows(final int row_number, final int number_of_rows, final boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    /*
+     * The parameter "number_of_rows" is validated within set_size(int, int).
+     */
+
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -787,7 +796,8 @@ public class Mat extends AbstractMat {
    * @param X The column vector
    * 
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
-   * @throws RuntimeException Both matrices must have the same number of columns.
+   * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
+   *           ).
    */
   public void insert_cols(final int col_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (col_number < 0 || col_number > n_elem) {
@@ -800,8 +810,8 @@ public class Mat extends AbstractMat {
       copy_size(X);
       _data = Arrays.copyOf(X._data, X.n_elem);
     } else {
-      if (n_rows != X.n_rows) {
-        throw new RuntimeException("Both matrices must have the same number of rows.");
+      if (n_cols != X.n_cols) {
+        throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
       }
 
       double[] temp = Arrays.copyOf(_data, n_elem);
@@ -823,6 +833,10 @@ public class Mat extends AbstractMat {
    * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
   public void insert_cols(final int col_number, final int number_of_cols) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    /*
+     * The parameter "number_of_rows" is validated within set_size(int, int).
+     */
+
     if (number_of_cols < 0) {
       throw new NegativeArraySizeException("The specified number of columns (" + number_of_cols + ") must be positive.");
     }
@@ -852,8 +866,15 @@ public class Mat extends AbstractMat {
    * @param col_number The column position
    * @param number_of_cols The number of columns
    * @param set_to_zero Whether the inserted elements are to be set to 0
+   * 
+   * @throws NegativeArraySizeException The specified number of columns ({@code number_of_cols}) must be positive.
+   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
    */
   public void insert_cols(final int col_number, final int number_of_cols, final boolean set_to_zero) throws NegativeArraySizeException, IndexOutOfBoundsException {
+    /*
+     * The parameter "number_of_rows" is validated within set_size(int, int).
+     */
+
     /*
      * All entries of an array are already set to 0 during creation.
      * Therefore, set_to_zero will be ignored.
@@ -873,16 +894,16 @@ public class Mat extends AbstractMat {
    * @param index_of_min_val The row position storage
    * @param index_of_min_val The column position storage
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
-  public double min(final int[] row_of_min_val, final int[] col_of_min_val) throws RuntimeException {
+  public double min(int[] row_of_min_val, int[] col_of_min_val) throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The matrix must have at least one element.");
+      throw new RuntimeException("The (" + n_rows + ", " + n_cols + ")-matrix must have at least one element.");
     }
 
     double minimum = _data[0];
-    row_of_min_val[0] = 0;
-    col_of_min_val[0] = 0;
+    row_of_min_val = new int[1];
+    col_of_min_val = new int[1];
 
     int n = 0;
     for (int j = 1; j < n_cols; j++) {
@@ -909,16 +930,16 @@ public class Mat extends AbstractMat {
    * @param index_of_min_val The row position storage
    * @param index_of_min_val The column position storage
    * 
-   * @throws RuntimeException The matrix must have at least one element.
+   * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
-  public double max(final int[] row_of_max_val, final int[] col_of_max_val) throws RuntimeException {
+  public double max(int[] row_of_max_val, int[] col_of_max_val) throws RuntimeException {
     if (is_empty()) {
-      throw new RuntimeException("The matrix must have at least one element.");
+      throw new RuntimeException("The (" + n_rows + ", " + n_cols + ")-matrix must have at least one element.");
     }
 
     double maximum = _data[0];
-    row_of_max_val[0] = 0;
-    col_of_max_val[0] = 0;
+    row_of_max_val = new int[1];
+    col_of_max_val = new int[1];
 
     int n = 0;
     for (int j = 1; j < n_cols; j++) {
@@ -946,6 +967,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void ones(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     set_size(n_rows, n_cols);
     fill(1);
   }
@@ -963,6 +988,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void randu(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextDouble();
@@ -980,6 +1009,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void randn(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     set_size(n_rows, n_cols);
     for (int n = 0; n < n_elem; n++) {
       _data[n] = RNG._rng.nextGaussian();
@@ -996,6 +1029,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void zeros(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     set_size(n_rows, n_cols);
   }
 
@@ -1009,6 +1046,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void reshape(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     double[] temp = Arrays.copyOf(_data, Math.min(n_elem, n_rows * n_cols));
     set_size(n_rows, n_cols);
     System.arraycopy(temp, 0, _data, 0, temp.length);
@@ -1025,6 +1066,10 @@ public class Mat extends AbstractMat {
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
   public void resize(final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within set_size(int, int).
+     */
+
     Mat temp = new Mat(this);
     set_size(n_rows, n_cols);
 
@@ -1068,44 +1113,112 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void shed_row(final int row_number) {
+  /**
+   * Removes the {@code row_number}th row.
+   * 
+   * @param row_number The row
+   * 
+   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bound.
+   */
+  public void shed_row(final int row_number) throws IndexOutOfBoundsException {
+    if (!in_range(row_number)) {
+      throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bound.");
+    }
+
     Mat temp = new Mat(this);
 
     set_size(n_rows - 1, n_cols);
-    // TODO use views
-    rows(0, row_number - 1, Op.EQUAL, temp.rows(0, row_number - 1));
-    // n_rows has been updated by set_size
-    rows(row_number, n_rows - 1, Op.EQUAL, temp.rows(row_number + 1, temp.n_rows - 1));
+
+    new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
+    /*
+     * The attribute "n_rows" has been updated by set_size(int, int).
+     */
+    new ViewSubRows(this, row_number, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number + 1, temp.n_rows - 1));
   }
 
-  public void shed_rows(final int first_row, final int last_row) {
+  /**
+   * Removes all rows from the {@code first_row} to the {@code last_row} (inclusive).
+   * 
+   * @param first_row The first row
+   * @param last_row The last row
+   * 
+   * @throws RuntimeException The first specified row ({@code first_row}) must be less than or equal the last specified
+   *           row ({@code last_row}).
+   * @throws IndexOutOfBoundsException The first specified row ({@code first_row}) is out of bound.
+   * @throws IndexOutOfBoundsException The last specified row ({@code last_row}) is out of bound.
+   */
+  public void shed_rows(final int first_row, final int last_row) throws RuntimeException, IndexOutOfBoundsException {
+    if (first_row > last_row) {
+      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ") .");
+    }
+
+    if (!in_range(first_row)) {
+      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bound.");
+    }
+
+    if (!in_range(last_row)) {
+      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bound.");
+    }
+
     Mat temp = new Mat(this);
 
     set_size(n_rows - (last_row - first_row + 1), n_cols);
-    // TODO use views
-    rows(0, first_row - 1, Op.EQUAL, temp.rows(0, first_row - 1));
-    // n_rows has been updated by set_size
-    rows(first_row, n_rows - 1, Op.EQUAL, temp.rows(last_row + 1, temp.n_rows - 1));
+
+    new ViewSubRows(this, 0, first_row - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, first_row - 1));
+    /*
+     * The attribute "n_rows" has been updated by set_size(int, int).
+     */
+    new ViewSubRows(this, first_row, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, last_row + 1, temp.n_rows - 1));
   }
 
-  public void shed_col(final int column_number) throws IndexOutOfBoundsException {
-    if (column_number < 0 || column_number > n_elem) {
-      throw new IndexOutOfBoundsException("The row position (" + column_number + ") is out of bounds.");
+  /**
+   * Removes the {@code col_number}th column.
+   * 
+   * @param col_number The column
+   * 
+   * @throws IndexOutOfBoundsException The specified column ({@code row_number}) is out of bound.
+   */
+  public void shed_col(final int col_number) throws IndexOutOfBoundsException {
+    if (!in_range(col_number)) {
+      throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
     set_size(n_rows, n_cols - 1);
 
-    System.arraycopy(temp, 0, _data, 0, column_number * n_rows);
-    System.arraycopy(temp, (column_number + 1) * n_rows, _data, 0, n_elem - (column_number + 1) * n_rows);
+    System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
+    System.arraycopy(temp, (col_number + 1) * n_rows, _data, 0, n_elem - (col_number + 1) * n_rows);
   }
 
-  public void shed_cols(final int first_column, final int last_column) throws IndexOutOfBoundsException {
-    double[] temp = Arrays.copyOf(_data, n_elem);
-    set_size(n_rows, n_cols - (last_column - first_column + 1));
+  /**
+   * Removes all columns from the {@code first_col} to the {@code last_col} (inclusive).
+   * 
+   * @param first_col The first column
+   * @param last_col The last column
+   * 
+   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
+   *           specified column ({@code last_col}).
+   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bound.
+   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bound.
+   */
+  public void shed_cols(final int first_col, final int last_col) throws RuntimeException, IndexOutOfBoundsException {
+    if (first_col > last_col) {
+      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ") .");
+    }
 
-    System.arraycopy(temp, 0, _data, 0, first_column * n_rows);
-    System.arraycopy(temp, (last_column + 1) * n_rows, _data, 0, n_elem - (last_column + 1) * n_rows);
+    if (!in_range(first_col)) {
+      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bound.");
+    }
+
+    if (!in_range(last_col)) {
+      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bound.");
+    }
+
+    double[] temp = Arrays.copyOf(_data, n_elem);
+    set_size(n_rows, n_cols - (last_col - first_col + 1));
+
+    System.arraycopy(temp, 0, _data, 0, first_col * n_rows);
+    System.arraycopy(temp, (last_col + 1) * n_rows, _data, 0, n_elem - (last_col + 1) * n_rows);
   }
 
   @Override

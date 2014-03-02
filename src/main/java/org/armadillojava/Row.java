@@ -463,15 +463,15 @@ public class Row extends AbstractVector {
   }
 
   /**
-   * Removes the specified column.
+   * Removes the {@code col_number}th column.
    * 
    * @param col_number The column
    * 
-   * @throws RuntimeException The column ({@code row_number}) is out of bound.
+   * @throws IndexOutOfBoundsException The specified column ({@code row_number}) is out of bound.
    */
-  public void shed_col(final int col_number) throws RuntimeException {
+  public void shed_col(final int col_number) throws IndexOutOfBoundsException {
     if (!in_range(col_number)) {
-      throw new RuntimeException("The column (" + col_number + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
@@ -482,27 +482,27 @@ public class Row extends AbstractVector {
   }
 
   /**
-   * Removes all columns from {@code first_col} to {@code last_col}.
+   * Removes all columns from the {@code first_col} to the {@code last_col} (inclusive).
    * 
    * @param first_col The first column
    * @param last_col The last column
    * 
-   * @throws RuntimeException The first column ({@code first_col}) must be less than or equal the last column (
-   *           {@code last_col}).
-   * @throws RuntimeException The first column ({@code first_col}) is out of bound.
-   * @throws RuntimeException The last column ({@code last_col}) is out of bound.
+   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
+   *           specified column ({@code last_col}).
+   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bound.
+   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bound.
    */
-  public void shed_cols(final int first_col, int last_col) throws RuntimeException {
+  public void shed_cols(final int first_col, int last_col) throws RuntimeException, IndexOutOfBoundsException {
     if (first_col > last_col) {
-      throw new RuntimeException("The first column (" + first_col + ") must be less than or equal the last column (" + last_col + ") .");
+      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ") .");
     }
 
     if (!in_range(first_col)) {
-      throw new RuntimeException("The first column (" + first_col + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bound.");
     }
 
     if (!in_range(last_col)) {
-      throw new RuntimeException("The last column (" + last_col + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);

@@ -463,15 +463,15 @@ public class Col extends AbstractVector {
   }
 
   /**
-   * Removes the specified row.
+   * Removes the {@code row_number}th row.
    * 
    * @param row_number The row
    * 
-   * @throws RuntimeException The row ({@code row_number}) is out of bound.
+   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bound.
    */
-  public void shed_row(final int row_number) throws RuntimeException {
+  public void shed_row(final int row_number) throws IndexOutOfBoundsException {
     if (!in_range(row_number)) {
-      throw new RuntimeException("The row (" + row_number + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);
@@ -482,27 +482,27 @@ public class Col extends AbstractVector {
   }
 
   /**
-   * Removes all rows from {@code first_row} to {@code last_row}.
+   * Removes all rows from the {@code first_row} to the {@code last_row} (inclusive).
    * 
    * @param first_row The first row
    * @param last_row The last row
    * 
-   * @throws RuntimeException The first row ({@code first_row}) must be less than or equal the last row ({@code last_row}
-   *           ).
-   * @throws RuntimeException The first row ({@code first_row}) is out of bound.
-   * @throws RuntimeException The last row ({@code last_row}) is out of bound.
+   * @throws RuntimeException The first specified row ({@code first_row}) must be less than or equal the last specified
+   *           row ({@code last_row}).
+   * @throws IndexOutOfBoundsException The first specified row ({@code first_row}) is out of bound.
+   * @throws IndexOutOfBoundsException The last specified row ({@code last_row}) is out of bound.
    */
-  public void shed_rows(final int first_row, final int last_row) throws RuntimeException {
+  public void shed_rows(final int first_row, final int last_row) throws RuntimeException, IndexOutOfBoundsException {
     if (first_row > last_row) {
-      throw new RuntimeException("The first row (" + first_row + ") must be less than or equal the last row (" + last_row + ") .");
+      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ") .");
     }
 
     if (!in_range(first_row)) {
-      throw new RuntimeException("The first row (" + first_row + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bound.");
     }
 
     if (!in_range(last_row)) {
-      throw new RuntimeException("The last row (" + last_row + ") is out of bound.");
+      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bound.");
     }
 
     double[] temp = Arrays.copyOf(_data, n_elem);

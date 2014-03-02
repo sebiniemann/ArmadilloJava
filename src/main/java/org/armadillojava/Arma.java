@@ -410,7 +410,7 @@ public class Arma {
        * First, copy "A.n_cols" columns alongside the rows ...
        */
       for (int i = 0; i < num_copies_per_row; i++) {
-        new ViewSubMat(result, i * A.n_rows, A.n_rows, 0, A.n_cols).replaceWith(A);
+        new ViewSubMat(result, i * A.n_rows, A.n_rows, 0, A.n_cols).inPlace(Op.EQUAL, A);
       }
 
       /*
@@ -446,12 +446,12 @@ public class Arma {
 
     Mat result = new Mat(A.n_elem, A.n_elem);
 
-    new ViewDiag(result, 0).replaceWith(A._data[0]);
+    new ViewDiag(result, 0).fill(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
       double value = A._data[n];
 
-      new ViewDiag(result, n).replaceWith(value);
-      new ViewDiag(result, -n).replaceWith(value);
+      new ViewDiag(result, n).fill(value);
+      new ViewDiag(result, -n).fill(value);
     }
 
     return result;
@@ -492,13 +492,13 @@ public class Arma {
 
     Mat result = new Mat(A.n_elem, B.n_elem);
 
-    new ViewDiag(result, 0).replaceWith(A._data[0]);
+    new ViewDiag(result, 0).fill(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
-      new ViewDiag(result, -n).replaceWith(A._data[n]);
+      new ViewDiag(result, -n).fill(A._data[n]);
     }
 
     for (int n = 1; n < B.n_elem; n++) {
-      new ViewDiag(result, n).replaceWith(B._data[n]);
+      new ViewDiag(result, n).fill(B._data[n]);
     }
 
     return result;
@@ -524,12 +524,12 @@ public class Arma {
 
     Mat result = new Mat(A.n_elem, A.n_elem);
 
-    new ViewDiag(result, 0).replaceWith(A._data[0]);
+    new ViewDiag(result, 0).fill(A._data[0]);
     for (int n = 1; n < A.n_elem; n++) {
       double value = A._data[n];
 
-      new ViewDiag(result, A.n_elem - n).replaceWith(value);
-      new ViewDiag(result, -n).replaceWith(value);
+      new ViewDiag(result, A.n_elem - n).fill(value);
+      new ViewDiag(result, -n).fill(value);
     }
 
     return result;
@@ -4020,7 +4020,7 @@ public class Arma {
     }
 
     Mat result = new Mat(X.n_elem, X.n_elem);
-    new ViewDiag(result, 0).replaceWith(X);
+    new ViewDiag(result, 0).inPlace(Op.EQUAL, X);
     return result;
   }
 
@@ -4045,7 +4045,7 @@ public class Arma {
      * All uninitialised matrices are already equal to a zero matrix.
      */
     Mat result = new Mat(X.n_rows, X.n_cols);
-    new ViewDiag(result, 0).replaceWith(new ViewDiag(X, 0));
+    new ViewDiag(result, 0).inPlace(Op.EQUAL, new ViewDiag(X, 0));
     return result;
   }
 
@@ -4158,7 +4158,7 @@ public class Arma {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     for (int i = 0; i < result.n_rows / 2; i++) {
-      new ViewSubRow(result, i).replaceWith(new ViewSubRow(X, X.n_rows - (i + 1)));
+      new ViewSubRow(result, i).inPlace(Op.EQUAL, new ViewSubRow(X, X.n_rows - (i + 1)));
     }
 
     return result;
@@ -4327,7 +4327,7 @@ public class Arma {
         }
 
         for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).replaceWith(hist(X.col(j), n_bins));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), n_bins));
         }
         break;
       case 1:
@@ -4338,7 +4338,7 @@ public class Arma {
         }
 
         for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).replaceWith(hist(X.row(i), n_bins));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), n_bins));
         }
         break;
       default:
@@ -4443,7 +4443,7 @@ public class Arma {
         }
 
         for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).replaceWith(hist(X.col(j), centers));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), centers));
         }
         break;
       case 1:
@@ -4454,7 +4454,7 @@ public class Arma {
         }
 
         for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).replaceWith(hist(X.row(i), centers));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), centers));
         }
         break;
       default:
@@ -4561,7 +4561,7 @@ public class Arma {
         }
 
         for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).replaceWith(histc(X.col(j), edges));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, histc(X.col(j), edges));
         }
         break;
       case 1:
@@ -4572,7 +4572,7 @@ public class Arma {
         }
 
         for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).replaceWith(histc(X.row(i), edges));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, histc(X.row(i), edges));
         }
         break;
       default:
@@ -4674,8 +4674,8 @@ public class Arma {
 
     Mat result = new Mat(A.n_rows + B.n_rows, A.n_cols);
 
-    new ViewSubRows(result, 0, A.n_rows - 1).replaceWith(A);
-    new ViewSubRows(result, A.n_rows, result.n_rows - 1).replaceWith(B);
+    new ViewSubRows(result, 0, A.n_rows - 1).inPlace(Op.EQUAL, A);
+    new ViewSubRows(result, A.n_rows, result.n_rows - 1).inPlace(Op.EQUAL, B);
 
     return result;
   }
@@ -4781,7 +4781,7 @@ public class Arma {
           /*
            * Creates a deep copy of each column, since shuffling of shallow sub views is not yet implemented.
            */
-          new ViewSubCol(result, j).replaceWith(shuffle(X.col(j)));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, shuffle(X.col(j)));
         }
         break;
       case 1:
@@ -4795,7 +4795,7 @@ public class Arma {
           /*
            * Creates a deep copy of each row, since shuffling of shallow sub views is not yet implemented.
            */
-          new ViewSubRow(result, i).replaceWith(shuffle(X.row(i)));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, shuffle(X.row(i)));
         }
         break;
       default:
@@ -4858,7 +4858,7 @@ public class Arma {
           /*
            * Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
            */
-          new ViewSubCol(result, j).replaceWith(sort(X.col(j)));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, sort(X.col(j)));
         }
         break;
       case 1:
@@ -4872,7 +4872,7 @@ public class Arma {
           /*
            * Creates a deep copy of each row, since sorting of shallow sub views is not yet implemented.
            */
-          new ViewSubRow(result, i).replaceWith(sort(X.row(i)));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, sort(X.row(i)));
         }
         break;
       default:
@@ -5142,8 +5142,8 @@ public class Arma {
     return R;
   }
 
-  public static void chol(Mat R, Mat X) {
-    R.replaceWith(X);
+  public static void chol(Mat R, Mat X) throws RuntimeException {
+    R.inPlace(Op.EQUAL, X);
 
     intW info = new intW(0);
 
@@ -5153,7 +5153,7 @@ public class Arma {
     }
   }
 
-  public static <T extends AbstractVector> T eig_sym(Class<T> return_type, Mat X) {
+  public static <T extends AbstractVector> T eig_sym(Class<T> return_type, Mat X) throws RuntimeException {
     T eigval;
 
     try {
@@ -5166,11 +5166,11 @@ public class Arma {
     return eigval;
   }
 
-  public static void eig_sym(AbstractVector eigval, Mat X) {
+  public static void eig_sym(AbstractVector eigval, Mat X) throws RuntimeException {
     /*
      * The size of this arrays is defined by the specification of the LAPACK routine.
      */
-    double[] work = new double[3 * (X.n_rows - 1)];
+    double[] work = new double[Math.max(1,  3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("N", "U", X.n_rows, X._data, X.n_rows, eigval._data, work, work.length, info);
@@ -5179,13 +5179,13 @@ public class Arma {
     }
   }
 
-  public static void eig_sym(AbstractVector eigval, Mat eigvec, Mat X) {
-    eigvec.replaceWith(X);
+  public static void eig_sym(AbstractVector eigval, Mat eigvec, Mat X) throws RuntimeException {
+    eigvec.inPlace(Op.EQUAL, X);
 
     /*
      * The size of this arrays is defined by the specification of the LAPACK routine.
      */
-    double[] work = new double[3 * (X.n_rows - 1)];
+    double[] work = new double[Math.max(1,  3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, X.n_rows, eigval._data, work, work.length, info);
@@ -5201,7 +5201,7 @@ public class Arma {
   }
 
   public static void inv(Mat B, Mat A) {
-    B.replaceWith(A.i());
+    B.inPlace(Op.EQUAL, A.i());
   }
 
   public static Mat inv_sympd(Mat A) {
@@ -5211,7 +5211,7 @@ public class Arma {
   }
 
   public static void inv_sympd(Mat B, Mat A) {
-    B.replaceWith(A);
+    B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 
     LAPACK.getInstance().dpotrf("U", A.n_rows, B._data, 0, info);
@@ -5226,7 +5226,7 @@ public class Arma {
   }
 
   public static boolean lu(Mat L, Mat U, Mat P, Mat X) {
-    U.replaceWith(X);
+    U.inPlace(Op.EQUAL, X);
 
     int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
     intW info = new intW(0);
@@ -5292,7 +5292,7 @@ public class Arma {
   }
 
   public static boolean lu(Mat L, Mat U, Mat X) {
-    U.replaceWith(X);
+    U.inPlace(Op.EQUAL, X);
 
     int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
     intW info = new intW(0);
@@ -5346,7 +5346,7 @@ public class Arma {
   public static Mat pinv(Mat A, double tolerance) {
     Mat B = new Mat();
     pinv(B, A, tolerance);
-    // TODO add exception is pinv returns false
+    // TODO add exception if pinv returns false
     return B;
   }
 
@@ -5401,9 +5401,9 @@ public class Arma {
       }
       
       if(A.n_rows >= A.n_cols) {
-        B.replaceWith(V.times(diagmat(singularValues).times(U.t())));
+        B.inPlace(Op.EQUAL, V.times(diagmat(singularValues).times(U.t())));
       } else {
-        B.replaceWith(U.times(diagmat(singularValues).times(V.t())));
+        B.inPlace(Op.EQUAL, U.times(diagmat(singularValues).times(V.t())));
       }
     }
     
@@ -5412,31 +5412,63 @@ public class Arma {
 
   public static Mat princomp(Mat X) {
     Mat coeff = new Mat();
-    solve(coeff, X);
+    princomp(coeff, X);
     return coeff;
   }
 
   public static boolean princomp(Mat coeff, Mat X) {
-    // TODO add
+    if(X.n_rows > 1) {
+      Mat temp = new Mat(X);
+      
+      Mat U = new Mat();
+      Col s = new Col();
+      
+      if(!svd(U, s, coeff, temp)) {
+        return false;
+      }
+    } else {
+      coeff.eye(X.n_cols, X.n_cols);
+    }
+
+    return true;
   }
 
   public static boolean princomp(Mat coeff, Mat score, Mat X) {
-    // TODO add
-  }
-
-  public static boolean princomp(Mat coeff, Mat score, AbstractVector latent, Mat X) {
-    // TODO add
-  }
-
-  public static boolean princomp(Mat coeff, Mat score, AbstractVector latent, AbstractVector tsquared, Mat X) {
     if(X.n_rows > 1) {
-      score.replaceWith(X);
+      score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
       
       Mat U = new Mat();
       Col s = new Col();
       
-      if(!svd(U, s, coeff, X)) {
+      if(!svd(U, s, coeff, score)) {
+        return false;
+      }
+      
+      score.inPlace(Op.ELEMTIMES, coeff);
+      
+      if(X.n_rows <= X.n_cols) {
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
+      }
+    } else {
+      coeff.eye(X.n_cols, X.n_cols);
+      
+      score.copy_size(X);
+      score.zeros();
+    }
+
+    return true;
+  }
+
+  public static boolean princomp(Mat coeff, Mat score, Col latent, Mat X) {
+    if(X.n_rows > 1) {
+      score.inPlace(Op.EQUAL, X);
+      score.each_row(Op.MINUS, mean(Row.class, X));
+      
+      Mat U = new Mat();
+      Col s = new Col();
+      
+      if(!svd(U, s, coeff, score)) {
         return false;
       }
       
@@ -5445,48 +5477,144 @@ public class Arma {
       score.inPlace(Op.ELEMTIMES, coeff);
       
       if(X.n_rows <= X.n_cols) {
-        score.cols(X.n_rows - 1, X.n_cols - 1).zeros();
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
       
-        
-        
-        Col temp = new Col(X.n_cols, Fill.ZEROS);
-        temp.rows(0, X.n_rows - 2, Op.EQUAL, s.rows(0, X.n_rows - 2));
-        s.inPlace(Op.EQUAL, temp);
-          
-        
-        temp.rows(0, X.n_rows - 2) = eT(1) / s_tmp.rows(0,n_rows-2);
-//      
-//      const Mat<eT> S = score_out * diagmat(Col<eT>(s_tmp));   
-//      tsquared_out = sum(S%S,1); 
-      } else {
-//      // compute the Hotelling's T-squared   
-//      const Mat<eT> S = score_out * diagmat(Col<eT>( eT(1) / s));
-//      tsquared_out = sum(S%S,1);
+        Col s_temp = new Col(X.n_cols, Fill.ZEROS);
+        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
+        s.inPlace(Op.EQUAL, s_temp);
       }
-      
-      // latent_out = s%s;
+
+      latent = square(s);
     } else {
-//      coeff_out.eye(n_cols, n_cols);
-//      
-//      score_out.copy_size(in);
-//      score_out.zeros();
-//      
-//      latent_out.set_size(n_cols);
-//      latent_out.zeros();
-//      
-//      tsquared_out.set_size(n_rows);
-//      tsquared_out.zeros();
+      coeff.eye(X.n_cols, X.n_cols);
+      
+      score.copy_size(X);
+      score.zeros();
+      
+      latent.set_size(X.n_cols);
+      latent.zeros();
     }
 
     return true;
   }
 
-  public static void qr(Mat Q, Mat R, Mat X) {
-    // TODO add
+  public static boolean princomp(Mat coeff, Mat score, Col latent, Col tsquared, Mat X) {
+    if(X.n_rows > 1) {
+      score.inPlace(Op.EQUAL, X);
+      score.each_row(Op.MINUS, mean(Row.class, X));
+      
+      Mat U = new Mat();
+      Col s = new Col();
+      
+      if(!svd(U, s, coeff, score)) {
+        return false;
+      }
+      
+      s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
+      
+      score.inPlace(Op.ELEMTIMES, coeff);
+      
+      Mat S;
+      if(X.n_rows <= X.n_cols) {
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
+      
+        Col s_temp = new Col(X.n_cols, Fill.ZEROS);
+        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
+        s.inPlace(Op.EQUAL, s_temp);
+
+        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, reciprocal(s_temp.rows(0, X.n_rows - 2)));
+        
+        S = score.times(diagmat(s_temp));
+      } else {
+        S = score.times(diagmat(reciprocal(s)));
+      }
+
+      tsquared.inPlace(Op.EQUAL, sum(Col.class, square(S), 1));
+      latent = square(s);
+    } else {
+      coeff.eye(X.n_cols, X.n_cols);
+      
+      score.copy_size(X);
+      score.zeros();
+      
+      latent.set_size(X.n_cols);
+      latent.zeros();
+      
+      tsquared.set_size(X.n_rows);
+      tsquared.zeros();
+    }
+
+    return true;
   }
 
-  public static void qr_econ(Mat Q, Mat R, Mat X) {
-    // TODO add
+  public static boolean qr(Mat Q, Mat R, Mat X) {
+    if(X.empty()) {
+      return false;
+    }
+    
+    R = new Mat(X);
+    
+    double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
+    double[] work = new double[Math.max(1, X.n_cols)];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgeqrf(X.n_rows, X.n_cols, R._data, X.n_rows, tau, work, work.length, info);
+    
+    if(info.val != 0) {
+      return false;
+    }
+    
+    Q.set_size(X.n_rows, X.n_rows);
+    Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
+
+    for (int j = 0; j < R.n_cols; ++j) {
+      for (int i = (j + 1); i < R.n_rows; ++i) {
+        R._data[i + j * R.n_rows] = 0;
+      }
+    }
+    
+    LAPACK.getInstance().dorgqr(X.n_rows, X.n_rows, tau.length, Q._data, X.n_rows, tau, work, work.length, info);
+    
+    return (info.val == 0);
+  }
+
+  public static boolean qr_econ(Mat Q, Mat R, Mat X) {
+    if(X.is_empty()) {
+      return false;
+    }
+    
+    if(X.n_rows <= X.n_cols) {
+      return qr(Q, R, X);
+    }
+    
+    Q = new Mat(X);
+    
+    double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
+    double[] work = new double[Math.max(1, Math.max(X.n_rows, X.n_cols))];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgeqrf(X.n_rows, X.n_cols, Q._data, X.n_rows, tau, work, work.length, info);
+    
+    if(info.val != 0) {
+      return false;
+    }
+    
+    R.set_size(X.n_cols, X.n_cols);
+    Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
+
+    for (int j = 0; j < R.n_cols; ++j) {
+      for (int i = 0; i < j; ++i) {
+        R._data[i + j * R.n_rows] = Q._data[i + j * Q.n_rows];
+      }
+      
+      for(int i = (j + 1); i < Q.n_cols; ++i) {
+        R._data[i + j * R.n_rows] = 0;
+      }
+    }
+    
+    LAPACK.getInstance().dorgqr(X.n_rows, X.n_cols, tau.length, Q._data, X.n_rows, tau, work, work.length, info);
+    
+    return (info.val == 0);
   }
 
   public static Mat solve(Mat A, Mat B) {
@@ -5495,8 +5623,17 @@ public class Arma {
     return X;
   }
 
-  public static void solve(Mat X, Mat A, Mat B) {
-    // TODO add
+  public static boolean solve(Mat X, Mat A, Mat B) {
+    if(A.empty() || B.empty()) {
+      return false;
+    }
+    
+    int[] pivotIndices = new int[A.n_rows + 2];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgesv(A.n_rows, B.n_cols, A._data, A.n_rows, pivotIndices, B._data, A.n_rows, info);
+    
+    return (info.val == 0);
   }
 
   public static <T extends AbstractVector> T svd(Class<T> return_type, Mat X) {
@@ -5513,23 +5650,84 @@ public class Arma {
   }
 
   public static boolean svd(AbstractVector s, Mat X) {
-    if (X.empty()) {
-      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    if(X.is_empty()) {
+      return false;
     }
+    
+    double[] U = new double[1];
+    s.set_size(Math.min(X.n_rows, X.n_cols));
+    double[] V = new double[X.n_cols];
 
-    // TODO add
+    double[] temp = Arrays.copyOf(X._data, X.n_elem);
+    double[] work = new double[Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgesvd("N", "N", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U, 1, V, 1, work, work.length, info);
+
+    return (info.val == 0);
   }
 
   public static boolean svd(Mat U, AbstractVector s, Mat V, Mat X) {
-    // TODO add
+    if(X.is_empty()) {
+      return false;
+    }
+    
+    U.set_size(X.n_rows, X.n_rows);
+    s.set_size(Math.min(X.n_rows, X.n_cols));
+    V.set_size(X.n_cols, X.n_cols);
+
+    double[] temp = Arrays.copyOf(X._data, X.n_elem);
+    double[] work = new double[Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dgesvd("A", "A", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, V.n_rows, work, work.length, info);
+    
+    inplace_trans(V);
+
+    return (info.val == 0);
   }
 
   public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X) {
-    // TODO add
+    return svd_econ(U, s, V, X, "both");
   }
 
   public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X, String side) {
-    // TODO add
+    if(X.is_empty()) {
+      return false;
+    }
+    
+    s.set_size(Math.min(X.n_rows, X.n_cols));
+
+    double[] temp = Arrays.copyOf(X._data, X.n_elem);
+    double[] work = new double[3 * Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
+    intW info = new intW(0);
+    
+    switch (side) {
+      case "left":
+        U.set_size(X.n_rows, s.n_elem);
+        V.reset();
+        
+        LAPACK.getInstance().dgesvd("S", "N", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, 1, work, work.length, info);
+        break;
+      case "right":
+        U.reset();
+        V.set_size(s.n_elem, X.n_cols);
+        
+        LAPACK.getInstance().dgesvd("N", "S", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, 1, V._data, V.n_rows, work, work.length, info);
+        break;
+      case "both":
+        U.set_size(X.n_rows, s.n_elem);
+        V.set_size(s.n_elem, X.n_cols);
+        
+        LAPACK.getInstance().dgesvd("S", "S", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, V.n_rows, work, work.length, info);
+        break;
+      default:
+        return false;
+    }
+    
+    inplace_trans(V);
+    
+    return (info.val == 0);
   }
 
   public static Mat syl(Mat A, Mat B, Mat C) {
@@ -5538,8 +5736,52 @@ public class Arma {
     return X;
   }
 
-  public static void syl(Mat X, Mat A, Mat B, Mat C) {
-    // TODO add
+  public static boolean syl(Mat X, Mat A, Mat B, Mat C) {
+    if(A.is_empty() || B.is_empty() || C.is_empty()) {
+      return false;
+    }
+    
+    if(!A.is_square() || !B.is_square()) {
+      return false;
+    }
+    
+    if(C.n_rows != A.n_rows) {
+      return false;
+    }
+    
+    if(C.n_cols != B.n_cols) {
+      return false;
+    }
+    
+
+//  #if defined(ARMA_USE_LAPACK)
+//    {
+//    Mat<eT> Z1, Z2, T1, T2;
+//    
+//    const bool status_sd1 = auxlib::schur_dec(Z1, T1, A);
+//    const bool status_sd2 = auxlib::schur_dec(Z2, T2, B);
+//    
+//    if( (status_sd1 == false) || (status_sd2 == false) )
+//      {
+//      return false;
+//      }
+    
+//    blas_int     m = blas_int(T1.n_rows);
+//    blas_int     n = blas_int(T2.n_cols);
+//    
+//    eT       scale = eT(0);
+//    blas_int  info = 0;
+//    
+//    Mat<eT> Y = trans(Z1) * C * Z2;
+//    
+//    lapack::trsyl<eT>("N", "N", 1, &m, &n, T1.memptr(), &m, T2.memptr(), &n, Y.memptr(), &m, &scale, &info);
+//    
+//    //Y /= scale;
+//    Y /= (-scale);
+//    
+//    X = Z1 * Y * trans(Z2);
+//    
+//    return (info >= 0);
   }
 
   /**
@@ -5560,12 +5802,94 @@ public class Arma {
     return (!Double.isInfinite(X) && !Double.isNaN(X));
   }
 
+  public static Col negate(Col X) {
+    Col result = new Col(X.n_elem);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = -X._data[n];
+    }
+    return result;
+  }
+
+  public static Row negate(Row X) {
+    Row result = new Row(X.n_elem);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = -X._data[n];
+    }
+    return result;
+  }
+
+  public static Mat negate(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = -X._data[n];
+    }
+    return result;
+  }
+
+  public static Col reciprocal(Col X) {
+    Col result = new Col(X.n_elem);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = 1 / X._data[n];
+    }
+    return result;
+  }
+
+  public static Row reciprocal(Row X) {
+    Row result = new Row(X.n_elem);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = 1 / X._data[n];
+    }
+    return result;
+  }
+
+  public static Mat reciprocal(Mat X) {
+    Mat result = new Mat(X.n_rows, X.n_cols);
+    for(int n = 0; n < X.n_elem; n++) {
+      result._data[n] = 1 / X._data[n];
+    }
+    return result;
+  }
+  
   protected static void revert(double[] result, double[] X) {
     for (int n = 0; n < X.length / 2; n++) {
       double temp = X[n];
       result[n] = X[X.length - (n + 1)];
       result[X.length - (n + 1)] = temp;
     }
+  }
+  
+  protected static void schur(Mat Z, Mat T, Mat A) {
+//    arma_debug_check( (A.is_square() == false), "schur_dec(): given matrix is not square" );
+//    
+//    if(A.is_empty())
+//      {
+//      Z.reset();
+//      T.reset();
+//      return true;
+//      }
+//    
+//    const uword A_n_rows = A.n_rows;
+//    
+//    Z.set_size(A_n_rows, A_n_rows);
+//    T = A;
+//    
+//    char    jobvs    = 'V';                // get Schur vectors (Z)
+//    char     sort    = 'N';                // do not sort eigenvalues/vectors
+//    blas_int* select = 0;                  // pointer to sorting function
+//    blas_int    n    = blas_int(A_n_rows);
+//    blas_int sdim    = 0;                  // output for sorting
+//    blas_int lwork   = 3 * ( (std::max)(blas_int(1), 3*n) );
+//    blas_int info    = 0;
+//    
+//    podarray<eT>       work( static_cast<uword>(lwork) );
+//    podarray<blas_int> bwork(A_n_rows);
+//    
+//    podarray<eT> wr(A_n_rows);             // output for eigenvalues
+//    podarray<eT> wi(A_n_rows);             // output for eigenvalues
+//    
+//    lapack::gees(&jobvs, &sort, select, &n, T.memptr(), &n, &sdim, wr.memptr(), wi.memptr(), Z.memptr(), &n, work.memptr(), &lwork, bwork.memptr(), &info);
+//    
+//    return (info == 0);
   }
 
 }

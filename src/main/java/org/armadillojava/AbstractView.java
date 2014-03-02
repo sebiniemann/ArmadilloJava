@@ -54,6 +54,13 @@ abstract class AbstractView {
    */
   abstract protected int iteratorNext();
 
+  protected void fill(double value) {
+    iteratorReset();
+    while (iteratorHasNext()) {
+      _data[iteratorNext()] = value;
+    }
+  }
+  
   protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
       case INCREMENT:
