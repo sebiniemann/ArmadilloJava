@@ -13,6 +13,7 @@ package org.armadillojava;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.netlib.util.doubleW;
 import org.netlib.util.intW;
 
 import com.github.fommil.netlib.BLAS;
@@ -5753,35 +5754,27 @@ public class Arma {
       return false;
     }
     
-
-//  #if defined(ARMA_USE_LAPACK)
-//    {
-//    Mat<eT> Z1, Z2, T1, T2;
-//    
-//    const bool status_sd1 = auxlib::schur_dec(Z1, T1, A);
-//    const bool status_sd2 = auxlib::schur_dec(Z2, T2, B);
-//    
-//    if( (status_sd1 == false) || (status_sd2 == false) )
-//      {
-//      return false;
-//      }
+    Mat Z1 = new Mat();
+    Mat Z2 = new Mat();
+    Mat T1 = new Mat();
+    Mat T2 = new Mat();
     
-//    blas_int     m = blas_int(T1.n_rows);
-//    blas_int     n = blas_int(T2.n_cols);
-//    
-//    eT       scale = eT(0);
-//    blas_int  info = 0;
-//    
-//    Mat<eT> Y = trans(Z1) * C * Z2;
-//    
-//    lapack::trsyl<eT>("N", "N", 1, &m, &n, T1.memptr(), &m, T2.memptr(), &n, Y.memptr(), &m, &scale, &info);
-//    
-//    //Y /= scale;
-//    Y /= (-scale);
-//    
-//    X = Z1 * Y * trans(Z2);
-//    
-//    return (info >= 0);
+    if(!schur(Z1, T1, A) || !schur(Z2, T2, B)) {
+      return false;
+    }
+    
+    Mat Y = trans(Z1).times(C).times(Z2);
+
+    doubleW scale = new doubleW(0);
+    intW info = new intW(0);
+    
+    LAPACK.getInstance().dtrsyl("N", "N", 1, T1.n_rows, T2.n_cols, T1._data, T1.n_rows, T2._data, T2.n_cols, Y._data, T1.n_rows, scale, info);
+    
+    Y.elemDivide(-scale.val);
+    
+    X.inPlace(Op.EQUAL, Z1.times(Y).times(trans(Z2)));
+    
+    return (info.val >= 0);
   }
 
   /**
@@ -5858,38 +5851,20 @@ public class Arma {
     }
   }
   
-  protected static void schur(Mat Z, Mat T, Mat A) {
-//    arma_debug_check( (A.is_square() == false), "schur_dec(): given matrix is not square" );
-//    
-//    if(A.is_empty())
-//      {
-//      Z.reset();
-//      T.reset();
-//      return true;
-//      }
-//    
-//    const uword A_n_rows = A.n_rows;
-//    
-//    Z.set_size(A_n_rows, A_n_rows);
-//    T = A;
-//    
-//    char    jobvs    = 'V';                // get Schur vectors (Z)
-//    char     sort    = 'N';                // do not sort eigenvalues/vectors
-//    blas_int* select = 0;                  // pointer to sorting function
-//    blas_int    n    = blas_int(A_n_rows);
-//    blas_int sdim    = 0;                  // output for sorting
-//    blas_int lwork   = 3 * ( (std::max)(blas_int(1), 3*n) );
-//    blas_int info    = 0;
-//    
-//    podarray<eT>       work( static_cast<uword>(lwork) );
-//    podarray<blas_int> bwork(A_n_rows);
-//    
-//    podarray<eT> wr(A_n_rows);             // output for eigenvalues
-//    podarray<eT> wi(A_n_rows);             // output for eigenvalues
-//    
-//    lapack::gees(&jobvs, &sort, select, &n, T.memptr(), &n, &sdim, wr.memptr(), wi.memptr(), Z.memptr(), &n, work.memptr(), &lwork, bwork.memptr(), &info);
-//    
-//    return (info == 0);
+  protected static boolean schur(Mat Z, Mat T, Mat A) {
+    Z.set_size(A.n_rows, A.n_rows);
+    T.inPlace(Op.EQUAL, A);
+
+    double[] workReal = new double[A.n_rows];
+    double[] workImaginary = new double[A.n_rows];
+    double[] work = new double[3 * Math.max(1, 3 * A.n_rows)];
+    boolean[] bwork = new boolean[A.n_rows];
+    intW sdim = new intW(0);
+    intW info = new intW(0);
+
+    LAPACK.getInstance().dgees("V", "N", null, A.n_rows, T._data, A.n_rows, sdim, workReal, workImaginary, Z._data, A.n_rows, work, work.length, bwork, info);
+
+    return (info.val == 0);
   }
 
 }
