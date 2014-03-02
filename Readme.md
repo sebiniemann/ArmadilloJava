@@ -51,8 +51,8 @@ API Reference for 4.000
 
 ### Decompositions, Factorisations, Inverses and Equation Solvers
 
-- **Supported:** `chol`, `eig_sym`, `inv`, `lu`, `pinv`, `qr`, `solve`, `svd`
-- **Unsupported:** `princomp`, `qr_econ`, `svd_econ`, `syl`
+- **Supported:** `chol`, `eig_sym`, `inv`, `lu`, `pinv`, `princomp`, `qr`, `qr_econ`, `solve`, `svd`, `svd_econ`, `syl`
+- **Unsupported:** _nothing_
 
 ### Miscellaneous
 
