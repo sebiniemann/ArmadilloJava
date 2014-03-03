@@ -43,7 +43,7 @@ public class Mat extends AbstractMat {
    * Creates an empty matrix with zero elements.
    */
   public Mat() {
-      set_size(0, 0);
+    set_size(0, 0);
   }
 
   /**
@@ -365,12 +365,13 @@ public class Mat extends AbstractMat {
     isNonEqualNumberOfElementsDetection(matrix.n_rows, n_rows);
     isColumnOutOfBoundsDetection(j);
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows, n_cols + matrix.n_cols);
     // Note: n_cols and n_rows were updated by .set_size()
-    cols(0, j - 1, Op.EQUAL, temp.cols(0, j - 1));
-    cols(j, matrix.n_cols - 1, Op.EQUAL, matrix);
-    cols(matrix.n_cols, n_cols - 1, Op.EQUAL, temp.cols(j, n_cols - matrix.n_cols - 1));
+    if (j > 0) cols(0, j - 1, Op.EQUAL, temp.cols(0, j - 1));
+    cols(j, j + matrix.n_cols - 1, Op.EQUAL, matrix);
+    cols(j + matrix.n_cols, n_cols - 1, Op.EQUAL, temp.cols(j, temp.n_cols /*- matrix.n_cols*/- 1));
   }
 
   /**
@@ -403,10 +404,11 @@ public class Mat extends AbstractMat {
       fillMatrix = new Mat(n_rows, spanLength);
     }
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows, n_cols + spanLength);
     // Note: n_cols and n_rows were updated by .set_size()
-    cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
+    if (a > 0) cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
     cols(a, b, Op.EQUAL, fillMatrix);
     cols(b + 1, n_cols - 1, Op.EQUAL, temp.cols(a, n_cols - spanLength - 1));
   }
@@ -419,14 +421,15 @@ public class Mat extends AbstractMat {
    */
   public void insert_rows(int i, Mat matrix) {
     isNonEqualNumberOfElementsDetection(matrix.n_cols, n_cols);
-    isColumnOutOfBoundsDetection(i);
+    isRowOutOfBoundsDetection(i);
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows + matrix.n_rows, n_cols);
     // Note: n_cols and n_rows were updated by .set_size()
-    rows(0, i - 1, Op.EQUAL, temp.rows(0, i - 1));
-    rows(i, matrix.n_rows - 1, Op.EQUAL, matrix);
-    rows(matrix.n_rows, n_rows - 1, Op.EQUAL, temp.rows(i, n_rows - matrix.n_rows - 1));
+    if (i > 0) rows(0, i - 1, Op.EQUAL, temp.rows(0, i - 1));
+    rows(i, i + matrix.n_rows - 1, Op.EQUAL, matrix);
+    rows(i + matrix.n_rows, n_rows - 1, Op.EQUAL, temp.rows(i, temp.n_rows/* - matrix.n_rows */- 1));
   }
 
   /**
@@ -459,7 +462,8 @@ public class Mat extends AbstractMat {
       fillMatrix = new Mat(spanLength, n_cols);
     }
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows + spanLength, n_cols);
     // Note: n_cols and n_rows were updated by .set_size()
     rows(0, a - 1, Op.EQUAL, temp.rows(0, a - 1));
@@ -487,7 +491,8 @@ public class Mat extends AbstractMat {
 
     int spanLength = b - a + 1;
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows, n_cols - spanLength);
     // Note: n_cols and n_rows were updated by .set_size()
     cols(0, a - 1, Op.EQUAL, temp.cols(0, a - 1));
@@ -514,7 +519,8 @@ public class Mat extends AbstractMat {
 
     int spanLength = b - a + 1;
 
-    Mat temp = new Mat(_matrix);
+    // Mat temp = new Mat(_matrix);
+    Mat temp = new Mat(this);
     set_size(n_rows - spanLength, n_cols);
     // Note: n_cols and n_rows were updated by .set_size()
     rows(0, a - 1, Op.EQUAL, temp.rows(0, a - 1));
@@ -652,7 +658,7 @@ public class Mat extends AbstractMat {
       srcColumnPointer += temp.n_rows;
       destColumnPointer += n_rows;
     }
-    
+
   }
 
   /**
@@ -741,24 +747,24 @@ public class Mat extends AbstractMat {
 
       double[] rowDouble = new double[numberOfColumns];
       for (int j = 0; j < numberOfColumns; j++) {
-          switch (rowString[j]) {
-              case "Inf":
-              case "inf":
-                  rowDouble[j] = Double.POSITIVE_INFINITY;
-                  break;
-              case "-Inf":
-              case "-inf":
-                  rowDouble[j] = Double.NEGATIVE_INFINITY;
-                  break;
-              case "NaN":
-              case "nan":
-              case "-nan":
-                  rowDouble[j] = Double.NaN;
-                  break;
-              default:
-                  rowDouble[j] = Double.valueOf(rowString[j]);
-                  break;
-          }
+        switch (rowString[j]) {
+          case "Inf":
+          case "inf":
+            rowDouble[j] = Double.POSITIVE_INFINITY;
+            break;
+          case "-Inf":
+          case "-inf":
+            rowDouble[j] = Double.NEGATIVE_INFINITY;
+            break;
+          case "NaN":
+          case "nan":
+          case "-nan":
+            rowDouble[j] = Double.NaN;
+            break;
+          default:
+            rowDouble[j] = Double.valueOf(rowString[j]);
+            break;
+        }
       }
       matrix.add(rowDouble);
 
