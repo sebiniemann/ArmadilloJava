@@ -27,11 +27,11 @@ public class RunningStatVec {
   /**
    * The smallest value
    */
-  protected Mat           _min;
+  protected Col           _min;
   /**
    * The largest value
    */
-  protected Mat           _max;
+  protected Col           _max;
   /**
    * The amount of values
    */
@@ -39,11 +39,11 @@ public class RunningStatVec {
   /**
    * The mean of all values
    */
-  protected Mat           _mean;
+  protected Col           _mean;
   /**
    * The variance of all values
    */
-  protected Mat           _var;
+  protected Col           _var;
   /**
    * The covariance of all values
    */
@@ -78,12 +78,15 @@ public class RunningStatVec {
    * @throws UnsupportedOperationException No more than 2^53 (approx. 9 * 10^15) samples can be processed without loss
    *           of precision.
    */
-  public void update(AbstractVector samples) throws IllegalArgumentException, UnsupportedOperationException {
+  public void update(Col samples) throws IllegalArgumentException, UnsupportedOperationException {
     // TODO add non vector detection
 
     // if (!samples.is_number()) {
     // throw new IllegalArgumentException("NaN is not valid sample value for any element.");
     // }
+
+    // samples.isEmptyDetection();
+    // TODO fix
 
     if (_count > 0) {
       // AbstractMat.isNonEqualNumberOfElementsDetection(_max.n_elem, samples.n_elem);
@@ -94,16 +97,9 @@ public class RunningStatVec {
       }
 
       if (_calculateCovariance) {
-        AbstractMat temp = samples.minus(_mean);
-
-        if (samples.is_colvec()) {
-          temp = temp.times(temp.t());
-        } else {
-          temp = temp.t().times(temp);
-        }
-
+        Col temp = samples.minus(_mean);
         _cov.inPlace(Op.ELEMTIMES, (_count - 1) / _count);
-        _cov.inPlace(Op.PLUS, temp.elemDivide(_count + 1));
+        _cov.inPlace(Op.PLUS, temp.times(temp.t()).elemDivide(_count + 1));
       }
 
       for (int n = 0; n < samples.n_elem; n++) {
@@ -115,17 +111,11 @@ public class RunningStatVec {
       _mean = _mean.plus(samples.minus(_mean).elemDivide(_count + 1));
 
     } else {
-      // samples.isEmptyDetection();
-      // TODO fix
-
-      int numberOfRows = samples.n_rows;
-      int numberOfColumns = samples.n_cols;
-
-      _cov = new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
-      _max = new Mat(samples);
-      _min = new Mat(samples);
-      _var = new Mat(numberOfRows, numberOfColumns, Fill.ZEROS);
-      _mean = new Mat(samples);
+      _cov = new Mat(samples.n_elem, samples.n_elem, Fill.ZEROS);
+      _max = new Col(samples);
+      _min = new Col(samples);
+      _var = new Col(samples.n_elem, Fill.ZEROS);
+      _mean = new Col(samples);
     }
 
     _count++;
@@ -145,7 +135,7 @@ public class RunningStatVec {
    * 
    * @return The minimum
    */
-  public Mat min() {
+  public Col min() {
     return _min;
   }
 
@@ -154,7 +144,7 @@ public class RunningStatVec {
    * 
    * @return The maximum
    */
-  public Mat max() {
+  public Col max() {
     return _max;
   }
 
@@ -163,7 +153,7 @@ public class RunningStatVec {
    * 
    * @return The mean
    */
-  public Mat mean() {
+  public Col mean() {
     return _mean;
   }
 
@@ -172,7 +162,7 @@ public class RunningStatVec {
    * 
    * @return The variance
    */
-  public Mat var() {
+  public Col var() {
     return var(0);
   }
 
@@ -187,7 +177,7 @@ public class RunningStatVec {
    * 
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public Mat var(int normType) throws IllegalArgumentException {
+  public Col var(int normType) throws IllegalArgumentException {
     if (normType == 0) {
       return _var;
     } else if (normType == 1) {
@@ -206,8 +196,8 @@ public class RunningStatVec {
    * 
    * @return The standard deviation
    */
-  public Mat stddev() {
-    return Arma.sqrt(var(0));
+  public Col stddev() {
+    return stddev(0);
   }
 
   /**
@@ -221,7 +211,7 @@ public class RunningStatVec {
    * 
    * @throws IllegalArgumentException The normalisation type must be one of 0 or 1, but was: {@code normType}.
    */
-  public Mat stddev(int normType) throws IllegalArgumentException {
+  public Col stddev(int normType) throws IllegalArgumentException {
     return Arma.sqrt(var(normType));
   }
 
@@ -273,11 +263,11 @@ public class RunningStatVec {
    * Resets all statistical values.
    */
   public void reset() {
-    _max = new Mat();
-    _min = new Mat();
-    _mean = new Mat();
-    _var = new Mat();
-    _cov = new Mat();
+    _max.reset();
+    _min.reset();
+    _mean.reset();
+    _var.reset();
+    _cov.reset();
 
     _count = 0;
   }
