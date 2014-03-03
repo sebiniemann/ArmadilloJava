@@ -46,7 +46,7 @@ class ViewSubCol extends AbstractView {
    * @param matrix The matrix
    * @param col_number The column position
    */
-  protected ViewSubCol(AbstractMat matrix, int col_number) {
+  protected ViewSubCol(final AbstractMat matrix, final int col_number) {
     super(matrix);
 
     n_rows = matrix.n_rows;
