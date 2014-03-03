@@ -130,7 +130,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T ones(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
+  public static <T extends AbstractVector> T ones(final Class<T> return_type, final int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -159,7 +159,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat ones(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat ones(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
@@ -176,7 +176,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
+  public static <T extends AbstractVector> T randi(final Class<T> return_type, final int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within randi(Class<T>, int, DistrParam).
      */
@@ -198,7 +198,7 @@ public class Arma {
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
-  public static <T extends AbstractVector> T randi(Class<T> return_type, int n_elem, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
+  public static <T extends AbstractVector> T randi(final Class<T> return_type, final int n_elem, final DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -239,7 +239,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randi(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat randi(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within randi(Class<T>, int, int, DistrParam).
      */
@@ -263,7 +263,7 @@ public class Arma {
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
    */
-  public static Mat randi(int n_rows, int n_cols, DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
+  public static Mat randi(final int n_rows, final int n_cols, final DistrParam distr_param) throws NegativeArraySizeException, RuntimeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      */
@@ -296,7 +296,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randu(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
+  public static <T extends AbstractVector> T randu(final Class<T> return_type, final int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -328,7 +328,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randu(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat randu(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int, Fill).
      */
@@ -345,7 +345,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T randn(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
+  public static <T extends AbstractVector> T randn(final Class<T> return_type, final int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -375,7 +375,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat randn(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat randn(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      */
@@ -395,7 +395,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of copies per column ({@code num_copies_per_col}) must be
    *           positive.
    */
-  public static Mat repmat(AbstractMat A, int num_copies_per_row, int num_copies_per_col) throws NegativeArraySizeException {
+  public static Mat repmat(final AbstractMat A, final int num_copies_per_row, final int num_copies_per_col) throws NegativeArraySizeException {
     if (num_copies_per_row < 0) {
       throw new NegativeArraySizeException("The specified number of copies per row (" + num_copies_per_row + ") must be positive.");
     }
@@ -436,7 +436,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat toeplitz(AbstractMat A) throws RuntimeException {
+  public static Mat toeplitz(final AbstractMat A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -474,7 +474,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in
    *           shape to a vector.
    */
-  public static Mat toeplitz(AbstractMat A, AbstractMat B) throws RuntimeException {
+  public static Mat toeplitz(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -514,7 +514,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat circ_toeplitz(AbstractMat A) throws RuntimeException {
+  public static Mat circ_toeplitz(final AbstractMat A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -543,7 +543,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
-  public static <T extends AbstractVector> T zeros(Class<T> return_type, int n_elem) throws NegativeArraySizeException {
+  public static <T extends AbstractVector> T zeros(final Class<T> return_type, final int n_elem) throws NegativeArraySizeException {
     /*
      * The parameter "n_elem" is validated within set_size(int).
      */
@@ -573,7 +573,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat zeros(int n_rows, int n_cols) throws NegativeArraySizeException {
+  public static Mat zeros(final int n_rows, final int n_cols) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within Mat(int, int).
      * All uninitialised matrices are already equal to a zero matrix.
@@ -582,7 +582,7 @@ public class Arma {
     return new Mat(n_rows, n_cols);
   }
 
-  protected static void abs(double[] result, double[] X) {
+  protected static void abs(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.abs(X[n]);
     }
@@ -593,7 +593,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col abs(Col X) {
+  public static Col abs(final Col X) {
     Col result = new Col(X.n_elem);
     abs(result._data, X._data);
     return result;
@@ -604,7 +604,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row abs(Row X) {
+  public static Row abs(final Row X) {
     Row result = new Row(X.n_elem);
     abs(result._data, X._data);
     return result;
@@ -615,13 +615,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat abs(Mat X) {
+  public static Mat abs(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     abs(result._data, X._data);
     return result;
   }
 
-  protected static void eps(double[] result, double[] X) {
+  protected static void eps(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.ulp(X[n]);
     }
@@ -633,7 +633,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col eps(Col X) {
+  public static Col eps(final Col X) {
     Col result = new Col(X.n_elem);
     eps(result._data, X._data);
     return result;
@@ -645,7 +645,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row eps(Row X) {
+  public static Row eps(final Row X) {
     Row result = new Row(X.n_elem);
     eps(result._data, X._data);
     return result;
@@ -657,13 +657,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat eps(Mat X) {
+  public static Mat eps(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     eps(result._data, X._data);
     return result;
   }
 
-  protected static void exp(double[] result, double[] A) {
+  protected static void exp(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.exp(A[n]);
     }
@@ -674,7 +674,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col exp(Col A) {
+  public static Col exp(final Col A) {
     Col result = new Col(A.n_elem);
     exp(result._data, A._data);
     return result;
@@ -685,7 +685,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row exp(Row A) {
+  public static Row exp(final Row A) {
     Row result = new Row(A.n_elem);
     exp(result._data, A._data);
     return result;
@@ -696,13 +696,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat exp(Mat A) {
+  public static Mat exp(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     exp(result._data, A._data);
     return result;
   }
 
-  protected static void exp2(double[] result, double[] A) {
+  protected static void exp2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(2, A[n]);
     }
@@ -713,7 +713,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col exp2(Col A) {
+  public static Col exp2(final Col A) {
     Col result = new Col(A.n_elem);
     exp2(result._data, A._data);
     return result;
@@ -724,7 +724,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row exp2(Row A) {
+  public static Row exp2(final Row A) {
     Row result = new Row(A.n_elem);
     exp2(result._data, A._data);
     return result;
@@ -735,13 +735,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat exp2(Mat A) {
+  public static Mat exp2(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     exp2(result._data, A._data);
     return result;
   }
 
-  protected static void exp10(double[] result, double[] A) {
+  protected static void exp10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(10, A[n]);
     }
@@ -752,7 +752,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col exp10(Col A) {
+  public static Col exp10(final Col A) {
     Col result = new Col(A.n_elem);
     exp10(result._data, A._data);
     return result;
@@ -763,7 +763,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row exp10(Row A) {
+  public static Row exp10(final Row A) {
     Row result = new Row(A.n_elem);
     exp10(result._data, A._data);
     return result;
@@ -774,13 +774,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat exp10(Mat A) {
+  public static Mat exp10(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     exp10(result._data, A._data);
     return result;
   }
 
-  protected static void trunc_exp(double[] result, double[] A) {
+  protected static void trunc_exp(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double exp = Math.exp(A[n]);
 
@@ -799,7 +799,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col trunc_exp(Col A) {
+  public static Col trunc_exp(final Col A) {
     Col result = new Col(A.n_elem);
     trunc_exp(result._data, A._data);
     return result;
@@ -812,7 +812,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row trunc_exp(Row A) {
+  public static Row trunc_exp(final Row A) {
     Row result = new Row(A.n_elem);
     trunc_exp(result._data, A._data);
     return result;
@@ -825,13 +825,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat trunc_exp(Mat A) {
+  public static Mat trunc_exp(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     trunc_exp(result._data, A._data);
     return result;
   }
 
-  protected static void log(double[] result, double[] A) {
+  protected static void log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.log(A[n]);
     }
@@ -842,7 +842,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col log(Col A) {
+  public static Col log(final Col A) {
     Col result = new Col(A.n_elem);
     log(result._data, A._data);
     return result;
@@ -853,7 +853,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row log(Row A) {
+  public static Row log(final Row A) {
     Row result = new Row(A.n_elem);
     log(result._data, A._data);
     return result;
@@ -864,13 +864,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log(Mat A) {
+  public static Mat log(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     log(result._data, A._data);
     return result;
   }
 
-  protected static void log2(double[] result, double[] A) {
+  protected static void log2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.log(A[n]) / Math.log(2);
     }
@@ -881,7 +881,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col log2(Col A) {
+  public static Col log2(final Col A) {
     Col result = new Col(A.n_elem);
     log2(result._data, A._data);
     return result;
@@ -892,7 +892,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row log2(Row A) {
+  public static Row log2(final Row A) {
     Row result = new Row(A.n_elem);
     log2(result._data, A._data);
     return result;
@@ -903,13 +903,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log2(Mat A) {
+  public static Mat log2(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     log2(result._data, A._data);
     return result;
   }
 
-  protected static void log10(double[] result, double[] A) {
+  protected static void log10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.log10(A[n]);
     }
@@ -920,7 +920,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col log10(Col A) {
+  public static Col log10(final Col A) {
     Col result = new Col(A.n_elem);
     log10(result._data, A._data);
     return result;
@@ -931,7 +931,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row log10(Row A) {
+  public static Row log10(final Row A) {
     Row result = new Row(A.n_elem);
     log10(result._data, A._data);
     return result;
@@ -942,13 +942,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat log10(Mat A) {
+  public static Mat log10(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     log10(result._data, A._data);
     return result;
   }
 
-  protected static void trunc_log(double[] result, double[] A) {
+  protected static void trunc_log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
 
@@ -971,7 +971,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col trunc_log(Col A) {
+  public static Col trunc_log(final Col A) {
     Col result = new Col(A.n_elem);
     trunc_log(result._data, A._data);
     return result;
@@ -986,7 +986,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row trunc_log(Row A) {
+  public static Row trunc_log(final Row A) {
     Row result = new Row(A.n_elem);
     trunc_log(result._data, A._data);
     return result;
@@ -1001,16 +1001,22 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat trunc_log(Mat A) {
+  public static Mat trunc_log(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     trunc_log(result._data, A._data);
     return result;
   }
 
-  protected static void pow(double[] result, double[] A, int p) {
+  protected static void pow(final double[] result, final double[] A, final int p) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(A[n], p);
     }
+  }
+  
+  protected static AbstractMat pow(final AbstractMat A, final int p) {
+    AbstractMat result = new Mat(A.n_rows, A.n_cols);
+    pow(result._data, A._data, p);
+    return result;
   }
 
   /**
@@ -1019,7 +1025,7 @@ public class Arma {
    * @param A The column vector
    * @param p The power
    */
-  public static Col pow(Col A, int p) {
+  public static Col pow(final Col A, final int p) {
     Col result = new Col(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1031,7 +1037,7 @@ public class Arma {
    * @param A The row vector
    * @param p The power
    */
-  public static Row pow(Row A, int p) {
+  public static Row pow(final Row A, final int p) {
     Row result = new Row(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1043,13 +1049,13 @@ public class Arma {
    * @param A The matrix
    * @param p The power
    */
-  public static Mat pow(Mat A, int p) {
+  public static Mat pow(final Mat A, final int p) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     pow(result._data, A._data, p);
     return result;
   }
 
-  protected static void sqrt(double[] result, double[] A) {
+  protected static void sqrt(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.sqrt(A[n]);
     }
@@ -1060,7 +1066,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col sqrt(Col A) {
+  public static Col sqrt(final Col A) {
     Col result = new Col(A.n_elem);
     sqrt(result._data, A._data);
     return result;
@@ -1071,7 +1077,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row sqrt(Row A) {
+  public static Row sqrt(final Row A) {
     Row result = new Row(A.n_elem);
     sqrt(result._data, A._data);
     return result;
@@ -1082,13 +1088,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat sqrt(Mat A) {
+  public static Mat sqrt(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     sqrt(result._data, A._data);
     return result;
   }
 
-  protected static void square(double[] result, double[] A) {
+  protected static void square(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(A[n], 2);
     }
@@ -1099,7 +1105,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col square(Col A) {
+  public static Col square(final Col A) {
     Col result = new Col(A.n_elem);
     square(result._data, A._data);
     return result;
@@ -1110,7 +1116,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row square(Row A) {
+  public static Row square(final Row A) {
     Row result = new Row(A.n_elem);
     square(result._data, A._data);
     return result;
@@ -1121,13 +1127,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat square(Mat A) {
+  public static Mat square(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     square(result._data, A._data);
     return result;
   }
 
-  protected static void floor(double[] result, double[] A) {
+  protected static void floor(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.floor(A[n]);
     }
@@ -1138,7 +1144,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col floor(Col A) {
+  public static Col floor(final Col A) {
     Col result = new Col(A.n_elem);
     floor(result._data, A._data);
     return result;
@@ -1149,7 +1155,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row floor(Row A) {
+  public static Row floor(final Row A) {
     Row result = new Row(A.n_elem);
     floor(result._data, A._data);
     return result;
@@ -1160,13 +1166,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat floor(Mat A) {
+  public static Mat floor(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     floor(result._data, A._data);
     return result;
   }
 
-  protected static void ceil(double[] result, double[] A) {
+  protected static void ceil(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.ceil(A[n]);
     }
@@ -1177,7 +1183,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col ceil(Col A) {
+  public static Col ceil(final Col A) {
     Col result = new Col(A.n_elem);
     ceil(result._data, A._data);
     return result;
@@ -1188,7 +1194,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row ceil(Row A) {
+  public static Row ceil(final Row A) {
     Row result = new Row(A.n_elem);
     ceil(result._data, A._data);
     return result;
@@ -1199,13 +1205,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat ceil(Mat A) {
+  public static Mat ceil(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     ceil(result._data, A._data);
     return result;
   }
 
-  protected static void round(double[] result, double[] A) {
+  protected static void round(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.round(A[n]);
     }
@@ -1216,7 +1222,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col round(Col A) {
+  public static Col round(final Col A) {
     Col result = new Col(A.n_elem);
     round(result._data, A._data);
     return result;
@@ -1227,7 +1233,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row round(Row A) {
+  public static Row round(final Row A) {
     Row result = new Row(A.n_elem);
     round(result._data, A._data);
     return result;
@@ -1238,13 +1244,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat round(Mat A) {
+  public static Mat round(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     round(result._data, A._data);
     return result;
   }
 
-  protected static void sign(double[] result, double[] A) {
+  protected static void sign(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.signum(A[n]);
     }
@@ -1257,7 +1263,7 @@ public class Arma {
    * 
    * @param A The column vector
    */
-  public static Col sign(Col A) {
+  public static Col sign(final Col A) {
     Col result = new Col(A.n_elem);
     sign(result._data, A._data);
     return result;
@@ -1270,7 +1276,7 @@ public class Arma {
    * 
    * @param A The row vector
    */
-  public static Row sign(Row A) {
+  public static Row sign(final Row A) {
     Row result = new Row(A.n_elem);
     sign(result._data, A._data);
     return result;
@@ -1283,13 +1289,13 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Mat sign(Mat A) {
+  public static Mat sign(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
     sign(result._data, A._data);
     return result;
   }
 
-  protected static void sin(double[] result, double[] X) {
+  protected static void sin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.sin(X[n]);
     }
@@ -1300,7 +1306,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col sin(Col X) {
+  public static Col sin(final Col X) {
     Col result = new Col(X.n_elem);
     sin(result._data, X._data);
     return result;
@@ -1311,7 +1317,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row sin(Row X) {
+  public static Row sin(final Row X) {
     Row result = new Row(X.n_elem);
     sin(result._data, X._data);
     return result;
@@ -1322,13 +1328,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat sin(Mat X) {
+  public static Mat sin(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     sin(result._data, X._data);
     return result;
   }
 
-  protected static void asin(double[] result, double[] X) {
+  protected static void asin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.asin(X[n]);
     }
@@ -1339,7 +1345,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col asin(Col X) {
+  public static Col asin(final Col X) {
     Col result = new Col(X.n_elem);
     asin(result._data, X._data);
     return result;
@@ -1350,7 +1356,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row asin(Row X) {
+  public static Row asin(final Row X) {
     Row result = new Row(X.n_elem);
     asin(result._data, X._data);
     return result;
@@ -1361,13 +1367,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat asin(Mat X) {
+  public static Mat asin(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     asin(result._data, X._data);
     return result;
   }
 
-  protected static void sinh(double[] result, double[] X) {
+  protected static void sinh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.sinh(X[n]);
     }
@@ -1378,7 +1384,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col sinh(Col X) {
+  public static Col sinh(final Col X) {
     Col result = new Col(X.n_elem);
     sinh(result._data, X._data);
     return result;
@@ -1389,7 +1395,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row sinh(Row X) {
+  public static Row sinh(final Row X) {
     Row result = new Row(X.n_elem);
     sinh(result._data, X._data);
     return result;
@@ -1400,13 +1406,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat sinh(Mat X) {
+  public static Mat sinh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     sinh(result._data, X._data);
     return result;
   }
 
-  protected static void asinh(double[] result, double[] X) {
+  protected static void asinh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
 
@@ -1423,7 +1429,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col asinh(Col X) {
+  public static Col asinh(final Col X) {
     Col result = new Col(X.n_elem);
     asinh(result._data, X._data);
     return result;
@@ -1434,7 +1440,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row asinh(Row X) {
+  public static Row asinh(final Row X) {
     Row result = new Row(X.n_elem);
     asinh(result._data, X._data);
     return result;
@@ -1445,13 +1451,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat asinh(Mat X) {
+  public static Mat asinh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     asinh(result._data, X._data);
     return result;
   }
 
-  protected static void cos(double[] result, double[] X) {
+  protected static void cos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.cos(X[n]);
     }
@@ -1462,7 +1468,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col cos(Col X) {
+  public static Col cos(final Col X) {
     Col result = new Col(X.n_elem);
     cos(result._data, X._data);
     return result;
@@ -1473,7 +1479,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row cos(Row X) {
+  public static Row cos(final Row X) {
     Row result = new Row(X.n_elem);
     cos(result._data, X._data);
     return result;
@@ -1484,13 +1490,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat cos(Mat X) {
+  public static Mat cos(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     cos(result._data, X._data);
     return result;
   }
 
-  protected static void acos(double[] result, double[] X) {
+  protected static void acos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.acos(X[n]);
     }
@@ -1501,7 +1507,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col acos(Col X) {
+  public static Col acos(final Col X) {
     Col result = new Col(X.n_elem);
     acos(result._data, X._data);
     return result;
@@ -1512,7 +1518,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row acos(Row X) {
+  public static Row acos(final Row X) {
     Row result = new Row(X.n_elem);
     acos(result._data, X._data);
     return result;
@@ -1523,13 +1529,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat acos(Mat X) {
+  public static Mat acos(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     acos(result._data, X._data);
     return result;
   }
 
-  protected static void cosh(double[] result, double[] X) {
+  protected static void cosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.cosh(X[n]);
     }
@@ -1540,7 +1546,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col cosh(Col X) {
+  public static Col cosh(final Col X) {
     Col result = new Col(X.n_elem);
     cosh(result._data, X._data);
     return result;
@@ -1551,7 +1557,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row cosh(Row X) {
+  public static Row cosh(final Row X) {
     Row result = new Row(X.n_elem);
     cosh(result._data, X._data);
     return result;
@@ -1562,13 +1568,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat cosh(Mat X) {
+  public static Mat cosh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     cosh(result._data, X._data);
     return result;
   }
 
-  protected static void acosh(double[] result, double[] X) {
+  protected static void acosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
       result[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
@@ -1580,7 +1586,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col acosh(Col X) {
+  public static Col acosh(final Col X) {
     Col result = new Col(X.n_elem);
     acosh(result._data, X._data);
     return result;
@@ -1591,7 +1597,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row acosh(Row X) {
+  public static Row acosh(final Row X) {
     Row result = new Row(X.n_elem);
     acosh(result._data, X._data);
     return result;
@@ -1602,13 +1608,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat acosh(Mat X) {
+  public static Mat acosh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     acosh(result._data, X._data);
     return result;
   }
 
-  protected static void tan(double[] result, double[] X) {
+  protected static void tan(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.tan(X[n]);
     }
@@ -1619,7 +1625,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col tan(Col X) {
+  public static Col tan(final Col X) {
     Col result = new Col(X.n_elem);
     tan(result._data, X._data);
     return result;
@@ -1630,7 +1636,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row tan(Row X) {
+  public static Row tan(final Row X) {
     Row result = new Row(X.n_elem);
     tan(result._data, X._data);
     return result;
@@ -1641,13 +1647,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat tan(Mat X) {
+  public static Mat tan(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     tan(result._data, X._data);
     return result;
   }
 
-  protected static void atan(double[] result, double[] X) {
+  protected static void atan(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.atan(X[n]);
     }
@@ -1658,7 +1664,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col atan(Col X) {
+  public static Col atan(final Col X) {
     Col result = new Col(X.n_elem);
     atan(result._data, X._data);
     return result;
@@ -1669,7 +1675,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row atan(Row X) {
+  public static Row atan(final Row X) {
     Row result = new Row(X.n_elem);
     atan(result._data, X._data);
     return result;
@@ -1680,13 +1686,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat atan(Mat X) {
+  public static Mat atan(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     atan(result._data, X._data);
     return result;
   }
 
-  protected static void tanh(double[] result, double[] X) {
+  protected static void tanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.tanh(X[n]);
     }
@@ -1697,7 +1703,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col tanh(Col X) {
+  public static Col tanh(final Col X) {
     Col result = new Col(X.n_elem);
     tanh(result._data, X._data);
     return result;
@@ -1708,7 +1714,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row tanh(Row X) {
+  public static Row tanh(final Row X) {
     Row result = new Row(X.n_elem);
     tanh(result._data, X._data);
     return result;
@@ -1719,13 +1725,13 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat tanh(Mat X) {
+  public static Mat tanh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     tanh(result._data, X._data);
     return result;
   }
 
-  protected static void atanh(double[] result, double[] X) {
+  protected static void atanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
       result[n] = 0.5 * Math.log((1 + value) / (1 - value));
@@ -1737,7 +1743,7 @@ public class Arma {
    * 
    * @param X The column vector
    */
-  public static Col atanh(Col X) {
+  public static Col atanh(final Col X) {
     Col result = new Col(X.n_elem);
     atanh(result._data, X._data);
     return result;
@@ -1748,7 +1754,7 @@ public class Arma {
    * 
    * @param X The row vector
    */
-  public static Row atanh(Row X) {
+  public static Row atanh(final Row X) {
     Row result = new Row(X.n_elem);
     atanh(result._data, X._data);
     return result;
@@ -1759,7 +1765,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat atanh(Mat X) {
+  public static Mat atanh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     atanh(result._data, X._data);
     return result;
@@ -1772,7 +1778,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static double accu(AbstractMat X) throws RuntimeException {
+  public static double accu(final AbstractMat X) throws RuntimeException {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -1793,7 +1799,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have exactly one element.
    */
-  public static double as_acalar(AbstractMat X) throws RuntimeException {
+  public static double as_acalar(final AbstractMat X) throws RuntimeException {
     if (X.n_elem != 1) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have exactly one element.");
     }
@@ -1808,7 +1814,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    */
-  public static double cond(Mat A) throws RuntimeException {
+  public static double cond(final Mat A) throws RuntimeException {
     /*
      * The parameter "A" is validated within svd(AbstractMat).
      */
@@ -1828,7 +1834,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    * @throws RuntimeException The factorisation could not be completed. The provided matrix appears to be singular.
    */
-  public static double det(Mat A) throws RuntimeException {
+  public static double det(final Mat A) throws RuntimeException {
     if (A.empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -1869,7 +1875,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
    */
-  public static double dot(AbstractMat A, AbstractMat B) throws RuntimeException {
+  public static double dot(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.n_elem != B.n_elem) {
       throw new RuntimeException("Both provided matrices must have the same number of elements (" + A.n_elem + ", " + B.n_elem + ").");
     }
@@ -1886,7 +1892,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
    */
-  public static double norm_dot(AbstractMat A, AbstractMat B) throws RuntimeException {
+  public static double norm_dot(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     /*
      * The parameters "A" and "B" are validated within dot(AbstractMat, AbstractMat).
      */
@@ -1908,7 +1914,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    * @throws RuntimeException The factorisation could not be completed. The provided matrix appears to be singular.
    */
-  public static void log_det(double[] val, int[] sign, Mat A) throws RuntimeException {
+  public static void log_det(final double[] val, final int[] sign, final Mat A) throws RuntimeException {
     if (A.empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -1955,7 +1961,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
    * @throws IllegalArgumentException The norm indicator ({@code p}) must be strict greater than 0.
    */
-  public static double norm(AbstractVector X, int p) throws RuntimeException, IllegalArgumentException {
+  public static double norm(final AbstractVector X, final int p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
     }
@@ -2003,7 +2009,7 @@ public class Arma {
    * @throws IllegalArgumentException For matrices in non-vector shape, the norm indicator ({@code p}) must be one of 1
    *           or 2.
    */
-  public static double norm(Mat X, int p) throws RuntimeException, IllegalArgumentException {
+  public static double norm(final Mat X, final int p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -2076,7 +2082,7 @@ public class Arma {
    * @throws IllegalArgumentException For vectors, the norm indicator ({@code p}) must be one of '-inf', 'inf' or 'fro'.
    * @throws IllegalArgumentException For non-vectors, the norm indicator ({@code p}) must be one of 'inf' or 'fro'.
    */
-  public static double norm(AbstractMat X, String p) throws RuntimeException, IllegalArgumentException {
+  public static double norm(final AbstractMat X, final String p) throws RuntimeException, IllegalArgumentException {
     if (X.empty()) {
       throw new RuntimeException("The provided matrix must have at least one element.");
     }
@@ -2143,7 +2149,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static int rank(Mat X) throws RuntimeException {
+  public static int rank(final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within rank(AbstractMat, double).
      */
@@ -2161,7 +2167,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static int rank(Mat X, double tolerance) throws RuntimeException {
+  public static int rank(final Mat X, final double tolerance) throws RuntimeException {
     /*
      * The parameter "X" is validated within svd(AbstractMat).
      */
@@ -2188,7 +2194,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    */
-  public static double trace(Mat X) throws RuntimeException {
+  public static double trace(final Mat X) throws RuntimeException {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -2210,7 +2216,7 @@ public class Arma {
    * 
    * @param A The matrix
    */
-  public static Col diagvec(Mat A) {
+  public static Col diagvec(final Mat A) {
     return diagvec(A, 0);
   }
 
@@ -2228,7 +2234,7 @@ public class Arma {
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
-  public static Col diagvec(Mat A, int k) throws IndexOutOfBoundsException {
+  public static Col diagvec(final Mat A, int k) throws IndexOutOfBoundsException {
     /*
      * The parameter "k" is validated within A.diag(int).
      */
@@ -2243,7 +2249,7 @@ public class Arma {
    * 
    * @throws RuntimeException The ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double min(AbstractVector V) throws RuntimeException {
+  public static double min(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within V.min().
      */
@@ -2256,7 +2262,7 @@ public class Arma {
    * 
    * @param X The sub view
    */
-  protected static double min(AbstractView V) {
+  protected static double min(final AbstractView V) {
     double minimum = V._data[V.iteratorNext()];
 
     V.iteratorReset();
@@ -2274,7 +2280,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T min(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "V" is validated within min(Class<T>, Mat, int).
      */
@@ -2292,7 +2298,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T min(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T min(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -2340,7 +2346,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
-  public static Mat min(Mat A, Mat B) throws RuntimeException {
+  public static Mat min(final Mat A, final Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
       throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
@@ -2361,7 +2367,7 @@ public class Arma {
    * 
    * @throws RuntimeException The ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double max(AbstractVector V) throws RuntimeException {
+  public static double max(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within V.max().
      */
@@ -2369,7 +2375,7 @@ public class Arma {
     return V.max();
   }
 
-  protected static double max(AbstractView V) {
+  protected static double max(final AbstractView V) {
     double maximum = V._data[V.iteratorNext()];
 
     V.iteratorReset();
@@ -2387,7 +2393,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T max(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "V" is validated within max(Class<T>, Mat, int).
      */
@@ -2405,7 +2411,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T max(Class<T> return_type, Mat X, int dim) throws RuntimeException {
+  public static <T extends AbstractVector> T max(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException {
     T result;
 
     try {
@@ -2453,7 +2459,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
-  public static Mat max(Mat A, Mat B) throws RuntimeException {
+  public static Mat max(final Mat A, final Mat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
       throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
@@ -2474,7 +2480,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static double prod(AbstractVector V) throws RuntimeException {
+  public static double prod(final AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -2488,7 +2494,7 @@ public class Arma {
     return prod;
   }
 
-  protected static double prod(AbstractView V) {
+  protected static double prod(final AbstractView V) {
     double product = 0;
 
     V.iteratorReset();
@@ -2506,7 +2512,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T prod(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within prod(Class<T>, Mat, int).
      */
@@ -2524,7 +2530,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T prod(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T prod(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -2570,7 +2576,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double sum(AbstractVector V) throws RuntimeException {
+  public static double sum(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within accu(AbstractMat).
      */
@@ -2578,7 +2584,7 @@ public class Arma {
     return accu(V);
   }
 
-  protected static double sum(AbstractView V) {
+  protected static double sum(final AbstractView V) {
     double sum = 0;
 
     V.iteratorReset();
@@ -2596,7 +2602,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T sum(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within sum(Class<T>, Mat, int).
      */
@@ -2614,7 +2620,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T sum(Class<T> return_type, Mat X, int dim) throws RuntimeException {
+  public static <T extends AbstractVector> T sum(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException {
     T result;
 
     try {
@@ -2660,7 +2666,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double mean(AbstractVector V) throws RuntimeException {
+  public static double mean(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within sum(AbstractVector).
      */
@@ -2668,7 +2674,7 @@ public class Arma {
     return sum(V) / V.n_elem;
   }
 
-  protected static double mean(AbstractView V) {
+  protected static double mean(final AbstractView V) {
     return sum(V) / V.n_elem;
   }
 
@@ -2679,7 +2685,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T mean(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within mean(Class<T>, Mat, int).
      */
@@ -2697,7 +2703,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T mean(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T mean(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -2743,7 +2749,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static double median(AbstractVector V) throws RuntimeException {
+  public static double median(final AbstractVector V) throws RuntimeException {
     /*
      * The current algorithm runs in O(n log n), however using a selection algorithm could solve the problem in O(n).
      * See ICS 161: Design and Analysis of Algorithms, Lecture notes for January 30, 1996:
@@ -2774,7 +2780,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T median(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within median(Class<T>, Mat, int).
      */
@@ -2792,7 +2798,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T median(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T median(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -2844,7 +2850,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double stddev(AbstractVector V) throws RuntimeException {
+  public static double stddev(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within stddev(AbstractVector, int).
      */
@@ -2862,7 +2868,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static double stddev(AbstractVector V, int norm_type) throws RuntimeException {
+  public static double stddev(final AbstractVector V, final int norm_type) throws RuntimeException {
     /*
      * The parameter "V" is validated within var(AbstractVector, int).
      */
@@ -2870,7 +2876,7 @@ public class Arma {
     return Math.sqrt(var(V, norm_type));
   }
 
-  protected static double stddev(AbstractView V, int norm_type) {
+  protected static double stddev(final AbstractView V, final int norm_type) {
     double mean = mean(V);
     double variance = 0;
 
@@ -2889,7 +2895,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T stddev(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int).
      */
@@ -2907,7 +2913,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type) throws RuntimeException {
+  public static <T extends AbstractVector> T stddev(final Class<T> return_type, final Mat X, final int norm_type) throws RuntimeException {
     /*
      * The parameter "X" is validated within stddev(Class<T>, Mat, int, int).
      */
@@ -2928,7 +2934,7 @@ public class Arma {
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T stddev(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T stddev(final Class<T> return_type, Mat X, final int norm_type, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -2981,7 +2987,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
-  public static double var(AbstractVector V) throws RuntimeException {
+  public static double var(final AbstractVector V) throws RuntimeException {
     /*
      * The parameter "V" is validated within var(AbstractVector, int).
      */
@@ -2999,7 +3005,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static double var(AbstractVector V, int norm_type) throws RuntimeException {
+  public static double var(final AbstractVector V, final int norm_type) throws RuntimeException {
     /*
      * The parameter "V" is validated within mean(AbstractVector).
      */
@@ -3025,7 +3031,7 @@ public class Arma {
     return variance;
   }
 
-  protected static double var(AbstractView V, int norm_type) {
+  protected static double var(final AbstractView V, final int norm_type) {
     double mean = mean(V);
     double variance = 0;
 
@@ -3044,7 +3050,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int).
      */
@@ -3062,7 +3068,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type) throws RuntimeException {
+  public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X, final int norm_type) throws RuntimeException {
     /*
      * The parameter "X" is validated within var(Class<T>, Mat, int, int).
      */
@@ -3083,7 +3089,7 @@ public class Arma {
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T var(Class<T> return_type, Mat X, int norm_type, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X, final int norm_type, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -3136,7 +3142,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static boolean all(AbstractVector V) throws RuntimeException {
+  public static boolean all(final AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -3150,7 +3156,7 @@ public class Arma {
     return true;
   }
 
-  protected static boolean all(AbstractView V) {
+  protected static boolean all(final AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
       if (V._data[V.iteratorNext()] == 0) {
@@ -3172,7 +3178,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -3228,7 +3234,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static boolean any(AbstractVector V) throws RuntimeException {
+  public static boolean any(final AbstractVector V) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -3249,7 +3255,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T all(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within all(Class<T>, Mat, int).
      */
@@ -3257,7 +3263,7 @@ public class Arma {
     return all(return_type, X, 0);
   }
 
-  protected static boolean any(AbstractView V) {
+  protected static boolean any(final AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
       if (V._data[V.iteratorNext()] != 0) {
@@ -3275,7 +3281,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T any(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within any(Class<T>, Mat, int).
      */
@@ -3295,7 +3301,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static <T extends AbstractVector> T any(Class<T> return_type, Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static <T extends AbstractVector> T any(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     T result;
 
     try {
@@ -3344,7 +3350,7 @@ public class Arma {
     return result;
   }
 
-  protected static void conv(AbstractVector result, AbstractVector A, AbstractVector B) {
+  protected static void conv(final AbstractVector result, final AbstractVector A, final AbstractVector B) {
     for (int n = 0; n < result.n_elem; n++) {
       int min = Math.max(0, n - B.n_elem + 1);
       int max = Math.min(A.n_elem, n + 1);
@@ -3367,7 +3373,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
    *           element.
    */
-  public static Col conv(Col A, AbstractVector B) throws RuntimeException {
+  public static Col conv(final Col A, final AbstractVector B) throws RuntimeException {
     if (A.empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
     }
@@ -3392,7 +3398,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
    *           element.
    */
-  public static Row conv(Row A, AbstractVector B) throws RuntimeException {
+  public static Row conv(final Row A, final AbstractVector B) throws RuntimeException {
     if (A.empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
     }
@@ -3417,7 +3423,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
-  public static double cor(AbstractVector X, AbstractVector Y) throws RuntimeException {
+  public static double cor(final AbstractVector X, final AbstractVector Y) throws RuntimeException {
     /*
      * The parameters "X" and "Y" are validated within cor(AbstractVector, AbstractVector, int).
      */
@@ -3439,7 +3445,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static double cor(AbstractVector X, AbstractVector Y, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static double cor(final AbstractVector X, final AbstractVector Y, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
      */
@@ -3456,7 +3462,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static double cor(AbstractVector X) throws RuntimeException {
+  public static double cor(final AbstractVector X) throws RuntimeException {
     /*
      * The autocorrelation of a vector is always 1.
      */
@@ -3475,7 +3481,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static double cor(AbstractVector X, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static double cor(final AbstractVector X, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The autocorrelation of a vector is always 1.
      */
@@ -3495,7 +3501,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
-  public static Mat cor(Mat X, Mat Y) throws RuntimeException {
+  public static Mat cor(final Mat X, final Mat Y) throws RuntimeException {
     /*
      * The parameters "X" and "Y" are validated within cor(AbstractVector, AbstractVector, int).
      */
@@ -3517,7 +3523,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
-  public static Mat cor(Mat X, Mat Y, int norm_type) throws RuntimeException {
+  public static Mat cor(final Mat X, final Mat Y, final int norm_type) throws RuntimeException {
     /*
      * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
      */
@@ -3545,7 +3551,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat cor(Mat X) throws RuntimeException {
+  public static Mat cor(final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within cor(Mat, int).
      */
@@ -3563,7 +3569,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat cor(Mat X, int norm_type) throws RuntimeException {
+  public static Mat cor(final Mat X, final int norm_type) throws RuntimeException {
     /*
      * The parameters "X" and "norm_type" are validated within cor(Mat, Mat, int).
      */
@@ -3582,7 +3588,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    */
-  public static double cov(AbstractVector X, AbstractVector Y) throws RuntimeException {
+  public static double cov(final AbstractVector X, final AbstractVector Y) throws RuntimeException {
     /*
      * The parameters "X" and "Y" are validated within cov(AbstractVector, AbstractVector, int).
      */
@@ -3604,7 +3610,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static double cov(AbstractVector X, AbstractVector Y, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static double cov(final AbstractVector X, final AbstractVector Y, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The parameters "X" and "Y" are validated within mean(AbstractVector).
      */
@@ -3646,7 +3652,7 @@ public class Arma {
    * 
    * @see var(AbstractVector)
    */
-  public static double cov(AbstractVector X) throws RuntimeException {
+  public static double cov(final AbstractVector X) throws RuntimeException {
     /*
      * The parameter "X" is validated within cov(AbstractVector, int).
      */
@@ -3667,7 +3673,7 @@ public class Arma {
    * 
    * @see var(AbstractVector, int)
    */
-  public static double cov(AbstractVector X, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static double cov(final AbstractVector X, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The parameter "X" is validated within var(AbstractVector, int).
      */
@@ -3690,7 +3696,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code Y.n_rows}, {@code Y.n_cols})-matrix must have at least one
    *           element.
    */
-  public static Mat cov(Mat X, Mat Y) {
+  public static Mat cov(final Mat X, final Mat Y) {
     /*
      * The parameters "X" and "Y" are validated within cov(Mat, Mat, int).
      */
@@ -3715,7 +3721,7 @@ public class Arma {
    *           element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static Mat cov(Mat X, Mat Y, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static Mat cov(final Mat X, final Mat Y, final int norm_type) throws RuntimeException, IllegalArgumentException {
     if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
       throw new RuntimeException("Both provided matrices (" + X.n_rows + ", " + X.n_cols + " and " + Y.n_rows + ", " + Y.n_cols + ") must have the same shape.");
     }
@@ -3785,7 +3791,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat cov(Mat X) throws RuntimeException {
+  public static Mat cov(final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within cov(Mat, int).
      */
@@ -3804,7 +3810,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
-  public static Mat cov(Mat X, int norm_type) throws RuntimeException, IllegalArgumentException {
+  public static Mat cov(final Mat X, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
      * The parameter "X" is validated within cov(Mat, Mat, int).
      */
@@ -3812,7 +3818,7 @@ public class Arma {
     return cov(X, X, norm_type);
   }
 
-  protected static void cross(double[] result, double[] A, double[] B) {
+  protected static void cross(final double[] result, final double[] A, final double[] B) {
     result[0] = A[1] * B[2] - A[2] * B[1];
     result[1] = A[2] * B[0] - A[0] * B[2];
     result[2] = A[0] * B[1] - A[1] * B[0];
@@ -3829,7 +3835,7 @@ public class Arma {
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    */
-  public static Col cross(Col A, AbstractMat B) throws RuntimeException {
+  public static Col cross(final Col A, final AbstractMat B) throws RuntimeException {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3855,7 +3861,7 @@ public class Arma {
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    */
-  public static Row cross(Row A, AbstractMat B) throws RuntimeException {
+  public static Row cross(final Row A, final AbstractMat B) throws RuntimeException {
     if (A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3881,7 +3887,7 @@ public class Arma {
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    */
-  public static Mat cross(Mat A, AbstractMat B) throws RuntimeException {
+  public static Mat cross(final Mat A, final AbstractMat B) throws RuntimeException {
     if (!A.is_vec() || A.n_elem != 3) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be equivalent in shape to a 3-dimensional vector.");
     }
@@ -3897,7 +3903,7 @@ public class Arma {
     return result;
   }
 
-  protected static void cumsum(double[] result, double[] V) {
+  protected static void cumsum(final double[] result, final double[] V) {
     result[0] = V[0];
     for (int n = 1; n < result.length; n++) {
       result[n] = result[n - 1] + V[n];
@@ -3911,7 +3917,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col cumsum(Col V) throws RuntimeException {
+  public static Col cumsum(final Col V) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -3928,7 +3934,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row cumsum(Row V) throws RuntimeException {
+  public static Row cumsum(final Row V) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -3938,7 +3944,7 @@ public class Arma {
     return result;
   }
 
-  protected static void cumsum(AbstractView result, AbstractView V) {
+  protected static void cumsum(final AbstractView result, final AbstractView V) {
     V.iteratorReset();
     result.iteratorReset();
 
@@ -3961,7 +3967,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat cumsum(Mat X) throws RuntimeException {
+  public static Mat cumsum(final Mat X) throws RuntimeException {
     /*
      * The parameter "X" is validated within cumsum(Mat, int).
      */
@@ -3979,7 +3985,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat cumsum(Mat X, int dim) throws RuntimeException, IllegalArgumentException {
+  public static Mat cumsum(final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
@@ -4015,7 +4021,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
    */
-  public static Mat diagmat(AbstractVector X) throws RuntimeException {
+  public static Mat diagmat(final AbstractVector X) throws RuntimeException {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
     }
@@ -4033,7 +4039,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    */
-  public static Mat diagmat(Mat X) throws RuntimeException {
+  public static Mat diagmat(final Mat X) throws RuntimeException {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
@@ -4055,7 +4061,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Col find(AbstractMat X) {
+  public static Col find(final AbstractMat X) {
     /*
      * The parameter "X" is validated within find(AbstractMat, int).
      */
@@ -4072,7 +4078,7 @@ public class Arma {
    * 
    * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
    */
-  public static Col find(AbstractMat X, int k) throws NegativeArraySizeException {
+  public static Col find(final AbstractMat X, final int k) throws NegativeArraySizeException {
     /*
      * The parameters "X" and "k" are validated within cumsum(AbstractMat, int, String).
      */
@@ -4091,7 +4097,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
    * @throws IllegalArgumentException The norm sorting order ({@code s}) must be one of 'first' or 'last'.
    */
-  public static Col find(AbstractMat X, int k, String s) throws NegativeArraySizeException, IllegalArgumentException {
+  public static Col find(final AbstractMat X, final int k, final String s) throws NegativeArraySizeException, IllegalArgumentException {
     if (k < 0) {
       throw new NegativeArraySizeException("The specified number of positions (" + k + ") must be positive.");
     }
@@ -4140,7 +4146,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat fliplr(Mat X) {
+  public static Mat fliplr(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     for (int j = 0; j < result.n_cols / 2; j++) {
@@ -4155,7 +4161,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static Mat flipud(Mat X) {
+  public static Mat flipud(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     for (int i = 0; i < result.n_rows / 2; i++) {
@@ -4165,7 +4171,7 @@ public class Arma {
     return result;
   }
 
-  protected static void hist(double[] result, double[] V, int n_bins) {
+  protected static void hist(final double[] result, final double[] V, final int n_bins) {
     double minimum = V[0];
     double maximum = V[0];
     for (int n = 1; n < V.length; n++) {
@@ -4197,7 +4203,7 @@ public class Arma {
 
     double[] temp = new double[edges.length];
     histc(temp, V, edges);
-    result = Arrays.copyOf(temp, n_bins);
+    System.arraycopy(temp, 0, result, 0, n_bins);
     result[result.length - 1] += temp[temp.length - 1];
   }
 
@@ -4209,7 +4215,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col hist(Col V) throws RuntimeException {
+  public static Col hist(final Col V) throws RuntimeException {
     return hist(V, 10);
   }
 
@@ -4223,7 +4229,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col hist(Col V, int n_bins) throws RuntimeException, IllegalArgumentException {
+  public static Col hist(final Col V, final int n_bins) throws RuntimeException, IllegalArgumentException {
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
@@ -4245,7 +4251,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row hist(Row V) throws RuntimeException {
+  public static Row hist(final Row V) throws RuntimeException {
     return hist(V, 10);
   }
 
@@ -4259,7 +4265,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row hist(Row V, int n_bins) throws RuntimeException, IllegalArgumentException {
+  public static Row hist(final Row V, final int n_bins) throws RuntimeException, IllegalArgumentException {
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
@@ -4281,7 +4287,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X) throws RuntimeException {
+  public static Mat hist(final Mat X) throws RuntimeException {
     return hist(X, 10);
   }
 
@@ -4295,7 +4301,7 @@ public class Arma {
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X, int n_bins) throws NegativeArraySizeException, RuntimeException {
+  public static Mat hist(final Mat X, final int n_bins) throws NegativeArraySizeException, RuntimeException {
     return hist(X, n_bins, 0);
   }
 
@@ -4312,7 +4318,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(Mat X, int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
+  public static Mat hist(final Mat X, final int n_bins, final int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
@@ -4349,7 +4355,7 @@ public class Arma {
     return result;
   }
 
-  protected static void hist(double[] result, double[] V, double[] centers) {
+  protected static void hist(final double[] result, final double[] V, final double[] centers) {
     double[] edges = new double[centers.length + 1];
 
     edges[0] = Double.NEGATIVE_INFINITY;
@@ -4367,7 +4373,7 @@ public class Arma {
 
     double[] temp = new double[edges.length];
     histc(temp, V, edges);
-    result = Arrays.copyOf(temp, centers.length);
+    System.arraycopy(temp, 0, result, 0, centers.length);
     result[result.length - 1] += temp[temp.length - 1];
   }
 
@@ -4379,7 +4385,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col hist(Col V, AbstractMat centers) throws RuntimeException {
+  public static Col hist(final Col V, final AbstractMat centers) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4397,7 +4403,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row hist(Row V, AbstractMat centers) throws RuntimeException {
+  public static Row hist(final Row V, final AbstractMat centers) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4416,7 +4422,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat hist(Mat X, AbstractMat centers) throws RuntimeException {
+  public static Mat hist(final Mat X, final AbstractMat centers) throws RuntimeException {
     return hist(X, centers, 0);
   }
 
@@ -4432,7 +4438,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(Mat X, AbstractMat centers, int dim) throws RuntimeException, IllegalArgumentException {
+  public static Mat hist(final Mat X, final AbstractMat centers, final int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4465,7 +4471,7 @@ public class Arma {
     return result;
   }
 
-  protected static void histc(double[] result, double[] V, double[] edges) {
+  protected static void histc(final double[] result, final double[] V, final double[] edges) {
     for (int n = 0; n < V.length; n++) {
       double element = V[n];
 
@@ -4498,7 +4504,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Col histc(Col V, AbstractMat edges) throws RuntimeException {
+  public static Col histc(final Col V, final AbstractMat edges) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4516,7 +4522,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
-  public static Row histc(Row V, AbstractMat edges) throws RuntimeException {
+  public static Row histc(final Row V, final AbstractMat edges) throws RuntimeException {
     if (V.is_empty()) {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
@@ -4534,7 +4540,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat histc(Mat X, AbstractMat edges) {
+  public static Mat histc(final Mat X, final AbstractMat edges) {
     return hist(X, edges, 0);
   }
 
@@ -4550,7 +4556,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat histc(Mat X, AbstractMat edges, int dim) {
+  public static Mat histc(final Mat X, final AbstractMat edges, final int dim) {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4588,7 +4594,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static void inplace_trans(Mat X) {
+  public static void inplace_trans(final Mat X) {
     int n = 0;
     for (int j = 0; j < X.n_cols; j++) {
       for (int i = 0; i < X.n_rows; i++) {
@@ -4615,7 +4621,7 @@ public class Arma {
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
-  public static Mat join_rows(AbstractMat A, AbstractMat B) {
+  public static Mat join_rows(final AbstractMat A, final AbstractMat B) {
     return join_horiz(A, B);
   }
 
@@ -4629,7 +4635,7 @@ public class Arma {
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
-  public static Mat join_horiz(AbstractMat A, AbstractMat B) {
+  public static Mat join_horiz(final AbstractMat A, final AbstractMat B) {
     if (A.n_rows != B.n_rows) {
       throw new RuntimeException("Both matrices must have the same number of rows (" + A.n_rows + " and " + B.n_rows + ").");
     }
@@ -4653,7 +4659,7 @@ public class Arma {
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
-  public static Mat join_cols(AbstractMat A, AbstractMat B) {
+  public static Mat join_cols(final AbstractMat A, final AbstractMat B) {
     return join_vert(A, B);
   }
 
@@ -4668,7 +4674,7 @@ public class Arma {
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
-  public static Mat join_vert(AbstractMat A, AbstractMat B) {
+  public static Mat join_vert(final AbstractMat A, final AbstractMat B) {
     if (A.n_cols != B.n_cols) {
       throw new RuntimeException("Both matrices must have the same number of columns (" + A.n_cols + " and " + B.n_cols + ").");
     }
@@ -4687,7 +4693,7 @@ public class Arma {
    * @param A The left-hand matrix
    * @param B The right-hand matrix
    */
-  public static Mat kron(AbstractMat A, AbstractMat B) {
+  public static Mat kron(final AbstractMat A, final AbstractMat B) {
     Mat result = repmat(B, A.n_rows, A.n_cols);
 
     int n = 0;
@@ -4714,7 +4720,7 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    */
-  public static Mat reshape(Mat mat, int n_rows, int n_cols) {
+  public static Mat reshape(final Mat mat, final int n_rows, final int n_cols) {
     Mat result = new Mat(mat);
     result.reshape(n_rows, n_cols);
     return result;
@@ -4728,13 +4734,13 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    */
-  public static Mat resize(Mat mat, int n_rows, int n_cols) {
+  public static Mat resize(final Mat mat, final int n_rows, final int n_cols) {
     Mat result = new Mat(mat);
     result.resize(n_rows, n_cols);
     return result;
   }
 
-  protected static void shuffle(double[] result, double[] V) {
+  protected static void shuffle(final double[] result, final double[] V) {
     /*
      * Performs an inside-out version of the Fisher-Yates shuffle
      */
@@ -4751,23 +4757,23 @@ public class Arma {
     }
   }
 
-  public static Col shuffle(Col V) {
+  public static Col shuffle(final Col V) {
     Col result = new Col(V.n_elem);
     shuffle(result._data, V._data);
     return result;
   }
 
-  public static Row shuffle(Row V) {
+  public static Row shuffle(final Row V) {
     Row result = new Row(V.n_elem);
     shuffle(result._data, V._data);
     return result;
   }
 
-  public static Mat shuffle(Mat X) {
+  public static Mat shuffle(final Mat X) {
     return shuffle(X, 0);
   }
 
-  public static Mat shuffle(Mat X, int dim) {
+  public static Mat shuffle(final Mat X, final int dim) {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4806,9 +4812,9 @@ public class Arma {
     return result;
   }
 
-  protected static void sort(double[] result, double[] V, String sort_direction) {
-    result = Arrays.copyOf(V, V.length);
-
+  protected static void sort(final double[] result, final double[] V, final String sort_direction) {
+    System.arraycopy(V, 0, result, 0, V.length);
+    
     Arrays.sort(result);
 
     if (sort_direction == "descend") {
@@ -4816,35 +4822,35 @@ public class Arma {
     }
   }
 
-  public static Col sort(Col V) {
+  public static Col sort(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col sort(Col V, String sort_direction) {
+  public static Col sort(final Col V, final String sort_direction) {
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  public static Row sort(Row V) {
+  public static Row sort(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row sort(Row V, String sort_direction) {
+  public static Row sort(final Row V, final String sort_direction) {
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  public static Mat sort(Mat X) {
+  public static Mat sort(final Mat X) {
     return sort(X, "ascend");
   }
 
-  public static Mat sort(Mat X, String sort_direction) {
+  public static Mat sort(final Mat X, final String sort_direction) {
     return sort(X, sort_direction, 0);
   }
 
-  public static Mat sort(Mat X, String sort_direction, int dim) {
+  public static Mat sort(final Mat X, final String sort_direction, final int dim) {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4883,31 +4889,31 @@ public class Arma {
     return result;
   }
 
-  protected static void sort_index(double[] result, double[] V, String sort_direction) {
+  protected static void sort_index(final double[] result, final double[] V, final String sort_direction) {
     stable_sort_index(result, V, sort_direction);
   }
 
-  public static Col sort_index(Col V) {
+  public static Col sort_index(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col sort_index(Col V, String sort_direction) {
+  public static Col sort_index(final Col V, final String sort_direction) {
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  public static Row sort_index(Row V) {
+  public static Row sort_index(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row sort_index(Row V, String sort_direction) {
+  public static Row sort_index(final Row V, final String sort_direction) {
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  protected static void stable_sort_index(double[] result, final double[] V, String sort_direction) {
+  protected static void stable_sort_index(final double[] result, final double[] V, final String sort_direction) {
     Integer[] temp = new Integer[result.length];
     for (int n = 0; n < temp.length; n++) {
       temp[n] = n;
@@ -4929,27 +4935,27 @@ public class Arma {
     }
   }
 
-  public static Col stable_sort_index(Col V) {
+  public static Col stable_sort_index(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col stable_sort_index(Col V, String sort_direction) {
+  public static Col stable_sort_index(final Col V, final String sort_direction) {
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  public static Row stable_sort_index(Row V) {
+  public static Row stable_sort_index(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row stable_sort_index(Row V, String sort_direction) {
+  public static Row stable_sort_index(final Row V, final String sort_direction) {
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
-  public static Mat symmatu(Mat A) throws RuntimeException {
+  public static Mat symmatu(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
@@ -4976,7 +4982,7 @@ public class Arma {
     return result;
   }
 
-  public static Mat symmatl(Mat A) throws RuntimeException {
+  public static Mat symmatl(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
@@ -5003,19 +5009,19 @@ public class Arma {
     return result;
   }
 
-  public static Row trans(Col A) {
+  public static Row trans(final Col A) {
     return A.t();
   }
 
-  public static Col trans(Row A) {
+  public static Col trans(final Row A) {
     return A.t();
   }
 
-  public static Mat trans(Mat A) {
+  public static Mat trans(final Mat A) {
     return A.t();
   }
 
-  public static Mat trimatu(Mat A) throws RuntimeException {
+  public static Mat trimatu(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
@@ -5039,7 +5045,7 @@ public class Arma {
     return result;
   }
 
-  public static Mat trimatl(Mat A) throws RuntimeException {
+  public static Mat trimatl(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
@@ -5063,7 +5069,7 @@ public class Arma {
     return result;
   }
 
-  protected static void unique(AbstractMat result, double[] A) {
+  protected static void unique(final AbstractMat result, final double[] A) {
     double[] sortedA = Arrays.copyOf(A, A.length);
     Arrays.sort(sortedA);
 
@@ -5085,29 +5091,29 @@ public class Arma {
     result._data = Arrays.copyOf(temp, temp.length);
   }
 
-  public static Col unique(Col A) {
+  public static Col unique(final Col A) {
     Col result = new Col();
     unique(result, A._data);
     return result;
   }
 
-  public static Row unique(Row A) {
+  public static Row unique(final Row A) {
     Row result = new Row();
     unique(result, A._data);
     return result;
   }
 
-  public static Col unique(Mat A) {
+  public static Col unique(final Mat A) {
     Col result = new Col();
     unique(result, A._data);
     return result;
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A) {
+  public static <T extends AbstractVector> T vectorise(final Class<T> return_type, final Mat A) {
     return vectorise(return_type, A, 0);
   }
 
-  public static <T extends AbstractVector> T vectorise(Class<T> return_type, Mat A, int dim) throws IllegalArgumentException {
+  public static <T extends AbstractVector> T vectorise(final Class<T> return_type, final Mat A, final int dim) throws IllegalArgumentException {
     T result;
 
     try {
@@ -5137,13 +5143,13 @@ public class Arma {
     return result;
   }
 
-  public static Mat chol(Mat X) {
+  public static Mat chol(final Mat X) {
     Mat R = new Mat();
     inv_sympd(R, X);
     return R;
   }
 
-  public static void chol(Mat R, Mat X) throws RuntimeException {
+  public static void chol(final Mat R, final Mat X) throws RuntimeException {
     R.inPlace(Op.EQUAL, X);
 
     intW info = new intW(0);
@@ -5154,7 +5160,7 @@ public class Arma {
     }
   }
 
-  public static <T extends AbstractVector> T eig_sym(Class<T> return_type, Mat X) throws RuntimeException {
+  public static <T extends AbstractVector> T eig_sym(final Class<T> return_type, final Mat X) throws RuntimeException {
     T eigval;
 
     try {
@@ -5167,7 +5173,7 @@ public class Arma {
     return eigval;
   }
 
-  public static void eig_sym(AbstractVector eigval, Mat X) throws RuntimeException {
+  public static void eig_sym(final AbstractVector eigval, Mat X) throws RuntimeException {
     /*
      * The size of this arrays is defined by the specification of the LAPACK routine.
      */
@@ -5180,7 +5186,7 @@ public class Arma {
     }
   }
 
-  public static void eig_sym(AbstractVector eigval, Mat eigvec, Mat X) throws RuntimeException {
+  public static void eig_sym(final AbstractVector eigval, final Mat eigvec, final Mat X) throws RuntimeException {
     eigvec.inPlace(Op.EQUAL, X);
 
     /*
@@ -5195,23 +5201,23 @@ public class Arma {
     }
   }
 
-  public static Mat inv(Mat A) {
+  public static Mat inv(final Mat A) {
     Mat B = new Mat();
     inv(B, A);
     return B;
   }
 
-  public static void inv(Mat B, Mat A) {
+  public static void inv(final Mat B, final Mat A) {
     B.inPlace(Op.EQUAL, A.i());
   }
 
-  public static Mat inv_sympd(Mat A) {
+  public static Mat inv_sympd(final Mat A) {
     Mat B = new Mat();
     inv_sympd(B, A);
     return B;
   }
 
-  public static void inv_sympd(Mat B, Mat A) {
+  public static void inv_sympd(final Mat B, final Mat A) {
     B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 
@@ -5226,7 +5232,7 @@ public class Arma {
     }
   }
 
-  public static boolean lu(Mat L, Mat U, Mat P, Mat X) {
+  public static boolean lu(final Mat L, final Mat U, final Mat P, final Mat X) {
     U.inPlace(Op.EQUAL, X);
 
     int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
@@ -5292,7 +5298,7 @@ public class Arma {
     return true;
   }
 
-  public static boolean lu(Mat L, Mat U, Mat X) {
+  public static boolean lu(final Mat L, final Mat U, final Mat X) {
     U.inPlace(Op.EQUAL, X);
 
     int[] pivotIndices = new int[Math.min(X.n_rows, X.n_cols)];
@@ -5340,22 +5346,22 @@ public class Arma {
     return true;
   }
 
-  public static Mat pinv(Mat A) {
+  public static Mat pinv(final Mat A) {
     return pinv(A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
-  public static Mat pinv(Mat A, double tolerance) {
+  public static Mat pinv(final Mat A, final double tolerance) {
     Mat B = new Mat();
     pinv(B, A, tolerance);
     // TODO add exception if pinv returns false
     return B;
   }
 
-  public static boolean pinv(Mat B, Mat A) {
+  public static boolean pinv(final Mat B, final Mat A) {
     return pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
-  public static boolean pinv(Mat B, Mat A, double tolerance) {
+  public static boolean pinv(final Mat B, final Mat A, final double tolerance) {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();
@@ -5417,7 +5423,7 @@ public class Arma {
     return coeff;
   }
 
-  public static boolean princomp(Mat coeff, Mat X) {
+  public static boolean princomp(final Mat coeff, final Mat X) {
     if(X.n_rows > 1) {
       Mat temp = new Mat(X);
       
@@ -5434,7 +5440,7 @@ public class Arma {
     return true;
   }
 
-  public static boolean princomp(Mat coeff, Mat score, Mat X) {
+  public static boolean princomp(final Mat coeff, final Mat score, final Mat X) {
     if(X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
@@ -5461,7 +5467,7 @@ public class Arma {
     return true;
   }
 
-  public static boolean princomp(Mat coeff, Mat score, Col latent, Mat X) {
+  public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Mat X) {
     if(X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
@@ -5485,7 +5491,7 @@ public class Arma {
         s.inPlace(Op.EQUAL, s_temp);
       }
 
-      latent = square(s);
+      latent.inPlace(Op.EQUAL, square(s));
     } else {
       coeff.eye(X.n_cols, X.n_cols);
       
@@ -5499,7 +5505,7 @@ public class Arma {
     return true;
   }
 
-  public static boolean princomp(Mat coeff, Mat score, Col latent, Col tsquared, Mat X) {
+  public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Col tsquared, final Mat X) {
     if(X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
@@ -5531,7 +5537,7 @@ public class Arma {
       }
 
       tsquared.inPlace(Op.EQUAL, sum(Col.class, square(S), 1));
-      latent = square(s);
+      latent.inPlace(Op.EQUAL, square(s));
     } else {
       coeff.eye(X.n_cols, X.n_cols);
       
@@ -5548,12 +5554,12 @@ public class Arma {
     return true;
   }
 
-  public static boolean qr(Mat Q, Mat R, Mat X) {
+  public static boolean qr(final Mat Q, final Mat R, final Mat X) {
     if(X.empty()) {
       return false;
     }
-    
-    R = new Mat(X);
+
+    R.inPlace(Op.EQUAL, X);
     
     double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
     double[] work = new double[Math.max(1, X.n_cols)];
@@ -5579,7 +5585,7 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static boolean qr_econ(Mat Q, Mat R, Mat X) {
+  public static boolean qr_econ(final Mat Q, final Mat R, final Mat X) {
     if(X.is_empty()) {
       return false;
     }
@@ -5587,8 +5593,8 @@ public class Arma {
     if(X.n_rows <= X.n_cols) {
       return qr(Q, R, X);
     }
-    
-    Q = new Mat(X);
+
+    Q.inPlace(Op.EQUAL, X);
     
     double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
     double[] work = new double[Math.max(1, Math.max(X.n_rows, X.n_cols))];
@@ -5618,13 +5624,13 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static Mat solve(Mat A, Mat B) {
+  public static Mat solve(final Mat A, final Mat B) {
     Mat X = new Mat();
     solve(X, A, B);
     return X;
   }
 
-  public static boolean solve(Mat X, Mat A, Mat B) {
+  public static boolean solve(final Mat X, final Mat A, final Mat B) {
     if(A.empty() || B.empty()) {
       return false;
     }
@@ -5637,7 +5643,7 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static <T extends AbstractVector> T svd(Class<T> return_type, Mat X) {
+  public static <T extends AbstractVector> T svd(final Class<T> return_type, final Mat X) {
     T s;
 
     try {
@@ -5650,7 +5656,7 @@ public class Arma {
     return s;
   }
 
-  public static boolean svd(AbstractVector s, Mat X) {
+  public static boolean svd(final AbstractVector s, final Mat X) {
     if(X.is_empty()) {
       return false;
     }
@@ -5668,7 +5674,7 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static boolean svd(Mat U, AbstractVector s, Mat V, Mat X) {
+  public static boolean svd(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
     if(X.is_empty()) {
       return false;
     }
@@ -5688,11 +5694,11 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X) {
+  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
     return svd_econ(U, s, V, X, "both");
   }
 
-  public static boolean svd_econ(Mat U, AbstractVector s, Mat V, Mat X, String side) {
+  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X, final String side) {
     if(X.is_empty()) {
       return false;
     }
@@ -5731,13 +5737,13 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static Mat syl(Mat A, Mat B, Mat C) {
+  public static Mat syl(final Mat A, final Mat B, final Mat C) {
     Mat X = new Mat();
     syl(X, A, B, C);
     return X;
   }
 
-  public static boolean syl(Mat X, Mat A, Mat B, Mat C) {
+  public static boolean syl(final Mat X, final Mat A, final Mat B, final Mat C) {
     if(A.is_empty() || B.is_empty() || C.is_empty()) {
       return false;
     }
@@ -5782,7 +5788,7 @@ public class Arma {
    * 
    * @param X The matrix
    */
-  public static boolean is_finite(AbstractMat X) {
+  public static boolean is_finite(final AbstractMat X) {
     return X.is_finite();
   }
 
@@ -5791,11 +5797,11 @@ public class Arma {
    * 
    * @param X The value
    */
-  public static boolean is_finite(double X) {
+  public static boolean is_finite(final double X) {
     return (!Double.isInfinite(X) && !Double.isNaN(X));
   }
 
-  public static Col negate(Col X) {
+  public static Col negate(final Col X) {
     Col result = new Col(X.n_elem);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
@@ -5803,7 +5809,7 @@ public class Arma {
     return result;
   }
 
-  public static Row negate(Row X) {
+  public static Row negate(final Row X) {
     Row result = new Row(X.n_elem);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
@@ -5811,7 +5817,7 @@ public class Arma {
     return result;
   }
 
-  public static Mat negate(Mat X) {
+  public static Mat negate(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
@@ -5819,7 +5825,7 @@ public class Arma {
     return result;
   }
 
-  public static Col reciprocal(Col X) {
+  public static Col reciprocal(final Col X) {
     Col result = new Col(X.n_elem);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
@@ -5827,7 +5833,7 @@ public class Arma {
     return result;
   }
 
-  public static Row reciprocal(Row X) {
+  public static Row reciprocal(final Row X) {
     Row result = new Row(X.n_elem);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
@@ -5835,7 +5841,7 @@ public class Arma {
     return result;
   }
 
-  public static Mat reciprocal(Mat X) {
+  public static Mat reciprocal(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     for(int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
@@ -5843,7 +5849,7 @@ public class Arma {
     return result;
   }
   
-  protected static void revert(double[] result, double[] X) {
+  protected static void revert(final double[] result, final double[] X) {
     for (int n = 0; n < X.length / 2; n++) {
       double temp = X[n];
       result[n] = X[X.length - (n + 1)];
@@ -5851,7 +5857,7 @@ public class Arma {
     }
   }
   
-  protected static boolean schur(Mat Z, Mat T, Mat A) {
+  protected static boolean schur(final Mat Z, final Mat T, final Mat A) {
     Z.set_size(A.n_rows, A.n_rows);
     T.inPlace(Op.EQUAL, A);
 
