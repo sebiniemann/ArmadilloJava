@@ -4757,12 +4757,22 @@ public class Arma {
     }
   }
 
+  /**
+   * Returns a shuffled copy of the provided vector.
+   * 
+   * @param V The vector
+   */
   public static Col shuffle(final Col V) {
     Col result = new Col(V.n_elem);
     shuffle(result._data, V._data);
     return result;
   }
 
+  /**
+   * Returns a shuffled copy of the provided vector.
+   * 
+   * @param V The vector
+   */
   public static Row shuffle(final Row V) {
     Row result = new Row(V.n_elem);
     shuffle(result._data, V._data);
@@ -4773,36 +4783,48 @@ public class Arma {
     return shuffle(X, 0);
   }
 
+  /**
+   * Returns a copy of the provided matrix  for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix for the
+   * provided, monotonically increasing bin edges.
+   * 
+   * @param X The matrix
+   * @param centers The bin edges
+   * @param dim The dimension
+   * 
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
   public static Mat shuffle(final Mat X, final int dim) {
     Mat result = new Mat();
+    result.copy_size(X);
 
+    double[] indicies;
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
+        indicies = new double[X.n_rows];
+        break;
+      case 1:
+        indicies = new double[X.n_cols];
+        break;
+      default:
+        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+    }
 
-        result.set_size(X.n_cols);
-
-        for (int j = 0; j < X.n_cols; j++) {
-          /*
-           * Creates a deep copy of each column, since shuffling of shallow sub views is not yet implemented.
-           */
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, shuffle(X.col(j)));
+    for (int n = 0; n < indicies.length; n++) {
+      indicies[n] = n;
+    }
+    
+    double[] shuffeldIndicies = new double[indicies.length];
+    shuffle(shuffeldIndicies, indicies);
+    
+    switch (dim) {
+      case 0:
+        for (int i = 0; i < X.n_rows; i++) {
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, new ViewSubRow(X, i));
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
-        result.set_size(X.n_rows);
-
-        for (int i = 0; i < X.n_rows; i++) {
-          /*
-           * Creates a deep copy of each row, since shuffling of shallow sub views is not yet implemented.
-           */
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, shuffle(X.row(i)));
+        for (int j = 0; j < X.n_cols; j++) {
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubRow(X, j));
         }
         break;
       default:
