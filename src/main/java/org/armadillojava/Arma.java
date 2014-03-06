@@ -4779,16 +4779,19 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided matrix with shuffled columns.
+   * 
+   * @param X The matrix
+   */
   public static Mat shuffle(final Mat X) {
     return shuffle(X, 0);
   }
 
   /**
-   * Returns a copy of the provided matrix  for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix for the
-   * provided, monotonically increasing bin edges.
+   * Returns a copy of the provided matrix with shuffled columns ({@code dim} = 0) or rows ({@code dim} = 1).
    * 
    * @param X The matrix
-   * @param centers The bin edges
    * @param dim The dimension
    * 
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -4827,8 +4830,6 @@ public class Arma {
           new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubRow(X, j));
         }
         break;
-      default:
-        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
     }
 
     return result;
