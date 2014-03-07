@@ -6185,7 +6185,7 @@ public class Arma {
   }
 
   /**
-   * Performs a singular value decomposition of the provided matrix and stored the singular values in descending order
+   * Performs a singular value decomposition of the provided matrix and stores the singular values in descending order
    * in {@code s}.
    * <p>
    * Returns {@code false} if the decomposition failed.
@@ -6211,6 +6211,17 @@ public class Arma {
     return (info.val == 0);
   }
 
+  /**
+   * Performs a singular value decomposition of the provided matrix and stores the singular values in descending order
+   * in {@code s}, such that {@code U.times(diagmat(s)).times(transpose(V)) = X}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param U The storage of U
+   * @param s The storage of the singular values
+   * @param V The storage of V
+   * @param X The matrix
+   */
   public static boolean svd(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
     if (X.is_empty()) {
       return false;
@@ -6231,11 +6242,42 @@ public class Arma {
     return (info.val == 0);
   }
 
+  /**
+   * Performs a economical (memory friendly) singular value decomposition of the provided matrix and stores the singular
+   * values in descending order in {@code s} and calculated both the left-singular and right-singular values.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param U The storage of the left-singular vectors U
+   * @param s The storage of the singular values
+   * @param V The storage of the right-singular vectors V
+   * @param X The matrix
+   */
   public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
     return svd_econ(U, s, V, X, "both");
   }
 
-  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X, final String side) {
+  /**
+   * Performs a economical (memory friendly) singular value decomposition of the provided matrix and stores the singular
+   * values in descending order in {@code s}.
+   * <p>
+   * <ul>
+   * <li>For {@code side} = "left", only the left-singular vectors are calculated.
+   * <li>For {@code side} = "right", only the right-singular vectors are calculated.
+   * <li>For {@code side} = "both", both the left-singular and right-singular vectors are calculated.
+   * </ul>
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param U The storage of the left-singular vectors U
+   * @param s The storage of the singular values
+   * @param V The storage of the right-singular vectors V
+   * @param X The matrix
+   * @param side The singular vectors to be calculated
+   * 
+   * @throws IllegalArgumentException The specified side ({@code side}) must be one of 'left', 'right' or 'both'.
+   */
+  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X, final String side) throws IllegalArgumentException {
     if (X.is_empty()) {
       return false;
     }
@@ -6266,7 +6308,7 @@ public class Arma {
         LAPACK.getInstance().dgesvd("S", "S", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, V.n_rows, work, work.length, info);
         break;
       default:
-        return false;
+        throw new IllegalArgumentException("The specified side (" + side + ") must be one of 'left', 'right' or 'both'.");
     }
 
     inplace_trans(V);
@@ -6284,7 +6326,7 @@ public class Arma {
    */
   public static Mat syl(final Mat A, final Mat B, final Mat C) throws RuntimeException {
     Mat X = new Mat();
-    if(!syl(X, A, B, C)) {
+    if (!syl(X, A, B, C)) {
       throw new RuntimeException("No solution was found.");
     }
     return X;
