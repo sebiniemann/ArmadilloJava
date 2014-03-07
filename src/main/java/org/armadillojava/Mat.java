@@ -666,7 +666,7 @@ public class Mat extends AbstractMat {
   }
 
   /**
-   * Returns true if the number of rows equals the number of columns.
+   * Returns {@code true} if the number of rows equals the number of columns.
    */
   public boolean is_square() {
     return (n_rows == n_cols);

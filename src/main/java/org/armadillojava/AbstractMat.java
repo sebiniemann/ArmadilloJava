@@ -111,7 +111,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if the position is not out of bounds.
+   * Returns {@code true} if the position is not out of bounds.
    * 
    * @param n The position
    */
@@ -120,7 +120,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if neither position within the span is out of bounds.
+   * Returns {@code true} if neither position within the span is out of bounds.
    * 
    * @param span The span
    */
@@ -132,7 +132,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if neither the row nor the column is out of bound.
+   * Returns {@code true} if neither the row nor the column is out of bound.
    * 
    * @param row The row
    * @param col The column
@@ -142,7 +142,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if neither position within the row and column span is out of bounds.
+   * Returns {@code true} if neither position within the row and column span is out of bounds.
    * 
    * @param row_span The row span
    * @param col_span The column span
@@ -155,7 +155,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if neither position from {@code first_row} to {@code first_row + size.n_rows - 1} and
+   * Returns {@code true} if neither position from {@code first_row} to {@code first_row + size.n_rows - 1} and
    * {@code first_col} to {@code first_col + size.n_cols - 1} is out of bounds.
    * 
    * @param first_row The first row
@@ -170,14 +170,14 @@ abstract class AbstractMat {
   }
 
   /**
-   * Returns true if the matrix has no elements.
+   * Returns {@code true} if the matrix has no elements.
    */
   public boolean is_empty() {
     return (n_elem == 0);
   }
 
   /**
-   * Returns true if the matrix contains only finite values.
+   * Returns {@code true} if the matrix contains only finite values.
    */
   public boolean is_finite() {
     for (int n = 0; n < n_elem; n++) {
@@ -464,7 +464,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the matrix at the specified file path and returns true on success.
+   * Stores the matrix at the specified file path and returns {@code true} on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -479,7 +479,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the matrix at the specified file path in the requested file format and returns true on success.
+   * Stores the matrix at the specified file path in the requested file format and returns {@code true} on success.
    * 
    * @param name The file path
    * @param file_type The file format
@@ -493,7 +493,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the matrix at the specified stream and returns true on success.
+   * Stores the matrix at the specified stream and returns {@code true} on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -508,7 +508,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Stores the matrix at the specified stream in the requested file format and returns true on success.
+   * Stores the matrix at the specified stream in the requested file format and returns {@code true} on success.
    * 
    * @param stream The stream
    * @param file_type The file format
@@ -556,7 +556,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the matrix with data from the specified file path and returns true on success.
+   * Fills the matrix with data from the specified file path and returns {@code true} on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -588,7 +588,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the matrix with data from the specified stream and returns true on success.
+   * Fills the matrix with data from the specified stream and returns {@code true} on success.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -604,7 +604,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Fills the matrix with data expected to be in specified format from the specified stream and returns true on
+   * Fills the matrix with data expected to be in specified format from the specified stream and returns {@code true} on
    * success.
    * 
    * @param stream The stream
@@ -685,7 +685,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #save(String)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #save(String)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -696,7 +696,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #save(String, FileType)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #save(String, FileType)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -712,7 +712,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #save(OutputStream)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #save(OutputStream)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -723,7 +723,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #save(OutputStream, FileType)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #save(OutputStream, FileType)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -739,7 +739,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #load(String)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #load(String)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -750,7 +750,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #load(String, FileType)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #load(String, FileType)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -766,7 +766,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #load(InputStream)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #load(InputStream)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -777,7 +777,7 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #load(InputStream, FileType)} but without error reporting. Returns false if an error occurred.
+   * Same as {@link #load(InputStream, FileType)} but without error reporting. Returns {@code false} if an error occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -811,7 +811,7 @@ abstract class AbstractMat {
   /**
    * C++ STL-like function
    * <p>
-   * Returns true if the matrix has no elements.
+   * Returns {@code true} if the matrix has no elements.
    */
   public boolean empty() {
     return is_empty();
@@ -2851,21 +2851,21 @@ abstract class AbstractMat {
   abstract protected void set_size(final int n_elem);
 
   /**
-   * Returns true if the matrix has only one row or column.
+   * Returns {@code true} if the matrix has only one row or column.
    */
   protected boolean is_vec() {
     return (is_colvec() || is_rowvec());
   }
 
   /**
-   * Returns true if the matrix has only one column.
+   * Returns {@code true} if the matrix has only one column.
    */
   protected boolean is_colvec() {
     return (n_cols == 1);
   }
 
   /**
-   * Returns true if the matrix has only one row.
+   * Returns {@code true} if the matrix has only one row.
    */
   protected boolean is_rowvec() {
     return (n_rows == 1);
