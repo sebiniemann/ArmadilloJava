@@ -6123,8 +6123,8 @@ public class Arma {
   /**
    * Returns the solution of a system of linear equations {@code A.times(X) = B} with unknown {@code X}.
    * 
-   * @param A The first matrix
-   * @param B The second matrix
+   * @param A The matrix A
+   * @param B The matrix B
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    * @throws RuntimeException No solution was found.
@@ -6149,8 +6149,8 @@ public class Arma {
    * Returns {@code false} if the calculation failed.
    * 
    * @param X The storage of the solution
-   * @param A The first matrix
-   * @param B The second matrix
+   * @param A The matrix A
+   * @param B The matrix B
    */
   public static boolean solve(final Mat X, final Mat A, final Mat B) {
     if (A.n_rows != B.n_rows) {
@@ -6317,14 +6317,35 @@ public class Arma {
   }
 
   /**
+   * Returns the solution of the Sylvester equations {@code A.times(X) + X.times(B) = C} with unknown {@code X}.
    * 
-   * @param A
-   * @param B
-   * @param C
+   * @param A The matrix A
+   * @param B The matrix B
+   * @param C The matrix C
    * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix A must be square.
+   * @throws RuntimeException The provided ({@code B.n_rows}, {@code B.n_cols})-matrix B must be square.
+   * @throws RuntimeException The matrix C must have the same number of rows ({@code C.n_rows}) as the matrix A ({@code A.n_rows}).
+   * @throws RuntimeException The matrix C must have the same number of columns ({@code C.n_cols}) as the matrix B ({@code A.n_cols}).
    * @throws RuntimeException No solution was found.
    */
   public static Mat syl(final Mat A, final Mat B, final Mat C) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix A must be square.");
+    }
+    
+    if (!B.is_square()) {
+      throw new RuntimeException("The provided (" + B.n_rows + ", " + B.n_cols + ")-matrix B must be square.");
+    }
+
+    if (C.n_rows != A.n_rows) {
+      throw new RuntimeException("The matrix C must have the same number of rows (" + C.n_rows + ") as the matrix A (" + A.n_rows + ").");
+    }
+    
+    if (C.n_cols != B.n_cols) {
+      throw new RuntimeException("The matrix C must have the same number of columns (" + C.n_cols + ") as the matrix B (" + A.n_cols + ").");
+    }
+    
     Mat X = new Mat();
     if (!syl(X, A, B, C)) {
       throw new RuntimeException("No solution was found.");
@@ -6332,6 +6353,17 @@ public class Arma {
     return X;
   }
 
+  /**
+   * Solves the Sylvester equations {@code A.times(X) + X.times(B) = C} with unknown {@code X} and stores the solution
+   * in {@code X}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param X The storage of the solution
+   * @param A The matrix A
+   * @param B The matrix B
+   * @param C The matrix C
+   */
   public static boolean syl(final Mat X, final Mat A, final Mat B, final Mat C) {
     if (A.is_empty() || B.is_empty() || C.is_empty()) {
       return false;
@@ -6340,12 +6372,8 @@ public class Arma {
     if (!A.is_square() || !B.is_square()) {
       return false;
     }
-
-    if (C.n_rows != A.n_rows) {
-      return false;
-    }
-
-    if (C.n_cols != B.n_cols) {
+    
+    if (C.n_rows != A.n_rows || C.n_cols != B.n_cols) {
       return false;
     }
 
