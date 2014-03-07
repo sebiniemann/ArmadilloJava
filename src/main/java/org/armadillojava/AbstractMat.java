@@ -220,7 +220,7 @@ abstract class AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
-   * @param index_of_min_val The position storage
+   * @param index_of_min_val The storage of the position
    * 
    * @throws RuntimeException The ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -266,7 +266,7 @@ abstract class AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
-   * @param index_of_max_val The position storage
+   * @param index_of_max_val The storage of the position
    * 
    * @throws RuntimeException The ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */

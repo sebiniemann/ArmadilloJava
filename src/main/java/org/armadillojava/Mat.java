@@ -891,8 +891,8 @@ public class Mat extends AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
-   * @param index_of_min_val The row position storage
-   * @param index_of_min_val The column position storage
+   * @param index_of_min_val The storage of the row position
+   * @param index_of_min_val The storage of the column position
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -927,8 +927,8 @@ public class Mat extends AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
-   * @param index_of_min_val The row position storage
-   * @param index_of_min_val The column position storage
+   * @param index_of_min_val The storage of the row position
+   * @param index_of_min_val The storage of the column position
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */

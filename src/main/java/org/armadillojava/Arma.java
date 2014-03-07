@@ -1806,17 +1806,16 @@ public class Arma {
    * Returns the spectral condition number of the provided matrix.
    * 
    * @param A the matrix
-   * 
-   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    */
   public static double cond(final Mat A) throws RuntimeException {
     /*
      * The parameter "A" is validated within svd(AbstractMat).
      */
 
-    // TODO Add exceptions thrown by svd(AbstractMat).
     Col singularValues = new Col();
-    svd(singularValues, A);
+    if (!svd(singularValues, A)) {
+      return Double.POSITIVE_INFINITY;
+    }
     return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
   }
 
@@ -1901,8 +1900,8 @@ public class Arma {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type double[], respectively int[].
    * 
-   * @param val The value storage
-   * @param sign The sign storage
+   * @param val The storage of the value
+   * @param sign The storage of the sign
    * @param A The matrix
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
@@ -2160,16 +2159,17 @@ public class Arma {
    * @param X The matrix
    * @param tolerance The tolerance
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
+   * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static int rank(final Mat X, final double tolerance) throws RuntimeException {
     /*
      * The parameter "X" is validated within svd(AbstractMat).
      */
 
-    // TODO Add exceptions thrown by svd(AbstractMat).
     Col singularValues = new Col();
-    svd(singularValues, X);
+    if (!svd(singularValues, X)) {
+      throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
+    }
 
     int rank = 0;
     for (int n = 0; n < singularValues.n_elem; n++) {
@@ -5390,13 +5390,13 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The factorisation could not be completed. Ensure that the provided matrix is symmetric and
+   * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric and
    *           positive-definite.
    */
   public static Mat chol(final Mat X) throws RuntimeException {
     Mat R = new Mat();
     if (!chol(R, X)) {
-      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is symmetric and positive-definite.");
+      throw new RuntimeException("The decomposition could not be completed. Ensure that the provided matrix is symmetric and positive-definite.");
     }
     return R;
   }
@@ -5407,7 +5407,7 @@ public class Arma {
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
-   * @param R The output storage
+   * @param R The storage of the output
    * @param X The matrix
    */
   public static boolean chol(final Mat R, final Mat X) {
@@ -5429,7 +5429,7 @@ public class Arma {
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
-   * @throws RuntimeException The factorisation could not be completed. Ensure that the provided matrix is
+   * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric and
    *           positive-definite.
    */
   public static Col eig_sym(final Mat X) throws RuntimeException {
@@ -5439,7 +5439,7 @@ public class Arma {
 
     Col eigval = new Col();
     if (!eig_sym(eigval, X)) {
-      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric and positive-definite.");
     }
     return eigval;
   }
@@ -5449,7 +5449,7 @@ public class Arma {
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
-   * @param eigval The eigenvalues storage
+   * @param eigval The storage of the eigenvalues
    * @param X The matrix
    */
   public static boolean eig_sym(final AbstractVector eigval, Mat X) {
@@ -5476,8 +5476,8 @@ public class Arma {
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
-   * @param eigval The eigenvalues storage
-   * @param eigval The eigenvectors storage
+   * @param eigval The storage of the eigenvalues
+   * @param eigval The storage of the eigenvectors
    * @param X The matrix
    */
   public static boolean eig_sym(final AbstractVector eigval, final Mat eigvec, final Mat X) {
@@ -5506,7 +5506,7 @@ public class Arma {
    * @param A The matrix
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
-   * @throws RuntimeException The matrix appears to be singular.
+   * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static Mat inv(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
@@ -5515,7 +5515,7 @@ public class Arma {
 
     Mat B = new Mat();
     if (!inv(B, A)) {
-      throw new RuntimeException("The matrix appears to be singular.");
+      throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
     }
 
     return B;
@@ -5528,7 +5528,7 @@ public class Arma {
    * <p>
    * Use {@link #inv_sympd(Mat, Mat)} instead, if the provided matrix is known to be symmetric and positive-definite.
    * 
-   * @param B The inserves storage
+   * @param B The storage of the inserve
    * @param A The matrix
    */
   public static boolean inv(final Mat B, final Mat A) {
@@ -5569,7 +5569,7 @@ public class Arma {
    * This method is faster than {@link #inv(Mat, Mat)} for matrices that are known to be symmetric and
    * positive-definite.
    * 
-   * @param B The inserves storage
+   * @param B The storage of the inserve
    * @param A The matrix
    */
   public static boolean inv_sympd(final Mat B, final Mat A) {
@@ -5596,9 +5596,9 @@ public class Arma {
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
-   * @param L The lower-triangular matrix storage
-   * @param U The upper-triangular matrix storage
-   * @param P The permutation matrix storage
+   * @param L The storage of the lower-triangular matrix
+   * @param U The storage of the upper-triangular matrix
+   * @param P The storage of the permutation matrix
    * @param X The matrix
    */
   public static boolean lu(final Mat L, final Mat U, final Mat P, final Mat X) {
@@ -5674,8 +5674,8 @@ public class Arma {
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
-   * @param L The permuted lower-triangular matrix storage
-   * @param U The permuted upper-triangular matrix storage
+   * @param L The storage of the permuted lower-triangular matrix
+   * @param U The storage of the permuted upper-triangular matrix
    * @param X The matrix
    */
   public static boolean lu(final Mat L, final Mat U, final Mat X) {
@@ -5762,7 +5762,7 @@ public class Arma {
    * <p>
    * Returns {@code false} if the calculation failed.
    * 
-   * @param B The inverses storage
+   * @param B The storage of the inverse
    * @param A The matrix
    */
   public static boolean pinv(final Mat B, final Mat A) {
@@ -5775,7 +5775,7 @@ public class Arma {
    * <p>
    * Returns {@code false} if the calculation failed.
    * 
-   * @param B The inverses storage
+   * @param B The storage of the inverse
    * @param A The matrix
    * @param tolerance The tolerance
    */
@@ -5835,12 +5835,31 @@ public class Arma {
     return true;
   }
 
-  public static Mat princomp(Mat X) {
+  /**
+   * Performs a principal component analysis of the provided matrix and returns the principal component coefficients.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
+   */
+  public static Mat princomp(Mat X) throws RuntimeException {
     Mat coeff = new Mat();
-    princomp(coeff, X);
+    if (!princomp(coeff, X)) {
+      throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
+    }
+
     return coeff;
   }
 
+  /**
+   * Performs a principal component analysis of the provided matrix and stores the principal component coefficients in
+   * {@code coeff}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param coeff The storage of the principal component coefficients
+   * @param X The matrix
+   */
   public static boolean princomp(final Mat coeff, final Mat X) {
     if (X.n_rows > 1) {
       Mat temp = new Mat(X);
@@ -5858,6 +5877,16 @@ public class Arma {
     return true;
   }
 
+  /**
+   * Performs a principal component analysis of the provided matrix and stores the principal component coefficients in
+   * {@code coeff} and the projected data in {@code score}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param coeff The storage of the principal component coefficients
+   * @param score The storage of the projected data
+   * @param X The matrix
+   */
   public static boolean princomp(final Mat coeff, final Mat score, final Mat X) {
     if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
@@ -5885,6 +5914,19 @@ public class Arma {
     return true;
   }
 
+  /**
+   * Performs a principal component analysis of the provided matrix and stores the principal component coefficients in
+   * {@code coeff}, the projected data in {@code score} and the eigenvalues of the covariance matrix of the provided
+   * matrix
+   * in {@code latent}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param coeff The storage of the principal component coefficients
+   * @param score The storage of the projected data
+   * @param latent The storage of the eigenvalues of the covariance matrix
+   * @param X The matrix
+   */
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Mat X) {
     if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
@@ -5923,6 +5965,19 @@ public class Arma {
     return true;
   }
 
+  /**
+   * Performs a principal component analysis of the provided matrix and stores the principal component coefficients in
+   * {@code coeff}, the projected data in {@code score}, the eigenvalues of the covariance matrix of the provided matrix
+   * in {@code latent} and the Hotteling's statistic for each sample in {@code tsquared}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param coeff The storage of the principal component coefficients
+   * @param score The storage of the projected data
+   * @param latent The storage of the eigenvalues of the covariance matrix
+   * @param tsquared The storage of the Hotteling's statistic for each sample
+   * @param X The matrix
+   */
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Col tsquared, final Mat X) {
     if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
@@ -5972,6 +6027,16 @@ public class Arma {
     return true;
   }
 
+  /**
+   * Performs a QR decomposition of the provided matrix and stores the orthogonal matrix in {@code Q}, the right
+   * -triangular matrix in {@code R}, such that {@code Q.times(U) = X}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param Q The storage of the orthogonal matrix
+   * @param R The storage of the right-triangular matrix
+   * @param X The matrix
+   */
   public static boolean qr(final Mat Q, final Mat R, final Mat X) {
     if (X.empty()) {
       return false;
@@ -6003,6 +6068,19 @@ public class Arma {
     return (info.val == 0);
   }
 
+  /**
+   * Performs a economical (memory friendly) QR decomposition of the provided matrix and stores the orthogonal matrix in
+   * {@code Q}, the right -triangular matrix in {@code R}, such that {@code Q.times(U) = X}.
+   * <p>
+   * {@code R} is calculated only up to the first {@code X.n_rows} rows and {@code Q} up to the first {@code X.n_cols}
+   * columns.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param Q The storage of the orthogonal matrix
+   * @param R The storage of the right-triangular matrix
+   * @param X The matrix
+   */
   public static boolean qr_econ(final Mat Q, final Mat R, final Mat X) {
     if (X.is_empty()) {
       return false;
@@ -6042,13 +6120,43 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static Mat solve(final Mat A, final Mat B) {
+  /**
+   * Returns the solution of a system of linear equations {@code A.times(X) = B} with unknown {@code X}.
+   * 
+   * @param A The first matrix
+   * @param B The second matrix
+   * 
+   * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
+   * @throws RuntimeException No solution was found.
+   */
+  public static Mat solve(final Mat A, final Mat B) throws RuntimeException {
+    if (A.n_rows != B.n_rows) {
+      throw new RuntimeException("Both matrices must have the same number of rows (" + A.n_rows + " and " + B.n_rows + ").");
+    }
+
     Mat X = new Mat();
-    solve(X, A, B);
+    if (!solve(X, A, B)) {
+      throw new RuntimeException("No solution was found.");
+    }
+
     return X;
   }
 
+  /**
+   * Solves a system of linear equations {@code A.times(X) = B} with unknown {@code X} and stores the solution in
+   * {@code X}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param X The storage of the solution
+   * @param A The first matrix
+   * @param B The second matrix
+   */
   public static boolean solve(final Mat X, final Mat A, final Mat B) {
+    if (A.n_rows != B.n_rows) {
+      throw new RuntimeException("Both matrices must have the same number of rows (" + A.n_rows + " and " + B.n_rows + ").");
+    }
+
     if (A.empty() || B.empty()) {
       return false;
     }
@@ -6061,19 +6169,30 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static <T extends AbstractVector> T svd(final Class<T> return_type, final Mat X) {
-    T s;
-
-    try {
-      s = return_type.newInstance();
-    } catch(InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException("An internal error occured. I would greatly appreciate an e-mail containing some information about this problem.");
+  /**
+   * Performs a singular value decomposition of the provided matrix and returns the singular values in descending order.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The decomposition could not be completed. The provided matrix appears to be singular.
+   */
+  public static Col svd(final Mat X) throws RuntimeException {
+    Col s = new Col();
+    if (!svd(s, X)) {
+      throw new RuntimeException("The decomposition could not be completed. The provided matrix appears to be singular.");
     }
-
-    svd(s, X);
     return s;
   }
 
+  /**
+   * Performs a singular value decomposition of the provided matrix and stored the singular values in descending order
+   * in {@code s}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param s The storage of the singular values
+   * @param X The matrix
+   */
   public static boolean svd(final AbstractVector s, final Mat X) {
     if (X.is_empty()) {
       return false;
@@ -6155,9 +6274,19 @@ public class Arma {
     return (info.val == 0);
   }
 
-  public static Mat syl(final Mat A, final Mat B, final Mat C) {
+  /**
+   * 
+   * @param A
+   * @param B
+   * @param C
+   * 
+   * @throws RuntimeException No solution was found.
+   */
+  public static Mat syl(final Mat A, final Mat B, final Mat C) throws RuntimeException {
     Mat X = new Mat();
-    syl(X, A, B, C);
+    if(!syl(X, A, B, C)) {
+      throw new RuntimeException("No solution was found.");
+    }
     return X;
   }
 
@@ -6219,6 +6348,11 @@ public class Arma {
     return (!Double.isInfinite(X) && !Double.isNaN(X));
   }
 
+  /**
+   * Returns a copy of the provided vector with element-wise negated elements.
+   * 
+   * @param X The vector
+   */
   public static Col negate(final Col X) {
     Col result = new Col(X.n_elem);
     for (int n = 0; n < X.n_elem; n++) {
@@ -6227,6 +6361,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided vector with element-wise negated elements.
+   * 
+   * @param X The vector
+   */
   public static Row negate(final Row X) {
     Row result = new Row(X.n_elem);
     for (int n = 0; n < X.n_elem; n++) {
@@ -6235,6 +6374,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided matrix with element-wise negated elements.
+   * 
+   * @param X The matrix
+   */
   public static Mat negate(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     for (int n = 0; n < X.n_elem; n++) {
@@ -6243,6 +6387,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided vector with element-wise inversed elements.
+   * 
+   * @param X The vector
+   */
   public static Col reciprocal(final Col X) {
     Col result = new Col(X.n_elem);
     for (int n = 0; n < X.n_elem; n++) {
@@ -6251,6 +6400,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided vector with element-wise inversed elements.
+   * 
+   * @param X The vector
+   */
   public static Row reciprocal(final Row X) {
     Row result = new Row(X.n_elem);
     for (int n = 0; n < X.n_elem; n++) {
@@ -6259,6 +6413,11 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a copy of the provided matrix with element-wise inversed elements.
+   * 
+   * @param X The matrix
+   */
   public static Mat reciprocal(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
     for (int n = 0; n < X.n_elem; n++) {
