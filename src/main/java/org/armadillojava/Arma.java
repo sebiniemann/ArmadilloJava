@@ -1012,7 +1012,7 @@ public class Arma {
       result[n] = Math.pow(A[n], p);
     }
   }
-  
+
   protected static AbstractMat pow(final AbstractMat A, final int p) {
     AbstractMat result = new Mat(A.n_rows, A.n_cols);
     pow(result._data, A._data, p);
@@ -4540,7 +4540,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
    */
-  public static Mat histc(final Mat X, final AbstractMat edges) {
+  public static Mat histc(final Mat X, final AbstractMat edges) throws RuntimeException {
     return hist(X, edges, 0);
   }
 
@@ -4556,7 +4556,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat histc(final Mat X, final AbstractMat edges, final int dim) {
+  public static Mat histc(final Mat X, final AbstractMat edges, final int dim) throws RuntimeException, IllegalArgumentException {
     Mat result = new Mat();
 
     switch (dim) {
@@ -4621,7 +4621,7 @@ public class Arma {
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
-  public static Mat join_rows(final AbstractMat A, final AbstractMat B) {
+  public static Mat join_rows(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     return join_horiz(A, B);
   }
 
@@ -4635,7 +4635,7 @@ public class Arma {
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
-  public static Mat join_horiz(final AbstractMat A, final AbstractMat B) {
+  public static Mat join_horiz(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.n_rows != B.n_rows) {
       throw new RuntimeException("Both matrices must have the same number of rows (" + A.n_rows + " and " + B.n_rows + ").");
     }
@@ -4659,7 +4659,7 @@ public class Arma {
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
-  public static Mat join_cols(final AbstractMat A, final AbstractMat B) {
+  public static Mat join_cols(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     return join_vert(A, B);
   }
 
@@ -4674,7 +4674,7 @@ public class Arma {
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
-  public static Mat join_vert(final AbstractMat A, final AbstractMat B) {
+  public static Mat join_vert(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.n_cols != B.n_cols) {
       throw new RuntimeException("Both matrices must have the same number of columns (" + A.n_cols + " and " + B.n_cols + ").");
     }
@@ -4719,8 +4719,15 @@ public class Arma {
    * @param mat The matrix
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat reshape(final Mat mat, final int n_rows, final int n_cols) {
+  public static Mat reshape(final Mat mat, final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within Mat.resize(int, int).
+     */
+
     Mat result = new Mat(mat);
     result.reshape(n_rows, n_cols);
     return result;
@@ -4733,8 +4740,15 @@ public class Arma {
    * @param mat The matrix
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
+   * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
-  public static Mat resize(final Mat mat, final int n_rows, final int n_cols) {
+  public static Mat resize(final Mat mat, final int n_rows, final int n_cols) throws NegativeArraySizeException {
+    /*
+     * The parameters "n_rows" and "n_cols" are validated within Mat.resize(int, int).
+     */
+
     Mat result = new Mat(mat);
     result.resize(n_rows, n_cols);
     return result;
@@ -4796,7 +4810,7 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat shuffle(final Mat X, final int dim) {
+  public static Mat shuffle(final Mat X, final int dim) throws RuntimeException {
     Mat result = new Mat();
     result.copy_size(X);
 
@@ -4815,10 +4829,10 @@ public class Arma {
     for (int n = 0; n < indicies.length; n++) {
       indicies[n] = n;
     }
-    
+
     double[] shuffeldIndicies = new double[indicies.length];
     shuffle(shuffeldIndicies, indicies);
-    
+
     switch (dim) {
       case 0:
         for (int i = 0; i < X.n_rows; i++) {
@@ -4837,7 +4851,7 @@ public class Arma {
 
   protected static void sort(final double[] result, final double[] V, final String sort_direction) {
     System.arraycopy(V, 0, result, 0, V.length);
-    
+
     Arrays.sort(result);
 
     if (sort_direction == "descend") {
@@ -4845,43 +4859,102 @@ public class Arma {
     }
   }
 
+  /**
+   * Returns a copy of the provided vector sorted in ascending order.
+   * 
+   * @param V The vector
+   */
   public static Col sort(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col sort(final Col V, final String sort_direction) {
+  /**
+   * Returns a copy of the provided vector sorted in ascending ({@code sort_direction} = 'ascend') or descending (
+   * {@code sort_direction} = 'descend') order.
+   * 
+   * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   */
+  public static Col sort(final Col V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
+  /**
+   * Returns a copy of the provided vector sorted in ascending order.
+   * 
+   * @param V The vector
+   */
   public static Row sort(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row sort(final Row V, final String sort_direction) {
+  /**
+   * Returns a copy of the provided vector sorted in ascending ({@code sort_direction} = 'ascend') or descending (
+   * {@code sort_direction} = 'descend') order.
+   * 
+   * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   */
+  public static Row sort(final Row V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
+  /**
+   * Returns a copy of the provided vector with each column sorted in ascending order.
+   * 
+   * @param X The matrix
+   */
   public static Mat sort(final Mat X) {
     return sort(X, "ascend");
   }
 
-  public static Mat sort(final Mat X, final String sort_direction) {
+  /**
+   * Returns a copy of the provided vector with each column sorted in ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order.
+   * 
+   * @param X The matrix
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   */
+  public static Mat sort(final Mat X, final String sort_direction) throws IllegalArgumentException {
     return sort(X, sort_direction, 0);
   }
 
-  public static Mat sort(final Mat X, final String sort_direction, final int dim) {
+  /**
+   * Returns a copy of the provided vector with each column sorted in ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order.
+   * 
+   * @param X The matrix
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   */
+  public static Mat sort(final Mat X, final String sort_direction, final int dim) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Mat result = new Mat();
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -4892,12 +4965,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
-        result.set_size(X.n_rows);
-
         for (int i = 0; i < X.n_rows; i++) {
           /*
            * Creates a deep copy of each row, since sorting of shallow sub views is not yet implemented.
@@ -4916,21 +4983,53 @@ public class Arma {
     stable_sort_index(result, V, sort_direction);
   }
 
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending order of the elements of the provided
+   * vector.
+   * 
+   * @param V The vector
+   */
   public static Col sort_index(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col sort_index(final Col V, final String sort_direction) {
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
+   * 
+   * @param V The vector
+   */
+  public static Col sort_index(final Col V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending order of the elements of the provided
+   * vector.
+   * 
+   * @param V The vector
+   */
   public static Row sort_index(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row sort_index(final Row V, final String sort_direction) {
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
+   * 
+   * @param V The vector
+   */
+  public static Row sort_index(final Row V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
@@ -4958,26 +5057,67 @@ public class Arma {
     }
   }
 
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending order of the elements of the provided
+   * vector and preserves the relative order of elements with equal values.
+   * 
+   * @param V The vector
+   */
   public static Col stable_sort_index(final Col V) {
     return sort(V, "ascend");
   }
 
-  public static Col stable_sort_index(final Col V, final String sort_direction) {
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector and preserves the
+   * relative order of elements with equal values.
+   * 
+   * @param V The vector
+   */
+  public static Col stable_sort_index(final Col V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Col result = new Col(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending order of the elements of the provided
+   * vector and preserves the relative order of elements with equal values.
+   * 
+   * @param V The vector
+   */
   public static Row stable_sort_index(final Row V) {
     return sort(V, "ascend");
   }
 
-  public static Row stable_sort_index(final Row V, final String sort_direction) {
+  /**
+   * Returns a vector of indicies that is arranged based on the ascending ({@code sort_direction} = 'ascend') or
+   * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector and preserves the
+   * relative order of elements with equal values.
+   * 
+   * @param V The vector
+   */
+  public static Row stable_sort_index(final Row V, final String sort_direction) throws IllegalArgumentException {
+    if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
+      throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
     Row result = new Row(V.n_elem);
     sort(result._data, V._data, sort_direction);
     return result;
   }
 
+  /**
+   * Returns a symmetric version of the provided matrix by reflecting the upper triangle to the lower one.
+   * 
+   * @param A The matrix
+   *
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   */
   public static Mat symmatu(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
@@ -5005,6 +5145,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a symmetric version of the provided matrix by reflecting the lower triangle to the upper one.
+   * 
+   * @param A The matrix
+   *
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   */
   public static Mat symmatl(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
@@ -5200,7 +5347,7 @@ public class Arma {
     /*
      * The size of this arrays is defined by the specification of the LAPACK routine.
      */
-    double[] work = new double[Math.max(1,  3 * (X.n_rows - 1))];
+    double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("N", "U", X.n_rows, X._data, X.n_rows, eigval._data, work, work.length, info);
@@ -5215,7 +5362,7 @@ public class Arma {
     /*
      * The size of this arrays is defined by the specification of the LAPACK routine.
      */
-    double[] work = new double[Math.max(1,  3 * (X.n_rows - 1))];
+    double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, X.n_rows, eigval._data, work, work.length, info);
@@ -5398,7 +5545,7 @@ public class Arma {
     }
 
     if (status == false) {
-      return  false;
+      return false;
     }
 
     int count = 0;
@@ -5407,13 +5554,13 @@ public class Arma {
         count++;
       }
     }
-    
-    if(count > 0) {
+
+    if (count > 0) {
       /*
        * Contains all singular values that are larger than the specififed tolerance.
        */
       Col singularValues = new Col(count);
-      
+
       int n = 0;
       for (int nn = 0; nn < s.n_elem; nn++) {
         double value = s._data[nn];
@@ -5421,22 +5568,22 @@ public class Arma {
           singularValues._data[n++] = 1 / value;
         }
       }
-      
-      if(V.n_cols > count) {
+
+      if (V.n_cols > count) {
         V = V.cols(0, count - 1);
       }
-      
-      if(U.n_cols > count) {
+
+      if (U.n_cols > count) {
         U = U.cols(0, count - 1);
       }
-      
-      if(A.n_rows >= A.n_cols) {
+
+      if (A.n_rows >= A.n_cols) {
         B.inPlace(Op.EQUAL, V.times(diagmat(singularValues).times(U.t())));
       } else {
         B.inPlace(Op.EQUAL, U.times(diagmat(singularValues).times(V.t())));
       }
     }
-    
+
     return true;
   }
 
@@ -5447,13 +5594,13 @@ public class Arma {
   }
 
   public static boolean princomp(final Mat coeff, final Mat X) {
-    if(X.n_rows > 1) {
+    if (X.n_rows > 1) {
       Mat temp = new Mat(X);
-      
+
       Mat U = new Mat();
       Col s = new Col();
-      
-      if(!svd(U, s, coeff, temp)) {
+
+      if (!svd(U, s, coeff, temp)) {
         return false;
       }
     } else {
@@ -5464,25 +5611,25 @@ public class Arma {
   }
 
   public static boolean princomp(final Mat coeff, final Mat score, final Mat X) {
-    if(X.n_rows > 1) {
+    if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
-      
+
       Mat U = new Mat();
       Col s = new Col();
-      
-      if(!svd(U, s, coeff, score)) {
+
+      if (!svd(U, s, coeff, score)) {
         return false;
       }
-      
+
       score.inPlace(Op.ELEMTIMES, coeff);
-      
-      if(X.n_rows <= X.n_cols) {
+
+      if (X.n_rows <= X.n_cols) {
         new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
       }
     } else {
       coeff.eye(X.n_cols, X.n_cols);
-      
+
       score.copy_size(X);
       score.zeros();
     }
@@ -5491,24 +5638,24 @@ public class Arma {
   }
 
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Mat X) {
-    if(X.n_rows > 1) {
+    if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
-      
+
       Mat U = new Mat();
       Col s = new Col();
-      
-      if(!svd(U, s, coeff, score)) {
+
+      if (!svd(U, s, coeff, score)) {
         return false;
       }
-      
+
       s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
-      
+
       score.inPlace(Op.ELEMTIMES, coeff);
-      
-      if(X.n_rows <= X.n_cols) {
+
+      if (X.n_rows <= X.n_cols) {
         new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
-      
+
         Col s_temp = new Col(X.n_cols, Fill.ZEROS);
         new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
         s.inPlace(Op.EQUAL, s_temp);
@@ -5517,10 +5664,10 @@ public class Arma {
       latent.inPlace(Op.EQUAL, square(s));
     } else {
       coeff.eye(X.n_cols, X.n_cols);
-      
+
       score.copy_size(X);
       score.zeros();
-      
+
       latent.set_size(X.n_cols);
       latent.zeros();
     }
@@ -5529,31 +5676,31 @@ public class Arma {
   }
 
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Col tsquared, final Mat X) {
-    if(X.n_rows > 1) {
+    if (X.n_rows > 1) {
       score.inPlace(Op.EQUAL, X);
       score.each_row(Op.MINUS, mean(Row.class, X));
-      
+
       Mat U = new Mat();
       Col s = new Col();
-      
-      if(!svd(U, s, coeff, score)) {
+
+      if (!svd(U, s, coeff, score)) {
         return false;
       }
-      
+
       s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
-      
+
       score.inPlace(Op.ELEMTIMES, coeff);
-      
+
       Mat S;
-      if(X.n_rows <= X.n_cols) {
+      if (X.n_rows <= X.n_cols) {
         new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
-      
+
         Col s_temp = new Col(X.n_cols, Fill.ZEROS);
         new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
         s.inPlace(Op.EQUAL, s_temp);
 
         new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, reciprocal(s_temp.rows(0, X.n_rows - 2)));
-        
+
         S = score.times(diagmat(s_temp));
       } else {
         S = score.times(diagmat(reciprocal(s)));
@@ -5563,13 +5710,13 @@ public class Arma {
       latent.inPlace(Op.EQUAL, square(s));
     } else {
       coeff.eye(X.n_cols, X.n_cols);
-      
+
       score.copy_size(X);
       score.zeros();
-      
+
       latent.set_size(X.n_cols);
       latent.zeros();
-      
+
       tsquared.set_size(X.n_rows);
       tsquared.zeros();
     }
@@ -5578,22 +5725,22 @@ public class Arma {
   }
 
   public static boolean qr(final Mat Q, final Mat R, final Mat X) {
-    if(X.empty()) {
+    if (X.empty()) {
       return false;
     }
 
     R.inPlace(Op.EQUAL, X);
-    
+
     double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
     double[] work = new double[Math.max(1, X.n_cols)];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgeqrf(X.n_rows, X.n_cols, R._data, X.n_rows, tau, work, work.length, info);
-    
-    if(info.val != 0) {
+
+    if (info.val != 0) {
       return false;
     }
-    
+
     Q.set_size(X.n_rows, X.n_rows);
     Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
 
@@ -5602,33 +5749,33 @@ public class Arma {
         R._data[i + j * R.n_rows] = 0;
       }
     }
-    
+
     LAPACK.getInstance().dorgqr(X.n_rows, X.n_rows, tau.length, Q._data, X.n_rows, tau, work, work.length, info);
-    
+
     return (info.val == 0);
   }
 
   public static boolean qr_econ(final Mat Q, final Mat R, final Mat X) {
-    if(X.is_empty()) {
+    if (X.is_empty()) {
       return false;
     }
-    
-    if(X.n_rows <= X.n_cols) {
+
+    if (X.n_rows <= X.n_cols) {
       return qr(Q, R, X);
     }
 
     Q.inPlace(Op.EQUAL, X);
-    
+
     double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
     double[] work = new double[Math.max(1, Math.max(X.n_rows, X.n_cols))];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgeqrf(X.n_rows, X.n_cols, Q._data, X.n_rows, tau, work, work.length, info);
-    
-    if(info.val != 0) {
+
+    if (info.val != 0) {
       return false;
     }
-    
+
     R.set_size(X.n_cols, X.n_cols);
     Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
 
@@ -5636,14 +5783,14 @@ public class Arma {
       for (int i = 0; i < j; ++i) {
         R._data[i + j * R.n_rows] = Q._data[i + j * Q.n_rows];
       }
-      
-      for(int i = (j + 1); i < Q.n_cols; ++i) {
+
+      for (int i = (j + 1); i < Q.n_cols; ++i) {
         R._data[i + j * R.n_rows] = 0;
       }
     }
-    
+
     LAPACK.getInstance().dorgqr(X.n_rows, X.n_cols, tau.length, Q._data, X.n_rows, tau, work, work.length, info);
-    
+
     return (info.val == 0);
   }
 
@@ -5654,15 +5801,15 @@ public class Arma {
   }
 
   public static boolean solve(final Mat X, final Mat A, final Mat B) {
-    if(A.empty() || B.empty()) {
+    if (A.empty() || B.empty()) {
       return false;
     }
-    
+
     int[] pivotIndices = new int[A.n_rows + 2];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgesv(A.n_rows, B.n_cols, A._data, A.n_rows, pivotIndices, B._data, A.n_rows, info);
-    
+
     return (info.val == 0);
   }
 
@@ -5680,10 +5827,10 @@ public class Arma {
   }
 
   public static boolean svd(final AbstractVector s, final Mat X) {
-    if(X.is_empty()) {
+    if (X.is_empty()) {
       return false;
     }
-    
+
     double[] U = new double[1];
     s.set_size(Math.min(X.n_rows, X.n_cols));
     double[] V = new double[X.n_cols];
@@ -5691,17 +5838,17 @@ public class Arma {
     double[] temp = Arrays.copyOf(X._data, X.n_elem);
     double[] work = new double[Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgesvd("N", "N", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U, 1, V, 1, work, work.length, info);
 
     return (info.val == 0);
   }
 
   public static boolean svd(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
-    if(X.is_empty()) {
+    if (X.is_empty()) {
       return false;
     }
-    
+
     U.set_size(X.n_rows, X.n_rows);
     s.set_size(Math.min(X.n_rows, X.n_cols));
     V.set_size(X.n_cols, X.n_cols);
@@ -5709,9 +5856,9 @@ public class Arma {
     double[] temp = Arrays.copyOf(X._data, X.n_elem);
     double[] work = new double[Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dgesvd("A", "A", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, V.n_rows, work, work.length, info);
-    
+
     inplace_trans(V);
 
     return (info.val == 0);
@@ -5722,41 +5869,41 @@ public class Arma {
   }
 
   public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X, final String side) {
-    if(X.is_empty()) {
+    if (X.is_empty()) {
       return false;
     }
-    
+
     s.set_size(Math.min(X.n_rows, X.n_cols));
 
     double[] temp = Arrays.copyOf(X._data, X.n_elem);
     double[] work = new double[3 * Math.max(1, Math.max(3 * Math.min(X.n_rows, X.n_cols) + Math.max(X.n_rows, X.n_cols), 5 * Math.min(X.n_rows, X.n_cols)))];
     intW info = new intW(0);
-    
+
     switch (side) {
       case "left":
         U.set_size(X.n_rows, s.n_elem);
         V.reset();
-        
+
         LAPACK.getInstance().dgesvd("S", "N", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, 1, work, work.length, info);
         break;
       case "right":
         U.reset();
         V.set_size(s.n_elem, X.n_cols);
-        
+
         LAPACK.getInstance().dgesvd("N", "S", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, 1, V._data, V.n_rows, work, work.length, info);
         break;
       case "both":
         U.set_size(X.n_rows, s.n_elem);
         V.set_size(s.n_elem, X.n_cols);
-        
+
         LAPACK.getInstance().dgesvd("S", "S", X.n_rows, X.n_cols, temp, X.n_rows, s._data, U._data, U.n_rows, V._data, V.n_rows, work, work.length, info);
         break;
       default:
         return false;
     }
-    
+
     inplace_trans(V);
-    
+
     return (info.val == 0);
   }
 
@@ -5767,42 +5914,42 @@ public class Arma {
   }
 
   public static boolean syl(final Mat X, final Mat A, final Mat B, final Mat C) {
-    if(A.is_empty() || B.is_empty() || C.is_empty()) {
+    if (A.is_empty() || B.is_empty() || C.is_empty()) {
       return false;
     }
-    
-    if(!A.is_square() || !B.is_square()) {
+
+    if (!A.is_square() || !B.is_square()) {
       return false;
     }
-    
-    if(C.n_rows != A.n_rows) {
+
+    if (C.n_rows != A.n_rows) {
       return false;
     }
-    
-    if(C.n_cols != B.n_cols) {
+
+    if (C.n_cols != B.n_cols) {
       return false;
     }
-    
+
     Mat Z1 = new Mat();
     Mat Z2 = new Mat();
     Mat T1 = new Mat();
     Mat T2 = new Mat();
-    
-    if(!schur(Z1, T1, A) || !schur(Z2, T2, B)) {
+
+    if (!schur(Z1, T1, A) || !schur(Z2, T2, B)) {
       return false;
     }
-    
+
     Mat Y = trans(Z1).times(C).times(Z2);
 
     doubleW scale = new doubleW(0);
     intW info = new intW(0);
-    
+
     LAPACK.getInstance().dtrsyl("N", "N", 1, T1.n_rows, T2.n_cols, T1._data, T1.n_rows, T2._data, T2.n_cols, Y._data, T1.n_rows, scale, info);
-    
+
     Y.elemDivide(-scale.val);
-    
+
     X.inPlace(Op.EQUAL, Z1.times(Y).times(trans(Z2)));
-    
+
     return (info.val >= 0);
   }
 
@@ -5826,7 +5973,7 @@ public class Arma {
 
   public static Col negate(final Col X) {
     Col result = new Col(X.n_elem);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
     }
     return result;
@@ -5834,7 +5981,7 @@ public class Arma {
 
   public static Row negate(final Row X) {
     Row result = new Row(X.n_elem);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
     }
     return result;
@@ -5842,7 +5989,7 @@ public class Arma {
 
   public static Mat negate(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = -X._data[n];
     }
     return result;
@@ -5850,7 +5997,7 @@ public class Arma {
 
   public static Col reciprocal(final Col X) {
     Col result = new Col(X.n_elem);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
     }
     return result;
@@ -5858,7 +6005,7 @@ public class Arma {
 
   public static Row reciprocal(final Row X) {
     Row result = new Row(X.n_elem);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
     }
     return result;
@@ -5866,12 +6013,12 @@ public class Arma {
 
   public static Mat reciprocal(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
-    for(int n = 0; n < X.n_elem; n++) {
+    for (int n = 0; n < X.n_elem; n++) {
       result._data[n] = 1 / X._data[n];
     }
     return result;
   }
-  
+
   protected static void revert(final double[] result, final double[] X) {
     for (int n = 0; n < X.length / 2; n++) {
       double temp = X[n];
@@ -5879,7 +6026,7 @@ public class Arma {
       result[X.length - (n + 1)] = temp;
     }
   }
-  
+
   protected static boolean schur(final Mat Z, final Mat T, final Mat A) {
     Z.set_size(A.n_rows, A.n_rows);
     T.inPlace(Op.EQUAL, A);
