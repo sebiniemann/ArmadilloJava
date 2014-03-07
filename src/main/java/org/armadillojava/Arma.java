@@ -37,7 +37,6 @@ public class Arma {
    * Returns a matrix with the specified number of rows and columns and all elements along the main diagonal set to 1
    * and all others to 0.
    * 
-   * @param return_type The matrix type to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
@@ -152,7 +151,6 @@ public class Arma {
   /**
    * Returns a matrix of ones with the specified number of rows and columns.
    * 
-   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
@@ -232,7 +230,6 @@ public class Arma {
    * Returns a matrix with the specified number of rows and columns and values drawn from the discrete uniform
    * distribution [0, Integer.MAX_VALUE - 1].
    * 
-   * @param return_type The type of vector to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
@@ -251,7 +248,6 @@ public class Arma {
    * Returns a matrix with the specified number of rows and columns and values drawn from the discrete uniform
    * distribution [{@code distr_param._a}, {@code distr_param._b}].
    * 
-   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * @param distr_param The distribution parameter
@@ -321,7 +317,6 @@ public class Arma {
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
-   * @param return_type The type of matrix to be returned
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
@@ -368,7 +363,6 @@ public class Arma {
    * Returns a matrix with the specified number of rows and columns and values drawn from the standard normal
    * distribution with mean 0.0 and standard deviation 1.0.
    * 
-   * @param return_type The type of matrix to be returned
    * @param numberOfRows The number of rows
    * @param numberOfColumns The number of columns
    * 
@@ -539,6 +533,7 @@ public class Arma {
   /**
    * Returns a null vector with the specified number of elements.
    * 
+   * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
@@ -2276,6 +2271,7 @@ public class Arma {
   /**
    * Returns the smallest value for each column of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided matrix must have at least one row.
@@ -2291,6 +2287,7 @@ public class Arma {
   /**
    * Returns the smallest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2389,6 +2386,7 @@ public class Arma {
   /**
    * Returns the largest value for each column of the provided matrix.
    * 
+   * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2404,6 +2402,7 @@ public class Arma {
   /**
    * Returns the largest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2508,6 +2507,7 @@ public class Arma {
   /**
    * Returns the product of all elements per column of the provided matrix.
    * 
+   * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2523,6 +2523,7 @@ public class Arma {
   /**
    * Returns the product of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2598,6 +2599,7 @@ public class Arma {
   /**
    * Returns the sum of all elements per column of the provided matrix.
    * 
+   * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2613,6 +2615,7 @@ public class Arma {
   /**
    * Returns the sum of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2681,6 +2684,7 @@ public class Arma {
   /**
    * Returns the mean for each column of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2696,6 +2700,7 @@ public class Arma {
   /**
    * Returns the mean for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2776,6 +2781,7 @@ public class Arma {
   /**
    * Returns the median for each column of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2791,6 +2797,7 @@ public class Arma {
   /**
    * Returns the median for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -2891,6 +2898,7 @@ public class Arma {
   /**
    * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -2907,6 +2915,7 @@ public class Arma {
    * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1} (
    * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * 
@@ -2925,6 +2934,7 @@ public class Arma {
    * Returns the standard deviation for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
    * normalised by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * @param dim The dimension
@@ -3046,6 +3056,7 @@ public class Arma {
   /**
    * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -3062,6 +3073,7 @@ public class Arma {
    * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1} ( {@code norm_type} =
    * 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * 
@@ -3080,6 +3092,7 @@ public class Arma {
    * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix normalised
    * by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * @param dim The dimension
@@ -3136,7 +3149,7 @@ public class Arma {
   }
 
   /**
-   * Returns true if all elements of the provided vector are non-zero.
+   * Returns {@code true} if all elements of the provided vector are non-zero.
    * 
    * @param V The vector
    * 
@@ -3168,9 +3181,26 @@ public class Arma {
   }
 
   /**
+   * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
+   * 
+   * @param return_type The type of vector to be returned
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   */
+  public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within all(Class<T>, Mat, int).
+     */
+
+    return all(return_type, X, 0);
+  }
+
+  /**
    * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where all elements
    * are non-zero and a 0 otherwise.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -3228,7 +3258,7 @@ public class Arma {
   }
 
   /**
-   * Returns true if any element of the provided vector is non-zero.
+   * Returns {@code true} if any element of the provided vector is non-zero.
    * 
    * @param V The vector
    * 
@@ -3248,21 +3278,6 @@ public class Arma {
     return false;
   }
 
-  /**
-   * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
-   * 
-   * @param X The matrix
-   * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   */
-  public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X) throws RuntimeException {
-    /*
-     * The parameter "X" is validated within all(Class<T>, Mat, int).
-     */
-
-    return all(return_type, X, 0);
-  }
-
   protected static boolean any(final AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
@@ -3277,6 +3292,7 @@ public class Arma {
   /**
    * Returns a 1 for each column of the provided matrix where any element is non-zero and a 0 otherwise.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
@@ -3294,6 +3310,7 @@ public class Arma {
    * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where any element
    * is non-zero and a 0 otherwise.
    * 
+   * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
    * 
@@ -4925,8 +4942,8 @@ public class Arma {
   }
 
   /**
-   * Returns a copy of the provided vector with each column sorted in ascending ({@code sort_direction} = 'ascend') or
-   * descending ({@code sort_direction} = 'descend') order.
+   * Returns a copy of the provided matrix with each column ({@code dim} = 0) or row ({@code dim} = 1) sorted in
+   * ascending ({@code sort_direction} = 'ascend') or descending ({@code sort_direction} = 'descend') order.
    * 
    * @param X The matrix
    * 
@@ -4938,13 +4955,14 @@ public class Arma {
   }
 
   /**
-   * Returns a copy of the provided vector with each column sorted in ascending ({@code sort_direction} = 'ascend') or
+   * Returns a copy of the provided matrix with each column sorted in ascending ({@code sort_direction} = 'ascend') or
    * descending ({@code sort_direction} = 'descend') order.
    * 
    * @param X The matrix
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static Mat sort(final Mat X, final String sort_direction, final int dim) throws IllegalArgumentException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
@@ -5112,10 +5130,10 @@ public class Arma {
   }
 
   /**
-   * Returns a symmetric version of the provided matrix by reflecting the upper triangle to the lower one.
+   * Returns a symmetric copy of the provided matrix by reflecting the upper triangle to the lower one.
    * 
    * @param A The matrix
-   *
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static Mat symmatu(final Mat A) throws RuntimeException {
@@ -5146,10 +5164,10 @@ public class Arma {
   }
 
   /**
-   * Returns a symmetric version of the provided matrix by reflecting the lower triangle to the upper one.
+   * Returns a symmetric copy of the provided matrix by reflecting the lower triangle to the upper one.
    * 
    * @param A The matrix
-   *
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static Mat symmatl(final Mat A) throws RuntimeException {
@@ -5179,18 +5197,34 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns the transpose of the provided matrix.
+   */
   public static Row trans(final Col A) {
     return A.t();
   }
 
+  /**
+   * Returns the transpose of the provided matrix.
+   */
   public static Col trans(final Row A) {
     return A.t();
   }
 
+  /**
+   * Returns the transpose of the provided matrix.
+   */
   public static Mat trans(final Mat A) {
     return A.t();
   }
 
+  /**
+   * Returns a upper triangular copy of the provided matrix by setting the lower triangle to zero.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   */
   public static Mat trimatu(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
@@ -5215,6 +5249,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * Returns a lower triangular copy of the provided matrix by setting the upper triangle to zero.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   */
   public static Mat trimatl(final Mat A) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
@@ -5261,28 +5302,58 @@ public class Arma {
     result._data = Arrays.copyOf(temp, temp.length);
   }
 
+  /**
+   * Returns a vector containing the unique values of the provided vector in ascending order.
+   * 
+   * @param A The vector
+   */
   public static Col unique(final Col A) {
     Col result = new Col();
     unique(result, A._data);
     return result;
   }
 
+  /**
+   * Returns a vector containing the unique values of the provided vector in ascending order.
+   * 
+   * @param A The vector
+   */
   public static Row unique(final Row A) {
     Row result = new Row();
     unique(result, A._data);
     return result;
   }
 
+  /**
+   * Returns a column vector containing the unique values of the provided matrix in ascending order.
+   * 
+   * @param A The vector
+   */
   public static Col unique(final Mat A) {
     Col result = new Col();
     unique(result, A._data);
     return result;
   }
 
+  /**
+   * Returns a vector created by column-wise concatination of the provided matrix A.
+   * 
+   * @param return_type The type of vector to be returned
+   * @param A The matrix
+   */
   public static <T extends AbstractVector> T vectorise(final Class<T> return_type, final Mat A) {
     return vectorise(return_type, A, 0);
   }
 
+  /**
+   * Returns a vector created by column-wise ({@code dim} = 0) or rows-wise ({@code dim} = 1) concatination of the
+   * provided matrix A.
+   * 
+   * @param return_type The type of vector to be returned
+   * @param A The matrix
+   * 
+   * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   */
   public static <T extends AbstractVector> T vectorise(final Class<T> return_type, final Mat A, final int dim) throws IllegalArgumentException {
     T result;
 
@@ -5313,95 +5384,223 @@ public class Arma {
     return result;
   }
 
-  public static Mat chol(final Mat X) {
+  /**
+   * Performs a Cholesky decomposition of the provided matrix and returns the result (called {@code R}), such that
+   * {@code trans(R).times(R) = X}.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The factorisation could not be completed. Ensure that the provided matrix is symmetric and
+   *           positive-definite.
+   */
+  public static Mat chol(final Mat X) throws RuntimeException {
     Mat R = new Mat();
-    inv_sympd(R, X);
+    if (!chol(R, X)) {
+      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is symmetric and positive-definite.");
+    }
     return R;
   }
 
-  public static void chol(final Mat R, final Mat X) throws RuntimeException {
+  /**
+   * Performs a Cholesky decomposition of the provided matrix and stores the result in {@code R}, such that
+   * {@code trans(R).times(R) = X}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param R The output storage
+   * @param X The matrix
+   */
+  public static boolean chol(final Mat R, final Mat X) {
     R.inPlace(Op.EQUAL, X);
 
     intW info = new intW(0);
 
     LAPACK.getInstance().dpotrf("U", X.n_rows, R._data, X.n_rows, info);
     if (info.val != 0) {
-      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is positive-definite.");
+      return false;
     }
+
+    return true;
   }
 
-  public static <T extends AbstractVector> T eig_sym(final Class<T> return_type, final Mat X) throws RuntimeException {
-    T eigval;
-
-    try {
-      eigval = return_type.newInstance();
-    } catch(InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException("Internal Exception. I would greatly appreciate an e-mail containing some information about this problem.");
+  /**
+   * Performs an Eigen decomposition of the provided matrix and returns its eigenvalues.
+   * 
+   * @param X The matrix
+   * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
+   * @throws RuntimeException The factorisation could not be completed. Ensure that the provided matrix is
+   *           positive-definite.
+   */
+  public static Col eig_sym(final Mat X) throws RuntimeException {
+    if (!X.is_square()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be square.");
     }
 
-    eig_sym(eigval, X);
+    Col eigval = new Col();
+    if (!eig_sym(eigval, X)) {
+      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+    }
     return eigval;
   }
 
-  public static void eig_sym(final AbstractVector eigval, Mat X) throws RuntimeException {
-    /*
-     * The size of this arrays is defined by the specification of the LAPACK routine.
-     */
+  /**
+   * Performs an Eigen decomposition of the provided matrix and stores the eigenvalues in {@code eigval}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param eigval The eigenvalues storage
+   * @param X The matrix
+   */
+  public static boolean eig_sym(final AbstractVector eigval, Mat X) {
+    if (!X.is_square()) {
+      return false;
+    }
+
+    eigval.set_size(X.n_rows);
+
     double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("N", "U", X.n_rows, X._data, X.n_rows, eigval._data, work, work.length, info);
     if (info.val != 0) {
-      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+      return false;
     }
+
+    return true;
   }
 
-  public static void eig_sym(final AbstractVector eigval, final Mat eigvec, final Mat X) throws RuntimeException {
+  /**
+   * Performs an Eigen decomposition of the provided matrix and stores the eigenvalues in {@code eigval} and the
+   * corresponding eigenvectors in {@code eigvec}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param eigval The eigenvalues storage
+   * @param eigval The eigenvectors storage
+   * @param X The matrix
+   */
+  public static boolean eig_sym(final AbstractVector eigval, final Mat eigvec, final Mat X) {
+    if (!X.is_square()) {
+      return false;
+    }
+
     eigvec.inPlace(Op.EQUAL, X);
 
-    /*
-     * The size of this arrays is defined by the specification of the LAPACK routine.
-     */
     double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, X.n_rows, eigval._data, work, work.length, info);
     if (info.val != 0) {
-      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
+      return false;
     }
+
+    return true;
   }
 
-  public static Mat inv(final Mat A) {
+  /**
+   * Returns the inverse of the provided matrix.
+   * <p>
+   * Use {@link #inv_sympd(Mat)} instead, if the provided matrix is known to be symmetric and positive-definite.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
+   * @throws RuntimeException The matrix appears to be singular.
+   */
+  public static Mat inv(final Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
+
     Mat B = new Mat();
-    inv(B, A);
+    if (!inv(B, A)) {
+      throw new RuntimeException("The matrix appears to be singular.");
+    }
+
     return B;
   }
 
-  public static void inv(final Mat B, final Mat A) {
-    B.inPlace(Op.EQUAL, A.i());
+  /**
+   * Calculates the inverse of the provided matrix and stores the result in {@code B}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * <p>
+   * Use {@link #inv_sympd(Mat, Mat)} instead, if the provided matrix is known to be symmetric and positive-definite.
+   * 
+   * @param B The inserves storage
+   * @param A The matrix
+   */
+  public static boolean inv(final Mat B, final Mat A) {
+    try {
+      B.inPlace(Op.EQUAL, A.i());
+    } catch(Exception e) {
+      return false;
+    }
+
+    return true;
   }
 
-  public static Mat inv_sympd(final Mat A) {
+  /**
+   * Returns the inverse of the provided matrix.
+   * <p>
+   * This method is faster than {@link #inv(Mat)} for matrices that are known to be symmetric and positive-definite.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The inverse could not be computed. Ensure that the provided matrix is symmetric,
+   *           positive-definite and not singular.
+   */
+  public static Mat inv_sympd(final Mat A) throws RuntimeException {
     Mat B = new Mat();
-    inv_sympd(B, A);
+
+    if (!inv_sympd(B, A)) {
+      throw new RuntimeException("The inverse could not be computed. Ensure that the provided matrix is symmetric, positive-definite and not singular.");
+    }
+
     return B;
   }
 
-  public static void inv_sympd(final Mat B, final Mat A) {
+  /**
+   * Calculates the inverse of the provided matrix and stores the result in {@code B}.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * <p>
+   * This method is faster than {@link #inv(Mat, Mat)} for matrices that are known to be symmetric and
+   * positive-definite.
+   * 
+   * @param B The inserves storage
+   * @param A The matrix
+   */
+  public static boolean inv_sympd(final Mat B, final Mat A) {
     B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 
     LAPACK.getInstance().dpotrf("U", A.n_rows, B._data, 0, info);
     if (info.val != 0) {
-      throw new RuntimeException("The factorisation could not be completed. Ensure that the provided matrix is positive-definite.");
+      return false;
     }
 
     LAPACK.getInstance().dpotri("U", A.n_rows, B._data, 0, info);
     if (info.val != 0) {
-      throw new RuntimeException("The inverse could not be computed. The provided matrix appears to be singular.");
+      return false;
     }
+
+    return true;
   }
 
+  /**
+   * Performs a Lower-upper decomposition (with partial pivoting) of the provided matrix and stores the lower-triangular
+   * matrix in {@code L}, the upper-triangular matrix in {@code U} and the permutation matrix in {@code P}, such that
+   * {@code trans(P).times(L).times(U) = X}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param L The lower-triangular matrix storage
+   * @param U The upper-triangular matrix storage
+   * @param P The permutation matrix storage
+   * @param X The matrix
+   */
   public static boolean lu(final Mat L, final Mat U, final Mat P, final Mat X) {
     U.inPlace(Op.EQUAL, X);
 
@@ -5468,6 +5667,17 @@ public class Arma {
     return true;
   }
 
+  /**
+   * Performs a Lower-upper decomposition (with partial pivoting) of the provided matrix and stores the permuted
+   * lower-triangular matrix in {@code L} and the permuted upper-triangular matrix in {@code U}, such that
+   * {@code L.times(U) = X}.
+   * <p>
+   * Returns {@code false} if the decomposition failed.
+   * 
+   * @param L The permuted lower-triangular matrix storage
+   * @param U The permuted upper-triangular matrix storage
+   * @param X The matrix
+   */
   public static boolean lu(final Mat L, final Mat U, final Mat X) {
     U.inPlace(Op.EQUAL, X);
 
@@ -5516,21 +5726,59 @@ public class Arma {
     return true;
   }
 
-  public static Mat pinv(final Mat A) {
+  /**
+   * Returns the Moore-Penrose pseudo-inverse of the provided matrix while treating any singular value below
+   * {@code Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps} as zero.
+   * 
+   * @param A The matrix
+   * 
+   * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
+   */
+  public static Mat pinv(final Mat A) throws RuntimeException {
     return pinv(A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
-  public static Mat pinv(final Mat A, final double tolerance) {
+  /**
+   * Returns the Moore-Penrose pseudo-inverse of the provided matrix while treating any singular value below the
+   * specified tolerance as zero.
+   * 
+   * @param A The matrix
+   * @param tolerance The tolerance
+   * 
+   * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
+   */
+  public static Mat pinv(final Mat A, final double tolerance) throws RuntimeException {
     Mat B = new Mat();
-    pinv(B, A, tolerance);
-    // TODO add exception if pinv returns false
+    if (!pinv(B, A, tolerance)) {
+      throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
+    }
+
     return B;
   }
 
+  /**
+   * Calculates the Moore-Penrose pseudo-inverse of the provided matrix and stores the inverse in {@code B} while
+   * treating any singular value below {@code Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps} as zero.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param B The inverses storage
+   * @param A The matrix
+   */
   public static boolean pinv(final Mat B, final Mat A) {
     return pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
   }
 
+  /**
+   * Calculates the Moore-Penrose pseudo-inverse of the provided matrix and stores the inverse in {@code B} while
+   * treating any singular value below the specified tolerance as zero.
+   * <p>
+   * Returns {@code false} if the calculation failed.
+   * 
+   * @param B The inverses storage
+   * @param A The matrix
+   * @param tolerance The tolerance
+   */
   public static boolean pinv(final Mat B, final Mat A, final double tolerance) {
     Mat U = new Mat();
     Col s = new Col();
@@ -5954,7 +6202,7 @@ public class Arma {
   }
 
   /**
-   * Returns true if all values of the provided matrix are neither NaN nor +/-infinity.
+   * Returns {@code true} if all values of the provided matrix are neither NaN nor +/-infinity.
    * 
    * @param X The matrix
    */
@@ -5963,7 +6211,7 @@ public class Arma {
   }
 
   /**
-   * Returns true if the value is neither NaN nor +/-infinity.
+   * Returns {@code true} if the value is neither NaN nor +/-infinity.
    * 
    * @param X The value
    */
