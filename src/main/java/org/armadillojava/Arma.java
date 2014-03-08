@@ -63,9 +63,9 @@ public class Arma {
    * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
    *           value to end with ({@code end}).
    */
-  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final int start, final int end) throws RuntimeException {
+  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final double start, final double end) throws RuntimeException {
     /*
-     * The parameters "start" and "end" are validated within linspace(Class<T>, int, int, int).
+     * The parameters "start" and "end" are validated within linspace(Class<T>, double, double, int).
      */
     return linspace(return_type, start, end, 100);
   }
@@ -85,7 +85,7 @@ public class Arma {
    *           value to end with ({@code end}).
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
-  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final int start, final int end, final int N) throws RuntimeException, NegativeArraySizeException {
+  public static <T extends AbstractMat> T linspace(final Class<T> return_type, final double start, final double end, final int N) throws RuntimeException, NegativeArraySizeException {
     /*
      * The parameter "N" is validated within set_size(int).
      */
