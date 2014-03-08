@@ -1794,7 +1794,7 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have exactly one element.
    */
-  public static double as_acalar(final AbstractMat X) throws RuntimeException {
+  public static double as_scalar(final AbstractMat X) throws RuntimeException {
     if (X.n_elem != 1) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have exactly one element.");
     }
