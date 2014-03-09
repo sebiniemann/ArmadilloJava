@@ -430,7 +430,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat toeplitz(final AbstractMat A) throws RuntimeException {
+  public static Mat toeplitz(final AbstractVector A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -468,7 +468,7 @@ public class Arma {
    * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in
    *           shape to a vector.
    */
-  public static Mat toeplitz(final AbstractMat A, final AbstractMat B) throws RuntimeException {
+  public static Mat toeplitz(final AbstractVector A, final AbstractVector B) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -508,7 +508,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
    */
-  public static Mat circ_toeplitz(final AbstractMat A) throws RuntimeException {
+  public static Mat circ_toeplitz(final AbstractVector A) throws RuntimeException {
     if (A.is_empty()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
@@ -5385,8 +5385,8 @@ public class Arma {
   }
 
   /**
-   * Performs a Cholesky decomposition of the provided matrix and returns the result (called {@code R}), such that
-   * {@code trans(R).times(R) = X}.
+   * Performs a Cholesky decomposition of the provided symmetric and positive-definite matrix and returns the result
+   * (called {@code R}), such that {@code trans(R).times(R) = X}.
    * 
    * @param X The matrix
    * 
@@ -5402,7 +5402,7 @@ public class Arma {
   }
 
   /**
-   * Performs a Cholesky decomposition of the provided matrix and stores the result in {@code R}, such that
+   * Performs a Cholesky decomposition of the provided symmetric and positive-definite matrix and stores the result in {@code R}, such that
    * {@code trans(R).times(R) = X}.
    * <p>
    * Returns {@code false} if the decomposition failed.
@@ -5424,13 +5424,12 @@ public class Arma {
   }
 
   /**
-   * Performs an Eigen decomposition of the provided matrix and returns its eigenvalues.
+   * Performs an Eigen decomposition of the provided symmetric matrix and returns its eigenvalues.
    * 
    * @param X The matrix
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
-   * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric and
-   *           positive-definite.
+   * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric.
    */
   public static Col eig_sym(final Mat X) throws RuntimeException {
     if (!X.is_square()) {
@@ -5439,13 +5438,13 @@ public class Arma {
 
     Col eigval = new Col();
     if (!eig_sym(eigval, X)) {
-      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric and positive-definite.");
+      throw new RuntimeException("The algorithm failed to converge. Ensure that the provided matrix is symmetric.");
     }
     return eigval;
   }
 
   /**
-   * Performs an Eigen decomposition of the provided matrix and stores the eigenvalues in {@code eigval}.
+   * Performs an Eigen decomposition of the provided symmetric matrix and stores the eigenvalues in {@code eigval}.
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
@@ -5499,7 +5498,7 @@ public class Arma {
   }
 
   /**
-   * Returns the inverse of the provided matrix.
+   * Returns the inverse of the provided symmetric and positive-definite matrix.
    * <p>
    * Use {@link #inv_sympd(Mat)} instead, if the provided matrix is known to be symmetric and positive-definite.
    * 
@@ -5522,7 +5521,7 @@ public class Arma {
   }
 
   /**
-   * Calculates the inverse of the provided matrix and stores the result in {@code B}.
+   * Calculates the inverse of the provided symmetric and positive-definite matrix and stores the result in {@code B}.
    * <p>
    * Returns {@code false} if the calculation failed.
    * <p>
@@ -5542,7 +5541,7 @@ public class Arma {
   }
 
   /**
-   * Returns the inverse of the provided matrix.
+   * Returns the inverse of the provided symmetric and positive-definite matrix.
    * <p>
    * This method is faster than {@link #inv(Mat)} for matrices that are known to be symmetric and positive-definite.
    * 
@@ -5562,7 +5561,7 @@ public class Arma {
   }
 
   /**
-   * Calculates the inverse of the provided matrix and stores the result in {@code B}.
+   * Calculates the inverse of the provided symmetric and positive-definite matrix and stores the result in {@code B}.
    * <p>
    * Returns {@code false} if the calculation failed.
    * <p>
@@ -6325,15 +6324,17 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix A must be square.
    * @throws RuntimeException The provided ({@code B.n_rows}, {@code B.n_cols})-matrix B must be square.
-   * @throws RuntimeException The matrix C must have the same number of rows ({@code C.n_rows}) as the matrix A ({@code A.n_rows}).
-   * @throws RuntimeException The matrix C must have the same number of columns ({@code C.n_cols}) as the matrix B ({@code A.n_cols}).
+   * @throws RuntimeException The matrix C must have the same number of rows ({@code C.n_rows}) as the matrix A (
+   *           {@code A.n_rows}).
+   * @throws RuntimeException The matrix C must have the same number of columns ({@code C.n_cols}) as the matrix B (
+   *           {@code A.n_cols}).
    * @throws RuntimeException No solution was found.
    */
   public static Mat syl(final Mat A, final Mat B, final Mat C) throws RuntimeException {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix A must be square.");
     }
-    
+
     if (!B.is_square()) {
       throw new RuntimeException("The provided (" + B.n_rows + ", " + B.n_cols + ")-matrix B must be square.");
     }
@@ -6341,11 +6342,11 @@ public class Arma {
     if (C.n_rows != A.n_rows) {
       throw new RuntimeException("The matrix C must have the same number of rows (" + C.n_rows + ") as the matrix A (" + A.n_rows + ").");
     }
-    
+
     if (C.n_cols != B.n_cols) {
       throw new RuntimeException("The matrix C must have the same number of columns (" + C.n_cols + ") as the matrix B (" + A.n_cols + ").");
     }
-    
+
     Mat X = new Mat();
     if (!syl(X, A, B, C)) {
       throw new RuntimeException("No solution was found.");
@@ -6372,7 +6373,7 @@ public class Arma {
     if (!A.is_square() || !B.is_square()) {
       return false;
     }
-    
+
     if (C.n_rows != A.n_rows || C.n_cols != B.n_cols) {
       return false;
     }

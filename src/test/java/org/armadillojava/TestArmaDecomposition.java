@@ -143,14 +143,14 @@ public class TestArmaDecomposition {
     Mat expectedEigenValues = new Mat();
     expectedEigenValues.load("./test/data/expected/TestArmaDecomposition/testEig_sym.eigenValues." + _filename);
 
-    Mat eigenValues;
+    Col eigenValues;
 
-    eigenValues = new Mat(1, _testMatrix.n_cols);
+    eigenValues = new Col();
     Arma.eig_sym(eigenValues, _testMatrix);
 
     assertMatEquals(_filename, expectedEigenValues, eigenValues);
 
-    eigenValues = new Mat(_testMatrix.n_rows, 1);
+    eigenValues = new Col();
     Arma.eig_sym(eigenValues, _testMatrix);
 
     assertMatEquals(_filename, expectedEigenValues, eigenValues);
@@ -171,10 +171,10 @@ public class TestArmaDecomposition {
     Mat expectedEigenValues = new Mat();
     expectedEigenValues.load("./test/data/expected/TestArmaDecomposition/testEig_sym.eigenValues." + _filename);
 
-    Mat eigenValues;
+    Col eigenValues;
     Mat eigenVectors;
 
-    eigenValues = new Mat(1, _testMatrix.n_cols);
+    eigenValues = new Col();
     eigenVectors = new Mat();
     Arma.eig_sym(eigenValues, eigenVectors, _testMatrix);
 
@@ -184,7 +184,7 @@ public class TestArmaDecomposition {
       assertMatEquals(_filename + ", eigen value " + eigenValue, Arma.zeros(_testMatrix.n_rows, 1), (_testMatrix.minus(Arma.eye(_testMatrix.n_rows, _testMatrix.n_cols).times(eigenValue))).times(eigenVectors.col(n)));
     }
 
-    eigenValues = new Mat(_testMatrix.n_rows, 1);
+    eigenValues = new Col();
     eigenVectors = new Mat();
     Arma.eig_sym(eigenValues, eigenVectors, _testMatrix);
 
@@ -445,7 +445,7 @@ public class TestArmaDecomposition {
     Mat expectedS = new Mat();
     expectedS.load("./test/data/expected/TestArmaDecomposition/testSvd." + _filename);
 
-    Mat S = new Mat();
+    Col S = new Col();
     Arma.svd(S, _testMatrix);
 
     assertMatEquals(_filename + ", expectedS", expectedS, S);
@@ -462,17 +462,17 @@ public class TestArmaDecomposition {
     expectedS.load("./test/data/expected/TestArmaDecomposition/testSvd." + _filename);
 
     Mat U = new Mat();
-    Mat S = new Mat();
+    Col s = new Col();
     Mat V = new Mat();
 
-    Arma.svd(U, S, V, _testMatrix);
+    Arma.svd(U, s, V, _testMatrix);
 
     assertMatEquals(_filename + ", U.t(), U.i()", U.t(), U.i());
-    assertMatEquals(_filename + ", expectedS", expectedS, S);
+    assertMatEquals(_filename + ", expectedS", expectedS, s);
     assertMatEquals(_filename + ", V.t(), V.i()", V.t(), V.i());
 
     if (_testMatrix.is_square()) {
-      assertMatEquals(_filename + ", X = U.times(Arma.diagmat(S)).times(V.t())", _testMatrix, U.times(Arma.diagmat(S)).times(V.t()));
+      assertMatEquals(_filename + ", X = U.times(Arma.diagmat(S)).times(V.t())", _testMatrix, U.times(Arma.diagmat(s)).times(V.t()));
     }
   }
 

@@ -356,7 +356,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_col(final AbstractMat vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
+  public void each_col(final AbstractVector vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
@@ -376,7 +376,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(final AbstractMat vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
+  public void each_col(final AbstractVector vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
@@ -396,7 +396,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_col(final AbstractMat vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+  public void each_col(final AbstractVector vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
@@ -467,7 +467,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
-  public void each_row(final AbstractMat vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
+  public void each_row(final AbstractVector vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
@@ -487,7 +487,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_row(final AbstractMat vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
+  public void each_row(final AbstractVector vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
@@ -507,7 +507,7 @@ public class Mat extends AbstractMat {
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
-  public void each_row(final AbstractMat vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
+  public void each_row(final AbstractVector vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
     /*
      * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
      */
