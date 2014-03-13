@@ -813,6 +813,52 @@ void testDatum() {
   expected.save("./expected/TestDatum/datum.mat", raw_ascii);
 }
 
+void testMat(){
+	std::array<double, 7> dimensions = {1, 2, 3, 4, 5, 10, 100};	
+	string filename;
+	
+	string filenameA;
+	string filenameB;
+	Mat<double> inputA;
+	Mat<double> inputB;
+	
+	Mat<double> expected;
+	
+	for (int numberOfColumnsA : dimensions) {
+			filenameA = "ones.1x" + to_string(numberOfColumnsA) + ".mat";
+			
+			for (int numberOfColumnsB : dimensions) {
+				if(numberOfColumnsB>numberOfColumnsA)continue;
+				filenameB = "zeros.1x" + to_string(numberOfColumnsB) + ".mat";
+				
+				for(int i = 0;i < numberOfColumnsA-1;i++){
+					filename = "ones.1x" + to_string(numberOfColumnsA) + ".zeros.1x" + to_string(numberOfColumnsB) + ".addOn"+ to_string(i) +".mat";
+					inputA.load("./input/" + filenameA);
+					inputB.load("./input/" + filenameB);
+					inputA.insert_cols(i,inputB);
+					inputA.save("./expected/TestMat/testInsert_cols." + filename, raw_ascii);
+				}
+			}
+	}
+	for (int numberOfRowsA : dimensions) {
+		filenameA = "ones." + to_string(numberOfRowsA) + "x1.mat";
+		
+		for (int numberOfRowsB : dimensions) {
+			if(numberOfRowsB>numberOfRowsA)continue;
+			filenameB = "zeros." + to_string(numberOfRowsB) + "x1.mat";
+			
+			for(int i = 0;i < numberOfRowsA-1;i++){
+				filename = "ones." + to_string(numberOfRowsA) + "x1.zeros." + to_string(numberOfRowsB) + "x1.addOn"+ to_string(i) +".mat";
+				inputA.load("./input/" + filenameA);
+				inputB.load("./input/" + filenameB);
+				inputA.insert_rows(i,inputB);
+				inputA.save("./expected/TestMat/testInsert_rows." + filename, raw_ascii);
+			}
+		}
+	}
+	
+}
+
 int main() {
   testArmaMatrixValuedElementWiseFunctionsTrigonometric();
   testArmaMatrixValuedElementWiseFunctionsMiscellaneous();
@@ -835,6 +881,7 @@ int main() {
   testArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous();
   testArmaScalarVectorValuedFunctionsOfVectorsMatricesLogic();
   testDatum();
+  testMat();
 
   return EXIT_SUCCESS;
 }
