@@ -5390,10 +5390,15 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric and
    *           positive-definite.
    */
   public static Mat chol(final Mat X) throws RuntimeException {
+    if (!X.is_square()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must be square.");
+    }
+
     Mat R = new Mat();
     if (!chol(R, X)) {
       throw new RuntimeException("The decomposition could not be completed. Ensure that the provided matrix is symmetric and positive-definite.");
@@ -5402,8 +5407,8 @@ public class Arma {
   }
 
   /**
-   * Performs a Cholesky decomposition of the provided symmetric and positive-definite matrix and stores the result in {@code R}, such that
-   * {@code trans(R).times(R) = X}.
+   * Performs a Cholesky decomposition of the provided symmetric and positive-definite matrix and stores the result in
+   * {@code R}, such that {@code trans(R).times(R) = X}.
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
@@ -5411,6 +5416,10 @@ public class Arma {
    * @param X The matrix
    */
   public static boolean chol(final Mat R, final Mat X) {
+    if (!X.is_square()) {
+      return false;
+    }
+    
     R.inPlace(Op.EQUAL, X);
 
     intW info = new intW(0);
@@ -5547,10 +5556,15 @@ public class Arma {
    * 
    * @param A The matrix
    * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    * @throws RuntimeException The inverse could not be computed. Ensure that the provided matrix is symmetric,
    *           positive-definite and not singular.
    */
   public static Mat inv_sympd(final Mat A) throws RuntimeException {
+    if (!A.is_square()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
+    }
+    
     Mat B = new Mat();
 
     if (!inv_sympd(B, A)) {
@@ -5572,6 +5586,10 @@ public class Arma {
    * @param A The matrix
    */
   public static boolean inv_sympd(final Mat B, final Mat A) {
+    if (!A.is_square()) {
+      return false;
+    }
+    
     B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 

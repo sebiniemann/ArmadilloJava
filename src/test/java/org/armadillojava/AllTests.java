@@ -18,33 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-  TestArmaAs_scalar.class,
-  TestArmaDecomposition.class,
-  TestArmaDotAndNorm_dot.class,
-  TestArmaMatrixGenerationLinspace.class,
-  TestArmaMatrixGenerationMatrix.class,
-  TestArmaMatrixGenerationToeplitz.class,
-  TestArmaMatrixGenerationVector.class,
-  TestArmaMatrixValuedElementWiseFunctionsMiscellaneous.class,
-  TestArmaMatrixValuedElementWiseFunctionsTrigonometric.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesHistogramm.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesMatrixJoins.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneous.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousFind.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousParameterised.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesMiscellaneousShuffle.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesReinterpret.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesReshapeResize.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesSort.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesStatistic.class,
-  TestArmaMatrixValuedFunctionsOfVectorsMatricesSwap.class,
-  TestArmaMiscellaneous.class,
-  TestArmaScalarValuedFunctionsOfVectorsMatrices.class,
-  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesMiscellaneous.class,
-  TestArmaScalarVectorValuedFunctionsOfVectorsMatricesStatistic.class,
   TestDatum.class,
   TestWallClock.class
 })
-public class AllTests {
-
-}
+public class AllTests {}
