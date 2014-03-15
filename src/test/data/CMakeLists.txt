@@ -18,15 +18,17 @@ set(ARMADILLO_JAVA_MINOR 000)
 set(ARMADILLO_JAVA_PATCH 0)
 
 message(STATUS "Configuring test input and result generators for ArmadilloJava ${ARMADILLO_JAVA_MAJOR}.${ARMADILLO_JAVA_MINOR}.${ARMADILLO_JAVA_PATCH}")
+message(STATUS "NOTICE: This is written with the system configuration of ArmadilloJava developers in mind and might not compile on your system.")
 
 project(ArmadilloJava CXX)
 
 if(WIN32)
   message(STATUS "")
   message(STATUS "NOTICE: Windows OS detected:")
-  message(STATUS "* Assuming Armadillo C++ to be located in C:\\Development\\Armadillo.")
-  message(STATUS "* Assuming OpenBLAS to be located in C:\\Development\\OpenBLAS.")
-  message(STATUS "* Assuming libgfortran to be located in C:\\Development\\GCC\\bin.")
+  message(STATUS "* Assuming the Armadillo C++ include folder to be located in C:\\Development\\Armadillo\\include.")
+  message(STATUS "* Assuming the OpenBLAS include folder to be located in C:\\Development\\OpenBLAS\\include.")
+  message(STATUS "* Assuming the OpenBLAS library folder to be located in C:\\Development\\OpenBLAS\\lib.")
+  message(STATUS "* Assuming the libgfortran library to be located in C:\\Development\\GCC\\bin.")
   
   include_directories(C:\\Development\\Armadillo\\include)
   include_directories(C:\\Development\\OpenBLAS\\include)
