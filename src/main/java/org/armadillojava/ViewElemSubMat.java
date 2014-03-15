@@ -13,6 +13,8 @@
  ******************************************************************************/
 package org.armadillojava;
 
+import java.util.Arrays;
+
 /**
  * Provides shallow matrix non-contiguous sub views of {@link AbstractMat}.
  * 
@@ -31,9 +33,9 @@ class ViewElemSubMat extends AbstractView {
   protected final double[] _vector_of_column_indices;
 
   /**
-   * Current row position of the sub view within the underlying matrix
+   * Current column position of the sub view within the underlying matrix
    */
-  protected int               _current_row;
+  protected int               _current_col;
 
   /**
    * Current row number within the sub view
@@ -63,6 +65,9 @@ class ViewElemSubMat extends AbstractView {
 
     _vector_of_row_indices = vector_of_row_indices;
     _vector_of_column_indices = vector_of_column_indices;
+    
+    System.out.println(Arrays.toString(_vector_of_row_indices));
+    System.out.println(Arrays.toString(_vector_of_column_indices));
   }
 
   @Override
@@ -71,18 +76,20 @@ class ViewElemSubMat extends AbstractView {
 
     _row_number = 0;
     _col_number = 0;
+    
+    _current_col = (int) _vector_of_column_indices[0] * _matrix.n_rows;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
 
-    if (_col_number >= n_cols) {
-      _col_number = 1;
-      _current_row = (int) _vector_of_row_indices[++_row_number];
-      return (int) _vector_of_column_indices[0] * n_rows + _current_row;
+    if (_row_number >= n_rows) {
+      _row_number = 1;
+      _current_col = (int) _vector_of_column_indices[++_col_number] * _matrix.n_rows;
+      return _current_col + (int) _vector_of_row_indices[0];
     } else {
-      return (int) _vector_of_column_indices[_col_number++] * n_rows + _current_row;
+      return _current_col + (int) _vector_of_row_indices[_row_number++];
     }
   }
 }
