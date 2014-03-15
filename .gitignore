@@ -6,9 +6,12 @@
 .classpath
 .project
 
-# Eclipse CDT
-/test/data/.cproject
-/test/data/.project
+# CMake
+/src/test/data/CMakeFiles
+/src/test/data/CMakeCache.txt
+/src/test/data/Makefile
+/src/test/data/cmake_install.cmake
 
-# Machine dependent C++ libraries
-/test/data/external
+# Eclipse CDT
+/src/test/data/.cproject
+/src/test/data/.project
