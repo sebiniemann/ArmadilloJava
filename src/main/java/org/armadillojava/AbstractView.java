@@ -58,17 +58,17 @@ abstract class AbstractView {
   }
 
   /**
-   * Returns true if iterator has yet to reach the last position.
-   */
-  protected final boolean iteratorHasNext() {
-    return (_iterator < n_elem - 1);
-  }
-
-  /**
    * Returns the next iterator
    */
   protected int iteratorNext() {
     return _iterator++;
+  }
+
+  /**
+   * Returns true if iterator has yet to reach the last position.
+   */
+  protected final boolean iteratorHasNext() {
+    return _iterator < n_elem;
   }
 
   protected void fill(double value) {

@@ -23,12 +23,12 @@ public class ViewDiag extends AbstractView {
   /**
    * First position of the sub view within the underlying matrix
    */
-  protected final int _firstPosition;
+  protected final int _first_position;
 
   /**
    * Current position of the sub view within the underlying matrix
    */
-  protected int _currentPosition;
+  protected int _current_position;
 
   /**
    * Rows to skip within the underlying matrix to move one position to another within the sub view
@@ -52,28 +52,31 @@ public class ViewDiag extends AbstractView {
 
     if (k > 0) {
       n_rows = Math.min(matrix.n_rows, matrix.n_cols - k);
-      _firstPosition = k * matrix.n_rows;
+      _first_position = k * matrix.n_rows;
     } else {
       n_rows = Math.min(matrix.n_rows + k, matrix.n_cols);
-      _firstPosition = -k;
+      _first_position = -k;
     }
 
     n_cols = 1;
-    n_elem = n_rows * n_cols;
-
+    n_elem = n_rows;
+    
     _n_rows_skip = matrix.n_rows + 1;
   }
 
   @Override
   protected void iteratorReset() {
-    _iterator = 0;
-    _currentPosition = _firstPosition - _n_rows_skip;
+    super.iteratorReset();
+    
+    _current_position = _first_position - _n_rows_skip;
   }
 
   @Override
   protected int iteratorNext() {
-    _currentPosition += _n_rows_skip;
-    return _currentPosition;
+    super.iteratorNext();
+    
+    _current_position += _n_rows_skip;
+    return _current_position;
   }
 
 }
