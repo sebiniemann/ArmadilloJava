@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -21,28 +21,30 @@ package org.armadillojava;
 class ViewElemRows extends AbstractView {
 
   /**
-   * The vector of specified indices
+   * Vector of specified indices.
    */
   protected final AbstractMat _vector_of_row_indices;
 
   /**
-   * The current row number within the sub view
+   * Current position of the sub view within the underlying matrix
    */
-  protected int         _row_number;
+  protected int               _current_position;
 
   /**
-   * The number of elements to shift to focus on the current column
+   * Current row number within the sub view
    */
-  protected int         _col_shift;
+  protected int               _row_number;
+
+  /**
+   * Current column number within the sub view
+   */
+  protected int               _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
-   * @param first_row The first row position
-   * @param last_row The last row position
-   * @param first_col The first column position
-   * @param last_col The last column position
+   * @param vector_of_row_indices The rows
    */
   protected ViewElemRows(final AbstractMat matrix, final AbstractMat vector_of_row_indices) {
     super(matrix);
@@ -56,19 +58,28 @@ class ViewElemRows extends AbstractView {
 
   @Override
   protected void iteratorReset() {
-    _row_number = -1;
-    _col_shift = 0;
+    super.iteratorReset();
+
+    _row_number = 0;
+    _col_number = 0;
+
+    _current_position = (int) _vector_of_row_indices._data[0] - n_rows;
   }
 
   @Override
   protected int iteratorNext() {
-    if (_row_number >= n_rows) {
-      _row_number = 0;
-      _col_shift += n_rows;
+    super.iteratorNext();
+
+    if (_col_number >= n_cols) {
+      _col_number = 1;
+      _current_position = (int) _vector_of_row_indices._data[++_row_number];
+      return _current_position;
+    } else {
+      ++_col_number;
+
+      _current_position += n_rows;
+      return _current_position;
     }
-
-    _iterator = (int) _vector_of_row_indices._data[_row_number++] + _col_shift;
-
-    return _iterator;
   }
+
 }

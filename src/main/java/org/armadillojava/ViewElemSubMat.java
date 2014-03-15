@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -21,29 +21,29 @@ package org.armadillojava;
 class ViewElemSubMat extends AbstractView {
 
   /**
-   * The vector of specified row indices
+   * Vector of specified row indices
    */
   protected final AbstractMat _vector_of_row_indices;
 
   /**
-   * The vector of specified column indices
+   * Vector of specified column indices
    */
   protected final AbstractMat _vector_of_column_indices;
 
   /**
-   * The current row number within the sub view
+   * Current row position of the sub view within the underlying matrix
    */
-  protected int         _row_number;
+  protected int               _current_row;
 
   /**
-   * The current column number within the sub view
+   * Current row number within the sub view
    */
-  protected int         _col_number;
+  protected int               _row_number;
 
   /**
-   * The number of elements to shift to focus on the current column
+   * Current column number within the sub view
    */
-  protected int         _col_shift;
+  protected int               _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -67,20 +67,22 @@ class ViewElemSubMat extends AbstractView {
 
   @Override
   protected void iteratorReset() {
-    _row_number = -1;
-    _col_number = -1;
+    super.iteratorReset();
+
+    _row_number = 0;
+    _col_number = 0;
   }
 
   @Override
   protected int iteratorNext() {
-    if (_row_number >= n_rows) {
-      _row_number = 0;
-      _col_shift = (int) (_vector_of_column_indices._data[++_col_number] * n_rows);
+    super.iteratorNext();
+
+    if (_col_number >= n_cols) {
+      _col_number = 1;
+      _current_row = (int) _vector_of_row_indices._data[++_row_number];
+      return (int) _vector_of_column_indices._data[0] * n_rows + _current_row;
+    } else {
+      return (int) _vector_of_column_indices._data[_col_number++] * n_rows + _current_row;
     }
-
-    _iterator = (int) _vector_of_row_indices._data[++_row_number] + _col_shift;
-
-    return _iterator;
-
   }
 }

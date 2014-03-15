@@ -53,7 +53,9 @@ abstract class AbstractView {
   /**
    * Resets the iterator
    */
-  abstract protected void iteratorReset();
+  protected void iteratorReset() {
+    _iterator = 0;
+  }
 
   /**
    * Returns true if iterator has yet to reach the last position.
@@ -65,7 +67,9 @@ abstract class AbstractView {
   /**
    * Returns the next iterator
    */
-  abstract protected int iteratorNext();
+  protected int iteratorNext() {
+    return _iterator++;
+  }
 
   protected void fill(double value) {
     iteratorReset();

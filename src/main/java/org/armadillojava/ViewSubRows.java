@@ -21,9 +21,14 @@ package org.armadillojava;
 class ViewSubRows extends AbstractView {
 
   /**
-   * The first position of the sub view within the underlying matrix
+   * The first position of the sub view within the underlying matrix.
    */
-  protected final int _firstPosition;
+  protected final int _first_position;
+
+  /**
+   * Current position of the sub view within the underlying matrix
+   */
+  protected int       _current_position;
 
   /**
    * The rows to skip within the underlying matrix to move from the last position of a column to one position before
@@ -50,25 +55,30 @@ class ViewSubRows extends AbstractView {
     this.n_cols = matrix.n_cols;
     this.n_elem = this.n_rows * this.n_cols;
 
-    _firstPosition = first_row;
-    _n_rows_skip = matrix.n_rows - this.n_rows;
+    _first_position = first_row;
+    _n_rows_skip = matrix.n_rows - this.n_rows + 1;
   }
 
   @Override
   protected void iteratorReset() {
-    _iterator = _firstPosition - 1;
-    _row_number = -1;
+    super.iteratorReset();
+    
+    _row_number = 0;
+    
+    _current_position = _first_position - 1;
   }
 
   @Override
   protected int iteratorNext() {
-    ++_row_number;
-
+    super.iteratorNext();
+    
     if (_row_number >= n_rows) {
-      _iterator += _n_rows_skip;
-      _row_number = 0;
+      _row_number = 1;
+      _current_position += _n_rows_skip;
+      return ++_current_position;
+    } else {
+      ++_row_number;
+      return ++_current_position;
     }
-
-    return ++_iterator;
   }
 }

@@ -21,14 +21,14 @@ package org.armadillojava;
 class ViewSubRow extends AbstractView {
 
   /**
-   * The first position of the sub view within the underlying matrix
+   * The first position of the sub view within the underlying matrix.
    */
-  protected final int _firstPosition;
+  protected final int _first_position;
 
   /**
-   * The rows to skip within the underlying matrix to move one position to another within the sub view.
+   * Current position of the sub view within the underlying matrix
    */
-  protected final int _n_rows_skip;
+  protected int       _current_position;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
@@ -45,8 +45,7 @@ class ViewSubRow extends AbstractView {
     this.n_cols = n_cols;
     this.n_elem = this.n_cols;
 
-    _firstPosition = row_number + first_col * matrix.n_cols;
-    _n_rows_skip = matrix.n_rows;
+    _first_position = row_number + first_col * matrix.n_cols;
   }
 
   /**
@@ -62,18 +61,21 @@ class ViewSubRow extends AbstractView {
     n_cols = matrix.n_cols;
     n_elem = n_cols;
 
-    _firstPosition = row_number;
-    _n_rows_skip = matrix.n_rows;
+    _first_position = row_number;
   }
 
   @Override
   protected void iteratorReset() {
-    _iterator = _firstPosition - _n_rows_skip;
+    super.iteratorReset();
+    
+    _current_position = _first_position - _matrix.n_rows;
   }
 
   @Override
   protected int iteratorNext() {
-    _iterator += _n_rows_skip;
-    return _iterator;
+    super.iteratorNext();
+    
+    _current_position += _matrix.n_rows;
+    return _current_position;
   }
 }

@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -21,12 +21,17 @@ package org.armadillojava;
 public class ViewDiag extends AbstractView {
 
   /**
-   * The first position of the sub view within the underlying matrix
+   * First position of the sub view within the underlying matrix
    */
   protected final int _firstPosition;
 
   /**
-   * The rows to skip within the underlying matrix to move one position to another within the sub view.
+   * Current position of the sub view within the underlying matrix
+   */
+  protected int _currentPosition;
+
+  /**
+   * Rows to skip within the underlying matrix to move one position to another within the sub view
    */
   protected final int _n_rows_skip;
 
@@ -61,13 +66,14 @@ public class ViewDiag extends AbstractView {
 
   @Override
   protected void iteratorReset() {
-    _iterator = _firstPosition - _n_rows_skip;
+    _iterator = 0;
+    _currentPosition = _firstPosition - _n_rows_skip;
   }
 
   @Override
   protected int iteratorNext() {
-    _iterator += _n_rows_skip;
-    return _iterator;
+    _currentPosition += _n_rows_skip;
+    return _currentPosition;
   }
 
 }

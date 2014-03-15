@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -21,28 +21,30 @@ package org.armadillojava;
 class ViewElemCols extends AbstractView {
 
   /**
-   * The vector of specified indices
+   * Vector of specified indices
    */
   protected final AbstractMat _vector_of_column_indices;
 
   /**
-   * The current row number within the sub view
+   * Current position of the sub view within the underlying matrix
    */
-  protected int         _row_number;
+  protected int               _current_position;
 
   /**
-   * The current column number within the sub view
+   * Current row number within the sub view
    */
-  protected int         _col_number;
+  protected int               _row_number;
+
+  /**
+   * Current column number within the sub view
+   */
+  protected int               _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
-   * @param first_row The first row position
-   * @param last_row The last row position
-   * @param first_col The first column position
-   * @param last_col The last column position
+   * @param vector_of_column_indices The columns
    */
   protected ViewElemCols(final AbstractMat matrix, final AbstractMat vector_of_column_indices) {
     super(matrix);
@@ -56,20 +58,26 @@ class ViewElemCols extends AbstractView {
 
   @Override
   protected void iteratorReset() {
-    _row_number = n_rows;
-    _col_number = -1;
+    super.iteratorReset();
+    
+    _row_number = 0;
+    _col_number = 0;
+
+    _current_position = (int) _vector_of_column_indices._data[0] * n_rows - 1;
   }
 
   @Override
   protected int iteratorNext() {
+    super.iteratorNext();
+    
     if (_row_number >= n_rows) {
-      _iterator = (int) _vector_of_column_indices._data[++_col_number] * n_rows;
-      /**
-       * The iterator will already point to the next element
-       */
-      return _iterator;
+      _row_number = 1;
+      _current_position = (int) _vector_of_column_indices._data[++_col_number] * n_rows;
+      return _current_position;
     } else {
-      return ++_iterator;
+      ++_row_number;
+      return ++_current_position;
     }
   }
+
 }

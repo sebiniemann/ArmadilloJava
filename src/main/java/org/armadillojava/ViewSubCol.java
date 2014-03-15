@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -21,9 +21,14 @@ package org.armadillojava;
 class ViewSubCol extends AbstractView {
 
   /**
-   * The first position of the sub view within the underlying matrix
+   * The first position of the sub view within the underlying matrix.
    */
-  protected final int _firstPosition;
+  protected final int _first_position;
+
+  /**
+   * Current position of the sub view within the underlying matrix
+   */
+  protected int       _current_position;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict its access to a sub view.
@@ -40,7 +45,7 @@ class ViewSubCol extends AbstractView {
     this.n_cols = 1;
     this.n_elem = this.n_rows;
 
-    _firstPosition = first_row + col_number * matrix.n_cols;
+    _first_position = first_row + col_number * matrix.n_cols;
   }
 
   /**
@@ -56,16 +61,20 @@ class ViewSubCol extends AbstractView {
     n_cols = 1;
     n_elem = n_rows;
 
-    _firstPosition = col_number * n_rows;
+    _first_position = col_number * n_rows;
   }
 
   @Override
   protected void iteratorReset() {
-    _iterator = _firstPosition - 1;
+    super.iteratorReset();
+
+    _current_position = _first_position - 1;
   }
 
   @Override
   protected int iteratorNext() {
-    return ++_iterator;
+    super.iteratorNext();
+
+    return ++_current_position;
   }
 }

@@ -21,36 +21,43 @@ package org.armadillojava;
 class ViewElemMat extends AbstractView {
 
   /**
-   * The vector of specified indices
+   * Vector of specified indices
    */
   protected final AbstractMat _vector_of_indices;
+
+  /**
+   * Current element number within the sub view
+   */
+  protected int               _elem_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
-   * @param first_row The first row position
-   * @param last_row The last row position
-   * @param first_col The first column position
-   * @param last_col The last column position
+   * @param vector_of_indices The elements
    */
   protected ViewElemMat(final AbstractMat matrix, final AbstractMat vector_of_indices) {
     super(matrix);
 
-    n_rows = 1;
-    n_cols = vector_of_indices.n_elem;
-    n_elem = n_cols;
+    n_rows = vector_of_indices.n_elem;
+    n_cols = 1;
+    n_elem = n_rows;
 
     _vector_of_indices = vector_of_indices;
   }
 
   @Override
   protected void iteratorReset() {
-    _iterator = -1;
+    super.iteratorReset();
+    
+    _elem_number = -1;
   }
 
   @Override
   protected int iteratorNext() {
-    return (int) _vector_of_indices._data[++_iterator];
+    super.iteratorNext();
+    
+    return (int) _vector_of_indices._data[++_elem_number];
   }
+  
 }
