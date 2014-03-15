@@ -446,9 +446,8 @@ abstract class AbstractMat {
         } else {
           writer.print(value);
         }
-
-        writer.println();
       }
+      writer.println();
     }
     writer.print("]");
     writer.println();
@@ -558,9 +557,8 @@ abstract class AbstractMat {
         } else {
           writer.format(Locale.ENGLISH, "%1$ 30.16e", value);
         }
-
-        writer.println();
       }
+      writer.println();
     }
 
     writer.close();
@@ -2837,7 +2835,7 @@ abstract class AbstractMat {
 
   @Override
   public String toString() {
-    String output = "(" + n_rows + ", " + n_cols + ")-matrix: [\n";
+    String output = "(" + n_rows + ", " + n_cols + ")-matrix: [" + System.lineSeparator();
     for (int i = 0; i < n_rows; i++) {
       output += " ";
 
@@ -2852,9 +2850,8 @@ abstract class AbstractMat {
         } else {
           output += String.format(Locale.ENGLISH, "%1$ 10.5f", value);
         }
-
-        output += "\n";
       }
+      output += System.lineSeparator();
     }
     output += "]";
 
