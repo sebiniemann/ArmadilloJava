@@ -23,7 +23,7 @@ class ViewElemMat extends AbstractView {
   /**
    * Vector of specified indices
    */
-  protected final AbstractMat _vector_of_indices;
+  protected final double[] _vector_of_indices;
 
   /**
    * Current element number within the sub view
@@ -36,10 +36,10 @@ class ViewElemMat extends AbstractView {
    * @param matrix The matrix
    * @param vector_of_indices The elements
    */
-  protected ViewElemMat(final AbstractMat matrix, final AbstractMat vector_of_indices) {
+  protected ViewElemMat(final AbstractMat matrix, final double[] vector_of_indices) {
     super(matrix);
 
-    n_rows = vector_of_indices.n_elem;
+    n_rows = vector_of_indices.length;
     n_cols = 1;
     n_elem = n_rows;
 
@@ -57,7 +57,7 @@ class ViewElemMat extends AbstractView {
   protected int iteratorNext() {
     super.iteratorNext();
     
-    return (int) _vector_of_indices._data[++_elem_number];
+    return (int) _vector_of_indices[++_elem_number];
   }
   
 }

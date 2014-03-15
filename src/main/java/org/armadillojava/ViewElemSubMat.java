@@ -23,12 +23,12 @@ class ViewElemSubMat extends AbstractView {
   /**
    * Vector of specified row indices
    */
-  protected final AbstractMat _vector_of_row_indices;
+  protected final double[] _vector_of_row_indices;
 
   /**
    * Vector of specified column indices
    */
-  protected final AbstractMat _vector_of_column_indices;
+  protected final double[] _vector_of_column_indices;
 
   /**
    * Current row position of the sub view within the underlying matrix
@@ -54,11 +54,11 @@ class ViewElemSubMat extends AbstractView {
    * @param first_col The first column position
    * @param last_col The last column position
    */
-  protected ViewElemSubMat(final AbstractMat matrix, final AbstractMat vector_of_row_indices, final AbstractMat vector_of_column_indices) {
+  protected ViewElemSubMat(final AbstractMat matrix, final double[] vector_of_row_indices, final double[] vector_of_column_indices) {
     super(matrix);
 
-    n_rows = vector_of_row_indices.n_elem;
-    n_cols = vector_of_column_indices.n_elem;
+    n_rows = vector_of_row_indices.length;
+    n_cols = vector_of_column_indices.length;
     n_elem = n_rows * n_cols;
 
     _vector_of_row_indices = vector_of_row_indices;
@@ -79,10 +79,10 @@ class ViewElemSubMat extends AbstractView {
 
     if (_col_number >= n_cols) {
       _col_number = 1;
-      _current_row = (int) _vector_of_row_indices._data[++_row_number];
-      return (int) _vector_of_column_indices._data[0] * n_rows + _current_row;
+      _current_row = (int) _vector_of_row_indices[++_row_number];
+      return (int) _vector_of_column_indices[0] * n_rows + _current_row;
     } else {
-      return (int) _vector_of_column_indices._data[_col_number++] * n_rows + _current_row;
+      return (int) _vector_of_column_indices[_col_number++] * n_rows + _current_row;
     }
   }
 }

@@ -23,7 +23,7 @@ class ViewElemRows extends AbstractView {
   /**
    * Vector of specified indices.
    */
-  protected final AbstractMat _vector_of_row_indices;
+  protected final double[] _vector_of_row_indices;
 
   /**
    * Current position of the sub view within the underlying matrix
@@ -46,10 +46,10 @@ class ViewElemRows extends AbstractView {
    * @param matrix The matrix
    * @param vector_of_row_indices The rows
    */
-  protected ViewElemRows(final AbstractMat matrix, final AbstractMat vector_of_row_indices) {
+  protected ViewElemRows(final AbstractMat matrix, final double[] vector_of_row_indices) {
     super(matrix);
 
-    n_rows = vector_of_row_indices.n_elem;
+    n_rows = vector_of_row_indices.length;
     n_cols = matrix.n_cols;
     n_elem = n_rows * n_cols;
 
@@ -63,7 +63,7 @@ class ViewElemRows extends AbstractView {
     _row_number = 0;
     _col_number = 0;
 
-    _current_position = (int) _vector_of_row_indices._data[0] - n_rows;
+    _current_position = (int) _vector_of_row_indices[0] - n_rows;
   }
 
   @Override
@@ -72,7 +72,7 @@ class ViewElemRows extends AbstractView {
 
     if (_col_number >= n_cols) {
       _col_number = 1;
-      _current_position = (int) _vector_of_row_indices._data[++_row_number];
+      _current_position = (int) _vector_of_row_indices[++_row_number];
       return _current_position;
     } else {
       ++_col_number;

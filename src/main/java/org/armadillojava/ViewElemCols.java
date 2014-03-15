@@ -23,22 +23,22 @@ class ViewElemCols extends AbstractView {
   /**
    * Vector of specified indices
    */
-  protected final AbstractMat _vector_of_column_indices;
+  protected final double[] _vector_of_column_indices;
 
   /**
    * Current position of the sub view within the underlying matrix
    */
-  protected int               _current_position;
+  protected int            _current_position;
 
   /**
    * Current row number within the sub view
    */
-  protected int               _row_number;
+  protected int            _row_number;
 
   /**
    * Current column number within the sub view
    */
-  protected int               _col_number;
+  protected int            _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -46,11 +46,11 @@ class ViewElemCols extends AbstractView {
    * @param matrix The matrix
    * @param vector_of_column_indices The columns
    */
-  protected ViewElemCols(final AbstractMat matrix, final AbstractMat vector_of_column_indices) {
+  protected ViewElemCols(final AbstractMat matrix, final double[] vector_of_column_indices) {
     super(matrix);
 
     n_rows = matrix.n_rows;
-    n_cols = vector_of_column_indices.n_elem;
+    n_cols = vector_of_column_indices.length;
     n_elem = n_rows * n_cols;
 
     _vector_of_column_indices = vector_of_column_indices;
@@ -59,20 +59,20 @@ class ViewElemCols extends AbstractView {
   @Override
   protected void iteratorReset() {
     super.iteratorReset();
-    
+
     _row_number = 0;
     _col_number = 0;
 
-    _current_position = (int) _vector_of_column_indices._data[0] * n_rows - 1;
+    _current_position = (int) _vector_of_column_indices[0] * n_rows - 1;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
-    
+
     if (_row_number >= n_rows) {
       _row_number = 1;
-      _current_position = (int) _vector_of_column_indices._data[++_col_number] * n_rows;
+      _current_position = (int) _vector_of_column_indices[++_col_number] * n_rows;
       return _current_position;
     } else {
       ++_row_number;

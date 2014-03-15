@@ -1947,7 +1947,7 @@ abstract class AbstractMat {
    * @param vector_of_indices The positions
    */
   public Col elem(final AbstractVector vector_of_indices) {
-    return new Col(new ViewElemMat(this, vector_of_indices));
+    return new Col(new ViewElemMat(this, vector_of_indices._data));
   }
 
   /**
@@ -1961,7 +1961,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
   public void elem(final AbstractVector vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_indices).inPlace(unary_operator);
+    new ViewElemMat(this, vector_of_indices._data).inPlace(unary_operator);
   }
 
   /**
@@ -1976,7 +1976,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void elem(final AbstractVector vector_of_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_indices).inPlace(binary_operator, operand);
+    new ViewElemMat(this, vector_of_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -1991,7 +1991,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void elem(final AbstractVector vector_of_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_indices).inPlace(binary_operator, operand);
+    new ViewElemMat(this, vector_of_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2002,7 +2002,7 @@ abstract class AbstractMat {
    * @param vector_of_column_indices The columns
    */
   public Mat cols(final AbstractVector vector_of_column_indices) {
-    return new Mat(new ViewElemCols(this, vector_of_column_indices));
+    return new Mat(new ViewElemCols(this, vector_of_column_indices._data));
   }
 
   /**
@@ -2016,7 +2016,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
   public void cols(final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemCols(this, vector_of_column_indices).inPlace(unary_operator);
+    new ViewElemCols(this, vector_of_column_indices._data).inPlace(unary_operator);
   }
 
   /**
@@ -2031,7 +2031,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void cols(final AbstractVector vector_of_column_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemCols(this, vector_of_column_indices).inPlace(binary_operator, operand);
+    new ViewElemCols(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2046,7 +2046,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void cols(final AbstractVector vector_of_column_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
-    new ViewElemCols(this, vector_of_column_indices).inPlace(binary_operator, operand);
+    new ViewElemCols(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2057,7 +2057,7 @@ abstract class AbstractMat {
    * @param vector_of_row_indices The rows
    */
   public Mat rows(final AbstractVector vector_of_row_indices) {
-    return new Mat(new ViewElemRows(this, vector_of_row_indices));
+    return new Mat(new ViewElemRows(this, vector_of_row_indices._data));
   }
 
   /**
@@ -2071,7 +2071,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
   public void rows(final AbstractVector vector_of_row_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemRows(this, vector_of_row_indices).inPlace(unary_operator);
+    new ViewElemRows(this, vector_of_row_indices._data).inPlace(unary_operator);
   }
 
   /**
@@ -2086,7 +2086,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void rows(final AbstractVector vector_of_row_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemRows(this, vector_of_row_indices).inPlace(binary_operator, operand);
+    new ViewElemRows(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2101,7 +2101,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void rows(final AbstractVector vector_of_row_indices, final Op binary_operator, final AbstractVector operand) throws UnsupportedOperationException {
-    new ViewElemRows(this, vector_of_row_indices).inPlace(binary_operator, operand);
+    new ViewElemRows(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2113,7 +2113,7 @@ abstract class AbstractMat {
    * @param vector_of_column_indices The columns
    */
   public Mat submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices) {
-    return new Mat(new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices));
+    return new Mat(new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data));
   }
 
   /**
@@ -2128,7 +2128,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
    */
   public void submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(unary_operator);
+    new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data).inPlace(unary_operator);
   }
 
   /**
@@ -2145,7 +2145,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
+    new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -2162,7 +2162,7 @@ abstract class AbstractMat {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices, final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
-    new ViewElemSubMat(this, vector_of_row_indices, vector_of_column_indices).inPlace(binary_operator, operand);
+    new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
