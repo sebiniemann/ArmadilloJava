@@ -15,3 +15,6 @@
 # Eclipse CDT
 /src/test/data/.cproject
 /src/test/data/.project
+
+# Files
+*.exe
