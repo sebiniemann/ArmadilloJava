@@ -77,7 +77,7 @@ class ViewSubMat extends AbstractView {
     if (_row_number >= n_rows) {
       _row_number = 1;
       _current_position += _n_rows_skip;
-      return ++_current_position;
+      return _current_position;
     } else {
       ++_row_number;
       return ++_current_position;
