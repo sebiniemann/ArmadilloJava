@@ -18,6 +18,7 @@ using armadilloJava::Input;
 using std::runtime_error;
 
 #include <armadillo>
+using arma::Mat;
 using arma::datum;
 
 namespace armadilloJava {
@@ -78,7 +79,7 @@ namespace armadilloJava {
 
   vector<void*> Input::getOOMat() {
     return {
-      new double(3)
+      new Mat<double>({3})
     };
   }
 

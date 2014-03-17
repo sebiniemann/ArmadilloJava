@@ -26,7 +26,23 @@ using armadilloJava::Input;
 
 namespace armadilloJava {
   ExpectedOOMat::ExpectedOOMat() {
-    cout << "Yeah!" << endl;
-    Input::getTestParameters({InputClass::OOMat});
+    vector<vector<void*>> inputs = Input::getTestParameters({InputClass::OOMat});
+
+    for (vector<void*> input : inputs) {
+      int n = 0;
+      for (void* value : input) {
+        switch (n) {
+          case 0:
+            _OOMat = *static_cast<Mat<double>*>(value);
+            break;
+        }
+      }
+
+      as_scalar();
+    }
+  }
+
+  void ExpectedOOMat::as_scalar() {
+    cout << _OOMat << endl;
   }
 }

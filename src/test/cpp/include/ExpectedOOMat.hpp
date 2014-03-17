@@ -16,9 +16,17 @@
 #include <Expected.hpp>
 using armadilloJava::Expected;
 
+#include <armadillo>
+using arma::Mat;
+
 namespace armadilloJava {
   class ExpectedOOMat: public Expected {
     public:
       ExpectedOOMat();
+
+    protected:
+      Mat<double> _OOMat;
+
+      void as_scalar();
   };
 }
