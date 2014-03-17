@@ -11,7 +11,6 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-
 #include <ExpectedOOMat.hpp>
 using armadilloJava::ExpectedOOMat;
 

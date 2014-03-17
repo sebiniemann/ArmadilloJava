@@ -11,14 +11,13 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-
 #pragma once
 
 #include <Expected.hpp>
 using armadilloJava::Expected;
 
 namespace armadilloJava {
-  class ExpectedOOMat : public Expected {
+  class ExpectedOOMat: public Expected {
     public:
       ExpectedOOMat();
   };

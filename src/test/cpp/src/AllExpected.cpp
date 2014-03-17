@@ -11,9 +11,6 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-// http://arma.sourceforge.net/docs.html#config_hpp
-#define ARMA_USE_CXX11 // Use C++11 features, such as initialiser lists
-
 #include <iostream>
 // EXIT_SUCCESS
 
@@ -24,8 +21,8 @@ using armadilloJava::ExpectedOOMat;
 using armadilloJava::ExpectedDatum;
 
 int main() {
-	ExpectedOOMat();
+  ExpectedOOMat();
   ExpectedDatum();
 
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

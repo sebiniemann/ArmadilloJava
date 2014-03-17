@@ -11,7 +11,6 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-
 #include <Input.hpp>
 using armadilloJava::Input;
 
