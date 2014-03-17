@@ -22,6 +22,9 @@ message(STATUS "NOTICE: This is written with the system configuration of Armadil
 
 project(ArmadilloJava CXX)
 
+set(PROJECT_SOURCE_DIR ${PROJECT_BINARY_DIR}/src)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
 if(WIN32)
   message(STATUS "")
   message(STATUS "NOTICE: Windows OS detected:")
@@ -48,8 +51,8 @@ endif()
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-add_executable(generateInput generateInput.cpp)
-target_link_libraries(generateInput openblas gfortran)
+include_directories(${PROJECT_BINARY_DIR}/include)
 
-add_executable(generateExpected generateExpected.cpp)
-target_link_libraries(generateExpected openblas gfortran)
+file(GLOB_RECURSE SRC_FILES src/Expected*.cpp src/Input*.cpp)
+add_executable(AllExpected src/AllExpected.cpp ${SRC_FILES})
+target_link_libraries(AllExpected openblas gfortran)

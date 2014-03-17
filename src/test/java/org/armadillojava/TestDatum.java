@@ -34,7 +34,7 @@ public class TestDatum {
   @Test
   public void test() throws IOException {
     Mat expected = new Mat();
-    expected.load("./src/test/data/expected/TestDatum/datum.mat");
+    expected.load("./src/test/data/expected/datum.mat");
 
     assertThat(expected.at(0), is(closeTo(Datum.pi, Math.abs(expected.at(0)) * 1e-12)));
     assertThat(expected.at(1), is(closeTo(Datum.e, Math.abs(expected.at(1)) * 1e-12)));

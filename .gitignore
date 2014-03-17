@@ -7,14 +7,14 @@
 .project
 
 # CMake
-/src/test/data/CMakeFiles
-/src/test/data/CMakeCache.txt
-/src/test/data/Makefile
-/src/test/data/cmake_install.cmake
+/src/test/cpp/CMakeFiles
+/src/test/cpp/CMakeCache.txt
+/src/test/cpp/Makefile
+/src/test/cpp/cmake_install.cmake
 
 # Eclipse CDT
-/src/test/data/.cproject
-/src/test/data/.project
+/src/test/cpp/.cproject
+/src/test/cpp/.project
 
 # Files
 *.exe
