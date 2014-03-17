@@ -25,7 +25,7 @@ import static org.hamcrest.number.IsCloseTo.*;
 public class TestUtil {
 
   public static void assertMatEquals(AbstractMat A, AbstractMat B) {
-    assertMatEquals(A, B, 1e-11);
+    assertMatEquals(A, B, 1e-12);
   }
 
   public static void assertMatEquals(AbstractMat A, AbstractMat B, double delta) {
