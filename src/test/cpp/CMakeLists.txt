@@ -46,7 +46,7 @@ elseif(UNIX)
   message(STATUS "NOTICE: Unix or Unix-like OS detected:")
 else()
   message(STATUS "")
-  message(FATAL_ERROR "ERROR: Neither Windows, Apple or Unix/Unix-like OS detected. I would greatly appreciate an e-mail containing some information about this problem.")
+  message(FATAL_ERROR "ERROR: Neither Windows, Apple nor Unix/Unix-like OS detected. I would greatly appreciate an e-mail containing some information about this problem.")
 endif()
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
