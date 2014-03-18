@@ -29,7 +29,11 @@ using std::runtime_error;
 
 #include <armadillo>
 using arma::Mat;
+using arma::Col;
+using arma::Row;
 using arma::datum;
+using arma::span;
+using arma::SizeMat;
 using arma::distr_param;
 
 namespace armadilloJava {
@@ -120,11 +124,11 @@ namespace armadilloJava {
     });
 
     for (pair<string, void*> value : getNumElems()) {
-      int intValue = *static_cast<int*>(value.second);
+      int numElems = *static_cast<int*>(value.second);
 
       inputs.push_back({
-        pair<string, void*>(to_string(intValue / 2), new int(intValue / 2)),
-        pair<string, void*>(to_string(intValue - 1), new int(intValue - 1))
+        pair<string, void*>(to_string(numElems / 2), new int(numElems / 2)),
+        pair<string, void*>(to_string(numElems - 1), new int(numElems - 1))
       });
     }
 
@@ -132,29 +136,11 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getColInd() {
-    vector<vector<pair<string, void*>>> inputs = {};
-    inputs.push_back({
-      pair<string, void*>("0", new int(0)),
-      pair<string, void*>("1", new int(1))
-    });
-
-    for (pair<string, void*> value : getNumCols()) {
-      int intValue = *static_cast<int*>(value.second);
-
-      inputs.push_back({
-        pair<string, void*>(to_string(intValue / 2), new int(intValue / 2)),
-        pair<string, void*>(to_string(intValue - 1), new int(intValue - 1))
-      });
-    }
-
-    return vectorUnion(inputs);
+    return getRowInd();
   }
 
   vector<pair<string, void*>> Input::getExtColInd() {
-    return vectorUnion({
-      getColInd(),
-      getNumCols()
-    });
+    return getExtRowInd();
   }
 
   vector<pair<string, void*>> Input::getRowInd() {
@@ -165,11 +151,11 @@ namespace armadilloJava {
     });
 
     for (pair<string, void*> value : getNumRows()) {
-      int intValue = *static_cast<int*>(value.second);
+      int numRows = *static_cast<int*>(value.second);
 
       inputs.push_back({
-        pair<string, void*>(to_string(intValue / 2), new int(intValue / 2)),
-        pair<string, void*>(to_string(intValue - 1), new int(intValue - 1))
+        pair<string, void*>(to_string(numRows / 2), new int(numRows / 2)),
+        pair<string, void*>(to_string(numRows - 1), new int(numRows - 1))
       });
     }
 
@@ -322,57 +308,108 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getElemIndRange() {
-    return {
+    vector<vector<pair<string, void*>>> inputs = {};
+    inputs.push_back({
+      pair<string, void*>("span(0, 0)", new span(0, 0))
+    });
 
-    };
+    for (pair<string, void*> value : getNumElems()) {
+      int numElems = *static_cast<int*>(value.second);
+
+      inputs.push_back({
+        pair<string, void*>("span(0, " + to_string(numElems - 1) + ")", new span(0, numElems - 1)),
+        pair<string, void*>("span(" + to_string(numElems - 1) + ", " + to_string(numElems - 1) + ")", new span(numElems - 1, numElems - 1)),
+        pair<string, void*>("span(" + to_string(numElems/2 - 1) + ", " + to_string(numElems/2 + 1) + ")", new span(numElems/2 - 1, numElems/2 + 1))
+      });
+    }
+
+    return vectorUnion(inputs);
   }
 
   vector<pair<string, void*>> Input::getColIndRange() {
-    return {
-
-    };
+    return getRowIndRange();
   }
 
   vector<pair<string, void*>> Input::getRowIndRange() {
-    return {
+    vector<vector<pair<string, void*>>> inputs = {};
+    inputs.push_back({
+      pair<string, void*>("span(0, 0)", new span(0, 0))
+    });
 
-    };
+    for (pair<string, void*> value : getNumRows()) {
+      int numRows = *static_cast<int*>(value.second);
+
+      inputs.push_back({
+        pair<string, void*>("span(0, " + to_string(numRows - 1) + ")", new span(0, numRows - 1)),
+        pair<string, void*>("span(" + to_string(numRows - 1) + ", " + to_string(numRows - 1) + ")", new span(numRows - 1, numRows - 1)),
+        pair<string, void*>("span(" + to_string(numRows/2 - 1) + ", " + to_string(numRows/2 + 1) + ")", new span(numRows/2 - 1, numRows/2 + 1))
+      });
+    }
+
+    return vectorUnion(inputs);
   }
 
   vector<pair<string, void*>> Input::getMatSize() {
-    return {
+    vector<pair<string, void*>> input = {};
 
-    };
+    for (pair<string, void*> value : getNumRows()) {
+      int numRows = *static_cast<int*>(value.second);
+
+      for (pair<string, void*> value : getNumCols()) {
+        int numCols = *static_cast<int*>(value.second);
+
+        input.push_back(pair<string, void*>("size(" + to_string(numRows) + ", " + to_string(numCols) + ")", new SizeMat(numRows, numCols)));
+      }
+    }
+
+    return input;
   }
 
   vector<pair<string, void*>> Input::getColVecSize() {
-    return {
+    vector<pair<string, void*>> input = {};
 
-    };
+    for (pair<string, void*> value : getNumElems()) {
+      int numElems = *static_cast<int*>(value.second);
+
+      input.push_back(pair<string, void*>("size(" + to_string(numElems) + ", 1)", new SizeMat(numElems, 1)));
+    }
+
+    return input;
   }
 
   vector<pair<string, void*>> Input::getRowVecSize() {
-    return {
+    vector<pair<string, void*>> input = {};
 
-    };
+    for (pair<string, void*> value : getNumElems()) {
+      int numElems = *static_cast<int*>(value.second);
+
+      input.push_back(pair<string, void*>("size(1, " + to_string(numElems) + ")", new SizeMat(1, numElems)));
+    }
+
+    return input;
   }
 
   vector<pair<string, void*>> Input::getGenMatVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getGenMat(),
+      getGenVec(),
+      getLogicMatVec(),
+      getOOMatVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getLogicMatVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getLogicMat(),
+      getLogicVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getOOMatVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getOOMat(),
+      getOOVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getGenMat() {
@@ -418,27 +455,34 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getGenVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getGenColVec(),
+      getGenRowVec(),
+      getMonVec(),
+      getLogicVec(),
+      getOOVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getMonVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getMonColVec(),
+      getMonRowVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getLogicVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getLogicColVec(),
+      getLogicRowVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getOOVec() {
-    return {
-
-    };
+    return vectorUnion({
+      getOOColVec(),
+      getOORowVec()
+    });
   }
 
   vector<pair<string, void*>> Input::getGenColVec() {
@@ -449,7 +493,13 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getMonColVec() {
     return {
-
+      pair<string, void*>("Col(0, 1, ..., n)", new Col<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
+      pair<string, void*>("Col(0, 0.1, ..., 1)", new Col<double>({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})),
+      pair<string, void*>("Col(-10, -5, 10)", new Col<double>({-10, -5, 10})),
+      pair<string, void*>("Col(-inf, 0, inf)", new Col<double>({datum::inf, 0, -datum::inf})),
+      pair<string, void*>("Col(0)", new Col<double>({0})),
+      pair<string, void*>("Col(-inf)", new Col<double>({-datum::inf})),
+      pair<string, void*>("Col(inf)", new Col<double>({datum::inf}))
     };
   }
 
@@ -473,7 +523,13 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getMonRowVec() {
     return {
-
+      pair<string, void*>("Row(0, 1, ..., n)", new Row<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
+      pair<string, void*>("Row(0, 0.1, ..., 1)", new Row<double>({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})),
+      pair<string, void*>("Row(-10, -5, 10)", new Row<double>({-10, -5, 10})),
+      pair<string, void*>("Row(-inf, 0, inf)", new Row<double>({datum::inf, 0, -datum::inf})),
+      pair<string, void*>("Row(0)", new Row<double>({0})),
+      pair<string, void*>("Row(-inf)", new Row<double>({-datum::inf})),
+      pair<string, void*>("Row(inf)", new Row<double>({datum::inf}))
     };
   }
 
