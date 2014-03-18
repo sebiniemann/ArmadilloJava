@@ -26,6 +26,8 @@ namespace armadilloJava {
 
     protected:
       Mat<double> _OOMat;
+      double _double;
+      int _int;
 
       void as_scalar();
   };

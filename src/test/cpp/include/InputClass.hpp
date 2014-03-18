@@ -63,7 +63,7 @@ namespace armadilloJava
     ColInds,
     RowInds,
     // Text, Untested
-    FilePath,
+    // FilePath, Test specific
     MatNormString,
     VecNormString,
     Sort,
@@ -74,8 +74,8 @@ namespace armadilloJava
     // RelOp, ArmadilloJava specific
     // OutputStream, Java specific
     // InputStream, Java specific
-    FileType,
-    DistParam,
+    // FileType, Test specific
+    DistrParam,
     Fill
   };
 }
