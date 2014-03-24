@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -1005,13 +1005,13 @@ public class Arma {
     return result;
   }
 
-  protected static void pow(final double[] result, final double[] A, final int p) {
+  protected static void pow(final double[] result, final double[] A, final double p) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(A[n], p);
     }
   }
 
-  protected static AbstractMat pow(final AbstractMat A, final int p) {
+  protected static AbstractMat pow(final AbstractMat A, final double p) {
     AbstractMat result = new Mat(A.n_rows, A.n_cols);
     pow(result._data, A._data, p);
     return result;
@@ -1022,8 +1022,14 @@ public class Arma {
    * 
    * @param A The column vector
    * @param p The power
+   * 
+   * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Col pow(final Col A, final int p) {
+  public static Col pow(final Col A, final int p) throws RuntimeException {
+    if(p < 0) {
+      throw new RuntimeException("The power (" + p + ") must be positive");
+    }
+    
     Col result = new Col(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1034,8 +1040,14 @@ public class Arma {
    * 
    * @param A The row vector
    * @param p The power
+   * 
+   * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Row pow(final Row A, final int p) {
+  public static Row pow(final Row A, final int p) throws RuntimeException {
+    if(p < 0) {
+      throw new RuntimeException("The power (" + p + ") must be positive");
+    }
+    
     Row result = new Row(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1046,8 +1058,14 @@ public class Arma {
    * 
    * @param A The matrix
    * @param p The power
+   * 
+   * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Mat pow(final Mat A, final int p) {
+  public static Mat pow(final Mat A, final int p) throws RuntimeException {
+    if(p < 0) {
+      throw new RuntimeException("The power (" + p + ") must be positive");
+    }
+    
     Mat result = new Mat(A.n_rows, A.n_cols);
     pow(result._data, A._data, p);
     return result;
@@ -5422,7 +5440,7 @@ public class Arma {
     if (!X.is_square()) {
       return false;
     }
-    
+
     R.inPlace(Op.EQUAL, X);
 
     intW info = new intW(0);
@@ -5567,7 +5585,7 @@ public class Arma {
     if (!A.is_square()) {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must be square.");
     }
-    
+
     Mat B = new Mat();
 
     if (!inv_sympd(B, A)) {
@@ -5592,7 +5610,7 @@ public class Arma {
     if (!A.is_square()) {
       return false;
     }
-    
+
     B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 

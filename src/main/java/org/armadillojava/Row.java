@@ -132,12 +132,12 @@ public class Row extends AbstractVector {
     copy_size(view);
 
     view.iteratorReset();
-    for (int n = 1; n < n_elem; n++) {
+    for (int n = 0; n < n_elem; n++) {
       _data[n] = view._data[view.iteratorNext()];
     }
   }
 
-  public void copy_size(final AbstractView vec) {
+  protected void copy_size(final AbstractView vec) {
     set_size(vec.n_elem);
   }
 

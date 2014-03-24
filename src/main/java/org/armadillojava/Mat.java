@@ -130,7 +130,7 @@ public class Mat extends AbstractMat {
     }
   }
 
-  public void copy_size(final AbstractView A) {
+  protected void copy_size(final AbstractView A) {
     set_size(A.n_rows, A.n_cols);
   }
 

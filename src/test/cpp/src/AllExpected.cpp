@@ -14,15 +14,34 @@
 #include <iostream>
 // EXIT_SUCCESS
 
-#include <ExpectedOOMat.hpp>
+#include <ExpectedGenMat.cpp>
+using armadilloJava::ExpectedGenMat;
+
+#include <ExpectedGenMatExp.cpp>
+using armadilloJava::ExpectedGenMatExp;
+
+#include <ExpectedOOMat.cpp>
 using armadilloJava::ExpectedOOMat;
 
-#include <ExpectedDatum.hpp>
+#include <ExpectedGenColVec.cpp>
+using armadilloJava::ExpectedGenColVec;
+
+#include <ExpectedGenRowVec.cpp>
+using armadilloJava::ExpectedGenRowVec;
+
+#include <ExpectedDatum.cpp>
 using armadilloJava::ExpectedDatum;
 
 int main() {
+  ExpectedGenMat();
+  ExpectedGenMatExp();
   ExpectedOOMat();
+  ExpectedGenColVec();
+  ExpectedGenRowVec();
+
   ExpectedDatum();
+
+
 
   return EXIT_SUCCESS;
 }

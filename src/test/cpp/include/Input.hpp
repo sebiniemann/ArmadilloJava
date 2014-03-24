@@ -13,11 +13,11 @@
  ******************************************************************************/
 #pragma once
 
-#include <utility>
-using std::pair;
-
 #include <string>
 using std::string;
+
+#include <utility>
+using std::pair;
 
 #include <vector>
 using std::vector;
@@ -50,6 +50,7 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getNumRows();
       static vector<pair<string, void*>> getNormal();
       static vector<pair<string, void*>> getDim();
+      static vector<pair<string, void*>> getExp();
       static vector<pair<string, void*>> getMatNormInt();
       static vector<pair<string, void*>> getVecNormInt();
       static vector<pair<string, void*>> getGenDouble();

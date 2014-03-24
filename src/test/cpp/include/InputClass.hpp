@@ -26,6 +26,7 @@ namespace armadilloJava
     NumRows,
     Normal,
     Dim,
+    Exp,
     MatNormInt,
     VecNormInt,
     GenDouble,

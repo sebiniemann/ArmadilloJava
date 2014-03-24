@@ -19,6 +19,6 @@ using arma::raw_ascii;
 
 namespace armadilloJava {
   void Expected::save(const string& filename, const Mat<double>& expected) {
-    expected.save("../data/expected/" + filename, raw_ascii);
+    expected.save("../data/expected/" + filename + _fileSuffix + ".mat", raw_ascii);
   }
 }

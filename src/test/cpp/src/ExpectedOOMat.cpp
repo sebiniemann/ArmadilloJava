@@ -11,15 +11,9 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-#include <ExpectedOOMat.hpp>
-using armadilloJava::ExpectedOOMat;
-
 #include <iostream>
 using std::cout;
 using std::endl;
-
-#include <string>
-using std::string;
 
 #include <utility>
 using std::pair;
@@ -30,28 +24,41 @@ using armadilloJava::InputClass;
 #include <Input.hpp>
 using armadilloJava::Input;
 
+#include <armadillo>
+using arma::Mat;
+using arma::as_scalar;
+
+#include <Expected.hpp>
+using armadilloJava::Expected;
+
 namespace armadilloJava {
-  ExpectedOOMat::ExpectedOOMat() {
-    //vector<vector<void*>> inputs = Input::getTestParameters({InputClass::OOMat});
-    vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::ElemInd});
+  class ExpectedOOMat : public Expected {
+    public:
+      ExpectedOOMat() {
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OOMat});
 
-    for (vector<pair<string, void*>> input : inputs) {
-      int n = 0;
-      for (pair<string, void*> value : input) {
-        switch (n) {
-          case 0:
-//            _OOMat = *static_cast<Mat<double>*>(value);
-//            _double = *static_cast<double*>(value.second);
-              _int = *static_cast<int*>(value.second);
-            break;
+          for (vector<pair<string, void*>> input : inputs) {
+            _fileSuffix = "";
+
+            int n = 0;
+            for (pair<string, void*> value : input) {
+              switch (n) {
+                case 0:
+                  _fileSuffix += value.first;
+                  _OOMat = *static_cast<Mat<double>*>(value.second);
+                  break;
+              }
+            }
+
+            expectedAs_scalar();
+          }
         }
+
+    protected:
+      Mat<double> _OOMat;
+
+      void expectedAs_scalar() {
+        save("as_scalar", Mat<double>({as_scalar(_OOMat)}));
       }
-
-      as_scalar();
-    }
-  }
-
-  void ExpectedOOMat::as_scalar() {
-    cout << _int << endl;
-  }
+  };
 }

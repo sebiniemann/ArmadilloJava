@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Sebastian Niemann <niemann@sra.uni-hannovr.de>
  */
-public class TestDatum {
+public class TestDatum extends TestClass {
 
   /**
    * Test method for {@link arma.is(closeTo(Datum}.
@@ -33,8 +33,7 @@ public class TestDatum {
    */
   @Test
   public void test() throws IOException {
-    Mat expected = new Mat();
-    expected.load("./src/test/data/expected/datum.mat");
+    Mat expected = load("datum");
 
     double delta = 1e-12;
     

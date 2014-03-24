@@ -132,7 +132,7 @@ public class Col extends AbstractVector {
     copy_size(view);
 
     view.iteratorReset();
-    for (int n = 1; n < n_elem; n++) {
+    for (int n = 0; n < n_elem; n++) {
       _data[n] = view._data[view.iteratorNext()];
     }
   }

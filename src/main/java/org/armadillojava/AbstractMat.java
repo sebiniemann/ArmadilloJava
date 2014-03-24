@@ -685,8 +685,8 @@ abstract class AbstractMat {
     _data = new double[n_elem];
 
     int n = 0;
-    for (int i = 0; i < n_rows; i++) {
-      for (int j = 0; j < n_cols; j++) {
+    for (int j = 0; j < n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
         _data[n++] = matrix.get(i)[j];
       }
     }
@@ -2839,7 +2839,7 @@ abstract class AbstractMat {
     for (int i = 0; i < n_rows; i++) {
       output += " ";
 
-      for (int j = 0; j < n_rows; j++) {
+      for (int j = 0; j < n_cols; j++) {
         double value = _data[i + j * n_rows];
         if (Double.isInfinite(value)) {
           String sign = "";

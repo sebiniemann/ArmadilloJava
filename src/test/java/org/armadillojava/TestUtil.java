@@ -36,16 +36,16 @@ public class TestUtil {
       double a = A.at(n);
       double b = B.at(n);
 
-      if (Double.isInfinite(a)) {
+      if (Double.isInfinite(a) || Double.isNaN(a)) {
         assertThat("The values as position " + n + "did not match.", a, is(b));
       } else {
-        assertThat("The values as position " + n + "did not match.", a, is(closeTo(b, delta)));
+        assertThat("The values as position " + n + "did not match.", a, is(closeTo(b, Math.max(1, Math.abs(b)) * delta)));
       }
     }
   }
   
   public static double globalDelta(AbstractMat A, double delta) {
-    return Math.max(1, A.max()) * delta;
+    return Math.max(1, Math.abs(A.max())) * delta;
   }
 }
 

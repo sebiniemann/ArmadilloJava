@@ -13,15 +13,17 @@
  ******************************************************************************/
 #pragma once
 
-#include <armadillo>
-using arma::Mat;
-
 #include <string>
 using std::string;
+
+#include <armadillo>
+using arma::Mat;
 
 namespace armadilloJava {
   class Expected {
     protected:
+      string _fileSuffix;
+
       void save(const string& filename, const Mat<double>& result);
   };
 }

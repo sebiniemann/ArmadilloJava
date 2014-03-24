@@ -30,4 +30,9 @@ public class Size {
     n_cols = matrix.n_cols;
   }
 
+  Size(final int n_rows, final int n_cols) {
+    this.n_rows = n_rows;
+    this.n_cols = n_cols;
+  }
+
 }
