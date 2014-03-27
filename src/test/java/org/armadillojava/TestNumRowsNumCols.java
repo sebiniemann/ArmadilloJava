@@ -13,7 +13,7 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.armadillojava.TestUtil.*;
+import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 

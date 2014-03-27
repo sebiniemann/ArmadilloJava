@@ -81,6 +81,7 @@ using arma::qr;
 using arma::qr_econ;
 using arma::svd;
 using arma::svd_econ;
+using arma::accu;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -168,6 +169,7 @@ namespace armadilloJava {
             expectedSvd_econ();
             expectedNegate();
             expectedReciprocal();
+            expectedAccu();
           }
 
           cout << "done." << endl;
@@ -553,6 +555,12 @@ namespace armadilloJava {
       void expectedReciprocal() {
         cout << "- Compute expectedReciprocal() ... ";
         save("reciprocal", 1/_genMat);
+        cout << "done." << endl;
+      }
+
+      void expectedAccu() {
+        cout << "- Compute expectedAccu() ... ";
+        save("accu", Mat<double>({accu(_genMat)}));
         cout << "done." << endl;
       }
   };

@@ -13,9 +13,9 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.armadillojava.TestUtil.*;
+import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;

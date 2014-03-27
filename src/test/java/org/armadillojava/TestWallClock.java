@@ -13,7 +13,9 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +37,7 @@ public class TestWallClock {
     for (int n = 100; n < 1000; n += 100) {
       WallClock.tic();
       TimeUnit.MILLISECONDS.sleep(n);
-      assertEquals(n / 1000.0, WallClock.toc(), 0.2);
+      assertThat(n / 1000.0, is(closeTo(WallClock.toc(), 0.2)));
     }
   }
 }

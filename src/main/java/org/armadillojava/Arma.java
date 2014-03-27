@@ -523,11 +523,20 @@ public class Arma {
     Mat result = new Mat(A.n_elem, A.n_elem);
 
     new ViewDiag(result, 0).fill(A._data[0]);
-    for (int n = 1; n < A.n_elem; n++) {
-      double value = A._data[n];
-
-      new ViewDiag(result, A.n_elem - n).fill(value);
-      new ViewDiag(result, -n).fill(value);
+    if(A.is_rowvec()) {
+      for (int n = 1; n < A.n_elem; n++) {
+        double value = A._data[n];
+  
+        new ViewDiag(result, n).fill(value);
+        new ViewDiag(result, n - A.n_elem).fill(value);
+      }
+    } else {
+      for (int n = 1; n < A.n_elem; n++) {
+        double value = A._data[n];
+  
+        new ViewDiag(result, A.n_elem - n).fill(value);
+        new ViewDiag(result, -n).fill(value);
+      }
     }
 
     return result;
@@ -2295,7 +2304,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T min(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2312,11 +2321,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T min(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2327,10 +2339,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2338,10 +2346,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2410,7 +2414,7 @@ public class Arma {
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T max(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2427,11 +2431,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T max(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2442,10 +2449,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2453,10 +2456,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2531,7 +2530,7 @@ public class Arma {
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T prod(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2548,11 +2547,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T prod(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2563,10 +2565,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2574,10 +2572,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2623,7 +2617,7 @@ public class Arma {
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T sum(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2640,11 +2634,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T sum(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2655,10 +2652,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2666,10 +2659,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2708,7 +2697,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T mean(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2725,11 +2714,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T mean(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2740,10 +2732,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2751,10 +2739,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2773,7 +2757,7 @@ public class Arma {
    * 
    * @param V The vector
    * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static double median(final AbstractVector V) throws RuntimeException {
     /*
@@ -2805,7 +2789,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T median(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2822,11 +2806,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T median(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2837,10 +2824,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         result.set_size(X.n_cols);
 
         for (int j = 0; j < X.n_cols; j++) {
@@ -2851,10 +2834,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         result.set_size(X.n_rows);
 
         for (int i = 0; i < X.n_rows; i++) {
@@ -2930,7 +2909,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T stddev(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -2948,7 +2927,7 @@ public class Arma {
    * @param X The matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T stddev(final Class<T> return_type, final Mat X, final int norm_type) throws RuntimeException {
@@ -2968,12 +2947,15 @@ public class Arma {
    * @param norm_type The normalisation
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T stddev(final Class<T> return_type, Mat X, final int norm_type, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -2987,10 +2969,6 @@ public class Arma {
       case 1:
         switch (dim) {
           case 0:
-            if (X.n_rows < 1) {
-              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-            }
-
             result.set_size(X.n_cols);
 
             for (int j = 0; j < X.n_cols; j++) {
@@ -2998,10 +2976,6 @@ public class Arma {
             }
             break;
           case 1:
-            if (X.n_cols < 1) {
-              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-            }
-
             result.set_size(X.n_rows);
 
             for (int i = 0; i < X.n_rows; i++) {
@@ -3091,7 +3065,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -3109,7 +3083,7 @@ public class Arma {
    * @param X The matrix
    * @param norm_type The normalisation
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X, final int norm_type) throws RuntimeException {
@@ -3129,12 +3103,15 @@ public class Arma {
    * @param norm_type The normalisation
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T var(final Class<T> return_type, final Mat X, final int norm_type, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -3148,10 +3125,6 @@ public class Arma {
       case 1:
         switch (dim) {
           case 0:
-            if (X.n_rows < 1) {
-              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-            }
-
             result.set_size(X.n_cols);
 
             for (int j = 0; j < X.n_cols; j++) {
@@ -3159,10 +3132,6 @@ public class Arma {
             }
             break;
           case 1:
-            if (X.n_cols < 1) {
-              throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-            }
-
             result.set_size(X.n_rows);
 
             for (int i = 0; i < X.n_rows; i++) {
@@ -3218,7 +3187,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -3236,11 +3205,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T all(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -3251,10 +3223,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         /*
          * All uninitialised matrices are already equal to a zero matrix.
          */
@@ -3267,10 +3235,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         /*
          * All uninitialised matrices are already equal to a zero matrix.
          */
@@ -3327,7 +3291,7 @@ public class Arma {
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static <T extends AbstractVector> T any(final Class<T> return_type, final Mat X) throws RuntimeException {
     /*
@@ -3346,11 +3310,14 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static <T extends AbstractVector> T any(final Class<T> return_type, final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     T result;
 
     try {
@@ -3361,10 +3328,6 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         /*
          * All uninitialised matrices are already equal to a zero matrix.
          */
@@ -3377,10 +3340,6 @@ public class Arma {
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         /*
          * All uninitialised matrices are already equal to a zero matrix.
          */
@@ -4083,8 +4042,7 @@ public class Arma {
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static Mat cumsum(final Mat X) throws RuntimeException {
@@ -4101,28 +4059,23 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static Mat cumsum(final Mat X, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
       case 0:
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
         for (int j = 0; j < X.n_cols; j++) {
           cumsum(new ViewSubCol(result, j), new ViewSubCol(X, j));
         }
         break;
       case 1:
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
         for (int i = 0; i < X.n_rows; i++) {
           cumsum(new ViewSubRow(result, i), new ViewSubRow(X, i));
         }
@@ -4291,116 +4244,15 @@ public class Arma {
     return result;
   }
 
-  protected static void hist(final double[] result, final double[] V, final int n_bins) {
-    double minimum = V[0];
-    double maximum = V[0];
-    for (int n = 1; n < V.length; n++) {
-      double value = V[n];
-      minimum = Math.min(minimum, value);
-      maximum = Math.max(maximum, value);
-    }
-
-    if (Double.isInfinite(minimum)) {
-      minimum = -Double.MAX_VALUE;
-    }
-
-    if (Double.isInfinite(maximum)) {
-      maximum = Double.MAX_VALUE;
-    }
-
-    double[] centers = new double[n_bins];
-    double stepLength = (maximum - minimum) / (double) n_bins;
-    for (int n = 0; n < n_bins; n++) {
-      /*
-       * While increasing the value step by step per stepLength will be faster, it will also reduce the precision.
-       */
-      centers[n] = minimum + stepLength * (0.5 + n);
-    }
-
-    hist(result, V, centers);
-  }
-
-  /**
-   * Returns the histogramm of the provided vector by using 10 uniformly distributed bins placed in regards to the range
-   * of values within the vector.
-   * 
-   * @param V The vector
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Col hist(final Col V) throws RuntimeException {
-    return hist(V, 10);
-  }
-
-  /**
-   * Returns the histogramm of the provided vector by using the specified number of uniformly distributed bins placed in
-   * regards to the range of values within the vector.
-   * 
-   * @param V The vector
-   * @param n_bins The number of bins
-   * 
-   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Col hist(final Col V, final int n_bins) throws RuntimeException, IllegalArgumentException {
-    if (n_bins < 0) {
-      throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
-    }
-
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Col result = new Col(n_bins);
-    hist(result._data, V._data, n_bins);
-    return result;
-  }
-
-  /**
-   * Returns the histogramm of the provided vector by using 10 uniformly distributed bins placed in regards to the range
-   * of values within the vector.
-   * 
-   * @param V The vector
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Row hist(final Row V) throws RuntimeException {
-    return hist(V, 10);
-  }
-
-  /**
-   * Returns the histogramm of the provided vector by using the specified number of uniformly distributed bins placed in
-   * regards to the range of values within the vector.
-   * 
-   * @param V The vector
-   * @param n_bins The number of bins
-   * 
-   * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Row hist(final Row V, final int n_bins) throws RuntimeException, IllegalArgumentException {
-    if (n_bins < 0) {
-      throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
-    }
-
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Row result = new Row(n_bins);
-    hist(result._data, V._data, n_bins);
-    return result;
-  }
-
   /**
    * Returns the histogramm for each column of the provided matrix by using 10 uniformly distributed bins placed in
    * regards to the range of values within the matrix.
    * 
    * @param X The matrix
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat hist(final Mat X) throws RuntimeException {
+  public static Mat hist(final AbstractMat X) throws RuntimeException {
     return hist(X, 10);
   }
 
@@ -4412,9 +4264,9 @@ public class Arma {
    * @param n_bins The number of bins
    * 
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat hist(final Mat X, final int n_bins) throws NegativeArraySizeException, RuntimeException {
+  public static Mat hist(final AbstractMat X, final int n_bins) throws NegativeArraySizeException, RuntimeException {
     return hist(X, n_bins, 0);
   }
 
@@ -4422,8 +4274,7 @@ public class Arma {
    * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix by using
    * the specified number of uniformly distributed bins placed in regards to the range of values within the matrix.
    * <p>
-   * <b>Note:</b> The method behaves like {@link #hist(Col, int)} and {@link #hist(Row, int)} if the provided matrix is
-   * in the shape of a vector.
+   * <b>Note:</b> The specified dimension will be ignored if the provided matrix is in the shape of a vector.
    * 
    * @param X The matrix
    * @param n_bins The number of bins
@@ -4433,7 +4284,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(final Mat X, final int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
+  public static Mat hist(final AbstractMat X, final int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
     /*
      * The parameter "dim" and is validated within hist(Mat, AbstractMat, int).
      */
@@ -4444,12 +4295,6 @@ public class Arma {
 
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
-    }
-
-    if (X.is_rowvec()) {
-      return new Mat(hist(new Row(X), n_bins));
-    } else if (X.is_colvec()) {
-      return new Mat(hist(new Col(X), n_bins));
     }
 
     double minimum = X._data[0];
@@ -4513,97 +4358,69 @@ public class Arma {
   }
 
   /**
-   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin centers.
-   * 
-   * @param V The vector
-   * @param centers The bin centers
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Col hist(final Col V, final AbstractMat centers) throws RuntimeException {
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Col result = new Col(centers.n_elem);
-    hist(result._data, V._data, centers._data);
-    return result;
-  }
-
-  /**
-   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin centers.
-   * 
-   * @param V The vector
-   * @param centers The bin centers
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Row hist(final Row V, final AbstractMat centers) throws RuntimeException {
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Row result = new Row(centers.n_elem);
-    hist(result._data, V._data, centers._data);
-    return result;
-  }
-
-  /**
    * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin
    * centers.
    * 
    * @param X The matrix
    * @param centers The bin centers
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat hist(final Mat X, final AbstractMat centers) throws RuntimeException {
+  public static Mat hist(final AbstractMat X, final AbstractMat centers) throws RuntimeException {
     return hist(X, centers, 0);
   }
 
   /**
    * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix for the
    * provided, monotonically increasing bin centers.
+   * <p>
+   * <b>Note:</b> The specified dimension will be ignored if the provided matrix is in the shape of a vector.
    * 
    * @param X The matrix
    * @param centers The bin centers
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(final Mat X, final AbstractMat centers, final int dim) throws RuntimeException, IllegalArgumentException {
-    Mat result = new Mat();
-
-    switch (dim) {
-      case 0:
-        result.set_size(centers.n_elem, X.n_cols);
-
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
-        for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), centers));
-        }
-        break;
-      case 1:
-        result.set_size(X.n_rows, centers.n_elem);
-
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
-        for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), centers));
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+  public static Mat hist(final AbstractMat X, final AbstractMat centers, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
     }
 
-    return result;
+    Mat result = new Mat();
+
+    if (X.is_rowvec()) {
+      result.set_size(1, centers.n_elem);
+      hist(result._data, X._data, centers._data);
+      return result;
+    } else if (X.is_colvec()) {
+      result.set_size(centers.n_elem, 1);
+      hist(result._data, X._data, centers._data);
+      return result;
+    }
+    else {
+      switch (dim) {
+        case 0:
+          result.set_size(centers.n_elem, X.n_cols);
+
+          for (int j = 0; j < X.n_cols; j++) {
+            new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), centers));
+          }
+          break;
+        case 1:
+          result.set_size(X.n_rows, centers.n_elem);
+
+          for (int i = 0; i < X.n_rows; i++) {
+            new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), centers));
+          }
+          break;
+        default:
+          throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+      }
+
+      return result;
+    }
   }
 
   protected static void histc(final double[] result, final double[] V, final double[] edges) {
@@ -4632,50 +4449,14 @@ public class Arma {
   }
 
   /**
-   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin edges.
-   * 
-   * @param V The vector
-   * @param centers The bin edges
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Col histc(final Col V, final AbstractMat edges) throws RuntimeException {
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Col result = new Col(edges.n_elem);
-    histc(result._data, V._data, edges._data);
-    return result;
-  }
-
-  /**
-   * Returns the histogramm of the provided vector for the provided, monotonically increasing bin edges.
-   * 
-   * @param V The vector
-   * @param centers The bin edges
-   * 
-   * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
-   */
-  public static Row histc(final Row V, final AbstractMat edges) throws RuntimeException {
-    if (V.is_empty()) {
-      throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
-    }
-
-    Row result = new Row(edges.n_elem);
-    histc(result._data, V._data, edges._data);
-    return result;
-  }
-
-  /**
    * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin edges.
    * 
    * @param X The matrix
    * @param centers The bin edges
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
-  public static Mat histc(final Mat X, final AbstractMat edges) throws RuntimeException {
+  public static Mat histc(final AbstractMat X, final AbstractMat edges) throws RuntimeException {
     return hist(X, edges, 0);
   }
 
@@ -4687,41 +4468,47 @@ public class Arma {
    * @param centers The bin edges
    * @param dim The dimension
    * 
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat histc(final Mat X, final AbstractMat edges, final int dim) throws RuntimeException, IllegalArgumentException {
-    Mat result = new Mat();
-
-    switch (dim) {
-      case 0:
-        result.set_size(edges.n_elem, X.n_cols);
-
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
-        for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, histc(X.col(j), edges));
-        }
-        break;
-      case 1:
-        result.set_size(X.n_rows, edges.n_elem);
-
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
-        for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, histc(X.row(i), edges));
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+  public static Mat histc(final AbstractMat X, final AbstractMat edges, final int dim) throws RuntimeException, IllegalArgumentException {
+    if (X.is_empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
     }
 
-    return result;
+    Mat result = new Mat();
+
+    if (X.is_rowvec()) {
+      result.set_size(1, edges.n_elem);
+      histc(result._data, X._data, edges._data);
+      return result;
+    } else if (X.is_colvec()) {
+      result.set_size(edges.n_elem, 1);
+      histc(result._data, X._data, edges._data);
+      return result;
+    }
+    else {
+      switch (dim) {
+        case 0:
+          result.set_size(edges.n_elem, X.n_cols);
+
+          for (int j = 0; j < X.n_cols; j++) {
+            new ViewSubCol(result, j).inPlace(Op.EQUAL, histc(X.col(j), edges));
+          }
+          break;
+        case 1:
+          result.set_size(X.n_rows, edges.n_elem);
+
+          for (int i = 0; i < X.n_rows; i++) {
+            new ViewSubRow(result, i).inPlace(Op.EQUAL, histc(X.row(i), edges));
+          }
+          break;
+        default:
+          throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+      }
+
+      return result;
+    }
   }
 
   /**
@@ -5122,7 +4909,7 @@ public class Arma {
    * @param V The vector
    */
   public static Col sort_index(final Col V) {
-    return sort(V, "ascend");
+    return stable_sort_index(V, "ascend");
   }
 
   /**
@@ -5137,7 +4924,7 @@ public class Arma {
     }
 
     Col result = new Col(V.n_elem);
-    sort(result._data, V._data, sort_direction);
+    stable_sort_index(result._data, V._data, sort_direction);
     return result;
   }
 
@@ -5148,7 +4935,7 @@ public class Arma {
    * @param V The vector
    */
   public static Row sort_index(final Row V) {
-    return sort(V, "ascend");
+    return stable_sort_index(V, "ascend");
   }
 
   /**
@@ -5163,7 +4950,7 @@ public class Arma {
     }
 
     Row result = new Row(V.n_elem);
-    sort(result._data, V._data, sort_direction);
+    stable_sort_index(result._data, V._data, sort_direction);
     return result;
   }
 
@@ -5196,7 +4983,7 @@ public class Arma {
    * @param V The vector
    */
   public static Col stable_sort_index(final Col V) {
-    return sort(V, "ascend");
+    return stable_sort_index(V, "ascend");
   }
 
   /**
@@ -5212,7 +4999,7 @@ public class Arma {
     }
 
     Col result = new Col(V.n_elem);
-    sort(result._data, V._data, sort_direction);
+    stable_sort_index(result._data, V._data, sort_direction);
     return result;
   }
 
@@ -5223,7 +5010,7 @@ public class Arma {
    * @param V The vector
    */
   public static Row stable_sort_index(final Row V) {
-    return sort(V, "ascend");
+    return stable_sort_index(V, "ascend");
   }
 
   /**
@@ -5239,7 +5026,7 @@ public class Arma {
     }
 
     Row result = new Row(V.n_elem);
-    sort(result._data, V._data, sort_direction);
+    stable_sort_index(result._data, V._data, sort_direction);
     return result;
   }
 

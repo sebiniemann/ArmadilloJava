@@ -13,7 +13,11 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.armadillojava.TestUtil.*;
+import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertThat;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -192,6 +196,191 @@ public class TestGenRowVec extends TestClass {
   @Test
   public void testAtanh() throws IOException {
     assertMatEquals(Arma.atanh(_genRowVec), load("atanh"));
+  }
+
+  @Test
+  public void testCumsum() throws IOException {
+    assertMatEquals(Arma.cumsum(_genRowVec), load("cumsum"));
+  }
+
+  @Test
+  public void testHist() throws IOException {
+    assertMatEquals(Arma.hist(_genRowVec), load("hist"));
+  }
+
+  @Test
+  public void testSort() throws IOException {
+    assertMatEquals(Arma.sort(_genRowVec), load("sort"));
+  }
+
+  @Test
+  public void testSort_index() throws IOException {
+    assertMatEquals(Arma.sort_index(_genRowVec), load("sort_index"));
+  }
+
+  @Test
+  public void testStable_sort_index() throws IOException {
+    assertMatEquals(Arma.stable_sort_index(_genRowVec), load("stable_sort_index"));
+  }
+
+  @Test
+  public void testTrans() throws IOException {
+    assertMatEquals(Arma.trans(_genRowVec), load("trans"));
+  }
+
+  @Test
+  public void testUnique() throws IOException {
+    assertMatEquals(Arma.unique(_genRowVec), load("unique"));
+  }
+
+  @Test
+  public void testNegate() throws IOException {
+    assertMatEquals(Arma.negate(_genRowVec), load("negate"));
+  }
+
+  @Test
+  public void testReciprocal() throws IOException {
+    assertMatEquals(Arma.reciprocal(_genRowVec), load("reciprocal"));
+  }
+
+  @Test
+  public void testToeplitz() throws IOException {
+    assertMatEquals(Arma.toeplitz(_genRowVec), load("toeplitz"));
+  }
+
+  @Test
+  public void testCirc_toeplitz() throws IOException {
+    System.out.println("debug - " + _fileSuffix);
+    System.out.println(_genRowVec);
+    System.out.println(Arma.circ_toeplitz(_genRowVec));
+    System.out.println(load("circ_toeplitz"));
+    
+    assertMatEquals(Arma.circ_toeplitz(_genRowVec), load("circ_toeplitz"));
+  }
+
+  @Test
+  public void testAccu() throws IOException {
+    double expected = load("accu")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.accu(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.accu(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMin() throws IOException {
+    double expected = load("min")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.min(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.min(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMax() throws IOException {
+    double expected = load("max")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.max(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.max(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testProd() throws IOException {
+    double expected = load("prod")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.prod(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.prod(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testSum() throws IOException {
+    double expected = load("sum")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.sum(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.sum(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMean() throws IOException {
+    double expected = load("mean")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.mean(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.mean(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMedian() throws IOException {
+    double expected = load("median")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.median(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.median(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testStddev() throws IOException {
+    double expected = load("stddev")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.stddev(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.stddev(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testVar() throws IOException {
+    double expected = load("var")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.var(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.var(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testCor() throws IOException {
+    double expected = load("cor")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.cor(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.cor(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testCov() throws IOException {
+    double expected = load("cov")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.cov(_genRowVec), is(expected));
+    } else {
+      assertThat(Arma.cov(_genRowVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testDiagmat() throws IOException {
+    assertMatEquals(Arma.diagmat(_genRowVec), load("diagmat"));
+  }
+
+  @Test
+  public void testIs_finite() throws IOException {
+    int expected = (int) load("is_finite")._data[0];
+    if(Arma.is_finite(_genRowVec)) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
   }
 
 }

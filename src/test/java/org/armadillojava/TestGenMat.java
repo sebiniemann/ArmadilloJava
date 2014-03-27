@@ -13,11 +13,11 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.number.IsCloseTo.*;
-import static org.armadillojava.TestUtil.*;
+import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -349,8 +349,17 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testPinv() throws IOException {
+  public void testPinvA() throws IOException {
     assertMatEquals(Arma.pinv(_genMat), load("pinv"), TestUtil.globalDelta(load("pinv"), 1e-12));
+  }
+
+  @Test
+  public void testPinvB() throws IOException {
+    Mat pinv = new Mat();
+    
+    Arma.pinv(pinv, _genMat);
+    
+    assertMatEquals(pinv, load("pinv"), TestUtil.globalDelta(load("pinv"), 1e-12));
   }
 
   @Test
@@ -405,7 +414,21 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testSvd() throws IOException {
+  public void testSvdA() throws IOException {
+    assertMatEquals(Arma.svd(_genMat), load("svd"));
+  }
+
+  @Test
+  public void testSvdB() throws IOException {
+    Col s = new Col();
+
+    Arma.svd(s, _genMat);
+
+    assertMatEquals(s, load("svd"));
+  }
+
+  @Test
+  public void testSvdC() throws IOException {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();
@@ -443,4 +466,15 @@ public class TestGenMat extends TestClass {
   public void testReciprocal() throws IOException {
     assertMatEquals(Arma.reciprocal(_genMat), load("reciprocal"));
   }
+
+  @Test
+  public void testAccu() throws IOException {
+    double expected = load("accu")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.accu(_genMat), is(expected));
+    } else {
+      assertThat(Arma.accu(_genMat), is(closeTo(expected, Math.abs(expected) * 1e-10)));
+    }
+  }
+  
 }

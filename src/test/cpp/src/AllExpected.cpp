@@ -27,6 +27,8 @@ using arma::svd;
 using arma::Mat;
 using arma::zeros;
 
+#include <ExpectedGenMatDim.cpp>
+using armadilloJava::ExpectedGenMatDim;
 
 #include <ExpectedNumRowsNumCols.cpp>
 using armadilloJava::ExpectedNumRowsNumCols;
@@ -55,6 +57,7 @@ int main() {
   set_stream_err1(logfile);
   set_stream_err2(logfile);
 
+  ExpectedGenMatDim();
   ExpectedNumRowsNumCols();
   ExpectedGenMat();
   ExpectedGenMatExp();

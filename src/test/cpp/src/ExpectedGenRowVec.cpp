@@ -22,7 +22,10 @@ using std::endl;
 using std::pair;
 
 #include <armadillo>
+using arma::Mat;
 using arma::Row;
+using arma::uword;
+using arma::raw_ascii;
 using arma::abs;
 using arma::eps;
 using arma::exp;
@@ -51,6 +54,28 @@ using arma::tan;
 using arma::atan;
 using arma::tanh;
 using arma::atanh;
+using arma::cumsum;
+using arma::hist;
+using arma::sort;
+using arma::sort_index;
+using arma::stable_sort_index;
+using arma::trans;
+using arma::unique;
+using arma::toeplitz;
+using arma::circ_toeplitz;
+using arma::accu;
+using arma::min;
+using arma::max;
+using arma::prod;
+using arma::sum;
+using arma::mean;
+using arma::median;
+using arma::stddev;
+using arma::var;
+using arma::cor;
+using arma::cov;
+using arma::diagmat;
+using arma::is_finite;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -109,13 +134,37 @@ namespace armadilloJava {
           expectedAtan();
           expectedTanh();
           expectedAtanh();
+          expectedCumsum();
+          expectedHist();
+          expectedSort();
+          expectedSort_index();
+          expectedStable_sort_index();
+          expectedTrans();
+          expectedUnique();
+          expectedNegate();
+          expectedReciprocal();
+          expectedToeplitz();
+          expectedCirc_toeplitz();
+          expectedAccu();
+          expectedMin();
+          expectedMax();
+          expectedProd();
+          expectedSum();
+          expectedMean();
+          expectedMedian();
+          expectedStddev();
+          expectedVar();
+          expectedCor();
+          expectedCov();
+          expectedDiagmat();
+          expectedIs_finite();
         }
 
         cout << "done." << endl;
       }
 
     protected:
-      Mat<double> _genRowVec;
+      Row<double> _genRowVec;
 
       void expectedAbs() {
         cout << "- Compute expectedAbs() ... ";
@@ -276,6 +325,162 @@ namespace armadilloJava {
       void expectedAtanh() {
         cout << "- Compute expectedAtanh() ... ";
         save("atanh", atanh(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedCumsum() {
+        cout << "- Compute expectedCumsum() ... ";
+        save("cumsum", cumsum(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedHist() {
+        cout << "- Compute expectedHist() ... ";
+        // Unable to convert the result of hist(...) to Mat<double>
+        Mat<uword> expected = hist(_genRowVec);
+        expected.save("../data/expected/hist" + _fileSuffix + ".mat", raw_ascii);
+        cout << "done." << endl;
+      }
+
+      void expectedSort() {
+        cout << "- Compute expectedSort() ... ";
+        save("sort", sort(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedSort_index() {
+        cout << "- Compute expectedSort_index() ... ";
+        // Unable to convert the result of hist(...) to Mat<double>
+        Mat<uword> expected = sort_index(_genRowVec);
+        expected.save("../data/expected/sort_index" + _fileSuffix + ".mat", raw_ascii);
+        cout << "done." << endl;
+      }
+
+      void expectedStable_sort_index() {
+        cout << "- Compute expectedStable_sort_index() ... ";
+        // Unable to convert the result of hist(...) to Mat<double>
+        Mat<uword> expected = stable_sort_index(_genRowVec);
+        expected.save("../data/expected/stable_sort_index" + _fileSuffix + ".mat", raw_ascii);
+        cout << "done." << endl;
+      }
+
+      void expectedTrans() {
+        cout << "- Compute expectedTrans() ... ";
+        save("trans", trans(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedUnique() {
+        cout << "- Compute expectedUnique() ... ";
+        save("unique", unique(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedNegate() {
+        cout << "- Compute expectedNegate() ... ";
+        save("negate", -_genRowVec);
+        cout << "done." << endl;
+      }
+
+      void expectedReciprocal() {
+        cout << "- Compute expectedReciprocal() ... ";
+        save("reciprocal", 1/_genRowVec);
+        cout << "done." << endl;
+      }
+
+      void expectedToeplitz() {
+        cout << "- Compute expectedToeplitz() ... ";
+        save("toeplitz", toeplitz(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedCirc_toeplitz() {
+        cout << "- Compute expectedCirc_toeplitz() ... ";
+        save("circ_toeplitz", circ_toeplitz(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedAccu() {
+        cout << "- Compute expectedAccu() ... ";
+        save("accu", Mat<double>({accu(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedMin() {
+        cout << "- Compute expectedMin() ... ";
+        save("min", Mat<double>({min(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedMax() {
+        cout << "- Compute expectedMax() ... ";
+        save("max", Mat<double>({max(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedProd() {
+        cout << "- Compute expectedProd() ... ";
+        save("prod", Mat<double>({prod(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedSum() {
+        cout << "- Compute expectedSum() ... ";
+        save("sum", Mat<double>({sum(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedMean() {
+        cout << "- Compute expectedMean() ... ";
+        save("mean", Mat<double>({mean(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedMedian() {
+        cout << "- Compute expectedMedian() ... ";
+        save("median", Mat<double>({median(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedStddev() {
+        cout << "- Compute expectedStddev() ... ";
+        save("stddev", Mat<double>({stddev(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedVar() {
+        cout << "- Compute expectedVar() ... ";
+        save("var", Mat<double>({var(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedCor() {
+        cout << "- Compute expectedCor() ... ";
+        save("cor", Mat<double>({cor(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedCov() {
+        cout << "- Compute expectedCov() ... ";
+        save("cov", Mat<double>({cov(_genRowVec)}));
+        cout << "done." << endl;
+      }
+
+      void expectedDiagmat() {
+        cout << "- Compute expectedDiagmat() ... ";
+        save("diagmat", diagmat(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedIs_finite() {
+        cout << "- Compute expectedIs_finite() ... ";
+
+        if(is_finite(_genRowVec)) {
+          save("is_finite", Mat<double>({1.0}));
+        } else {
+          save("is_finite", Mat<double>({0.0}));
+        }
+
         cout << "done." << endl;
       }
 

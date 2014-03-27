@@ -13,7 +13,10 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.armadillojava.TestUtil.*;
+import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,4 +197,184 @@ public class TestGenColVec extends TestClass {
     assertMatEquals(Arma.atanh(_genColVec), load("atanh"));
   }
 
+  @Test
+  public void testCumsum() throws IOException {
+    assertMatEquals(Arma.cumsum(_genColVec), load("cumsum"));
+  }
+
+  @Test
+  public void testHist() throws IOException {
+    assertMatEquals(Arma.hist(_genColVec), load("hist"));
+  }
+
+  @Test
+  public void testSort() throws IOException {
+    assertMatEquals(Arma.sort(_genColVec), load("sort"));
+  }
+
+  @Test
+  public void testSort_index() throws IOException {
+    assertMatEquals(Arma.sort_index(_genColVec), load("sort_index"));
+  }
+
+  @Test
+  public void testStable_sort_index() throws IOException {
+    assertMatEquals(Arma.stable_sort_index(_genColVec), load("stable_sort_index"));
+  }
+
+  @Test
+  public void testTrans() throws IOException {
+    assertMatEquals(Arma.trans(_genColVec), load("trans"));
+  }
+
+  @Test
+  public void testUnique() throws IOException {
+    assertMatEquals(Arma.unique(_genColVec), load("unique"));
+  }
+
+  @Test
+  public void testNegate() throws IOException {
+    assertMatEquals(Arma.negate(_genColVec), load("negate"));
+  }
+
+  @Test
+  public void testReciprocal() throws IOException {
+    assertMatEquals(Arma.reciprocal(_genColVec), load("reciprocal"));
+  }
+
+  @Test
+  public void testToeplitz() throws IOException {
+    assertMatEquals(Arma.toeplitz(_genColVec), load("toeplitz"));
+  }
+
+  @Test
+  public void testCirc_toeplitz() throws IOException {
+    assertMatEquals(Arma.circ_toeplitz(_genColVec), load("circ_toeplitz"));
+  }
+
+  @Test
+  public void testAccu() throws IOException {
+    double expected = load("accu")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.accu(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.accu(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMin() throws IOException {
+    double expected = load("min")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.min(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.min(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMax() throws IOException {
+    double expected = load("max")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.max(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.max(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testProd() throws IOException {
+    double expected = load("prod")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.prod(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.prod(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testSum() throws IOException {
+    double expected = load("sum")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.sum(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.sum(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMean() throws IOException {
+    double expected = load("mean")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.mean(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.mean(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testMedian() throws IOException {
+    double expected = load("median")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.median(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.median(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testStddev() throws IOException {
+    double expected = load("stddev")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.stddev(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.stddev(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testVar() throws IOException {
+    double expected = load("var")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.var(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.var(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testCor() throws IOException {
+    double expected = load("cor")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.cor(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.cor(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testCov() throws IOException {
+    double expected = load("cov")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(Arma.cov(_genColVec), is(expected));
+    } else {
+      assertThat(Arma.cov(_genColVec), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+    }
+  }
+
+  @Test
+  public void testDiagmat() throws IOException {
+    assertMatEquals(Arma.diagmat(_genColVec), load("diagmat"));
+  }
+
+  @Test
+  public void testIs_finite() throws IOException {
+    int expected = (int) load("is_finite")._data[0];
+    if(Arma.is_finite(_genColVec)) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
 }

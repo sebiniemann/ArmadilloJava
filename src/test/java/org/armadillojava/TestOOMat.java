@@ -13,10 +13,10 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.junit.Assert.assertThat;
 import static org.armadillojava.TestUtil.assertMatEquals;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.number.IsCloseTo.*;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.io.IOException;
 import java.util.ArrayList;
