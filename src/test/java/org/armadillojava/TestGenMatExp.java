@@ -1,6 +1,6 @@
 package org.armadillojava;
 
-import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.armadillojava.TestUtil.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +42,6 @@ public class TestGenMatExp extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString + _expString;
-    System.out.println(_fileSuffix);
   }
 
   @Test

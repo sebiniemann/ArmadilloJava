@@ -11,8 +11,18 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
+#include <Expected.hpp>
+using armadilloJava::Expected;
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
 #include <utility>
 using std::pair;
+#include <armadillo>
+using arma::Mat;
+using arma::pow;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -20,17 +30,12 @@ using armadilloJava::InputClass;
 #include <Input.hpp>
 using armadilloJava::Input;
 
-#include <armadillo>
-using arma::Mat;
-using arma::pow;
-
-#include <Expected.hpp>
-using armadilloJava::Expected;
-
 namespace armadilloJava {
   class ExpectedGenMatExp : public Expected {
     public:
       ExpectedGenMatExp() {
+        cout << "Compute ExpectedGenMatExp(): " << endl;
+
         vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::Exp});
 
         for (vector<pair<string, void*>> input : inputs) {
@@ -51,8 +56,12 @@ namespace armadilloJava {
             ++n;
           }
 
+          cout << "Using input: " << _fileSuffix << endl;
+
           expectedPow();
         }
+
+        cout << "done." << endl;
       }
 
     protected:

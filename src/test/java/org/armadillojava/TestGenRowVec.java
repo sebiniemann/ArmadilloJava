@@ -1,6 +1,6 @@
 package org.armadillojava;
 
-import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.armadillojava.TestUtil.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenRowVec extends TestClass {
 
-  @Parameters(name = "{index}: _GenRowVec = {0}")
+  @Parameters(name = "{index}: _genRowVec = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
@@ -27,122 +27,122 @@ public class TestGenRowVec extends TestClass {
   }
 
   @Parameter(0)
-  public String _GenRowVecString;
+  public String _genRowVecString;
 
   @Parameter(1)
-  public Row    _GenRowVec;
+  public Row    _genRowVec;
 
   @Before
   public void before() {
-    _fileSuffix = _GenRowVecString;
+    _fileSuffix = _genRowVecString;
   }
 
   @Test  public void testAbs() throws IOException {
-    assertMatEquals(Arma.abs(_GenRowVec), load("abs"));
+    assertMatEquals(Arma.abs(_genRowVec), load("abs"));
   }
 
   @Test  public void testEps() throws IOException {
-    assertMatEquals(Arma.eps(_GenRowVec), load("eps"));
+    assertMatEquals(Arma.eps(_genRowVec), load("eps"));
   }
 
   @Test  public void testExp() throws IOException {
-    assertMatEquals(Arma.exp(_GenRowVec), load("exp"));
+    assertMatEquals(Arma.exp(_genRowVec), load("exp"));
   }
 
   @Test  public void testExp2() throws IOException {
-    assertMatEquals(Arma.exp2(_GenRowVec), load("exp2"));
+    assertMatEquals(Arma.exp2(_genRowVec), load("exp2"));
   }
 
   @Test  public void testExp10() throws IOException {
-    assertMatEquals(Arma.exp10(_GenRowVec), load("exp10"));
+    assertMatEquals(Arma.exp10(_genRowVec), load("exp10"));
   }
 
   @Test  public void testTrunc_exp() throws IOException {
-    assertMatEquals(Arma.trunc_exp(_GenRowVec), load("trunc_exp"));
+    assertMatEquals(Arma.trunc_exp(_genRowVec), load("trunc_exp"));
   }
 
   @Test  public void testLog() throws IOException {
-    assertMatEquals(Arma.log(_GenRowVec), load("log"));
+    assertMatEquals(Arma.log(_genRowVec), load("log"));
   }
 
   @Test  public void testLog2() throws IOException {
-    assertMatEquals(Arma.log2(_GenRowVec), load("log2"));
+    assertMatEquals(Arma.log2(_genRowVec), load("log2"));
   }
 
   @Test  public void testLog10() throws IOException {
-    assertMatEquals(Arma.log10(_GenRowVec), load("log10"));
+    assertMatEquals(Arma.log10(_genRowVec), load("log10"));
   }
 
   @Test  public void testTrunc_log() throws IOException {
-    assertMatEquals(Arma.trunc_log(_GenRowVec), load("trunc_log"));
+    assertMatEquals(Arma.trunc_log(_genRowVec), load("trunc_log"));
   }
 
   @Test  public void testSquare() throws IOException {
-    assertMatEquals(Arma.square(_GenRowVec), load("square"));
+    assertMatEquals(Arma.square(_genRowVec), load("square"));
   }
 
   @Test  public void testFloor() throws IOException {
-    assertMatEquals(Arma.floor(_GenRowVec), load("floor"));
+    assertMatEquals(Arma.floor(_genRowVec), load("floor"));
   }
 
   @Test  public void testCeil() throws IOException {
-    assertMatEquals(Arma.ceil(_GenRowVec), load("ceil"));
+    assertMatEquals(Arma.ceil(_genRowVec), load("ceil"));
   }
 
   @Test  public void testRound() throws IOException {
-    assertMatEquals(Arma.round(_GenRowVec), load("round"));
+    assertMatEquals(Arma.round(_genRowVec), load("round"));
   }
 
   @Test  public void testSign() throws IOException {
-    assertMatEquals(Arma.sign(_GenRowVec), load("sign"));
+    assertMatEquals(Arma.sign(_genRowVec), load("sign"));
   }
 
   @Test  public void testSin() throws IOException {
-    assertMatEquals(Arma.sin(_GenRowVec), load("sin"));
+    assertMatEquals(Arma.sin(_genRowVec), load("sin"));
   }
 
   @Test  public void testAsin() throws IOException {
-    assertMatEquals(Arma.asin(_GenRowVec), load("asin"));
+    assertMatEquals(Arma.asin(_genRowVec), load("asin"));
   }
 
   @Test  public void testSinh() throws IOException {
-    assertMatEquals(Arma.sinh(_GenRowVec), load("sinh"));
+    assertMatEquals(Arma.sinh(_genRowVec), load("sinh"));
   }
 
   @Test  public void testAsinh() throws IOException {
-    assertMatEquals(Arma.asinh(_GenRowVec), load("asinh"));
+    assertMatEquals(Arma.asinh(_genRowVec), load("asinh"));
   }
 
   @Test  public void testCos() throws IOException {
-    assertMatEquals(Arma.cos(_GenRowVec), load("cos"));
+    assertMatEquals(Arma.cos(_genRowVec), load("cos"));
   }
 
   @Test  public void testAcos() throws IOException {
-    assertMatEquals(Arma.acos(_GenRowVec), load("acos"));
+    assertMatEquals(Arma.acos(_genRowVec), load("acos"));
   }
 
   @Test  public void testCosh() throws IOException {
-    assertMatEquals(Arma.cosh(_GenRowVec), load("cosh"));
+    assertMatEquals(Arma.cosh(_genRowVec), load("cosh"));
   }
 
   @Test  public void testAcosh() throws IOException {
-    assertMatEquals(Arma.acosh(_GenRowVec), load("acosh"));
+    assertMatEquals(Arma.acosh(_genRowVec), load("acosh"));
   }
 
   @Test  public void testTan() throws IOException {
-    assertMatEquals(Arma.tan(_GenRowVec), load("tan"));
+    assertMatEquals(Arma.tan(_genRowVec), load("tan"));
   }
 
   @Test  public void testAtan() throws IOException {
-    assertMatEquals(Arma.atan(_GenRowVec), load("atan"));
+    assertMatEquals(Arma.atan(_genRowVec), load("atan"));
   }
 
   @Test  public void testTanh() throws IOException {
-    assertMatEquals(Arma.tanh(_GenRowVec), load("tanh"));
+    assertMatEquals(Arma.tanh(_genRowVec), load("tanh"));
   }
 
   @Test  public void testAtanh() throws IOException {
-    assertMatEquals(Arma.atanh(_GenRowVec), load("atanh"));
+    assertMatEquals(Arma.atanh(_genRowVec), load("atanh"));
   }
 
 }

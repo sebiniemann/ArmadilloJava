@@ -11,18 +11,15 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
+#include <Expected.hpp>
+using armadilloJava::Expected;
+
 #include <iostream>
 using std::cout;
 using std::endl;
 
 #include <utility>
 using std::pair;
-
-#include <InputClass.hpp>
-using armadilloJava::InputClass;
-
-#include <Input.hpp>
-using armadilloJava::Input;
 
 #include <armadillo>
 using arma::Col;
@@ -55,168 +52,231 @@ using arma::atan;
 using arma::tanh;
 using arma::atanh;
 
-#include <Expected.hpp>
-using armadilloJava::Expected;
+#include <InputClass.hpp>
+using armadilloJava::InputClass;
+
+#include <Input.hpp>
+using armadilloJava::Input;
 
 namespace armadilloJava {
   class ExpectedGenColVec : public Expected {
     public:
       ExpectedGenColVec() {
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenColVec});
+        cout << "Compute ExpectedGenColVec(): " << endl;
 
-          for (vector<pair<string, void*>> input : inputs) {
-            _fileSuffix = "";
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenColVec});
 
-            int n = 0;
-            for (pair<string, void*> value : input) {
-              switch (n) {
-                case 0:
-                  _fileSuffix += value.first;
-                  _GenColVec = *static_cast<Col<double>*>(value.second);
-                  break;
-              }
-              ++n;
+        for (vector<pair<string, void*>> input : inputs) {
+          _fileSuffix = "";
+
+          int n = 0;
+          for (pair<string, void*> value : input) {
+            switch (n) {
+              case 0:
+                _fileSuffix += value.first;
+                _genColVec = *static_cast<Col<double>*>(value.second);
+                break;
             }
-
-            expectedAbs();
-            expectedEps();
-            expectedExp();
-            expectedExp2();
-            expectedExp10();
-            expectedTrunc_exp();
-            expectedLog();
-            expectedLog2();
-            expectedLog10();
-            expectedTrunc_log();
-            expectedSquare();
-            expectedFloor();
-            expectedCeil();
-            expectedRound();
-            expectedSign();
-            expectedSin();
-            expectedAsin();
-            expectedSinh();
-            expectedAsinh();
-            expectedCos();
-            expectedAcos();
-            expectedCosh();
-            expectedAcosh();
-            expectedTan();
-            expectedAtan();
-            expectedTanh();
-            expectedAtanh();
+            ++n;
           }
+
+          cout << "Using input: " << _fileSuffix << endl;
+
+          expectedAbs();
+          expectedEps();
+          expectedExp();
+          expectedExp2();
+          expectedExp10();
+          expectedTrunc_exp();
+          expectedLog();
+          expectedLog2();
+          expectedLog10();
+          expectedTrunc_log();
+          expectedSquare();
+          expectedFloor();
+          expectedCeil();
+          expectedRound();
+          expectedSign();
+          expectedSin();
+          expectedAsin();
+          expectedSinh();
+          expectedAsinh();
+          expectedCos();
+          expectedAcos();
+          expectedCosh();
+          expectedAcosh();
+          expectedTan();
+          expectedAtan();
+          expectedTanh();
+          expectedAtanh();
         }
 
+        cout << "done." << endl;
+      }
+
     protected:
-      Mat<double> _GenColVec;
+      Mat<double> _genColVec;
 
       void expectedAbs() {
-        save("abs", abs(_GenColVec));
+        cout << "- Compute expectedAbs() ... ";
+        save("abs", abs(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedEps() {
-        save("eps", eps(_GenColVec));
+        cout << "- Compute expectedAbs() ... ";
+        save("eps", eps(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedExp() {
-        save("exp", exp(_GenColVec));
+        cout << "- Compute expectedExp() ... ";
+        save("exp", exp(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedExp2() {
-        save("exp2", exp2(_GenColVec));
+        cout << "- Compute expectedExp2() ... ";
+        save("exp2", exp2(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedExp10() {
-        save("exp10", exp10(_GenColVec));
+        cout << "- Compute expectedExp10() ... ";
+        save("exp10", exp10(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedTrunc_exp() {
-        save("trunc_exp", trunc_exp(_GenColVec));
+        cout << "- Compute expectedTrunc_exp() ... ";
+        save("trunc_exp", trunc_exp(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedLog() {
-        save("log", log(_GenColVec));
+        cout << "- Compute expectedLog() ... ";
+        save("log", log(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedLog2() {
-        save("log2", log2(_GenColVec));
+        cout << "- Compute expectedLog2() ... ";
+        save("log2", log2(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedLog10() {
-        save("log10", log10(_GenColVec));
+        cout << "- Compute expectedLog10() ... ";
+        save("log10", log10(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedTrunc_log() {
-        save("trunc_log", trunc_log(_GenColVec));
+        cout << "- Compute expectedTrunc_log() ... ";
+        save("trunc_log", trunc_log(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedSquare() {
-        save("square", square(_GenColVec));
+        cout << "- Compute expectedSquare() ... ";
+        save("square", square(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedFloor() {
-        save("floor", floor(_GenColVec));
+        cout << "- Compute expectedFloor() ... ";
+        save("floor", floor(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedCeil() {
-        save("ceil", ceil(_GenColVec));
+        cout << "- Compute expectedCeil() ... ";
+        save("ceil", ceil(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedRound() {
-        save("round", round(_GenColVec));
+        cout << "- Compute expectedRound() ... ";
+        save("round", round(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedSign() {
-        save("sign", sign(_GenColVec));
+        cout << "- Compute expectedSign() ... ";
+        save("sign", sign(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedSin() {
-        save("sin", sin(_GenColVec));
+        cout << "- Compute expectedSin() ... ";
+        save("sin", sin(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAsin() {
-        save("asin", asin(_GenColVec));
+        cout << "- Compute expectedAsin() ... ";
+        save("asin", asin(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedSinh() {
-        save("sinh", sinh(_GenColVec));
+        cout << "- Compute expectedSinh() ... ";
+        save("sinh", sinh(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAsinh() {
-        save("asinh", asinh(_GenColVec));
+        cout << "- Compute expectedAsinh() ... ";
+        save("asinh", asinh(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedCos() {
-        save("cos", cos(_GenColVec));
+        cout << "- Compute expectedCos() ... ";
+        save("cos", cos(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAcos() {
-        save("acos", acos(_GenColVec));
+        cout << "- Compute expectedAcos() ... ";
+        save("acos", acos(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedCosh() {
-        save("cosh", cosh(_GenColVec));
+        cout << "- Compute expectedCosh() ... ";
+        save("cosh", cosh(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAcosh() {
-        save("acosh", acosh(_GenColVec));
+        cout << "- Compute expectedAcosh() ... ";
+        save("acosh", acosh(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedTan() {
-        save("tan", tan(_GenColVec));
+        cout << "- Compute expectedTan() ... ";
+        save("tan", tan(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAtan() {
-        save("atan", atan(_GenColVec));
+        cout << "- Compute expectedAtan() ... ";
+        save("atan", atan(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedTanh() {
-        save("tanh", tanh(_GenColVec));
+        cout << "- Compute expectedTanh() ... ";
+        save("tanh", tanh(_genColVec));
+        cout << "done." << endl;
       }
 
       void expectedAtanh() {
-        save("atanh", atanh(_GenColVec));
+        cout << "- Compute expectedAtanh() ... ";
+        save("atanh", atanh(_genColVec));
+        cout << "done." << endl;
       }
 
   };

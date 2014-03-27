@@ -1025,7 +1025,7 @@ abstract class AbstractMat {
     }
 
     Mat cols = new Mat(n_rows, last_col - first_col + 1);
-    cols._data = Arrays.copyOfRange(_data, first_col * n_rows, last_col * n_rows);
+    cols._data = Arrays.copyOfRange(_data, first_col * n_rows, cols.n_cols * n_rows);
     return cols;
   }
 
@@ -1152,7 +1152,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1185,7 +1185,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1220,7 +1220,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1255,7 +1255,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1288,7 +1288,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
       }
 
-      if (span._last > n_cols - 1) {
+      if (span._last > n_rows - 1) {
         throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
       }
 
@@ -1327,7 +1327,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
       }
 
-      if (span._last > n_cols - 1) {
+      if (span._last > n_rows - 1) {
         throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
       }
 
@@ -1366,7 +1366,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
       }
 
-      if (span._last > n_cols - 1) {
+      if (span._last > n_rows - 1) {
         throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
       }
 
@@ -1405,7 +1405,7 @@ abstract class AbstractMat {
         throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
       }
 
-      if (span._last > n_cols - 1) {
+      if (span._last > n_rows - 1) {
         throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
       }
 
@@ -1431,7 +1431,7 @@ abstract class AbstractMat {
     if (span._isEntireRange) {
       return row(row_number);
     } else {
-      if (row_number < 0 || row_number > n_cols - 1) {
+      if (row_number < 0 || row_number > n_rows - 1) {
         throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
       }
 
@@ -1469,7 +1469,7 @@ abstract class AbstractMat {
     if (span._isEntireRange) {
       row(row_number, unary_operator);
     } else {
-      if (row_number < 0 || row_number > n_cols - 1) {
+      if (row_number < 0 || row_number > n_rows - 1) {
         throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
       }
 
@@ -1508,7 +1508,7 @@ abstract class AbstractMat {
     if (span._isEntireRange) {
       row(row_number, binary_operator, operand);
     } else {
-      if (row_number < 0 || row_number > n_cols - 1) {
+      if (row_number < 0 || row_number > n_rows - 1) {
         throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
       }
 
@@ -1547,7 +1547,7 @@ abstract class AbstractMat {
     if (span._isEntireRange) {
       row(row_number, binary_operator, operand);
     } else {
-      if (row_number < 0 || row_number > n_cols - 1) {
+      if (row_number < 0 || row_number > n_rows - 1) {
         throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
       }
 
@@ -1602,7 +1602,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1654,7 +1654,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1707,7 +1707,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -1760,7 +1760,7 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
     }
 
-    if (last_row > n_cols - 1) {
+    if (last_row > n_rows - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
     }
 
@@ -2253,6 +2253,11 @@ abstract class AbstractMat {
           _data[n] -= rightHandOperand._data[n];
         }
         break;
+      case TIMES:
+        AbstractMat result = times(rightHandOperand);
+        copy_size(result);
+        _data = Arrays.copyOf(result._data, result.n_elem);
+        break;
       case ELEMTIMES:
         for (int n = 0; n < n_elem; n++) {
           _data[n] *= rightHandOperand._data[n];
@@ -2464,6 +2469,8 @@ abstract class AbstractMat {
    */
   abstract public AbstractMat times(final double X) throws RuntimeException;
 
+  abstract protected AbstractMat times(final AbstractMat X) throws RuntimeException;
+  
   /**
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
@@ -2493,7 +2500,7 @@ abstract class AbstractMat {
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Mat X) throws RuntimeException;
-
+  
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] * rightHandOperand;

@@ -19,7 +19,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestOOMat extends TestClass {
 
-  @Parameters(name = "{index}: _OOMat = {0}")
+  @Parameters(name = "{index}: _ooMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
     
@@ -29,23 +29,23 @@ public class TestOOMat extends TestClass {
   }
   
   @Parameter(0)
-  public String _OOMatString;
+  public String _ooMatString;
   
   @Parameter(1)
-  public Mat _OOMat;
+  public Mat _ooMat;
   
   @Before
   public void before() {
-    _fileSuffix = _OOMatString;
+    _fileSuffix = _ooMatString;
   }
 
   @Test
   public void testAs_scalar() throws IOException {
     double expected = load("as_scalar")._data[0];
     if(Double.isInfinite(expected)) {
-      assertThat(Arma.as_scalar(_OOMat), is(expected));
+      assertThat(Arma.as_scalar(_ooMat), is(expected));
     } else {
-      assertThat(Arma.as_scalar(_OOMat), is(closeTo(expected, Math.abs(expected) * 1e-12)));
+      assertThat(Arma.as_scalar(_ooMat), is(closeTo(expected, Math.abs(expected) * 1e-12)));
     }
   }
 }

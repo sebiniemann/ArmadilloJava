@@ -13,7 +13,7 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.number.IsCloseTo.*;
 

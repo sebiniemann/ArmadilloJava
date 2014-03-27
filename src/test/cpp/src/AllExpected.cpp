@@ -13,6 +13,23 @@
  ******************************************************************************/
 #include <iostream>
 // EXIT_SUCCESS
+using std::cout;
+using std::endl;
+
+#include <fstream>
+using std::ofstream;
+
+#include <armadillo>
+using arma::set_stream_err1;
+using arma::set_stream_err2;
+using arma::mean;
+using arma::svd;
+using arma::Mat;
+using arma::zeros;
+
+
+#include <ExpectedNumRowsNumCols.cpp>
+using armadilloJava::ExpectedNumRowsNumCols;
 
 #include <ExpectedGenMat.cpp>
 using armadilloJava::ExpectedGenMat;
@@ -33,6 +50,12 @@ using armadilloJava::ExpectedGenRowVec;
 using armadilloJava::ExpectedDatum;
 
 int main() {
+  ofstream logfile("./expected.log");
+  cout.rdbuf(logfile.rdbuf());
+  set_stream_err1(logfile);
+  set_stream_err2(logfile);
+
+  ExpectedNumRowsNumCols();
   ExpectedGenMat();
   ExpectedGenMatExp();
   ExpectedOOMat();
@@ -40,8 +63,6 @@ int main() {
   ExpectedGenRowVec();
 
   ExpectedDatum();
-
-
 
   return EXIT_SUCCESS;
 }

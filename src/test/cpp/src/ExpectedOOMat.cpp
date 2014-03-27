@@ -11,6 +11,9 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
+#include <Expected.hpp>
+using armadilloJava::Expected;
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -18,47 +21,50 @@ using std::endl;
 #include <utility>
 using std::pair;
 
+#include <armadillo>
+using arma::Mat;
+using arma::as_scalar;
+
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
 
 #include <Input.hpp>
 using armadilloJava::Input;
 
-#include <armadillo>
-using arma::Mat;
-using arma::as_scalar;
-
-#include <Expected.hpp>
-using armadilloJava::Expected;
-
 namespace armadilloJava {
   class ExpectedOOMat : public Expected {
     public:
       ExpectedOOMat() {
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OOMat});
+        cout << "Compute ExpectedOOMat(): " << endl;
 
-          for (vector<pair<string, void*>> input : inputs) {
-            _fileSuffix = "";
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OOMat});
 
-            int n = 0;
-            for (pair<string, void*> value : input) {
-              switch (n) {
-                case 0:
-                  _fileSuffix += value.first;
-                  _OOMat = *static_cast<Mat<double>*>(value.second);
-                  break;
-              }
+        for (vector<pair<string, void*>> input : inputs) {
+          _fileSuffix = "";
+
+          int n = 0;
+          for (pair<string, void*> value : input) {
+            switch (n) {
+              case 0:
+                _fileSuffix += value.first;
+                _ooMat = *static_cast<Mat<double>*>(value.second);
+                break;
             }
-
-            expectedAs_scalar();
           }
+
+          cout << "Using input: " << _fileSuffix << endl;
+
+          expectedAs_scalar();
         }
 
+        cout << "done." << endl;
+      }
+
     protected:
-      Mat<double> _OOMat;
+      Mat<double> _ooMat;
 
       void expectedAs_scalar() {
-        save("as_scalar", Mat<double>({as_scalar(_OOMat)}));
+        save("as_scalar", Mat<double>({as_scalar(_ooMat)}));
       }
   };
 }

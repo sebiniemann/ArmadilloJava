@@ -11,17 +11,23 @@
  *   Sebastian Niemann - Lead developer
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
-#include <armadillo>
-using arma::datum;
-
 #include <Expected.hpp>
 using armadilloJava::Expected;
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+#include <armadillo>
+using arma::datum;
 
 namespace armadilloJava {
 
   class ExpectedDatum: public Expected {
     public:
       ExpectedDatum() {
+        cout << "Compute ExpectedDatum() ... ";
+
         Mat<double> expected = {
           datum::pi,
           datum::e,
@@ -64,6 +70,8 @@ namespace armadilloJava {
           datum::b
         };
         save("datum", expected);
+
+        cout << "done." << endl;
       }
   };
 }

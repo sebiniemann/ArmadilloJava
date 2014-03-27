@@ -38,6 +38,8 @@ if(WIN32)
   
   link_directories(C:\\Development\\OpenBLAS\\lib)
   link_directories(C:\\Development\\GCC\\bin)
+  
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lopenblas -lgfortran -O2")
 elseif(APPLE)
   message(STATUS "")
   message(STATUS "NOTICE: Apple OS detected:")

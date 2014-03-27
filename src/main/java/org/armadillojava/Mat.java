@@ -1177,11 +1177,11 @@ public class Mat extends AbstractMat {
 
     set_size(n_rows - (last_row - first_row + 1), n_cols);
 
-    new ViewSubRows(this, 0, first_row - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, first_row - 1));
+    new ViewSubRows(this, 0, first_row).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, first_row));
     /*
      * The attribute "n_rows" has been updated by set_size(int, int).
      */
-    new ViewSubRows(this, first_row, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, last_row + 1, temp.n_rows - 1));
+    new ViewSubRows(this, first_row, n_rows - (first_row + 1)).inPlace(Op.EQUAL, new ViewSubRows(temp, last_row + 1, temp.n_rows - (last_row + 1)));
   }
 
   /**
@@ -1200,7 +1200,7 @@ public class Mat extends AbstractMat {
     set_size(n_rows, n_cols - 1);
 
     System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
-    System.arraycopy(temp, (col_number + 1) * n_rows, _data, 0, n_elem - (col_number + 1) * n_rows);
+    System.arraycopy(temp, (col_number + 1) * n_rows, _data, col_number * n_rows, n_elem - col_number * n_rows);
   }
 
   /**
@@ -1231,7 +1231,7 @@ public class Mat extends AbstractMat {
     set_size(n_rows, n_cols - (last_col - first_col + 1));
 
     System.arraycopy(temp, 0, _data, 0, first_col * n_rows);
-    System.arraycopy(temp, (last_col + 1) * n_rows, _data, 0, n_elem - (last_col + 1) * n_rows);
+    System.arraycopy(temp, (last_col + 1) * n_rows, _data, first_col * n_rows, n_elem - first_col * n_rows);
   }
 
   @Override
@@ -1280,9 +1280,9 @@ public class Mat extends AbstractMat {
     Mat transpose = new Mat(n_cols, n_rows);
 
     int n = 0;
-    for (int j = 0; j < n_cols; j++) {
-      for (int i = 0; i < n_rows; i++) {
-        transpose._data[i + j * n_rows] = _data[n++];
+    for (int i = 0; i < transpose.n_rows; i++) {
+      for (int j = 0; j < transpose.n_cols; j++) {
+        transpose._data[i + j * transpose.n_rows] = _data[n++];
       }
     }
 
@@ -1351,6 +1351,41 @@ public class Mat extends AbstractMat {
   @Override
   public Mat times(final double X) {
     return elemTimes(X);
+  }
+
+  @Override
+  protected AbstractMat times(final AbstractMat X) {
+    if(X.n_elem == 1) {
+      return elemTimes(X._data[0]);
+    } else if(X.is_colvec()) {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      /*
+       * Only (1, m)-matrices can be left-hand side multiplied to column vectors.
+       */
+      return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+    } else if(X.is_rowvec()) {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      /*
+       * Only (n, 1)-matrices can be left-hand side multiplied to row vectors.
+       */
+      Mat result = new Mat(n_rows, X.n_cols);
+      BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+      return result;
+    } else {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      Mat result = new Mat(n_rows, X.n_cols);
+      BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+      return result;
+    }
   }
 
   @Override

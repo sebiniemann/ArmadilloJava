@@ -302,6 +302,37 @@ public class Row extends AbstractVector {
   }
 
   @Override
+  protected AbstractMat times(final AbstractMat X) {
+    if(X.n_elem == 1) {
+      return elemTimes(X._data[0]);
+    } else if(X.is_colvec()) {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      /*
+       * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
+       */
+      return elemTimes(X._data[0]);
+    } else if(X.is_rowvec()) {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      /*
+       * Only (n, 1)-matrices can be right-hand side multiplied to row vectors.
+       */
+      return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+    } else {
+      if (n_cols != X.n_rows) {
+        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+      }
+
+      return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+    }
+  }
+
+  @Override
   public Row times(final Row X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");

@@ -23,11 +23,12 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
   TestDatum.class,
+  TestGenColVec.class,
   TestGenMat.class,
   TestGenMatExp.class,
-  TestOOMat.class,
-  TestGenColVec.class,
   TestGenRowVec.class,
+  TestNumRowsNumCols.class,
+  TestOOMat.class,
   TestWallClock.class
 })
 public class AllTests {}

@@ -1026,10 +1026,10 @@ public class Arma {
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
   public static Col pow(final Col A, final int p) throws RuntimeException {
-    if(p < 0) {
+    if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
-    
+
     Col result = new Col(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1044,10 +1044,10 @@ public class Arma {
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
   public static Row pow(final Row A, final int p) throws RuntimeException {
-    if(p < 0) {
+    if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
-    
+
     Row result = new Row(A.n_elem);
     pow(result._data, A._data, p);
     return result;
@@ -1062,10 +1062,10 @@ public class Arma {
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
   public static Mat pow(final Mat A, final int p) throws RuntimeException {
-    if(p < 0) {
+    if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
-    
+
     Mat result = new Mat(A.n_rows, A.n_cols);
     pow(result._data, A._data, p);
     return result;
@@ -2279,9 +2279,9 @@ public class Arma {
    * @param X The sub view
    */
   protected static double min(final AbstractView V) {
-    double minimum = V._data[V.iteratorNext()];
 
     V.iteratorReset();
+    double minimum = V._data[V.iteratorNext()];
     while (V.iteratorHasNext()) {
       minimum = Math.min(minimum, V._data[V.iteratorNext()]);
     }
@@ -2394,9 +2394,9 @@ public class Arma {
   }
 
   protected static double max(final AbstractView V) {
-    double maximum = V._data[V.iteratorNext()];
 
     V.iteratorReset();
+    double maximum = V._data[V.iteratorNext()];
     while (V.iteratorHasNext()) {
       maximum = Math.max(maximum, V._data[V.iteratorNext()]);
     }
@@ -2515,7 +2515,7 @@ public class Arma {
   }
 
   protected static double prod(final AbstractView V) {
-    double product = 0;
+    double product = 1;
 
     V.iteratorReset();
     while (V.iteratorHasNext()) {
@@ -2905,6 +2905,13 @@ public class Arma {
   }
 
   protected static double stddev(final AbstractView V, final int norm_type) {
+    /*
+     * The standard deviation of just one element is 0.
+     */
+    if (V.n_elem < 2) {
+      return 0;
+    }
+
     double mean = mean(V);
     double variance = 0;
 
@@ -2913,7 +2920,8 @@ public class Arma {
       variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);
     }
 
-    return Math.sqrt((norm_type == 0 ? variance / (V.n_elem - 1) : variance / V.n_elem));
+    variance /= (norm_type == 0) ? ((V.n_elem > 1) ? V.n_elem - 1 : 1) : V.n_elem;
+    return Math.sqrt(variance);
   }
 
   /**
@@ -3050,7 +3058,9 @@ public class Arma {
 
     switch (norm_type) {
       case 0:
-        variance /= (V.n_elem - 1);
+        if (V.n_elem > 1) {
+          variance /= (V.n_elem - 1);
+        }
         break;
       case 1:
         variance /= V.n_elem;
@@ -3071,7 +3081,8 @@ public class Arma {
       variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);
     }
 
-    return (norm_type == 0 ? variance / (V.n_elem - 1) : variance / V.n_elem);
+    variance /= (norm_type == 0) ? ((V.n_elem > 1) ? V.n_elem - 1 : 1) : V.n_elem;
+    return variance;
   }
 
   /**
@@ -3530,6 +3541,9 @@ public class Arma {
    * Returns the correlation between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
    * the correlation between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
    * normalised by {@code X.n_elem -1}.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, AbstractVector)} if the provided matrices are in
+   * the shape of a vector.
    * 
    * @param X The first matrix
    * @param Y The second matrix
@@ -3551,6 +3565,9 @@ public class Arma {
    * Returns the correlation between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
    * the correlation between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
    * normalised by {@code X.n_elem -1} ( {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, AbstractVector, int)} if the provided matrices are
+   * in the shape of a vector.
    * 
    * @param X The first matrix
    * @param Y The second matrix
@@ -3563,20 +3580,38 @@ public class Arma {
    */
   public static Mat cor(final Mat X, final Mat Y, final int norm_type) throws RuntimeException {
     /*
-     * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
+     * The parameters "X", "Y" and "norm_type" are validated within cor(AbstractVector, AbstractVector, int), if
+     * the provided matrices are in the shape of a vector, and otherwise within sum(Class<T>, Mat) (excluding
+     * "norm_type" in this case).
      */
 
-    Mat result = new Mat(X.n_cols, X.n_cols);
-
-    Mat covariance = cov(X, Y, norm_type);
-    int n = 0;
-    for (int j = 0; j < X.n_cols; j++) {
-      double stddevX = stddev(new ViewSubCol(X, j), 0);
-
-      for (int jj = 0; jj < Y.n_cols; jj++) {
-        result._data[n++] = covariance.at(j, jj) / (stddevX * stddev(new ViewSubCol(Y, jj), 0));
-      }
+    if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
+      throw new RuntimeException("Both provided matrices (" + X.n_rows + ", " + X.n_cols + " and " + Y.n_rows + ", " + Y.n_cols + ") must have the same shape.");
     }
+
+    if (X.is_rowvec()) {
+      return new Mat(new double[]{cor(new Row(X), new Row(Y), norm_type)});
+    } else if (X.is_colvec()) {
+      return new Mat(new double[]{cor(new Col(X), new Col(Y), norm_type)});
+    }
+
+    Mat result = trans(X).times(Y);
+    result.inPlace(Op.MINUS, trans(sum(Col.class, X)).times(sum(Col.class, Y)).elemDivide(X.n_rows));
+
+    switch (norm_type) {
+      case 0:
+        if (X.n_rows > 1) {
+          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+        }
+        break;
+      case 1:
+        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+    }
+
+    result.inPlace(Op.ELEMDIVIDE, trans(stddev(Col.class, X).times(stddev(Col.class, Y))));
 
     return result;
   }
@@ -3584,6 +3619,9 @@ public class Arma {
   /**
    * Returns the autocorrelation of the provided matrix, where the ({@code i}, {@code j})-th entry is
    * the correlation between the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1}.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector)} if the provided matrix is in the shape of a
+   * vector.
    * 
    * @param X The matrix
    * 
@@ -3601,6 +3639,9 @@ public class Arma {
    * Returns the autocorrelation of the provided matrix, where the ({@code i}, {@code j})-th entry is
    * the correlation between the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1} (
    * {@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, int)} if the provided matrix is in the shape of a
+   * vector.
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -3609,10 +3650,38 @@ public class Arma {
    */
   public static Mat cor(final Mat X, final int norm_type) throws RuntimeException {
     /*
-     * The parameters "X" and "norm_type" are validated within cor(Mat, Mat, int).
+     * The parameters "X" and "norm_type" are validated within cor(AbstractVector, int), if the provided matrices are in
+     * the shape of a vector, and otherwise within sum(Class<T>, Mat) (excluding "norm_type" in this case).
      */
 
-    return cor(X, X, norm_type);
+    if (X.is_rowvec()) {
+      return new Mat(new double[]{cor(new Row(X), norm_type)});
+    } else if (X.is_colvec()) {
+      return new Mat(new double[]{cor(new Col(X), norm_type)});
+    }
+
+    Row sum = sum(Row.class, X);
+    Row stddev = stddev(Row.class, X);
+
+    Mat result = trans(X).times(X);
+    result.inPlace(Op.MINUS, trans(sum).times(sum).elemDivide(X.n_rows));
+
+    switch (norm_type) {
+      case 0:
+        if (X.n_rows > 1) {
+          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+        }
+        break;
+      case 1:
+        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+    }
+
+    result.inPlace(Op.ELEMDIVIDE, trans(stddev).times(stddev));
+
+    return result;
   }
 
   /**
@@ -3667,7 +3736,9 @@ public class Arma {
 
     switch (norm_type) {
       case 0:
-        covariance /= (X.n_elem - 1);
+        if (X.n_elem > 1) {
+          covariance /= (X.n_elem - 1);
+        }
         break;
       case 1:
         covariance /= X.n_elem;
@@ -3723,6 +3794,9 @@ public class Arma {
    * Returns the covariance between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
    * the covariance between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
    * normalised by {@code X.n_elem -1}.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, AbstractVector)} if the provided matrices are in
+   * the shape of a vector.
    * 
    * @param X The first matrix
    * @param Y The second matrix
@@ -3746,6 +3820,9 @@ public class Arma {
    * Returns the covariance between the first and second provided matrix, where the ({@code i}, {@code j})-th entry is
    * the covariance between the {@code i}th column of the first matrix and the {@code j}th column of the second matrix
    * normalised by {@code X.n_elem -1} ({@code norm_type} = 0) or {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, AbstractVector, int)} if the provided matrices are
+   * in the shape of a vector.
    * 
    * @param X The first matrix
    * @param Y The second matrix
@@ -3760,59 +3837,32 @@ public class Arma {
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
   public static Mat cov(final Mat X, final Mat Y, final int norm_type) throws RuntimeException, IllegalArgumentException {
+    /*
+     * The parameters "X" and "norm_type" are validated within cov(AbstractVector, int), if the provided matrices are in
+     * the shape of a vector, and otherwise within sum(Class<T>, Mat) (excluding "norm_type" in this case).
+     */
+
     if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols) {
       throw new RuntimeException("Both provided matrices (" + X.n_rows + ", " + X.n_cols + " and " + Y.n_rows + ", " + Y.n_cols + ") must have the same shape.");
     }
 
-    if (X.is_empty()) {
-      throw new RuntimeException("The first provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    if (X.is_rowvec()) {
+      return new Mat(new double[]{cov(new Row(X), new Row(Y), norm_type)});
+    } else if (X.is_colvec()) {
+      return new Mat(new double[]{cov(new Col(X), new Col(Y), norm_type)});
     }
 
-    if (Y.is_empty()) {
-      throw new RuntimeException("The second provided (" + Y.n_rows + ", " + Y.n_cols + ")-matrix must have at least one element.");
-    }
+    Mat result = trans(X).times(Y);
+    result.inPlace(Op.MINUS, trans(sum(Col.class, X)).times(sum(Col.class, Y)).elemDivide(X.n_rows));
 
-    Mat result = new Mat(X.n_cols, X.n_cols);
-
-    int n = 0;
     switch (norm_type) {
       case 0:
-        for (int j = 0; j < X.n_cols; j++) {
-          int columnIndexX = j * X.n_rows;
-
-          double meanX = mean(new ViewSubCol(X, j));
-
-          for (int jj = 0; jj < Y.n_cols; jj++) {
-            int columnIndexY = jj * Y.n_rows;
-
-            double meanY = mean(new ViewSubCol(Y, jj));
-
-            double covariance = 0;
-            for (int i = 0; i < X.n_rows; i++) {
-              covariance += (X._data[i + columnIndexX] - meanX) * (X._data[i + columnIndexY] - meanY);
-            }
-            result._data[n++] = covariance / (X.n_elem - 1);
-          }
+        if (X.n_rows > 1) {
+          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
         }
         break;
       case 1:
-        for (int j = 0; j < X.n_cols; j++) {
-          int columnIndexX = j * X.n_rows;
-
-          double meanX = mean(new ViewSubCol(X, j));
-
-          for (int jj = 0; jj < Y.n_cols; jj++) {
-            int columnIndexY = jj * Y.n_rows;
-
-            double meanY = mean(new ViewSubCol(Y, jj));
-
-            double covariance = 0;
-            for (int i = 0; i < X.n_rows; i++) {
-              covariance += (X._data[i + columnIndexX] - meanX) * (X._data[i + columnIndexY] - meanY);
-            }
-            result._data[n++] = covariance / X.n_elem;
-          }
-        }
+        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
         break;
       default:
         throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
@@ -3824,6 +3874,9 @@ public class Arma {
   /**
    * Returns the covariance of the provided matrix, where the ({@code i}, {@code j})-th entry is the correlation between
    * the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1}.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector)} if the provided matrix is in the shape of a
+   * vector.
    * 
    * @param X The matrix
    * 
@@ -3841,6 +3894,9 @@ public class Arma {
    * Returns the covariance of the provided matrix, where the ({@code i}, {@code j})-th entry is the correlation between
    * the {@code i}th column and {@code j}th column normalised by {@code X.n_elem -1} ({@code norm_type} = 0) or
    * {@code X.n_elem} ({@code norm_type} = 1).
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #cov(AbstractVector, int)} if the provided matrix is in the shape of a
+   * vector.
    * 
    * @param X The matrix
    * @param norm_type The normalisation
@@ -3850,10 +3906,37 @@ public class Arma {
    */
   public static Mat cov(final Mat X, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
-     * The parameter "X" is validated within cov(Mat, Mat, int).
+     * The parameters "X" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int), if the provided
+     * matrices are in the shape of a vector, and otherwise within sum(Class<T>, Mat) (excluding "norm_type" in this
+     * case).
      */
 
-    return cov(X, X, norm_type);
+    if (X.is_rowvec()) {
+      return new Mat(new double[]{cov(new Row(X), norm_type)});
+    } else if (X.is_colvec()) {
+      return new Mat(new double[]{cov(new Col(X), norm_type)});
+    }
+
+    Row sum = sum(Row.class, X);
+    Row stddev = stddev(Row.class, X);
+
+    Mat result = trans(X).times(X);
+    result.inPlace(Op.MINUS, trans(sum).times(sum).elemDivide(X.n_rows));
+
+    switch (norm_type) {
+      case 0:
+        if (X.n_rows > 1) {
+          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+        }
+        break;
+      case 1:
+        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        break;
+      default:
+        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+    }
+
+    return result;
   }
 
   protected static void cross(final double[] result, final double[] A, final double[] B) {
@@ -4187,8 +4270,8 @@ public class Arma {
   public static Mat fliplr(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
-    for (int j = 0; j < result.n_cols / 2; j++) {
-      System.arraycopy(X._data, result.n_cols - (j + 1) * X.n_rows, result._data, j * X.n_rows, X.n_rows);
+    for (int j = 0; j < result.n_cols; j++) {
+      System.arraycopy(X._data, (result.n_cols - (j + 1)) * X.n_rows, result._data, j * X.n_rows, X.n_rows);
     }
 
     return result;
@@ -4202,7 +4285,7 @@ public class Arma {
   public static Mat flipud(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
 
-    for (int i = 0; i < result.n_rows / 2; i++) {
+    for (int i = 0; i < result.n_rows; i++) {
       new ViewSubRow(result, i).inPlace(Op.EQUAL, new ViewSubRow(X, X.n_rows - (i + 1)));
     }
 
@@ -4226,23 +4309,16 @@ public class Arma {
       maximum = Double.MAX_VALUE;
     }
 
-    double[] edges = new double[n_bins + 1];
-    edges[0] = Double.NEGATIVE_INFINITY;
-
-    double stepLength = (maximum - minimum) / edges.length;
-    for (int n = 1; n < n_bins; n++) {
+    double[] centers = new double[n_bins];
+    double stepLength = (maximum - minimum) / (double) n_bins;
+    for (int n = 0; n < n_bins; n++) {
       /*
        * While increasing the value step by step per stepLength will be faster, it will also reduce the precision.
        */
-      edges[n] = minimum + stepLength * n;
+      centers[n] = minimum + stepLength * (0.5 + n);
     }
 
-    edges[edges.length - 1] = Double.POSITIVE_INFINITY;
-
-    double[] temp = new double[edges.length];
-    histc(temp, V, edges);
-    System.arraycopy(temp, 0, result, 0, n_bins);
-    result[result.length - 1] += temp[temp.length - 1];
+    hist(result, V, centers);
   }
 
   /**
@@ -4276,7 +4352,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Col result = new Col(V.n_elem);
+    Col result = new Col(n_bins);
     hist(result._data, V._data, n_bins);
     return result;
   }
@@ -4312,7 +4388,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Row result = new Row(V.n_elem);
+    Row result = new Row(n_bins);
     hist(result._data, V._data, n_bins);
     return result;
   }
@@ -4346,73 +4422,95 @@ public class Arma {
   /**
    * Returns the histogramm for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix by using
    * the specified number of uniformly distributed bins placed in regards to the range of values within the matrix.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #hist(Col, int)} and {@link #hist(Row, int)} if the provided matrix is
+   * in the shape of a vector.
    * 
    * @param X The matrix
    * @param n_bins The number of bins
    * @param dim The dimension
    * 
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one row.
-   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one column.
+   * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
-  public static Mat hist(final Mat X, final int n_bins, final int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
+  public static Mat hist(final Mat X, final int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
+    /*
+     * The parameter "dim" and  is validated within hist(Mat, AbstractMat, int).
+     */
+    
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
 
-    Mat result = new Mat();
-
-    switch (dim) {
-      case 0:
-        result.set_size(n_bins, X.n_cols);
-
-        if (X.n_rows < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one row.");
-        }
-
-        for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), n_bins));
-        }
-        break;
-      case 1:
-        result.set_size(X.n_rows, n_bins);
-
-        if (X.n_cols < 1) {
-          throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one column.");
-        }
-
-        for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), n_bins));
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
+    if (X.empty()) {
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
+    }
+    
+    if (X.is_rowvec()) {
+      return new Mat(hist(new Row(X), n_bins));
+    } else if (X.is_colvec()) {
+      return new Mat(hist(new Col(X), n_bins));
     }
 
-    return result;
+    double minimum = X._data[0];
+    double maximum = X._data[0];
+    for (int n = 1; n < X.n_elem; n++) {
+      double value = X._data[n];
+      minimum = Math.min(minimum, value);
+      maximum = Math.max(maximum, value);
+    }
+
+    if (Double.isInfinite(minimum)) {
+      minimum = -Double.MAX_VALUE;
+    }
+
+    if (Double.isInfinite(maximum)) {
+      maximum = Double.MAX_VALUE;
+    }
+
+    Col centers = new Col(n_bins);
+    double stepLength = (maximum - minimum) / (double) n_bins;
+    for (int n = 0; n < n_bins; n++) {
+      /*
+       * While increasing the value step by step per stepLength will be faster, it will also reduce the precision.
+       */
+      centers._data[n] = minimum + stepLength * (0.5 + n);
+    }
+
+    return hist(X, centers, dim);
   }
 
   protected static void hist(final double[] result, final double[] V, final double[] centers) {
-    double[] edges = new double[centers.length + 1];
+    for (int n = 0; n < V.length; n++) {
+      double value = V[n];
 
-    edges[0] = Double.NEGATIVE_INFINITY;
+      if (is_finite(value)) {
+        double previousDistance = Math.abs(value - centers[0]);
+        int index = 0;
 
-    double lastElement = centers[0];
-    for (int n = 1; n < centers.length; n++) {
-      double currentElement = centers[n];
+        for (int nn = 1; nn < centers.length; nn++) {
+          double currentDistance = Math.abs(value - centers[nn]);
 
-      edges[n] = lastElement + (currentElement - lastElement) / 2;
+          if (currentDistance < previousDistance) {
+            previousDistance = currentDistance;
+            ++index;
+          } else {
+            break;
+          }
+        }
 
-      lastElement = currentElement;
+        result[index]++;
+      } else {
+        if (value < 0) {
+          result[0]++;
+        }
+
+        if (value > 0) {
+          result[result.length - 1]++;
+        }
+      }
     }
-
-    edges[edges.length - 1] = Double.POSITIVE_INFINITY;
-
-    double[] temp = new double[edges.length];
-    histc(temp, V, edges);
-    System.arraycopy(temp, 0, result, 0, centers.length);
-    result[result.length - 1] += temp[temp.length - 1];
   }
 
   /**
@@ -4428,7 +4526,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Col result = new Col(V.n_elem);
+    Col result = new Col(centers.n_elem);
     hist(result._data, V._data, centers._data);
     return result;
   }
@@ -4446,7 +4544,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Row result = new Row(V.n_elem);
+    Row result = new Row(centers.n_elem);
     hist(result._data, V._data, centers._data);
     return result;
   }
@@ -4547,7 +4645,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Col result = new Col(V.n_elem);
+    Col result = new Col(edges.n_elem);
     histc(result._data, V._data, edges._data);
     return result;
   }
@@ -4565,7 +4663,7 @@ public class Arma {
       throw new RuntimeException("The provided (" + V.n_rows + ", " + V.n_cols + ")-vector must have at least one element.");
     }
 
-    Row result = new Row(V.n_elem);
+    Row result = new Row(edges.n_elem);
     histc(result._data, V._data, edges._data);
     return result;
   }
@@ -4634,14 +4732,12 @@ public class Arma {
    */
   public static void inplace_trans(final Mat X) {
     int n = 0;
-    for (int j = 0; j < X.n_cols; j++) {
-      for (int i = 0; i < X.n_rows; i++) {
+    for (int i = 0; i < X.n_rows; i++) {
+      for (int j = 0; j < X.n_cols; j++) {
         if (i < j) {
           double temp = X._data[i + j * X.n_rows];
           X._data[i + j * X.n_rows] = X._data[n];
           X._data[n] = temp;
-        } else if (i == j) {
-          X._data[n] = X._data[n];
         }
 
         n++;
@@ -4990,17 +5086,15 @@ public class Arma {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
     }
 
-    Mat result = new Mat();
+    Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
       case 0:
-        result.set_size(X.n_cols);
-
         for (int j = 0; j < X.n_cols; j++) {
           /*
            * Creates a deep copy of each column, since sorting of shallow sub views is not yet implemented.
            */
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, sort(X.col(j)));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, sort(X.col(j), sort_direction));
         }
         break;
       case 1:
@@ -5008,7 +5102,7 @@ public class Arma {
           /*
            * Creates a deep copy of each row, since sorting of shallow sub views is not yet implemented.
            */
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, sort(X.row(i)));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, sort(X.row(i), sort_direction));
         }
         break;
       default:
@@ -5309,9 +5403,9 @@ public class Arma {
     double currentValue = sortedA[0];
     temp[0] = currentValue;
 
-    int n = 0;
-    for (int nn = 0; nn < sortedA.length; nn++) {
-      double value = sortedA[n];
+    int n = 1;
+    for (int nn = 1; nn < sortedA.length; nn++) {
+      double value = sortedA[nn];
 
       if (value > currentValue || Double.isInfinite(value)) {
         temp[n++] = value;
@@ -5327,8 +5421,15 @@ public class Arma {
    * Returns a vector containing the unique values of the provided vector in ascending order.
    * 
    * @param A The vector
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-column vector must have at least one
+   *           element.
    */
   public static Col unique(final Col A) {
+    if (A.is_empty()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-column vector must have at least one element.");
+    }
+
     Col result = new Col();
     unique(result, A._data);
     return result;
@@ -5338,20 +5439,40 @@ public class Arma {
    * Returns a vector containing the unique values of the provided vector in ascending order.
    * 
    * @param A The vector
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-row vector must have at least one
+   *           element.
    */
   public static Row unique(final Row A) {
+    if (A.is_empty()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-row vector must have at least one element.");
+    }
+
     Row result = new Row();
     unique(result, A._data);
     return result;
   }
 
   /**
-   * Returns a column vector containing the unique values of the provided matrix in ascending order.
+   * Returns a matrix in the shape of a column vector containing the unique values of the provided matrix in ascending
+   * order.
+   * <p>
+   * <b>Note:</b> The method behaves like {@link #unique(Row)} if the provided matrix is in the shape of a row vector.
    * 
    * @param A The vector
+   * 
+   * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    */
-  public static Col unique(final Mat A) {
-    Col result = new Col();
+  public static Mat unique(final Mat A) {
+    if (A.is_empty()) {
+      throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
+    }
+
+    if (A.is_rowvec()) {
+      return new Mat(unique(new Row(A)));
+    }
+
+    Mat result = new Mat();
     unique(result, A._data);
     return result;
   }
@@ -5652,46 +5773,49 @@ public class Arma {
 
     L.copy_size(U);
 
+    int n = 0;
     for (int j = 0; j < X.n_cols; j++) {
       for (int i = 0; i < X.n_rows; i++) {
         if (i < j) {
           /*
            * strict upper triangle
            */
-          L._data[i + j * L.n_rows] = 0;
+          L._data[n] = 0;
         } else if (i == j) {
           /*
            * main diagonal
            */
-          L._data[i + j * L.n_rows] = 1;
+          L._data[n] = 1;
         } else {
           /*
            * strict lower triangle
            */
-          L._data[i + j * L.n_rows] = U._data[i + j * U.n_rows];
-          U._data[i + j * U.n_rows] = 0;
+          L._data[n] = U._data[n];
+          U._data[n] = 0;
         }
+
+        n++;
       }
     }
 
-    int[] pivotVector = new int[pivotIndices.length];
-    for (int n = 0; n < pivotVector.length; n++) {
-      pivotVector[n] = n;
+    int[] pivotVector = new int[X.n_rows];
+    for (int nn = 0; nn < pivotVector.length; nn++) {
+      pivotVector[nn] = nn;
     }
 
-    for (int n = 0; n < pivotVector.length; n++) {
-      int nn = pivotIndices[n] - 1;
+    for (int nn = 0; nn < pivotIndices.length; nn++) {
+      int nnn = pivotIndices[nn] - 1;
 
-      if (pivotVector[n] != pivotVector[nn]) {
-        int temp = pivotVector[n];
-        pivotVector[n] = pivotVector[nn];
-        pivotVector[nn] = temp;
+      if (pivotVector[nn] != pivotVector[nnn]) {
+        int temp = pivotVector[nn];
+        pivotVector[nn] = pivotVector[nnn];
+        pivotVector[nnn] = temp;
       }
     }
 
     P.zeros(X.n_rows, X.n_rows);
     for (int i = 0; i < P.n_rows; i++) {
-      P._data[i + pivotIndices[i] * P.n_rows] = 1;
+      P._data[i + pivotVector[i] * P.n_rows] = 1;
     }
 
     if (L.n_cols > U.n_rows) {
@@ -5729,6 +5853,7 @@ public class Arma {
 
     L.copy_size(U);
 
+    int n = 0;
     for (int j = 0; j < X.n_cols; j++)
     {
       for (int i = 0; i < X.n_rows; i++)
@@ -5737,19 +5862,37 @@ public class Arma {
           /*
            * strict upper triangle
            */
-          L._data[i + j * L.n_rows] = 0;
+          L._data[n] = 0;
         } else if (i == j) {
           /*
            * main diagonal
            */
-          L._data[i + j * L.n_rows] = 1;
+          L._data[n] = 1;
         } else {
           /*
            * strict lower triangle
            */
-          L._data[i + j * L.n_rows] = U._data[i + j * U.n_rows];
-          U._data[i + j * U.n_rows] = 0;
+          L._data[n] = U._data[n];
+          U._data[n] = 0;
         }
+        n++;
+      }
+    }
+
+    int[] pivotVector = new int[X.n_rows];
+    for (int nn = 0; nn < pivotVector.length; nn++) {
+      pivotVector[nn] = nn;
+    }
+
+    for (int nn = 0; nn < pivotIndices.length; nn++) {
+      int nnn = pivotIndices[nn] - 1;
+
+      if (pivotVector[nn] != pivotVector[nnn]) {
+        int temp = pivotVector[nn];
+        pivotVector[nn] = pivotVector[nnn];
+        pivotVector[nnn] = temp;
+
+        L.swap_rows(pivotVector[nn], pivotVector[nnn]);
       }
     }
 
@@ -5868,6 +6011,8 @@ public class Arma {
       } else {
         B.inPlace(Op.EQUAL, U.times(diagmat(singularValues).times(V.t())));
       }
+    } else {
+      B.zeros(A.n_cols, A.n_rows);
     }
 
     return true;
@@ -5901,6 +6046,7 @@ public class Arma {
   public static boolean princomp(final Mat coeff, final Mat X) {
     if (X.n_rows > 1) {
       Mat temp = new Mat(X);
+      temp.each_row(Op.MINUS, mean(Row.class, X));
 
       Mat U = new Mat();
       Col s = new Col();
@@ -5937,10 +6083,10 @@ public class Arma {
         return false;
       }
 
-      score.inPlace(Op.ELEMTIMES, coeff);
+      score.inPlace(Op.TIMES, coeff);
 
       if (X.n_rows <= X.n_cols) {
-        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - X.n_rows + 1).fill(0);
       }
     } else {
       coeff.eye(X.n_cols, X.n_cols);
@@ -5979,13 +6125,13 @@ public class Arma {
 
       s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
 
-      score.inPlace(Op.ELEMTIMES, coeff);
+      score.inPlace(Op.TIMES, coeff);
 
       if (X.n_rows <= X.n_cols) {
-        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - X.n_rows + 1).fill(0);
 
         Col s_temp = new Col(X.n_cols, Fill.ZEROS);
-        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
+        new ViewSubRows(s_temp, 0, X.n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(s, 0, X.n_rows - 1));
         s.inPlace(Op.EQUAL, s_temp);
       }
 
@@ -6030,17 +6176,17 @@ public class Arma {
 
       s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
 
-      score.inPlace(Op.ELEMTIMES, coeff);
+      score.inPlace(Op.TIMES, coeff);
 
       Mat S;
       if (X.n_rows <= X.n_cols) {
-        new ViewSubCols(score, X.n_rows - 1, X.n_cols - 1).fill(0);
+        new ViewSubCols(score, X.n_rows - 1, X.n_cols - X.n_rows + 1).fill(0);
 
         Col s_temp = new Col(X.n_cols, Fill.ZEROS);
-        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, new ViewSubCols(s, 0, X.n_rows - 2));
+        new ViewSubRows(s_temp, 0, X.n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(s, 0, X.n_rows - 1));
         s.inPlace(Op.EQUAL, s_temp);
 
-        new ViewSubCols(s_temp, 0, X.n_rows - 2).inPlace(Op.EQUAL, reciprocal(s_temp.rows(0, X.n_rows - 2)));
+        new ViewSubRows(s_temp, 0, X.n_rows - 1).inPlace(Op.EQUAL, reciprocal(s_temp.rows(0, X.n_rows - 2)));
 
         S = score.times(diagmat(s_temp));
       } else {
@@ -6083,7 +6229,7 @@ public class Arma {
     R.inPlace(Op.EQUAL, X);
 
     double[] tau = new double[Math.min(X.n_rows, X.n_cols)];
-    double[] work = new double[Math.max(1, X.n_cols)];
+    double[] work = new double[Math.max(1, Math.max(X.n_rows, X.n_cols))];
     intW info = new intW(0);
 
     LAPACK.getInstance().dgeqrf(X.n_rows, X.n_cols, R._data, X.n_rows, tau, work, work.length, info);
@@ -6093,10 +6239,10 @@ public class Arma {
     }
 
     Q.set_size(X.n_rows, X.n_rows);
-    Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
+    System.arraycopy(R._data, 0, Q._data, 0, Math.min(Q.n_elem, R.n_elem));
 
-    for (int j = 0; j < R.n_cols; ++j) {
-      for (int i = (j + 1); i < R.n_rows; ++i) {
+    for (int j = 0; j < R.n_cols; j++) {
+      for (int i = (j + 1); i < R.n_rows; i++) {
         R._data[i + j * R.n_rows] = 0;
       }
     }
@@ -6107,8 +6253,8 @@ public class Arma {
   }
 
   /**
-   * Performs a economical (memory friendly) QR decomposition of the provided matrix and stores the orthogonal matrix in
-   * {@code Q}, the right -triangular matrix in {@code R}, such that {@code Q.times(U) = X}.
+   * Performs an economical (memory friendly) QR decomposition of the provided matrix and stores the orthogonal matrix
+   * in {@code Q}, the right -triangular matrix in {@code R}, such that {@code Q.times(U) = X}.
    * <p>
    * {@code R} is calculated only up to the first {@code X.n_rows} rows and {@code Q} up to the first {@code X.n_cols}
    * columns.
@@ -6141,14 +6287,13 @@ public class Arma {
     }
 
     R.set_size(X.n_cols, X.n_cols);
-    Q._data = Arrays.copyOf(R._data, Math.min(Q.n_elem, R.n_elem));
 
-    for (int j = 0; j < R.n_cols; ++j) {
-      for (int i = 0; i < j; ++i) {
+    for (int j = 0; j < R.n_cols; j++) {
+      for (int i = 0; i <= j; ++i) {
         R._data[i + j * R.n_rows] = Q._data[i + j * Q.n_rows];
       }
 
-      for (int i = (j + 1); i < Q.n_cols; ++i) {
+      for (int i = (j + 1); i < R.n_cols; i++) {
         R._data[i + j * R.n_rows] = 0;
       }
     }
@@ -6231,7 +6376,7 @@ public class Arma {
    * @param s The storage of the singular values
    * @param X The matrix
    */
-  public static boolean svd(final AbstractVector s, final Mat X) {
+  public static boolean svd(final Col s, final Mat X) {
     if (X.is_empty()) {
       return false;
     }
@@ -6260,7 +6405,7 @@ public class Arma {
    * @param V The storage of V
    * @param X The matrix
    */
-  public static boolean svd(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
+  public static boolean svd(final Mat U, final Col s, final Mat V, final Mat X) {
     if (X.is_empty()) {
       return false;
     }
@@ -6281,8 +6426,8 @@ public class Arma {
   }
 
   /**
-   * Performs a economical (memory friendly) singular value decomposition of the provided matrix and stores the singular
-   * values in descending order in {@code s} and calculated both the left-singular and right-singular values.
+   * Performs an economical (memory friendly) singular value decomposition of the provided matrix and stores the
+   * singular values in descending order in {@code s} and calculated both the left-singular and right-singular values.
    * <p>
    * Returns {@code false} if the decomposition failed.
    * 
@@ -6291,13 +6436,13 @@ public class Arma {
    * @param V The storage of the right-singular vectors V
    * @param X The matrix
    */
-  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X) {
+  public static boolean svd_econ(final Mat U, final Col s, final Mat V, final Mat X) {
     return svd_econ(U, s, V, X, "both");
   }
 
   /**
-   * Performs a economical (memory friendly) singular value decomposition of the provided matrix and stores the singular
-   * values in descending order in {@code s}.
+   * Performs an economical (memory friendly) singular value decomposition of the provided matrix and stores the
+   * singular values in descending order in {@code s}.
    * <p>
    * <ul>
    * <li>For {@code side} = "left", only the left-singular vectors are calculated.
@@ -6315,7 +6460,7 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The specified side ({@code side}) must be one of 'left', 'right' or 'both'.
    */
-  public static boolean svd_econ(final Mat U, final AbstractVector s, final Mat V, final Mat X, final String side) throws IllegalArgumentException {
+  public static boolean svd_econ(final Mat U, final Col s, final Mat V, final Mat X, final String side) throws IllegalArgumentException {
     if (X.is_empty()) {
       return false;
     }
