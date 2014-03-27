@@ -22,8 +22,7 @@ using std::endl;
 using std::pair;
 
 #include <armadillo>
-using arma::Mat;
-using arma::eye;
+using arma::Col;
 using arma::ones;
 using arma::zeros;
 
@@ -34,12 +33,12 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedNumRowsNumCols : public Expected {
+  class ExpectedNumElems : public Expected {
     public:
-      ExpectedNumRowsNumCols() {
+      ExpectedNumElems() {
         cout << "Compute ExpectedNumRowsNumCols(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::NumRows, InputClass::NumCols});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::NumElems});
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";
@@ -49,11 +48,7 @@ namespace armadilloJava {
             switch (n) {
               case 0:
                 _fileSuffix += value.first;
-                _numRows = *static_cast<int*>(value.second);
-                break;
-              case 1:
-                _fileSuffix += "," + value.first;
-                _numCols = *static_cast<int*>(value.second);
+                _numElems = *static_cast<int*>(value.second);
                 break;
             }
             ++n;
@@ -61,7 +56,6 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedEye();
           expectedOnes();
           expectedZeros();
         }
@@ -70,24 +64,17 @@ namespace armadilloJava {
       }
 
     protected:
-      int _numRows;
-      int _numCols;
-
-      void expectedEye() {
-        cout << "- Compute expectedEye() ... ";
-        save("eye", eye<Mat<double>>(_numRows, _numCols));
-        cout << "done." << endl;
-      }
+      int _numElems;
 
       void expectedOnes() {
         cout << "- Compute expectedOnes() ... ";
-        save("ones", ones<Mat<double>>(_numRows, _numCols));
+        save("ones", ones<Col<double>>(_numElems));
         cout << "done." << endl;
       }
 
       void expectedZeros() {
         cout << "- Compute expectedZeros() ... ";
-        save("zeros", zeros<Mat<double>>(_numRows, _numCols));
+        save("zeros", zeros<Col<double>>(_numElems));
         cout << "done." << endl;
       }
 

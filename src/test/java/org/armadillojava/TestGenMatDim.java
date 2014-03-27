@@ -61,7 +61,7 @@ public class TestGenMatDim extends TestClass {
 
   @Before
   public void before() {
-    _fileSuffix = _genMatString + _dimString;
+    _fileSuffix = _genMatString + "," + _dimString;
 
     _copyOfGenMat = _genMat;
     _copyOfDim = _dim;

@@ -56,7 +56,7 @@ namespace armadilloJava {
                 _genMat = *static_cast<Mat<double>*>(value.second);
                 break;
               case 1:
-                _fileSuffix += value.first;
+                _fileSuffix += "," + value.first;
                 _dim = *static_cast<int*>(value.second);
                 break;
             }

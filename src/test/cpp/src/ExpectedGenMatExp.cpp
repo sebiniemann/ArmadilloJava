@@ -49,7 +49,7 @@ namespace armadilloJava {
                 _genMat = *static_cast<Mat<double>*>(value.second);
                 break;
               case 1:
-                _fileSuffix += value.first;
+                _fileSuffix += "," + value.first;
                 _exp = *static_cast<double*>(value.second);
                 break;
             }

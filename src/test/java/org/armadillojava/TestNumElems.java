@@ -31,61 +31,47 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestNumRowsNumCols extends TestClass {
+public class TestNumElems extends TestClass {
 
   @Parameters(name = "{index}: _genColVec = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
-    inputClasses.add(InputClass.NumRows);
-    inputClasses.add(InputClass.NumCols);
+    inputClasses.add(InputClass.NumElems);
 
     return Input.getTestParameters(inputClasses);
   }
 
   @Parameter(0)
-  public String _numRowsString;
+  public String _numElemsString;
 
   @Parameter(1)
-  public int    _numRows;
+  public int    _numElems;
 
-  protected int _copyOfNumRows;
-
-  @Parameter(2)
-  public String _numColsString;
-
-  @Parameter(3)
-  public int    _numCols;
-
-  protected int _copyOfNumCols;
+  protected int _copyOfNumElems;
 
   @Before
   public void before() {
-    _fileSuffix = _numRowsString + "," + _numColsString;
+    _fileSuffix = _numElemsString;
 
-    _copyOfNumRows = _numRows;
-    _copyOfNumCols = _numCols;
+    _copyOfNumElems = _numElems;
   }
 
   @After
   public void after() {
-    assertThat(_numRows, is(_copyOfNumRows));
-    assertThat(_numCols, is(_copyOfNumCols));
-  }
-
-  @Test
-  public void testEye() throws IOException {
-    assertMatEquals(Arma.eye(_numRows, _numCols), load("eye"));
+    assertThat(_numElems, is(_copyOfNumElems));
   }
 
   @Test
   public void testOnes() throws IOException {
-    assertMatEquals(Arma.ones(_numRows, _numCols), load("ones"));
+    assertMatEquals(Arma.ones(Col.class, _numElems), load("ones"));
+    assertMatEquals(Arma.ones(Row.class, _numElems), load("ones").t());
   }
 
   @Test
   public void testZeros() throws IOException {
-    assertMatEquals(Arma.zeros(_numRows, _numCols), load("zeros"));
+    assertMatEquals(Arma.zeros(Col.class, _numElems), load("zeros"));
+    assertMatEquals(Arma.zeros(Row.class, _numElems), load("zeros").t());
   }
 
 }
