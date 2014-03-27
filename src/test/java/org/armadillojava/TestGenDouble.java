@@ -31,7 +31,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenDouble extends TestClass {
 
-  @Parameters(name = "{index}: _genColVec = {0}")
+  @Parameters(name = "{index}: GenDouble = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

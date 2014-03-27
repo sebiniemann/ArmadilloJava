@@ -28,6 +28,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenMat.class,
   TestGenMatDim.class,
   TestGenMatExp.class,
+  TestGenMatNormal.class,
   TestGenRowVec.class,
   TestNumElems.class,
   TestNumRowsNumCols.class,

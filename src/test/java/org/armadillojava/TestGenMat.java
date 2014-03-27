@@ -35,7 +35,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenMat extends TestClass {
 
-  @Parameters(name = "{index}: _genMat = {0}")
+  @Parameters(name = "{index}: GenMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

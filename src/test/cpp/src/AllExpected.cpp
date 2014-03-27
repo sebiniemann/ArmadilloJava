@@ -27,35 +27,38 @@ using arma::svd;
 using arma::Mat;
 using arma::zeros;
 
-#include <ExpectedNumElems.cpp>
-using armadilloJava::ExpectedNumElems;
-
-#include <ExpectedGenDouble.cpp>
-using armadilloJava::ExpectedGenDouble;
-
-#include <ExpectedGenMatDim.cpp>
-using armadilloJava::ExpectedGenMatDim;
-
-#include <ExpectedNumRowsNumCols.cpp>
-using armadilloJava::ExpectedNumRowsNumCols;
-
-#include <ExpectedGenMat.cpp>
-using armadilloJava::ExpectedGenMat;
-
-#include <ExpectedGenMatExp.cpp>
-using armadilloJava::ExpectedGenMatExp;
-
-#include <ExpectedOOMat.cpp>
-using armadilloJava::ExpectedOOMat;
+#include <ExpectedDatum.cpp>
+using armadilloJava::ExpectedDatum;
 
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;
 
+#include <ExpectedGenDouble.cpp>
+using armadilloJava::ExpectedGenDouble;
+
+#include <ExpectedGenMat.cpp>
+using armadilloJava::ExpectedGenMat;
+
+#include <ExpectedGenMatDim.cpp>
+using armadilloJava::ExpectedGenMatDim;
+
+#include <ExpectedGenMatExp.cpp>
+using armadilloJava::ExpectedGenMatExp;
+
+#include <ExpectedGenMatNormal.cpp>
+using armadilloJava::ExpectedGenMatNormal;
+
+#include <ExpectedNumElems.cpp>
+using armadilloJava::ExpectedNumElems;
+
+#include <ExpectedNumRowsNumCols.cpp>
+using armadilloJava::ExpectedNumRowsNumCols;
+
 #include <ExpectedGenRowVec.cpp>
 using armadilloJava::ExpectedGenRowVec;
 
-#include <ExpectedDatum.cpp>
-using armadilloJava::ExpectedDatum;
+#include <ExpectedOOMat.cpp>
+using armadilloJava::ExpectedOOMat;
 
 int main() {
   ofstream logfile("./expected.log");
@@ -63,17 +66,17 @@ int main() {
   set_stream_err1(logfile);
   set_stream_err2(logfile);
 
-  ExpectedNumElems();
-  ExpectedGenDouble();
-  ExpectedGenMatDim();
-  ExpectedNumRowsNumCols();
-  ExpectedGenMat();
-  ExpectedGenMatExp();
-  ExpectedOOMat();
-  ExpectedGenColVec();
-  ExpectedGenRowVec();
-
   ExpectedDatum();
+  ExpectedGenColVec();
+  ExpectedGenDouble();
+  ExpectedGenMat();
+  ExpectedGenMatDim();
+  ExpectedGenMatExp();
+  ExpectedGenMatNormal();
+  ExpectedGenRowVec();
+  ExpectedNumElems();
+  ExpectedNumRowsNumCols();
+  ExpectedOOMat();
 
   return EXIT_SUCCESS;
 }

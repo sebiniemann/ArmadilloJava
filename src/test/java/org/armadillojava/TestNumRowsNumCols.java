@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestNumRowsNumCols extends TestClass {
 
-  @Parameters(name = "{index}: _genColVec = {0}")
+  @Parameters(name = "{index}: NumRows = {0}, NumCols = {3}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

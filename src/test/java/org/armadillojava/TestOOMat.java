@@ -34,7 +34,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestOOMat extends TestClass {
 
-  @Parameters(name = "{index}: _ooMat = {0}")
+  @Parameters(name = "{index}: OOMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

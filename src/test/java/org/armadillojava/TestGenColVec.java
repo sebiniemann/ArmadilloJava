@@ -34,7 +34,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenColVec extends TestClass {
 
-  @Parameters(name = "{index}: _genColVec = {0}")
+  @Parameters(name = "{index}: GenColVec = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

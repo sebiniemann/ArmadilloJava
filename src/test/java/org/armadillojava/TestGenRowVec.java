@@ -34,7 +34,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenRowVec extends TestClass {
 
-  @Parameters(name = "{index}: _genRowVec = {0}")
+  @Parameters(name = "{index}: GenRowVec = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
@@ -250,11 +250,6 @@ public class TestGenRowVec extends TestClass {
 
   @Test
   public void testCirc_toeplitz() throws IOException {
-    System.out.println("debug - " + _fileSuffix);
-    System.out.println(_genRowVec);
-    System.out.println(Arma.circ_toeplitz(_genRowVec));
-    System.out.println(load("circ_toeplitz"));
-    
     assertMatEquals(Arma.circ_toeplitz(_genRowVec), load("circ_toeplitz"));
   }
 
