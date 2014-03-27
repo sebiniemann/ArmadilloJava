@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- * Sebastian Niemann - Lead developer
- * Daniel Kiechle - Unit testing
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
