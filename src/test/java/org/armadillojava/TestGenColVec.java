@@ -49,17 +49,17 @@ public class TestGenColVec extends TestClass {
   @Parameter(1)
   public Col    _genColVec;
 
-  protected Col _copyOfgenColVec;
+  protected Col _copyOfGenColVec;
 
   @Before
   public void before() {
     _fileSuffix = _genColVecString;
-    _copyOfgenColVec = new Col(_genColVec);
+    _copyOfGenColVec = new Col(_genColVec);
   }
 
   @After
   public void after() {
-    assertMatEquals(_genColVec, _copyOfgenColVec);
+    assertMatEquals(_genColVec, _copyOfGenColVec);
   }
 
   @Test

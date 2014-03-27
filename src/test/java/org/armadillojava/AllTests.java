@@ -24,6 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
   TestDatum.class,
   TestGenColVec.class,
+  TestGenDouble.class,
   TestGenMat.class,
   TestGenMatDim.class,
   TestGenMatExp.class,

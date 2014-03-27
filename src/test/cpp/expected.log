@@ -1,3 +1,27 @@
+Compute ExpectedGenDouble(): 
+Using input: -2.0
+- Compute expectedIs_finite() ... done.
+Using input: -inf
+- Compute expectedIs_finite() ... done.
+Using input: 0.0
+- Compute expectedIs_finite() ... done.
+Using input: 0.5
+- Compute expectedIs_finite() ... done.
+Using input: 1.0
+- Compute expectedIs_finite() ... done.
+Using input: 3.0
+- Compute expectedIs_finite() ... done.
+Using input: 4.0
+- Compute expectedIs_finite() ... done.
+Using input: euler_number
+- Compute expectedIs_finite() ... done.
+Using input: inf
+- Compute expectedIs_finite() ... done.
+Using input: machine_epsilon
+- Compute expectedIs_finite() ... done.
+Using input: pi
+- Compute expectedIs_finite() ... done.
+done.
 Compute ExpectedGenMatDim(): 
 Using input: Mat(zeros(1,1))0
 - Compute expectedMin() ... done.
