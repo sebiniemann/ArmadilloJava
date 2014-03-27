@@ -8,18 +8,18 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,9 +45,18 @@ public class TestGenRowVec extends TestClass {
   @Parameter(1)
   public Row    _genRowVec;
 
+  protected Row _copyOfGenRowVec;
+
   @Before
   public void before() {
     _fileSuffix = _genRowVecString;
+
+    _copyOfGenRowVec = new Row(_genRowVec);
+  }
+
+  @After
+  public void after() {
+    assertMatEquals(_genRowVec, _copyOfGenRowVec);
   }
 
   @Test

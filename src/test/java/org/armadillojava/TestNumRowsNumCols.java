@@ -8,18 +8,21 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,15 +49,28 @@ public class TestNumRowsNumCols extends TestClass {
   @Parameter(1)
   public int    _numRows;
 
+  protected int _copyOfNumRows;
+
   @Parameter(2)
   public String _numColsString;
 
   @Parameter(3)
   public int    _numCols;
 
+  protected int _copyOfNumCols;
+
   @Before
   public void before() {
     _fileSuffix = _numRowsString + _numColsString;
+
+    _copyOfNumRows = _numRows;
+    _copyOfNumCols = _numCols;
+  }
+
+  @After
+  public void after() {
+    assertThat(_numRows, is(_copyOfNumRows));
+    assertThat(_numCols, is(_copyOfNumCols));
   }
 
   @Test

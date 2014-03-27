@@ -8,11 +8,13 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.armadillojava.TestUtil.*;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,20 +44,33 @@ public class TestGenMatExp extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
+
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _expString;
+  public String    _expString;
 
   @Parameter(3)
-  public double _exp;
+  public double    _exp;
+
+  protected double _copyOfExp;
 
   @Before
   public void before() {
     _fileSuffix = _genMatString + _expString;
+
+    _copyOfGenMat = new Mat(_genMat);
+    _copyOfExp = _exp;
+  }
+
+  @After
+  public void after() {
+    assertMatEquals(_genMat, _copyOfGenMat);
+    assertThat(_exp, is(_copyOfExp));
   }
 
   @Test

@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,9 +50,17 @@ public class TestGenMat extends TestClass {
   @Parameter(1)
   public Mat    _genMat;
 
+  protected Mat _copyOfGenMat;
+
   @Before
   public void before() {
     _fileSuffix = _genMatString;
+    _copyOfGenMat = new Mat(_genMat);
+  }
+
+  @After
+  public void after() {
+    assertMatEquals(_genMat, _copyOfGenMat);
   }
 
   @Test

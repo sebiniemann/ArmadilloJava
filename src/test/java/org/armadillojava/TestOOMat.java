@@ -8,12 +8,13 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- *   Sebastian Niemann - Lead developer
- *   Daniel Kiechle - Unit testing
+ * Sebastian Niemann - Lead developer
+ * Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
 import static org.junit.Assert.assertThat;
+import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.number.IsCloseTo.*;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,9 +49,18 @@ public class TestOOMat extends TestClass {
   @Parameter(1)
   public Mat    _ooMat;
 
+  protected Mat _copyOfOOMat;
+
   @Before
   public void before() {
     _fileSuffix = _ooMatString;
+
+    _copyOfOOMat = new Mat(_ooMat);
+  }
+
+  @After
+  public void after() {
+    assertMatEquals(_ooMat, _copyOfOOMat);
   }
 
   @Test
