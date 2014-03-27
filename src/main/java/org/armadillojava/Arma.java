@@ -3918,7 +3918,6 @@ public class Arma {
     }
 
     Row sum = sum(Row.class, X);
-    Row stddev = stddev(Row.class, X);
 
     Mat result = trans(X).times(X);
     result.inPlace(Op.MINUS, trans(sum).times(sum).elemDivide(X.n_rows));
