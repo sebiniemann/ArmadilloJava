@@ -303,9 +303,9 @@ public class Row extends AbstractVector {
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
-    if(X.n_elem == 1) {
+    if (X.n_elem == 1) {
       return elemTimes(X._data[0]);
-    } else if(X.is_colvec()) {
+    } else if (X.is_colvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
       }
@@ -314,7 +314,7 @@ public class Row extends AbstractVector {
        * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
        */
       return elemTimes(X._data[0]);
-    } else if(X.is_rowvec()) {
+    } else if (X.is_rowvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
       }

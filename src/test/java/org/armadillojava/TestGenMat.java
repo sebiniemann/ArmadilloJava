@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2013-2014 Sebastian Niemann <niemann@sra.uni-hannover.de>.
+ * 
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://opensource.org/licenses/MIT
+ * 
+ * Developers:
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
+ ******************************************************************************/
 package org.armadillojava;
 
 import static org.junit.Assert.*;
@@ -319,7 +332,7 @@ public class TestGenMat extends TestClass {
     Mat U = new Mat();
 
     Arma.lu(L, U, _genMat);
-    
+
     if (_genMat.is_square()) {
       assertMatEquals(U, Arma.trimatu(U));
     }
@@ -361,13 +374,13 @@ public class TestGenMat extends TestClass {
 
     Arma.qr(Q, R, _genMat);
 
-    if(_genMat.is_square()) {
+    if (_genMat.is_square()) {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }
     assertMatEquals(Q.times(R), _genMat);
   }
-  
+
   @Test
   public void testQr_econ() throws IOException {
     Mat Q = new Mat();
@@ -375,7 +388,7 @@ public class TestGenMat extends TestClass {
 
     Arma.qr_econ(Q, R, _genMat);
 
-    if(_genMat.n_rows <= _genMat.n_cols && _genMat.is_square()) {
+    if (_genMat.n_rows <= _genMat.n_cols && _genMat.is_square()) {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }

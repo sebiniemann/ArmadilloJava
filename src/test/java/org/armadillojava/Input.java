@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2013-2014 Sebastian Niemann <niemann@sra.uni-hannover.de>.
+ * 
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://opensource.org/licenses/MIT
+ * 
+ * Developers:
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
+ ******************************************************************************/
 package org.armadillojava;
 
 import java.util.ArrayList;
@@ -176,24 +189,24 @@ class Input {
           throw new RuntimeException("Unsupported test class requested.");
       }
     }
-    
+
     return convertToJUnitTestParameters(cartesianProduct(inputs));
   }
-  
+
   protected static Collection<Object[]> convertToJUnitTestParameters(List<List<Pair<String, Object>>> inputs) {
     Collection<Object[]> testParameters = new ArrayList<Object[]>();
-    
+
     for (List<Pair<String, Object>> input : inputs) {
       Object[] testParameter = new Object[input.size() * 2];
-      
-      for(int n = 0; n < input.size(); n++) {
+
+      for (int n = 0; n < input.size(); n++) {
         testParameter[2 * n] = input.get(n).getFirst();
         testParameter[2 * n + 1] = input.get(n).getSecond();
       }
-      
+
       testParameters.add(testParameter);
     }
-    
+
     return testParameters;
   }
 
@@ -590,7 +603,7 @@ class Input {
       for (Pair<String, Object> keyValuePairB : getNumCols()) {
         int numCols = (int) keyValuePairB.getSecond();
 
-        if(numRows == numCols) {
+        if (numRows == numCols) {
           input.add(new Pair<String, Object>("Mat(eye(" + numRows + "," + numCols + "))", new Mat(Arma.eye(numRows, numCols))));
           input.add(new Pair<String, Object>("Mat(kms(" + numRows + "," + numCols + "))", new Mat(getKMSMatrix(numRows, numCols))));
         }
@@ -610,7 +623,7 @@ class Input {
       for (Pair<String, Object> keyValuePairB : getNumCols()) {
         int numCols = (int) keyValuePairB.getSecond();
 
-        if(numRows == numCols) {
+        if (numRows == numCols) {
           List<Pair<String, Object>> input = new ArrayList<>();
           input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
           input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
@@ -631,7 +644,7 @@ class Input {
       for (Pair<String, Object> keyValuePairB : getNumCols()) {
         int numCols = (int) keyValuePairB.getSecond();
 
-        if(numRows == numCols) {
+        if (numRows == numCols) {
           input.add(new Pair<String, Object>("Mat(eye(" + numRows + "," + numCols + "))", new Mat(Arma.eye(numRows, numCols))));
           input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols))));
         }
@@ -652,7 +665,7 @@ class Input {
 
         input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
         input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols).minus(2.0/(numRows + numCols + 2)))));
+        input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2)))));
       }
     }
 
@@ -762,7 +775,7 @@ class Input {
         int numCols = (int) keyValuePairB.getSecond();
 
         Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0/(numRows + numCols + 2));
+        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2));
 
         input.add(new Pair<String, Object>("Col(eye(" + numRows + "," + numCols + ").col(0))", new Col(identity.col(0))));
         input.add(new Pair<String, Object>("Col(hilbertSub(" + numRows + "," + numCols + ").col(0))", new Col(hilbertSub.col(0))));
@@ -836,7 +849,7 @@ class Input {
         int numRows = (int) keyValuePairB.getSecond();
 
         Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0/(numRows + numCols + 2));
+        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2));
 
         input.add(new Pair<String, Object>("Row(eye(" + numRows + "," + numCols + ").row(0))", new Row(identity.row(0))));
         input.add(new Pair<String, Object>("Row(hilbertSub(" + numRows + "," + numCols + ").row(0))", new Row(hilbertSub.row(0))));

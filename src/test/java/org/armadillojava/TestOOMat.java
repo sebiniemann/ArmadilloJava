@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2013-2014 Sebastian Niemann <niemann@sra.uni-hannover.de>.
+ * 
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://opensource.org/licenses/MIT
+ * 
+ * Developers:
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
+ ******************************************************************************/
 package org.armadillojava;
 
 import static org.junit.Assert.assertThat;
@@ -22,18 +35,18 @@ public class TestOOMat extends TestClass {
   @Parameters(name = "{index}: _ooMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
-    
+
     inputClasses.add(InputClass.OOMat);
-    
+
     return Input.getTestParameters(inputClasses);
   }
-  
+
   @Parameter(0)
   public String _ooMatString;
-  
+
   @Parameter(1)
-  public Mat _ooMat;
-  
+  public Mat    _ooMat;
+
   @Before
   public void before() {
     _fileSuffix = _ooMatString;
@@ -42,7 +55,7 @@ public class TestOOMat extends TestClass {
   @Test
   public void testAs_scalar() throws IOException {
     double expected = load("as_scalar")._data[0];
-    if(Double.isInfinite(expected)) {
+    if (Double.isInfinite(expected)) {
       assertThat(Arma.as_scalar(_ooMat), is(expected));
     } else {
       assertThat(Arma.as_scalar(_ooMat), is(closeTo(expected, Math.abs(expected) * 1e-12)));

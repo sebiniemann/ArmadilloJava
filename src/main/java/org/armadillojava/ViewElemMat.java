@@ -28,7 +28,7 @@ class ViewElemMat extends AbstractView {
   /**
    * Current element number within the sub view
    */
-  protected int               _elem_number;
+  protected int            _elem_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -49,15 +49,15 @@ class ViewElemMat extends AbstractView {
   @Override
   protected void iteratorReset() {
     super.iteratorReset();
-    
+
     _elem_number = -1;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
-    
+
     return (int) _vector_of_indices[++_elem_number];
   }
-  
+
 }

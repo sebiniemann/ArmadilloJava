@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- * Sebastian Niemann - Lead developer
- * Daniel Kiechle - Unit testing
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -4436,9 +4436,9 @@ public class Arma {
    */
   public static Mat hist(final Mat X, final int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
     /*
-     * The parameter "dim" and  is validated within hist(Mat, AbstractMat, int).
+     * The parameter "dim" and is validated within hist(Mat, AbstractMat, int).
      */
-    
+
     if (n_bins < 0) {
       throw new NegativeArraySizeException("The specified number of bins (" + n_bins + ") must be positive.");
     }
@@ -4446,7 +4446,7 @@ public class Arma {
     if (X.empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     if (X.is_rowvec()) {
       return new Mat(hist(new Row(X), n_bins));
     } else if (X.is_colvec()) {

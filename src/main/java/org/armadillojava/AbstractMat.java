@@ -734,7 +734,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #save(OutputStream, FileType)} but without error reporting. Returns {@code false} if an error occurred.
+   * Same as {@link #save(OutputStream, FileType)} but without error reporting. Returns {@code false} if an error
+   * occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -788,7 +789,8 @@ abstract class AbstractMat {
   }
 
   /**
-   * Same as {@link #load(InputStream, FileType)} but without error reporting. Returns {@code false} if an error occurred.
+   * Same as {@link #load(InputStream, FileType)} but without error reporting. Returns {@code false} if an error
+   * occurred.
    * <p>
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
@@ -1942,7 +1944,8 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified elements.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The positions
    */
@@ -1953,7 +1956,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified elements.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The positions
    * @param unary_operator The unary operator
@@ -1967,7 +1971,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The positions
    * @param binary_operator The binary operator
@@ -1982,7 +1987,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_indices The positions
    * @param binary_operator The binary operator
@@ -1997,7 +2003,8 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified columns.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_column_indices The columns
    */
@@ -2008,7 +2015,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified columns.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_column_indices The columns
    * @param unary_operator The unary operator
@@ -2022,7 +2030,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_column_indices The columns
    * @param binary_operator The binary operator
@@ -2037,7 +2046,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_column_indices The columns
    * @param binary_operator The binary operator
@@ -2052,7 +2062,8 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified rows.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    */
@@ -2063,7 +2074,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified rows.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param unary_operator The unary operator
@@ -2077,7 +2089,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param binary_operator The binary operator
@@ -2092,7 +2105,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param binary_operator The binary operator
@@ -2107,7 +2121,8 @@ abstract class AbstractMat {
   /**
    * Returns a deep copy of the specified rows of the specified columns.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2119,7 +2134,8 @@ abstract class AbstractMat {
   /**
    * Performs an in-place unary operation on the specified rows of the specified columns.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2135,7 +2151,8 @@ abstract class AbstractMat {
    * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2152,7 +2169,8 @@ abstract class AbstractMat {
    * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
    * side operand.
    * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon errors.
+   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+   * errors.
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
@@ -2470,7 +2488,7 @@ abstract class AbstractMat {
   abstract public AbstractMat times(final double X) throws RuntimeException;
 
   abstract protected AbstractMat times(final AbstractMat X) throws RuntimeException;
-  
+
   /**
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
@@ -2500,7 +2518,7 @@ abstract class AbstractMat {
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Mat X) throws RuntimeException;
-  
+
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] * rightHandOperand;

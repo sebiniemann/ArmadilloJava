@@ -298,9 +298,9 @@ public class Col extends AbstractVector {
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
-    if(X.n_elem == 1) {
+    if (X.n_elem == 1) {
       return elemTimes(X._data[0]);
-    } else if(X.is_colvec()) {
+    } else if (X.is_colvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
       }
@@ -309,7 +309,7 @@ public class Col extends AbstractVector {
        * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
        */
       return elemTimes(X._data[0]);
-    } else if(X.is_rowvec()) {
+    } else if (X.is_rowvec()) {
       Mat result = new Mat(n_rows, X.n_cols);
       BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
       return result;
@@ -326,7 +326,7 @@ public class Col extends AbstractVector {
       return result;
     }
   }
-  
+
   @Override
   public Col times(final double X) {
     return elemTimes(X);

@@ -77,7 +77,7 @@ abstract class AbstractView {
       _data[iteratorNext()] = value;
     }
   }
-  
+
   protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
     switch (unary_operator) {
       case INCREMENT:

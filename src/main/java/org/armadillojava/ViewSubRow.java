@@ -67,14 +67,14 @@ class ViewSubRow extends AbstractView {
   @Override
   protected void iteratorReset() {
     super.iteratorReset();
-    
+
     _current_position = _first_position - _matrix.n_rows;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
-    
+
     _current_position += _matrix.n_rows;
     return _current_position;
   }

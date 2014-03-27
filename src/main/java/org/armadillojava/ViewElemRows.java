@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- * Sebastian Niemann - Lead developer
- * Daniel Kiechle - Unit testing
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -28,17 +28,17 @@ class ViewElemRows extends AbstractView {
   /**
    * Current position of the sub view within the underlying matrix
    */
-  protected int               _current_position;
+  protected int            _current_position;
 
   /**
    * Current row number within the sub view
    */
-  protected int               _row_number;
+  protected int            _row_number;
 
   /**
    * Current column number within the sub view
    */
-  protected int               _col_number;
+  protected int            _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.

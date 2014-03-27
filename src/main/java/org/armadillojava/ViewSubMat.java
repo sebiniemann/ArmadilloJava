@@ -39,7 +39,7 @@ class ViewSubMat extends AbstractView {
   /**
    * The current row number within the sub view
    */
-  protected int _row_number;
+  protected int       _row_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -64,16 +64,16 @@ class ViewSubMat extends AbstractView {
   @Override
   protected void iteratorReset() {
     super.iteratorReset();
-    
+
     _row_number = 0;
-    
+
     _current_position = _first_position - 1;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
-    
+
     if (_row_number >= n_rows) {
       _row_number = 1;
       _current_position += _n_rows_skip;

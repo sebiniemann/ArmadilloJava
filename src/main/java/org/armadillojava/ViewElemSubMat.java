@@ -8,8 +8,8 @@
  * http://opensource.org/licenses/MIT
  * 
  * Developers:
- * Sebastian Niemann - Lead developer
- * Daniel Kiechle - Unit testing
+ *   Sebastian Niemann - Lead developer
+ *   Daniel Kiechle - Unit testing
  ******************************************************************************/
 package org.armadillojava;
 
@@ -35,17 +35,17 @@ class ViewElemSubMat extends AbstractView {
   /**
    * Current column position of the sub view within the underlying matrix
    */
-  protected int               _current_col;
+  protected int            _current_col;
 
   /**
    * Current row number within the sub view
    */
-  protected int               _row_number;
+  protected int            _row_number;
 
   /**
    * Current column number within the sub view
    */
-  protected int               _col_number;
+  protected int            _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -65,7 +65,7 @@ class ViewElemSubMat extends AbstractView {
 
     _vector_of_row_indices = vector_of_row_indices;
     _vector_of_column_indices = vector_of_column_indices;
-    
+
     System.out.println(Arrays.toString(_vector_of_row_indices));
     System.out.println(Arrays.toString(_vector_of_column_indices));
   }
@@ -76,7 +76,7 @@ class ViewElemSubMat extends AbstractView {
 
     _row_number = 0;
     _col_number = 0;
-    
+
     _current_col = (int) _vector_of_column_indices[0] * _matrix.n_rows;
   }
 
