@@ -523,17 +523,17 @@ public class Arma {
     Mat result = new Mat(A.n_elem, A.n_elem);
 
     new ViewDiag(result, 0).fill(A._data[0]);
-    if(A.is_rowvec()) {
+    if (A.is_rowvec()) {
       for (int n = 1; n < A.n_elem; n++) {
         double value = A._data[n];
-  
+
         new ViewDiag(result, n).fill(value);
         new ViewDiag(result, n - A.n_elem).fill(value);
       }
     } else {
       for (int n = 1; n < A.n_elem; n++) {
         double value = A._data[n];
-  
+
         new ViewDiag(result, A.n_elem - n).fill(value);
         new ViewDiag(result, -n).fill(value);
       }
@@ -2329,7 +2329,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2439,7 +2439,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2555,7 +2555,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2642,7 +2642,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2722,7 +2722,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2814,7 +2814,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -2956,7 +2956,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -3112,7 +3112,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -3213,7 +3213,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -3318,7 +3318,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     T result;
 
     try {
@@ -4067,7 +4067,7 @@ public class Arma {
     if (X.is_empty()) {
       throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
-    
+
     Mat result = new Mat(X.n_rows, X.n_cols);
 
     switch (dim) {
