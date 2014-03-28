@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

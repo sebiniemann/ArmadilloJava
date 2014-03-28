@@ -350,7 +350,7 @@ namespace armadilloJava {
 
       void expectedSort_index() {
         cout << "- Compute expectedSort_index() ... ";
-        // Unable to convert the result of hist(...) to Mat<double>
+        // Unable to convert the result of sort_index(...) to Mat<double>
         Mat<uword> expected = sort_index(_genColVec);
         expected.save("../data/expected/sort_index" + _fileSuffix + ".mat", raw_ascii);
         cout << "done." << endl;
@@ -358,7 +358,7 @@ namespace armadilloJava {
 
       void expectedStable_sort_index() {
         cout << "- Compute expectedStable_sort_index() ... ";
-        // Unable to convert the result of hist(...) to Mat<double>
+        // Unable to convert the result of stable_sort_index(...) to Mat<double>
         Mat<uword> expected = stable_sort_index(_genColVec);
         expected.save("../data/expected/stable_sort_index" + _fileSuffix + ".mat", raw_ascii);
         cout << "done." << endl;

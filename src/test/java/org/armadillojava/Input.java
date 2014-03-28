@@ -665,7 +665,7 @@ class Input {
 
         input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
         input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2)))));
+        input.add(new Pair<String, Object>("Mat(hilbertSub(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2)))));
       }
     }
 

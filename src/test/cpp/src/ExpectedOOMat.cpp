@@ -64,7 +64,9 @@ namespace armadilloJava {
       Mat<double> _ooMat;
 
       void expectedAs_scalar() {
+        cout << "- Compute expectedAs_scalar() ... ";
         save("as_scalar", Mat<double>({as_scalar(_ooMat)}));
+        cout << "done." << endl;
       }
   };
 }

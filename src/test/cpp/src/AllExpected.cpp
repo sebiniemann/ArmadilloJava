@@ -48,14 +48,26 @@ using armadilloJava::ExpectedGenMatExp;
 #include <ExpectedGenMatNormal.cpp>
 using armadilloJava::ExpectedGenMatNormal;
 
+#include <ExpectedGenRowVec.cpp>
+using armadilloJava::ExpectedGenRowVec;
+
+#include <ExpectedLogicColVec.cpp>
+using armadilloJava::ExpectedLogicColVec;
+
+#include <ExpectedLogicMat.cpp>
+using armadilloJava::ExpectedLogicMat;
+
+#include <ExpectedLogicMatDim.cpp>
+using armadilloJava::ExpectedLogicMatDim;
+
+#include <ExpectedLogicRowVec.cpp>
+using armadilloJava::ExpectedLogicRowVec;
+
 #include <ExpectedNumElems.cpp>
 using armadilloJava::ExpectedNumElems;
 
 #include <ExpectedNumRowsNumCols.cpp>
 using armadilloJava::ExpectedNumRowsNumCols;
-
-#include <ExpectedGenRowVec.cpp>
-using armadilloJava::ExpectedGenRowVec;
 
 #include <ExpectedOOColVec.cpp>
 using armadilloJava::ExpectedOOColVec;
@@ -83,6 +95,10 @@ int main() {
   ExpectedGenMatExp();
   ExpectedGenMatNormal();
   ExpectedGenRowVec();
+  ExpectedLogicColVec();
+  ExpectedLogicMat();
+  ExpectedLogicMatDim();
+  ExpectedLogicRowVec();
   ExpectedNumElems();
   ExpectedNumRowsNumCols();
   ExpectedOOColVec();
