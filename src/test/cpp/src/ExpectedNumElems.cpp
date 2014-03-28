@@ -36,7 +36,7 @@ namespace armadilloJava {
   class ExpectedNumElems : public Expected {
     public:
       ExpectedNumElems() {
-        cout << "Compute ExpectedNumRowsNumCols(): " << endl;
+        cout << "Compute ExpectedNumElems(): " << endl;
 
         vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::NumElems});
 

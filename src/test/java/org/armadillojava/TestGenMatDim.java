@@ -69,7 +69,7 @@ public class TestGenMatDim extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_genMat, _copyOfGenMat);
+    assertMatEquals(_genMat, _copyOfGenMat, 0);
     assertThat(_dim, is(_copyOfDim));
   }
 

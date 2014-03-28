@@ -37,7 +37,7 @@ namespace armadilloJava {
   class ExpectedGenMatNormal : public Expected {
     public:
       ExpectedGenMatNormal() {
-        cout << "Compute ExpectedGenMatDim(): " << endl;
+        cout << "Compute ExpectedGenMatNormal(): " << endl;
 
         vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::Normal});
 

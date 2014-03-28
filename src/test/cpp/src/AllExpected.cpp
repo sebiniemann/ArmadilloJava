@@ -60,6 +60,9 @@ using armadilloJava::ExpectedGenRowVec;
 #include <ExpectedOOMat.cpp>
 using armadilloJava::ExpectedOOMat;
 
+#include <ExpectedSquMat.cpp>
+using armadilloJava::ExpectedSquMat;
+
 int main() {
   ofstream logfile("./expected.log");
   cout.rdbuf(logfile.rdbuf());
@@ -77,6 +80,7 @@ int main() {
   ExpectedNumElems();
   ExpectedNumRowsNumCols();
   ExpectedOOMat();
+  ExpectedSquMat();
 
   return EXIT_SUCCESS;
 }

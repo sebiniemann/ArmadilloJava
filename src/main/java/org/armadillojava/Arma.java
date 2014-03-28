@@ -1856,7 +1856,6 @@ public class Arma {
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
-   * @throws RuntimeException The factorisation could not be completed. The provided matrix appears to be singular.
    */
   public static double det(final Mat A) throws RuntimeException {
     if (A.empty()) {
@@ -1873,10 +1872,10 @@ public class Arma {
 
     LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
     if (info.val != 0) {
-      throw new RuntimeException("The factorisation could not be completed. The provided matrix appears to be singular.");
+      return 0;
     }
 
-    double determinant = temp[0];
+    double determinant = 1;
     boolean positiveSign = true;
 
     for (int i = 0; i < A.n_rows; i++) {
@@ -1956,13 +1955,15 @@ public class Arma {
 
     LAPACK.getInstance().dgetrf(A.n_rows, A.n_cols, temp, A.n_rows, pivotIndices, info);
     if (info.val != 0) {
-      throw new RuntimeException("The factorisation could not be completed. The provided matrix appears to be singular.");
+      val[0] = Double.NEGATIVE_INFINITY;
+      sign[0] = 1;
+      return;
     }
 
-    double determinant = temp[0];
-    boolean positiveSign = true;
+    double determinant = Math.log(temp[0]);
+    boolean positiveSign = (0 != pivotIndices[0] - 1 ^ temp[0] < 0) ? false : true;
 
-    for (int i = 0; i < A.n_rows; i++) {
+    for (int i = 1; i < A.n_rows; i++) {
       double value = temp[i + i * A.n_rows];
 
       determinant += Math.log(Math.abs(value));
@@ -1973,7 +1974,7 @@ public class Arma {
     }
 
     val[0] = determinant;
-    sign[0] = (positiveSign ? 1 : -1);
+    sign[0] = (positiveSign) ? 1 : -1;
   }
 
   /**
@@ -5046,8 +5047,8 @@ public class Arma {
     result.copy_size(A);
 
     int n = 0;
-    for (int j = 0; j < A.n_cols; j++) {
-      for (int i = 0; i < A.n_rows; i++) {
+    for (int i = 0; i < A.n_rows; i++) {
+      for (int j = 0; j < A.n_cols; j++) {
         double value = A._data[n];
 
         if (i < j) {
@@ -5080,8 +5081,8 @@ public class Arma {
     result.copy_size(A);
 
     int n = 0;
-    for (int j = 0; j < A.n_cols; j++) {
-      for (int i = 0; i < A.n_rows; i++) {
+    for (int i = 0; i < A.n_rows; i++) {
+      for (int j = 0; j < A.n_cols; j++) {
         double value = A._data[n];
 
         if (i > j) {

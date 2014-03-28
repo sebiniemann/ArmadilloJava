@@ -69,7 +69,7 @@ public class TestGenMatNormal extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_genMat, _copyOfGenMat);
+    assertMatEquals(_genMat, _copyOfGenMat, 0);
     assertThat(_normal, is(_copyOfNormal));
   }
 

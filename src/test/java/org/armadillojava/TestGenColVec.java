@@ -59,7 +59,7 @@ public class TestGenColVec extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_genColVec, _copyOfGenColVec);
+    assertMatEquals(_genColVec, _copyOfGenColVec, 0);
   }
 
   @Test

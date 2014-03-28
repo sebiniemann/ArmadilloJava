@@ -33,6 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestNumElems.class,
   TestNumRowsNumCols.class,
   TestOOMat.class,
+  TestSquMat.class,
   TestWallClock.class
 })
 public class AllTests {}

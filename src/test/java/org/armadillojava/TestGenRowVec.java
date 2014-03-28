@@ -60,7 +60,7 @@ public class TestGenRowVec extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_genRowVec, _copyOfGenRowVec);
+    assertMatEquals(_genRowVec, _copyOfGenRowVec, 0);
   }
 
   @Test

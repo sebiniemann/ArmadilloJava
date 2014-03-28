@@ -60,7 +60,7 @@ public class TestOOMat extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_ooMat, _copyOfOOMat);
+    assertMatEquals(_ooMat, _copyOfOOMat, 0);
   }
 
   @Test

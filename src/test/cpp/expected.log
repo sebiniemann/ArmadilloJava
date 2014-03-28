@@ -5566,7 +5566,7 @@ Using input: Mat(kms(5,5)),2.0
 Using input: Mat(kms(5,5)),3.0
 - Compute expectedPow() ... done.
 done.
-Compute ExpectedGenMatDim(): 
+Compute ExpectedGenMatNormal(): 
 Using input: Mat(zeros(1,1)),0
 - Compute expectedStddev() ... done.
 - Compute expectedVar() ... done.
@@ -7736,7 +7736,7 @@ Using input: Row(kms(5,5).row(0))
 - Compute expectedDiagmat() ... done.
 - Compute expectedIs_finite() ... done.
 done.
-Compute ExpectedNumRowsNumCols(): 
+Compute ExpectedNumElems(): 
 Using input: 1
 - Compute expectedOnes() ... done.
 - Compute expectedZeros() ... done.
@@ -7797,4 +7797,141 @@ Using input: Mat({euler_number})
 Using input: Mat({inf})
 Using input: Mat({machine_epsilon})
 Using input: Mat({pi})
+done.
+Compute ExpectedSquMat(): 
+Using input: Mat(eye(1,1))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(eye(2,2))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(eye(5,5))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(hilbert(1,1))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(hilbert(2,2))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(hilbert(5,5))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(kms(1,1))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(kms(2,2))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(kms(5,5))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(ones(1,1))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(ones(2,2))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(ones(5,5))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(zeros(1,1))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(zeros(2,2))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
+Using input: Mat(zeros(5,5))
+- Compute expectedDet() ... done.
+- Compute expectedLog_det() ... done.
+- Compute expectedTrace() ... done.
+- Compute expectedDiagmat() ... done.
+- Compute expectedSymmatu() ... done.
+- Compute expectedSymmatl() ... done.
+- Compute expectedTrimatu() ... done.
+- Compute expectedTrimatl() ... done.
 done.
