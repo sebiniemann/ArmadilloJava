@@ -370,11 +370,11 @@ public class TestGenColVec extends TestClass {
   @Test
   public void testIs_finite() throws IOException {
     int expected = (int) load("is_finite")._data[0];
-    if(Arma.is_finite(_genColVec)) {
+    if (Arma.is_finite(_genColVec)) {
       assertThat(1, is(expected));
     } else {
       assertThat(0, is(expected));
     }
   }
-  
+
 }

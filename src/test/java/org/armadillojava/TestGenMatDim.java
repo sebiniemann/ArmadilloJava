@@ -75,7 +75,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testMin() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("min"));
       assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("min").t());
     } else {
@@ -86,7 +86,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testMax() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("max"));
       assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("max").t());
     } else {
@@ -97,7 +97,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testProd() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("prod"));
       assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("prod").t());
     } else {
@@ -108,7 +108,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testSum() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("sum"));
       assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("sum").t());
     } else {
@@ -119,7 +119,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testMean() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("mean"));
       assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("mean").t());
     } else {
@@ -130,7 +130,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testMedian() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("median"));
       assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("median").t());
     } else {
@@ -146,7 +146,7 @@ public class TestGenMatDim extends TestClass {
 
   @Test
   public void testVectorise() throws IOException {
-    if(_dim == 0) {
+    if (_dim == 0) {
       assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("vectorise"));
       assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("vectorise").t());
     } else {

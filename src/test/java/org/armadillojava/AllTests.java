@@ -32,7 +32,9 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenRowVec.class,
   TestNumElems.class,
   TestNumRowsNumCols.class,
+  TestOOColVec.class,
   TestOOMat.class,
+  TestOORowVec.class,
   TestSquMat.class,
   TestWallClock.class
 })

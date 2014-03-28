@@ -371,7 +371,7 @@ public class TestGenRowVec extends TestClass {
   @Test
   public void testIs_finite() throws IOException {
     int expected = (int) load("is_finite")._data[0];
-    if(Arma.is_finite(_genRowVec)) {
+    if (Arma.is_finite(_genRowVec)) {
       assertThat(1, is(expected));
     } else {
       assertThat(0, is(expected));

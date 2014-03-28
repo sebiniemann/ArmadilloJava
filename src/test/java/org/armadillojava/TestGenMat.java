@@ -356,9 +356,9 @@ public class TestGenMat extends TestClass {
   @Test
   public void testPinvB() throws IOException {
     Mat pinv = new Mat();
-    
+
     Arma.pinv(pinv, _genMat);
-    
+
     assertMatEquals(pinv, load("pinv"), TestUtil.globalDelta(load("pinv"), 1e-12));
   }
 
@@ -476,5 +476,5 @@ public class TestGenMat extends TestClass {
       assertThat(Arma.accu(_genMat), is(closeTo(expected, Math.abs(expected) * 1e-10)));
     }
   }
-  
+
 }

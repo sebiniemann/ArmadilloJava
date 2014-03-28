@@ -76,18 +76,18 @@ public class TestSquMat extends TestClass {
   public void testLog_det() throws IOException {
     double expectedVal = load("log_detVal")._data[0];
     double expectedSign = load("log_detSign")._data[0];
-    
+
     double[] val = new double[1];
     int[] sign = new int[1];
-    
+
     Arma.log_det(val, sign, _squMat);
-    
+
     if (Double.isInfinite(expectedVal) || Double.isNaN(expectedVal)) {
       assertThat(val[0], is(expectedVal));
     } else {
       assertThat(val[0], is(closeTo(expectedVal, Math.abs(expectedVal) * 1e-12)));
     }
-    
+
     assertThat(sign[0], is((int) expectedSign));
   }
 
@@ -125,5 +125,5 @@ public class TestSquMat extends TestClass {
   public void testTrimatl() throws IOException {
     assertMatEquals(Arma.trimatl(_squMat), load("trimatl"));
   }
-  
+
 }

@@ -57,8 +57,14 @@ using armadilloJava::ExpectedNumRowsNumCols;
 #include <ExpectedGenRowVec.cpp>
 using armadilloJava::ExpectedGenRowVec;
 
+#include <ExpectedOOColVec.cpp>
+using armadilloJava::ExpectedOOColVec;
+
 #include <ExpectedOOMat.cpp>
 using armadilloJava::ExpectedOOMat;
+
+#include <ExpectedOORowVec.cpp>
+using armadilloJava::ExpectedOORowVec;
 
 #include <ExpectedSquMat.cpp>
 using armadilloJava::ExpectedSquMat;
@@ -79,7 +85,9 @@ int main() {
   ExpectedGenRowVec();
   ExpectedNumElems();
   ExpectedNumRowsNumCols();
+  ExpectedOOColVec();
   ExpectedOOMat();
+  ExpectedOORowVec();
   ExpectedSquMat();
 
   return EXIT_SUCCESS;

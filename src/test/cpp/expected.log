@@ -7785,6 +7785,19 @@ Using input: 5,5
 - Compute expectedOnes() ... done.
 - Compute expectedZeros() ... done.
 done.
+Compute ExpectedOOColVec(): 
+Using input: Col({-2.0})
+Using input: Col({-inf})
+Using input: Col({0.0})
+Using input: Col({0.5})
+Using input: Col({1.0})
+Using input: Col({3.0})
+Using input: Col({4.0})
+Using input: Col({euler_number})
+Using input: Col({inf})
+Using input: Col({machine_epsilon})
+Using input: Col({pi})
+done.
 Compute ExpectedOOMat(): 
 Using input: Mat({-2.0})
 Using input: Mat({-inf})
@@ -7797,6 +7810,19 @@ Using input: Mat({euler_number})
 Using input: Mat({inf})
 Using input: Mat({machine_epsilon})
 Using input: Mat({pi})
+done.
+Compute ExpectedOORowVec(): 
+Using input: Row({-2.0})
+Using input: Row({-inf})
+Using input: Row({0.0})
+Using input: Row({0.5})
+Using input: Row({1.0})
+Using input: Row({3.0})
+Using input: Row({4.0})
+Using input: Row({euler_number})
+Using input: Row({inf})
+Using input: Row({machine_epsilon})
+Using input: Row({pi})
 done.
 Compute ExpectedSquMat(): 
 Using input: Mat(eye(1,1))
