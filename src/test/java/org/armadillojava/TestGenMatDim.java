@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenMatDim extends TestClass {
 
-  @Parameters(name = "{index}: GenMat = {0}, Dim = {3}")
+  @Parameters(name = "{index}: GenMat = {0}, Dim = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

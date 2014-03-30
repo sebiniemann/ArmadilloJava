@@ -4206,7 +4206,7 @@ public class Arma {
     }
 
     Col result = new Col(X.n_elem);
-    result._data = Arrays.copyOf(temp, index);
+    System.arraycopy(temp, 0, result._data, 0, index);
 
     if (s.equals("last")) {
       revert(result._data, result._data);
@@ -4254,6 +4254,9 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat hist(final AbstractMat X) throws RuntimeException {
+    /*
+     * The parameter "X" is validated within hist(Mat, int).
+     */
     return hist(X, 10);
   }
 
@@ -4268,6 +4271,9 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat hist(final AbstractMat X, final int n_bins) throws NegativeArraySizeException, RuntimeException {
+    /*
+     * The parameters "X" and "n_bins" are validated within hist(Mat, int, int).
+     */
     return hist(X, n_bins, 0);
   }
 
@@ -4287,7 +4293,7 @@ public class Arma {
    */
   public static Mat hist(final AbstractMat X, final int n_bins, int dim) throws NegativeArraySizeException, RuntimeException, IllegalArgumentException {
     /*
-     * The parameter "dim" and is validated within hist(Mat, AbstractMat, int).
+     * The parameter "dim" is validated within hist(Mat, AbstractMat, int).
      */
 
     if (n_bins < 0) {
@@ -4322,7 +4328,7 @@ public class Arma {
        */
       centers._data[n] = minimum + stepLength * (0.5 + n);
     }
-
+    
     return hist(X, centers, dim);
   }
 
@@ -4386,7 +4392,7 @@ public class Arma {
    */
   public static Mat hist(final AbstractMat X, final AbstractMat centers, final int dim) throws RuntimeException, IllegalArgumentException {
     if (X.is_empty()) {
-      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-vector must have at least one element.");
+      throw new RuntimeException("The provided (" + X.n_rows + ", " + X.n_cols + ")-matrix must have at least one element.");
     }
 
     Mat result = new Mat();
@@ -4426,25 +4432,16 @@ public class Arma {
 
   protected static void histc(final double[] result, final double[] V, final double[] edges) {
     for (int n = 0; n < V.length; n++) {
-      double element = V[n];
+      double value = V[n];
 
-      double edge = edges[0];
-
-      if (element < edge) {
-        continue;
-      }
-
-      for (int nn = 1; nn < edges.length; nn++) {
-        edge = edges[nn];
-
-        if (element < edge) {
-          result[nn - 1]++;
+      for (int nn = 0; nn < edges.length - 1; nn++) {
+        if(edges[nn] <= value && value < edges[nn + 1]) {
+          result[nn]++;
+          break;
+        } else if(value == edges[edges.length - 1]) {
+          result[edges.length - 1]++;
           break;
         }
-      }
-
-      if (element == edge) {
-        result[edges.length - 1]++;
       }
     }
   }
@@ -4458,7 +4455,7 @@ public class Arma {
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat histc(final AbstractMat X, final AbstractMat edges) throws RuntimeException {
-    return hist(X, edges, 0);
+    return histc(X, edges, 0);
   }
 
   /**
@@ -4518,6 +4515,9 @@ public class Arma {
    * @param X The matrix
    */
   public static void inplace_trans(final Mat X) {
+    //TODO catch vectors
+    //TODO adjust n_rows, n_cols
+    
     int n = 0;
     for (int i = 0; i < X.n_rows; i++) {
       for (int j = 0; j < X.n_cols; j++) {
@@ -4530,6 +4530,7 @@ public class Arma {
         n++;
       }
     }
+    
   }
 
   /**
@@ -5201,7 +5202,7 @@ public class Arma {
     }
 
     result.set_size(n);
-    result._data = Arrays.copyOf(temp, temp.length);
+    System.arraycopy(temp, 0, result._data, 0, result.n_elem);
   }
 
   /**
@@ -5255,12 +5256,13 @@ public class Arma {
       throw new RuntimeException("The provided (" + A.n_rows + ", " + A.n_cols + ")-matrix must have at least one element.");
     }
 
-    if (A.is_rowvec()) {
-      return new Mat(unique(new Row(A)));
-    }
-
     Mat result = new Mat();
     unique(result, A._data);
+    
+    if (A.is_rowvec()) {
+      return result.t();
+    }
+
     return result;
   }
 
@@ -5296,7 +5298,7 @@ public class Arma {
 
     switch (dim) {
       case 0:
-        result._data = Arrays.copyOf(A._data, A.n_elem);
+        System.arraycopy(A._data, 0, result._data, 0, A.n_elem);
         break;
       case 1:
         int n = 0;

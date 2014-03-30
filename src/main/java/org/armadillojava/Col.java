@@ -93,7 +93,7 @@ public class Col extends AbstractVector {
    */
   public Col(final Col vec) {
     copy_size(vec);
-    _data = Arrays.copyOf(vec._data, vec.n_elem);
+    System.arraycopy(vec._data, 0, _data, 0, vec.n_elem);
   }
 
   /**
@@ -110,7 +110,7 @@ public class Col extends AbstractVector {
     }
 
     copy_size(mat);
-    _data = Arrays.copyOf(mat._data, mat.n_elem);
+    System.arraycopy(mat._data, 0, _data, 0, mat.n_elem);
   }
 
   /**
@@ -120,7 +120,7 @@ public class Col extends AbstractVector {
    */
   public Col(final double[] array) {
     set_size(array.length);
-    _data = Arrays.copyOf(array, array.length);
+    System.arraycopy(array, 0, _data, 0, array.length);
   }
 
   /**
@@ -173,7 +173,7 @@ public class Col extends AbstractVector {
       return; // Nothing to do here.
     } else if (is_empty()) {
       copy_size(X);
-      _data = Arrays.copyOf(X._data, X.n_elem);
+      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {
       double[] temp = Arrays.copyOf(_data, n_elem);
       set_size(n_elem + X.n_elem);
@@ -571,7 +571,7 @@ public class Col extends AbstractVector {
     }
 
     Col col = new Col(last_index - first_index + 1);
-    col._data = Arrays.copyOfRange(_data, first_index, last_index + 1);
+    System.arraycopy(_data, first_index, col._data, 0, last_index - first_index + 1);
     return col;
   }
 
@@ -593,10 +593,10 @@ public class Col extends AbstractVector {
     Col temp = new Col(_data);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
@@ -608,10 +608,10 @@ public class Col extends AbstractVector {
     Col temp = new Col(_data);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
@@ -619,10 +619,10 @@ public class Col extends AbstractVector {
     Col temp = new Col(_data);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override

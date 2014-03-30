@@ -1026,8 +1026,11 @@ abstract class AbstractMat {
       throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bounds.");
     }
 
+    /*
+     * Faster than new Mat(ViewSubCols(this, first_col, last_col - first_col + 1))
+     */
     Mat cols = new Mat(n_rows, last_col - first_col + 1);
-    cols._data = Arrays.copyOfRange(_data, first_col * n_rows, cols.n_cols * n_rows);
+    System.arraycopy(_data, first_col * n_rows, cols._data, 0, cols.n_cols * n_rows);
     return cols;
   }
 
@@ -2259,7 +2262,7 @@ abstract class AbstractMat {
     switch (binary_operator) {
       case EQUAL:
         copy_size(rightHandOperand);
-        _data = Arrays.copyOf(rightHandOperand._data, rightHandOperand.n_elem);
+        System.arraycopy(rightHandOperand._data, 0, _data, 0, rightHandOperand.n_elem);
         break;
       case PLUS:
         for (int n = 0; n < n_elem; n++) {
@@ -2274,7 +2277,7 @@ abstract class AbstractMat {
       case TIMES:
         AbstractMat result = times(rightHandOperand);
         copy_size(result);
-        _data = Arrays.copyOf(result._data, result.n_elem);
+        System.arraycopy(result._data, 0, _data, 0, result.n_elem);
         break;
       case ELEMTIMES:
         for (int n = 0; n < n_elem; n++) {

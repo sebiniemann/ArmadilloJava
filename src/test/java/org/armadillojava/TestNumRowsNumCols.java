@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestNumRowsNumCols extends TestClass {
 
-  @Parameters(name = "{index}: NumRows = {0}, NumCols = {3}")
+  @Parameters(name = "{index}: NumRows = {0}, NumCols = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 

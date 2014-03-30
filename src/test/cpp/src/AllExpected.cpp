@@ -33,6 +33,12 @@ using armadilloJava::ExpectedDatum;
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;
 
+#include <ExpectedGenColVecMonColVec.cpp>
+using armadilloJava::ExpectedGenColVecMonColVec;
+
+#include <ExpectedGenColVecMonRowVec.cpp>
+using armadilloJava::ExpectedGenColVecMonRowVec;
+
 #include <ExpectedGenDouble.cpp>
 using armadilloJava::ExpectedGenDouble;
 
@@ -45,11 +51,32 @@ using armadilloJava::ExpectedGenMatDim;
 #include <ExpectedGenMatExp.cpp>
 using armadilloJava::ExpectedGenMatExp;
 
+#include <ExpectedGenMatMonColVec.cpp>
+using armadilloJava::ExpectedGenMatMonColVec;
+
+#include <ExpectedGenMatMonColVecDim.cpp>
+using armadilloJava::ExpectedGenMatMonColVecDim;
+
+#include <ExpectedGenMatMonRowVec.cpp>
+using armadilloJava::ExpectedGenMatMonRowVec;
+
+#include <ExpectedGenMatMonRowVecDim.cpp>
+using armadilloJava::ExpectedGenMatMonRowVecDim;
+
 #include <ExpectedGenMatNormal.cpp>
 using armadilloJava::ExpectedGenMatNormal;
 
+#include <ExpectedGenMatSort.cpp>
+using armadilloJava::ExpectedGenMatSort;
+
 #include <ExpectedGenRowVec.cpp>
 using armadilloJava::ExpectedGenRowVec;
+
+#include <ExpectedGenRowVecMonColVec.cpp>
+using armadilloJava::ExpectedGenRowVecMonColVec;
+
+#include <ExpectedGenRowVecMonRowVec.cpp>
+using armadilloJava::ExpectedGenRowVecMonRowVec;
 
 #include <ExpectedLogicColVec.cpp>
 using armadilloJava::ExpectedLogicColVec;
@@ -89,12 +116,21 @@ int main() {
 
   ExpectedDatum();
   ExpectedGenColVec();
+  ExpectedGenColVecMonColVec();
+  ExpectedGenColVecMonRowVec();
   ExpectedGenDouble();
   ExpectedGenMat();
   ExpectedGenMatDim();
   ExpectedGenMatExp();
+  ExpectedGenMatMonColVec();
+  ExpectedGenMatMonColVecDim();
+  ExpectedGenMatMonRowVec();
+  ExpectedGenMatMonRowVecDim();
   ExpectedGenMatNormal();
+  ExpectedGenMatSort();
   ExpectedGenRowVec();
+  ExpectedGenRowVecMonColVec();
+  ExpectedGenRowVecMonRowVec();
   ExpectedLogicColVec();
   ExpectedLogicMat();
   ExpectedLogicMatDim();

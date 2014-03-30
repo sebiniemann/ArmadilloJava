@@ -20,6 +20,7 @@ using std::endl;
 
 #include <utility>
 using std::pair;
+
 #include <armadillo>
 using arma::Col;
 using arma::all;

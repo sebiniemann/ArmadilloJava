@@ -103,7 +103,7 @@ public class Mat extends AbstractMat {
    */
   public Mat(final AbstractMat mat) {
     copy_size(mat);
-    _data = Arrays.copyOf(mat._data, mat.n_elem);
+    System.arraycopy(mat._data, 0, _data, 0, mat.n_elem);
   }
 
   /**
@@ -113,7 +113,7 @@ public class Mat extends AbstractMat {
    */
   public Mat(final double[] array) {
     set_size(array.length);
-    _data = Arrays.copyOf(array, array.length);
+    System.arraycopy(array, 0, _data, 0, array.length);
   }
 
   /**
@@ -719,7 +719,7 @@ public class Mat extends AbstractMat {
       return; // Nothing to do here.
     } else if (is_empty()) {
       copy_size(X);
-      _data = Arrays.copyOf(X._data, X.n_elem);
+      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {
       if (n_cols != X.n_cols) {
         throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
@@ -821,7 +821,7 @@ public class Mat extends AbstractMat {
       return; // Nothing to do here.
     } else if (is_empty()) {
       copy_size(X);
-      _data = Arrays.copyOf(X._data, X.n_elem);
+      System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {
       if (n_cols != X.n_cols) {
         throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
@@ -1239,10 +1239,10 @@ public class Mat extends AbstractMat {
     Mat temp = new Mat(this);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
@@ -1254,10 +1254,10 @@ public class Mat extends AbstractMat {
     Mat temp = new Mat(this);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
@@ -1269,20 +1269,24 @@ public class Mat extends AbstractMat {
     Mat temp = new Mat(this);
 
     copy_size(X);
-    _data = Arrays.copyOf(X._data, X.n_elem);
+    System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
     copy_size(temp);
-    X._data = Arrays.copyOf(temp._data, temp.n_elem);
+    System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
   @Override
   public Mat t() {
     Mat transpose = new Mat(n_cols, n_rows);
 
-    int n = 0;
-    for (int i = 0; i < transpose.n_rows; i++) {
-      for (int j = 0; j < transpose.n_cols; j++) {
-        transpose._data[i + j * transpose.n_rows] = _data[n++];
+    if(is_vec()) {
+      System.arraycopy(_data, 0, transpose._data, 0, n_elem);
+    } else {
+      int n = 0;
+      for (int i = 0; i < transpose.n_rows; i++) {
+        for (int j = 0; j < transpose.n_cols; j++) {
+          transpose._data[i + j * transpose.n_rows] = _data[n++];
+        }
       }
     }
 
