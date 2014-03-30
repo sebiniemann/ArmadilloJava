@@ -4328,7 +4328,7 @@ public class Arma {
        */
       centers._data[n] = minimum + stepLength * (0.5 + n);
     }
-    
+
     return hist(X, centers, dim);
   }
 
@@ -4435,10 +4435,10 @@ public class Arma {
       double value = V[n];
 
       for (int nn = 0; nn < edges.length - 1; nn++) {
-        if(edges[nn] <= value && value < edges[nn + 1]) {
+        if (edges[nn] <= value && value < edges[nn + 1]) {
           result[nn]++;
           break;
-        } else if(value == edges[edges.length - 1]) {
+        } else if (value == edges[edges.length - 1]) {
           result[edges.length - 1]++;
           break;
         }
@@ -4515,9 +4515,9 @@ public class Arma {
    * @param X The matrix
    */
   public static void inplace_trans(final Mat X) {
-    //TODO catch vectors
-    //TODO adjust n_rows, n_cols
-    
+    // TODO catch vectors
+    // TODO adjust n_rows, n_cols
+
     int n = 0;
     for (int i = 0; i < X.n_rows; i++) {
       for (int j = 0; j < X.n_cols; j++) {
@@ -4530,7 +4530,7 @@ public class Arma {
         n++;
       }
     }
-    
+
   }
 
   /**
@@ -4776,7 +4776,7 @@ public class Arma {
 
     Arrays.sort(result);
 
-    if (sort_direction == "descend") {
+    if (sort_direction.equals("descend")) {
       revert(result, result);
     }
   }
@@ -4962,19 +4962,24 @@ public class Arma {
       temp[n] = n;
     }
 
-    Arrays.sort(temp, new Comparator<Integer>() {
-      @Override
-      public int compare(final Integer a, final Integer b) {
-        return Double.compare(V[a], V[b]);
-      }
-    });
+    if (sort_direction.equals("descend")) {
+      Arrays.sort(temp, new Comparator<Integer>() {
+        @Override
+        public int compare(final Integer a, final Integer b) {
+          return Double.compare(V[b], V[a]);
+        }
+      });
+    } else {
+      Arrays.sort(temp, new Comparator<Integer>() {
+        @Override
+        public int compare(final Integer a, final Integer b) {
+          return Double.compare(V[a], V[b]);
+        }
+      });
+    }
 
     for (int n = 0; n < temp.length; n++) {
       result[n] = temp[n];
-    }
-
-    if (sort_direction == "descend") {
-      revert(result, result);
     }
   }
 
@@ -5258,7 +5263,7 @@ public class Arma {
 
     Mat result = new Mat();
     unique(result, A._data);
-    
+
     if (A.is_rowvec()) {
       return result.t();
     }

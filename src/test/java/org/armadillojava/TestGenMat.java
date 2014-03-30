@@ -55,6 +55,7 @@ public class TestGenMat extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString;
+    
     _copyOfGenMat = new Mat(_genMat);
   }
 

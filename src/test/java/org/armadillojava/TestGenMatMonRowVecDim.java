@@ -74,7 +74,7 @@ public class TestGenMatMonRowVecDim extends TestClass {
     
     _copyOfGenMat = new Mat(_genMat);
     _copyOfMonRowVec = new Row(_monRowVecMat);
-    _copyOfDim = _dim;
+    _copyOfDim = new Integer(_dim);
   }
 
   @After

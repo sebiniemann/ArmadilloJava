@@ -63,8 +63,8 @@ public class TestNumRowsNumCols extends TestClass {
   public void before() {
     _fileSuffix = _numRowsString + "," + _numColsString;
 
-    _copyOfNumRows = _numRows;
-    _copyOfNumCols = _numCols;
+    _copyOfNumRows = new Integer(_numRows);
+    _copyOfNumCols = new Integer(_numCols);
   }
 
   @After

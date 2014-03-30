@@ -52,7 +52,8 @@ public class TestGenDouble extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genDoubleString;
-    _copyOfGenDouble = _genDouble;
+    
+    _copyOfGenDouble = new Double(_genDouble);
   }
 
   @After

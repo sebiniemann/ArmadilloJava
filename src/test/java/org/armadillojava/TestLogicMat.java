@@ -51,6 +51,7 @@ public class TestLogicMat extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _logicMatString;
+    
     _copyOfLogicMat = new Mat(_logicMat);
   }
 

@@ -63,8 +63,8 @@ public class TestGenMatNormal extends TestClass {
   public void before() {
     _fileSuffix = _genMatString + "," + _normalString;
 
-    _copyOfGenMat = _genMat;
-    _copyOfNormal = _normal;
+    _copyOfGenMat = new Mat(_genMat);
+    _copyOfNormal = new Integer(_normal);
   }
 
   @After

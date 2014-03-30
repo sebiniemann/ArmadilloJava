@@ -64,7 +64,7 @@ public class TestGenMatExp extends TestClass {
     _fileSuffix = _genMatString + "," + _expString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfExp = _exp;
+    _copyOfExp = new Double(_exp);
   }
 
   @After

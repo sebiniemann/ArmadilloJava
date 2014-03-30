@@ -54,7 +54,7 @@ public class TestNumElems extends TestClass {
   public void before() {
     _fileSuffix = _numElemsString;
 
-    _copyOfNumElems = _numElems;
+    _copyOfNumElems = new Integer(_numElems);
   }
 
   @After

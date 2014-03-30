@@ -3107,6 +3107,272 @@ Using input: Col(kms(5,5).col(0)),Row({inf})
 - Compute expectedHist() ... done.
 - Compute expectedHistc() ... done.
 done.
+Compute ExpectedGenColVecSort(): 
+Using input: Col(zeros(1,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(zeros(1,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(1,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(1,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(1,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(1,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(1,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(zeros(2,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(zeros(2,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(2,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(2,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(2,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(2,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(2,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(zeros(5,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(zeros(5,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(5,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(ones(5,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,1).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,1).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,2).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,2).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(eye(5,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(hilbert(5,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,5).col(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Col(kms(5,5).col(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+done.
 Compute ExpectedGenDouble(): 
 Using input: -2.0
 - Compute expectedIs_finite() ... done.
@@ -13268,6 +13534,368 @@ Using input: Mat(kms(5,5)),'ascend'
 Using input: Mat(kms(5,5)),'descend'
 - Compute expectedSort() ... done.
 done.
+Compute ExpectedGenMatSortDim(): 
+Using input: Mat(zeros(1,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(1,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(1,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(1,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(1,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(1,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(2,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(2,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(2,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(2,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(2,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,1)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,1)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,1)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,1)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,2)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,2)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,2)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,2)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(zeros(5,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(ones(5,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(eye(5,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(hilbert(5,5)),'descend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,5)),'ascend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,5)),'ascend',1
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,5)),'descend',0
+- Compute expectedSort() ... done.
+Using input: Mat(kms(5,5)),'descend',1
+- Compute expectedSort() ... done.
+done.
 Compute ExpectedGenRowVec(): 
 Using input: Row(zeros(1,1))
 - Compute expectedAbs() ... done.
@@ -16375,6 +17003,272 @@ Using input: Row(kms(5,5).row(0)),Row({-inf})
 Using input: Row(kms(5,5).row(0)),Row({inf})
 - Compute expectedHist() ... done.
 - Compute expectedHistc() ... done.
+done.
+Compute ExpectedGenRowVecSort(): 
+Using input: Row(zeros(1,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(zeros(1,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,1)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,1)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,1).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,1).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(zeros(1,2)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(zeros(1,2)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,2)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,2)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,2).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,2).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(zeros(1,5)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(zeros(1,5)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,5)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(ones(1,5)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(1,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(1,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(1,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(2,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(2,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(2,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(eye(5,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(hilbert(5,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,5).row(0)),'ascend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
+Using input: Row(kms(5,5).row(0)),'descend'
+- Compute expectedSort() ... done.
+- Compute expectedSort_index() ... done.
+- Compute expectedStable_sort_index() ... done.
 done.
 Compute ExpectedLogicColVec(): 
 Using input: Col(zeros(1,1))

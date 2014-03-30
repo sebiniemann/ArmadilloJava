@@ -64,7 +64,7 @@ public class TestLogicMatDim extends TestClass {
     _fileSuffix = _logicMatString + "," + _dimString;
 
     _copyOfLogicMat = new Mat(_logicMat);
-    _copyOfDim = _dim;
+    _copyOfDim = new Integer(_dim);
   }
 
   @After

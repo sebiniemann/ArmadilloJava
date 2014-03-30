@@ -63,8 +63,8 @@ public class TestGenMatDim extends TestClass {
   public void before() {
     _fileSuffix = _genMatString + "," + _dimString;
 
-    _copyOfGenMat = _genMat;
-    _copyOfDim = _dim;
+    _copyOfGenMat = new Mat(_genMat);
+    _copyOfDim = new Integer(_dim);
   }
 
   @After

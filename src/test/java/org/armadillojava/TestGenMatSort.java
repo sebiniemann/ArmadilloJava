@@ -61,7 +61,7 @@ public class TestGenMatSort extends TestClass {
 
   @Before
   public void before() {
-    _fileSuffix = _genMatString;
+    _fileSuffix = _genMatString + "," + _sortString;
 
     _copyOfGenMat = new Mat(_genMat);
     _copyOfSort = new String(_sort);
