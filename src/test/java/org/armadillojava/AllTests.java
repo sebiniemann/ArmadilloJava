@@ -77,6 +77,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestOOMat.class,
   TestOORowVec.class,
   TestSquMat.class,
+  TestSymMat.class,
   TestSymPDMat.class,
   TestWallClock.class
 })

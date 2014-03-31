@@ -189,6 +189,9 @@ using armadilloJava::ExpectedOORowVec;
 #include <ExpectedSquMat.cpp>
 using armadilloJava::ExpectedSquMat;
 
+#include <ExpectedSymMat.cpp>
+using armadilloJava::ExpectedSymMat;
+
 #include <ExpectedSymPDMat.cpp>
 using armadilloJava::ExpectedSymPDMat;
 
@@ -252,7 +255,8 @@ int main() {
 //  ExpectedOOMat();
 //  ExpectedOORowVec();
 //  ExpectedSquMat();
-  ExpectedSymPDMat();
+  ExpectedSymMat();
+//  ExpectedSymPDMat();
 
   return EXIT_SUCCESS;
 }

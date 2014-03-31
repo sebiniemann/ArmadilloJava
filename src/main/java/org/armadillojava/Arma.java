@@ -5406,12 +5406,13 @@ public class Arma {
       return false;
     }
 
+    double temp[] = Arrays.copyOf(X._data, X.n_elem);
     eigval.set_size(X.n_rows);
 
-    double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
+    double[] work = new double[Math.max(1, 3 * X.n_rows - 1)];
     intW info = new intW(0);
 
-    LAPACK.getInstance().dsyev("N", "U", X.n_rows, X._data, X.n_rows, eigval._data, work, work.length, info);
+    LAPACK.getInstance().dsyev("N", "U", X.n_rows, temp, Math.max(1, X.n_rows), eigval._data, work, work.length, info);
     if (info.val != 0) {
       return false;
     }
@@ -5435,11 +5436,12 @@ public class Arma {
     }
 
     eigvec.inPlace(Op.EQUAL, X);
+    eigval.set_size(X.n_rows);
 
-    double[] work = new double[Math.max(1, 3 * (X.n_rows - 1))];
+    double[] work = new double[Math.max(1, 3 * X.n_rows - 1)];
     intW info = new intW(0);
 
-    LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, X.n_rows, eigval._data, work, work.length, info);
+    LAPACK.getInstance().dsyev("V", "U", X.n_rows, eigvec._data, Math.max(1, X.n_rows), eigval._data, work, work.length, info);
     if (info.val != 0) {
       return false;
     }
