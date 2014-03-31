@@ -84,18 +84,12 @@ public class Arma {
    * @param end The value to end with
    * @param N The number of elements
    * 
-   * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
-   *           value to end with ({@code end}).
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
   public static <T extends AbstractMat> T linspace(final Class<T> return_type, final double start, final double end, final int N) throws RuntimeException, NegativeArraySizeException {
     /*
      * The parameter "N" is validated within set_size(int).
      */
-    if (end < start) {
-      throw new RuntimeException("The specified value to start with (" + start + ") must be less than or equal the specified value to end with (" + end + ").");
-    }
-
     T result;
 
     try {
@@ -118,7 +112,7 @@ public class Arma {
        * This way, the first and last value will be exactly the same as provided, without any additional loss of
        * precision.
        */
-      result._data[N] = end;
+      result._data[result.n_elem - 1] = end;
     }
 
     return result;

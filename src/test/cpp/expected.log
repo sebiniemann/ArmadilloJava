@@ -23841,6 +23841,978 @@ Using input: machine_epsilon
 Using input: pi
 - Compute expectedIs_finite() ... done.
 done.
+Compute ExpectedGenDoubleGenDouble(): 
+Using input: -2.0,-2.0
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-inf
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.0
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.5
+- Compute expectedLinspace() ... done.
+Using input: -2.0,1.0
+- Compute expectedLinspace() ... done.
+Using input: -2.0,3.0
+- Compute expectedLinspace() ... done.
+Using input: -2.0,4.0
+- Compute expectedLinspace() ... done.
+Using input: -2.0,euler_number
+- Compute expectedLinspace() ... done.
+Using input: -2.0,inf
+- Compute expectedLinspace() ... done.
+Using input: -2.0,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: -2.0,pi
+- Compute expectedLinspace() ... done.
+Using input: -inf,-2.0
+- Compute expectedLinspace() ... done.
+Using input: -inf,-inf
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.0
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.5
+- Compute expectedLinspace() ... done.
+Using input: -inf,1.0
+- Compute expectedLinspace() ... done.
+Using input: -inf,3.0
+- Compute expectedLinspace() ... done.
+Using input: -inf,4.0
+- Compute expectedLinspace() ... done.
+Using input: -inf,euler_number
+- Compute expectedLinspace() ... done.
+Using input: -inf,inf
+- Compute expectedLinspace() ... done.
+Using input: -inf,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: -inf,pi
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-2.0
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-inf
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.0
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.5
+- Compute expectedLinspace() ... done.
+Using input: 0.0,1.0
+- Compute expectedLinspace() ... done.
+Using input: 0.0,3.0
+- Compute expectedLinspace() ... done.
+Using input: 0.0,4.0
+- Compute expectedLinspace() ... done.
+Using input: 0.0,euler_number
+- Compute expectedLinspace() ... done.
+Using input: 0.0,inf
+- Compute expectedLinspace() ... done.
+Using input: 0.0,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: 0.0,pi
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-2.0
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-inf
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.0
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.5
+- Compute expectedLinspace() ... done.
+Using input: 0.5,1.0
+- Compute expectedLinspace() ... done.
+Using input: 0.5,3.0
+- Compute expectedLinspace() ... done.
+Using input: 0.5,4.0
+- Compute expectedLinspace() ... done.
+Using input: 0.5,euler_number
+- Compute expectedLinspace() ... done.
+Using input: 0.5,inf
+- Compute expectedLinspace() ... done.
+Using input: 0.5,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: 0.5,pi
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-2.0
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-inf
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.0
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.5
+- Compute expectedLinspace() ... done.
+Using input: 1.0,1.0
+- Compute expectedLinspace() ... done.
+Using input: 1.0,3.0
+- Compute expectedLinspace() ... done.
+Using input: 1.0,4.0
+- Compute expectedLinspace() ... done.
+Using input: 1.0,euler_number
+- Compute expectedLinspace() ... done.
+Using input: 1.0,inf
+- Compute expectedLinspace() ... done.
+Using input: 1.0,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: 1.0,pi
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-2.0
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-inf
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.0
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.5
+- Compute expectedLinspace() ... done.
+Using input: 3.0,1.0
+- Compute expectedLinspace() ... done.
+Using input: 3.0,3.0
+- Compute expectedLinspace() ... done.
+Using input: 3.0,4.0
+- Compute expectedLinspace() ... done.
+Using input: 3.0,euler_number
+- Compute expectedLinspace() ... done.
+Using input: 3.0,inf
+- Compute expectedLinspace() ... done.
+Using input: 3.0,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: 3.0,pi
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-2.0
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-inf
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.0
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.5
+- Compute expectedLinspace() ... done.
+Using input: 4.0,1.0
+- Compute expectedLinspace() ... done.
+Using input: 4.0,3.0
+- Compute expectedLinspace() ... done.
+Using input: 4.0,4.0
+- Compute expectedLinspace() ... done.
+Using input: 4.0,euler_number
+- Compute expectedLinspace() ... done.
+Using input: 4.0,inf
+- Compute expectedLinspace() ... done.
+Using input: 4.0,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: 4.0,pi
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-2.0
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-inf
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.0
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.5
+- Compute expectedLinspace() ... done.
+Using input: euler_number,1.0
+- Compute expectedLinspace() ... done.
+Using input: euler_number,3.0
+- Compute expectedLinspace() ... done.
+Using input: euler_number,4.0
+- Compute expectedLinspace() ... done.
+Using input: euler_number,euler_number
+- Compute expectedLinspace() ... done.
+Using input: euler_number,inf
+- Compute expectedLinspace() ... done.
+Using input: euler_number,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: euler_number,pi
+- Compute expectedLinspace() ... done.
+Using input: inf,-2.0
+- Compute expectedLinspace() ... done.
+Using input: inf,-inf
+- Compute expectedLinspace() ... done.
+Using input: inf,0.0
+- Compute expectedLinspace() ... done.
+Using input: inf,0.5
+- Compute expectedLinspace() ... done.
+Using input: inf,1.0
+- Compute expectedLinspace() ... done.
+Using input: inf,3.0
+- Compute expectedLinspace() ... done.
+Using input: inf,4.0
+- Compute expectedLinspace() ... done.
+Using input: inf,euler_number
+- Compute expectedLinspace() ... done.
+Using input: inf,inf
+- Compute expectedLinspace() ... done.
+Using input: inf,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: inf,pi
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-2.0
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-inf
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.0
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.5
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,1.0
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,3.0
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,4.0
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,euler_number
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,inf
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,pi
+- Compute expectedLinspace() ... done.
+Using input: pi,-2.0
+- Compute expectedLinspace() ... done.
+Using input: pi,-inf
+- Compute expectedLinspace() ... done.
+Using input: pi,0.0
+- Compute expectedLinspace() ... done.
+Using input: pi,0.5
+- Compute expectedLinspace() ... done.
+Using input: pi,1.0
+- Compute expectedLinspace() ... done.
+Using input: pi,3.0
+- Compute expectedLinspace() ... done.
+Using input: pi,4.0
+- Compute expectedLinspace() ... done.
+Using input: pi,euler_number
+- Compute expectedLinspace() ... done.
+Using input: pi,inf
+- Compute expectedLinspace() ... done.
+Using input: pi,machine_epsilon
+- Compute expectedLinspace() ... done.
+Using input: pi,pi
+- Compute expectedLinspace() ... done.
+done.
+Compute ExpectedGenDoubleGenDoubleNumElems(): 
+Using input: -2.0,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,inf,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,inf,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,inf,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: -2.0,pi,1
+- Compute expectedLinspace() ... done.
+Using input: -2.0,pi,2
+- Compute expectedLinspace() ... done.
+Using input: -2.0,pi,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,inf,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,inf,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,inf,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: -inf,pi,1
+- Compute expectedLinspace() ... done.
+Using input: -inf,pi,2
+- Compute expectedLinspace() ... done.
+Using input: -inf,pi,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,inf,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,inf,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,inf,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: 0.0,pi,1
+- Compute expectedLinspace() ... done.
+Using input: 0.0,pi,2
+- Compute expectedLinspace() ... done.
+Using input: 0.0,pi,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,inf,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,inf,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,inf,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: 0.5,pi,1
+- Compute expectedLinspace() ... done.
+Using input: 0.5,pi,2
+- Compute expectedLinspace() ... done.
+Using input: 0.5,pi,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,inf,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,inf,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,inf,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: 1.0,pi,1
+- Compute expectedLinspace() ... done.
+Using input: 1.0,pi,2
+- Compute expectedLinspace() ... done.
+Using input: 1.0,pi,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,inf,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,inf,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,inf,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: 3.0,pi,1
+- Compute expectedLinspace() ... done.
+Using input: 3.0,pi,2
+- Compute expectedLinspace() ... done.
+Using input: 3.0,pi,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,inf,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,inf,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,inf,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: 4.0,pi,1
+- Compute expectedLinspace() ... done.
+Using input: 4.0,pi,2
+- Compute expectedLinspace() ... done.
+Using input: 4.0,pi,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,inf,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,inf,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,inf,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: euler_number,pi,1
+- Compute expectedLinspace() ... done.
+Using input: euler_number,pi,2
+- Compute expectedLinspace() ... done.
+Using input: euler_number,pi,25
+- Compute expectedLinspace() ... done.
+Using input: inf,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: inf,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: inf,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: inf,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: inf,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: inf,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: inf,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: inf,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: inf,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: inf,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: inf,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: inf,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: inf,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: inf,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: inf,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: inf,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: inf,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: inf,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: inf,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: inf,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: inf,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: inf,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: inf,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: inf,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: inf,inf,1
+- Compute expectedLinspace() ... done.
+Using input: inf,inf,2
+- Compute expectedLinspace() ... done.
+Using input: inf,inf,25
+- Compute expectedLinspace() ... done.
+Using input: inf,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: inf,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: inf,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: inf,pi,1
+- Compute expectedLinspace() ... done.
+Using input: inf,pi,2
+- Compute expectedLinspace() ... done.
+Using input: inf,pi,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,inf,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,inf,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,inf,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,pi,1
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,pi,2
+- Compute expectedLinspace() ... done.
+Using input: machine_epsilon,pi,25
+- Compute expectedLinspace() ... done.
+Using input: pi,-2.0,1
+- Compute expectedLinspace() ... done.
+Using input: pi,-2.0,2
+- Compute expectedLinspace() ... done.
+Using input: pi,-2.0,25
+- Compute expectedLinspace() ... done.
+Using input: pi,-inf,1
+- Compute expectedLinspace() ... done.
+Using input: pi,-inf,2
+- Compute expectedLinspace() ... done.
+Using input: pi,-inf,25
+- Compute expectedLinspace() ... done.
+Using input: pi,0.0,1
+- Compute expectedLinspace() ... done.
+Using input: pi,0.0,2
+- Compute expectedLinspace() ... done.
+Using input: pi,0.0,25
+- Compute expectedLinspace() ... done.
+Using input: pi,0.5,1
+- Compute expectedLinspace() ... done.
+Using input: pi,0.5,2
+- Compute expectedLinspace() ... done.
+Using input: pi,0.5,25
+- Compute expectedLinspace() ... done.
+Using input: pi,1.0,1
+- Compute expectedLinspace() ... done.
+Using input: pi,1.0,2
+- Compute expectedLinspace() ... done.
+Using input: pi,1.0,25
+- Compute expectedLinspace() ... done.
+Using input: pi,3.0,1
+- Compute expectedLinspace() ... done.
+Using input: pi,3.0,2
+- Compute expectedLinspace() ... done.
+Using input: pi,3.0,25
+- Compute expectedLinspace() ... done.
+Using input: pi,4.0,1
+- Compute expectedLinspace() ... done.
+Using input: pi,4.0,2
+- Compute expectedLinspace() ... done.
+Using input: pi,4.0,25
+- Compute expectedLinspace() ... done.
+Using input: pi,euler_number,1
+- Compute expectedLinspace() ... done.
+Using input: pi,euler_number,2
+- Compute expectedLinspace() ... done.
+Using input: pi,euler_number,25
+- Compute expectedLinspace() ... done.
+Using input: pi,inf,1
+- Compute expectedLinspace() ... done.
+Using input: pi,inf,2
+- Compute expectedLinspace() ... done.
+Using input: pi,inf,25
+- Compute expectedLinspace() ... done.
+Using input: pi,machine_epsilon,1
+- Compute expectedLinspace() ... done.
+Using input: pi,machine_epsilon,2
+- Compute expectedLinspace() ... done.
+Using input: pi,machine_epsilon,25
+- Compute expectedLinspace() ... done.
+Using input: pi,pi,1
+- Compute expectedLinspace() ... done.
+Using input: pi,pi,2
+- Compute expectedLinspace() ... done.
+Using input: pi,pi,25
+- Compute expectedLinspace() ... done.
+done.
 Compute ExpectedGenMat(): 
 Using input: Mat(zeros(1,1))
 - Compute expectedAbs() ... done.

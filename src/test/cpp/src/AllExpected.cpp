@@ -54,6 +54,12 @@ using armadilloJava::ExpectedGenColVecSort;
 #include <ExpectedGenDouble.cpp>
 using armadilloJava::ExpectedGenDouble;
 
+#include <ExpectedGenDoubleGenDouble.cpp>
+using armadilloJava::ExpectedGenDoubleGenDouble;
+
+#include <ExpectedGenDoubleGenDoubleNumElems.cpp>
+using armadilloJava::ExpectedGenDoubleGenDoubleNumElems;
+
 #include <ExpectedGenMat.cpp>
 using armadilloJava::ExpectedGenMat;
 
@@ -159,6 +165,8 @@ int main() {
   ExpectedGenColVecMonRowVec();
   ExpectedGenColVecSort();
   ExpectedGenDouble();
+  ExpectedGenDoubleGenDouble();
+  ExpectedGenDoubleGenDoubleNumElems();
   ExpectedGenMat();
   ExpectedGenMatDim();
   ExpectedGenMatExp();
