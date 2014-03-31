@@ -72,4 +72,9 @@ public class TestLogicMat extends TestClass {
     assertMatEquals(Arma.any(Col.class, _logicMat), load("any").t());
   }
 
+  @Test
+  public void testFind() throws IOException {
+    assertMatEquals(Arma.find(_logicMat), load("find"));
+  }
+
 }

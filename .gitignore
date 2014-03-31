@@ -19,3 +19,6 @@ hs_err_pid*.log
 
 # Files
 *.exe
+
+# Project specific
+/src/test/cpp/expected.log

@@ -23,8 +23,11 @@ using std::pair;
 
 #include <armadillo>
 using arma::Col;
+using arma::uword;
+using arma::raw_ascii;
 using arma::all;
 using arma::any;
+using arma::find;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -58,6 +61,7 @@ namespace armadilloJava {
 
           expectedAll();
           expectedAny();
+          expectedFind();
         }
 
         cout << "done." << endl;
@@ -87,6 +91,14 @@ namespace armadilloJava {
           save("any", Mat<double>({0.0}));
         }
 
+        cout << "done." << endl;
+      }
+
+      void expectedFind() {
+        cout << "- Compute expectedFind() ... ";
+        // Unable to convert the result of find(...) to Mat<double>
+        Mat<uword> expected = find(_logicColVec);
+        expected.save("../data/expected/find" + _fileSuffix + ".mat", raw_ascii);
         cout << "done." << endl;
       }
 

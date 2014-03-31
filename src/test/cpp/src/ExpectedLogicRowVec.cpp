@@ -23,6 +23,8 @@ using std::pair;
 
 #include <armadillo>
 using arma::Row;
+using arma::uword;
+using arma::raw_ascii;
 using arma::all;
 using arma::any;
 
@@ -87,6 +89,14 @@ namespace armadilloJava {
           save("any", Mat<double>({0.0}));
         }
 
+        cout << "done." << endl;
+      }
+
+      void expectedFind() {
+        cout << "- Compute expectedFind() ... ";
+        // Unable to convert the result of find(...) to Mat<double>
+        Mat<uword> expected = find(_logicRowVec);
+        expected.save("../data/expected/find" + _fileSuffix + ".mat", raw_ascii);
         cout << "done." << endl;
       }
 

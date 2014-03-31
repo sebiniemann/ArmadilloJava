@@ -82,4 +82,9 @@ public class TestLogicRowVec extends TestClass {
     }
   }
 
+  @Test
+  public void testFind() throws IOException {
+    assertMatEquals(Arma.find(_logicRowVec), load("find"));
+  }
+
 }

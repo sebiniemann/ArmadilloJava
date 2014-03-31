@@ -4198,9 +4198,11 @@ public class Arma {
         throw new IllegalArgumentException("The search direction (" + s + ") must be one of 'first' or 'last'.");
     }
 
-    Col result = new Col(X.n_elem);
-    System.arraycopy(temp, 0, result._data, 0, index);
-
+    Col result = new Col(index);
+    if(index > 0) {
+      System.arraycopy(temp, 0, result._data, 0, index);
+    }
+    
     if (s.equals("last")) {
       revert(result._data, result._data);
     }
