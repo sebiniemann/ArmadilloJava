@@ -62,7 +62,7 @@ public class TestGenRowVecMonRowVec extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genRowVecString + "," + _monRowVecString;
-    
+
     _copyOfGenRowVec = new Row(_genRowVec);
     _copyOfMonRowVec = new Row(_monRowVecMat);
   }

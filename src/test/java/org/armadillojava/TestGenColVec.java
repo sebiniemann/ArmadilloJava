@@ -54,7 +54,7 @@ public class TestGenColVec extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genColVecString;
-    
+
     _copyOfGenColVec = new Col(_genColVec);
   }
 

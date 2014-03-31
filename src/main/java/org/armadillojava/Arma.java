@@ -3557,7 +3557,7 @@ public class Arma {
     } else {
       result = trans(X).times(Y);
       result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).elemDivide(X.n_rows));
-  
+
       switch (norm_type) {
         case 0:
           if (X.n_rows > 1) {
@@ -3570,16 +3570,16 @@ public class Arma {
         default:
           throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
       }
-  
+
       result.inPlace(Op.ELEMDIVIDE, trans(stddev(Row.class, X)).times(stddev(Row.class, Y)));
     }
-    
-    for(int n = 0; n < result.n_elem; n++) {
-      if(Double.isInfinite(result._data[n])) {
+
+    for (int n = 0; n < result.n_elem; n++) {
+      if (Double.isInfinite(result._data[n])) {
         result._data[n] = Double.NaN;
       }
     }
-    
+
     return result;
   }
 
@@ -3693,22 +3693,22 @@ public class Arma {
       throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
     }
 
-    //TODO at least one
-    
+    // TODO at least one
+
     double X_accu = X._data[0];
     double Y_accu = Y._data[0];
     double XY_accu = X_accu * Y_accu;
     for (int n = 1; n < X.n_elem; n++) {
       double valueX = X._data[n];
       double valueY = Y._data[n];
-      
+
       X_accu += valueX;
       Y_accu += valueY;
       XY_accu += valueX * valueY;
     }
-    
+
     double covariance = XY_accu - (X_accu * Y_accu) / X.n_elem;
-    
+
     switch (norm_type) {
       case 0:
         if (X.n_elem > 1) {

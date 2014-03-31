@@ -71,7 +71,7 @@ public class TestGenMatMonColVecDim extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString + "," + _monColVecString + "," + _dimString;
-    
+
     _copyOfGenMat = new Mat(_genMat);
     _copyOfMonColVec = new Col(_monColVecMat);
     _copyOfDim = new Integer(_dim);

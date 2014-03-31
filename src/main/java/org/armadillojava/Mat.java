@@ -127,7 +127,7 @@ public class Mat extends AbstractMat {
    */
   public Mat(double[][] array) throws IllegalArgumentException {
     set_size(array.length, array[0].length);
-    
+
     for (int i = 0; i < n_rows; i++) {
       for (int j = 0; j < n_cols; j++) {
         if (array[i].length != n_cols) {
@@ -1302,7 +1302,7 @@ public class Mat extends AbstractMat {
   public Mat t() {
     Mat transpose = new Mat(n_cols, n_rows);
 
-    if(is_vec()) {
+    if (is_vec()) {
       System.arraycopy(_data, 0, transpose._data, 0, n_elem);
     } else {
       int n = 0;

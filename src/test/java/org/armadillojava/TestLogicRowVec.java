@@ -53,7 +53,7 @@ public class TestLogicRowVec extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _logicRowVecString;
-    
+
     _copyOfLogicRowVec = new Row(_logicRowVec);
   }
 

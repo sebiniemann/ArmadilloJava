@@ -62,7 +62,7 @@ public class TestGenColVecMonColVec extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genColVecString + "," + _monColVecString;
-    
+
     _copyOfGenColVec = new Col(_genColVec);
     _copyOfMonColVec = new Col(_monColVecMat);
   }

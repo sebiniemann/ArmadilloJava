@@ -60,7 +60,7 @@ public class TestGenMatMonRowVec extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString + "," + _monRowVecString;
-    
+
     _copyOfGenMat = new Mat(_genMat);
     _copyOfMonRowVec = new Row(_monRowVecMat);
   }

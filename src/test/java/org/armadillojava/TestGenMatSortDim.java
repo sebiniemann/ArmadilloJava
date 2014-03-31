@@ -64,9 +64,9 @@ public class TestGenMatSortDim extends TestClass {
   public String    _dimString;
 
   @Parameter(5)
-  public int    _dim;
+  public int       _dim;
 
-  protected int _copyOfDim;
+  protected int    _copyOfDim;
 
   @Before
   public void before() {
