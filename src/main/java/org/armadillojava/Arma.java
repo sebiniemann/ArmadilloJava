@@ -2007,7 +2007,7 @@ public class Arma {
         for (int n = 0; n < X.n_elem; n++) {
           norm += Math.pow(Math.abs(X._data[n]), p);
         }
-        norm = Math.pow(norm, 1 / p);
+        norm = Math.pow(norm, 1.0 / p);
         break;
     }
 
@@ -2056,7 +2056,7 @@ public class Arma {
           for (int n = 0; n < X.n_elem; n++) {
             norm += Math.pow(Math.abs(X._data[n]), p);
           }
-          norm = Math.pow(norm, 1 / p);
+          norm = Math.pow(norm, 1.0 / p);
           break;
       }
 
@@ -2106,22 +2106,24 @@ public class Arma {
       throw new RuntimeException("The provided matrix must have at least one element.");
     }
 
-    double norm = 0;
+    double norm;
 
     if (X.is_vec()) {
       switch (p) {
         case "-inf":
-          for (int n = 0; n < X.n_elem; n++) {
-            norm = Math.max(norm, Math.abs(X._data[n]));
+          norm = Math.abs(X._data[0]);
+          for (int n = 1; n < X.n_elem; n++) {
+            norm = Math.min(norm, Math.abs(X._data[n]));
           }
           break;
         case "inf":
-          for (int n = 0; n < X.n_elem; n++) {
-            norm = Math.min(norm, Math.abs(X._data[n]));
+          norm = Math.abs(X._data[0]);
+          for (int n = 1; n < X.n_elem; n++) {
+            norm = Math.max(norm, Math.abs(X._data[n]));
           }
-          norm = Math.sqrt(norm);
           break;
         case "fro":
+          norm = 0;
           for (int n = 0; n < X.n_elem; n++) {
             norm += Math.pow(X._data[n], 2);
           }
@@ -2146,6 +2148,7 @@ public class Arma {
           }
           break;
         case "fro":
+          norm = 0;
           for (int n = 0; n < X.n_elem; n++) {
             norm += Math.pow(X._data[n], 2);
           }

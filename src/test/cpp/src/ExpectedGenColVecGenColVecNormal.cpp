@@ -82,7 +82,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedVar() ... ";
+        cout << "- Compute expectedCor() ... ";
         save("cor", Mat<double>({cor(_genColVecA, _genColVecB, _normal)}));
         cout << "done." << endl;
       }
@@ -92,7 +92,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedVar() ... ";
+        cout << "- Compute expectedCov() ... ";
         save("cov", Mat<double>({cov(_genColVecA, _genColVecB, _normal)}));
         cout << "done." << endl;
       }
