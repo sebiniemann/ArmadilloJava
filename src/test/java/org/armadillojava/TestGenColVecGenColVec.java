@@ -83,10 +83,10 @@ public class TestGenColVecGenColVec extends TestClass {
   @Test
   public void testDot() throws IOException {
     assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
-    
+
     double expected = load("dot")._data[0];
     double actual = Arma.dot(_genColVecA, _genColVecB);
-    
+
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(actual, is(expected));
     } else {
@@ -97,10 +97,10 @@ public class TestGenColVecGenColVec extends TestClass {
   @Test
   public void testNorm_dot() throws IOException {
     assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
-    
+
     double expected = load("norm_dot")._data[0];
     double actual = Arma.norm_dot(_genColVecA, _genColVecB);
-    
+
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(actual, is(expected));
     } else {
@@ -120,7 +120,7 @@ public class TestGenColVecGenColVec extends TestClass {
 
     double expected = load("cor")._data[0];
     double actual = Arma.cor(_genColVecA, _genColVecB);
-    
+
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(actual, is(expected));
     } else {
@@ -135,7 +135,7 @@ public class TestGenColVecGenColVec extends TestClass {
 
     double expected = load("cov")._data[0];
     double actual = Arma.cov(_genColVecA, _genColVecB);
-    
+
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(actual, is(expected));
     } else {

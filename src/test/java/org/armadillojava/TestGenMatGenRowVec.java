@@ -72,6 +72,7 @@ public class TestGenMatGenRowVec extends TestClass {
     assertMatEquals(_genMat, _copyOfGenMat, 0);
     assertMatEquals(_genRowVec, _copyOfGenRowVec, 0);
   }
+
   @Test
   public void testCross() throws IOException {
     assumeThat(_genMat.is_vec(), is(true));
