@@ -65,6 +65,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenRowVecSort.class,
   TestGenRowVecVecNormInt.class,
   TestGenRowVecVecNormString.class,
+  TestInvMat.class,
   TestLogicColVec.class,
   TestLogicMat.class,
   TestLogicMatDim.class,

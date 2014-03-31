@@ -54,7 +54,7 @@ namespace armadilloJava {
               switch (n) {
                 case 0:
                   _fileSuffix += value.first;
-                  _genMat = *static_cast<Mat<double>*>(value.second);
+                  _squMat = *static_cast<Mat<double>*>(value.second);
                   break;
               }
               ++n;
@@ -76,11 +76,11 @@ namespace armadilloJava {
         }
 
     protected:
-      Mat<double> _genMat;
+      Mat<double> _squMat;
 
       void expectedDet() {
         cout << "- Compute expectedDet() ... ";
-        save("det", Mat<double>({det(_genMat)}));
+        save("det", Mat<double>({det(_squMat)}));
         cout << "done." << endl;
       }
 
@@ -89,7 +89,7 @@ namespace armadilloJava {
 
         double val, sign;
 
-        log_det(val, sign, _genMat);
+        log_det(val, sign, _squMat);
 
         save("log_detVal", Mat<double>({val}));
         save("log_detSign", Mat<double>({sign}));
@@ -99,37 +99,37 @@ namespace armadilloJava {
 
       void expectedTrace() {
         cout << "- Compute expectedTrace() ... ";
-        save("trace", Mat<double>({trace(_genMat)}));
+        save("trace", Mat<double>({trace(_squMat)}));
         cout << "done." << endl;
       }
 
       void expectedDiagmat() {
         cout << "- Compute expectedDiagmat() ... ";
-        save("diagmat", diagmat(_genMat));
+        save("diagmat", diagmat(_squMat));
         cout << "done." << endl;
       }
 
       void expectedSymmatu() {
         cout << "- Compute expectedSymmatu() ... ";
-        save("symmatu", symmatu(_genMat));
+        save("symmatu", symmatu(_squMat));
         cout << "done." << endl;
       }
 
       void expectedSymmatl() {
         cout << "- Compute expectedSymmatl() ... ";
-        save("symmatl", symmatl(_genMat));
+        save("symmatl", symmatl(_squMat));
         cout << "done." << endl;
       }
 
       void expectedTrimatu() {
         cout << "- Compute expectedTrimatu() ... ";
-        save("trimatu", trimatu(_genMat));
+        save("trimatu", trimatu(_squMat));
         cout << "done." << endl;
       }
 
       void expectedTrimatl() {
         cout << "- Compute expectedTrimatl() ... ";
-        save("trimatl", trimatl(_genMat));
+        save("trimatl", trimatl(_squMat));
         cout << "done." << endl;
       }
   };

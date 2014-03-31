@@ -156,6 +156,9 @@ using armadilloJava::ExpectedGenRowVecVecNormInt;
 #include <ExpectedGenRowVecVecNormString.cpp>
 using armadilloJava::ExpectedGenRowVecVecNormString;
 
+#include <ExpectedInvMat.cpp>
+using armadilloJava::ExpectedInvMat;
+
 #include <ExpectedLogicColVec.cpp>
 using armadilloJava::ExpectedLogicColVec;
 
@@ -203,8 +206,8 @@ int main() {
 //  ExpectedGenColVecMonRowVec();
 //  ExpectedGenColVecNormal();
 //  ExpectedGenColVecSort();
-  ExpectedGenColVecVecNormInt();
-  ExpectedGenColVecVecNormString();
+//  ExpectedGenColVecVecNormInt();
+//  ExpectedGenColVecVecNormString();
 //  ExpectedGenDouble();
 //  ExpectedGenDoubleGenDouble();
 //  ExpectedGenDoubleGenDoubleNumElems();
@@ -214,8 +217,8 @@ int main() {
 //  ExpectedGenMatGenColVec();
 //  ExpectedGenMatGenMat();
 //  ExpectedGenMatGenRowVec();
-  ExpectedGenMatMatNormInt();
-  ExpectedGenMatMatNormString();
+//  ExpectedGenMatMatNormInt();
+//  ExpectedGenMatMatNormString();
 //  ExpectedGenMatMonColVec();
 //  ExpectedGenMatMonColVecDim();
 //  ExpectedGenMatMonRowVec();
@@ -233,8 +236,9 @@ int main() {
 //  ExpectedGenRowVecMonRowVec();
 //  ExpectedGenRowVecNormal();
 //  ExpectedGenRowVecSort();
-  ExpectedGenRowVecVecNormInt();
-  ExpectedGenRowVecVecNormString();
+//  ExpectedGenRowVecVecNormInt();
+//  ExpectedGenRowVecVecNormString();
+  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicMat();
 //  ExpectedLogicMatDim();
