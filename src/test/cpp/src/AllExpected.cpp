@@ -36,17 +36,26 @@ using armadilloJava::ExpectedGenColVec;
 #include <ExpectedGenColVecGenColVec.cpp>
 using armadilloJava::ExpectedGenColVecGenColVec;
 
+#include <ExpectedGenColVecGenColVecNormal.cpp>
+using armadilloJava::ExpectedGenColVecGenColVecNormal;
+
 #include <ExpectedGenColVecGenMat.cpp>
 using armadilloJava::ExpectedGenColVecGenMat;
 
 #include <ExpectedGenColVecGenRowVec.cpp>
 using armadilloJava::ExpectedGenColVecGenRowVec;
 
+#include <ExpectedGenColVecGenRowVecNormal.cpp>
+using armadilloJava::ExpectedGenColVecGenRowVecNormal;
+
 #include <ExpectedGenColVecMonColVec.cpp>
 using armadilloJava::ExpectedGenColVecMonColVec;
 
 #include <ExpectedGenColVecMonRowVec.cpp>
 using armadilloJava::ExpectedGenColVecMonRowVec;
+
+#include <ExpectedGenColVecNormal.cpp>
+using armadilloJava::ExpectedGenColVecNormal;
 
 #include <ExpectedGenColVecSort.cpp>
 using armadilloJava::ExpectedGenColVecSort;
@@ -105,17 +114,26 @@ using armadilloJava::ExpectedGenRowVec;
 #include <ExpectedGenRowVecGenColVec.cpp>
 using armadilloJava::ExpectedGenRowVecGenColVec;
 
+#include <ExpectedGenRowVecGenColVecNormal.cpp>
+using armadilloJava::ExpectedGenRowVecGenColVecNormal;
+
 #include <ExpectedGenRowVecGenMat.cpp>
 using armadilloJava::ExpectedGenRowVecGenMat;
 
 #include <ExpectedGenRowVecGenRowVec.cpp>
 using armadilloJava::ExpectedGenRowVecGenRowVec;
 
+#include <ExpectedGenRowVecGenRowVecNormal.cpp>
+using armadilloJava::ExpectedGenRowVecGenRowVecNormal;
+
 #include <ExpectedGenRowVecMonColVec.cpp>
 using armadilloJava::ExpectedGenRowVecMonColVec;
 
 #include <ExpectedGenRowVecMonRowVec.cpp>
 using armadilloJava::ExpectedGenRowVecMonRowVec;
+
+#include <ExpectedGenRowVecNormal.cpp>
+using armadilloJava::ExpectedGenRowVecNormal;
 
 #include <ExpectedGenRowVecSort.cpp>
 using armadilloJava::ExpectedGenRowVecSort;
@@ -156,47 +174,53 @@ int main() {
   set_stream_err1(logfile);
   set_stream_err2(logfile);
 
-  ExpectedDatum();
-  ExpectedGenColVec();
-  ExpectedGenColVecGenColVec();
-  ExpectedGenColVecGenMat();
-  ExpectedGenColVecGenRowVec();
-  ExpectedGenColVecMonColVec();
-  ExpectedGenColVecMonRowVec();
-  ExpectedGenColVecSort();
-  ExpectedGenDouble();
-  ExpectedGenDoubleGenDouble();
-  ExpectedGenDoubleGenDoubleNumElems();
-  ExpectedGenMat();
-  ExpectedGenMatDim();
-  ExpectedGenMatExp();
-  ExpectedGenMatGenColVec();
-  ExpectedGenMatGenMat();
-  ExpectedGenMatGenRowVec();
-  ExpectedGenMatMonColVec();
-  ExpectedGenMatMonColVecDim();
-  ExpectedGenMatMonRowVec();
-  ExpectedGenMatMonRowVecDim();
-  ExpectedGenMatNormal();
-  ExpectedGenMatSort();
-  ExpectedGenMatSortDim();
-  ExpectedGenRowVec();
-  ExpectedGenRowVecGenColVec();
-  ExpectedGenRowVecGenMat();
-  ExpectedGenRowVecGenRowVec();
-  ExpectedGenRowVecMonColVec();
-  ExpectedGenRowVecMonRowVec();
-  ExpectedGenRowVecSort();
-  ExpectedLogicColVec();
-  ExpectedLogicMat();
-  ExpectedLogicMatDim();
-  ExpectedLogicRowVec();
-  ExpectedNumElems();
-  ExpectedNumRowsNumCols();
-  ExpectedOOColVec();
-  ExpectedOOMat();
-  ExpectedOORowVec();
-  ExpectedSquMat();
+//  ExpectedDatum();
+//  ExpectedGenColVec();
+//  ExpectedGenColVecGenColVec();
+  ExpectedGenColVecGenColVecNormal();
+//  ExpectedGenColVecGenMat();
+//  ExpectedGenColVecGenRowVec();
+  ExpectedGenColVecGenRowVecNormal();
+//  ExpectedGenColVecMonColVec();
+//  ExpectedGenColVecMonRowVec();
+  ExpectedGenColVecNormal();
+//  ExpectedGenColVecSort();
+//  ExpectedGenDouble();
+//  ExpectedGenDoubleGenDouble();
+//  ExpectedGenDoubleGenDoubleNumElems();
+//  ExpectedGenMat();
+//  ExpectedGenMatDim();
+//  ExpectedGenMatExp();
+//  ExpectedGenMatGenColVec();
+//  ExpectedGenMatGenMat();
+//  ExpectedGenMatGenRowVec();
+//  ExpectedGenMatMonColVec();
+//  ExpectedGenMatMonColVecDim();
+//  ExpectedGenMatMonRowVec();
+//  ExpectedGenMatMonRowVecDim();
+//  ExpectedGenMatNormal();
+//  ExpectedGenMatSort();
+//  ExpectedGenMatSortDim();
+//  ExpectedGenRowVec();
+//  ExpectedGenRowVecGenColVec();
+  ExpectedGenRowVecGenColVecNormal();
+//  ExpectedGenRowVecGenMat();
+//  ExpectedGenRowVecGenRowVec();
+  ExpectedGenRowVecGenRowVecNormal();
+//  ExpectedGenRowVecMonColVec();
+//  ExpectedGenRowVecMonRowVec();
+  ExpectedGenRowVecNormal();
+//  ExpectedGenRowVecSort();
+//  ExpectedLogicColVec();
+//  ExpectedLogicMat();
+//  ExpectedLogicMatDim();
+//  ExpectedLogicRowVec();
+//  ExpectedNumElems();
+//  ExpectedNumRowsNumCols();
+//  ExpectedOOColVec();
+//  ExpectedOOMat();
+//  ExpectedOORowVec();
+//  ExpectedSquMat();
 
   return EXIT_SUCCESS;
 }
