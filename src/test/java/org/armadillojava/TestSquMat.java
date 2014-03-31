@@ -54,6 +54,7 @@ public class TestSquMat extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _squMatString;
+    
     _copyOfSquMat = new Mat(_squMat);
   }
 

@@ -14,6 +14,8 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assume.assumeThat;
+import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,13 +31,14 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestInvMat extends TestClass {
+public class TestInvMatGenMat extends TestClass {
 
   @Parameters(name = "{index}: InvMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.InvMat);
+    inputClasses.add(InputClass.GenMat);
 
     return Input.getTestParameters(inputClasses);
   }
@@ -48,30 +51,43 @@ public class TestInvMat extends TestClass {
 
   protected Mat _copyOfInvMat;
 
+  @Parameter(2)
+  public String _genMatString;
+
+  @Parameter(3)
+  public Mat    _genMat;
+
+  protected Mat _copyOfGenMat;
+
   @Before
   public void before() {
-    _fileSuffix = _invMatString;
-    
+    _fileSuffix = _invMatString + "," + _genMatString;
+
     _copyOfInvMat = new Mat(_invMat);
+    _copyOfGenMat = new Mat(_genMat);
   }
 
   @After
   public void after() {
     assertMatEquals(_invMat, _copyOfInvMat, 0);
+    assertMatEquals(_genMat, _copyOfGenMat, 0);
   }
 
   @Test
-  public void testInvA() throws IOException {
-    assertMatEquals(Arma.inv(_invMat), load("inv"));
+  public void testSolveA() throws IOException {
+    assumeThat(_invMat.n_rows, is(_genMat.n_rows));
+
+    assertMatEquals(Arma.solve(_invMat, _genMat), Arma.inv(_invMat).times(_genMat));
   }
 
   @Test
-  public void testInvB() throws IOException {
-    Mat inv = new Mat();
-
-    Arma.inv(inv, _invMat);
-
-    assertMatEquals(inv, load("inv"));
+  public void testSolveB() throws IOException {
+    assumeThat(_invMat.n_rows, is(_genMat.n_rows));
+    
+    Mat X = new Mat();
+    Arma.solve(X, _invMat, _genMat);
+  
+    assertMatEquals(X, Arma.inv(_invMat).times(_genMat));
   }
 
 }

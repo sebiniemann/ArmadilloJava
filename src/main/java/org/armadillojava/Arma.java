@@ -6131,11 +6131,34 @@ public class Arma {
       return false;
     }
 
-    int[] pivotIndices = new int[A.n_rows + 2];
+    X.set_size(A.n_cols, B.n_cols);
     intW info = new intW(0);
+    
+    if (A.n_rows == A.n_cols) {
+      double[] tempA = Arrays.copyOf(A._data, A.n_elem);
+      System.arraycopy(B._data, 0, X._data, 0, B.n_elem);
+      int[] pivotIndices = new int[A.n_rows + 2];
 
-    LAPACK.getInstance().dgesv(A.n_rows, B.n_cols, A._data, A.n_rows, pivotIndices, B._data, A.n_rows, info);
-
+      LAPACK.getInstance().dgesv(A.n_rows, B.n_cols, tempA, A.n_rows, pivotIndices, X._data, A.n_rows, info);
+    } else if (A.n_rows > A.n_cols) {
+      double[] tempA = Arrays.copyOf(A._data, A.n_elem);
+      double[] tempB = Arrays.copyOf(B._data, B.n_elem);
+      double[] work = new double[3 * Math.max(1, A.n_cols + Math.max(A.n_cols, B.n_cols))];
+    
+      LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_rows, work, work.length, info);
+      System.arraycopy(tempB, 0, X._data, 0, X.n_elem);
+    } else {
+      double[] tempA = Arrays.copyOf(A._data, A.n_elem);
+      double[] tempB = new double[X.n_elem];
+      for(int j = 0; j < B.n_cols; j++) {
+        System.arraycopy(B._data, j * B.n_rows, tempB, j * X.n_rows, B.n_rows);
+      }
+      double[] work = new double[3 * Math.max(1, A.n_cols + Math.max(A.n_cols, B.n_cols))];
+    
+      LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_rows, work, work.length, info);
+      System.arraycopy(tempB, 0, X._data, 0, X.n_elem);
+    }
+    
     return (info.val == 0);
   }
 

@@ -102,14 +102,7 @@ public class TestGenMatGenMat extends TestClass {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
 
-    try {
-      assertMatEquals(Arma.cov(_genMatA, _genMatB), load("cov"));
-    } catch(AssertionError e) {
-      System.out.println(_fileSuffix);
-      System.out.println(Arma.cov(_genMatA, _genMatB));
-      System.out.println(load("cov"));
-      throw e;
-    }
+    assertMatEquals(Arma.cov(_genMatA, _genMatB), load("cov"));
   }
 
   @Test
@@ -153,19 +146,6 @@ public class TestGenMatGenMat extends TestClass {
   @Test
   public void testKron() throws IOException {
     assertMatEquals(Arma.kron(_genMatA, _genMatB), load("kron"));
-  }
-
-  @Test
-  public void testSolve() {
-    assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
-    try {
-      assertMatEquals(Arma.solve(_genMatA, _genMatB), load("kron"));
-    } catch (IOException e) {
-      /*
-       * Do nothing if the equation was not solved by the C++ reference implementation.
-       */
-    }
   }
 
 }
