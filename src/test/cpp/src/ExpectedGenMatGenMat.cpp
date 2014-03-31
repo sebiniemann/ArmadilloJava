@@ -21,6 +21,9 @@ using std::endl;
 #include <utility>
 using std::pair;
 
+#include <stdexcept>
+using std::runtime_error;
+
 #include <armadillo>
 using arma::Mat;
 using arma::min;
@@ -78,6 +81,7 @@ namespace armadilloJava {
           expectedJoin_cols();
           expectedJoin_vert();
           expectedKron();
+          expectedSolve();
         }
 
         cout << "done." << endl;
@@ -208,6 +212,24 @@ namespace armadilloJava {
       void expectedKron() {
         cout << "- Compute expectedKron() ... ";
         save("kron", kron(_genMatA, _genMatB));
+        cout << "done." << endl;
+      }
+
+      void expectedSolve() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        cout << "- Compute expectedSolve() ... ";
+
+        try {
+          save("solve", solve(_genMatA, _genMatB));
+        } catch(runtime_error e) {
+          /*
+           * Do nothing is the equation is not solvable.
+           */
+        }
+
         cout << "done." << endl;
       }
 

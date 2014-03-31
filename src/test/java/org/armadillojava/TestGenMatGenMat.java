@@ -155,4 +155,17 @@ public class TestGenMatGenMat extends TestClass {
     assertMatEquals(Arma.kron(_genMatA, _genMatB), load("kron"));
   }
 
+  @Test
+  public void testSolve() {
+    assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
+    
+    try {
+      assertMatEquals(Arma.solve(_genMatA, _genMatB), load("kron"));
+    } catch (IOException e) {
+      /*
+       * Do nothing if the equation was not solved by the C++ reference implementation.
+       */
+    }
+  }
+
 }

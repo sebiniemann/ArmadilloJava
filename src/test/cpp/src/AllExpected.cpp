@@ -215,7 +215,7 @@ int main() {
 //  ExpectedGenMatDim();
 //  ExpectedGenMatExp();
 //  ExpectedGenMatGenColVec();
-//  ExpectedGenMatGenMat();
+  ExpectedGenMatGenMat();
 //  ExpectedGenMatGenRowVec();
 //  ExpectedGenMatMatNormInt();
 //  ExpectedGenMatMatNormString();
@@ -238,7 +238,7 @@ int main() {
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
 //  ExpectedGenRowVecVecNormString();
-  ExpectedInvMat();
+//  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicMat();
 //  ExpectedLogicMatDim();
