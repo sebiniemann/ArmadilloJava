@@ -2189,7 +2189,7 @@ public class Arma {
    * 
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
-  public static int rank(final Mat X, final double tolerance) throws RuntimeException {
+  public static int rank(final Mat X, double tolerance) throws RuntimeException {
     /*
      * The parameter "X" is validated within svd(AbstractMat).
      */
@@ -2199,9 +2199,13 @@ public class Arma {
       throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
     }
 
+    if(tolerance == 0) {
+      tolerance = Math.max(X.n_rows, X.n_cols) * Math.ulp(singularValues.max());
+    }
+    
     int rank = 0;
     for (int n = 0; n < singularValues.n_elem; n++) {
-      if (singularValues._data[n] > tolerance) {
+      if (singularValues._data[n] > tolerance + Datum.eps) {
         rank++;
       }
     }
@@ -5771,7 +5775,7 @@ public class Arma {
    * @param A The matrix
    * @param tolerance The tolerance
    */
-  public static boolean pinv(final Mat B, final Mat A, final double tolerance) {
+  public static boolean pinv(final Mat B, final Mat A, double tolerance) {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();
@@ -5787,10 +5791,14 @@ public class Arma {
     if (status == false) {
       return false;
     }
-
+    
+    if(tolerance == 0) {
+      tolerance = Math.max(A.n_rows, A.n_cols) * Math.ulp(s.max());
+    }
+    
     int count = 0;
     for (int n = 0; n < s.n_elem; n++) {
-      if (s._data[n] > tolerance) {
+      if (s._data[n] > tolerance + Datum.eps) {
         count++;
       }
     }
@@ -5804,7 +5812,7 @@ public class Arma {
       int n = 0;
       for (int nn = 0; nn < s.n_elem; nn++) {
         double value = s._data[nn];
-        if (value > tolerance) {
+        if (value > tolerance + Datum.eps) {
           singularValues._data[n++] = 1 / value;
         }
       }

@@ -444,9 +444,8 @@ class Input {
   protected static List<Pair<String, Object>> getSinValTol() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    input.add(new Pair<String, Object>("0", 0));
-    input.add(new Pair<String, Object>("1", 1));
-    input.add(new Pair<String, Object>("-1", -1));
+    input.add(new Pair<String, Object>("0.0", 0));
+    input.add(new Pair<String, Object>("1.0", 1));
 
     return input;
   }

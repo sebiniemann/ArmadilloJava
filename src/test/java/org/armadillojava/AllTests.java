@@ -51,6 +51,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenMatMonRowVec.class,
   TestGenMatMonRowVecDim.class,
   TestGenMatNormal.class,
+  TestGenMatSinValTol.class,
   TestGenMatSort.class,
   TestGenMatSortDim.class,
   TestGenRowVec.class,

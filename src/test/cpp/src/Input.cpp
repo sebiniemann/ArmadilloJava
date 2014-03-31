@@ -416,9 +416,8 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getSinValTol() {
     return {
-      pair<string, void*>("0", new int(0)),
-      pair<string, void*>("1", new int(1)),
-      pair<string, void*>("-1", new int(-1))
+      pair<string, void*>("0.0", new double(0)),
+      pair<string, void*>("1.0", new double(1))
     };
   }
 
