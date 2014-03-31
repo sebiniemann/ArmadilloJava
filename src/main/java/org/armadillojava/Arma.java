@@ -5360,6 +5360,16 @@ public class Arma {
       return false;
     }
 
+    int n = 0;
+    for (int j = 0; j < R.n_cols; j++) {
+      for (int i = 0; i < R.n_rows; i++) {
+        if (i > j) {
+          R._data[n] = 0;
+        }
+        n++;
+      }
+    }
+    
     return true;
   }
 
@@ -5524,14 +5534,24 @@ public class Arma {
     B.inPlace(Op.EQUAL, A);
     intW info = new intW(0);
 
-    LAPACK.getInstance().dpotrf("U", A.n_rows, B._data, 0, info);
+    LAPACK.getInstance().dpotrf("U", A.n_rows, B._data, Math.max(1, A.n_rows), info);
     if (info.val != 0) {
       return false;
     }
 
-    LAPACK.getInstance().dpotri("U", A.n_rows, B._data, 0, info);
+    LAPACK.getInstance().dpotri("U", A.n_rows, B._data, Math.max(1, A.n_rows), info);
     if (info.val != 0) {
       return false;
+    }
+    
+    int n = 0;
+    for (int i = 0; i < B.n_rows; i++) {
+      for (int j = 0; j < B.n_cols; j++) {
+        if (i > j) {
+          B._data[i + j * B.n_rows] = B._data[n];
+        }
+        n++;
+      }
     }
 
     return true;

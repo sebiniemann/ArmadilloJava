@@ -189,6 +189,9 @@ using armadilloJava::ExpectedOORowVec;
 #include <ExpectedSquMat.cpp>
 using armadilloJava::ExpectedSquMat;
 
+#include <ExpectedSymPDMat.cpp>
+using armadilloJava::ExpectedSymPDMat;
+
 int main() {
   ofstream logfile("./expected.log");
   cout.rdbuf(logfile.rdbuf());
@@ -239,16 +242,17 @@ int main() {
 //  ExpectedGenRowVecVecNormInt();
 //  ExpectedGenRowVecVecNormString();
 //  ExpectedInvMat();
-  ExpectedLogicColVec();
-  ExpectedLogicMat();
+//  ExpectedLogicColVec();
+//  ExpectedLogicMat();
 //  ExpectedLogicMatDim();
-  ExpectedLogicRowVec();
+//  ExpectedLogicRowVec();
 //  ExpectedNumElems();
 //  ExpectedNumRowsNumCols();
 //  ExpectedOOColVec();
 //  ExpectedOOMat();
 //  ExpectedOORowVec();
 //  ExpectedSquMat();
+  ExpectedSymPDMat();
 
   return EXIT_SUCCESS;
 }

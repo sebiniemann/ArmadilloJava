@@ -14,8 +14,6 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
-import static org.junit.Assume.assumeThat;
-import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,63 +29,66 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestInvMatGenMat extends TestClass {
+public class TestSymPDMat extends TestClass {
 
-  @Parameters(name = "{index}: InvMat = {0}, GenMat = {2}")
+  @Parameters(name = "{index}: SymPDMat = {0}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
-    inputClasses.add(InputClass.InvMat);
-    inputClasses.add(InputClass.GenMat);
+    inputClasses.add(InputClass.SymPDMat);
 
     return Input.getTestParameters(inputClasses);
   }
 
   @Parameter(0)
-  public String _invMatString;
+  public String _symPDMatString;
 
   @Parameter(1)
-  public Mat    _invMat;
+  public Mat    _symPDMat;
 
-  protected Mat _copyOfInvMat;
-
-  @Parameter(2)
-  public String _genMatString;
-
-  @Parameter(3)
-  public Mat    _genMat;
-
-  protected Mat _copyOfGenMat;
+  protected Mat _copyOfSymPDMat;
 
   @Before
   public void before() {
-    _fileSuffix = _invMatString + "," + _genMatString;
-
-    _copyOfInvMat = new Mat(_invMat);
-    _copyOfGenMat = new Mat(_genMat);
+    _fileSuffix = _symPDMatString;
+    
+    _copyOfSymPDMat = new Mat(_symPDMat);
   }
 
   @After
   public void after() {
-    assertMatEquals(_invMat, _copyOfInvMat, 0);
-    assertMatEquals(_genMat, _copyOfGenMat, 0);
+    assertMatEquals(_symPDMat, _copyOfSymPDMat, 0);
   }
 
   @Test
-  public void testSolveA() throws IOException {
-    assumeThat(_invMat.n_rows, is(_genMat.n_rows));
-
-    assertMatEquals(Arma.solve(_invMat, _genMat), Arma.inv(_invMat).times(_genMat));
-  }
-
-  @Test
-  public void testSolveB() throws IOException {
-    assumeThat(_invMat.n_rows, is(_genMat.n_rows));
+  public void testCholA() throws IOException {
+    Mat R = Arma.chol(_symPDMat);
     
-    Mat X = new Mat();
-    Arma.solve(X, _invMat, _genMat);
-  
-    assertMatEquals(X, Arma.inv(_invMat).times(_genMat));
+    assertMatEquals((R.t()).times(R), _symPDMat);
+  }
+
+  @Test
+  public void testCholB() throws IOException {
+    Mat R = new Mat();
+    
+    Arma.chol(R, _symPDMat);
+
+    assertMatEquals((R.t()).times(R), _symPDMat);
+  }
+
+  @Test
+  public void testInv_sympdA() throws IOException {
+    
+    assertMatEquals(Arma.inv_sympd(_symPDMat), load("inv_sympd"));
+  }
+
+  @Test
+  public void testInv_sympdB() throws IOException {
+    Mat B = new Mat();
+    
+    Arma.inv_sympd(B, _symPDMat);
+    
+    assertMatEquals(B, load("inv_sympd"));
   }
 
 }
