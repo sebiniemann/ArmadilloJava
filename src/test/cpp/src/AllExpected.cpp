@@ -33,6 +33,15 @@ using armadilloJava::ExpectedDatum;
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;
 
+#include <ExpectedGenColVecGenColVec.cpp>
+using armadilloJava::ExpectedGenColVecGenColVec;
+
+#include <ExpectedGenColVecGenMat.cpp>
+using armadilloJava::ExpectedGenColVecGenMat;
+
+#include <ExpectedGenColVecGenRowVec.cpp>
+using armadilloJava::ExpectedGenColVecGenRowVec;
+
 #include <ExpectedGenColVecMonColVec.cpp>
 using armadilloJava::ExpectedGenColVecMonColVec;
 
@@ -54,8 +63,14 @@ using armadilloJava::ExpectedGenMatDim;
 #include <ExpectedGenMatExp.cpp>
 using armadilloJava::ExpectedGenMatExp;
 
+#include <ExpectedGenMatGenColVec.cpp>
+using armadilloJava::ExpectedGenMatGenColVec;
+
 #include <ExpectedGenMatGenMat.cpp>
 using armadilloJava::ExpectedGenMatGenMat;
+
+#include <ExpectedGenMatGenRowVec.cpp>
+using armadilloJava::ExpectedGenMatGenRowVec;
 
 #include <ExpectedGenMatMonColVec.cpp>
 using armadilloJava::ExpectedGenMatMonColVec;
@@ -80,6 +95,15 @@ using armadilloJava::ExpectedGenMatSortDim;
 
 #include <ExpectedGenRowVec.cpp>
 using armadilloJava::ExpectedGenRowVec;
+
+#include <ExpectedGenRowVecGenColVec.cpp>
+using armadilloJava::ExpectedGenRowVecGenColVec;
+
+#include <ExpectedGenRowVecGenMat.cpp>
+using armadilloJava::ExpectedGenRowVecGenMat;
+
+#include <ExpectedGenRowVecGenRowVec.cpp>
+using armadilloJava::ExpectedGenRowVecGenRowVec;
 
 #include <ExpectedGenRowVecMonColVec.cpp>
 using armadilloJava::ExpectedGenRowVecMonColVec;
@@ -128,6 +152,9 @@ int main() {
 
   ExpectedDatum();
   ExpectedGenColVec();
+  ExpectedGenColVecGenColVec();
+  ExpectedGenColVecGenMat();
+  ExpectedGenColVecGenRowVec();
   ExpectedGenColVecMonColVec();
   ExpectedGenColVecMonRowVec();
   ExpectedGenColVecSort();
@@ -135,7 +162,9 @@ int main() {
   ExpectedGenMat();
   ExpectedGenMatDim();
   ExpectedGenMatExp();
+  ExpectedGenMatGenColVec();
   ExpectedGenMatGenMat();
+  ExpectedGenMatGenRowVec();
   ExpectedGenMatMonColVec();
   ExpectedGenMatMonColVecDim();
   ExpectedGenMatMonRowVec();
@@ -144,6 +173,9 @@ int main() {
   ExpectedGenMatSort();
   ExpectedGenMatSortDim();
   ExpectedGenRowVec();
+  ExpectedGenRowVecGenColVec();
+  ExpectedGenRowVecGenMat();
+  ExpectedGenRowVecGenRowVec();
   ExpectedGenRowVecMonColVec();
   ExpectedGenRowVecMonRowVec();
   ExpectedGenRowVecSort();

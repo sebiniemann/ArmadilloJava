@@ -3359,14 +3359,14 @@ public class Arma {
     return result;
   }
 
-  protected static void conv(final AbstractVector result, final AbstractVector A, final AbstractVector B) {
-    for (int n = 0; n < result.n_elem; n++) {
-      int min = Math.max(0, n - B.n_elem + 1);
-      int max = Math.min(A.n_elem, n + 1);
+  protected static void conv(final double[] result, final double[] A, final double[] B) {
+    for (int n = 0; n < result.length; n++) {
+      int min = Math.max(0, n - B.length + 1);
+      int max = Math.min(A.length, n + 1);
 
       for (int nn = min; nn < max; nn++)
       {
-        result._data[n] += A._data[nn] * B._data[n - nn];
+        result[n] += A[nn] * B[n - nn];
       }
     }
   }
@@ -3377,12 +3377,12 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
-   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
+   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-vector must have at least one
    *           element.
-   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
+   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-vector must have at least one
    *           element.
    */
-  public static Col conv(final Col A, final AbstractVector B) throws RuntimeException {
+  public static Mat conv(final AbstractVector A, final AbstractVector B) throws RuntimeException {
     if (A.empty()) {
       throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
     }
@@ -3391,33 +3391,14 @@ public class Arma {
       throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-vector must have at least one element.");
     }
 
-    Col result = new Col(A.n_elem + B.n_elem - 1);
-    conv(result, A, B);
-    return result;
-  }
-
-  /**
-   * Returns the convolution between the first and second provided vector.
-   * 
-   * @param A The first vector
-   * @param B The second vector
-   * 
-   * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
-   *           element.
-   * @throws RuntimeException The second provided ({@code B.n_rows}, {@code B.n_cols})-matrix must have at least one
-   *           element.
-   */
-  public static Row conv(final Row A, final AbstractVector B) throws RuntimeException {
-    if (A.empty()) {
-      throw new RuntimeException("The first provided (" + A.n_rows + ", " + A.n_cols + ")-vector must have at least one element.");
+    Mat result;
+    if(A.is_colvec()) {
+      result = new Mat(A.n_elem + B.n_elem - 1, 1);
+    } else {
+      result = new Mat(1, A.n_elem + B.n_elem - 1);
     }
-
-    if (B.empty()) {
-      throw new RuntimeException("The second provided (" + B.n_rows + ", " + B.n_cols + ")-vector must have at least one element.");
-    }
-
-    Row result = new Row(A.n_elem + B.n_elem - 1);
-    conv(result, A, B);
+    
+    conv(result._data, A._data, B._data);
     return result;
   }
 
