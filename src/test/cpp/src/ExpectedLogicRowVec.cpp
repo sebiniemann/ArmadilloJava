@@ -60,6 +60,7 @@ namespace armadilloJava {
 
           expectedAll();
           expectedAny();
+          expectedFind();
         }
 
         cout << "done." << endl;

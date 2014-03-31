@@ -1141,9 +1141,15 @@ public class Mat extends AbstractMat {
     }
 
     if (n_rows != this.n_rows || n_cols != this.n_cols) {
-      this.n_rows = n_rows;
-      this.n_cols = n_cols;
-      this.n_elem = n_rows * n_cols;
+      if (n_rows > 0 && n_cols > 0) {
+        this.n_rows = n_rows;
+        this.n_cols = n_cols;
+      } else {
+        this.n_rows = 0;
+        this.n_cols = 0;
+      }
+      
+      this.n_elem = this.n_rows * this.n_cols;
 
       _data = new double[this.n_elem];
     }
