@@ -57,7 +57,7 @@ class ViewSubMat extends AbstractView {
     this.n_cols = n_cols;
     this.n_elem = this.n_rows * this.n_cols;
 
-    _first_position = first_row + first_col * this.n_rows;
+    _first_position = first_row + first_col * matrix.n_rows;
     _n_rows_skip = matrix.n_rows - this.n_rows + 1;
   }
 

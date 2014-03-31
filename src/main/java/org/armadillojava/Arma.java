@@ -408,7 +408,7 @@ public class Arma {
        * First, copy "A.n_cols" columns alongside the rows ...
        */
       for (int i = 0; i < num_copies_per_row; i++) {
-        new ViewSubMat(result, i * A.n_rows, A.n_rows, 0, A.n_cols).inPlace(Op.EQUAL, A);
+        new ViewSubMat(result, i * A.n_rows, 0, A.n_rows, A.n_cols).inPlace(Op.EQUAL, A);
       }
 
       /*
@@ -416,7 +416,7 @@ public class Arma {
        * Copying alongside the columns is way faster and should therefore handle the largest amount of data to be
        * copied.
        */
-      for (int j = 0; j < num_copies_per_row; j++) {
+      for (int j = 0; j < num_copies_per_col; j++) {
         System.arraycopy(result._data, 0, result._data, j * result.n_rows * A.n_cols, result.n_rows * A.n_cols);
       }
     }
@@ -1890,7 +1890,7 @@ public class Arma {
   }
 
   /**
-   * Returns the dot product, assuming both provided matrices are vectors.
+   * Returns the dot product of the provided vectors.
    * 
    * @param A The first matrix
    * @param B The second matrix
@@ -1898,16 +1898,16 @@ public class Arma {
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
    */
-  public static double dot(final AbstractMat A, final AbstractMat B) throws RuntimeException {
+  public static double dot(final AbstractVector A, final AbstractVector B) throws RuntimeException {
     if (A.n_elem != B.n_elem) {
-      throw new RuntimeException("Both provided matrices must have the same number of elements (" + A.n_elem + ", " + B.n_elem + ").");
+      throw new RuntimeException("Both provided vectors must have the same number of elements (" + A.n_elem + ", " + B.n_elem + ").");
     }
 
     return BLAS.getInstance().ddot(A.n_elem, A._data, 1, B._data, 1);
   }
 
   /**
-   * Returns the normalised dot product, assuming both provided matrices are vectors.
+   * Returns the normalised dot product of the provided vectors.
    * 
    * @param A The first matrix
    * @param B The second matrix
@@ -1915,7 +1915,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
    */
-  public static double norm_dot(final AbstractMat A, final AbstractMat B) throws RuntimeException {
+  public static double norm_dot(final AbstractVector A, final AbstractVector B) throws RuntimeException {
     /*
      * The parameters "A" and "B" are validated within dot(AbstractMat, AbstractMat).
      */
@@ -3459,7 +3459,7 @@ public class Arma {
      * The parameters "X", "Y" and "norm_type" are validated within cov(AbstractVector, AbstractVector, int).
      */
 
-    return cov(X, Y, norm_type) / (stddev(X, norm_type) * stddev(Y, norm_type));
+    return cov(X, Y, norm_type) / (stddev(X) * stddev(Y));
   }
 
   /**
@@ -3549,30 +3549,37 @@ public class Arma {
       throw new RuntimeException("Both provided matrices (" + X.n_rows + ", " + X.n_cols + " and " + Y.n_rows + ", " + Y.n_cols + ") must have the same shape.");
     }
 
+    Mat result;
     if (X.is_rowvec()) {
-      return new Mat(new double[]{cor(new Row(X), new Row(Y), norm_type)});
+      result = new Mat(new double[]{cor(new Row(X), new Row(Y), norm_type)});
     } else if (X.is_colvec()) {
-      return new Mat(new double[]{cor(new Col(X), new Col(Y), norm_type)});
+      result = new Mat(new double[]{cor(new Col(X), new Col(Y), norm_type)});
+    } else {
+      result = trans(X).times(Y);
+      result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).elemDivide(X.n_rows));
+  
+      switch (norm_type) {
+        case 0:
+          if (X.n_rows > 1) {
+            result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+          }
+          break;
+        case 1:
+          result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+          break;
+        default:
+          throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+      }
+  
+      result.inPlace(Op.ELEMDIVIDE, trans(stddev(Row.class, X)).times(stddev(Row.class, Y)));
     }
-
-    Mat result = trans(X).times(Y);
-    result.inPlace(Op.MINUS, trans(sum(Col.class, X)).times(sum(Col.class, Y)).elemDivide(X.n_rows));
-
-    switch (norm_type) {
-      case 0:
-        if (X.n_rows > 1) {
-          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
-        }
-        break;
-      case 1:
-        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
-        break;
-      default:
-        throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
+    
+    for(int n = 0; n < result.n_elem; n++) {
+      if(Double.isInfinite(result._data[n])) {
+        result._data[n] = Double.NaN;
+      }
     }
-
-    result.inPlace(Op.ELEMDIVIDE, trans(stddev(Col.class, X).times(stddev(Col.class, Y))));
-
+    
     return result;
   }
 
@@ -3686,14 +3693,22 @@ public class Arma {
       throw new RuntimeException("Both provided matrices must have the same number of elements (" + X.n_elem + ", " + Y.n_elem + ").");
     }
 
-    double meanX = mean(X);
-    double meanY = mean(Y);
-
-    double covariance = 0;
-    for (int n = 0; n < X.n_elem; n++) {
-      covariance += (X._data[n] - meanX) * (X._data[n] - meanY);
+    //TODO at least one
+    
+    double X_accu = X._data[0];
+    double Y_accu = Y._data[0];
+    double XY_accu = X_accu * Y_accu;
+    for (int n = 1; n < X.n_elem; n++) {
+      double valueX = X._data[n];
+      double valueY = Y._data[n];
+      
+      X_accu += valueX;
+      Y_accu += valueY;
+      XY_accu += valueX * valueY;
     }
-
+    
+    double covariance = XY_accu - (X_accu * Y_accu) / X.n_elem;
+    
     switch (norm_type) {
       case 0:
         if (X.n_elem > 1) {
@@ -3813,7 +3828,7 @@ public class Arma {
     }
 
     Mat result = trans(X).times(Y);
-    result.inPlace(Op.MINUS, trans(sum(Col.class, X)).times(sum(Col.class, Y)).elemDivide(X.n_rows));
+    result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).elemDivide(X.n_rows));
 
     switch (norm_type) {
       case 0:
@@ -4603,8 +4618,8 @@ public class Arma {
 
     Mat result = new Mat(A.n_rows + B.n_rows, A.n_cols);
 
-    new ViewSubRows(result, 0, A.n_rows - 1).inPlace(Op.EQUAL, A);
-    new ViewSubRows(result, A.n_rows, result.n_rows - 1).inPlace(Op.EQUAL, B);
+    new ViewSubRows(result, 0, A.n_rows).inPlace(Op.EQUAL, A);
+    new ViewSubRows(result, A.n_rows, B.n_rows).inPlace(Op.EQUAL, B);
 
     return result;
   }

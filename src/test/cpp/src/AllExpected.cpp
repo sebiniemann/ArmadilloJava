@@ -54,6 +54,9 @@ using armadilloJava::ExpectedGenMatDim;
 #include <ExpectedGenMatExp.cpp>
 using armadilloJava::ExpectedGenMatExp;
 
+#include <ExpectedGenMatGenMat.cpp>
+using armadilloJava::ExpectedGenMatGenMat;
+
 #include <ExpectedGenMatMonColVec.cpp>
 using armadilloJava::ExpectedGenMatMonColVec;
 
@@ -132,6 +135,7 @@ int main() {
   ExpectedGenMat();
   ExpectedGenMatDim();
   ExpectedGenMatExp();
+  ExpectedGenMatGenMat();
   ExpectedGenMatMonColVec();
   ExpectedGenMatMonColVecDim();
   ExpectedGenMatMonRowVec();

@@ -117,6 +117,29 @@ public class Mat extends AbstractMat {
   }
 
   /**
+   * Creates a matrix with the same number of elements and values as the provided array.
+   * <p>
+   * The array is assumed to is structured as {@code array[rows][columns]}.
+   * 
+   * @param array The array
+   * 
+   * @throws IllegalArgumentException All rows must have the same length.
+   */
+  public Mat(double[][] array) throws IllegalArgumentException {
+    set_size(array.length, array[0].length);
+    
+    for (int i = 0; i < n_rows; i++) {
+      for (int j = 0; j < n_cols; j++) {
+        if (array[i].length != n_cols) {
+          throw new IllegalArgumentException("All rows must have the same length.");
+        }
+
+        _data[i + j * n_rows] = array[i][j];
+      }
+    }
+  }
+
+  /**
    * Creates a deep copy of a matrix sub view.
    * 
    * @param mat The sub view

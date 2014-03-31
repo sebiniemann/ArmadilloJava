@@ -31,6 +31,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenMat.class,
   TestGenMatDim.class,
   TestGenMatExp.class,
+  TestGenMatGenMat.class,
   TestGenMatMonColVec.class,
   TestGenMatMonColVecDim.class,
   TestGenMatMonRowVec.class,
