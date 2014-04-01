@@ -66,6 +66,7 @@ enum InputClass {
   MatNormString,
   VecNormString,
   Sort,
+  Search,
   SinValSel,
   UnOp,
   ElemWiseOp,

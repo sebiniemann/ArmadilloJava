@@ -2971,17 +2971,11 @@ public class Arma {
       case 1:
         switch (dim) {
           case 0:
+          case 1:
             result.set_size(X.n_cols);
 
             for (int j = 0; j < X.n_cols; j++) {
               result._data[j] = stddev(new ViewSubCol(X, j), norm_type);
-            }
-            break;
-          case 1:
-            result.set_size(X.n_rows);
-
-            for (int i = 0; i < X.n_rows; i++) {
-              result._data[i] = stddev(new ViewSubRow(X, i), norm_type);
             }
             break;
           default:
@@ -3127,17 +3121,11 @@ public class Arma {
       case 1:
         switch (dim) {
           case 0:
+          case 1:
             result.set_size(X.n_cols);
 
             for (int j = 0; j < X.n_cols; j++) {
               result._data[j] = var(new ViewSubCol(X, j), norm_type);
-            }
-            break;
-          case 1:
-            result.set_size(X.n_rows);
-
-            for (int i = 0; i < X.n_rows; i++) {
-              result._data[i] = var(new ViewSubRow(X, i), norm_type);
             }
             break;
           default:
@@ -4207,7 +4195,7 @@ public class Arma {
       System.arraycopy(temp, 0, result._data, 0, index);
     }
     
-    if (s.equals("last")) {
+    if (s.equals("last") && result.n_elem > 0) {
       revert(result._data, result._data);
     }
 
@@ -4327,7 +4315,7 @@ public class Arma {
        */
       centers._data[n] = minimum + stepLength * (0.5 + n);
     }
-
+    
     return hist(X, centers, dim);
   }
 
@@ -4344,6 +4332,7 @@ public class Arma {
 
           if (currentDistance < previousDistance) {
             previousDistance = currentDistance;
+            
             ++index;
           } else {
             break;
@@ -6409,7 +6398,10 @@ public class Arma {
     Mat T1 = new Mat();
     Mat T2 = new Mat();
 
-    if (!schur(Z1, T1, A) || !schur(Z2, T2, B)) {
+    boolean statusA = schur(Z1, T1, A);
+    boolean statusB = schur(Z2, T2, B);
+    
+    if (!statusA || !statusB) {
       return false;
     }
 
@@ -6420,8 +6412,7 @@ public class Arma {
 
     LAPACK.getInstance().dtrsyl("N", "N", 1, T1.n_rows, T2.n_cols, T1._data, T1.n_rows, T2._data, T2.n_cols, Y._data, T1.n_rows, scale, info);
 
-    Y.elemDivide(-scale.val);
-
+    Y.inPlace(Op.ELEMDIVIDE, -scale.val);
     X.inPlace(Op.EQUAL, Z1.times(Y).times(trans(Z2)));
 
     return (info.val >= 0);
@@ -6542,7 +6533,7 @@ public class Arma {
     intW sdim = new intW(0);
     intW info = new intW(0);
 
-    LAPACK.getInstance().dgees("V", "N", null, A.n_rows, T._data, A.n_rows, sdim, workReal, workImaginary, Z._data, A.n_rows, work, work.length, bwork, info);
+    LAPACK.getInstance().dgees("V", "N", new Object(), A.n_rows, T._data, A.n_rows, sdim, workReal, workImaginary, Z._data, A.n_rows, work, work.length, bwork, info);
 
     return (info.val == 0);
   }

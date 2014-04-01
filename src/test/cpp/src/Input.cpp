@@ -202,6 +202,9 @@ namespace armadilloJava {
         case InputClass::Sort:
           inputs.push_back(getSort());
           break;
+        case InputClass::Search:
+          inputs.push_back(getSearch());
+          break;
         case InputClass::SinValSel:
           inputs.push_back(getSinValSel());
           break;
@@ -952,6 +955,13 @@ namespace armadilloJava {
     return {
       pair<string, void*>("'ascend'", new string("ascend")),
       pair<string, void*>("'descend'", new string("descend"))
+    };
+  }
+
+  vector<pair<string, void*>> Input::getSearch() {
+    return {
+      pair<string, void*>("'first'", new string("first")),
+      pair<string, void*>("'last'", new string("last"))
     };
   }
 

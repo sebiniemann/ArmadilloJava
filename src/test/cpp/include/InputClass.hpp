@@ -68,6 +68,7 @@ namespace armadilloJava
     MatNormString,
     VecNormString,
     Sort,
+    Search,
     SinValSel,
     // UnOp, ArmadilloJava specific
     // ElemWiseOp, ArmadilloJava specific

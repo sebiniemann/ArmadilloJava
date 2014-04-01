@@ -230,7 +230,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
-    if (k < 0 && -k <= n_rows) {
+    if (k < 0 && -k >= n_rows) {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
@@ -261,7 +261,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
-    if (k < 0 && -k <= n_rows) {
+    if (k < 0 && -k >= n_rows) {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
@@ -293,7 +293,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
-    if (k < 0 && -k <= n_rows) {
+    if (k < 0 && -k >= n_rows) {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
@@ -325,7 +325,7 @@ public class Mat extends AbstractMat {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 
-    if (k < 0 && -k <= n_rows) {
+    if (k < 0 && -k >= n_rows) {
       throw new IndexOutOfBoundsException("The specified diagonal index (" + k + ") is out of bounds.");
     }
 

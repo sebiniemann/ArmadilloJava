@@ -90,6 +90,7 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getMatNormString();
       static vector<pair<string, void*>> getVecNormString();
       static vector<pair<string, void*>> getSort();
+      static vector<pair<string, void*>> getSearch();
       static vector<pair<string, void*>> getSinValSel();
       static vector<pair<string, void*>> getDistrParam();
       static vector<pair<string, void*>> getFill();

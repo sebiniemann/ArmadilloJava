@@ -73,10 +73,6 @@ namespace armadilloJava {
 
       void expectedRank() {
         cout << "- Compute expectedRank() ... ";
-
-        cout << svd(_genMat) << endl;
-        cout << rank(_genMat, _sinValTol) << endl;
-
         save("rank", Mat<double>({static_cast<double>(rank(_genMat, _sinValTol))}));
         cout << "done." << endl;
       }

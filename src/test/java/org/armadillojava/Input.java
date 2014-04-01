@@ -176,6 +176,9 @@ class Input {
         case Sort:
           inputs.add(getSort());
           break;
+        case Search:
+          inputs.add(getSearch());
+          break;
         case SinValSel:
           inputs.add(getSinValSel());
           break;
@@ -189,7 +192,7 @@ class Input {
           throw new RuntimeException("Unsupported test class requested.");
       }
     }
-
+    
     return convertToJUnitTestParameters(cartesianProduct(inputs));
   }
 
@@ -229,7 +232,7 @@ class Input {
 
   protected static List<Pair<String, Object>> vectorUnion(List<List<Pair<String, Object>>> inputs) {
     List<Pair<String, Object>> vectorUnion = inputs.get(0);
-
+    
     Collections.sort(vectorUnion, new Comparator<Pair<String, Object>>() {
       @Override
       public int compare(Pair<String, Object> lhs, Pair<String, Object> rhs) {
@@ -246,8 +249,11 @@ class Input {
         }
       });
 
-      vectorUnion.removeAll(input);
-      vectorUnion.addAll(input);
+      
+      if(input.size() > 0 && !vectorUnion.equals(input)) {
+        vectorUnion.removeAll(input);
+        vectorUnion.addAll(input);
+      }
     }
 
     return vectorUnion;
@@ -319,7 +325,7 @@ class Input {
       input.add(new Pair<String, Object>(Integer.toString(numRows - 1), numRows - 1));
       inputs.add(input);
     }
-
+    
     return vectorUnion(inputs);
   }
 
@@ -1008,6 +1014,15 @@ class Input {
 
     input.add(new Pair<String, Object>("'ascend'", new String("ascend")));
     input.add(new Pair<String, Object>("'descend'", new String("descend")));
+
+    return input;
+  }
+
+  protected static List<Pair<String, Object>> getSearch() {
+    List<Pair<String, Object>> input = new ArrayList<>();
+
+    input.add(new Pair<String, Object>("'first'", new String("first")));
+    input.add(new Pair<String, Object>("'last'", new String("last")));
 
     return input;
   }
