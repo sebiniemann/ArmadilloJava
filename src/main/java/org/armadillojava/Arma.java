@@ -2199,10 +2199,10 @@ public class Arma {
       throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
     }
 
-    if(tolerance == 0) {
+    if (tolerance == 0) {
       tolerance = Math.max(X.n_rows, X.n_cols) * Math.ulp(singularValues.max());
     }
-    
+
     int rank = 0;
     for (int n = 0; n < singularValues.n_elem; n++) {
       if (singularValues._data[n] > tolerance + Datum.eps) {
@@ -3381,12 +3381,12 @@ public class Arma {
     }
 
     Mat result;
-    if(A.is_colvec()) {
+    if (A.is_colvec()) {
       result = new Mat(A.n_elem + B.n_elem - 1, 1);
     } else {
       result = new Mat(1, A.n_elem + B.n_elem - 1);
     }
-    
+
     conv(result._data, A._data, B._data);
     return result;
   }
@@ -4191,10 +4191,10 @@ public class Arma {
     }
 
     Col result = new Col(index);
-    if(index > 0) {
+    if (index > 0) {
       System.arraycopy(temp, 0, result._data, 0, index);
     }
-    
+
     if (s.equals("last") && result.n_elem > 0) {
       revert(result._data, result._data);
     }
@@ -4315,7 +4315,7 @@ public class Arma {
        */
       centers._data[n] = minimum + stepLength * (0.5 + n);
     }
-    
+
     return hist(X, centers, dim);
   }
 
@@ -4332,7 +4332,7 @@ public class Arma {
 
           if (currentDistance < previousDistance) {
             previousDistance = currentDistance;
-            
+
             ++index;
           } else {
             break;
@@ -4503,20 +4503,32 @@ public class Arma {
    * @param X The matrix
    */
   public static void inplace_trans(final Mat X) {
-    // TODO catch vectors
-    // TODO adjust n_rows, n_cols
+    int n_rows = X.n_rows;
+    int n_cols = X.n_cols;
+    
+    if (X.is_vec()) {
+      X.n_rows = n_cols;
+      X.n_cols = n_rows;
+      X.n_elem = X.n_rows * X.n_cols;
+    } else if (n_rows == n_cols) {
+      X.n_rows = n_cols;
+      X.n_cols = n_rows;
+      X.n_elem = X.n_rows * X.n_cols;
+      
+      int n = 0;
+      for (int i = 0; i < n_rows; i++) {
+        for (int j = 0; j < n_cols; j++) {
+          if (i < j) {
+            double temp = X._data[i + j * n_rows];
+            X._data[i + j * n_rows] = X._data[n];
+            X._data[n] = temp;
+          }
 
-    int n = 0;
-    for (int i = 0; i < X.n_rows; i++) {
-      for (int j = 0; j < X.n_cols; j++) {
-        if (i < j) {
-          double temp = X._data[i + j * X.n_rows];
-          X._data[i + j * X.n_rows] = X._data[n];
-          X._data[n] = temp;
+          n++;
         }
-
-        n++;
       }
+    } else {
+      X.inPlace(Op.EQUAL, X.t());
     }
 
   }
@@ -5362,7 +5374,7 @@ public class Arma {
         n++;
       }
     }
-    
+
     return true;
   }
 
@@ -5538,7 +5550,7 @@ public class Arma {
     if (info.val != 0) {
       return false;
     }
-    
+
     int n = 0;
     for (int i = 0; i < B.n_rows; i++) {
       for (int j = 0; j < B.n_cols; j++) {
@@ -5780,11 +5792,11 @@ public class Arma {
     if (status == false) {
       return false;
     }
-    
-    if(tolerance == 0) {
+
+    if (tolerance == 0) {
       tolerance = Math.max(A.n_rows, A.n_cols) * Math.ulp(s.max());
     }
-    
+
     int count = 0;
     for (int n = 0; n < s.n_elem; n++) {
       if (s._data[n] > tolerance + Datum.eps) {
@@ -6154,7 +6166,7 @@ public class Arma {
 
     X.set_size(A.n_cols, B.n_cols);
     intW info = new intW(0);
-    
+
     if (A.n_rows == A.n_cols) {
       double[] tempA = Arrays.copyOf(A._data, A.n_elem);
       System.arraycopy(B._data, 0, X._data, 0, B.n_elem);
@@ -6165,21 +6177,21 @@ public class Arma {
       double[] tempA = Arrays.copyOf(A._data, A.n_elem);
       double[] tempB = Arrays.copyOf(B._data, B.n_elem);
       double[] work = new double[3 * Math.max(1, A.n_cols + Math.max(A.n_cols, B.n_cols))];
-    
+
       LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_rows, work, work.length, info);
       System.arraycopy(tempB, 0, X._data, 0, X.n_elem);
     } else {
       double[] tempA = Arrays.copyOf(A._data, A.n_elem);
       double[] tempB = new double[X.n_elem];
-      for(int j = 0; j < B.n_cols; j++) {
+      for (int j = 0; j < B.n_cols; j++) {
         System.arraycopy(B._data, j * B.n_rows, tempB, j * X.n_rows, B.n_rows);
       }
       double[] work = new double[3 * Math.max(1, A.n_cols + Math.max(A.n_cols, B.n_cols))];
-    
+
       LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_rows, work, work.length, info);
       System.arraycopy(tempB, 0, X._data, 0, X.n_elem);
     }
-    
+
     return (info.val == 0);
   }
 
@@ -6400,7 +6412,7 @@ public class Arma {
 
     boolean statusA = schur(Z1, T1, A);
     boolean statusB = schur(Z2, T2, B);
-    
+
     if (!statusA || !statusB) {
       return false;
     }
