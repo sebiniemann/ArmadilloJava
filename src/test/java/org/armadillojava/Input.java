@@ -188,6 +188,9 @@ class Input {
         case Fill:
           inputs.add(getFill());
           break;
+        case Random:
+          inputs.add(getRandom());
+          break;
         default:
           throw new RuntimeException("Unsupported test class requested.");
       }
@@ -1049,5 +1052,13 @@ class Input {
 
   protected static List<Pair<String, Object>> getFill() {
     return null;
+  }
+
+  protected static List<Pair<String, Object>> getRandom() {
+    List<Pair<String, Object>> input = new ArrayList<>();
+
+    input.add(new Pair<String, Object>("1000", 1000));
+    
+    return input;
   }
 }

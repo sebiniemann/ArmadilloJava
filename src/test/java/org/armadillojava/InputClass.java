@@ -76,5 +76,6 @@ enum InputClass {
   InputStream,
   FileType,
   DistrParam,
-  Fill
+  Fill,
+  Random
 }
