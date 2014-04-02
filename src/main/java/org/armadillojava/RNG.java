@@ -17,6 +17,14 @@ import java.util.Random;
 
 class RNG {
 
-  protected static Random _rng;
+  protected static Random _rng = new Random();
 
+  public void set_seed(long seed) {
+    _rng.setSeed(seed);
+  }
+  
+  public void set_seed_random() {
+    _rng.setSeed(Double.doubleToLongBits(Math.random()));
+  }
+  
 }
