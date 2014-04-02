@@ -4780,7 +4780,7 @@ public class Arma {
         break;
       case 1:
         for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubRow(X, shuffeldIndicies[j]));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubCol(X, shuffeldIndicies[j]));
         }
         break;
     }

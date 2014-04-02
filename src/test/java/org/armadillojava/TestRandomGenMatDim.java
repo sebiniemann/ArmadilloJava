@@ -31,15 +31,14 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestRandomGenMat extends TestClass {
+public class TestRandomGenMatDim extends TestClass {
 
-  @Parameters(name = "{index}: Random = {0}, GenMat = {2}, Dim = {4}")
+  @Parameters(name = "{index}: Random = {0}, GenMat = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);
     inputClasses.add(InputClass.GenMat);
-    inputClasses.add(InputClass.Dim);
 
     return Input.getTestParameters(inputClasses);
   }
@@ -60,35 +59,25 @@ public class TestRandomGenMat extends TestClass {
 
   protected Mat _copyOfGenMat;
 
-  @Parameter(4)
-  public String _dimString;
-
-  @Parameter(5)
-  public int    _dim;
-
-  protected int _copyOfDim;
-
   @Before
   public void before() {
-    _fileSuffix = _randomString + "," + _genMatString + "," + _dimString;
+    _fileSuffix = _randomString + "," + _genMatString;
 
     _copyOfGenMat = new Mat(_genMat);
     _copyOfRandom = new Integer(_random);
-    _copyOfDim = new Integer(_dim);
   }
 
   @After
   public void after() {
     assertMatEquals(_genMat, _copyOfGenMat, 0);
     assertThat(_random, is(_copyOfRandom));
-    assertThat(_dim, is(_copyOfDim));
   }
 
   @Test
   public void testShuffle() throws IOException {
-    Mat result = Arma.shuffle(_genMat, _dim);
+    Mat result = Arma.shuffle(_genMat);
     for(int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.shuffle(_genMat, _dim)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.shuffle(_genMat)).elemDivide(n + 1);
     }
     assertMatEquals(result.minus(load("shuffle")), Arma.zeros(_genMat.n_rows, _genMat.n_cols), 1);
   }
