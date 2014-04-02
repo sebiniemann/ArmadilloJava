@@ -72,7 +72,7 @@ namespace armadilloJava {
       void expectedShuffle() {
         cout << "- Compute expectedShuffle() ... ";
 
-        Mat<double> result = shuffle(_genColVec);
+        Col<double> result = shuffle(_genColVec);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + shuffle(_genColVec)) / (n + 1);
         }

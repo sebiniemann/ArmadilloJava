@@ -4693,6 +4693,23 @@ public class Arma {
     }
   }
 
+  protected static void shuffle(final int[] result, final int[] V) {
+    /*
+     * Performs an inside-out version of the Fisher-Yates shuffle
+     */
+    result[0] = V[0];
+    for (int n = 1; n < V.length; n++)
+    {
+      int nn = RNG._rng.nextInt(n + 1);
+
+      if (n != nn) {
+        result[n] = result[nn];
+      }
+
+      result[nn] = V[n];
+    }
+  }
+
   /**
    * Returns a shuffled copy of the provided vector.
    * 
@@ -4736,13 +4753,13 @@ public class Arma {
     Mat result = new Mat();
     result.copy_size(X);
 
-    double[] indicies;
+    int[] indicies;
     switch (dim) {
       case 0:
-        indicies = new double[X.n_rows];
+        indicies = new int[X.n_rows];
         break;
       case 1:
-        indicies = new double[X.n_cols];
+        indicies = new int[X.n_cols];
         break;
       default:
         throw new IllegalArgumentException("The specified dimension (" + dim + ") must either be 0 or 1.");
@@ -4752,18 +4769,18 @@ public class Arma {
       indicies[n] = n;
     }
 
-    double[] shuffeldIndicies = new double[indicies.length];
+    int[] shuffeldIndicies = new int[indicies.length];
     shuffle(shuffeldIndicies, indicies);
-
+    
     switch (dim) {
       case 0:
         for (int i = 0; i < X.n_rows; i++) {
-          new ViewSubRow(result, i).inPlace(Op.EQUAL, new ViewSubRow(X, i));
+          new ViewSubRow(result, i).inPlace(Op.EQUAL, new ViewSubRow(X, shuffeldIndicies[i]));
         }
         break;
       case 1:
         for (int j = 0; j < X.n_cols; j++) {
-          new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubRow(X, j));
+          new ViewSubCol(result, j).inPlace(Op.EQUAL, new ViewSubRow(X, shuffeldIndicies[j]));
         }
         break;
     }

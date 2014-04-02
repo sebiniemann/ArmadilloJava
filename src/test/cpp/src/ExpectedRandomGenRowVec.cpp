@@ -67,12 +67,12 @@ namespace armadilloJava {
 
     protected:
       int _random;
-      Mat<double> _genRowVec;
+      Row<double> _genRowVec;
 
       void expectedShuffle() {
         cout << "- Compute expectedShuffle() ... ";
 
-        Mat<double> result = shuffle(_genRowVec);
+        Row<double> result = shuffle(_genRowVec);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + shuffle(_genRowVec)) / (n + 1);
         }
