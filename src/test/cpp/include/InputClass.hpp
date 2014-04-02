@@ -78,6 +78,7 @@ namespace armadilloJava
     // InputStream, Java specific
     // FileType, Test specific
     DistrParam,
-    Fill
+    Fill,
+    Random
   };
 }

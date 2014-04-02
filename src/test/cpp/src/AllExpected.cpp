@@ -240,6 +240,30 @@ using armadilloJava::ExpectedOOMat;
 #include <ExpectedOORowVec.cpp>
 using armadilloJava::ExpectedOORowVec;
 
+#include <ExpectedRandomGenColVec.cpp>
+using armadilloJava::ExpectedRandomGenColVec;
+
+#include <ExpectedRandomGenMat.cpp>
+using armadilloJava::ExpectedRandomGenMat;
+
+#include <ExpectedRandomGenMatDim.cpp>
+using armadilloJava::ExpectedRandomGenMatDim;
+
+#include <ExpectedRandomGenRowVec.cpp>
+using armadilloJava::ExpectedRandomGenRowVec;
+
+#include <ExpectedRandomNumElems.cpp>
+using armadilloJava::ExpectedRandomNumElems;
+
+#include <ExpectedRandomNumElemsDistrParam.cpp>
+using armadilloJava::ExpectedRandomNumElemsDistrParam;
+
+#include <ExpectedRandomNumRowsNumCols.cpp>
+using armadilloJava::ExpectedRandomNumRowsNumCols;
+
+#include <ExpectedRandomNumRowsNumColsDistrParam.cpp>
+using armadilloJava::ExpectedRandomNumRowsNumColsDistrParam;
+
 #include <ExpectedSquMat.cpp>
 using armadilloJava::ExpectedSquMat;
 
@@ -314,7 +338,7 @@ int main() {
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
 //  ExpectedGenRowVecVecNormString();
-  ExpectedInPlaceGenMat();
+//  ExpectedInPlaceGenMat();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicColVecNumElems();
@@ -329,6 +353,14 @@ int main() {
 //  ExpectedOOColVec();
 //  ExpectedOOMat();
 //  ExpectedOORowVec();
+  ExpectedRandomGenColVec();
+  ExpectedRandomGenMat();
+  ExpectedRandomGenMatDim();
+  ExpectedRandomGenRowVec();
+  ExpectedRandomNumElems();
+  ExpectedRandomNumElemsDistrParam();
+  ExpectedRandomNumRowsNumCols();
+  ExpectedRandomNumRowsNumColsDistrParam();
 //  ExpectedSquMat();
 //  ExpectedSquMatSquMatGenMat();
 //  ExpectedSymMat();

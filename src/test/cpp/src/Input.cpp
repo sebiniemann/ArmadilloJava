@@ -214,6 +214,9 @@ namespace armadilloJava {
         case InputClass::Fill:
           inputs.push_back(getFill());
           break;
+        case InputClass::Random:
+          inputs.push_back(getRandom());
+          break;
         default:
           throw new runtime_error("Unsupported test class requested.");
       }
@@ -984,6 +987,12 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getFill() {
     return {
 
+    };
+  }
+
+  vector<pair<string, void*>> Input::getRandom() {
+    return {
+      pair<string, void*>("1000", new int(1000))
     };
   }
 }

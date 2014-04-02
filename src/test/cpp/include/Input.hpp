@@ -94,5 +94,6 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getSinValSel();
       static vector<pair<string, void*>> getDistrParam();
       static vector<pair<string, void*>> getFill();
+      static vector<pair<string, void*>> getRandom();
   };
 }
