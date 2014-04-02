@@ -31,55 +31,78 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestRandomGenColVec extends TestClass {
+public class TestRandomNumRowsNumColsDistrParam extends TestClass {
 
-  @Parameters(name = "{index}: Random = {0}, GenColVec = {2}")
+  @Parameters(name = "{index}: Random = {0}, NumRows = {2}, NumCols = {4}, DistrParam = {6}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);
-    inputClasses.add(InputClass.GenColVec);
+    inputClasses.add(InputClass.NumRows);
+    inputClasses.add(InputClass.NumCols);
+    inputClasses.add(InputClass.DistrParam);
 
     return Input.getTestParameters(inputClasses);
   }
 
   @Parameter(0)
-  public String _randomString;
+  public String        _randomString;
 
   @Parameter(1)
-  public int    _random;
+  public int           _random;
 
-  protected int _copyOfRandom;
+  protected int        _copyOfRandom;
 
   @Parameter(2)
-  public String _genColVecString;
+  public String        _numRowsString;
 
   @Parameter(3)
-  public Col    _genColVec;
+  public int           _numRows;
 
-  protected Col _copyOfGenColVec;
+  protected int        _copyOfNumRows;
+
+  @Parameter(4)
+  public String        _numColsString;
+
+  @Parameter(5)
+  public int           _numCols;
+
+  protected int        _copyOfNumCols;
+
+  @Parameter(6)
+  public String        _distrParamString;
+
+  @Parameter(7)
+  public DistrParam    _distrParam;
+
+  protected DistrParam _copyOfDistrParam;
 
   @Before
   public void before() {
-    _fileSuffix = _randomString + "," + _genColVecString;
+    _fileSuffix = _randomString + "," + _numRowsString + "," + _numColsString + "," + _distrParamString;
 
-    _copyOfGenColVec = new Col(_genColVec);
     _copyOfRandom = new Integer(_random);
+    _copyOfNumRows = new Integer(_numRows);
+    _copyOfNumCols = new Integer(_numCols);
+    _copyOfDistrParam = new DistrParam(_distrParam._a, _distrParam._b);
   }
 
   @After
   public void after() {
-    assertMatEquals(_genColVec, _copyOfGenColVec, 0);
     assertThat(_random, is(_copyOfRandom));
+    assertThat(_numRows, is(_copyOfNumRows));
+    assertThat(_numCols, is(_copyOfNumCols));
+    assertThat(_distrParam._a, is(_copyOfDistrParam._a));
+    assertThat(_distrParam._b, is(_copyOfDistrParam._b));
   }
 
   @Test
-  public void testShuffle() throws IOException {
-    Col result = Arma.shuffle(_genColVec);
+  public void testRandiA() throws IOException {
+    Mat result = Arma.randi(_numRows, _numCols, _distrParam);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.shuffle(_genColVec)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randi(_numRows, _numCols, _distrParam)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("shuffle")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("randi")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

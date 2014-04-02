@@ -48,7 +48,7 @@ namespace armadilloJava {
             switch (n) {
               case 0:
                 _fileSuffix += value.first;
-                _numRows = *static_cast<int*>(value.second);
+                _random = *static_cast<int*>(value.second);
                 break;
               case 1:
                 _fileSuffix += "," + value.first;

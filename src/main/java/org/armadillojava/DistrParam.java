@@ -23,5 +23,5 @@ public class DistrParam {
     _a = a;
     _b = b;
   }
-
+  
 }

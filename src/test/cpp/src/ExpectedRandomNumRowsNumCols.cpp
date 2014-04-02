@@ -23,6 +23,7 @@ using std::pair;
 
 #include <armadillo>
 using arma::Mat;
+using arma::shuffle;
 using arma::randi;
 using arma::randu;
 using arma::randn;
@@ -49,7 +50,7 @@ namespace armadilloJava {
             switch (n) {
               case 0:
                 _fileSuffix += value.first;
-                _numRows = *static_cast<int*>(value.second);
+                _random = *static_cast<int*>(value.second);
                 break;
               case 1:
                 _fileSuffix += "," + value.first;
@@ -81,9 +82,9 @@ namespace armadilloJava {
       void expectedRandi() {
         cout << "- Compute expectedRandi() ... ";
 
-        Mat<double> result = randi<Mat<double>>(_numRows, _numCols);
+        Mat<double> result = randi<Mat<double>>(_numRows, _numCols) / arma::arma_rng::randi<int>::max_val();
         for(int n = 2; n <= _random; n++) {
-          result = (result * n + randi<Mat<double>>(_numRows, _numCols)) / (n + 1);
+          result = (result * n + (randi<Mat<double>>(_numRows, _numCols) / arma::arma_rng::randi<int>::max_val())) / (n + 1);
         }
         save("randi", result);
 

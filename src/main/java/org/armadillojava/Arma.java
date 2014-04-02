@@ -238,7 +238,7 @@ public class Arma {
      * The parameters "n_rows" and "n_cols" are validated within randi(Class<T>, int, int, DistrParam).
      */
 
-    return randi(n_rows, n_rows, new DistrParam(0, Integer.MAX_VALUE - 1));
+    return randi(n_rows, n_cols, new DistrParam(0, Integer.MAX_VALUE - 1));
   }
 
   /**

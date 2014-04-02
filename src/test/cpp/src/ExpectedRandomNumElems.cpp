@@ -76,9 +76,9 @@ namespace armadilloJava {
       void expectedRandi() {
         cout << "- Compute expectedRandi() ... ";
 
-        Mat<double> result = randi<Col<double>>(_numElems);
+        Mat<double> result = randi<Col<double>>(_numElems) / arma::arma_rng::randi<int>::max_val();
         for(int n = 2; n <= _random; n++) {
-          result = (result * n + randi<Col<double>>(_numElems)) / (n + 1);
+          result = (result * n + (randi<Col<double>>(_numElems) / arma::arma_rng::randi<int>::max_val())) / (n + 1);
         }
         save("randi", result);
 

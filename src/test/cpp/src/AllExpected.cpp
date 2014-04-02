@@ -356,11 +356,11 @@ int main() {
 //  ExpectedRandomGenColVec();
 //  ExpectedRandomGenMat();
 //  ExpectedRandomGenMatDim();
-  ExpectedRandomGenRowVec();
+//  ExpectedRandomGenRowVec();
 //  ExpectedRandomNumElems();
 //  ExpectedRandomNumElemsDistrParam();
-//  ExpectedRandomNumRowsNumCols();
-//  ExpectedRandomNumRowsNumColsDistrParam();
+  ExpectedRandomNumRowsNumCols();
+  ExpectedRandomNumRowsNumColsDistrParam();
 //  ExpectedSquMat();
 //  ExpectedSquMatSquMatGenMat();
 //  ExpectedSymMat();
