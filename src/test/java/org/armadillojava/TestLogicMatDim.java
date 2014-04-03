@@ -76,22 +76,22 @@ public class TestLogicMatDim extends TestClass {
   @Test
   public void testAll() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.all(Row.class, _logicMat, _dim), load("all"));
-      assertMatEquals(Arma.all(Col.class, _logicMat, _dim), load("all").t());
+      assertMatEquals(Arma.all(Row.class, _logicMat, _dim), load("Arma.all"));
+      assertMatEquals(Arma.all(Col.class, _logicMat, _dim), load("Arma.all").t());
     } else {
-      assertMatEquals(Arma.all(Row.class, _logicMat, _dim), load("all").t());
-      assertMatEquals(Arma.all(Col.class, _logicMat, _dim), load("all"));
+      assertMatEquals(Arma.all(Row.class, _logicMat, _dim), load("Arma.all").t());
+      assertMatEquals(Arma.all(Col.class, _logicMat, _dim), load("Arma.all"));
     }
   }
 
   @Test
   public void testAny() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.any(Row.class, _logicMat, _dim), load("any"));
-      assertMatEquals(Arma.any(Col.class, _logicMat, _dim), load("any").t());
+      assertMatEquals(Arma.any(Row.class, _logicMat, _dim), load("Arma.any"));
+      assertMatEquals(Arma.any(Col.class, _logicMat, _dim), load("Arma.any").t());
     } else {
-      assertMatEquals(Arma.any(Row.class, _logicMat, _dim), load("any").t());
-      assertMatEquals(Arma.any(Col.class, _logicMat, _dim), load("any"));
+      assertMatEquals(Arma.any(Row.class, _logicMat, _dim), load("Arma.any").t());
+      assertMatEquals(Arma.any(Col.class, _logicMat, _dim), load("Arma.any"));
     }
   }
 

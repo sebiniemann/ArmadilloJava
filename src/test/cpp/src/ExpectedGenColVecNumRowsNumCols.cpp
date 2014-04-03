@@ -63,7 +63,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedRepmat();
+          expectedArmaRepmat();
         }
 
         cout << "done." << endl;
@@ -74,9 +74,9 @@ namespace armadilloJava {
       int _numRows;
       int _numCols;
 
-      void expectedRepmat() {
-        cout << "- Compute expectedRepmat() ... ";
-        save("repmat", repmat(_genColVec, _numRows, _numCols));
+      void expectedArmaRepmat() {
+        cout << "- Compute expectedArmaRepmat() ... ";
+        save<double>("Arma.repmat", repmat(_genColVec, _numRows, _numCols));
         cout << "done." << endl;
       }
 

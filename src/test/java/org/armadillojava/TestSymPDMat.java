@@ -79,7 +79,7 @@ public class TestSymPDMat extends TestClass {
   @Test
   public void testInv_sympdA() throws IOException {
     
-    assertMatEquals(Arma.inv_sympd(_symPDMat), load("inv_sympd"));
+    assertMatEquals(Arma.inv_sympd(_symPDMat), load("Arma.inv_sympd"));
   }
 
   @Test
@@ -88,7 +88,7 @@ public class TestSymPDMat extends TestClass {
     
     Arma.inv_sympd(B, _symPDMat);
     
-    assertMatEquals(B, load("inv_sympd"));
+    assertMatEquals(B, load("Arma.inv_sympd"));
   }
 
 }

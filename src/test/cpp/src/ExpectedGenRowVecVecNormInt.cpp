@@ -59,7 +59,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedNorm();
+          expectedArmaNorm();
         }
 
         cout << "done." << endl;
@@ -69,9 +69,9 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       int _vecNormInt;
 
-      void expectedNorm() {
-        cout << "- Compute expectedNorm() ... ";
-        save("norm", Mat<double>({norm(_genRowVec, _vecNormInt)}));
+      void expectedArmaNorm() {
+        cout << "- Compute expectedArmaNorm() ... ";
+        save<double>("Arma.norm", Mat<double>({norm(_genRowVec, _vecNormInt)}));
         cout << "done." << endl;
       }
 

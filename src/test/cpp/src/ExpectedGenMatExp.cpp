@@ -59,7 +59,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedPow();
+          expectedArmaPow();
         }
 
         cout << "done." << endl;
@@ -69,9 +69,9 @@ namespace armadilloJava {
       Mat<double> _genMat;
       double _exp;
 
-      void expectedPow() {
-        cout << "- Compute expectedPow() ... ";
-        save("pow", pow(_genMat, _exp));
+      void expectedArmaPow() {
+        cout << "- Compute expectedArmaPow() ... ";
+        save<double>("Arma.pow", pow(_genMat, _exp));
         cout << "done." << endl;
       }
 

@@ -24,7 +24,6 @@ using std::pair;
 #include <armadillo>
 using arma::Mat;
 using arma::uword;
-using arma::raw_ascii;
 using arma::all;
 using arma::any;
 
@@ -62,8 +61,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedAll();
-          expectedAny();
+          expectedArmaAll();
+          expectedArmaAny();
         }
 
         cout << "done." << endl;
@@ -73,19 +72,15 @@ namespace armadilloJava {
       Mat<double> _logicMat;
       int _dim;
 
-      void expectedAll() {
-        cout << "- Compute expectedAll() ... ";
-        // Unable to convert the result of all(...) to Mat<double>
-        Mat<uword> expected = all(_logicMat, _dim);
-        expected.save("../data/expected/all" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaAll() {
+        cout << "- Compute expectedArmaAll() ... ";
+        save<uword>("Arma.all", all(_logicMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedAny() {
-        cout << "- Compute expectedAny() ... ";
-        // Unable to convert the result of any(...) to Mat<double>
-        Mat<uword> expected = any(_logicMat, _dim);
-        expected.save("../data/expected/any" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaAny() {
+        cout << "- Compute expectedArmaAny() ... ";
+        save<uword>("Arma.any", any(_logicMat, _dim));
         cout << "done." << endl;
       }
 

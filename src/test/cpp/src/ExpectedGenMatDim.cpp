@@ -66,14 +66,14 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedMin();
-          expectedMax();
-          expectedProd();
-          expectedSum();
-          expectedMean();
-          expectedMedian();
-          expectedCumsum();
-          expectedVectorise();
+          expectedArmaMin();
+          expectedArmaMax();
+          expectedArmaProd();
+          expectedArmaSum();
+          expectedArmaMean();
+          expectedArmaMedian();
+          expectedArmaCumsum();
+          expectedArmaVectorise();
         }
 
         cout << "done." << endl;
@@ -83,51 +83,51 @@ namespace armadilloJava {
       Mat<double> _genMat;
       int _dim;
 
-      void expectedMin() {
-        cout << "- Compute expectedMin() ... ";
-        save("min", min(_genMat, _dim));
+      void expectedArmaMin() {
+        cout << "- Compute expectedArmaMin() ... ";
+        save<double>("Arma.min", min(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedMax() {
-        cout << "- Compute expectedMax() ... ";
-        save("max", max(_genMat, _dim));
+      void expectedArmaMax() {
+        cout << "- Compute expectedArmaMax() ... ";
+        save<double>("Arma.max", max(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedProd() {
-        cout << "- Compute expectedProd() ... ";
-        save("prod", prod(_genMat, _dim));
+      void expectedArmaProd() {
+        cout << "- Compute expectedArmaProd() ... ";
+        save<double>("Arma.prod", prod(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedSum() {
-        cout << "- Compute expectedSum() ... ";
-        save("sum", sum(_genMat, _dim));
+      void expectedArmaSum() {
+        cout << "- Compute expectedArmaSum() ... ";
+        save<double>("Arma.sum", sum(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedMean() {
-        cout << "- Compute expectedMean() ... ";
-        save("mean", mean(_genMat, _dim));
+      void expectedArmaMean() {
+        cout << "- Compute expectedArmaMean() ... ";
+        save<double>("Arma.mean", mean(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedMedian() {
-        cout << "- Compute expectedMedian() ... ";
-        save("median", median(_genMat, _dim));
+      void expectedArmaMedian() {
+        cout << "- Compute expectedArmaMedian() ... ";
+        save<double>("Arma.median", median(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedCumsum() {
-        cout << "- Compute expectedCumsum() ... ";
-        save("cumsum", cumsum(_genMat, _dim));
+      void expectedArmaCumsum() {
+        cout << "- Compute expectedArmaCumsum() ... ";
+        save<double>("Arma.cumsum", cumsum(_genMat, _dim));
         cout << "done." << endl;
       }
 
-      void expectedVectorise() {
-        cout << "- Compute expectedVectorise() ... ";
-        save("vectorise", vectorise(_genMat, _dim));
+      void expectedArmaVectorise() {
+        cout << "- Compute expectedArmaVectorise() ... ";
+        save<double>("Arma.vectorise", vectorise(_genMat, _dim));
         cout << "done." << endl;
       }
 

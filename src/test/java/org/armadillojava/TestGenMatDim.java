@@ -76,82 +76,82 @@ public class TestGenMatDim extends TestClass {
   @Test
   public void testMin() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("min"));
-      assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("min").t());
+      assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("Arma.min"));
+      assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("Arma.min").t());
     } else {
-      assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("min").t());
-      assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("min"));
+      assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("Arma.min").t());
+      assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("Arma.min"));
     }
   }
 
   @Test
   public void testMax() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("max"));
-      assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("max").t());
+      assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("Arma.max"));
+      assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("Arma.max").t());
     } else {
-      assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("max").t());
-      assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("max"));
+      assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("Arma.max").t());
+      assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("Arma.max"));
     }
   }
 
   @Test
   public void testProd() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("prod"));
-      assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("prod").t());
+      assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("Arma.prod"));
+      assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("Arma.prod").t());
     } else {
-      assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("prod").t());
-      assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("prod"));
+      assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("Arma.prod").t());
+      assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("Arma.prod"));
     }
   }
 
   @Test
   public void testSum() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("sum"));
-      assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("sum").t());
+      assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("Arma.sum"));
+      assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("Arma.sum").t());
     } else {
-      assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("sum").t());
-      assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("sum"));
+      assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("Arma.sum").t());
+      assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("Arma.sum"));
     }
   }
 
   @Test
   public void testMean() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("mean"));
-      assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("mean").t());
+      assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("Arma.mean"));
+      assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("Arma.mean").t());
     } else {
-      assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("mean").t());
-      assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("mean"));
+      assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("Arma.mean").t());
+      assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("Arma.mean"));
     }
   }
 
   @Test
   public void testMedian() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("median"));
-      assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("median").t());
+      assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("Arma.median"));
+      assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("Arma.median").t());
     } else {
-      assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("median").t());
-      assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("median"));
+      assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("Arma.median").t());
+      assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("Arma.median"));
     }
   }
 
   @Test
   public void testCumsum() throws IOException {
-    assertMatEquals(Arma.cumsum(_genMat, _dim), load("cumsum"));
+    assertMatEquals(Arma.cumsum(_genMat, _dim), load("Arma.cumsum"));
   }
 
   @Test
   public void testVectorise() throws IOException {
     if (_dim == 0) {
-      assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("vectorise"));
-      assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("vectorise").t());
+      assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("Arma.vectorise"));
+      assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("Arma.vectorise").t());
     } else {
-      assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("vectorise").t());
-      assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("vectorise"));
+      assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("Arma.vectorise").t());
+      assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("Arma.vectorise"));
     }
   }
 

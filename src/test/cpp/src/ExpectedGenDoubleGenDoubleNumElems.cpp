@@ -62,7 +62,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedLinspace();
+          expectedArmaLinspace();
         }
 
         cout << "done." << endl;
@@ -73,9 +73,9 @@ namespace armadilloJava {
       double _genDoubleB;
       int _numElems;
 
-      void expectedLinspace() {
-        cout << "- Compute expectedLinspace() ... ";
-        save("linspace", linspace(_genDoubleA, _genDoubleB, _numElems));
+      void expectedArmaLinspace() {
+        cout << "- Compute expectedArmaLinspace() ... ";
+        save<double>("Arma.linspace", linspace(_genDoubleA, _genDoubleB, _numElems));
         cout << "done." << endl;
       }
 

@@ -61,9 +61,9 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedEye();
-          expectedOnes();
-          expectedZeros();
+          expectedArmaEye();
+          expectedArmaOnes();
+          expectedArmaZeros();
         }
 
         cout << "done." << endl;
@@ -73,21 +73,21 @@ namespace armadilloJava {
       int _numRows;
       int _numCols;
 
-      void expectedEye() {
-        cout << "- Compute expectedEye() ... ";
-        save("eye", eye<Mat<double>>(_numRows, _numCols));
+      void expectedArmaEye() {
+        cout << "- Compute expectedArmaEye() ... ";
+        save<double>("Arma.eye", eye<Mat<double>>(_numRows, _numCols));
         cout << "done." << endl;
       }
 
-      void expectedOnes() {
-        cout << "- Compute expectedOnes() ... ";
-        save("ones", ones<Mat<double>>(_numRows, _numCols));
+      void expectedArmaOnes() {
+        cout << "- Compute expectedArmaOnes() ... ";
+        save<double>("Arma.ones", ones<Mat<double>>(_numRows, _numCols));
         cout << "done." << endl;
       }
 
-      void expectedZeros() {
-        cout << "- Compute expectedZeros() ... ";
-        save("zeros", zeros<Mat<double>>(_numRows, _numCols));
+      void expectedArmaZeros() {
+        cout << "- Compute expectedArmaZeros() ... ";
+        save<double>("Arma.zeros", zeros<Mat<double>>(_numRows, _numCols));
         cout << "done." << endl;
       }
 

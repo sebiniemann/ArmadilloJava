@@ -33,7 +33,7 @@ public class TestDatum extends TestClass {
    */
   @Test
   public void test() throws IOException {
-    Mat expected = load("datum");
+    Mat expected = load("Datum");
 
     double delta = 1e-12;
 

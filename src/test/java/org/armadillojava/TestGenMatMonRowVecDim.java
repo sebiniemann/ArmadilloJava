@@ -86,12 +86,12 @@ public class TestGenMatMonRowVecDim extends TestClass {
 
   @Test
   public void testHist() throws IOException {
-    assertMatEquals(Arma.hist(_genMat, _monRowVecMat, _dim), load("hist"));
+    assertMatEquals(Arma.hist(_genMat, _monRowVecMat, _dim), load("Arma.hist"));
   }
 
   @Test
   public void testHistc() throws IOException {
-    assertMatEquals(Arma.histc(_genMat, _monRowVecMat, _dim), load("histc"));
+    assertMatEquals(Arma.histc(_genMat, _monRowVecMat, _dim), load("Arma.histc"));
   }
 
 }

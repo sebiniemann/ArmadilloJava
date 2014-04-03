@@ -72,18 +72,18 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedToeplitz();
-          expectedDot();
-          expectedNorm_dot();
-          expectedConv();
-          expectedCor();
-          expectedCov();
-          expectedCross();
-          expectedJoin_rows();
-          expectedJoin_horiz();
-          expectedJoin_cols();
-          expectedJoin_vert();
-          expectedKron();
+          expectedArmaToeplitz();
+          expectedArmaDot();
+          expectedArmaNorm_dot();
+          expectedArmaConv();
+          expectedArmaCor();
+          expectedArmaCov();
+          expectedArmaCross();
+          expectedArmaJoin_rows();
+          expectedArmaJoin_horiz();
+          expectedArmaJoin_cols();
+          expectedArmaJoin_vert();
+          expectedArmaKron();
         }
 
         cout << "done." << endl;
@@ -93,39 +93,39 @@ namespace armadilloJava {
       Col<double> _genColVec;
       Row<double> _genRowVec;
 
-      void expectedToeplitz() {
-        cout << "- Compute expectedToeplitz() ... ";
-        save("toeplitz", toeplitz(_genColVec, _genRowVec));
+      void expectedArmaToeplitz() {
+        cout << "- Compute expectedArmaToeplitz() ... ";
+        save<double>("Arma.toeplitz", toeplitz(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedDot() {
+      void expectedArmaDot() {
         if(_genColVec.n_elem != _genRowVec.n_elem) {
           return;
         }
 
-        cout << "- Compute expectedDot() ... ";
-        save("dot", Mat<double>({dot(_genColVec, _genRowVec)}));
+        cout << "- Compute expectedArmaDot() ... ";
+        save<double>("Arma.dot", Mat<double>({dot(_genColVec, _genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedNorm_dot() {
+      void expectedArmaNorm_dot() {
         if(_genColVec.n_elem != _genRowVec.n_elem) {
           return;
         }
 
-        cout << "- Compute expectedNorm_dot() ... ";
-        save("norm_dot", Mat<double>({norm_dot(_genColVec, _genRowVec)}));
+        cout << "- Compute expectedArmaNorm_dot() ... ";
+        save<double>("Arma.norm_dot", Mat<double>({norm_dot(_genColVec, _genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedConv() {
-        cout << "- Compute expectedConv() ... ";
-        save("conv", conv(_genColVec, _genRowVec));
+      void expectedArmaConv() {
+        cout << "- Compute expectedArmaConv() ... ";
+        save<double>("Arma.conv", conv(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCor() {
+      void expectedArmaCor() {
         if(_genColVec.n_rows != _genRowVec.n_rows) {
           return;
         }
@@ -134,12 +134,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCor() ... ";
-        save("cor", cor(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaCor() ... ";
+        save<double>("Arma.cor", cor(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
+      void expectedArmaCov() {
         if(_genColVec.n_rows != _genRowVec.n_rows) {
           return;
         }
@@ -148,12 +148,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCov() ... ";
-        save("cov", cov(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaCov() ... ";
+        save<double>("Arma.cov", cov(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCross() {
+      void expectedArmaCross() {
         if(!_genColVec.is_vec()) {
           return;
         }
@@ -170,54 +170,54 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCross() ... ";
-        save("cross", cross(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaCross() ... ";
+        save<double>("Arma.cross", cross(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedJoin_rows() {
+      void expectedArmaJoin_rows() {
         if(_genColVec.n_rows != _genRowVec.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_rows() ... ";
-        save("join_rows", join_rows(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaJoin_rows() ... ";
+        save<double>("Arma.join_rows", join_rows(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedJoin_horiz() {
+      void expectedArmaJoin_horiz() {
         if(_genColVec.n_rows != _genRowVec.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_horiz() ... ";
-        save("join_horiz", join_horiz(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaJoin_horiz() ... ";
+        save<double>("Arma.join_horiz", join_horiz(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedJoin_cols() {
+      void expectedArmaJoin_cols() {
         if(_genColVec.n_cols != _genRowVec.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_cols() ... ";
-        save("join_cols", join_cols(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaJoin_cols() ... ";
+        save<double>("Arma.join_cols", join_cols(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedJoin_vert() {
+      void expectedArmaJoin_vert() {
         if(_genColVec.n_cols != _genRowVec.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_vert() ... ";
-        save("join_vert", join_cols(_genColVec, _genRowVec));
+        cout << "- Compute expectedArmaJoin_vert() ... ";
+        save<double>("Arma.join_vert", join_cols(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedKron() {
-        cout << "- Compute expectedKron() ... ";
-        save("kron", kron(_genColVec, _genRowVec));
+      void expectedArmaKron() {
+        cout << "- Compute expectedArmaKron() ... ";
+        save<double>("Arma.kron", kron(_genColVec, _genRowVec));
         cout << "done." << endl;
       }
 

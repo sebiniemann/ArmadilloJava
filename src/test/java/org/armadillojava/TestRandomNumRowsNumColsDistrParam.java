@@ -102,7 +102,7 @@ public class TestRandomNumRowsNumColsDistrParam extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randi(_numRows, _numCols, _distrParam)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randi")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.randi")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

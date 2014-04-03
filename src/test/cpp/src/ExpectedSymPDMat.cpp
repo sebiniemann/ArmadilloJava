@@ -55,7 +55,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedInv_sympd();
+            expectedArmaInv_sympd();
           }
 
           cout << "done." << endl;
@@ -64,9 +64,9 @@ namespace armadilloJava {
     protected:
       Mat<double> _symPDMat;
 
-      void expectedInv_sympd() {
-        cout << "- Compute expectedInv_sympd() ... ";
-        save("inv_sympd", inv_sympd(_symPDMat));
+      void expectedArmaInv_sympd() {
+        cout << "- Compute expectedArmaInv_sympd() ... ";
+        save<double>("Arma.inv_sympd", inv_sympd(_symPDMat));
         cout << "done." << endl;
       }
   };

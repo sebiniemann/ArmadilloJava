@@ -86,17 +86,17 @@ public class TestGenMatNumRowsNumCols extends TestClass {
 
   @Test
   public void testRepmat() throws IOException {
-    assertMatEquals(Arma.repmat(_genMat, _numRows, _numCols), load("repmat"));
+    assertMatEquals(Arma.repmat(_genMat, _numRows, _numCols), load("Arma.repmat"));
   }
 
   @Test
   public void testReshape() throws IOException {
-    assertMatEquals(Arma.reshape(_genMat, _numRows, _numCols), load("reshape"));
+    assertMatEquals(Arma.reshape(_genMat, _numRows, _numCols), load("Arma.reshape"));
   }
 
   @Test
   public void testResize() throws IOException {
-    assertMatEquals(Arma.resize(_genMat, _numRows, _numCols), load("resize"));
+    assertMatEquals(Arma.resize(_genMat, _numRows, _numCols), load("Arma.resize"));
   }
 
 }

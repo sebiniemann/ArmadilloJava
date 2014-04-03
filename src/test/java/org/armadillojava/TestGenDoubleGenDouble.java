@@ -75,8 +75,8 @@ public class TestGenDoubleGenDouble extends TestClass {
 
   @Test
   public void testLinspace() throws IOException {
-    assertMatEquals(Arma.linspace(Col.class, _genDoubleA, _genDoubleB), load("linspace"));
-    assertMatEquals(Arma.linspace(Row.class, _genDoubleA, _genDoubleB), load("linspace").t());
+    assertMatEquals(Arma.linspace(Col.class, _genDoubleA, _genDoubleB), load("Arma.linspace"));
+    assertMatEquals(Arma.linspace(Row.class, _genDoubleA, _genDoubleB), load("Arma.linspace").t());
   }
 
 }

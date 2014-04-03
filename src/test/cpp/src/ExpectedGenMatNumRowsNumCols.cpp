@@ -65,9 +65,9 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedRepmat();
-          expectedReshape();
-          expectedResize();
+          expectedArmaRepmat();
+          expectedArmaReshape();
+          expectedArmaResize();
         }
 
         cout << "done." << endl;
@@ -78,21 +78,21 @@ namespace armadilloJava {
       int _numRows;
       int _numCols;
 
-      void expectedRepmat() {
-        cout << "- Compute expectedRepmat() ... ";
-        save("repmat", repmat(_genMat, _numRows, _numCols));
+      void expectedArmaRepmat() {
+        cout << "- Compute expectedArmaRepmat() ... ";
+        save<double>("Arma.repmat", repmat(_genMat, _numRows, _numCols));
         cout << "done." << endl;
       }
 
-      void expectedReshape() {
-        cout << "- Compute expectedReshape() ... ";
-        save("reshape", reshape(_genMat, _numRows, _numCols));
+      void expectedArmaReshape() {
+        cout << "- Compute expectedArmaReshape() ... ";
+        save<double>("Arma.reshape", reshape(_genMat, _numRows, _numCols));
         cout << "done." << endl;
       }
 
-      void expectedResize() {
-        cout << "- Compute expectedResize() ... ";
-        save("resize", resize(_genMat, _numRows, _numCols));
+      void expectedArmaResize() {
+        cout << "- Compute expectedArmaResize() ... ";
+        save<double>("Arma.resize", resize(_genMat, _numRows, _numCols));
         cout << "done." << endl;
       }
 

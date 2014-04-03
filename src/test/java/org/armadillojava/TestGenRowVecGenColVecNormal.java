@@ -90,7 +90,7 @@ public class TestGenRowVecGenColVecNormal extends TestClass {
   public void testCor() throws IOException {
     assumeThat(_genRowVec.n_elem, is(_genColVec.n_elem));
     
-    double expected = load("cor")._data[0];
+    double expected = load("Arma.cor")._data[0];
     double actual = Arma.cor(_genRowVec, _genColVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -104,7 +104,7 @@ public class TestGenRowVecGenColVecNormal extends TestClass {
   public void testCov() throws IOException {
     assumeThat(_genRowVec.n_elem, is(_genColVec.n_elem));
     
-    double expected = load("cov")._data[0];
+    double expected = load("Arma.cov")._data[0];
     double actual = Arma.cov(_genRowVec, _genColVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {

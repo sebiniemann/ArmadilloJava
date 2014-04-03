@@ -63,7 +63,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedShuffle();
+            expectedArmaShuffle();
           }
 
           cout << "done." << endl;
@@ -74,14 +74,14 @@ namespace armadilloJava {
       Mat<double> _genMat;
       int _dim;
 
-      void expectedShuffle() {
-        cout << "- Compute expectedShuffle() ... ";
+      void expectedArmaShuffle() {
+        cout << "- Compute expectedArmaShuffle() ... ";
 
         Mat<double> result = shuffle(_genMat, _dim);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + shuffle(_genMat, _dim)) / (n + 1);
         }
-        save("shuffle", result);
+        save<double>("Arma.shuffle", result);
 
         cout << "done." << endl;
       }

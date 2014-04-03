@@ -90,7 +90,7 @@ public class TestRandomGenMat extends TestClass {
     for(int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.shuffle(_genMat, _dim)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("shuffle")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.shuffle")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

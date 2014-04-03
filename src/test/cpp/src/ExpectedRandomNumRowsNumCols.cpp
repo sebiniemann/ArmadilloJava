@@ -66,9 +66,9 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedRandi();
-          expectedRandu();
-          expectedRandn();
+          expectedArmaRandi();
+          expectedArmaRandu();
+          expectedArmaRandn();
         }
 
         cout << "done." << endl;
@@ -79,38 +79,38 @@ namespace armadilloJava {
       int _numRows;
       int _numCols;
 
-      void expectedRandi() {
-        cout << "- Compute expectedRandi() ... ";
+      void expectedArmaRandi() {
+        cout << "- Compute expectedArmaRandi() ... ";
 
         Mat<double> result = randi<Mat<double>>(_numRows, _numCols) / arma::arma_rng::randi<int>::max_val();
         for(int n = 2; n <= _random; n++) {
           result = (result * n + (randi<Mat<double>>(_numRows, _numCols) / arma::arma_rng::randi<int>::max_val())) / (n + 1);
         }
-        save("randi", result);
+        save<double>("Arma.randi", result);
 
         cout << "done." << endl;
       }
 
-      void expectedRandu() {
-        cout << "- Compute expectedRandu() ... ";
+      void expectedArmaRandu() {
+        cout << "- Compute expectedArmaRandu() ... ";
 
         Mat<double> result = randu<Mat<double>>(_numRows, _numCols);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + randu<Mat<double>>(_numRows, _numCols)) / (n + 1);
         }
-        save("randu", result);
+        save<double>("Arma.randu", result);
 
         cout << "done." << endl;
       }
 
-      void expectedRandn() {
-        cout << "- Compute expectedRandn() ... ";
+      void expectedArmaRandn() {
+        cout << "- Compute expectedArmaRandn() ... ";
 
         Mat<double> result = randn<Mat<double>>(_numRows, _numCols);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + randn<Mat<double>>(_numRows, _numCols)) / (n + 1);
         }
-        save("randn", result);
+        save<double>("Arma.randn", result);
 
         cout << "done." << endl;
       }

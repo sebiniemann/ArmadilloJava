@@ -62,7 +62,7 @@ public class TestSymMat extends TestClass {
 
   @Test
   public void testEig_symA() throws IOException {
-    assertMatEquals(Arma.eig_sym(_symMat), load("eig_symEigval"));
+    assertMatEquals(Arma.eig_sym(_symMat), load("Arma.eig_symEigval"));
   }
 
   @Test
@@ -71,7 +71,7 @@ public class TestSymMat extends TestClass {
     
     Arma.eig_sym(eigval, _symMat);
     
-    assertMatEquals(eigval, load("eig_symEigval"));
+    assertMatEquals(eigval, load("Arma.eig_symEigval"));
   }
 
   @Test
@@ -80,7 +80,7 @@ public class TestSymMat extends TestClass {
     
     Arma.eig_sym(eigval, _symMat);
 
-    assertMatEquals(eigval, load("eig_symEigval").t());
+    assertMatEquals(eigval, load("Arma.eig_symEigval").t());
   }
 
   @Test
@@ -90,8 +90,8 @@ public class TestSymMat extends TestClass {
     
     Arma.eig_sym(eigval, eigvec, _symMat);
 
-    assertMatEquals(eigval, load("eig_symEigval"));
-    assertMatEquals(eigvec, load("eig_symEigvec"));
+    assertMatEquals(eigval, load("Arma.eig_symEigval"));
+    assertMatEquals(eigvec, load("Arma.eig_symEigvec"));
   }
 
   @Test
@@ -101,8 +101,8 @@ public class TestSymMat extends TestClass {
     
     Arma.eig_sym(eigval, eigvec, _symMat);
 
-    assertMatEquals(eigval, load("eig_symEigval").t());
-    assertMatEquals(eigvec, load("eig_symEigvec"));
+    assertMatEquals(eigval, load("Arma.eig_symEigval").t());
+    assertMatEquals(eigvec, load("Arma.eig_symEigvec"));
   }
 
 }

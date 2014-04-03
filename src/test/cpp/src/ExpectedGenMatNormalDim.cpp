@@ -66,8 +66,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedStddev();
-          expectedVar();
+          expectedArmaStddev();
+          expectedArmaVar();
         }
 
         cout << "done." << endl;
@@ -78,15 +78,15 @@ namespace armadilloJava {
       int _normal;
       int _dim;
 
-      void expectedStddev() {
-        cout << "- Compute expectedStddev() ... ";
-        save("stddev", stddev(_genMat, _normal, _dim));
+      void expectedArmaStddev() {
+        cout << "- Compute expectedArmaStddev() ... ";
+        save<double>("Arma.stddev", stddev(_genMat, _normal, _dim));
         cout << "done." << endl;
       }
 
-      void expectedVar() {
-        cout << "- Compute expectedVar() ... ";
-        save("var", var(_genMat, _normal, _dim));
+      void expectedArmaVar() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.var", var(_genMat, _normal, _dim));
         cout << "done." << endl;
       }
 

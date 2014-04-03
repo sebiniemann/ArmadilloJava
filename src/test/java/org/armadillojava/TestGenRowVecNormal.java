@@ -76,7 +76,7 @@ public class TestGenRowVecNormal extends TestClass {
 
   @Test
   public void testStddev() throws IOException {
-    double expected = load("stddev")._data[0];
+    double expected = load("Arma.stddev")._data[0];
     double actual = Arma.stddev(_genRowVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -88,7 +88,7 @@ public class TestGenRowVecNormal extends TestClass {
 
   @Test
   public void testVar() throws IOException {
-    double expected = load("var")._data[0];
+    double expected = load("Arma.var")._data[0];
     double actual = Arma.var(_genRowVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -100,7 +100,7 @@ public class TestGenRowVecNormal extends TestClass {
 
   @Test
   public void testCor() throws IOException {
-    double expected = load("cor")._data[0];
+    double expected = load("Arma.cor")._data[0];
     double actual = Arma.cor(_genRowVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -112,7 +112,7 @@ public class TestGenRowVecNormal extends TestClass {
 
   @Test
   public void testCov() throws IOException {
-    double expected = load("cov")._data[0];
+    double expected = load("Arma.cov")._data[0];
     double actual = Arma.cov(_genRowVec, _normal);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {

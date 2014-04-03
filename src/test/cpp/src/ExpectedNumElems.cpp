@@ -56,8 +56,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedOnes();
-          expectedZeros();
+          expectedArmaOnes();
+          expectedArmaZeros();
         }
 
         cout << "done." << endl;
@@ -66,15 +66,15 @@ namespace armadilloJava {
     protected:
       int _numElems;
 
-      void expectedOnes() {
-        cout << "- Compute expectedOnes() ... ";
-        save("ones", ones<Col<double>>(_numElems));
+      void expectedArmaOnes() {
+        cout << "- Compute expectedArmaOnes() ... ";
+        save<double>("Arma.ones", ones<Col<double>>(_numElems));
         cout << "done." << endl;
       }
 
-      void expectedZeros() {
-        cout << "- Compute expectedZeros() ... ";
-        save("zeros", zeros<Col<double>>(_numElems));
+      void expectedArmaZeros() {
+        cout << "- Compute expectedArmaZeros() ... ";
+        save<double>("Arma.zeros", zeros<Col<double>>(_numElems));
         cout << "done." << endl;
       }
 

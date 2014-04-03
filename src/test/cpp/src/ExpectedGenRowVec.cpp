@@ -25,7 +25,6 @@ using std::pair;
 using arma::Mat;
 using arma::Row;
 using arma::uword;
-using arma::raw_ascii;
 using arma::abs;
 using arma::eps;
 using arma::exp;
@@ -107,57 +106,57 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedAbs();
-          expectedEps();
-          expectedExp();
-          expectedExp2();
-          expectedExp10();
-          expectedTrunc_exp();
-          expectedLog();
-          expectedLog2();
-          expectedLog10();
-          expectedTrunc_log();
-          expectedSquare();
-          expectedFloor();
-          expectedCeil();
-          expectedRound();
-          expectedSign();
-          expectedSin();
-          expectedAsin();
-          expectedSinh();
-          expectedAsinh();
-          expectedCos();
-          expectedAcos();
-          expectedCosh();
-          expectedAcosh();
-          expectedTan();
-          expectedAtan();
-          expectedTanh();
-          expectedAtanh();
-          expectedCumsum();
-          expectedHist();
-          expectedSort();
-          expectedSort_index();
-          expectedStable_sort_index();
-          expectedTrans();
-          expectedUnique();
-          expectedNegate();
-          expectedReciprocal();
-          expectedToeplitz();
-          expectedCirc_toeplitz();
-          expectedAccu();
-          expectedMin();
-          expectedMax();
-          expectedProd();
-          expectedSum();
-          expectedMean();
-          expectedMedian();
-          expectedStddev();
-          expectedVar();
-          expectedCor();
-          expectedCov();
-          expectedDiagmat();
-          expectedIs_finite();
+          expectedArmaAbs();
+          expectedArmaEps();
+          expectedArmaExp();
+          expectedArmaExp2();
+          expectedArmaExp10();
+          expectedArmaTrunc_exp();
+          expectedArmaLog();
+          expectedArmaLog2();
+          expectedArmaLog10();
+          expectedArmaTrunc_log();
+          expectedArmaSquare();
+          expectedArmaFloor();
+          expectedArmaCeil();
+          expectedArmaRound();
+          expectedArmaSign();
+          expectedArmaSin();
+          expectedArmaAsin();
+          expectedArmaSinh();
+          expectedArmaAsinh();
+          expectedArmaCos();
+          expectedArmaAcos();
+          expectedArmaCosh();
+          expectedArmaAcosh();
+          expectedArmaTan();
+          expectedArmaAtan();
+          expectedArmaTanh();
+          expectedArmaAtanh();
+          expectedArmaCumsum();
+          expectedArmaHist();
+          expectedArmaSort();
+          expectedArmaSort_index();
+          expectedArmaStable_sort_index();
+          expectedArmaTrans();
+          expectedArmaUnique();
+          expectedArmaNegate();
+          expectedArmaReciprocal();
+          expectedArmaToeplitz();
+          expectedArmaCirc_toeplitz();
+          expectedArmaAccu();
+          expectedArmaMin();
+          expectedArmaMax();
+          expectedArmaProd();
+          expectedArmaSum();
+          expectedArmaMean();
+          expectedArmaMedian();
+          expectedArmaStddev();
+          expectedArmaVar();
+          expectedArmaCor();
+          expectedArmaCov();
+          expectedArmaDiagmat();
+          expectedArmaIs_finite();
         }
 
         cout << "done." << endl;
@@ -166,319 +165,313 @@ namespace armadilloJava {
     protected:
       Row<double> _genRowVec;
 
-      void expectedAbs() {
-        cout << "- Compute expectedAbs() ... ";
-        save("abs", abs(_genRowVec));
+      void expectedArmaAbs() {
+        cout << "- Compute expectedArmaAbs() ... ";
+        save<double>("Arma.abs", abs(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedEps() {
-        cout << "- Compute expectedAbs() ... ";
-        save("eps", eps(_genRowVec));
+      void expectedArmaEps() {
+        cout << "- Compute expectedArmaAbs() ... ";
+        save<double>("Arma.eps", eps(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedExp() {
-        cout << "- Compute expectedExp() ... ";
-        save("exp", exp(_genRowVec));
+      void expectedArmaExp() {
+        cout << "- Compute expectedArmaExp() ... ";
+        save<double>("Arma.exp", exp(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedExp2() {
-        cout << "- Compute expectedExp2() ... ";
-        save("exp2", exp2(_genRowVec));
+      void expectedArmaExp2() {
+        cout << "- Compute expectedArmaExp2() ... ";
+        save<double>("Arma.exp2", exp2(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedExp10() {
-        cout << "- Compute expectedExp10() ... ";
-        save("exp10", exp10(_genRowVec));
+      void expectedArmaExp10() {
+        cout << "- Compute expectedArmaExp10() ... ";
+        save<double>("Arma.exp10", exp10(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedTrunc_exp() {
-        cout << "- Compute expectedTrunc_exp() ... ";
-        save("trunc_exp", trunc_exp(_genRowVec));
+      void expectedArmaTrunc_exp() {
+        cout << "- Compute expectedArmaTrunc_exp() ... ";
+        save<double>("Arma.trunc_exp", trunc_exp(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedLog() {
-        cout << "- Compute expectedLog() ... ";
-        save("log", log(_genRowVec));
+      void expectedArmaLog() {
+        cout << "- Compute expectedArmaLog() ... ";
+        save<double>("Arma.log", log(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedLog2() {
-        cout << "- Compute expectedLog2() ... ";
-        save("log2", log2(_genRowVec));
+      void expectedArmaLog2() {
+        cout << "- Compute expectedArmaLog2() ... ";
+        save<double>("Arma.log2", log2(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedLog10() {
-        cout << "- Compute expectedLog10() ... ";
-        save("log10", log10(_genRowVec));
+      void expectedArmaLog10() {
+        cout << "- Compute expectedArmaLog10() ... ";
+        save<double>("Arma.log10", log10(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedTrunc_log() {
-        cout << "- Compute expectedTrunc_log() ... ";
-        save("trunc_log", trunc_log(_genRowVec));
+      void expectedArmaTrunc_log() {
+        cout << "- Compute expectedArmaTrunc_log() ... ";
+        save<double>("Arma.trunc_log", trunc_log(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSquare() {
-        cout << "- Compute expectedSquare() ... ";
-        save("square", square(_genRowVec));
+      void expectedArmaSquare() {
+        cout << "- Compute expectedArmaSquare() ... ";
+        save<double>("Arma.square", square(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedFloor() {
-        cout << "- Compute expectedFloor() ... ";
-        save("floor", floor(_genRowVec));
+      void expectedArmaFloor() {
+        cout << "- Compute expectedArmaFloor() ... ";
+        save<double>("Arma.floor", floor(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCeil() {
-        cout << "- Compute expectedCeil() ... ";
-        save("ceil", ceil(_genRowVec));
+      void expectedArmaCeil() {
+        cout << "- Compute expectedArmaCeil() ... ";
+        save<double>("Arma.ceil", ceil(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedRound() {
-        cout << "- Compute expectedRound() ... ";
-        save("round", round(_genRowVec));
+      void expectedArmaRound() {
+        cout << "- Compute expectedArmaRound() ... ";
+        save<double>("Arma.round", round(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSign() {
-        cout << "- Compute expectedSign() ... ";
-        save("sign", sign(_genRowVec));
+      void expectedArmaSign() {
+        cout << "- Compute expectedArmaSign() ... ";
+        save<double>("Arma.sign", sign(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSin() {
-        cout << "- Compute expectedSin() ... ";
-        save("sin", sin(_genRowVec));
+      void expectedArmaSin() {
+        cout << "- Compute expectedArmaSin() ... ";
+        save<double>("Arma.sin", sin(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAsin() {
-        cout << "- Compute expectedAsin() ... ";
-        save("asin", asin(_genRowVec));
+      void expectedArmaAsin() {
+        cout << "- Compute expectedArmaAsin() ... ";
+        save<double>("Arma.asin", asin(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSinh() {
-        cout << "- Compute expectedSinh() ... ";
-        save("sinh", sinh(_genRowVec));
+      void expectedArmaSinh() {
+        cout << "- Compute expectedArmaSinh() ... ";
+        save<double>("Arma.sinh", sinh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAsinh() {
-        cout << "- Compute expectedAsinh() ... ";
-        save("asinh", asinh(_genRowVec));
+      void expectedArmaAsinh() {
+        cout << "- Compute expectedArmaAsinh() ... ";
+        save<double>("Arma.asinh", asinh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCos() {
-        cout << "- Compute expectedCos() ... ";
-        save("cos", cos(_genRowVec));
+      void expectedArmaCos() {
+        cout << "- Compute expectedArmaCos() ... ";
+        save<double>("Arma.cos", cos(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAcos() {
-        cout << "- Compute expectedAcos() ... ";
-        save("acos", acos(_genRowVec));
+      void expectedArmaAcos() {
+        cout << "- Compute expectedArmaAcos() ... ";
+        save<double>("Arma.acos", acos(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCosh() {
-        cout << "- Compute expectedCosh() ... ";
-        save("cosh", cosh(_genRowVec));
+      void expectedArmaCosh() {
+        cout << "- Compute expectedArmaCosh() ... ";
+        save<double>("Arma.cosh", cosh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAcosh() {
-        cout << "- Compute expectedAcosh() ... ";
-        save("acosh", acosh(_genRowVec));
+      void expectedArmaAcosh() {
+        cout << "- Compute expectedArmaAcosh() ... ";
+        save<double>("Arma.acosh", acosh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedTan() {
-        cout << "- Compute expectedTan() ... ";
-        save("tan", tan(_genRowVec));
+      void expectedArmaTan() {
+        cout << "- Compute expectedArmaTan() ... ";
+        save<double>("Arma.tan", tan(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAtan() {
-        cout << "- Compute expectedAtan() ... ";
-        save("atan", atan(_genRowVec));
+      void expectedArmaAtan() {
+        cout << "- Compute expectedArmaAtan() ... ";
+        save<double>("Arma.atan", atan(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedTanh() {
-        cout << "- Compute expectedTanh() ... ";
-        save("tanh", tanh(_genRowVec));
+      void expectedArmaTanh() {
+        cout << "- Compute expectedArmaTanh() ... ";
+        save<double>("Arma.tanh", tanh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAtanh() {
-        cout << "- Compute expectedAtanh() ... ";
-        save("atanh", atanh(_genRowVec));
+      void expectedArmaAtanh() {
+        cout << "- Compute expectedArmaAtanh() ... ";
+        save<double>("Arma.atanh", atanh(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCumsum() {
-        cout << "- Compute expectedCumsum() ... ";
-        save("cumsum", cumsum(_genRowVec));
+      void expectedArmaCumsum() {
+        cout << "- Compute expectedArmaCumsum() ... ";
+        save<double>("Arma.cumsum", cumsum(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedHist() {
-        cout << "- Compute expectedHist() ... ";
-        // Unable to convert the result of hist(...) to Mat<double>
-        Mat<uword> expected = hist(_genRowVec);
-        expected.save("../data/expected/hist" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaHist() {
+        cout << "- Compute expectedArmaHist() ... ";
+        save<uword>("Arma.hist", hist(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSort() {
-        cout << "- Compute expectedSort() ... ";
-        save("sort", sort(_genRowVec));
+      void expectedArmaSort() {
+        cout << "- Compute expectedArmaSort() ... ";
+        save<double>("Arma.sort", sort(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedSort_index() {
-        cout << "- Compute expectedSort_index() ... ";
-        // Unable to convert the result of sort_index(...) to Mat<double>
-        Mat<uword> expected = sort_index(_genRowVec);
-        expected.save("../data/expected/sort_index" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaSort_index() {
+        cout << "- Compute expectedArmaSort_index() ... ";
+        save<uword>("Arma.sort_index", sort_index(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedStable_sort_index() {
-        cout << "- Compute expectedStable_sort_index() ... ";
-        // Unable to convert the result of stable_sort_index(...) to Mat<double>
-        Mat<uword> expected = stable_sort_index(_genRowVec);
-        expected.save("../data/expected/stable_sort_index" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaStable_sort_index() {
+        cout << "- Compute expectedArmaStable_sort_index() ... ";
+        save<uword>("Arma.stable_sort_index", stable_sort_index(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedTrans() {
-        cout << "- Compute expectedTrans() ... ";
-        save("trans", trans(_genRowVec));
+      void expectedArmaTrans() {
+        cout << "- Compute expectedArmaTrans() ... ";
+        save<double>("Arma.trans", trans(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedUnique() {
-        cout << "- Compute expectedUnique() ... ";
-        save("unique", unique(_genRowVec));
+      void expectedArmaUnique() {
+        cout << "- Compute expectedArmaUnique() ... ";
+        save<double>("Arma.unique", unique(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedNegate() {
-        cout << "- Compute expectedNegate() ... ";
-        save("negate", -_genRowVec);
+      void expectedArmaNegate() {
+        cout << "- Compute expectedArmaNegate() ... ";
+        save<double>("Arma.negate", -_genRowVec);
         cout << "done." << endl;
       }
 
-      void expectedReciprocal() {
-        cout << "- Compute expectedReciprocal() ... ";
-        save("reciprocal", 1/_genRowVec);
+      void expectedArmaReciprocal() {
+        cout << "- Compute expectedArmaReciprocal() ... ";
+        save<double>("Arma.reciprocal", 1/_genRowVec);
         cout << "done." << endl;
       }
 
-      void expectedToeplitz() {
-        cout << "- Compute expectedToeplitz() ... ";
-        save("toeplitz", toeplitz(_genRowVec));
+      void expectedArmaToeplitz() {
+        cout << "- Compute expectedArmaToeplitz() ... ";
+        save<double>("Arma.toeplitz", toeplitz(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedCirc_toeplitz() {
-        cout << "- Compute expectedCirc_toeplitz() ... ";
-        save("circ_toeplitz", circ_toeplitz(_genRowVec));
+      void expectedArmaCirc_toeplitz() {
+        cout << "- Compute expectedArmaCirc_toeplitz() ... ";
+        save<double>("Arma.circ_toeplitz", circ_toeplitz(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedAccu() {
-        cout << "- Compute expectedAccu() ... ";
-        save("accu", Mat<double>({accu(_genRowVec)}));
+      void expectedArmaAccu() {
+        cout << "- Compute expectedArmaAccu() ... ";
+        save<double>("Arma.accu", Mat<double>({accu(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedMin() {
-        cout << "- Compute expectedMin() ... ";
-        save("min", Mat<double>({min(_genRowVec)}));
+      void expectedArmaMin() {
+        cout << "- Compute expectedArmaMin() ... ";
+        save<double>("Arma.min", Mat<double>({min(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedMax() {
-        cout << "- Compute expectedMax() ... ";
-        save("max", Mat<double>({max(_genRowVec)}));
+      void expectedArmaMax() {
+        cout << "- Compute expectedArmaMax() ... ";
+        save<double>("Arma.max", Mat<double>({max(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedProd() {
-        cout << "- Compute expectedProd() ... ";
-        save("prod", Mat<double>({prod(_genRowVec)}));
+      void expectedArmaProd() {
+        cout << "- Compute expectedArmaProd() ... ";
+        save<double>("Arma.prod", Mat<double>({prod(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedSum() {
-        cout << "- Compute expectedSum() ... ";
-        save("sum", Mat<double>({sum(_genRowVec)}));
+      void expectedArmaSum() {
+        cout << "- Compute expectedArmaSum() ... ";
+        save<double>("Arma.sum", Mat<double>({sum(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedMean() {
-        cout << "- Compute expectedMean() ... ";
-        save("mean", Mat<double>({mean(_genRowVec)}));
+      void expectedArmaMean() {
+        cout << "- Compute expectedArmaMean() ... ";
+        save<double>("Arma.mean", Mat<double>({mean(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedMedian() {
-        cout << "- Compute expectedMedian() ... ";
-        save("median", Mat<double>({median(_genRowVec)}));
+      void expectedArmaMedian() {
+        cout << "- Compute expectedArmaMedian() ... ";
+        save<double>("Arma.median", Mat<double>({median(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedStddev() {
-        cout << "- Compute expectedStddev() ... ";
-        save("stddev", Mat<double>({stddev(_genRowVec)}));
+      void expectedArmaStddev() {
+        cout << "- Compute expectedArmaStddev() ... ";
+        save<double>("Arma.stddev", Mat<double>({stddev(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedVar() {
-        cout << "- Compute expectedVar() ... ";
-        save("var", Mat<double>({var(_genRowVec)}));
+      void expectedArmaVar() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.var", Mat<double>({var(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedCor() {
-        cout << "- Compute expectedCor() ... ";
-        save("cor", Mat<double>({cor(_genRowVec)}));
+      void expectedArmaCor() {
+        cout << "- Compute expectedArmaCor() ... ";
+        save<double>("Arma.cor", Mat<double>({cor(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
-        cout << "- Compute expectedCov() ... ";
-        save("cov", Mat<double>({cov(_genRowVec)}));
+      void expectedArmaCov() {
+        cout << "- Compute expectedArmaCov() ... ";
+        save<double>("Arma.cov", Mat<double>({cov(_genRowVec)}));
         cout << "done." << endl;
       }
 
-      void expectedDiagmat() {
-        cout << "- Compute expectedDiagmat() ... ";
-        save("diagmat", diagmat(_genRowVec));
+      void expectedArmaDiagmat() {
+        cout << "- Compute expectedArmaDiagmat() ... ";
+        save<double>("Arma.diagmat", diagmat(_genRowVec));
         cout << "done." << endl;
       }
 
-      void expectedIs_finite() {
-        cout << "- Compute expectedIs_finite() ... ";
+      void expectedArmaIs_finite() {
+        cout << "- Compute expectedArmaIs_finite() ... ";
 
         if(is_finite(_genRowVec)) {
-          save("is_finite", Mat<double>({1.0}));
+          save<double>("Arma.is_finite", Mat<double>({1.0}));
         } else {
-          save("is_finite", Mat<double>({0.0}));
+          save<double>("Arma.is_finite", Mat<double>({0.0}));
         }
 
         cout << "done." << endl;

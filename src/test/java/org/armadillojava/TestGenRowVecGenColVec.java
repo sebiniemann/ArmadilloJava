@@ -77,14 +77,14 @@ public class TestGenRowVecGenColVec extends TestClass {
 
   @Test
   public void testToeplitz() throws IOException {
-    assertMatEquals(Arma.toeplitz(_genRowVec, _genColVec), load("toeplitz"));
+    assertMatEquals(Arma.toeplitz(_genRowVec, _genColVec), load("Arma.toeplitz"));
   }
 
   @Test
   public void testDot() throws IOException {
     assumeThat(_genRowVec.n_elem, is(_genColVec.n_elem));
 
-    double expected = load("dot")._data[0];
+    double expected = load("Arma.dot")._data[0];
     double actual = Arma.dot(_genRowVec, _genColVec);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -98,7 +98,7 @@ public class TestGenRowVecGenColVec extends TestClass {
   public void testNorm_dot() throws IOException {
     assumeThat(_genRowVec.n_elem, is(_genColVec.n_elem));
 
-    double expected = load("norm_dot")._data[0];
+    double expected = load("Arma.norm_dot")._data[0];
     double actual = Arma.norm_dot(_genRowVec, _genColVec);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -110,7 +110,7 @@ public class TestGenRowVecGenColVec extends TestClass {
 
   @Test
   public void testConv() throws IOException {
-    assertMatEquals(Arma.conv(_genRowVec, _genColVec), load("conv"));
+    assertMatEquals(Arma.conv(_genRowVec, _genColVec), load("Arma.conv"));
   }
 
   @Test
@@ -118,7 +118,7 @@ public class TestGenRowVecGenColVec extends TestClass {
     assumeThat(_genRowVec.n_rows, is(_genColVec.n_rows));
     assumeThat(_genRowVec.n_cols, is(_genColVec.n_cols));
 
-    double expected = load("cor")._data[0];
+    double expected = load("Arma.cor")._data[0];
     double actual = Arma.cor(_genRowVec, _genColVec);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -133,7 +133,7 @@ public class TestGenRowVecGenColVec extends TestClass {
     assumeThat(_genRowVec.n_rows, is(_genColVec.n_rows));
     assumeThat(_genRowVec.n_cols, is(_genColVec.n_cols));
 
-    double expected = load("cov")._data[0];
+    double expected = load("Arma.cov")._data[0];
     double actual = Arma.cov(_genRowVec, _genColVec);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
@@ -150,40 +150,40 @@ public class TestGenRowVecGenColVec extends TestClass {
     assumeThat(_genColVec.is_vec(), is(true));
     assumeThat(_genColVec.n_elem, is(3));
 
-    assertMatEquals(Arma.cross(_genRowVec, _genColVec), load("cross"));
+    assertMatEquals(Arma.cross(_genRowVec, _genColVec), load("Arma.cross"));
   }
 
   @Test
   public void testJoin_rows() throws IOException {
     assumeThat(_genRowVec.n_rows, is(_genColVec.n_rows));
 
-    assertMatEquals(Arma.join_rows(_genRowVec, _genColVec), load("join_rows"));
+    assertMatEquals(Arma.join_rows(_genRowVec, _genColVec), load("Arma.join_rows"));
   }
 
   @Test
   public void testJoin_horiz() throws IOException {
     assumeThat(_genRowVec.n_rows, is(_genColVec.n_rows));
 
-    assertMatEquals(Arma.join_horiz(_genRowVec, _genColVec), load("join_horiz"));
+    assertMatEquals(Arma.join_horiz(_genRowVec, _genColVec), load("Arma.join_horiz"));
   }
 
   @Test
   public void testJoin_cols() throws IOException {
     assumeThat(_genRowVec.n_cols, is(_genColVec.n_cols));
 
-    assertMatEquals(Arma.join_cols(_genRowVec, _genColVec), load("join_cols"));
+    assertMatEquals(Arma.join_cols(_genRowVec, _genColVec), load("Arma.join_cols"));
   }
 
   @Test
   public void testJoin_vert() throws IOException {
     assumeThat(_genRowVec.n_cols, is(_genColVec.n_cols));
 
-    assertMatEquals(Arma.join_vert(_genRowVec, _genColVec), load("join_vert"));
+    assertMatEquals(Arma.join_vert(_genRowVec, _genColVec), load("Arma.join_vert"));
   }
 
   @Test
   public void testKron() throws IOException {
-    assertMatEquals(Arma.kron(_genRowVec, _genColVec), load("kron"));
+    assertMatEquals(Arma.kron(_genRowVec, _genColVec), load("Arma.kron"));
   }
 
 }

@@ -57,7 +57,7 @@ namespace armadilloJava {
 
             _copyOfGenMat = _genMat;
 
-            expectedInplace_trans();
+            expectedArmaInplace_trans();
             _genMat = _copyOfGenMat;
           }
 
@@ -68,11 +68,11 @@ namespace armadilloJava {
       Mat<double> _genMat;
       Mat<double> _copyOfGenMat;
 
-      void expectedInplace_trans() {
-        cout << "- Compute expectedInplace_trans() ... ";
+      void expectedArmaInplace_trans() {
+        cout << "- Compute expectedArmaInplace_trans() ... ";
 
         inplace_trans(_genMat);
-        save("inplace_trans", abs(_genMat));
+        save<double>("Arma.inplace_trans", abs(_genMat));
 
         cout << "done." << endl;
       }

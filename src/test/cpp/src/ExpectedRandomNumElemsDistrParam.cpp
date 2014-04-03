@@ -64,7 +64,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedRandi();
+          expectedArmaRandi();
         }
 
         cout << "done." << endl;
@@ -75,14 +75,14 @@ namespace armadilloJava {
       int _numElems;
       distr_param _distrParam;
 
-      void expectedRandi() {
-        cout << "- Compute expectedRandi() ... ";
+      void expectedArmaRandi() {
+        cout << "- Compute expectedArmaRandi() ... ";
 
         Mat<double> result = randi<Col<double>>(_numElems, _distrParam);
         for(int n = 2; n <= _random; n++) {
           result = (result * n + randi<Col<double>>(_numElems, _distrParam)) / (n + 1);
         }
-        save("randi", result);
+        save<double>("Arma.randi", result);
 
         cout << "done." << endl;
       }

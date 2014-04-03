@@ -25,7 +25,6 @@ using std::pair;
 using arma::Row;
 using arma::Col;
 using arma::uword;
-using arma::raw_ascii;
 using arma::find;
 
 #include <InputClass.hpp>
@@ -62,7 +61,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedFind();
+          expectedArmaFind();
         }
 
         cout << "done." << endl;
@@ -72,11 +71,9 @@ namespace armadilloJava {
       Row<double> _logicRowVec;
       int _numElems;
 
-      void expectedFind() {
-        cout << "- Compute expectedFind() ... ";
-        // Unable to convert the result of find(...) to Mat<double>
-        Col<uword> expected = find(_logicRowVec, _numElems);
-        expected.save("../data/expected/find" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaFind() {
+        cout << "- Compute expectedArmaFind() ... ";
+        save<uword>("Arma.find", find(_logicRowVec, _numElems));
         cout << "done." << endl;
       }
 

@@ -69,7 +69,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedSyl();
+          expectedArmaSyl();
         }
 
         cout << "done." << endl;
@@ -80,7 +80,7 @@ namespace armadilloJava {
       Mat<double> _squMatB;
       Mat<double> _genMat;
 
-      void expectedSyl() {
+      void expectedArmaSyl() {
         if (_genMat.n_rows != _squMatA.n_rows) {
           return;
         }
@@ -89,8 +89,8 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedSyl() ... ";
-        save("syl", syl(_squMatA, _squMatB, _genMat));
+        cout << "- Compute expectedArmaSyl() ... ";
+        save<double>("Arma.syl", syl(_squMatA, _squMatB, _genMat));
         cout << "done." << endl;
       }
 

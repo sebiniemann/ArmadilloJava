@@ -75,24 +75,24 @@ public class TestGenMatNormal extends TestClass {
 
   @Test
   public void testStddev() throws IOException {
-    assertMatEquals(Arma.stddev(Row.class, _genMat, _normal), load("stddev"));
-    assertMatEquals(Arma.stddev(Col.class, _genMat, _normal), load("stddev").t());
+    assertMatEquals(Arma.stddev(Row.class, _genMat, _normal), load("Arma.stddev"));
+    assertMatEquals(Arma.stddev(Col.class, _genMat, _normal), load("Arma.stddev").t());
   }
 
   @Test
   public void testVar() throws IOException {
-    assertMatEquals(Arma.var(Row.class, _genMat, _normal), load("var"));
-    assertMatEquals(Arma.var(Col.class, _genMat, _normal), load("var").t());
+    assertMatEquals(Arma.var(Row.class, _genMat, _normal), load("Arma.var"));
+    assertMatEquals(Arma.var(Col.class, _genMat, _normal), load("Arma.var").t());
   }
 
   @Test
   public void testCor() throws IOException {
-    assertMatEquals(Arma.cor(_genMat, _normal), load("cor"));
+    assertMatEquals(Arma.cor(_genMat, _normal), load("Arma.cor"));
   }
 
   @Test
   public void testCov() throws IOException {
-    assertMatEquals(Arma.cov(_genMat, _normal), load("cov"));
+    assertMatEquals(Arma.cov(_genMat, _normal), load("Arma.cov"));
   }
 
 }

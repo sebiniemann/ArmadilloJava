@@ -79,7 +79,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus((Arma.randi(Col.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randi")), Arma.zeros(result.n_rows, result.n_cols), 0.1);
+    assertMatEquals(result.minus(load("Arma.randi")), Arma.zeros(result.n_rows, result.n_cols), 0.1);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus((Arma.randi(Row.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randi").t()), Arma.zeros(result.n_rows, result.n_cols), 0.1);
+    assertMatEquals(result.minus(load("Arma.randi").t()), Arma.zeros(result.n_rows, result.n_cols), 0.1);
   }
 
   @Test
@@ -97,7 +97,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randu(Col.class, _numElems)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
   @Test
@@ -106,7 +106,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randu(Row.class, _numElems)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randu").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.randu").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randn(Col.class, _numElems)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
   @Test
@@ -124,7 +124,7 @@ public class TestRandomNumElems extends TestClass {
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randn(Row.class, _numElems)).elemDivide(n + 1);
     }
-    assertMatEquals(result.minus(load("randn").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
+    assertMatEquals(result.minus(load("Arma.randn").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

@@ -91,7 +91,7 @@ public class TestSquMatSquMatGenMat extends TestClass {
 
     Mat X = Arma.syl(_squMatA, _squMatB, _genMat);
 
-    assertMatEquals((_squMatA.times(X)).plus(X.times(_squMatB)).plus(_genMat), Arma.zeros(_genMat.n_rows, _genMat.n_cols), TestUtil.globalDelta(load("syl"), 1e12));
+    assertMatEquals((_squMatA.times(X)).plus(X.times(_squMatB)).plus(_genMat), Arma.zeros(_genMat.n_rows, _genMat.n_cols), TestUtil.globalDelta(load("Arma.syl"), 1e12));
   }
 
   @Test
@@ -103,7 +103,7 @@ public class TestSquMatSquMatGenMat extends TestClass {
 
     Arma.syl(X, _squMatA, _squMatB, _genMat);
 
-    assertMatEquals((_squMatA.times(X)).plus(X.times(_squMatB)).plus(_genMat), Arma.zeros(_genMat.n_rows, _genMat.n_cols), TestUtil.globalDelta(load("syl"), 1e12));
+    assertMatEquals((_squMatA.times(X)).plus(X.times(_squMatB)).plus(_genMat), Arma.zeros(_genMat.n_rows, _genMat.n_cols), TestUtil.globalDelta(load("Arma.syl"), 1e12));
   }
 
 }

@@ -86,14 +86,14 @@ public class TestGenMatNormalDim extends TestClass {
 
   @Test
   public void testStddev() throws IOException {
-    assertMatEquals(Arma.stddev(Row.class, _genMat, _normal, _dim), load("stddev"));
-    assertMatEquals(Arma.stddev(Col.class, _genMat, _normal, _dim), load("stddev").t());
+    assertMatEquals(Arma.stddev(Row.class, _genMat, _normal, _dim), load("Arma.stddev"));
+    assertMatEquals(Arma.stddev(Col.class, _genMat, _normal, _dim), load("Arma.stddev").t());
   }
 
   @Test
   public void testVar() throws IOException {
-    assertMatEquals(Arma.var(Row.class, _genMat, _normal, _dim), load("var"));
-    assertMatEquals(Arma.var(Col.class, _genMat, _normal, _dim), load("var").t());
+    assertMatEquals(Arma.var(Row.class, _genMat, _normal, _dim), load("Arma.var"));
+    assertMatEquals(Arma.var(Col.class, _genMat, _normal, _dim), load("Arma.var").t());
   }
 
 }

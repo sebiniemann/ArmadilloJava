@@ -86,7 +86,7 @@ public class TestLogicMatNumElemsSearch extends TestClass {
 
   @Test
   public void testFind() throws IOException {
-    assertMatEquals(Arma.find(_logicMat, _numElems, _search), load("find"));
+    assertMatEquals(Arma.find(_logicMat, _numElems, _search), load("Arma.find"));
   }
 
 }

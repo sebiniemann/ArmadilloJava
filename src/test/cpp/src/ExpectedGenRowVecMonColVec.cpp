@@ -25,7 +25,6 @@ using std::pair;
 using arma::Row;
 using arma::Col;
 using arma::uword;
-using arma::raw_ascii;
 using arma::hist;
 using arma::histc;
 
@@ -63,8 +62,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedHist();
-          expectedHistc();
+          expectedArmaHist();
+          expectedArmaHistc();
         }
 
         cout << "done." << endl;
@@ -74,19 +73,15 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       Col<double> _monColVec;
 
-      void expectedHist() {
-        cout << "- Compute expectedHist() ... ";
-        // Unable to convert the result of hist(...) to Mat<double>
-        Mat<uword> expected = hist(_genRowVec, _monColVec);
-        expected.save("../data/expected/hist" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaHist() {
+        cout << "- Compute expectedArmaHist() ... ";
+        save<uword>("Arma.hist", hist(_genRowVec, _monColVec));
         cout << "done." << endl;
       }
 
-      void expectedHistc() {
-        cout << "- Compute expectedHistc() ... ";
-        // Unable to convert the result of histc(...) to Mat<double>
-        Mat<uword> expected = histc(_genRowVec, _monColVec);
-        expected.save("../data/expected/histc" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaHistc() {
+        cout << "- Compute expectedArmaHistc() ... ";
+        save<uword>("Arma.histc", histc(_genRowVec, _monColVec));
         cout << "done." << endl;
       }
 

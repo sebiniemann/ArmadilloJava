@@ -64,7 +64,7 @@ public class TestLogicColVec extends TestClass {
 
   @Test
   public void testAll() throws IOException {
-    int expected = (int) load("all")._data[0];
+    int expected = (int) load("Arma.all")._data[0];
     if (Arma.all(_logicColVec)) {
       assertThat(1, is(expected));
     } else {
@@ -74,7 +74,7 @@ public class TestLogicColVec extends TestClass {
 
   @Test
   public void testAny() throws IOException {
-    int expected = (int) load("any")._data[0];
+    int expected = (int) load("Arma.any")._data[0];
     if (Arma.any(_logicColVec)) {
       assertThat(1, is(expected));
     } else {
@@ -84,7 +84,7 @@ public class TestLogicColVec extends TestClass {
 
   @Test
   public void testFind() throws IOException {
-    assertMatEquals(Arma.find(_logicColVec), load("find"));
+    assertMatEquals(Arma.find(_logicColVec), load("Arma.find"));
   }
 
 }

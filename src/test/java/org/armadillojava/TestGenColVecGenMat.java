@@ -80,40 +80,40 @@ public class TestGenColVecGenMat extends TestClass {
     assumeThat(_genRowVec.is_vec(), is(true));
     assumeThat(_genRowVec.n_elem, is(3));
 
-    assertMatEquals(Arma.cross(_genColVec, _genRowVec), load("cross"));
+    assertMatEquals(Arma.cross(_genColVec, _genRowVec), load("Arma.cross"));
   }
 
   @Test
   public void testJoin_rows() throws IOException {
     assumeThat(_genColVec.n_rows, is(_genRowVec.n_rows));
 
-    assertMatEquals(Arma.join_rows(_genColVec, _genRowVec), load("join_rows"));
+    assertMatEquals(Arma.join_rows(_genColVec, _genRowVec), load("Arma.join_rows"));
   }
 
   @Test
   public void testJoin_horiz() throws IOException {
     assumeThat(_genColVec.n_rows, is(_genRowVec.n_rows));
 
-    assertMatEquals(Arma.join_horiz(_genColVec, _genRowVec), load("join_horiz"));
+    assertMatEquals(Arma.join_horiz(_genColVec, _genRowVec), load("Arma.join_horiz"));
   }
 
   @Test
   public void testJoin_cols() throws IOException {
     assumeThat(_genColVec.n_cols, is(_genRowVec.n_cols));
 
-    assertMatEquals(Arma.join_cols(_genColVec, _genRowVec), load("join_cols"));
+    assertMatEquals(Arma.join_cols(_genColVec, _genRowVec), load("Arma.join_cols"));
   }
 
   @Test
   public void testJoin_vert() throws IOException {
     assumeThat(_genColVec.n_cols, is(_genRowVec.n_cols));
 
-    assertMatEquals(Arma.join_vert(_genColVec, _genRowVec), load("join_vert"));
+    assertMatEquals(Arma.join_vert(_genColVec, _genRowVec), load("Arma.join_vert"));
   }
 
   @Test
   public void testKron() throws IOException {
-    assertMatEquals(Arma.kron(_genColVec, _genRowVec), load("kron"));
+    assertMatEquals(Arma.kron(_genColVec, _genRowVec), load("Arma.kron"));
   }
 
 }

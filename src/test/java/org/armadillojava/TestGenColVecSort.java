@@ -75,17 +75,17 @@ public class TestGenColVecSort extends TestClass {
 
   @Test
   public void testSort() throws IOException {
-    assertMatEquals(Arma.sort(_genColVec, _sort), load("sort"));
+    assertMatEquals(Arma.sort(_genColVec, _sort), load("Arma.sort"));
   }
 
   @Test
   public void testSort_index() throws IOException {
-    assertMatEquals(_genColVec.elem(Arma.sort_index(_genColVec, _sort)), _genColVec.elem(new Col(load("sort_index"))));
+    assertMatEquals(_genColVec.elem(Arma.sort_index(_genColVec, _sort)), _genColVec.elem(new Col(load("Arma.sort_index"))));
   }
 
   @Test
   public void testStable_sort_index() throws IOException {
-    assertMatEquals(Arma.stable_sort_index(_genColVec, _sort), load("stable_sort_index"));
+    assertMatEquals(Arma.stable_sort_index(_genColVec, _sort), load("Arma.stable_sort_index"));
   }
 
 }

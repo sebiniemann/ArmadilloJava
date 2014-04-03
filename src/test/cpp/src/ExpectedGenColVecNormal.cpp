@@ -63,10 +63,10 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedStddev();
-          expectedVar();
-          expectedCor();
-          expectedCov();
+          expectedArmaStddev();
+          expectedArmaVar();
+          expectedArmaCor();
+          expectedArmaCov();
         }
 
         cout << "done." << endl;
@@ -76,27 +76,27 @@ namespace armadilloJava {
       Col<double> _genColVec;
       int _normal;
 
-      void expectedStddev() {
-        cout << "- Compute expectedStddev() ... ";
-        save("stddev", Mat<double>({stddev(_genColVec, _normal)}));
+      void expectedArmaStddev() {
+        cout << "- Compute expectedArmaStddev() ... ";
+        save<double>("Arma.stddev", Mat<double>({stddev(_genColVec, _normal)}));
         cout << "done." << endl;
       }
 
-      void expectedVar() {
-        cout << "- Compute expectedVar() ... ";
-        save("var", Mat<double>({var(_genColVec, _normal)}));
+      void expectedArmaVar() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.var", Mat<double>({var(_genColVec, _normal)}));
         cout << "done." << endl;
       }
 
-      void expectedCor() {
-        cout << "- Compute expectedVar() ... ";
-        save("cor", Mat<double>({cor(_genColVec, _normal)}));
+      void expectedArmaCor() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.cor", Mat<double>({cor(_genColVec, _normal)}));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
-        cout << "- Compute expectedVar() ... ";
-        save("cov", Mat<double>({cov(_genColVec, _normal)}));
+      void expectedArmaCov() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.cov", Mat<double>({cov(_genColVec, _normal)}));
         cout << "done." << endl;
       }
 

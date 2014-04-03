@@ -75,7 +75,7 @@ public class TestGenColVecNumElems extends TestClass {
 
   @Test
   public void testHist() throws IOException {
-    assertMatEquals(Arma.hist(_genColVec, _numElems), load("hist"));
+    assertMatEquals(Arma.hist(_genColVec, _numElems), load("Arma.hist"));
   }
 
 }

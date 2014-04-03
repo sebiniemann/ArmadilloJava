@@ -12,13 +12,3 @@
  *   Daniel Kiechle - Unit testing
  ******************************************************************************/
 #include <Expected.hpp>
-using armadilloJava::Expected;
-
-#include <armadillo>
-using arma::raw_ascii;
-
-namespace armadilloJava {
-  void Expected::save(const string& filename, const Mat<double>& expected) {
-    expected.save("../data/expected/" + filename + _fileSuffix + ".mat", raw_ascii);
-  }
-}

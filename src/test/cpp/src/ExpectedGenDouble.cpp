@@ -54,7 +54,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedIs_finite();
+          expectedArmaIs_finite();
         }
 
         cout << "done." << endl;
@@ -63,13 +63,13 @@ namespace armadilloJava {
     protected:
       double _genDouble;
 
-      void expectedIs_finite() {
-        cout << "- Compute expectedIs_finite() ... ";
+      void expectedArmaIs_finite() {
+        cout << "- Compute expectedArmaIs_finite() ... ";
 
         if(is_finite(_genDouble)) {
-          save("is_finite", Mat<double>({1.0}));
+          save<double>("Arma.is_finite", Mat<double>({1.0}));
         } else {
-          save("is_finite", Mat<double>({0.0}));
+          save<double>("Arma.is_finite", Mat<double>({0.0}));
         }
 
         cout << "done." << endl;

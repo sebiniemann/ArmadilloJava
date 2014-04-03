@@ -75,7 +75,7 @@ public class TestLogicRowVecNumElems extends TestClass {
 
   @Test
   public void testFind() throws IOException {
-    assertMatEquals(Arma.find(_logicRowVec, _numElems), load("find"));
+    assertMatEquals(Arma.find(_logicRowVec, _numElems), load("Arma.find"));
   }
 
 }

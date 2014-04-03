@@ -65,7 +65,7 @@ public class TestSquMat extends TestClass {
 
   @Test
   public void testDet() throws IOException {
-    double expected = load("det")._data[0];
+    double expected = load("Arma.det")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.det(_squMat), is(expected));
     } else {
@@ -75,8 +75,8 @@ public class TestSquMat extends TestClass {
 
   @Test
   public void testLog_det() throws IOException {
-    double expectedVal = load("log_detVal")._data[0];
-    double expectedSign = load("log_detSign")._data[0];
+    double expectedVal = load("Arma.log_detVal")._data[0];
+    double expectedSign = load("Arma.log_detSign")._data[0];
 
     double[] val = new double[1];
     int[] sign = new int[1];
@@ -94,7 +94,7 @@ public class TestSquMat extends TestClass {
 
   @Test
   public void testTrace() throws IOException {
-    double expected = load("trace")._data[0];
+    double expected = load("Arma.trace")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.trace(_squMat), is(expected));
     } else {
@@ -104,27 +104,27 @@ public class TestSquMat extends TestClass {
 
   @Test
   public void testDiagmat() throws IOException {
-    assertMatEquals(Arma.diagmat(_squMat), load("diagmat"));
+    assertMatEquals(Arma.diagmat(_squMat), load("Arma.diagmat"));
   }
 
   @Test
   public void testSymmatu() throws IOException {
-    assertMatEquals(Arma.symmatu(_squMat), load("symmatu"));
+    assertMatEquals(Arma.symmatu(_squMat), load("Arma.symmatu"));
   }
 
   @Test
   public void testSymmatl() throws IOException {
-    assertMatEquals(Arma.symmatl(_squMat), load("symmatl"));
+    assertMatEquals(Arma.symmatl(_squMat), load("Arma.symmatl"));
   }
 
   @Test
   public void testTrimatu() throws IOException {
-    assertMatEquals(Arma.trimatu(_squMat), load("trimatu"));
+    assertMatEquals(Arma.trimatu(_squMat), load("Arma.trimatu"));
   }
 
   @Test
   public void testTrimatl() throws IOException {
-    assertMatEquals(Arma.trimatl(_squMat), load("trimatl"));
+    assertMatEquals(Arma.trimatl(_squMat), load("Arma.trimatl"));
   }
 
 }

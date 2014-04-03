@@ -56,7 +56,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedEig_sym();
+            expectedArmaEig_sym();
           }
 
           cout << "done." << endl;
@@ -65,16 +65,16 @@ namespace armadilloJava {
     protected:
       Mat<double> _symMat;
 
-      void expectedEig_sym() {
-        cout << "- Compute expectedEig_sym() ... ";
+      void expectedArmaEig_sym() {
+        cout << "- Compute expectedArmaEig_sym() ... ";
 
         Col<double> eigval;
         Mat<double> eigvec;
 
         eig_sym(eigval, eigvec, _symMat);
 
-        save("eig_symEigval", eigval);
-        save("eig_symEigvec", eigvec);
+        save<double>("Arma.eig_symEigval", eigval);
+        save<double>("Arma.eig_symEigvec", eigvec);
 
         cout << "done." << endl;
       }

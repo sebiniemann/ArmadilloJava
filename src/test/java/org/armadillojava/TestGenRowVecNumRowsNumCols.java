@@ -86,7 +86,7 @@ public class TestGenRowVecNumRowsNumCols extends TestClass {
 
   @Test
   public void testRepmat() throws IOException {
-    assertMatEquals(Arma.repmat(_genRowVec, _numRows, _numCols), load("repmat"));
+    assertMatEquals(Arma.repmat(_genRowVec, _numRows, _numCols), load("Arma.repmat"));
   }
 
 }

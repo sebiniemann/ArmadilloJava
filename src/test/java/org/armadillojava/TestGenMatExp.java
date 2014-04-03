@@ -75,7 +75,7 @@ public class TestGenMatExp extends TestClass {
 
   @Test
   public void testPow() throws IOException {
-    assertMatEquals(Arma.pow(_genMat, _exp), load("pow"));
+    assertMatEquals(Arma.pow(_genMat, _exp), load("Arma.pow"));
   }
 
 }

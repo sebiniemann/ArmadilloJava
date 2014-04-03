@@ -69,7 +69,7 @@ namespace armadilloJava {
           datum::R_k,
           datum::b
         };
-        save("datum", expected);
+        save<double>("Datum", expected);
 
         cout << "done." << endl;
       }

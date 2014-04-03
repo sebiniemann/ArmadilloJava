@@ -65,12 +65,12 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedCross();
-          expectedJoin_rows();
-          expectedJoin_horiz();
-          expectedJoin_cols();
-          expectedJoin_vert();
-          expectedKron();
+          expectedArmaCross();
+          expectedArmaJoin_rows();
+          expectedArmaJoin_horiz();
+          expectedArmaJoin_cols();
+          expectedArmaJoin_vert();
+          expectedArmaKron();
         }
 
         cout << "done." << endl;
@@ -80,7 +80,7 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       Mat<double> _genMat;
 
-      void expectedCross() {
+      void expectedArmaCross() {
         if(!_genRowVec.is_vec()) {
           return;
         }
@@ -97,54 +97,54 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCross() ... ";
-        save("cross", cross(_genRowVec, _genMat));
+        cout << "- Compute expectedArmaCross() ... ";
+        save<double>("Arma.cross", cross(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 
-      void expectedJoin_rows() {
+      void expectedArmaJoin_rows() {
         if(_genRowVec.n_rows != _genMat.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_rows() ... ";
-        save("join_rows", join_rows(_genRowVec, _genMat));
+        cout << "- Compute expectedArmaJoin_rows() ... ";
+        save<double>("Arma.join_rows", join_rows(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 
-      void expectedJoin_horiz() {
+      void expectedArmaJoin_horiz() {
         if(_genRowVec.n_rows != _genMat.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_horiz() ... ";
-        save("join_horiz", join_horiz(_genRowVec, _genMat));
+        cout << "- Compute expectedArmaJoin_horiz() ... ";
+        save<double>("Arma.join_horiz", join_horiz(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 
-      void expectedJoin_cols() {
+      void expectedArmaJoin_cols() {
         if(_genRowVec.n_cols != _genMat.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_cols() ... ";
-        save("join_cols", join_cols(_genRowVec, _genMat));
+        cout << "- Compute expectedArmaJoin_cols() ... ";
+        save<double>("Arma.join_cols", join_cols(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 
-      void expectedJoin_vert() {
+      void expectedArmaJoin_vert() {
         if(_genRowVec.n_cols != _genMat.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_vert() ... ";
-        save("join_vert", join_cols(_genRowVec, _genMat));
+        cout << "- Compute expectedArmaJoin_vert() ... ";
+        save<double>("Arma.join_vert", join_cols(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 
-      void expectedKron() {
-        cout << "- Compute expectedKron() ... ";
-        save("kron", kron(_genRowVec, _genMat));
+      void expectedArmaKron() {
+        cout << "- Compute expectedArmaKron() ... ";
+        save<double>("Arma.kron", kron(_genRowVec, _genMat));
         cout << "done." << endl;
       }
 

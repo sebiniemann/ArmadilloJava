@@ -90,7 +90,7 @@ public class TestGenMatGenMatNormal extends TestClass {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
 
-    assertMatEquals(Arma.cor(_genMatA, _genMatB, _normal), load("cor"));
+    assertMatEquals(Arma.cor(_genMatA, _genMatB, _normal), load("Arma.cor"));
   }
 
   @Test
@@ -98,7 +98,7 @@ public class TestGenMatGenMatNormal extends TestClass {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
 
-    assertMatEquals(Arma.cov(_genMatA, _genMatB, _normal), load("cov"));
+    assertMatEquals(Arma.cov(_genMatA, _genMatB, _normal), load("Arma.cov"));
   }
 
 }

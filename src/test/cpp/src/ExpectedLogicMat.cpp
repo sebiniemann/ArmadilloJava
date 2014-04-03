@@ -24,7 +24,6 @@ using std::pair;
 #include <armadillo>
 using arma::Mat;
 using arma::uword;
-using arma::raw_ascii;
 using arma::all;
 using arma::any;
 using arma::find;
@@ -59,9 +58,9 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedAll();
-          expectedAny();
-          expectedFind();
+          expectedArmaAll();
+          expectedArmaAny();
+          expectedArmaFind();
         }
 
         cout << "done." << endl;
@@ -70,27 +69,21 @@ namespace armadilloJava {
     protected:
       Mat<double> _logicMat;
 
-      void expectedAll() {
-        cout << "- Compute expectedAll() ... ";
-        // Unable to convert the result of all(...) to Mat<double>
-        Mat<uword> expected = all(_logicMat);
-        expected.save("../data/expected/all" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaAll() {
+        cout << "- Compute expectedArmaAll() ... ";
+        save<uword>("Arma.all", all(_logicMat));
         cout << "done." << endl;
       }
 
-      void expectedAny() {
-        cout << "- Compute expectedAny() ... ";
-        // Unable to convert the result of any(...) to Mat<double>
-        Mat<uword> expected = any(_logicMat);
-        expected.save("../data/expected/any" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaAny() {
+        cout << "- Compute expectedArmaAny() ... ";
+        save<uword>("Arma.any", any(_logicMat));
         cout << "done." << endl;
       }
 
-      void expectedFind() {
-        cout << "- Compute expectedFind() ... ";
-        // Unable to convert the result of find(...) to Mat<double>
-        Mat<uword> expected = find(_logicMat);
-        expected.save("../data/expected/find" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaFind() {
+        cout << "- Compute expectedArmaFind() ... ";
+        save<uword>("Arma.find", find(_logicMat));
         cout << "done." << endl;
       }
 

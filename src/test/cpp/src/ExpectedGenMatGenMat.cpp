@@ -71,16 +71,16 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedMin();
-          expectedMax();
-          expectedCor();
-          expectedCov();
-          expectedCross();
-          expectedJoin_rows();
-          expectedJoin_horiz();
-          expectedJoin_cols();
-          expectedJoin_vert();
-          expectedKron();
+          expectedArmaMin();
+          expectedArmaMax();
+          expectedArmaCor();
+          expectedArmaCov();
+          expectedArmaCross();
+          expectedArmaJoin_rows();
+          expectedArmaJoin_horiz();
+          expectedArmaJoin_cols();
+          expectedArmaJoin_vert();
+          expectedArmaKron();
         }
 
         cout << "done." << endl;
@@ -90,7 +90,7 @@ namespace armadilloJava {
       Mat<double> _genMatA;
       Mat<double> _genMatB;
 
-      void expectedMin() {
+      void expectedArmaMin() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -99,12 +99,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMin() ... ";
-        save("min", min(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaMin() ... ";
+        save<double>("Arma.min", min(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedMax() {
+      void expectedArmaMax() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -113,12 +113,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMax() ... ";
-        save("max", max(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaMax() ... ";
+        save<double>("Arma.max", max(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedCor() {
+      void expectedArmaCor() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -127,12 +127,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCor() ... ";
-        save("cor", cor(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaCor() ... ";
+        save<double>("Arma.cor", cor(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
+      void expectedArmaCov() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -141,12 +141,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCov() ... ";
-        save("cov", cov(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaCov() ... ";
+        save<double>("Arma.cov", cov(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedCross() {
+      void expectedArmaCross() {
         if(!_genMatA.is_vec()) {
           return;
         }
@@ -163,54 +163,54 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCross() ... ";
-        save("cross", cross(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaCross() ... ";
+        save<double>("Arma.cross", cross(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedJoin_rows() {
+      void expectedArmaJoin_rows() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_rows() ... ";
-        save("join_rows", join_rows(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaJoin_rows() ... ";
+        save<double>("Arma.join_rows", join_rows(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedJoin_horiz() {
+      void expectedArmaJoin_horiz() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
 
-        cout << "- Compute expectedJoin_horiz() ... ";
-        save("join_horiz", join_horiz(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaJoin_horiz() ... ";
+        save<double>("Arma.join_horiz", join_horiz(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedJoin_cols() {
+      void expectedArmaJoin_cols() {
         if(_genMatA.n_cols != _genMatB.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_cols() ... ";
-        save("join_cols", join_cols(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaJoin_cols() ... ";
+        save<double>("Arma.join_cols", join_cols(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedJoin_vert() {
+      void expectedArmaJoin_vert() {
         if(_genMatA.n_cols != _genMatB.n_cols) {
           return;
         }
 
-        cout << "- Compute expectedJoin_vert() ... ";
-        save("join_vert", join_cols(_genMatA, _genMatB));
+        cout << "- Compute expectedArmaJoin_vert() ... ";
+        save<double>("Arma.join_vert", join_cols(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 
-      void expectedKron() {
-        cout << "- Compute expectedKron() ... ";
-        save("kron", kron(_genMatA, _genMatB));
+      void expectedArmaKron() {
+        cout << "- Compute expectedArmaKron() ... ";
+        save<double>("Arma.kron", kron(_genMatA, _genMatB));
         cout << "done." << endl;
       }
 

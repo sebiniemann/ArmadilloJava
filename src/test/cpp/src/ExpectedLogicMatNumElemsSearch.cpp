@@ -27,7 +27,6 @@ using std::pair;
 #include <armadillo>
 using arma::Mat;
 using arma::uword;
-using arma::raw_ascii;
 using arma::find;
 
 #include <InputClass.hpp>
@@ -68,7 +67,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedFind();
+          expectedArmaFind();
         }
 
         cout << "done." << endl;
@@ -79,11 +78,9 @@ namespace armadilloJava {
       int _numElems;
       string _search;
 
-      void expectedFind() {
-        cout << "- Compute expectedFind() ... ";
-        // Unable to convert the result of find(...) to Mat<double>
-        Mat<uword> expected = find(_logicMat, _numElems, _search.c_str());
-        expected.save("../data/expected/find" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaFind() {
+        cout << "- Compute expectedArmaFind() ... ";
+        save<uword>("Arma.find", find(_logicMat, _numElems, _search.c_str()));
         cout << "done." << endl;
       }
 

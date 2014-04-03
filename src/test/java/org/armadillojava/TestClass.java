@@ -19,8 +19,15 @@ public class TestClass {
   protected String _fileSuffix = "";
 
   protected Mat load(String filename) throws IOException {
+    String completeFilepath;
+    if(_fileSuffix.length() > 0) {
+      completeFilepath = "./src/test/data/expected/" + filename + "(" + _fileSuffix + ").mat";
+    } else {
+      completeFilepath = "./src/test/data/expected/" + filename + ".mat";
+    }
+    
     Mat expected = new Mat();
-    expected.load("./src/test/data/expected/" + filename + _fileSuffix + ".mat", FileType.RAW_ASCII);
+    expected.load(completeFilepath, FileType.RAW_ASCII);
     return expected;
   }
 }

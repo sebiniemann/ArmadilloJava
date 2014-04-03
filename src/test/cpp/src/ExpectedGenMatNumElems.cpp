@@ -24,7 +24,6 @@ using std::pair;
 #include <armadillo>
 using arma::Mat;
 using arma::uword;
-using arma::raw_ascii;
 using arma::hist;
 
 #include <InputClass.hpp>
@@ -61,7 +60,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedHist();
+            expectedArmaHist();
           }
 
           cout << "done." << endl;
@@ -71,11 +70,9 @@ namespace armadilloJava {
       Mat<double> _genMat;
       int _numElems;
 
-      void expectedHist() {
-        cout << "- Compute expectedHist() ... ";
-        // Unable to convert the result of hist(...) to Mat<double>
-        Mat<uword> expected = hist(_genMat, _numElems);
-        expected.save("../data/expected/hist" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaHist() {
+        cout << "- Compute expectedArmaHist() ... ";
+        save<uword>("Arma.hist", hist(_genMat, _numElems));
         cout << "done." << endl;
       }
   };

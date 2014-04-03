@@ -18,12 +18,25 @@ using std::string;
 
 #include <armadillo>
 using arma::Mat;
+using arma::uword;
+using arma::raw_ascii;
 
 namespace armadilloJava {
   class Expected {
     protected:
+      string _filepath = "../data/expected/";
       string _fileSuffix;
 
-      void save(const string& filename, const Mat<double>& result);
+      template<typename T>
+      void save(const string& filename, const Mat<T>& expected) {
+        string completeFilepath;
+        if(_fileSuffix.length() > 0) {
+          completeFilepath = _filepath + filename + "(" + _fileSuffix + ").mat";
+        } else {
+          completeFilepath = _filepath + filename + ".mat";
+        }
+
+        expected.save(completeFilepath, raw_ascii);
+      }
   };
 }

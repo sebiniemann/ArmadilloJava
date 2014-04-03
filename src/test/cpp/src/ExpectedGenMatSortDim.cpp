@@ -66,7 +66,7 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedSort();
+          expectedArmaSort();
         }
 
         cout << "done." << endl;
@@ -77,9 +77,9 @@ namespace armadilloJava {
       string _sort;
       int _dim;
 
-      void expectedSort() {
-        cout << "- Compute expectedSort() ... ";
-        save("sort", sort(_genMat, _sort.c_str(), _dim));
+      void expectedArmaSort() {
+        cout << "- Compute expectedArmaSort() ... ";
+        save<double>("Arma.sort", sort(_genMat, _sort.c_str(), _dim));
         cout << "done." << endl;
       }
 

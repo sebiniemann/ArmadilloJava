@@ -67,8 +67,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedCor();
-          expectedCov();
+          expectedArmaCor();
+          expectedArmaCov();
         }
 
         cout << "done." << endl;
@@ -79,7 +79,7 @@ namespace armadilloJava {
       Mat<double> _genMatB;
       int _normal;
 
-      void expectedCor() {
+      void expectedArmaCor() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -88,12 +88,12 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCor() ... ";
-        save("cor", cor(_genMatA, _genMatB, _normal));
+        cout << "- Compute expectedArmaCor() ... ";
+        save<double>("Arma.cor", cor(_genMatA, _genMatB, _normal));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
+      void expectedArmaCov() {
         if(_genMatA.n_rows != _genMatB.n_rows) {
           return;
         }
@@ -102,8 +102,8 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedCov() ... ";
-        save("cov", cov(_genMatA, _genMatB, _normal));
+        cout << "- Compute expectedArmaCov() ... ";
+        save<double>("Arma.cov", cov(_genMatA, _genMatB, _normal));
         cout << "done." << endl;
       }
   };

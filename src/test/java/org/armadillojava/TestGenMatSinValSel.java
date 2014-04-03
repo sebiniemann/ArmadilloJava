@@ -81,7 +81,7 @@ public class TestGenMatSinValSel extends TestClass {
 
     Arma.svd_econ(U, s, V, _genMat);
 
-    assertMatEquals(s, load("svd_econ"));
+    assertMatEquals(s, load("Arma.svd_econ"));
 
     if (_genMat.is_square() && _sinValSel.equals("both")) {
       assertMatEquals(U.times(Arma.diagmat(s)).times(V.t()), _genMat);

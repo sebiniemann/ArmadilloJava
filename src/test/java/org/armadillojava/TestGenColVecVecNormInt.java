@@ -76,7 +76,7 @@ public class TestGenColVecVecNormInt extends TestClass {
 
   @Test
   public void testNorm() throws IOException {
-    double expected = load("norm")._data[0];
+    double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genColVec, _vecNormInt);
     
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {

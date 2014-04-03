@@ -62,14 +62,14 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedDet();
-            expectedLog_det();
-            expectedTrace();
-            expectedDiagmat();
-            expectedSymmatu();
-            expectedSymmatl();
-            expectedTrimatu();
-            expectedTrimatl();
+            expectedArmaDet();
+            expectedArmaLog_det();
+            expectedArmaTrace();
+            expectedArmaDiagmat();
+            expectedArmaSymmatu();
+            expectedArmaSymmatl();
+            expectedArmaTrimatu();
+            expectedArmaTrimatl();
           }
 
           cout << "done." << endl;
@@ -78,58 +78,58 @@ namespace armadilloJava {
     protected:
       Mat<double> _squMat;
 
-      void expectedDet() {
-        cout << "- Compute expectedDet() ... ";
-        save("det", Mat<double>({det(_squMat)}));
+      void expectedArmaDet() {
+        cout << "- Compute expectedArmaDet() ... ";
+        save<double>("Arma.det", Mat<double>({det(_squMat)}));
         cout << "done." << endl;
       }
 
-      void expectedLog_det() {
-        cout << "- Compute expectedLog_det() ... ";
+      void expectedArmaLog_det() {
+        cout << "- Compute expectedArmaLog_det() ... ";
 
         double val, sign;
 
         log_det(val, sign, _squMat);
 
-        save("log_detVal", Mat<double>({val}));
-        save("log_detSign", Mat<double>({sign}));
+        save<double>("Arma.log_detVal", Mat<double>({val}));
+        save<double>("Arma.log_detSign", Mat<double>({sign}));
 
         cout << "done." << endl;
       }
 
-      void expectedTrace() {
-        cout << "- Compute expectedTrace() ... ";
-        save("trace", Mat<double>({trace(_squMat)}));
+      void expectedArmaTrace() {
+        cout << "- Compute expectedArmaTrace() ... ";
+        save<double>("Arma.trace", Mat<double>({trace(_squMat)}));
         cout << "done." << endl;
       }
 
-      void expectedDiagmat() {
-        cout << "- Compute expectedDiagmat() ... ";
-        save("diagmat", diagmat(_squMat));
+      void expectedArmaDiagmat() {
+        cout << "- Compute expectedArmaDiagmat() ... ";
+        save<double>("Arma.diagmat", diagmat(_squMat));
         cout << "done." << endl;
       }
 
-      void expectedSymmatu() {
-        cout << "- Compute expectedSymmatu() ... ";
-        save("symmatu", symmatu(_squMat));
+      void expectedArmaSymmatu() {
+        cout << "- Compute expectedArmaSymmatu() ... ";
+        save<double>("Arma.symmatu", symmatu(_squMat));
         cout << "done." << endl;
       }
 
-      void expectedSymmatl() {
-        cout << "- Compute expectedSymmatl() ... ";
-        save("symmatl", symmatl(_squMat));
+      void expectedArmaSymmatl() {
+        cout << "- Compute expectedArmaSymmatl() ... ";
+        save<double>("Arma.symmatl", symmatl(_squMat));
         cout << "done." << endl;
       }
 
-      void expectedTrimatu() {
-        cout << "- Compute expectedTrimatu() ... ";
-        save("trimatu", trimatu(_squMat));
+      void expectedArmaTrimatu() {
+        cout << "- Compute expectedArmaTrimatu() ... ";
+        save<double>("Arma.trimatu", trimatu(_squMat));
         cout << "done." << endl;
       }
 
-      void expectedTrimatl() {
-        cout << "- Compute expectedTrimatl() ... ";
-        save("trimatl", trimatl(_squMat));
+      void expectedArmaTrimatl() {
+        cout << "- Compute expectedArmaTrimatl() ... ";
+        save<double>("Arma.trimatl", trimatl(_squMat));
         cout << "done." << endl;
       }
   };

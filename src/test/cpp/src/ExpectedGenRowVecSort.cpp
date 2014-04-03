@@ -27,7 +27,6 @@ using std::pair;
 #include <armadillo>
 using arma::Row;
 using arma::uword;
-using arma::raw_ascii;
 using arma::sort;
 using arma::sort_index;
 using arma::stable_sort_index;
@@ -66,9 +65,9 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedSort();
-          expectedSort_index();
-          expectedStable_sort_index();
+          expectedArmaSort();
+          expectedArmaSort_index();
+          expectedArmaStable_sort_index();
         }
 
         cout << "done." << endl;
@@ -78,25 +77,21 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       string _sort;
 
-      void expectedSort() {
-        cout << "- Compute expectedSort() ... ";
-        save("sort", sort(_genRowVec, _sort.c_str()));
+      void expectedArmaSort() {
+        cout << "- Compute expectedArmaSort() ... ";
+        save<double>("Arma.sort", sort(_genRowVec, _sort.c_str()));
         cout << "done." << endl;
       }
 
-      void expectedSort_index() {
-        cout << "- Compute expectedSort_index() ... ";
-        // Unable to convert the result of sort(...) to Mat<double>
-        Mat<uword> expected = sort_index(_genRowVec, _sort.c_str());
-        expected.save("../data/expected/sort_index" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaSort_index() {
+        cout << "- Compute expectedArmaSort_index() ... ";
+        save<uword>("Arma.sort_index", sort_index(_genRowVec, _sort.c_str()));
         cout << "done." << endl;
       }
 
-      void expectedStable_sort_index() {
-        cout << "- Compute expectedStable_sort_index() ... ";
-        // Unable to convert the result of sort(...) to Mat<double>
-        Mat<uword> expected = stable_sort_index(_genRowVec, _sort.c_str());
-        expected.save("../data/expected/stable_sort_index" + _fileSuffix + ".mat", raw_ascii);
+      void expectedArmaStable_sort_index() {
+        cout << "- Compute expectedArmaStable_sort_index() ... ";
+        save<uword>("Arma.stable_sort_index", stable_sort_index(_genRowVec, _sort.c_str()));
         cout << "done." << endl;
       }
 

@@ -63,7 +63,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedSvd_econ();
+            expectedArmaSvd_econ();
           }
 
           cout << "done." << endl;
@@ -73,14 +73,14 @@ namespace armadilloJava {
       Mat<double> _genMat;
       string _sinValSel;
 
-      void expectedSvd_econ() {
-        cout << "- Compute expectedSvd_econ() ... ";
+      void expectedArmaSvd_econ() {
+        cout << "- Compute expectedArmaSvd_econ() ... ";
 
         Mat<double> U, V;
         Col<double> s;
 
         svd_econ(U, s, V, _genMat, _sinValSel.c_str());
-        save("svd_econ", Mat<double>(s));
+        save<double>("Arma.svd_econ", Mat<double>(s));
 
         cout << "done." << endl;
       }

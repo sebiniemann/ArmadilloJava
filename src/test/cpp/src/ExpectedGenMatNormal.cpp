@@ -62,10 +62,10 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedStddev();
-          expectedVar();
-          expectedCor();
-          expectedCov();
+          expectedArmaStddev();
+          expectedArmaVar();
+          expectedArmaCor();
+          expectedArmaCov();
         }
 
         cout << "done." << endl;
@@ -75,27 +75,27 @@ namespace armadilloJava {
       Mat<double> _genMat;
       int _normal;
 
-      void expectedStddev() {
-        cout << "- Compute expectedStddev() ... ";
-        save("stddev", stddev(_genMat, _normal));
+      void expectedArmaStddev() {
+        cout << "- Compute expectedArmaStddev() ... ";
+        save<double>("Arma.stddev", stddev(_genMat, _normal));
         cout << "done." << endl;
       }
 
-      void expectedVar() {
-        cout << "- Compute expectedVar() ... ";
-        save("var", var(_genMat, _normal));
+      void expectedArmaVar() {
+        cout << "- Compute expectedArmaVar() ... ";
+        save<double>("Arma.var", var(_genMat, _normal));
         cout << "done." << endl;
       }
 
-      void expectedCor() {
-        cout << "- Compute expectedCor() ... ";
-        save("cor", cor(_genMat, _normal));
+      void expectedArmaCor() {
+        cout << "- Compute expectedArmaCor() ... ";
+        save<double>("Arma.cor", cor(_genMat, _normal));
         cout << "done." << endl;
       }
 
-      void expectedCov() {
-        cout << "- Compute expectedCov() ... ";
-        save("cov", cov(_genMat, _normal));
+      void expectedArmaCov() {
+        cout << "- Compute expectedArmaCov() ... ";
+        save<double>("Arma.cov", cov(_genMat, _normal));
         cout << "done." << endl;
       }
 

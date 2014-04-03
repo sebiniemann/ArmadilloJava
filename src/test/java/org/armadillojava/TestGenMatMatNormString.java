@@ -76,7 +76,7 @@ public class TestGenMatMatNormString extends TestClass {
 
   @Test
   public void testNorm() throws IOException {
-    double expected = load("norm")._data[0];
+    double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genMat, _matNormString);
 
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {

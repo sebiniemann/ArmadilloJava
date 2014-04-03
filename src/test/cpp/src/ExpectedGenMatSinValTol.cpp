@@ -60,8 +60,8 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedRank();
-            expectedPinv();
+            expectedArmaRank();
+            expectedArmaPinv();
           }
 
           cout << "done." << endl;
@@ -71,15 +71,15 @@ namespace armadilloJava {
       Mat<double> _genMat;
       double _sinValTol;
 
-      void expectedRank() {
-        cout << "- Compute expectedRank() ... ";
-        save("rank", Mat<double>({static_cast<double>(rank(_genMat, _sinValTol))}));
+      void expectedArmaRank() {
+        cout << "- Compute expectedArmaRank() ... ";
+        save<double>("Arma.rank", Mat<double>({static_cast<double>(rank(_genMat, _sinValTol))}));
         cout << "done." << endl;
       }
 
-      void expectedPinv() {
-        cout << "- Compute expectedPinv() ... ";
-        save("pinv", pinv(_genMat, _sinValTol));
+      void expectedArmaPinv() {
+        cout << "- Compute expectedArmaPinv() ... ";
+        save<double>("Arma.pinv", pinv(_genMat, _sinValTol));
         cout << "done." << endl;
       }
   };
