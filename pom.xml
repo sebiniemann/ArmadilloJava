@@ -40,7 +40,6 @@
 			<type>pom</type>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -53,8 +52,25 @@
 						<target>1.7</target>
 					</configuration>
 				</plugin>
+				<plugin>
+				    <groupId>org.jacoco</groupId>
+				    <artifactId>jacoco-maven-plugin</artifactId>
+				    <version>0.6.4.201312101107</version>
+				    <executions>
+				        <execution>
+				            <id>prepare-agent</id>
+				            <goals>
+				                <goal>prepare-agent</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
+				<plugin>
+				    <groupId>org.eluder.coveralls</groupId>
+				    <artifactId>coveralls-maven-plugin</artifactId>
+				    <version>2.2.0</version>
+				</plugin>
 			</plugins>
-
 		</pluginManagement>
 	</build>
 </project>
