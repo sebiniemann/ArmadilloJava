@@ -1,6 +1,7 @@
 ArmadilloJava 4.000.0
 =====================
 [![Build Status](https://travis-ci.org/SebastianNiemann/ArmadilloJava.png?branch=master)](https://travis-ci.org/SebastianNiemann/ArmadilloJava)
+[![Coverage Status](https://coveralls.io/repos/SebastianNiemann/ArmadilloJava/badge.png?branch=master)](https://coveralls.io/r/SebastianNiemann/ArmadilloJava?branch=master)
 
 Provides Java based interfaces similar to the [Armadillo C++ Algebra Library (Armadillo)](http://arma.sourceforge.net/) by Conrad Sanderson et al., NICTA, Australia.
 
