@@ -79,7 +79,7 @@ public class TestGenMatSinValSel extends TestClass {
     Col s = new Col();
     Mat V = new Mat();
 
-    Arma.svd_econ(U, s, V, _genMat);
+    Arma.svd_econ(U, s, V, _genMat, _sinValSel);
 
     assertMatEquals(s, load("Arma.svd_econ"));
 

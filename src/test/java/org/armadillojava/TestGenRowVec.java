@@ -114,6 +114,11 @@ public class TestGenRowVec extends TestClass {
   }
 
   @Test
+  public void testSqrt() throws IOException {
+    assertMatEquals(Arma.sqrt(_genRowVec), load("Arma.sqrt"));
+  }
+
+  @Test
   public void testSquare() throws IOException {
     assertMatEquals(Arma.square(_genRowVec), load("Arma.square"));
   }
