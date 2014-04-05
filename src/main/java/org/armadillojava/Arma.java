@@ -1014,12 +1014,6 @@ public class Arma {
     }
   }
 
-  protected static AbstractMat pow(final AbstractMat A, final double p) {
-    AbstractMat result = new Mat(A.n_rows, A.n_cols);
-    pow(result._data, A._data, p);
-    return result;
-  }
-
   /**
    * Returns a column vector made of the element-wise computed raise to the specified power of the provided one.
    * 
@@ -1028,7 +1022,7 @@ public class Arma {
    * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Col pow(final Col A, final int p) throws RuntimeException {
+  public static Col pow(final Col A, final double p) throws RuntimeException {
     if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
@@ -1046,7 +1040,7 @@ public class Arma {
    * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Row pow(final Row A, final int p) throws RuntimeException {
+  public static Row pow(final Row A, final double p) throws RuntimeException {
     if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
@@ -1064,7 +1058,7 @@ public class Arma {
    * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
-  public static Mat pow(final Mat A, final int p) throws RuntimeException {
+  public static Mat pow(final Mat A, final double p) throws RuntimeException {
     if (p < 0) {
       throw new RuntimeException("The power (" + p + ") must be positive");
     }
@@ -3544,12 +3538,6 @@ public class Arma {
       result.inPlace(Op.ELEMDIVIDE, trans(stddev(Row.class, X)).times(stddev(Row.class, Y)));
     }
 
-    for (int n = 0; n < result.n_elem; n++) {
-      if (Double.isInfinite(result._data[n])) {
-        result._data[n] = Double.NaN;
-      }
-    }
-
     return result;
   }
 
@@ -4943,7 +4931,7 @@ public class Arma {
     }
 
     Col result = new Col(V.n_elem);
-    stable_sort_index(result._data, V._data, sort_direction);
+    sort_index(result._data, V._data, sort_direction);
     return result;
   }
 
@@ -4969,7 +4957,7 @@ public class Arma {
     }
 
     Row result = new Row(V.n_elem);
-    stable_sort_index(result._data, V._data, sort_direction);
+    sort_index(result._data, V._data, sort_direction);
     return result;
   }
 
