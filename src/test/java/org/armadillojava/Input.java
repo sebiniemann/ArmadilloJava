@@ -92,15 +92,6 @@ class Input {
         case RowVecSize:
           inputs.add(getRowVecSize());
           break;
-        case GenMatVec:
-          inputs.add(getGenMatVec());
-          break;
-        case LogicMatVec:
-          inputs.add(getLogicMatVec());
-          break;
-        case OOMatVec:
-          inputs.add(getOOMatVec());
-          break;
         case GenMat:
           inputs.add(getGenMat());
           break;
@@ -544,35 +535,6 @@ class Input {
     return input;
   }
 
-  protected static List<Pair<String, Object>> getGenMatVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getGenMat());
-    inputs.add(getGenVec());
-    inputs.add(getLogicMatVec());
-    inputs.add(getOOMatVec());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getLogicMatVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getLogicMat());
-    inputs.add(getLogicVec());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getOOMatVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getOOMat());
-    inputs.add(getOOVec());
-
-    return vectorUnion(inputs);
-  }
-
   protected static List<Pair<String, Object>> getGenMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
@@ -909,8 +871,8 @@ class Input {
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceA)));
+      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }
 
@@ -947,8 +909,8 @@ class Input {
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceA)));
+      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }
 
@@ -985,8 +947,8 @@ class Input {
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceA)));
+      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }
 

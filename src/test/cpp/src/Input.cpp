@@ -118,15 +118,6 @@ namespace armadilloJava {
         case InputClass::RowVecSize:
           inputs.push_back(getRowVecSize());
           break;
-        case InputClass::GenMatVec:
-          inputs.push_back(getGenMatVec());
-          break;
-        case InputClass::LogicMatVec:
-          inputs.push_back(getLogicMatVec());
-          break;
-        case InputClass::OOMatVec:
-          inputs.push_back(getOOMatVec());
-          break;
         case InputClass::GenMat:
           inputs.push_back(getGenMat());
           break;
@@ -508,29 +499,6 @@ namespace armadilloJava {
     }
 
     return input;
-  }
-
-  vector<pair<string, void*>> Input::getGenMatVec() {
-    return vectorUnion({
-      getGenMat(),
-      getGenVec(),
-      getLogicMatVec(),
-      getOOMatVec()
-    });
-  }
-
-  vector<pair<string, void*>> Input::getLogicMatVec() {
-    return vectorUnion({
-      getLogicMat(),
-      getLogicVec()
-    });
-  }
-
-  vector<pair<string, void*>> Input::getOOMatVec() {
-    return vectorUnion({
-      getOOMat(),
-      getOOVec()
-    });
   }
 
   vector<pair<string, void*>> Input::getGenMat() {

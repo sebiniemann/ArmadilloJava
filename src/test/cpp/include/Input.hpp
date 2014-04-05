@@ -62,9 +62,6 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getMatSize();
       static vector<pair<string, void*>> getColVecSize();
       static vector<pair<string, void*>> getRowVecSize();
-      static vector<pair<string, void*>> getGenMatVec();
-      static vector<pair<string, void*>> getLogicMatVec();
-      static vector<pair<string, void*>> getOOMatVec();
       static vector<pair<string, void*>> getGenMat();
       static vector<pair<string, void*>> getSquMat();
       static vector<pair<string, void*>> getInvMat();

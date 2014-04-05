@@ -116,6 +116,7 @@ namespace armadilloJava {
           expectedArmaLog2();
           expectedArmaLog10();
           expectedArmaTrunc_log();
+          expectedArmaSqrt();
           expectedArmaSquare();
           expectedArmaFloor();
           expectedArmaCeil();
@@ -222,6 +223,12 @@ namespace armadilloJava {
       void expectedArmaTrunc_log() {
         cout << "- Compute expectedArmaTrunc_log() ... ";
         save<double>("Arma.trunc_log", trunc_log(_genRowVec));
+        cout << "done." << endl;
+      }
+
+      void expectedArmaSqrt() {
+        cout << "- Compute expectedArmaSqrt() ... ";
+        save<double>("Arma.sqrt", sqrt(_genRowVec));
         cout << "done." << endl;
       }
 
