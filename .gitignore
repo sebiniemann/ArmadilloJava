@@ -22,3 +22,4 @@ hs_err_pid*.log
 
 # Project specific
 /src/test/cpp/expected.log
+/src/test/cpp/bin
