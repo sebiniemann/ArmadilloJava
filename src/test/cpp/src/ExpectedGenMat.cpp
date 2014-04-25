@@ -170,6 +170,8 @@ namespace armadilloJava {
             expectedArmaNegate();
             expectedArmaReciprocal();
             expectedArmaAccu();
+            expectedMatMin();
+            expectedMatMax();
           }
 
           cout << "done." << endl;
@@ -565,6 +567,34 @@ namespace armadilloJava {
       void expectedArmaAccu() {
         cout << "- Compute expectedArmaAccu() ... ";
         save<double>("Arma.accu", Mat<double>({accu(_genMat)}));
+        cout << "done." << endl;
+      }
+
+      void expectedMatMin() {
+        cout << "- Compute expectedMatMin() ... ";
+
+        double value;
+        uword index;
+
+        value = _genMat.min(index);
+
+        save<double>("Mat.minValue", Mat<double>({value}));
+        save<double>("Mat.minIndex", Mat<double>({static_cast<double>(index)}));
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatMax() {
+        cout << "- Compute expectedMatMax() ... ";
+
+        double value;
+        uword index;
+
+        value = _genMat.max(index);
+
+        save<double>("Mat.maxValue", Mat<double>({value}));
+        save<double>("Mat.maxIndex", Mat<double>({static_cast<double>(index)}));
+
         cout << "done." << endl;
       }
   };

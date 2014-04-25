@@ -483,4 +483,58 @@ public class TestGenMat extends TestClass {
     }
   }
 
+  @Test
+  public void testMatMinA() throws IOException {
+    double expected = load("Mat.minValue")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(_genMat.min(), is(expected));
+    } else {
+      assertThat(_genMat.min(), is(closeTo(expected, Math.abs(expected) * 1e-10)));
+    }
+  }
+
+  @Test
+  public void testMatMinB() throws IOException {
+    double expectedValue = load("Mat.minValue")._data[0];
+    int expectedIndex = (int) load("Mat.minIndex")._data[0];
+    
+    int[] index = new int[1];
+    double value = _genMat.min(index);
+    
+    if (Double.isInfinite(expectedValue) || Double.isNaN(expectedValue)) {
+      assertThat(value, is(expectedValue));
+    } else {
+      assertThat(value, is(closeTo(expectedValue, Math.abs(expectedValue) * 1e-10)));
+    }
+    
+    assertThat(index[0], is(expectedIndex));
+  }
+
+  @Test
+  public void testMatMaxA() throws IOException {
+    double expected = load("Mat.maxValue")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(_genMat.max(), is(expected));
+    } else {
+      assertThat(_genMat.max(), is(closeTo(expected, Math.abs(expected) * 1e-10)));
+    }
+  }
+
+  @Test
+  public void testMatMaxB() throws IOException {
+    double expectedValue = load("Mat.maxValue")._data[0];
+    int expectedIndex = (int) load("Mat.maxIndex")._data[0];
+    
+    int[] index = new int[1];
+    double value = _genMat.max(index);
+    
+    if (Double.isInfinite(expectedValue) || Double.isNaN(expectedValue)) {
+      assertThat(value, is(expectedValue));
+    } else {
+      assertThat(value, is(closeTo(expectedValue, Math.abs(expectedValue) * 1e-10)));
+    }
+    
+    assertThat(index[0], is(expectedIndex));
+  }
+
 }
