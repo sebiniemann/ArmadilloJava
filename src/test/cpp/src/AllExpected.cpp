@@ -338,7 +338,7 @@ int main() {
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
 //  ExpectedGenRowVecVecNormString();
-//  ExpectedInPlaceGenMat();
+  ExpectedInPlaceGenMat();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicColVecNumElems();

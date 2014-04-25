@@ -47,7 +47,7 @@ public class TestInPlaceGenMat extends TestClass {
   public Mat    _genMat;
 
   protected Mat _copyOfGenMat;
-
+  
   @Before
   public void before() {
     _fileSuffix = _genMatString;
@@ -57,7 +57,7 @@ public class TestInPlaceGenMat extends TestClass {
   
   @After
   public void after() {
-    _genMat = new Mat(_copyOfGenMat);
+    _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
   }
 
   @Test
@@ -65,6 +65,20 @@ public class TestInPlaceGenMat extends TestClass {
     Arma.inplace_trans(_genMat);
     
     assertMatEquals(_genMat, load("Arma.inplace_trans"));
+  }
+
+  @Test
+  public void testMatOnes() throws IOException {
+    _genMat.ones();
+    
+    assertMatEquals(_genMat, load("Mat.ones"));
+  }
+
+  @Test
+  public void testMatZeros() throws IOException {
+    _genMat.zeros();
+    
+    assertMatEquals(_genMat, load("Mat.zeros"));
   }
 
 }
