@@ -61,12 +61,12 @@ public class TestInvMat extends TestClass {
   }
 
   @Test
-  public void testInvA() throws IOException {
+  public void testArmaInvA() throws IOException {
     assertMatEquals(Arma.inv(_invMat), load("Arma.inv"));
   }
 
   @Test
-  public void testInvB() throws IOException {
+  public void testArmaInvB() throws IOException {
     Mat inv = new Mat();
 
     Arma.inv(inv, _invMat);

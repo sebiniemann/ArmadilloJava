@@ -86,7 +86,7 @@ public class TestGenMatNumElemsDim extends TestClass {
 
 // Contrary to the documentation of Armadillo C++, this is actually not implemented.
   @Test
-  public void testHist() throws IOException {
+  public void testArmaHist() throws IOException {
 //    assertMatEquals(Arma.hist(_genMat, _numElems, _dim), load("Arma.hist"));
   }
 

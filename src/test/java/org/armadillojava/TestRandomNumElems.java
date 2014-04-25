@@ -74,7 +74,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRandiA() throws IOException {
+  public void testArmaRandiA() throws IOException {
     Col result = Arma.randi(Col.class, _numElems).elemDivide(Integer.MAX_VALUE);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus((Arma.randi(Col.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
@@ -83,7 +83,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRandiB() throws IOException {
+  public void testArmaRandiB() throws IOException {
     Row result = Arma.randi(Row.class, _numElems).elemDivide(Integer.MAX_VALUE);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus((Arma.randi(Row.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
@@ -92,7 +92,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRanduA() throws IOException {
+  public void testArmaRanduA() throws IOException {
     Col result = Arma.randu(Col.class, _numElems);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randu(Col.class, _numElems)).elemDivide(n + 1);
@@ -101,7 +101,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRanduB() throws IOException {
+  public void testArmaRanduB() throws IOException {
     Row result = Arma.randu(Row.class, _numElems);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randu(Row.class, _numElems)).elemDivide(n + 1);
@@ -110,7 +110,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRandnA() throws IOException {
+  public void testArmaRandnA() throws IOException {
     Col result = Arma.randn(Col.class, _numElems);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randn(Col.class, _numElems)).elemDivide(n + 1);
@@ -119,7 +119,7 @@ public class TestRandomNumElems extends TestClass {
   }
 
   @Test
-  public void testRandnB() throws IOException {
+  public void testArmaRandnB() throws IOException {
     Row result = Arma.randn(Row.class, _numElems);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randn(Row.class, _numElems)).elemDivide(n + 1);

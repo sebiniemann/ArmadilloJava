@@ -61,14 +61,14 @@ public class TestSymPDMat extends TestClass {
   }
 
   @Test
-  public void testCholA() throws IOException {
+  public void testArmaCholA() throws IOException {
     Mat R = Arma.chol(_symPDMat);
     
     assertMatEquals((R.t()).times(R), _symPDMat);
   }
 
   @Test
-  public void testCholB() throws IOException {
+  public void testArmaCholB() throws IOException {
     Mat R = new Mat();
     
     Arma.chol(R, _symPDMat);
@@ -77,13 +77,13 @@ public class TestSymPDMat extends TestClass {
   }
 
   @Test
-  public void testInv_sympdA() throws IOException {
+  public void testArmaInv_sympdA() throws IOException {
     
     assertMatEquals(Arma.inv_sympd(_symPDMat), load("Arma.inv_sympd"));
   }
 
   @Test
-  public void testInv_sympdB() throws IOException {
+  public void testArmaInv_sympdB() throws IOException {
     Mat B = new Mat();
     
     Arma.inv_sympd(B, _symPDMat);

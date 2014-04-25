@@ -85,7 +85,7 @@ public class TestRandomNumRowsNumCols extends TestClass {
   }
 
   @Test
-  public void testRandiA() throws IOException {
+  public void testArmaRandiA() throws IOException {
     Mat result = Arma.randi(_numRows, _numCols).elemDivide(Integer.MAX_VALUE);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus((Arma.randi(_numRows, _numCols).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
@@ -94,7 +94,7 @@ public class TestRandomNumRowsNumCols extends TestClass {
   }
 
   @Test
-  public void testRanduA() throws IOException {
+  public void testArmaRanduA() throws IOException {
     Mat result = Arma.randu(_numRows, _numCols);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randu(_numRows, _numCols)).elemDivide(n + 1);
@@ -103,7 +103,7 @@ public class TestRandomNumRowsNumCols extends TestClass {
   }
 
   @Test
-  public void testRandnA() throws IOException {
+  public void testArmaRandnA() throws IOException {
     Mat result = Arma.randn(_numRows, _numCols);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randn(_numRows, _numCols)).elemDivide(n + 1);

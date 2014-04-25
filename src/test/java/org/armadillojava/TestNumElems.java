@@ -63,13 +63,13 @@ public class TestNumElems extends TestClass {
   }
 
   @Test
-  public void testOnes() throws IOException {
+  public void testArmaOnes() throws IOException {
     assertMatEquals(Arma.ones(Col.class, _numElems), load("Arma.ones"));
     assertMatEquals(Arma.ones(Row.class, _numElems), load("Arma.ones").t());
   }
 
   @Test
-  public void testZeros() throws IOException {
+  public void testArmaZeros() throws IOException {
     assertMatEquals(Arma.zeros(Col.class, _numElems), load("Arma.zeros"));
     assertMatEquals(Arma.zeros(Row.class, _numElems), load("Arma.zeros").t());
   }

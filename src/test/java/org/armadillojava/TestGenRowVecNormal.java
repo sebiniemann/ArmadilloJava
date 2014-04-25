@@ -75,7 +75,7 @@ public class TestGenRowVecNormal extends TestClass {
   }
 
   @Test
-  public void testStddev() throws IOException {
+  public void testArmaStddev() throws IOException {
     double expected = load("Arma.stddev")._data[0];
     double actual = Arma.stddev(_genRowVec, _normal);
 
@@ -87,7 +87,7 @@ public class TestGenRowVecNormal extends TestClass {
   }
 
   @Test
-  public void testVar() throws IOException {
+  public void testArmaVar() throws IOException {
     double expected = load("Arma.var")._data[0];
     double actual = Arma.var(_genRowVec, _normal);
 
@@ -99,7 +99,7 @@ public class TestGenRowVecNormal extends TestClass {
   }
 
   @Test
-  public void testCor() throws IOException {
+  public void testArmaCor() throws IOException {
     double expected = load("Arma.cor")._data[0];
     double actual = Arma.cor(_genRowVec, _normal);
 
@@ -111,7 +111,7 @@ public class TestGenRowVecNormal extends TestClass {
   }
 
   @Test
-  public void testCov() throws IOException {
+  public void testArmaCov() throws IOException {
     double expected = load("Arma.cov")._data[0];
     double actual = Arma.cov(_genRowVec, _normal);
 

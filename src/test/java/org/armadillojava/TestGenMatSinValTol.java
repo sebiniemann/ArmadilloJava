@@ -74,18 +74,18 @@ public class TestGenMatSinValTol extends TestClass {
   }
 
   @Test
-  public void testRank() throws IOException {
+  public void testArmaRank() throws IOException {
     int expected = (int) load("Arma.rank")._data[0];
     assertThat(Arma.rank(_genMat, _sinValTol), is(expected));
   }
 
   @Test
-  public void testPinvA() throws IOException {
+  public void testArmaPinvA() throws IOException {
     assertMatEquals(Arma.pinv(_genMat, _sinValTol), load("Arma.pinv"), TestUtil.globalDelta(load("Arma.pinv"), 1e-12));
   }
 
   @Test
-  public void testPinvB() throws IOException {
+  public void testArmaPinvB() throws IOException {
     Mat pinv = new Mat();
 
     Arma.pinv(pinv, _genMat, _sinValTol);

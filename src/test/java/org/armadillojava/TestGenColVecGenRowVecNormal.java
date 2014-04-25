@@ -87,7 +87,7 @@ public class TestGenColVecGenRowVecNormal extends TestClass {
   }
   
   @Test
-  public void testCor() throws IOException {
+  public void testArmaCor() throws IOException {
     assumeThat(_genColVec.n_elem, is(_genRowVec.n_elem));
     
     double expected = load("Arma.cor")._data[0];
@@ -101,7 +101,7 @@ public class TestGenColVecGenRowVecNormal extends TestClass {
   }
 
   @Test
-  public void testCov() throws IOException {
+  public void testArmaCov() throws IOException {
     assumeThat(_genColVec.n_elem, is(_genRowVec.n_elem));
     
     double expected = load("Arma.cov")._data[0];

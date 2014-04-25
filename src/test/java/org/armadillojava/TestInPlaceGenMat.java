@@ -61,7 +61,7 @@ public class TestInPlaceGenMat extends TestClass {
   }
 
   @Test
-  public void testInplace_trans() throws IOException {
+  public void testArmaInplace_trans() throws IOException {
     Arma.inplace_trans(_genMat);
     
     assertMatEquals(_genMat, load("Arma.inplace_trans"));

@@ -86,7 +86,7 @@ public class TestRandomNumElemsDistrParam extends TestClass {
   }
 
   @Test
-  public void testRandiA() throws IOException {
+  public void testArmaRandiA() throws IOException {
     Col result = Arma.randi(Col.class, _numElems, _distrParam);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randi(Col.class, _numElems, _distrParam)).elemDivide(n + 1);
@@ -95,7 +95,7 @@ public class TestRandomNumElemsDistrParam extends TestClass {
   }
 
   @Test
-  public void testRandiB() throws IOException {
+  public void testArmaRandiB() throws IOException {
     Row result = Arma.randi(Row.class, _numElems, _distrParam);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randi(Row.class, _numElems, _distrParam)).elemDivide(n + 1);

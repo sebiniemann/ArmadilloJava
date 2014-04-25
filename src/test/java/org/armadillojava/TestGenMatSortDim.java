@@ -85,7 +85,7 @@ public class TestGenMatSortDim extends TestClass {
   }
 
   @Test
-  public void testSort() throws IOException {
+  public void testArmaSort() throws IOException {
     assertMatEquals(Arma.sort(_genMat, _sort, _dim), load("Arma.sort"));
   }
 

@@ -74,7 +74,7 @@ public class TestRandomGenRowVec extends TestClass {
   }
 
   @Test
-  public void testShuffle() throws IOException {
+  public void testArmaShuffle() throws IOException {
     Row result = Arma.shuffle(_genRowVec);
     for(int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.shuffle(_genRowVec)).elemDivide(n + 1);

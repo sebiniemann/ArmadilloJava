@@ -65,147 +65,147 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testAbs() throws IOException {
+  public void testArmaAbs() throws IOException {
     assertMatEquals(Arma.abs(_genMat), load("Arma.abs"));
   }
 
   @Test
-  public void testEps() throws IOException {
+  public void testArmaEps() throws IOException {
     assertMatEquals(Arma.eps(_genMat), load("Arma.eps"));
   }
 
   @Test
-  public void testExp() throws IOException {
+  public void testArmaExp() throws IOException {
     assertMatEquals(Arma.exp(_genMat), load("Arma.exp"));
   }
 
   @Test
-  public void testExp2() throws IOException {
+  public void testArmaExp2() throws IOException {
     assertMatEquals(Arma.exp2(_genMat), load("Arma.exp2"));
   }
 
   @Test
-  public void testExp10() throws IOException {
+  public void testArmaExp10() throws IOException {
     assertMatEquals(Arma.exp10(_genMat), load("Arma.exp10"));
   }
 
   @Test
-  public void testTrunc_exp() throws IOException {
+  public void testArmaTrunc_exp() throws IOException {
     assertMatEquals(Arma.trunc_exp(_genMat), load("Arma.trunc_exp"));
   }
 
   @Test
-  public void testLog() throws IOException {
+  public void testArmaLog() throws IOException {
     assertMatEquals(Arma.log(_genMat), load("Arma.log"));
   }
 
   @Test
-  public void testLog2() throws IOException {
+  public void testArmaLog2() throws IOException {
     assertMatEquals(Arma.log2(_genMat), load("Arma.log2"));
   }
 
   @Test
-  public void testLog10() throws IOException {
+  public void testArmaLog10() throws IOException {
     assertMatEquals(Arma.log10(_genMat), load("Arma.log10"));
   }
 
   @Test
-  public void testTrunc_log() throws IOException {
+  public void testArmaTrunc_log() throws IOException {
     assertMatEquals(Arma.trunc_log(_genMat), load("Arma.trunc_log"));
   }
 
   @Test
-  public void testSqrt() throws IOException {
+  public void testArmaSqrt() throws IOException {
     assertMatEquals(Arma.sqrt(_genMat), load("Arma.sqrt"));
   }
 
   @Test
-  public void testSquare() throws IOException {
+  public void testArmaSquare() throws IOException {
     assertMatEquals(Arma.square(_genMat), load("Arma.square"));
   }
 
   @Test
-  public void testFloor() throws IOException {
+  public void testArmaFloor() throws IOException {
     assertMatEquals(Arma.floor(_genMat), load("Arma.floor"));
   }
 
   @Test
-  public void testCeil() throws IOException {
+  public void testArmaCeil() throws IOException {
     assertMatEquals(Arma.ceil(_genMat), load("Arma.ceil"));
   }
 
   @Test
-  public void testRound() throws IOException {
+  public void testArmaRound() throws IOException {
     assertMatEquals(Arma.round(_genMat), load("Arma.round"));
   }
 
   @Test
-  public void testSign() throws IOException {
+  public void testArmaSign() throws IOException {
     assertMatEquals(Arma.sign(_genMat), load("Arma.sign"));
   }
 
   @Test
-  public void testSin() throws IOException {
+  public void testArmaSin() throws IOException {
     assertMatEquals(Arma.sin(_genMat), load("Arma.sin"));
   }
 
   @Test
-  public void testAsin() throws IOException {
+  public void testArmaAsin() throws IOException {
     assertMatEquals(Arma.asin(_genMat), load("Arma.asin"));
   }
 
   @Test
-  public void testSinh() throws IOException {
+  public void testArmaSinh() throws IOException {
     assertMatEquals(Arma.sinh(_genMat), load("Arma.sinh"));
   }
 
   @Test
-  public void testAsinh() throws IOException {
+  public void testArmaAsinh() throws IOException {
     assertMatEquals(Arma.asinh(_genMat), load("Arma.asinh"));
   }
 
   @Test
-  public void testCos() throws IOException {
+  public void testArmaCos() throws IOException {
     assertMatEquals(Arma.cos(_genMat), load("Arma.cos"));
   }
 
   @Test
-  public void testAcos() throws IOException {
+  public void testArmaAcos() throws IOException {
     assertMatEquals(Arma.acos(_genMat), load("Arma.acos"));
   }
 
   @Test
-  public void testCosh() throws IOException {
+  public void testArmaCosh() throws IOException {
     assertMatEquals(Arma.cosh(_genMat), load("Arma.cosh"));
   }
 
   @Test
-  public void testAcosh() throws IOException {
+  public void testArmaAcosh() throws IOException {
     assertMatEquals(Arma.acosh(_genMat), load("Arma.acosh"));
   }
 
   @Test
-  public void testTan() throws IOException {
+  public void testArmaTan() throws IOException {
     assertMatEquals(Arma.tan(_genMat), load("Arma.tan"));
   }
 
   @Test
-  public void testAtan() throws IOException {
+  public void testArmaAtan() throws IOException {
     assertMatEquals(Arma.atan(_genMat), load("Arma.atan"));
   }
 
   @Test
-  public void testTanh() throws IOException {
+  public void testArmaTanh() throws IOException {
     assertMatEquals(Arma.tanh(_genMat), load("Arma.tanh"));
   }
 
   @Test
-  public void testAtanh() throws IOException {
+  public void testArmaAtanh() throws IOException {
     assertMatEquals(Arma.atanh(_genMat), load("Arma.atanh"));
   }
 
   @Test
-  public void testCond() throws IOException {
+  public void testArmaCond() throws IOException {
     double expected = load("Arma.cond")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.cond(_genMat), is(expected));
@@ -215,111 +215,111 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testRank() throws IOException {
+  public void testArmaRank() throws IOException {
     int expected = (int) load("Arma.rank")._data[0];
     assertThat(Arma.rank(_genMat), is(expected));
   }
 
   @Test
-  public void testDiagvec() throws IOException {
+  public void testArmaDiagvec() throws IOException {
     assertMatEquals(Arma.diagvec(_genMat), load("Arma.diagvec"));
   }
 
   @Test
-  public void testMin() throws IOException {
+  public void testArmaMin() throws IOException {
     assertMatEquals(Arma.min(Row.class, _genMat), load("Arma.min"));
     assertMatEquals(Arma.min(Col.class, _genMat), load("Arma.min").t());
   }
 
   @Test
-  public void testMax() throws IOException {
+  public void testArmaMax() throws IOException {
     assertMatEquals(Arma.max(Row.class, _genMat), load("Arma.max"));
     assertMatEquals(Arma.max(Col.class, _genMat), load("Arma.max").t());
   }
 
   @Test
-  public void testProd() throws IOException {
+  public void testArmaProd() throws IOException {
     assertMatEquals(Arma.prod(Row.class, _genMat), load("Arma.prod"));
     assertMatEquals(Arma.prod(Col.class, _genMat), load("Arma.prod").t());
   }
 
   @Test
-  public void testMean() throws IOException {
+  public void testArmaMean() throws IOException {
     assertMatEquals(Arma.mean(Row.class, _genMat), load("Arma.mean"));
     assertMatEquals(Arma.mean(Col.class, _genMat), load("Arma.mean").t());
   }
 
   @Test
-  public void testMedian() throws IOException {
+  public void testArmaMedian() throws IOException {
     assertMatEquals(Arma.median(Row.class, _genMat), load("Arma.median"));
     assertMatEquals(Arma.median(Col.class, _genMat), load("Arma.median").t());
   }
 
   @Test
-  public void testStddev() throws IOException {
+  public void testArmaStddev() throws IOException {
     assertMatEquals(Arma.stddev(Row.class, _genMat), load("Arma.stddev"));
     assertMatEquals(Arma.stddev(Col.class, _genMat), load("Arma.stddev").t());
   }
 
   @Test
-  public void testVar() throws IOException {
+  public void testArmaVar() throws IOException {
     assertMatEquals(Arma.var(Row.class, _genMat), load("Arma.var"));
     assertMatEquals(Arma.var(Col.class, _genMat), load("Arma.var").t());
   }
 
   @Test
-  public void testCor() throws IOException {
+  public void testArmaCor() throws IOException {
     assertMatEquals(Arma.cor(_genMat), load("Arma.cor"));
   }
 
   @Test
-  public void testCov() throws IOException {
+  public void testArmaCov() throws IOException {
     assertMatEquals(Arma.cov(_genMat), load("Arma.cov"));
   }
 
   @Test
-  public void testCumsum() throws IOException {
+  public void testArmaCumsum() throws IOException {
     assertMatEquals(Arma.cumsum(_genMat), load("Arma.cumsum"));
   }
 
   @Test
-  public void testFliplr() throws IOException {
+  public void testArmaFliplr() throws IOException {
     assertMatEquals(Arma.fliplr(_genMat), load("Arma.fliplr"));
   }
 
   @Test
-  public void testFlipud() throws IOException {
+  public void testArmaFlipud() throws IOException {
     assertMatEquals(Arma.flipud(_genMat), load("Arma.flipud"));
   }
 
   @Test
-  public void testHist() throws IOException {
+  public void testArmaHist() throws IOException {
     assertMatEquals(Arma.hist(_genMat), load("Arma.hist"));
   }
 
   @Test
-  public void testSort() throws IOException {
+  public void testArmaSort() throws IOException {
     assertMatEquals(Arma.sort(_genMat), load("Arma.sort"));
   }
 
   @Test
-  public void testTrans() throws IOException {
+  public void testArmaTrans() throws IOException {
     assertMatEquals(Arma.trans(_genMat), load("Arma.trans"));
   }
 
   @Test
-  public void testUnique() throws IOException {
+  public void testArmaUnique() throws IOException {
     assertMatEquals(Arma.unique(_genMat), load("Arma.unique"));
   }
 
   @Test
-  public void testVectorise() throws IOException {
+  public void testArmaVectorise() throws IOException {
     assertMatEquals(Arma.vectorise(Col.class, _genMat), load("Arma.vectorise"));
     assertMatEquals(Arma.vectorise(Row.class, _genMat), load("Arma.vectorise").t());
   }
 
   @Test
-  public void testLu1() throws IOException {
+  public void testArmaLu1() throws IOException {
     assumeThat(load("Arma.lu")._data[0], is(1.0));
 
     Mat L = new Mat();
@@ -340,7 +340,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testLu2() throws IOException {
+  public void testArmaLu2() throws IOException {
     assumeThat(load("Arma.lu")._data[0], is(1.0));
 
     Mat L = new Mat();
@@ -355,12 +355,12 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testPinvA() throws IOException {
+  public void testArmaPinvA() throws IOException {
     assertMatEquals(Arma.pinv(_genMat), load("Arma.pinv"), TestUtil.globalDelta(load("Arma.pinv"), 1e-12));
   }
 
   @Test
-  public void testPinvB() throws IOException {
+  public void testArmaPinvB() throws IOException {
     Mat pinv = new Mat();
 
     Arma.pinv(pinv, _genMat);
@@ -369,7 +369,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testPrincompA() throws IOException {
+  public void testArmaPrincompA() throws IOException {
     Mat coeff = new Mat();
     Mat score = new Mat();
     Col latent = new Col();
@@ -381,7 +381,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testPrincompB() throws IOException {
+  public void testArmaPrincompB() throws IOException {
     Mat coeff = new Mat();
     Mat score = new Mat();
     Col latent = new Col();
@@ -392,7 +392,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testQr() throws IOException {
+  public void testArmaQr() throws IOException {
     Mat Q = new Mat();
     Mat R = new Mat();
 
@@ -406,7 +406,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testQr_econ() throws IOException {
+  public void testArmaQr_econ() throws IOException {
     Mat Q = new Mat();
     Mat R = new Mat();
 
@@ -420,12 +420,12 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testSvdA() throws IOException {
+  public void testArmaSvdA() throws IOException {
     assertMatEquals(Arma.svd(_genMat), load("Arma.svd"));
   }
 
   @Test
-  public void testSvdB() throws IOException {
+  public void testArmaSvdB() throws IOException {
     Col s = new Col();
 
     Arma.svd(s, _genMat);
@@ -434,7 +434,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testSvdC() throws IOException {
+  public void testArmaSvdC() throws IOException {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();
@@ -449,7 +449,7 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testSvd_econ() throws IOException {
+  public void testArmaSvd_econ() throws IOException {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();
@@ -464,17 +464,17 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
-  public void testNegate() throws IOException {
+  public void testArmaNegate() throws IOException {
     assertMatEquals(Arma.negate(_genMat), load("Arma.negate"));
   }
 
   @Test
-  public void testReciprocal() throws IOException {
+  public void testArmaReciprocal() throws IOException {
     assertMatEquals(Arma.reciprocal(_genMat), load("Arma.reciprocal"));
   }
 
   @Test
-  public void testAccu() throws IOException {
+  public void testArmaAccu() throws IOException {
     double expected = load("Arma.accu")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.accu(_genMat), is(expected));

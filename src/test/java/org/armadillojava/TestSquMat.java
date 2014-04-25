@@ -64,7 +64,7 @@ public class TestSquMat extends TestClass {
   }
 
   @Test
-  public void testDet() throws IOException {
+  public void testArmaDet() throws IOException {
     double expected = load("Arma.det")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.det(_squMat), is(expected));
@@ -74,7 +74,7 @@ public class TestSquMat extends TestClass {
   }
 
   @Test
-  public void testLog_det() throws IOException {
+  public void testArmaLog_det() throws IOException {
     double expectedVal = load("Arma.log_detVal")._data[0];
     double expectedSign = load("Arma.log_detSign")._data[0];
 
@@ -93,7 +93,7 @@ public class TestSquMat extends TestClass {
   }
 
   @Test
-  public void testTrace() throws IOException {
+  public void testArmaTrace() throws IOException {
     double expected = load("Arma.trace")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(Arma.trace(_squMat), is(expected));
@@ -103,27 +103,27 @@ public class TestSquMat extends TestClass {
   }
 
   @Test
-  public void testDiagmat() throws IOException {
+  public void testArmaDiagmat() throws IOException {
     assertMatEquals(Arma.diagmat(_squMat), load("Arma.diagmat"));
   }
 
   @Test
-  public void testSymmatu() throws IOException {
+  public void testArmaSymmatu() throws IOException {
     assertMatEquals(Arma.symmatu(_squMat), load("Arma.symmatu"));
   }
 
   @Test
-  public void testSymmatl() throws IOException {
+  public void testArmaSymmatl() throws IOException {
     assertMatEquals(Arma.symmatl(_squMat), load("Arma.symmatl"));
   }
 
   @Test
-  public void testTrimatu() throws IOException {
+  public void testArmaTrimatu() throws IOException {
     assertMatEquals(Arma.trimatu(_squMat), load("Arma.trimatu"));
   }
 
   @Test
-  public void testTrimatl() throws IOException {
+  public void testArmaTrimatl() throws IOException {
     assertMatEquals(Arma.trimatl(_squMat), load("Arma.trimatl"));
   }
 

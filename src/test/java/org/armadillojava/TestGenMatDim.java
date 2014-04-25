@@ -74,7 +74,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testMin() throws IOException {
+  public void testArmaMin() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.min(Row.class, _genMat, _dim), load("Arma.min"));
       assertMatEquals(Arma.min(Col.class, _genMat, _dim), load("Arma.min").t());
@@ -85,7 +85,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testMax() throws IOException {
+  public void testArmaMax() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.max(Row.class, _genMat, _dim), load("Arma.max"));
       assertMatEquals(Arma.max(Col.class, _genMat, _dim), load("Arma.max").t());
@@ -96,7 +96,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testProd() throws IOException {
+  public void testArmaProd() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.prod(Row.class, _genMat, _dim), load("Arma.prod"));
       assertMatEquals(Arma.prod(Col.class, _genMat, _dim), load("Arma.prod").t());
@@ -107,7 +107,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testSum() throws IOException {
+  public void testArmaSum() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.sum(Row.class, _genMat, _dim), load("Arma.sum"));
       assertMatEquals(Arma.sum(Col.class, _genMat, _dim), load("Arma.sum").t());
@@ -118,7 +118,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testMean() throws IOException {
+  public void testArmaMean() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.mean(Row.class, _genMat, _dim), load("Arma.mean"));
       assertMatEquals(Arma.mean(Col.class, _genMat, _dim), load("Arma.mean").t());
@@ -129,7 +129,7 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testMedian() throws IOException {
+  public void testArmaMedian() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.median(Row.class, _genMat, _dim), load("Arma.median"));
       assertMatEquals(Arma.median(Col.class, _genMat, _dim), load("Arma.median").t());
@@ -140,12 +140,12 @@ public class TestGenMatDim extends TestClass {
   }
 
   @Test
-  public void testCumsum() throws IOException {
+  public void testArmaCumsum() throws IOException {
     assertMatEquals(Arma.cumsum(_genMat, _dim), load("Arma.cumsum"));
   }
 
   @Test
-  public void testVectorise() throws IOException {
+  public void testArmaVectorise() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.vectorise(Col.class, _genMat, _dim), load("Arma.vectorise"));
       assertMatEquals(Arma.vectorise(Row.class, _genMat, _dim), load("Arma.vectorise").t());

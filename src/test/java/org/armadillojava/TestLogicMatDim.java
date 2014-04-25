@@ -74,7 +74,7 @@ public class TestLogicMatDim extends TestClass {
   }
 
   @Test
-  public void testAll() throws IOException {
+  public void testArmaAll() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.all(Row.class, _logicMat, _dim), load("Arma.all"));
       assertMatEquals(Arma.all(Col.class, _logicMat, _dim), load("Arma.all").t());
@@ -85,7 +85,7 @@ public class TestLogicMatDim extends TestClass {
   }
 
   @Test
-  public void testAny() throws IOException {
+  public void testArmaAny() throws IOException {
     if (_dim == 0) {
       assertMatEquals(Arma.any(Row.class, _logicMat, _dim), load("Arma.any"));
       assertMatEquals(Arma.any(Col.class, _logicMat, _dim), load("Arma.any").t());

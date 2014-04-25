@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013-2014 Sebastian Niemann <niemann@sra.uni-hannover.de>.
+a * Copyright 2013-2014 Sebastian Niemann <niemann@sra.uni-hannover.de>.
  * 
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ public class TestGenRowVecNumElems extends TestClass {
   }
 
   @Test
-  public void testHist() throws IOException {
+  public void testArmaHist() throws IOException {
     assertMatEquals(Arma.hist(_genRowVec, _numElems), load("Arma.hist"));
   }
 

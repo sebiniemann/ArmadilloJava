@@ -74,12 +74,12 @@ public class TestGenRowVecMonColVec extends TestClass {
   }
 
   @Test
-  public void testHist() throws IOException {
+  public void testArmaHist() throws IOException {
     assertMatEquals(Arma.hist(_genRowVec, _monColVecMat), load("Arma.hist"));
   }
 
   @Test
-  public void testHistc() throws IOException {
+  public void testArmaHistc() throws IOException {
     assertMatEquals(Arma.histc(_genRowVec, _monColVecMat), load("Arma.histc"));
   }
 

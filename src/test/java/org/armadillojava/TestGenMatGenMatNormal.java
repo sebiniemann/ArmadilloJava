@@ -86,7 +86,7 @@ public class TestGenMatGenMatNormal extends TestClass {
   }
 
   @Test
-  public void testCor() throws IOException {
+  public void testArmaCor() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
 
@@ -94,7 +94,7 @@ public class TestGenMatGenMatNormal extends TestClass {
   }
 
   @Test
-  public void testCov() throws IOException {
+  public void testArmaCov() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
 

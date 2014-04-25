@@ -61,19 +61,19 @@ public class TestLogicMat extends TestClass {
   }
 
   @Test
-  public void testAll() throws IOException {
+  public void testArmaAll() throws IOException {
     assertMatEquals(Arma.all(Row.class, _logicMat), load("Arma.all"));
     assertMatEquals(Arma.all(Col.class, _logicMat), load("Arma.all").t());
   }
 
   @Test
-  public void testAny() throws IOException {
+  public void testArmaAny() throws IOException {
     assertMatEquals(Arma.any(Row.class, _logicMat), load("Arma.any"));
     assertMatEquals(Arma.any(Col.class, _logicMat), load("Arma.any").t());
   }
 
   @Test
-  public void testFind() throws IOException {
+  public void testArmaFind() throws IOException {
     assertMatEquals(Arma.find(_logicMat), load("Arma.find"));
   }
 

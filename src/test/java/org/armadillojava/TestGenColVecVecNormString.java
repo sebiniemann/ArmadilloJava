@@ -75,7 +75,7 @@ public class TestGenColVecVecNormString extends TestClass {
   }
 
   @Test
-  public void testNorm() throws IOException {
+  public void testArmaNorm() throws IOException {
     double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genColVec, _vecNormString);
 

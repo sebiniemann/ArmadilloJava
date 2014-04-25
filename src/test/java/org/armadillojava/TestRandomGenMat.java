@@ -85,7 +85,7 @@ public class TestRandomGenMat extends TestClass {
   }
 
   @Test
-  public void testShuffle() throws IOException {
+  public void testArmaShuffle() throws IOException {
     Mat result = Arma.shuffle(_genMat, _dim);
     for(int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.shuffle(_genMat, _dim)).elemDivide(n + 1);

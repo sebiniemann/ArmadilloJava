@@ -74,17 +74,17 @@ public class TestNumRowsNumCols extends TestClass {
   }
 
   @Test
-  public void testEye() throws IOException {
+  public void testArmaEye() throws IOException {
     assertMatEquals(Arma.eye(_numRows, _numCols), load("Arma.eye"));
   }
 
   @Test
-  public void testOnes() throws IOException {
+  public void testArmaOnes() throws IOException {
     assertMatEquals(Arma.ones(_numRows, _numCols), load("Arma.ones"));
   }
 
   @Test
-  public void testZeros() throws IOException {
+  public void testArmaZeros() throws IOException {
     assertMatEquals(Arma.zeros(_numRows, _numCols), load("Arma.zeros"));
   }
 

@@ -85,7 +85,7 @@ public class TestSquMatSquMatGenMat extends TestClass {
   }
 
   @Test
-  public void testSylA() throws IOException {
+  public void testArmaSylA() throws IOException {
     assumeThat(_genMat.n_rows, is(_squMatA.n_rows));
     assumeThat(_genMat.n_cols, is(_squMatB.n_cols));
 
@@ -95,7 +95,7 @@ public class TestSquMatSquMatGenMat extends TestClass {
   }
 
   @Test
-  public void testSylB() throws IOException {
+  public void testArmaSylB() throws IOException {
     assumeThat(_genMat.n_rows, is(_squMatA.n_rows));
     assumeThat(_genMat.n_cols, is(_squMatB.n_cols));
 

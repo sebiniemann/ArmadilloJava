@@ -74,7 +74,7 @@ public class TestGenMatSinValSel extends TestClass {
   }
 
   @Test
-  public void testSvd_econ() throws IOException {
+  public void testArmaSvd_econ() throws IOException {
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();

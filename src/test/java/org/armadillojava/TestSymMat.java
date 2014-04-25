@@ -61,12 +61,12 @@ public class TestSymMat extends TestClass {
   }
 
   @Test
-  public void testEig_symA() throws IOException {
+  public void testArmaEig_symA() throws IOException {
     assertMatEquals(Arma.eig_sym(_symMat), load("Arma.eig_symEigval"));
   }
 
   @Test
-  public void testEig_symB() throws IOException {
+  public void testArmaEig_symB() throws IOException {
     Col eigval = new Col();
     
     Arma.eig_sym(eigval, _symMat);
@@ -75,7 +75,7 @@ public class TestSymMat extends TestClass {
   }
 
   @Test
-  public void testEig_symC() throws IOException {
+  public void testArmaEig_symC() throws IOException {
     Row eigval = new Row();
     
     Arma.eig_sym(eigval, _symMat);
@@ -84,7 +84,7 @@ public class TestSymMat extends TestClass {
   }
 
   @Test
-  public void testEig_symD() throws IOException {
+  public void testArmaEig_symD() throws IOException {
     Col eigval = new Col();
     Mat eigvec = new Mat();
     
@@ -95,7 +95,7 @@ public class TestSymMat extends TestClass {
   }
 
   @Test
-  public void testEig_symE() throws IOException {
+  public void testArmaEig_symE() throws IOException {
     Row eigval = new Row();
     Mat eigvec = new Mat();
     

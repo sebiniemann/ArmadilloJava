@@ -64,7 +64,7 @@ public class TestOOColVec extends TestClass {
   }
 
   @Test
-  public void testAs_scalar() throws IOException {
+  public void testArmaAs_scalar() throws IOException {
     double expected = load("Arma.as_scalar")._data[0];
     if (Double.isInfinite(expected)) {
       assertThat(Arma.as_scalar(_ooColVec), is(expected));
