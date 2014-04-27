@@ -1270,7 +1270,7 @@ public class Mat extends AbstractMat {
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
@@ -1285,7 +1285,7 @@ public class Mat extends AbstractMat {
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
@@ -1300,7 +1300,7 @@ public class Mat extends AbstractMat {
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
@@ -1390,26 +1390,6 @@ public class Mat extends AbstractMat {
   protected AbstractMat times(final AbstractMat X) {
     if (X.n_elem == 1) {
       return elemTimes(X._data[0]);
-    } else if (X.is_colvec()) {
-      if (n_cols != X.n_rows) {
-        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-      }
-
-      /*
-       * Only (1, m)-matrices can be left-hand side multiplied to column vectors.
-       */
-      return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
-    } else if (X.is_rowvec()) {
-      if (n_cols != X.n_rows) {
-        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-      }
-
-      /*
-       * Only (n, 1)-matrices can be left-hand side multiplied to row vectors.
-       */
-      Mat result = new Mat(n_rows, X.n_cols);
-      BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
-      return result;
     } else {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -1427,10 +1407,9 @@ public class Mat extends AbstractMat {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    /*
-     * Only (1, m)-matrices can be left-hand side multiplied to column vectors.
-     */
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+    Mat result = new Mat(n_rows, X.n_cols);
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+    return result;
   }
 
   @Override

@@ -86,6 +86,10 @@ namespace armadilloJava {
 
             _genMatA = _copyOfGenMatA;
             _genMatB = _copyOfGenMatB;
+            expectedMatSwap();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
             expectedMatEach_colEqual();
 
             _genMatA = _copyOfGenMatA;
@@ -225,7 +229,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_colEqual() ... ";
 
-        _genMatA.each_col() += _genMatB;
+        _genMatA.each_col() = _genMatB;
         save<double>("Mat.each_colEqual", _genMatA);
 
         cout << "done." << endl;
@@ -251,7 +255,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_colMinus() ... ";
 
-        _genMatA.each_col() += _genMatB;
+        _genMatA.each_col() -= _genMatB;
         save<double>("Mat.each_colMinus", _genMatA);
 
         cout << "done." << endl;
@@ -264,7 +268,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_colElemTimes() ... ";
 
-        _genMatA.each_col() += _genMatB;
+        _genMatA.each_col() %= _genMatB;
         save<double>("Mat.each_colElemTimes", _genMatA);
 
         cout << "done." << endl;
@@ -277,7 +281,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_colElemDivide() ... ";
 
-        _genMatA.each_col() += _genMatB;
+        _genMatA.each_col() /= _genMatB;
         save<double>("Mat.each_colElemDivide", _genMatA);
 
         cout << "done." << endl;
@@ -290,7 +294,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_rowEqual() ... ";
 
-        _genMatA.each_row() += _genMatB;
+        _genMatA.each_row() = _genMatB;
         save<double>("Mat.each_rowEqual", _genMatA);
 
         cout << "done." << endl;
@@ -316,7 +320,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_rowMinus() ... ";
 
-        _genMatA.each_row() += _genMatB;
+        _genMatA.each_row() -= _genMatB;
         save<double>("Mat.each_rowMinus", _genMatA);
 
         cout << "done." << endl;
@@ -329,7 +333,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_rowElemTimes() ... ";
 
-        _genMatA.each_row() += _genMatB;
+        _genMatA.each_row() %= _genMatB;
         save<double>("Mat.each_rowElemTimes", _genMatA);
 
         cout << "done." << endl;
@@ -342,7 +346,7 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatEach_rowElemDivide() ... ";
 
-        _genMatA.each_row() += _genMatB;
+        _genMatA.each_row() /= _genMatB;
         save<double>("Mat.each_rowElemDivide", _genMatA);
 
         cout << "done." << endl;

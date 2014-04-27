@@ -79,6 +79,7 @@ import org.junit.runners.Suite.SuiteClasses;
   TestGenRowVecVecNormInt.class,
   TestGenRowVecVecNormString.class,
   TestInPlaceGenMat.class,
+  TestInPlaceGenMatGenMat.class,
   TestInvMat.class,
   TestInvMatGenMat.class,
   TestLogicColVec.class,
