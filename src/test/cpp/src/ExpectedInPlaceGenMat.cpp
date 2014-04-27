@@ -58,11 +58,11 @@ namespace armadilloJava {
             _copyOfGenMat = _genMat;
 
             expectedArmaInplace_trans();
-            _genMat = _copyOfGenMat;
 
+            _genMat = _copyOfGenMat;
             expectedMatOnes();
-            _genMat = _copyOfGenMat;
 
+            _genMat = _copyOfGenMat;
             expectedMatZeros();
           }
 

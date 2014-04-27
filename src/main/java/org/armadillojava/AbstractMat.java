@@ -2252,39 +2252,68 @@ abstract class AbstractMat {
 
   /**
    * Performs an in-place binary operation on the whole matrix with the specified right-hand side operand.
+   * <p>
+   * <b>Note:</b> Both matrices must have the same shape if used with Op.PLUS, Op.MINUS, Op.ELEMTIMES or Op.ELEMDIVIDE.
+   * <br>
+   * The number of columns of first matrix must be equal to the number of rows of the second matrix if used with
+   * Op.TIMES. <br>
+   * Nothing about the shape of both matrices is required if used with Op.EQUAL.
    * 
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code rightHandOperand.n_rows},
+   *           {@code rightHandOperand.n_cols}) must have the same shape.
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code rightHandOperand.n_rows}) in the specified multiplier.
    */
-  public void inPlace(final Op binary_operator, final AbstractMat rightHandOperand) throws UnsupportedOperationException {
+  public void inPlace(final Op binary_operator, final AbstractMat rightHandOperand) throws UnsupportedOperationException, RuntimeException {
     switch (binary_operator) {
       case EQUAL:
         copy_size(rightHandOperand);
         System.arraycopy(rightHandOperand._data, 0, _data, 0, rightHandOperand.n_elem);
         break;
       case PLUS:
+        if (n_rows != rightHandOperand.n_rows || n_cols != rightHandOperand.n_cols) {
+          throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + rightHandOperand.n_rows + ", " + rightHandOperand.n_cols + ") must have the same shape.");
+        }
+
         for (int n = 0; n < n_elem; n++) {
           _data[n] += rightHandOperand._data[n];
         }
         break;
       case MINUS:
+        if (n_rows != rightHandOperand.n_rows || n_cols != rightHandOperand.n_cols) {
+          throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + rightHandOperand.n_rows + ", " + rightHandOperand.n_cols + ") must have the same shape.");
+        }
+
         for (int n = 0; n < n_elem; n++) {
           _data[n] -= rightHandOperand._data[n];
         }
         break;
       case TIMES:
+        /*
+         * The parameter "rightHandOperand" is validated within times(AbstractMat).
+         */
         AbstractMat result = times(rightHandOperand);
         copy_size(result);
         System.arraycopy(result._data, 0, _data, 0, result.n_elem);
         break;
       case ELEMTIMES:
+        if (n_rows != rightHandOperand.n_rows || n_cols != rightHandOperand.n_cols) {
+          throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + rightHandOperand.n_rows + ", " + rightHandOperand.n_cols + ") must have the same shape.");
+        }
+
         for (int n = 0; n < n_elem; n++) {
           _data[n] *= rightHandOperand._data[n];
         }
         break;
       case ELEMDIVIDE:
+        if (n_rows != rightHandOperand.n_rows || n_cols != rightHandOperand.n_cols) {
+          throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + rightHandOperand.n_rows + ", " + rightHandOperand.n_cols + ") must have the same shape.");
+        }
+
         for (int n = 0; n < n_elem; n++) {
           _data[n] /= rightHandOperand._data[n];
         }
@@ -2485,7 +2514,7 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final double X) throws RuntimeException;
@@ -2497,7 +2526,7 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Col X) throws RuntimeException;
@@ -2507,7 +2536,7 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Row X) throws RuntimeException;
@@ -2517,7 +2546,7 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
-   * @throws RuntimeException The numbers of columns ({@code n_cols}) must be equal to the number of rows (
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Mat X) throws RuntimeException;
