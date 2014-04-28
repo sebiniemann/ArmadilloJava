@@ -141,42 +141,42 @@ abstract class AbstractVector extends AbstractMat {
    */
   abstract public AbstractVector subvec(final int first_index, final int last_index) throws IndexOutOfBoundsException;
 
-  /**
-   * Performs a in-place unary operation on the {@code first_index}th to {@code last_index} element.
-   * 
-   * @param first_index The first position
-   * @param last_index The last position
-   * @param unary_operator The unary operator
-   * 
-   * @throws RuntimeException The first specified position ({@code first_index}) must be less than or equal the last
-   *           specified position ({@code last_index}).
-   * @throws IndexOutOfBoundsException The first specified position ({@code first_index}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified position ({@code last_index}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void subvec(final int first_index, final int last_index, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (last_index < first_index) {
-      throw new RuntimeException("The first specified position (" + first_index + ") must be less than or equal the last specified position (" + last_index + ").");
-    }
-
-    if (first_index < 0) {
-      throw new IndexOutOfBoundsException("The first specified position (" + first_index + ") is out of bounds.");
-    }
-
-    if (last_index > n_elem - 1) {
-      throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
-    }
-
-    if (is_colvec()) {
-      new ViewSubCol(this, 0, first_index, last_index).inPlace(unary_operator);
-    } else {
-      new ViewSubRow(this, 0, first_index, last_index).inPlace(unary_operator);
-    }
-  }
+//  /**
+//   * Performs a in-place unary operation on the {@code first_index}th to {@code last_index} element.
+//   * 
+//   * @param first_index The first position
+//   * @param last_index The last position
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws RuntimeException The first specified position ({@code first_index}) must be less than or equal the last
+//   *           specified position ({@code last_index}).
+//   * @throws IndexOutOfBoundsException The first specified position ({@code first_index}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified position ({@code last_index}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void subvec(final int first_index, final int last_index, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (last_index < first_index) {
+//      throw new RuntimeException("The first specified position (" + first_index + ") must be less than or equal the last specified position (" + last_index + ").");
+//    }
+//
+//    if (first_index < 0) {
+//      throw new IndexOutOfBoundsException("The first specified position (" + first_index + ") is out of bounds.");
+//    }
+//
+//    if (last_index > n_elem - 1) {
+//      throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
+//    }
+//
+//    if (is_colvec()) {
+//      new ViewSubCol(this, 0, first_index, last_index).inPlace(unary_operator);
+//    } else {
+//      new ViewSubRow(this, 0, first_index, last_index).inPlace(unary_operator);
+//    }
+//  }
 
   /**
    * Performs a in-place binary operation on the {@code first_index}th to {@code last_index} element with the specified
@@ -266,23 +266,23 @@ abstract class AbstractVector extends AbstractMat {
    */
   abstract public AbstractVector subvec(final Span span) throws IndexOutOfBoundsException;
 
-  /**
-   * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} element.
-   * 
-   * @param span The span
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The first specified position ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified position ({@code span._last}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void subvec(final Span span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-    subvec(span._first, span._last, unary_operator);
-  }
+//  /**
+//   * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} element.
+//   * 
+//   * @param span The span
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The first specified position ({@code span._first}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified position ({@code span._last}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void subvec(final Span span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "span" was already validated during its instantiation.
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//    subvec(span._first, span._last, unary_operator);
+//  }
 
   /**
    * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified

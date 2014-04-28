@@ -854,26 +854,26 @@ abstract class AbstractMat {
     return new Col(Arrays.copyOfRange(_data, n, n + n_rows));
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code col_number}th column.
-   * 
-   * @param col_number The column
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void col(final int col_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (col_number < 0 || col_number > n_cols - 1) {
-      throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
-    }
-
-    new ViewSubCol(this, col_number).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code col_number}th column.
+//   * 
+//   * @param col_number The column
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void col(final int col_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (col_number < 0 || col_number > n_cols - 1) {
+//      throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
+//    }
+//
+//    new ViewSubCol(this, col_number).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code col_number}th column with the specified right-hand side
@@ -936,26 +936,26 @@ abstract class AbstractMat {
     return new Row(new ViewSubRow(this, row_number));
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code row_number}th row.
-   * 
-   * @param row_number The row
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void row(final int row_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (row_number < 0 || row_number > n_rows - 1) {
-      throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
-    }
-
-    new ViewSubRow(this, row_number).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code row_number}th row.
+//   * 
+//   * @param row_number The row
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void row(final int row_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (row_number < 0 || row_number > n_rows - 1) {
+//      throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
+//    }
+//
+//    new ViewSubRow(this, row_number).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code row_number}th row with the specified right-hand side operand.
@@ -1033,38 +1033,38 @@ abstract class AbstractMat {
     return cols;
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code first_col}th to {@code last_col} column.
-   * 
-   * @param first_col The first column
-   * @param last_col The last column
-   * @param unary_operator The unary operator
-   * 
-   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
-   *           specified column ({@code last_col}).
-   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void cols(final int first_col, final int last_col, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (last_col < first_col) {
-      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ").");
-    }
-
-    if (first_col < 0) {
-      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bounds.");
-    }
-
-    if (last_col > n_cols - 1) {
-      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bounds.");
-    }
-
-    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code first_col}th to {@code last_col} column.
+//   * 
+//   * @param first_col The first column
+//   * @param last_col The last column
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
+//   *           specified column ({@code last_col}).
+//   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void cols(final int first_col, final int last_col, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (last_col < first_col) {
+//      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ").");
+//    }
+//
+//    if (first_col < 0) {
+//      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bounds.");
+//    }
+//
+//    if (last_col > n_cols - 1) {
+//      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bounds.");
+//    }
+//
+//    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code first_col}th to {@code last_col} column with the specified
@@ -1163,38 +1163,38 @@ abstract class AbstractMat {
     return new Mat(new ViewSubRows(this, first_row, last_row - first_row + 1));
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row.
-   * 
-   * @param first_row The first row
-   * @param last_row The last row
-   * @param unary_operator The unary operator
-   * 
-   * @throws RuntimeException The first specified row ({@code first_col}) must be less than or equal the last specified
-   *           row ({@code last_col}).
-   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void rows(final int first_row, final int last_row, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (last_row < first_row) {
-      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ").");
-    }
-
-    if (first_row < 0) {
-      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
-    }
-
-    if (last_row > n_rows - 1) {
-      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
-    }
-
-    new ViewSubRows(this, first_row, last_row - first_row + 1).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row.
+//   * 
+//   * @param first_row The first row
+//   * @param last_row The last row
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws RuntimeException The first specified row ({@code first_col}) must be less than or equal the last specified
+//   *           row ({@code last_col}).
+//   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void rows(final int first_row, final int last_row, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (last_row < first_row) {
+//      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ").");
+//    }
+//
+//    if (first_row < 0) {
+//      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
+//    }
+//
+//    if (last_row > n_rows - 1) {
+//      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
+//    }
+//
+//    new ViewSubRows(this, first_row, last_row - first_row + 1).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row with the specified
@@ -1301,43 +1301,43 @@ abstract class AbstractMat {
     }
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code span._first}th to {@code span._last} row of the
-   * {@code col_number}th column.
-   * 
-   * @param span The span
-   * @param col_number The column
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code span._last}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void col(final Span span, final int col_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (span._isEntireRange) {
-      col(col_number, unary_operator);
-    } else {
-      if (col_number < 0 || col_number > n_cols - 1) {
-        throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
-      }
-
-      if (span._first < 0) {
-        throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
-      }
-
-      if (span._last > n_rows - 1) {
-        throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
-      }
-
-      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
-    }
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code span._first}th to {@code span._last} row of the
+//   * {@code col_number}th column.
+//   * 
+//   * @param span The span
+//   * @param col_number The column
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code span._last}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void col(final Span span, final int col_number, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "span" was already validated during its instantiation.
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (span._isEntireRange) {
+//      col(col_number, unary_operator);
+//    } else {
+//      if (col_number < 0 || col_number > n_cols - 1) {
+//        throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
+//      }
+//
+//      if (span._first < 0) {
+//        throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
+//      }
+//
+//      if (span._last > n_rows - 1) {
+//        throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
+//      }
+//
+//      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
+//    }
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code span._first}th to {@code span._last} row of the
@@ -1451,43 +1451,43 @@ abstract class AbstractMat {
     }
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
-   * {@code span._last} column.
-   * 
-   * @param row_number The row
-   * @param span The span
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified column ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified column ({@code span._last}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void row(final int row_number, final Span span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (span._isEntireRange) {
-      row(row_number, unary_operator);
-    } else {
-      if (row_number < 0 || row_number > n_rows - 1) {
-        throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
-      }
-
-      if (span._first < 0) {
-        throw new IndexOutOfBoundsException("The first specified column (" + span._first + ") is out of bounds.");
-      }
-
-      if (span._last > n_cols - 1) {
-        throw new IndexOutOfBoundsException("The last specified column (" + span._last + ") is out of bounds.");
-      }
-
-      new ViewSubRow(this, row_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
-    }
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code row_number}th row of the {@code span._first}th to
+//   * {@code span._last} column.
+//   * 
+//   * @param row_number The row
+//   * @param span The span
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The first specified column ({@code span._first}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code span._last}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void row(final int row_number, final Span span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "span" was already validated during its instantiation.
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (span._isEntireRange) {
+//      row(row_number, unary_operator);
+//    } else {
+//      if (row_number < 0 || row_number > n_rows - 1) {
+//        throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
+//      }
+//
+//      if (span._first < 0) {
+//        throw new IndexOutOfBoundsException("The first specified column (" + span._first + ") is out of bounds.");
+//      }
+//
+//      if (span._last > n_cols - 1) {
+//        throw new IndexOutOfBoundsException("The last specified column (" + span._last + ") is out of bounds.");
+//      }
+//
+//      new ViewSubRow(this, row_number, span._first, span._last - span._first + 1).inPlace(unary_operator);
+//    }
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code row_number}th row of the {@code span._first}th to
@@ -1613,57 +1613,57 @@ abstract class AbstractMat {
     return new Mat(new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1));
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
-   * to {@code last_col} column.
-   * 
-   * @param first_row The first row
-   * @param first_col The first column
-   * @param last_row The last row
-   * @param last_col The last column
-   * @param unary_operator The unary operator
-   * 
-   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
-   *           specified column ({@code last_col}).
-   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
-   * @throws RuntimeException The first specified row ({@code first_col}) must be less than or equal the last specified
-   *           row ({@code last_col}).
-   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void submat(final int first_row, final int first_col, final int last_row, final int last_col, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-     */
-
-    if (last_col < first_col) {
-      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ").");
-    }
-
-    if (first_col < 0) {
-      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bounds.");
-    }
-
-    if (last_col > n_cols - 1) {
-      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bounds.");
-    }
-
-    if (last_row < first_row) {
-      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ").");
-    }
-
-    if (first_row < 0) {
-      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
-    }
-
-    if (last_row > n_rows - 1) {
-      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
-    }
-
-    new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
+//   * to {@code last_col} column.
+//   * 
+//   * @param first_row The first row
+//   * @param first_col The first column
+//   * @param last_row The last row
+//   * @param last_col The last column
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
+//   *           specified column ({@code last_col}).
+//   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
+//   * @throws RuntimeException The first specified row ({@code first_col}) must be less than or equal the last specified
+//   *           row ({@code last_col}).
+//   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void submat(final int first_row, final int first_col, final int last_row, final int last_col, final Op unary_operator) throws RuntimeException, IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
+//     */
+//
+//    if (last_col < first_col) {
+//      throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ").");
+//    }
+//
+//    if (first_col < 0) {
+//      throw new IndexOutOfBoundsException("The first specified column (" + first_col + ") is out of bounds.");
+//    }
+//
+//    if (last_col > n_cols - 1) {
+//      throw new IndexOutOfBoundsException("The last specified column (" + last_col + ") is out of bounds.");
+//    }
+//
+//    if (last_row < first_row) {
+//      throw new RuntimeException("The first specified row (" + first_row + ") must be less than or equal the last specified row (" + last_row + ").");
+//    }
+//
+//    if (first_row < 0) {
+//      throw new IndexOutOfBoundsException("The first specified row (" + first_row + ") is out of bounds.");
+//    }
+//
+//    if (last_row > n_rows - 1) {
+//      throw new IndexOutOfBoundsException("The last specified row (" + last_row + ") is out of bounds.");
+//    }
+//
+//    new ViewSubMat(this, first_row, first_col, last_row - first_row + 1, last_col - first_col + 1).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code first_row}th to {@code last_row} row of the {@code first_col}th
@@ -1790,26 +1790,26 @@ abstract class AbstractMat {
     return submat(row_span._first, col_span._first, row_span._last, col_span._last);
   }
 
-  /**
-   * Performs an in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
-   * {@code col_span._first}th to {@code col_span._last} column.
-   * 
-   * @param row_span The row span
-   * @param col_span The column span
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void submat(final Span row_span, final Span col_span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameters "row_span" and "col_span" were already validated during their instantiation.
-     */
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+//   * {@code col_span._first}th to {@code col_span._last} column.
+//   * 
+//   * @param row_span The row span
+//   * @param col_span The column span
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void submat(final Span row_span, final Span col_span, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameters "row_span" and "col_span" were already validated during their instantiation.
+//     */
+//    submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
@@ -1875,27 +1875,27 @@ abstract class AbstractMat {
     return submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1);
   }
 
-  /**
-   * Performs an in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
-   * rows and {@code size.n_cols} columns.
-   * 
-   * @param first_row The first row
-   * @param first_col The first column
-   * @param size The size
-   * @param unary_operator The unary operator
-   * 
-   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void submat(final int first_row, final int first_col, final Size size, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "size" was already validated during its instantiation.
-     */
-    submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
+//   * rows and {@code size.n_cols} columns.
+//   * 
+//   * @param first_row The first row
+//   * @param first_col The first column
+//   * @param size The size
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void submat(final int first_row, final int first_col, final Size size, final Op unary_operator) throws IndexOutOfBoundsException, UnsupportedOperationException {
+//    /*
+//     * The parameter "size" was already validated during its instantiation.
+//     */
+//    submat(first_row, first_col, first_row + size.n_rows - 1, first_col + size.n_cols - 1, unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the position ({@code first_row}, {@code first_col}) of {@code size.n_rows}
@@ -1955,20 +1955,20 @@ abstract class AbstractMat {
     return new Col(new ViewElemMat(this, vector_of_indices._data));
   }
 
-  /**
-   * Performs an in-place unary operation on the specified elements.
-   * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
-   * errors.
-   * 
-   * @param vector_of_indices The positions
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void elem(final AbstractVector vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_indices._data).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the specified elements.
+//   * <p>
+//   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+//   * errors.
+//   * 
+//   * @param vector_of_indices The positions
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void elem(final AbstractVector vector_of_indices, final Op unary_operator) throws UnsupportedOperationException {
+//    new ViewElemMat(this, vector_of_indices._data).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the specified elements with the specified right-hand side operand.
@@ -2014,20 +2014,20 @@ abstract class AbstractMat {
     return new Mat(new ViewElemCols(this, vector_of_column_indices._data));
   }
 
-  /**
-   * Performs an in-place unary operation on the specified columns.
-   * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
-   * errors.
-   * 
-   * @param vector_of_column_indices The columns
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void cols(final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemCols(this, vector_of_column_indices._data).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the specified columns.
+//   * <p>
+//   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+//   * errors.
+//   * 
+//   * @param vector_of_column_indices The columns
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void cols(final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
+//    new ViewElemCols(this, vector_of_column_indices._data).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the specified columns with the specified right-hand side operand.
@@ -2073,20 +2073,20 @@ abstract class AbstractMat {
     return new Mat(new ViewElemRows(this, vector_of_row_indices._data));
   }
 
-  /**
-   * Performs an in-place unary operation on the specified rows.
-   * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
-   * errors.
-   * 
-   * @param vector_of_row_indices The rows
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void rows(final AbstractVector vector_of_row_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemRows(this, vector_of_row_indices._data).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the specified rows.
+//   * <p>
+//   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+//   * errors.
+//   * 
+//   * @param vector_of_row_indices The rows
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void rows(final AbstractVector vector_of_row_indices, final Op unary_operator) throws UnsupportedOperationException {
+//    new ViewElemRows(this, vector_of_row_indices._data).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the specified rows with the specified right-hand side operand.
@@ -2133,21 +2133,21 @@ abstract class AbstractMat {
     return new Mat(new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data));
   }
 
-  /**
-   * Performs an in-place unary operation on the specified rows of the specified columns.
-   * <p>
-   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
-   * errors.
-   * 
-   * @param vector_of_row_indices The rows
-   * @param vector_of_column_indices The columns
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
-    new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data).inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on the specified rows of the specified columns.
+//   * <p>
+//   * <b>Note:</b> No explicit error handling. However, the JVM should throw IndexOutOfBoundsException exceptions upon
+//   * errors.
+//   * 
+//   * @param vector_of_row_indices The rows
+//   * @param vector_of_column_indices The columns
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices, final Op unary_operator) throws UnsupportedOperationException {
+//    new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data).inPlace(unary_operator);
+//  }
 
   /**
    * Performs an in-place binary operation on the specified rows of the specified columns with the specified right-hand
