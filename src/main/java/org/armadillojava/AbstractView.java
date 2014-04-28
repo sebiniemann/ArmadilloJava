@@ -112,13 +112,12 @@ abstract class AbstractView {
         }
         break;
       case TIMES:
-      case ELEMTIMES:
         iteratorReset();
         while (iteratorHasNext()) {
           _data[iteratorNext()] *= rightHandOperand;
         }
         break;
-      case ELEMDIVIDE:
+      case DIVIDE:
         iteratorReset();
         while (iteratorHasNext()) {
           _data[iteratorNext()] /= rightHandOperand;

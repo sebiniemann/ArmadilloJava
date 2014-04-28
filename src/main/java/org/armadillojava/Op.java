@@ -53,6 +53,10 @@ public enum Op {
    */
   ELEMTIMES,
   /**
+   * Division (binary arithmetic operator)
+   */
+  DIVIDE,
+  /**
    * Element-wise division (binary arithmetic operator)
    */
   ELEMDIVIDE,

@@ -114,7 +114,7 @@ abstract class AbstractMat {
       case TIMES:
         _data[n] *= operand;
         break;
-      case ELEMDIVIDE:
+      case DIVIDE:
         _data[n] /= operand;
         break;
       default:
@@ -2234,12 +2234,11 @@ abstract class AbstractMat {
         }
         break;
       case TIMES:
-      case ELEMTIMES:
         for (int n = 0; n < n_elem; n++) {
           _data[n] *= rightHandOperand;
         }
         break;
-      case ELEMDIVIDE:
+      case DIVIDE:
         for (int n = 0; n < n_elem; n++) {
           _data[n] /= rightHandOperand;
         }

@@ -332,35 +332,35 @@ public class Mat extends AbstractMat {
     new ViewDiag(this, k).inPlace(binary_operator, operand);
   }
 
-  /**
-   * Performs an in-place unary operation on each column of the matrix individually.
-   * 
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void each_col(final Op unary_operator) throws UnsupportedOperationException {
-    /*
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
-     */
-    inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on each column of the matrix individually.
+//   * 
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void each_col(final Op unary_operator) throws UnsupportedOperationException {
+//    /*
+//     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+//     */
+//    inPlace(unary_operator);
+//  }
 
-  /**
-   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side
-   * operand.
-   * 
-   * @param binary_operator The binary operator
-   * @param operand The operand
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
-   */
-  public void each_col(final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    /*
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
-     */
-    inPlace(binary_operator, operand);
-  }
+//  /**
+//   * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side
+//   * operand.
+//   * 
+//   * @param binary_operator The binary operator
+//   * @param operand The operand
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
+//   */
+//  public void each_col(final Op binary_operator, final double operand) throws UnsupportedOperationException {
+//    /*
+//     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+//     */
+//    inPlace(binary_operator, operand);
+//  }
 
   /**
    * Performs an in-place binary operation on each column of the matrix individually with the specified right-hand side
@@ -442,35 +442,35 @@ public class Mat extends AbstractMat {
     }
   }
 
-  /**
-   * Performs an in-place unary operation on each row of the matrix individually.
-   * 
-   * @param unary_operator The unary operator
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-   */
-  public void each_row(final Op unary_operator) throws UnsupportedOperationException {
-    /*
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
-     */
-    inPlace(unary_operator);
-  }
+//  /**
+//   * Performs an in-place unary operation on each row of the matrix individually.
+//   * 
+//   * @param unary_operator The unary operator
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//  public void each_row(final Op unary_operator) throws UnsupportedOperationException {
+//    /*
+//     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+//     */
+//    inPlace(unary_operator);
+//  }
 
-  /**
-   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side
-   * operand.
-   * 
-   * @param binary_operator The binary operator
-   * @param operand The operand
-   * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
-   */
-  public void each_row(final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    /*
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
-     */
-    inPlace(binary_operator, operand);
-  }
+//  /**
+//   * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side
+//   * operand.
+//   * 
+//   * @param binary_operator The binary operator
+//   * @param operand The operand
+//   * 
+//   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
+//   */
+//  public void each_row(final Op binary_operator, final double operand) throws UnsupportedOperationException {
+//    /*
+//     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
+//     */
+//    inPlace(binary_operator, operand);
+//  }
 
   /**
    * Performs an in-place binary operation on each row of the matrix individually with the specified right-hand side
@@ -613,10 +613,9 @@ public class Mat extends AbstractMat {
         _data[i + j * n_rows] -= operand;
         break;
       case TIMES:
-      case ELEMTIMES:
         _data[i + j * n_rows] *= operand;
         break;
-      case ELEMDIVIDE:
+      case DIVIDE:
         _data[i + j * n_rows] /= operand;
         break;
       default:

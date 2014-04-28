@@ -3525,11 +3525,11 @@ public class Arma {
       switch (norm_type) {
         case 0:
           if (X.n_rows > 1) {
-            result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+            result.inPlace(Op.DIVIDE, X.n_rows - 1);
           }
           break;
         case 1:
-          result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+          result.inPlace(Op.DIVIDE, X.n_rows);
           break;
         default:
           throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
@@ -3594,11 +3594,11 @@ public class Arma {
     switch (norm_type) {
       case 0:
         if (X.n_rows > 1) {
-          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+          result.inPlace(Op.DIVIDE, X.n_rows - 1);
         }
         break;
       case 1:
-        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        result.inPlace(Op.DIVIDE, X.n_rows);
         break;
       default:
         throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
@@ -3791,11 +3791,11 @@ public class Arma {
     switch (norm_type) {
       case 0:
         if (X.n_rows > 1) {
-          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+          result.inPlace(Op.DIVIDE, X.n_rows - 1);
         }
         break;
       case 1:
-        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        result.inPlace(Op.DIVIDE, X.n_rows);
         break;
       default:
         throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
@@ -3858,11 +3858,11 @@ public class Arma {
     switch (norm_type) {
       case 0:
         if (X.n_rows > 1) {
-          result.inPlace(Op.ELEMDIVIDE, X.n_rows - 1);
+          result.inPlace(Op.DIVIDE, X.n_rows - 1);
         }
         break;
       case 1:
-        result.inPlace(Op.ELEMDIVIDE, X.n_rows);
+        result.inPlace(Op.DIVIDE, X.n_rows);
         break;
       default:
         throw new IllegalArgumentException("The specified normalisation (" + norm_type + ") must either be 0 or 1.");
@@ -5948,7 +5948,7 @@ public class Arma {
         return false;
       }
 
-      s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
+      s.inPlace(Op.DIVIDE, Math.sqrt(X.n_rows - 1));
 
       score.inPlace(Op.TIMES, coeff);
 
@@ -5999,7 +5999,7 @@ public class Arma {
         return false;
       }
 
-      s.inPlace(Op.ELEMDIVIDE, Math.sqrt(X.n_rows - 1));
+      s.inPlace(Op.DIVIDE, Math.sqrt(X.n_rows - 1));
 
       score.inPlace(Op.TIMES, coeff);
 
@@ -6429,7 +6429,7 @@ public class Arma {
 
     LAPACK.getInstance().dtrsyl("N", "N", 1, T1.n_rows, T2.n_cols, T1._data, T1.n_rows, T2._data, T2.n_cols, Y._data, T1.n_rows, scale, info);
 
-    Y.inPlace(Op.ELEMDIVIDE, -scale.val);
+    Y.inPlace(Op.DIVIDE, -scale.val);
     X.inPlace(Op.EQUAL, Z1.times(Y).times(trans(Z2)));
 
     return (info.val >= 0);

@@ -100,15 +100,7 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
     
     _genMat.at(_elemInd, Op.PLUS, _genDouble);
     
-    try {
-      assertMatEquals(_genMat, load("Mat.atPlus"));
-    } catch (AssertionError e) {
-      System.out.println(_fileSuffix);
-      System.out.println(_genMat);
-      System.out.println(_genDouble);
-      throw e;
-    }
-    
+    assertMatEquals(_genMat, load("Mat.atPlus"));
   }
 
   @Test
@@ -130,12 +122,12 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
   }
 
   @Test
-  public void testMatAtElemDivide() throws IOException {
+  public void testMatAtDivide() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
     
-    _genMat.at(_elemInd, Op.ELEMDIVIDE, _genDouble);
+    _genMat.at(_elemInd, Op.DIVIDE, _genDouble);
     
-    assertMatEquals(_genMat, load("Mat.atElemDivide"));
+    assertMatEquals(_genMat, load("Mat.atDivide"));
   }
 
 }

@@ -86,7 +86,7 @@ namespace armadilloJava {
             _genMat = _copyOfGenMat;
             _elemInd = _copyOfElemInd;
             _genDouble = _copyOfGenDouble;
-            expectedMatAtElemDivide();
+            expectedMatAtDivide();
           }
 
           cout << "done." << endl;
@@ -150,15 +150,15 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatAtElemDivide() {
+      void expectedMatAtDivide() {
         if(_elemInd >= _genMat.n_elem) {
           return;
         }
 
         _genMat.at(_elemInd) /= _genDouble;
 
-        cout << "- Compute expectedMatAtPElemDivide() ... ";
-        save<double>("Mat.atElemDivide", _genMat);
+        cout << "- Compute expectedMatAtDivide() ... ";
+        save<double>("Mat.atDivide", _genMat);
         cout << "done." << endl;
       }
   };
