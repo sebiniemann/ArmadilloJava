@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 
 import java.io.IOException;
@@ -239,6 +240,16 @@ public class TestInPlaceGenMatGenMat extends TestClass {
     _genMatA.each_row(Op.ELEMDIVIDE, _genMatB);
     
     assertMatEquals(_genMatA, load("Mat.each_rowElemDivide"));
+  }
+
+  @Test
+  public void testMatCopy_size() throws IOException {
+    _genMatA.copy_size(_genMatB);
+    
+    Mat expected = load("Mat.copy_size");
+    
+    assertThat(_genMatA.n_rows, is(expected.n_rows));
+    assertThat(_genMatA.n_cols, is(expected.n_cols));
   }
 
 }

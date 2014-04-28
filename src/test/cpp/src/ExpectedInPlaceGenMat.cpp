@@ -64,6 +64,12 @@ namespace armadilloJava {
 
             _genMat = _copyOfGenMat;
             expectedMatZeros();
+
+            _genMat = _copyOfGenMat;
+            expectedMatInPlaceIncrement();
+
+            _genMat = _copyOfGenMat;
+            expectedMatInPlaceDecrement();
           }
 
           cout << "done." << endl;
@@ -96,6 +102,24 @@ namespace armadilloJava {
 
         _genMat.zeros();
         save<double>("Mat.zeros", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatInPlaceIncrement() {
+        cout << "- Compute expectedMatInPlaceIncrement() ... ";
+
+        _genMat++;
+        save<double>("Mat.inPlaceIncrement", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatInPlaceDecrement() {
+        cout << "- Compute expectedMatInPlaceDecrement() ... ";
+
+        _genMat--;
+        save<double>("Mat.inPlaceDecrement", _genMat);
 
         cout << "done." << endl;
       }

@@ -81,4 +81,18 @@ public class TestInPlaceGenMat extends TestClass {
     assertMatEquals(_genMat, load("Mat.zeros"));
   }
 
+  @Test
+  public void testMatInPlaceIncrement() throws IOException {  
+    _genMat.inPlace(Op.INCREMENT);
+    
+    assertMatEquals(_genMat, load("Mat.inPlaceIncrement"));
+  }
+
+  @Test
+  public void testMatInPlaceDecrement() throws IOException {
+    _genMat.inPlace(Op.DECREMENT);
+    
+    assertMatEquals(_genMat, load("Mat.inPlaceDecrement"));
+  }
+
 }

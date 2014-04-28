@@ -86,12 +86,6 @@ class Input {
         case MatSize:
           inputs.add(getMatSize());
           break;
-        case ColVecSize:
-          inputs.add(getColVecSize());
-          break;
-        case RowVecSize:
-          inputs.add(getRowVecSize());
-          break;
         case GenMat:
           inputs.add(getGenMat());
           break;
@@ -112,18 +106,6 @@ class Input {
           break;
         case OOMat:
           inputs.add(getOOMat());
-          break;
-        case GenVec:
-          inputs.add(getGenVec());
-          break;
-        case MonVec:
-          inputs.add(getMonVec());
-          break;
-        case LogicVec:
-          inputs.add(getLogicVec());
-          break;
-        case OOVec:
-          inputs.add(getOOVec());
           break;
         case GenColVec:
           inputs.add(getGenColVec());
@@ -149,14 +131,23 @@ class Input {
         case OORowVec:
           inputs.add(getOORowVec());
           break;
-        case ElemInds:
-          inputs.add(getElemInds());
+        case ElemIndsAsColVec:
+          inputs.add(getElemIndsAsColVec());
           break;
-        case ColInds:
-          inputs.add(getColInds());
+        case ElemIndsAsRowVec:
+          inputs.add(getElemIndsAsRowVec());
           break;
-        case RowInds:
-          inputs.add(getRowInds());
+        case ColIndsAsColVec:
+          inputs.add(getColIndsAsColVec());
+          break;
+        case ColIndsAsRowVec:
+          inputs.add(getColIndsAsRowVec());
+          break;
+        case RowIndsAsColVec:
+          inputs.add(getRowIndsAsColVec());
+          break;
+        case RowIndsAsRowVec:
+          inputs.add(getRowIndsAsRowVec());
           break;
         case MatNormString:
           inputs.add(getMatNormString());
@@ -511,30 +502,6 @@ class Input {
     return input;
   }
 
-  protected static List<Pair<String, Object>> getColVecSize() {
-    List<Pair<String, Object>> input = new ArrayList<>();
-
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (int) keyValuePair.getSecond();
-
-      input.add(new Pair<String, Object>("size(" + numElems + ",1)", new Size(new Col(numElems))));
-    }
-
-    return input;
-  }
-
-  protected static List<Pair<String, Object>> getRowVecSize() {
-    List<Pair<String, Object>> input = new ArrayList<>();
-
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (int) keyValuePair.getSecond();
-
-      input.add(new Pair<String, Object>("size(1," + numElems + ")", new Size(new Row(numElems))));
-    }
-
-    return input;
-  }
-
   protected static List<Pair<String, Object>> getGenMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
@@ -652,45 +619,6 @@ class Input {
     }
 
     return input;
-  }
-
-  protected static List<Pair<String, Object>> getGenVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getGenColVec());
-    inputs.add(getGenRowVec());
-    inputs.add(getMonVec());
-    inputs.add(getLogicVec());
-    inputs.add(getOOVec());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getMonVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getMonColVec());
-    inputs.add(getMonRowVec());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getLogicVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getLogicColVec());
-    inputs.add(getLogicRowVec());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getOOVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(getOOColVec());
-    inputs.add(getOORowVec());
-
-    return vectorUnion(inputs);
   }
 
   protected static List<Pair<String, Object>> getGenColVec() {
@@ -841,14 +769,12 @@ class Input {
     return input;
   }
 
-  protected static List<Pair<String, Object>> getElemInds() {
+  protected static List<Pair<String, Object>> getElemIndsAsColVec() {
     List<List<Pair<String, Object>>> inputs = new ArrayList<>();
 
     List<Pair<String, Object>> input = new ArrayList<>();
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
     input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
     inputs.add(input);
 
     for (Pair<String, Object> keyValuePair : getNumElems()) {
@@ -856,9 +782,7 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({" + (numElems - 1) + "})", new Col(new double[]{numElems - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numElems - 1) + "})", new Row(new double[]{numElems - 1})));
       input.add(new Pair<String, Object>("Col({" + (numElems / 2 - 1) + "," + (numElems / 2) + "," + (numElems / 2 + 1) + "})", new Col(new double[]{numElems / 2 - 1, numElems / 2, numElems / 2 + 1})));
-      input.add(new Pair<String, Object>("Row({" + (numElems / 2 - 1) + "," + (numElems / 2) + "," + (numElems / 2 + 1) + "})", new Row(new double[]{numElems / 2 - 1, numElems / 2, numElems / 2 + 1})));
       inputs.add(input);
 
       double[] sequenceA = new double[numElems];
@@ -870,8 +794,38 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      inputs.add(input);
+    }
+
+    return vectorUnion(inputs);
+  }
+
+  protected static List<Pair<String, Object>> getElemIndsAsRowVec() {
+    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
+
+    List<Pair<String, Object>> input = new ArrayList<>();
+    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
+    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
+    inputs.add(input);
+
+    for (Pair<String, Object> keyValuePair : getNumElems()) {
+      int numElems = (Integer) (keyValuePair.getSecond());
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({" + (numElems - 1) + "})", new Row(new double[]{numElems - 1})));
+      input.add(new Pair<String, Object>("Row({" + (numElems / 2 - 1) + "," + (numElems / 2) + "," + (numElems / 2 + 1) + "})", new Row(new double[]{numElems / 2 - 1, numElems / 2, numElems / 2 + 1})));
+      inputs.add(input);
+
+      double[] sequenceA = new double[numElems];
+      double[] sequenceB = new double[numElems];
+      for (int n = 0; n < numElems; n++) {
+        sequenceA[n] = n;
+        sequenceB[n] = ((n % 2 == 0) ? n : numElems - n);
+      }
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }
@@ -879,14 +833,12 @@ class Input {
     return vectorUnion(inputs);
   }
 
-  protected static List<Pair<String, Object>> getColInds() {
+  protected static List<Pair<String, Object>> getColIndsAsColVec() {
     List<List<Pair<String, Object>>> inputs = new ArrayList<>();
 
     List<Pair<String, Object>> input = new ArrayList<>();
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
     input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
     inputs.add(input);
 
     for (Pair<String, Object> keyValuePair : getNumCols()) {
@@ -894,9 +846,7 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({" + (numCols - 1) + "})", new Col(new double[]{numCols - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numCols - 1) + "})", new Row(new double[]{numCols - 1})));
       input.add(new Pair<String, Object>("Col({" + (numCols / 2 - 1) + "," + (numCols / 2) + "," + (numCols / 2 + 1) + "})", new Col(new double[]{numCols / 2 - 1, numCols / 2, numCols / 2 + 1})));
-      input.add(new Pair<String, Object>("Row({" + (numCols / 2 - 1) + "," + (numCols / 2) + "," + (numCols / 2 + 1) + "})", new Row(new double[]{numCols / 2 - 1, numCols / 2, numCols / 2 + 1})));
       inputs.add(input);
 
       double[] sequenceA = new double[numCols];
@@ -908,8 +858,38 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      inputs.add(input);
+    }
+
+    return vectorUnion(inputs);
+  }
+
+  protected static List<Pair<String, Object>> getColIndsAsRowVec() {
+    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
+
+    List<Pair<String, Object>> input = new ArrayList<>();
+    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
+    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
+    inputs.add(input);
+
+    for (Pair<String, Object> keyValuePair : getNumCols()) {
+      int numCols = (Integer) (keyValuePair.getSecond());
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({" + (numCols - 1) + "})", new Row(new double[]{numCols - 1})));
+      input.add(new Pair<String, Object>("Row({" + (numCols / 2 - 1) + "," + (numCols / 2) + "," + (numCols / 2 + 1) + "})", new Row(new double[]{numCols / 2 - 1, numCols / 2, numCols / 2 + 1})));
+      inputs.add(input);
+
+      double[] sequenceA = new double[numCols];
+      double[] sequenceB = new double[numCols];
+      for (int n = 0; n < numCols; n++) {
+        sequenceA[n] = n;
+        sequenceB[n] = ((n % 2 == 0) ? n : numCols - n);
+      }
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }
@@ -917,14 +897,12 @@ class Input {
     return vectorUnion(inputs);
   }
 
-  protected static List<Pair<String, Object>> getRowInds() {
+  protected static List<Pair<String, Object>> getRowIndsAsColVec() {
     List<List<Pair<String, Object>>> inputs = new ArrayList<>();
 
     List<Pair<String, Object>> input = new ArrayList<>();
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
     input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
     inputs.add(input);
 
     for (Pair<String, Object> keyValuePair : getNumRows()) {
@@ -932,9 +910,7 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({" + (numRows - 1) + "})", new Col(new double[]{numRows - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numRows - 1) + "})", new Row(new double[]{numRows - 1})));
       input.add(new Pair<String, Object>("Col({" + (numRows / 2 - 1) + "," + (numRows / 2) + "," + (numRows / 2 + 1) + "})", new Col(new double[]{numRows / 2 - 1, numRows / 2, numRows / 2 + 1})));
-      input.add(new Pair<String, Object>("Row({" + (numRows / 2 - 1) + "," + (numRows / 2) + "," + (numRows / 2 + 1) + "})", new Row(new double[]{numRows / 2 - 1, numRows / 2, numRows / 2 + 1})));
       inputs.add(input);
 
       double[] sequenceA = new double[numRows];
@@ -946,8 +922,38 @@ class Input {
 
       input.clear();
       input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
+      inputs.add(input);
+    }
+
+    return vectorUnion(inputs);
+  }
+
+  protected static List<Pair<String, Object>> getRowIndsAsRowVec() {
+    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
+
+    List<Pair<String, Object>> input = new ArrayList<>();
+    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
+    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
+    inputs.add(input);
+
+    for (Pair<String, Object> keyValuePair : getNumRows()) {
+      int numRows = (Integer) (keyValuePair.getSecond());
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({" + (numRows - 1) + "})", new Row(new double[]{numRows - 1})));
+      input.add(new Pair<String, Object>("Row({" + (numRows / 2 - 1) + "," + (numRows / 2) + "," + (numRows / 2 + 1) + "})", new Row(new double[]{numRows / 2 - 1, numRows / 2, numRows / 2 + 1})));
+      inputs.add(input);
+
+      double[] sequenceA = new double[numRows];
+      double[] sequenceB = new double[numRows];
+      for (int n = 0; n < numRows; n++) {
+        sequenceA[n] = n;
+        sequenceB[n] = ((n % 2 == 0) ? n : numRows - n);
+      }
+
+      input.clear();
+      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
       input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
       inputs.add(input);
     }

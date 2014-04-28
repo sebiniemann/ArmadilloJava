@@ -127,6 +127,10 @@ namespace armadilloJava {
             _genMatA = _copyOfGenMatA;
             _genMatB = _copyOfGenMatB;
             expectedMatEach_rowElemDivide();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatCopy_size();
           }
 
           cout << "done." << endl;
@@ -348,6 +352,15 @@ namespace armadilloJava {
 
         _genMatA.each_row() /= _genMatB;
         save<double>("Mat.each_rowElemDivide", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatCopy_size() {
+        cout << "- Compute expectedMatCopy_size() ... ";
+
+        _genMatA.copy_size(_genMatB);
+        save<double>("Mat.copy_size", _genMatA);
 
         cout << "done." << endl;
       }
