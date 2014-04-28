@@ -71,7 +71,7 @@ public class TestInPlaceGenMatElemInd extends TestClass {
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
-    _elemInd = _copyOfElemInd;
+    _elemInd = new Integer(_copyOfElemInd);
   }
 
   @Test

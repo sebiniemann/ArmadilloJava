@@ -112,7 +112,6 @@ abstract class AbstractMat {
         _data[n] -= operand;
         break;
       case TIMES:
-      case ELEMTIMES:
         _data[n] *= operand;
         break;
       case ELEMDIVIDE:

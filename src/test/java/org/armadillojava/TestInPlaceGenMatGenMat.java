@@ -106,13 +106,7 @@ public class TestInPlaceGenMatGenMat extends TestClass {
     
     _genMatA.inPlace(Op.TIMES, _genMatB);
     
-    try {
     assertMatEquals(_genMatA, load("Mat.inPlaceTimes"));
-    } catch (AssertionError e) {
-      System.out.println(_fileSuffix);
-      System.out.println(_genMatA);
-      throw e;
-    }
   }
 
   @Test
