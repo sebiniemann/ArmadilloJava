@@ -30,7 +30,6 @@ namespace armadilloJava
     MatNormInt,
     VecNormInt,
     GenDouble,
-    TriDouble,
     SinValTol,
     ElemIndRange,
     ColIndRange,

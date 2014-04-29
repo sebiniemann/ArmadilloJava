@@ -43,7 +43,10 @@ namespace armadilloJava {
       ExpectedGenColVecSort() {
         cout << "Compute ExpectedGenColVecSort(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenColVec, InputClass::Sort});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenColVec,
+          InputClass::Sort
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

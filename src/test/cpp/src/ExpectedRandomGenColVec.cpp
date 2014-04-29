@@ -37,7 +37,10 @@ namespace armadilloJava {
       ExpectedRandomGenColVec() {
         cout << "Compute ExpectedRandomGenColVec(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::Random, InputClass::GenColVec});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::Random,
+            InputClass::GenColVec
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

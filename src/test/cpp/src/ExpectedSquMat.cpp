@@ -44,7 +44,9 @@ namespace armadilloJava {
       ExpectedSquMat() {
         cout << "Compute ExpectedSquMat(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::SquMat});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::SquMat
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

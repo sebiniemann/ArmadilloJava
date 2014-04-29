@@ -37,7 +37,10 @@ namespace armadilloJava {
       ExpectedGenMatRowInd() {
         cout << "Compute ExpectedGenMatRowInd(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::RowInd});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::GenMat,
+            InputClass::RowInd
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";
@@ -50,7 +53,7 @@ namespace armadilloJava {
                   _genMat = *static_cast<Mat<double>*>(value.second);
                   break;
                 case 1:
-                  _fileSuffix += ",-" + value.first;
+                  _fileSuffix += "," + value.first;
                   _rowInd = *static_cast<int*>(value.second);
                   break;
               }

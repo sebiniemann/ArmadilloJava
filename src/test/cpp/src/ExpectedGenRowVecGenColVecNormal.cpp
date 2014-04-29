@@ -40,7 +40,11 @@ namespace armadilloJava {
       ExpectedGenRowVecGenColVecNormal() {
         cout << "Compute ExpectedGenRowVecGenColVecNormal(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenRowVec, InputClass::GenColVec, InputClass::Normal});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenRowVec,
+          InputClass::GenColVec,
+          InputClass::Normal
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedOORowVec() {
         cout << "Compute ExpectedOORowVec(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OORowVec});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::OORowVec
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

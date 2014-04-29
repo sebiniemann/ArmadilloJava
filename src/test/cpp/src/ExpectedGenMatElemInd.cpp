@@ -36,7 +36,10 @@ namespace armadilloJava {
       ExpectedGenMatElemInd() {
         cout << "Compute ExpectedGenMatElemInd(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::ElemInd});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::GenMat,
+            InputClass::ElemInd
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";
@@ -80,10 +83,6 @@ namespace armadilloJava {
       }
 
       void expectedMatIn_range() {
-        if(_elemInd >= _genMat.n_elem) {
-          return;
-        }
-
         cout << "- Compute expectedMatIn_range() ... ";
 
         if(_genMat.in_range(_elemInd)) {

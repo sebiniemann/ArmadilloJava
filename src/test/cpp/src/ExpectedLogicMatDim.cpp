@@ -39,7 +39,10 @@ namespace armadilloJava {
       ExpectedLogicMatDim() {
         cout << "Compute ExpectedLogicMatDim(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::LogicMat, InputClass::Dim});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::LogicMat,
+          InputClass::Dim
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

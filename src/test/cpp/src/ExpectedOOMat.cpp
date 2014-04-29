@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedOOMat() {
         cout << "Compute ExpectedOOMat(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OOMat});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::OOMat
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

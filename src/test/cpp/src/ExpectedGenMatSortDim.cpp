@@ -40,7 +40,11 @@ namespace armadilloJava {
       ExpectedGenMatSortDim() {
         cout << "Compute ExpectedGenMatSortDim(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::Sort, InputClass::Dim});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::Sort,
+          InputClass::Dim
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

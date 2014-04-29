@@ -36,7 +36,10 @@ namespace armadilloJava {
       ExpectedGenDoubleGenDouble() {
         cout << "Compute ExpectedGenDoubleGenDouble(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenDouble, InputClass::GenDouble});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenDouble,
+          InputClass::GenDouble
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

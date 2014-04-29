@@ -28,7 +28,6 @@ enum InputClass {
   MatNormInt,
   VecNormInt,
   GenDouble,
-  TriDouble,
   SinValTol,
   ElemIndRange,
   ColIndRange,

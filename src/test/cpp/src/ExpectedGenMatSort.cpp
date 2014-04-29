@@ -40,7 +40,10 @@ namespace armadilloJava {
       ExpectedGenMatSort() {
         cout << "Compute ExpectedGenMatSort(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::Sort});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::Sort
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

@@ -68,9 +68,6 @@ class Input {
         case GenDouble:
           inputs.add(getGenDouble());
           break;
-        case TriDouble:
-          inputs.add(getTriDouble());
-          break;
         case SinValTol:
           inputs.add(getSinValTol());
           break;
@@ -407,26 +404,8 @@ class Input {
     input.add(new Pair<String, Object>("1.0", 1.0));
     input.add(new Pair<String, Object>("euler_number", Datum.e));
     input.add(new Pair<String, Object>("3.0", 3.0));
-    input.add(new Pair<String, Object>("4.0", 4.0));
-    input.add(new Pair<String, Object>("inf", Datum.inf));
-
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    inputs.add(input);
-    inputs.add(getTriDouble());
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getTriDouble() {
-    List<Pair<String, Object>> input = new ArrayList<>();
-
-    input.add(new Pair<String, Object>("-inf", -Datum.inf));
-    input.add(new Pair<String, Object>("-2.0", -2.0));
-    input.add(new Pair<String, Object>("0.0", 0.0));
-    input.add(new Pair<String, Object>("machine_epsilon", Datum.eps));
-    input.add(new Pair<String, Object>("1.0", 1.0));
     input.add(new Pair<String, Object>("pi", Datum.pi));
+    input.add(new Pair<String, Object>("4.0", 4.0));
     input.add(new Pair<String, Object>("inf", Datum.inf));
 
     return input;
@@ -454,7 +433,7 @@ class Input {
       input.clear();
       input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
       input.add(new Pair<String, Object>("span(0," + (numElems - 1) + ")", new Span(0, numElems - 1)));
-      input.add(new Pair<String, Object>("span(" + (numElems / 2 - 1) + "," + (numElems / 2 + 1) + ")", new Span(numElems / 2 - 1, numElems / 2 + 1)));
+      input.add(new Pair<String, Object>("span(" + Math.max(numElems / 2 - 1, 0) + "," + (numElems / 2 + 1) + ")", new Span( Math.max(numElems / 2 - 1, 0), numElems / 2 + 1)));
       inputs.add(input);
     }
 
@@ -478,7 +457,7 @@ class Input {
       input.clear();
       input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
       input.add(new Pair<String, Object>("span(0," + (numRows - 1) + ")", new Span(0, numRows - 1)));
-      input.add(new Pair<String, Object>("span(" + (numRows / 2 - 1) + "," + (numRows / 2 + 1) + ")", new Span(numRows / 2 - 1, numRows / 2 + 1)));
+      input.add(new Pair<String, Object>("span(" + Math.max(numRows / 2 - 1, 0) + "," + (numRows / 2 + 1) + ")", new Span(Math.max(numRows / 2 - 1, 0), numRows / 2 + 1)));
       inputs.add(input);
     }
 

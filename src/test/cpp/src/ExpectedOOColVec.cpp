@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedOOColVec() {
         cout << "Compute ExpectedOOColVec(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::OOColVec});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::OOColVec
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

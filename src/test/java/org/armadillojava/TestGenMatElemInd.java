@@ -90,8 +90,6 @@ public class TestGenMatElemInd extends TestClass {
 
   @Test
   public void testMatIn_range() throws IOException {
-    assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
     double expected = load("Mat.in_range")._data[0];
     
     if (_genMat.in_range(_elemInd)) {

@@ -37,7 +37,11 @@ namespace armadilloJava {
       ExpectedRandomGenMatDim() {
         cout << "Compute ExpectedRandomGenMatDim(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::Random, InputClass::GenMat, InputClass::Dim});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::Random,
+            InputClass::GenMat,
+            InputClass::Dim
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

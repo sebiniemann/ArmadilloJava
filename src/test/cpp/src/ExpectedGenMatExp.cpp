@@ -37,7 +37,10 @@ namespace armadilloJava {
       ExpectedGenMatExp() {
         cout << "Compute ExpectedGenMatExp(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::Exp});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::Exp
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

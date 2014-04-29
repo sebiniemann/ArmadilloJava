@@ -43,7 +43,11 @@ namespace armadilloJava {
       ExpectedSquMatSquMatGenMat() {
         cout << "Compute ExpectedSquMatSquMatGenMat(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::SquMat, InputClass::SquMat, InputClass::GenMat});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::SquMat,
+          InputClass::SquMat,
+          InputClass::GenMat
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

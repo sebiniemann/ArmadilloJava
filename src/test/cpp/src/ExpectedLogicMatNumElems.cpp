@@ -38,7 +38,10 @@ namespace armadilloJava {
       ExpectedLogicMatNumElems() {
         cout << "Compute ExpectedLogicMatNumElems(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::LogicMat, InputClass::NumElems});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::LogicMat,
+          InputClass::NumElems
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

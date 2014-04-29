@@ -63,7 +63,7 @@ public class TestGenMatRowInd extends TestClass {
 
   @Before
   public void before() {
-    _fileSuffix = _genMatString + ",-" + _rowIndString;
+    _fileSuffix = _genMatString + "," + _rowIndString;
 
     _copyOfGenMat = new Mat(_genMat);
     _copyOfRowInd = new Integer(_rowInd);

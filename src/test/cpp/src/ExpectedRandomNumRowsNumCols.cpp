@@ -40,7 +40,11 @@ namespace armadilloJava {
       ExpectedRandomNumRowsNumCols() {
         cout << "Compute ExpectedRandomNumRowsNumCols(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::Random, InputClass::NumRows, InputClass::NumCols});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::Random,
+          InputClass::NumRows,
+          InputClass::NumCols
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

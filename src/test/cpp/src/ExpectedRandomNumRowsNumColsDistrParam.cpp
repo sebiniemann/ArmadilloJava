@@ -38,7 +38,12 @@ namespace armadilloJava {
       ExpectedRandomNumRowsNumColsDistrParam() {
         cout << "Compute ExpectedRandomNumRowsNumColsDistrParam(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::Random, InputClass::NumRows, InputClass::NumCols, InputClass::DistrParam});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::Random,
+          InputClass::NumRows,
+          InputClass::NumCols,
+          InputClass::DistrParam
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

@@ -40,7 +40,11 @@ namespace armadilloJava {
       ExpectedGenMatMonRowVecDim() {
         cout << "Compute ExpectedGenMatMonRowVecDim(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::MonRowVec, InputClass::Dim});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::MonRowVec,
+          InputClass::Dim
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

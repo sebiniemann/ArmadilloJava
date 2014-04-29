@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedInvMat() {
         cout << "Compute ExpectedInvMat(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::InvMat});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::InvMat
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

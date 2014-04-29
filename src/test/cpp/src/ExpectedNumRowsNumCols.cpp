@@ -39,7 +39,10 @@ namespace armadilloJava {
       ExpectedNumRowsNumCols() {
         cout << "Compute ExpectedNumRowsNumCols(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::NumRows, InputClass::NumCols});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::NumRows,
+          InputClass::NumCols
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

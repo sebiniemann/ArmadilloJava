@@ -39,7 +39,11 @@ namespace armadilloJava {
       ExpectedGenMatNumRowsNumCols() {
         cout << "Compute ExpectedGenMatNumRowsNumCols(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::NumRows, InputClass::NumCols});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::NumRows,
+          InputClass::NumCols
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

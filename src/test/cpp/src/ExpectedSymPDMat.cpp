@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedSymPDMat() {
         cout << "Compute ExpectedSymPDMat(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::SymPDMat});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::SymPDMat
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

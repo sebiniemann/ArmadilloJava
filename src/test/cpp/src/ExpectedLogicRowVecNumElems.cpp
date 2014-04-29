@@ -39,7 +39,10 @@ namespace armadilloJava {
       ExpectedLogicRowVecNumElems() {
         cout << "Compute ExpectedLogicRowVecNumElems(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::LogicRowVec, InputClass::NumElems});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::LogicRowVec,
+          InputClass::NumElems
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

@@ -38,7 +38,10 @@ namespace armadilloJava {
       ExpectedGenColVecNumElems() {
         cout << "Compute ExpectedGenColVecNumElems(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenColVec, InputClass::NumElems});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::GenColVec,
+            InputClass::NumElems
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

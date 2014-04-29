@@ -40,7 +40,10 @@ namespace armadilloJava {
       ExpectedGenMatMatNormString() {
         cout << "Compute ExpectedGenMatMatNormString(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::MatNormString});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::MatNormString
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

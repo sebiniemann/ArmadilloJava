@@ -37,7 +37,10 @@ namespace armadilloJava {
       ExpectedGenMatGenDouble() {
         cout << "Compute ExpectedGenMatGenDouble(): " << endl;
 
-        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::GenDouble});
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+          InputClass::GenMat,
+          InputClass::GenDouble
+        });
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";

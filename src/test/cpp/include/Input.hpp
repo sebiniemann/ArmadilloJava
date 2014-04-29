@@ -54,7 +54,6 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getMatNormInt();
       static vector<pair<string, void*>> getVecNormInt();
       static vector<pair<string, void*>> getGenDouble();
-      static vector<pair<string, void*>> getTriDouble();
       static vector<pair<string, void*>> getSinValTol();
       static vector<pair<string, void*>> getElemIndRange();
       static vector<pair<string, void*>> getColIndRange();

@@ -18,6 +18,7 @@
 using armadilloJava::Input;
 
 #include <algorithm>
+using std::max;
 using std::sort;
 using std::set_union;
 
@@ -93,9 +94,6 @@ namespace armadilloJava {
           break;
         case InputClass::GenDouble:
           inputs.push_back(getGenDouble());
-          break;
-        case InputClass::TriDouble:
-          inputs.push_back(getTriDouble());
           break;
         case InputClass::SinValTol:
           inputs.push_back(getSinValTol());
@@ -376,7 +374,7 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getGenDouble() {
-    return vectorUnion({{
+    return {
       pair<string, void*>("-inf", new double(-datum::inf)),
       pair<string, void*>("-2.0", new double(-2)),
       pair<string, void*>("0.0", new double(0)),
@@ -385,19 +383,8 @@ namespace armadilloJava {
       pair<string, void*>("1.0", new double(1)),
       pair<string, void*>("euler_number", new double(datum::e)),
       pair<string, void*>("3.0", new double(3)),
-      pair<string, void*>("4.0", new double(4)),
-      pair<string, void*>("inf", new double(datum::inf))
-    }, getTriDouble()});
-  }
-
-  vector<pair<string, void*>> Input::getTriDouble() {
-    return {
-      pair<string, void*>("-inf", new double(-datum::inf)),
-      pair<string, void*>("-2.0", new double(-2)),
-      pair<string, void*>("0.0", new double(0)),
-      pair<string, void*>("machine_epsilon", new double(datum::eps)),
-      pair<string, void*>("1.0", new double(1)),
       pair<string, void*>("pi", new double(datum::pi)),
+      pair<string, void*>("4.0", new double(4)),
       pair<string, void*>("inf", new double(datum::inf))
     };
   }
@@ -421,7 +408,7 @@ namespace armadilloJava {
       inputs.push_back({
         pair<string, void*>("span(0," + to_string(numElems - 1) + ")", new span(0, numElems - 1)),
         pair<string, void*>("span(" + to_string(numElems - 1) + "," + to_string(numElems - 1) + ")", new span(numElems - 1, numElems - 1)),
-        pair<string, void*>("span(" + to_string(numElems/2 - 1) + "," + to_string(numElems/2 + 1) + ")", new span(numElems/2 - 1, numElems/2 + 1))
+        pair<string, void*>("span(" + to_string(max(numElems/2 - 1, 0)) + "," + to_string(numElems/2 + 1) + ")", new span(max(numElems/2 - 1, 0), numElems/2 + 1))
       });
     }
 
@@ -444,7 +431,7 @@ namespace armadilloJava {
       inputs.push_back({
         pair<string, void*>("span(0," + to_string(numRows - 1) + ")", new span(0, numRows - 1)),
         pair<string, void*>("span(" + to_string(numRows - 1) + "," + to_string(numRows - 1) + ")", new span(numRows - 1, numRows - 1)),
-        pair<string, void*>("span(" + to_string(numRows/2 - 1) + "," + to_string(numRows/2 + 1) + ")", new span(numRows/2 - 1, numRows/2 + 1))
+        pair<string, void*>("span(" + to_string(max(numRows/2 - 1, 0)) + "," + to_string(numRows/2 + 1) + ")", new span(max(numRows/2 - 1, 0), numRows/2 + 1))
       });
     }
 

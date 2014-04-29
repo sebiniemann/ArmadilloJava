@@ -37,7 +37,9 @@ namespace armadilloJava {
       ExpectedInPlaceGenMat() {
         cout << "Compute ExpectedInPlaceGenMat(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::GenMat
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";

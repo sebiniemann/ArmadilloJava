@@ -38,7 +38,10 @@ namespace armadilloJava {
       ExpectedGenMatSinValTol() {
         cout << "Compute ExpectedGenMatSinValTol(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({InputClass::GenMat, InputClass::SinValTol});
+          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+            InputClass::GenMat,
+            InputClass::SinValTol
+          });
 
           for (vector<pair<string, void*>> input : inputs) {
             _fileSuffix = "";
