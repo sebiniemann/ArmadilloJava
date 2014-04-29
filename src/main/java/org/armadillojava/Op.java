@@ -14,16 +14,13 @@
 package org.armadillojava;
 
 /**
- * Provides predefined constants to identify arithmetic or relational operators.
+ * Provides predefined constants to identify arithmetic operators.
  * <p>
  * Unary arithmetic operators: <br>
  * {@link #INCREMENT} and {@link #DECREMENT}
  * <p>
  * Binary arithmetic operators: <br>
  * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES} and {@link #ELEMDIVIDE}
- * <p>
- * Relational operators: <br>
- * {@link #EQUAL}, {@link #NOT_EQUAL}, {@link #STRICT_LESS}, {@link #LESS}, {@link #STRICT_GREATER} and {@link #GREATER}
  * 
  * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
  */
@@ -61,27 +58,10 @@ public enum Op {
    */
   ELEMDIVIDE,
   /**
-   * Equality (relational operator)
+   * Equality (binary arithmetic operator)
    */
   EQUAL,
   /**
-   * Inequality (relational operator)
+   * Equality (relational operator)
    */
-  NOT_EQUAL,
-  /**
-   * Strict less than (relational operator)
-   */
-  STRICT_LESS,
-  /**
-   * Non-strict less than (relational operator)
-   */
-  LESS,
-  /**
-   * Strict greater than (relational operator)
-   */
-  STRICT_GREATER,
-  /**
-   * Non-strict greater than (relational operator)
-   */
-  GREATER;
 }
