@@ -14,6 +14,8 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,6 +95,27 @@ public class TestInPlaceGenMat extends TestClass {
     _genMat.inPlace(Op.DECREMENT);
     
     assertMatEquals(_genMat, load("Mat.inPlaceDecrement"));
+  }
+
+  @Test
+  public void testMatReset() throws IOException {
+    _genMat.reset();
+    
+    assertThat(_genMat.n_elem, is(0));
+  }
+
+  @Test
+  public void testMatClear() throws IOException {
+    _genMat.clear();
+    
+    assertThat(_genMat.n_elem, is(0));
+  }
+
+  @Test
+  public void testMatEye() throws IOException {
+    _genMat.eye();
+    
+    assertMatEquals(_genMat, load("Mat.eye"));
   }
 
 }

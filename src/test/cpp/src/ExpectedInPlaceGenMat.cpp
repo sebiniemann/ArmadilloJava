@@ -72,6 +72,9 @@ namespace armadilloJava {
 
             _genMat = _copyOfGenMat;
             expectedMatInPlaceDecrement();
+
+            _genMat = _copyOfGenMat;
+            expectedMatEye();
           }
 
           cout << "done." << endl;
@@ -122,6 +125,15 @@ namespace armadilloJava {
 
         _genMat--;
         save<double>("Mat.inPlaceDecrement", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatEye() {
+        cout << "- Compute expectedMatEye() ... ";
+
+        _genMat.eye();
+        save<double>("Mat.eye", _genMat);
 
         cout << "done." << endl;
       }
