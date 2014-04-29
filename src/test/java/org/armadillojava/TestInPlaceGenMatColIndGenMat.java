@@ -126,7 +126,7 @@ public class TestInPlaceGenMatColIndGenMat extends TestClass {
     
     _genMatA.col(_colInd, Op.ELEMTIMES, _genMatB);
     
-    assertMatEquals(_genMatA, load("Mat.colElemtimes"));
+    assertMatEquals(_genMatA, load("Mat.colElemTimes"));
   }
 
   @Test
@@ -137,7 +137,7 @@ public class TestInPlaceGenMatColIndGenMat extends TestClass {
     
     _genMatA.col(_colInd, Op.ELEMDIVIDE, _genMatB);
     
-    assertMatEquals(_genMatA, load("Mat.colElemdivide"));
+    assertMatEquals(_genMatA, load("Mat.colElemDivide"));
   }
 
 }
