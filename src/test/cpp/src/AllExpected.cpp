@@ -87,6 +87,9 @@ using armadilloJava::ExpectedGenMat;
 #include <ExpectedGenMatColInd.cpp>
 using armadilloJava::ExpectedGenMatColInd;
 
+#include <ExpectedGenMatColIndRange.cpp>
+using armadilloJava::ExpectedGenMatColIndRange;
+
 #include <ExpectedGenMatDim.cpp>
 using armadilloJava::ExpectedGenMatDim;
 
@@ -341,6 +344,7 @@ int main() {
 //  ExpectedGenDoubleGenDoubleNumElems();
 //  ExpectedGenMat();
 //  ExpectedGenMatColInd();
+  ExpectedGenMatColIndRange();
 //  ExpectedGenMatDim();
 //  ExpectedGenMatElemInd();
 //  ExpectedGenMatElemIndRange();
