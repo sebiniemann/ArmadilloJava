@@ -74,4 +74,9 @@ public class TestInvMat extends TestClass {
     assertMatEquals(inv, load("Arma.inv"));
   }
 
+  @Test
+  public void testMatI() throws IOException {
+    assertMatEquals(_invMat.i(), load("Mat.i"));
+  }
+
 }

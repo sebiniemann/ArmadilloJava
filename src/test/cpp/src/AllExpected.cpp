@@ -374,8 +374,8 @@ int main() {
 //  ExpectedInPlaceGenMatGenDouble();
 //  ExpectedInPlaceGenMatGenMat();
 //  ExpectedInPlaceGenMatRowIndGenDouble();
-  ExpectedInPlaceRandomGenMat();
-//  ExpectedInvMat();
+//  ExpectedInPlaceRandomGenMat();
+  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicColVecNumElems();
 //  ExpectedLogicMat();
