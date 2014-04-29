@@ -1455,38 +1455,38 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public Mat equal(final double X) {
+  public Mat equals(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    equal(result._data, _data, X);
+    equals(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat equal(final AbstractMat X) throws RuntimeException {
+  public Mat equals(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    equal(result._data, _data, X._data);
+    equals(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Mat nonEqual(final double X) {
+  public Mat nonEquals(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    nonEqual(result._data, _data, X);
+    nonEquals(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Mat nonEqual(final AbstractMat X) throws RuntimeException {
+  public Mat nonEquals(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Mat result = new Mat(n_rows, n_cols);
-    nonEqual(result._data, _data, X._data);
+    nonEquals(result._data, _data, X._data);
     return result;
   }
 

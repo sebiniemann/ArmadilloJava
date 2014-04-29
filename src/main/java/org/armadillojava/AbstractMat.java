@@ -2578,7 +2578,7 @@ abstract class AbstractMat {
    */
   abstract public AbstractMat elemTimes(final AbstractMat X) throws RuntimeException;
 
-  protected static void equal(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
+  protected static void equals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2600,9 +2600,9 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    */
-  abstract public AbstractMat equal(final double X);
+  abstract public AbstractMat equals(final double X);
 
-  protected static void equal(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
+  protected static void equals(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2627,9 +2627,9 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat equal(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat equals(final AbstractMat X) throws RuntimeException;
 
-  protected static void nonEqual(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
+  protected static void nonEquals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2651,9 +2651,9 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    */
-  abstract public AbstractMat nonEqual(final double X);
+  abstract public AbstractMat nonEquals(final double X);
 
-  protected static void nonEqual(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
+  protected static void nonEquals(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
      * 
@@ -2678,7 +2678,7 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat nonEqual(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat nonEquals(final AbstractMat X) throws RuntimeException;
 
   protected static void greaterThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*

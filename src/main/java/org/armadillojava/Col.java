@@ -384,38 +384,38 @@ public class Col extends AbstractVector {
   }
 
   @Override
-  public Col equal(final double X) {
+  public Col equals(final double X) {
     Col result = new Col(n_elem);
-    equal(result._data, _data, X);
+    equals(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Col equal(final AbstractMat X) throws RuntimeException {
+  public Col equals(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Col result = new Col(n_elem);
-    equal(result._data, _data, X._data);
+    equals(result._data, _data, X._data);
     return result;
   }
 
   @Override
-  public Col nonEqual(final double X) {
+  public Col nonEquals(final double X) {
     Col result = new Col(n_elem);
-    nonEqual(result._data, _data, X);
+    nonEquals(result._data, _data, X);
     return result;
   }
 
   @Override
-  public Col nonEqual(final AbstractMat X) throws RuntimeException {
+  public Col nonEquals(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
 
     Col result = new Col(n_elem);
-    nonEqual(result._data, _data, X._data);
+    nonEquals(result._data, _data, X._data);
     return result;
   }
 
