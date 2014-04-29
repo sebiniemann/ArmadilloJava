@@ -14,8 +14,6 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,15 +29,14 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestRandomNumRowsNumCols extends TestClass {
+public class TestInPlaceRandomGenMat extends TestClass {
 
-  @Parameters(name = "{index}: Random = {0}, NumRows = {2}, NumCols = {4}")
+  @Parameters(name = "{index}: Random = {0}, GenMat = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);
-    inputClasses.add(InputClass.NumRows);
-    inputClasses.add(InputClass.NumCols);
+    inputClasses.add(InputClass.GenMat);
 
     return Input.getTestParameters(inputClasses);
   }
@@ -53,62 +50,51 @@ public class TestRandomNumRowsNumCols extends TestClass {
   protected int _copyOfRandom;
 
   @Parameter(2)
-  public String _numRowsString;
+  public String _genMatString;
 
   @Parameter(3)
-  public int    _numRows;
+  public Mat    _genMat;
 
-  protected int _copyOfNumRows;
-
-  @Parameter(4)
-  public String _numColsString;
-
-  @Parameter(5)
-  public int    _numCols;
-
-  protected int _copyOfNumCols;
+  protected Mat _copyOfGenMat;
 
   @Before
   public void before() {
-    _fileSuffix = _randomString + "," + _numRowsString + "," + _numColsString;
+    _fileSuffix = _randomString + "," + _genMatString;
 
     _copyOfRandom = new Integer(_random);
-    _copyOfNumRows = new Integer(_numRows);
-    _copyOfNumCols = new Integer(_numCols);
+    _copyOfGenMat = new Mat(_genMat);
   }
 
   @After
   public void after() {
-    assertThat(_random, is(_copyOfRandom));
-    assertThat(_numRows, is(_copyOfNumRows));
-    assertThat(_numCols, is(_copyOfNumCols));
-  }
-
-  @Test
-  public void testArmaRandi() throws IOException {
-    Mat result = Arma.randi(_numRows, _numCols).divide(Integer.MAX_VALUE);
-    for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus((Arma.randi(_numRows, _numCols).divide(Integer.MAX_VALUE))).divide(n + 1);
-    }
-    assertMatEquals(result.minus(load("Arma.randi")), Arma.zeros(result.n_rows, result.n_cols), 0.1);
+    _random = new Integer(_copyOfRandom);
+    _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
   }
 
   @Test
   public void testArmaRandu() throws IOException {
-    Mat result = Arma.randu(_numRows, _numCols);
+    _genMat.randu();
+    Mat result = new Mat(_genMat);
+    
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randu(_numRows, _numCols)).divide(n + 1);
+      _genMat.randu();
+      result = (result.times(n)).plus(_genMat).divide(n + 1);
     }
-    assertMatEquals(result.minus(load("Arma.randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    
+    assertMatEquals(result.minus(load("Mat.randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
   @Test
   public void testArmaRandn() throws IOException {
-    Mat result = Arma.randn(_numRows, _numCols);
+    _genMat.randn();
+    Mat result = new Mat(_genMat);
+    
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randn(_numRows, _numCols)).divide(n + 1);
+      _genMat.randn();
+      result = (result.times(n)).plus(_genMat).divide(n + 1);
     }
-    assertMatEquals(result.minus(load("Arma.randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
+    
+    assertMatEquals(result.minus(load("Mat.randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

@@ -97,7 +97,7 @@ public class TestRandomNumRowsNumColsDistrParam extends TestClass {
   }
 
   @Test
-  public void testArmaRandiA() throws IOException {
+  public void testArmaRandi() throws IOException {
     Mat result = Arma.randi(_numRows, _numCols, _distrParam);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.randi(_numRows, _numCols, _distrParam)).divide(n + 1);
