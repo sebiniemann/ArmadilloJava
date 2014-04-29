@@ -108,7 +108,7 @@ namespace armadilloJava {
       Mat<double> _copyOfGenMatB;
 
       void expectedMatColsEqual() {
-        if(_copyOfColIndRange.b >= _genMatA.n_cols) {
+        if(_colIndRange.b >= _genMatA.n_cols) {
           return;
         }
 
@@ -116,20 +116,20 @@ namespace armadilloJava {
           return;
         }
 
-        if(_genMatB.n_cols != _copyOfColIndRange.b - _copyOfColIndRange.a + 1) {
+        if(_genMatB.n_cols != _colIndRange.b - _colIndRange.a + 1) {
           return;
         }
 
         cout << "- Compute expectedMatColsEqual() ... ";
 
-        _genMatA.cols(_copyOfColIndRange.a, _copyOfColIndRange.b) = _genMatB;
+        _genMatA.cols(_colIndRange.a, _colIndRange.b) = _genMatB;
         save<double>("Mat.colsEqual", _genMatA);
 
         cout << "done." << endl;
       }
 
       void expectedMatColsPlus() {
-        if(_copyOfColIndRange.b >= _genMatA.n_cols) {
+        if(_colIndRange.b >= _genMatA.n_cols) {
           return;
         }
 
@@ -137,20 +137,20 @@ namespace armadilloJava {
           return;
         }
 
-        if(_genMatB.n_cols != _copyOfColIndRange.b - _copyOfColIndRange.a + 1) {
+        if(_genMatB.n_cols != _colIndRange.b - _colIndRange.a + 1) {
           return;
         }
 
         cout << "- Compute expectedMatColsPlus() ... ";
 
-        _genMatA.cols(_copyOfColIndRange.a, _copyOfColIndRange.b) += _genMatB;
+        _genMatA.cols(_colIndRange.a, _colIndRange.b) += _genMatB;
         save<double>("Mat.colsPlus", _genMatA);
 
         cout << "done." << endl;
       }
 
       void expectedMatColsMinus() {
-        if(_copyOfColIndRange.b >= _genMatA.n_cols) {
+        if(_colIndRange.b >= _genMatA.n_cols) {
           return;
         }
 
@@ -158,20 +158,20 @@ namespace armadilloJava {
           return;
         }
 
-        if(_genMatB.n_cols != _copyOfColIndRange.b - _copyOfColIndRange.a + 1) {
+        if(_genMatB.n_cols != _colIndRange.b - _colIndRange.a + 1) {
           return;
         }
 
         cout << "- Compute expectedMatColsMinus() ... ";
 
-        _genMatA.cols(_copyOfColIndRange.a, _copyOfColIndRange.b) -= _genMatB;
+        _genMatA.cols(_colIndRange.a, _colIndRange.b) -= _genMatB;
         save<double>("Mat.colsMinus", _genMatA);
 
         cout << "done." << endl;
       }
 
       void expectedMatColsElemTimes() {
-        if(_copyOfColIndRange.b >= _genMatA.n_cols) {
+        if(_colIndRange.b >= _genMatA.n_cols) {
           return;
         }
 
@@ -179,20 +179,20 @@ namespace armadilloJava {
           return;
         }
 
-        if(_genMatB.n_cols != _copyOfColIndRange.b - _copyOfColIndRange.a + 1) {
+        if(_genMatB.n_cols != _colIndRange.b - _colIndRange.a + 1) {
           return;
         }
 
         cout << "- Compute expectedMatColsElemTimes() ... ";
 
-        _genMatA.cols(_copyOfColIndRange.a, _copyOfColIndRange.b) %= _genMatB;
+        _genMatA.cols(_colIndRange.a, _colIndRange.b) %= _genMatB;
         save<double>("Mat.colsElemTimes", _genMatA);
 
         cout << "done." << endl;
       }
 
       void expectedMatColsElemDivide() {
-        if(_copyOfColIndRange.b >= _genMatA.n_cols) {
+        if(_colIndRange.b >= _genMatA.n_cols) {
           return;
         }
 
@@ -200,13 +200,13 @@ namespace armadilloJava {
           return;
         }
 
-        if(_genMatB.n_cols != _copyOfColIndRange.b - _copyOfColIndRange.a + 1) {
+        if(_genMatB.n_cols != _colIndRange.b - _colIndRange.a + 1) {
           return;
         }
 
         cout << "- Compute expectedMatColsElemDivide() ... ";
 
-        _genMatA.cols(_copyOfColIndRange.a, _copyOfColIndRange.b) /= _genMatB;
+        _genMatA.cols(_colIndRange.a, _colIndRange.b) /= _genMatB;
         save<double>("Mat.colsElemDivide", _genMatA);
 
         cout << "done." << endl;
