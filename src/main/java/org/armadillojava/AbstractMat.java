@@ -2478,7 +2478,7 @@ abstract class AbstractMat {
    */
   abstract public AbstractMat minus(final AbstractMat X) throws RuntimeException;
 
-  protected static void elemDivide(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
+  protected static void divide(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] / rightHandOperand;
     }
@@ -2489,7 +2489,7 @@ abstract class AbstractMat {
    * 
    * @param X The divisor
    */
-  abstract public AbstractMat elemDivide(final double X);
+  abstract public AbstractMat divide(final double X);
 
   protected static void elemDivide(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
@@ -2507,6 +2507,12 @@ abstract class AbstractMat {
    */
   abstract public AbstractMat elemDivide(final AbstractMat X) throws RuntimeException;
 
+  protected static void times(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
+    for (int n = 0; n < leftHandOperand.length; n++) {
+      result[n] = leftHandOperand[n] * rightHandOperand;
+    }
+  }
+  
   /**
    * Return the out-of-place matrix multiplication with the specified right-hand side multiplier.
    * 
@@ -2548,19 +2554,6 @@ abstract class AbstractMat {
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final Mat X) throws RuntimeException;
-
-  protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
-    for (int n = 0; n < leftHandOperand.length; n++) {
-      result[n] = leftHandOperand[n] * rightHandOperand;
-    }
-  }
-
-  /**
-   * Returns the out-of-place element-wise multiplication with the specified right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   */
-  abstract public AbstractMat elemTimes(final double X);
 
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {

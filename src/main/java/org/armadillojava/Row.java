@@ -279,9 +279,9 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row elemDivide(final double X) {
+  public Row divide(final double X) {
     Row result = new Row(n_elem);
-    elemDivide(result._data, _data, X);
+    divide(result._data, _data, X);
     return result;
   }
 
@@ -298,13 +298,15 @@ public class Row extends AbstractVector {
 
   @Override
   public Row times(final double X) {
-    return elemTimes(X);
+    Row result = new Row(n_elem);
+    times(result._data, _data, X);
+    return result;
   }
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
     if (X.n_elem == 1) {
-      return elemTimes(X._data[0]);
+      return times(X._data[0]);
     } else if (X.is_colvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -313,7 +315,7 @@ public class Row extends AbstractVector {
       /*
        * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
        */
-      return elemTimes(X._data[0]);
+      return times(X._data[0]);
     } else if (X.is_rowvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -341,7 +343,7 @@ public class Row extends AbstractVector {
     /*
      * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
      */
-    return elemTimes(X._data[0]);
+    return times(X._data[0]);
   }
 
   @Override
@@ -363,13 +365,6 @@ public class Row extends AbstractVector {
     }
 
     return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
-  }
-
-  @Override
-  public Row elemTimes(final double X) {
-    Row result = new Row(n_elem);
-    elemTimes(result._data, _data, X);
-    return result;
   }
 
   @Override

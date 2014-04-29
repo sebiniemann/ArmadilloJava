@@ -102,7 +102,7 @@ public class RunningStatVec {
       if (_calculateCovariance) {
         Col temp = samples.minus(_mean);
         _cov.inPlace(Op.ELEMTIMES, (_count - 1) / _count);
-        _cov.inPlace(Op.PLUS, temp.times(temp.t()).elemDivide(_count + 1));
+        _cov.inPlace(Op.PLUS, temp.times(temp.t()).divide(_count + 1));
       }
 
       for (int n = 0; n < samples.n_elem; n++) {
@@ -110,8 +110,8 @@ public class RunningStatVec {
         _min.at(n, Op.EQUAL, Math.min(_max.at(n), samples.at(n)));
       }
 
-      _var = (Arma.pow(samples.minus(_mean), 2)).elemDivide(_count + 1).plus(_var.times((_count - 1) / _count));
-      _mean = _mean.plus(samples.minus(_mean).elemDivide(_count + 1));
+      _var = (Arma.pow(samples.minus(_mean), 2)).divide(_count + 1).plus(_var.times((_count - 1) / _count));
+      _mean = _mean.plus(samples.minus(_mean).divide(_count + 1));
 
     } else {
       _cov = new Mat(samples.n_elem, samples.n_elem, Fill.ZEROS);

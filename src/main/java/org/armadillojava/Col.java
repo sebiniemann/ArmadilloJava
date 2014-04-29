@@ -279,9 +279,9 @@ public class Col extends AbstractVector {
   }
 
   @Override
-  public Col elemDivide(final double X) {
+  public Col divide(final double X) {
     Col result = new Col(n_elem);
-    elemDivide(result._data, _data, X);
+    divide(result._data, _data, X);
     return result;
   }
 
@@ -299,7 +299,7 @@ public class Col extends AbstractVector {
   @Override
   protected AbstractMat times(final AbstractMat X) {
     if (X.n_elem == 1) {
-      return elemTimes(X._data[0]);
+      return times(X._data[0]);
     } else if (X.is_colvec()) {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -308,7 +308,7 @@ public class Col extends AbstractVector {
       /*
        * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
        */
-      return elemTimes(X._data[0]);
+      return times(X._data[0]);
     } else if (X.is_rowvec()) {
       Mat result = new Mat(n_rows, X.n_cols);
       BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
@@ -329,7 +329,9 @@ public class Col extends AbstractVector {
 
   @Override
   public Col times(final double X) {
-    return elemTimes(X);
+    Col result = new Col(n_elem);
+    times(result._data, _data, X);
+    return result;
   }
 
   @Override
@@ -341,7 +343,7 @@ public class Col extends AbstractVector {
     /*
      * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
      */
-    return elemTimes(X._data[0]);
+    return times(X._data[0]);
   }
 
   @Override
@@ -362,13 +364,6 @@ public class Col extends AbstractVector {
      */
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
-    return result;
-  }
-
-  @Override
-  public Col elemTimes(final double X) {
-    Col result = new Col(n_elem);
-    elemTimes(result._data, _data, X);
     return result;
   }
 

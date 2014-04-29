@@ -89,7 +89,7 @@ public class TestRandomNumElemsDistrParam extends TestClass {
   public void testArmaRandiA() throws IOException {
     Col result = Arma.randi(Col.class, _numElems, _distrParam);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randi(Col.class, _numElems, _distrParam)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randi(Col.class, _numElems, _distrParam)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randi")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
@@ -98,7 +98,7 @@ public class TestRandomNumElemsDistrParam extends TestClass {
   public void testArmaRandiB() throws IOException {
     Row result = Arma.randi(Row.class, _numElems, _distrParam);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randi(Row.class, _numElems, _distrParam)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randi(Row.class, _numElems, _distrParam)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randi").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
   }

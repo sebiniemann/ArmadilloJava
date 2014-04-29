@@ -75,18 +75,18 @@ public class TestRandomNumElems extends TestClass {
 
   @Test
   public void testArmaRandiA() throws IOException {
-    Col result = Arma.randi(Col.class, _numElems).elemDivide(Integer.MAX_VALUE);
+    Col result = Arma.randi(Col.class, _numElems).divide(Integer.MAX_VALUE);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus((Arma.randi(Col.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
+      result = (result.times(n)).plus((Arma.randi(Col.class, _numElems).divide(Integer.MAX_VALUE))).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randi")), Arma.zeros(result.n_rows, result.n_cols), 0.1);
   }
 
   @Test
   public void testArmaRandiB() throws IOException {
-    Row result = Arma.randi(Row.class, _numElems).elemDivide(Integer.MAX_VALUE);
+    Row result = Arma.randi(Row.class, _numElems).divide(Integer.MAX_VALUE);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus((Arma.randi(Row.class, _numElems).elemDivide(Integer.MAX_VALUE))).elemDivide(n + 1);
+      result = (result.times(n)).plus((Arma.randi(Row.class, _numElems).divide(Integer.MAX_VALUE))).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randi").t()), Arma.zeros(result.n_rows, result.n_cols), 0.1);
   }
@@ -95,7 +95,7 @@ public class TestRandomNumElems extends TestClass {
   public void testArmaRanduA() throws IOException {
     Col result = Arma.randu(Col.class, _numElems);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randu(Col.class, _numElems)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randu(Col.class, _numElems)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
@@ -104,7 +104,7 @@ public class TestRandomNumElems extends TestClass {
   public void testArmaRanduB() throws IOException {
     Row result = Arma.randu(Row.class, _numElems);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randu(Row.class, _numElems)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randu(Row.class, _numElems)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randu").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
@@ -113,7 +113,7 @@ public class TestRandomNumElems extends TestClass {
   public void testArmaRandnA() throws IOException {
     Col result = Arma.randn(Col.class, _numElems);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randn(Col.class, _numElems)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randn(Col.class, _numElems)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
@@ -122,7 +122,7 @@ public class TestRandomNumElems extends TestClass {
   public void testArmaRandnB() throws IOException {
     Row result = Arma.randn(Row.class, _numElems);
     for (int n = 2; n <= _random; n++) {
-      result = (result.times(n)).plus(Arma.randn(Row.class, _numElems)).elemDivide(n + 1);
+      result = (result.times(n)).plus(Arma.randn(Row.class, _numElems)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.randn").t()), Arma.zeros(result.n_rows, result.n_cols), 1);
   }

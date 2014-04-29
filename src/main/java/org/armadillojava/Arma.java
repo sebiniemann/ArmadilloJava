@@ -3520,7 +3520,7 @@ public class Arma {
       result = new Mat(new double[]{cor(new Col(X), new Col(Y), norm_type)});
     } else {
       result = trans(X).times(Y);
-      result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).elemDivide(X.n_rows));
+      result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).divide(X.n_rows));
 
       switch (norm_type) {
         case 0:
@@ -3589,7 +3589,7 @@ public class Arma {
     Row stddev = stddev(Row.class, X);
 
     Mat result = trans(X).times(X);
-    result.inPlace(Op.MINUS, trans(sum).times(sum).elemDivide(X.n_rows));
+    result.inPlace(Op.MINUS, trans(sum).times(sum).divide(X.n_rows));
 
     switch (norm_type) {
       case 0:
@@ -3786,7 +3786,7 @@ public class Arma {
     }
 
     Mat result = trans(X).times(Y);
-    result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).elemDivide(X.n_rows));
+    result.inPlace(Op.MINUS, trans(sum(Row.class, X)).times(sum(Row.class, Y)).divide(X.n_rows));
 
     switch (norm_type) {
       case 0:
@@ -3853,7 +3853,7 @@ public class Arma {
     Row sum = sum(Row.class, X);
 
     Mat result = trans(X).times(X);
-    result.inPlace(Op.MINUS, trans(sum).times(sum).elemDivide(X.n_rows));
+    result.inPlace(Op.MINUS, trans(sum).times(sum).divide(X.n_rows));
 
     switch (norm_type) {
       case 0:

@@ -1363,9 +1363,9 @@ public class Mat extends AbstractMat {
   }
 
   @Override
-  public Mat elemDivide(final double X) {
+  public Mat divide(final double X) {
     Mat result = new Mat(n_rows, n_cols);
-    elemDivide(result._data, _data, X);
+    divide(result._data, _data, X);
     return result;
   }
 
@@ -1382,13 +1382,15 @@ public class Mat extends AbstractMat {
 
   @Override
   public Mat times(final double X) {
-    return elemTimes(X);
+    Mat result = new Mat(n_rows, n_cols);
+    times(result._data, _data, X);
+    return result;
   }
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
     if (X.n_elem == 1) {
-      return elemTimes(X._data[0]);
+      return times(X._data[0]);
     } else {
       if (n_cols != X.n_rows) {
         throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
@@ -1435,14 +1437,7 @@ public class Mat extends AbstractMat {
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
   }
-
-  @Override
-  public Mat elemTimes(final double X) {
-    Mat result = new Mat(n_rows, n_cols);
-    elemTimes(result._data, _data, X);
-    return result;
-  }
-
+  
   @Override
   public Mat elemTimes(final AbstractMat X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
