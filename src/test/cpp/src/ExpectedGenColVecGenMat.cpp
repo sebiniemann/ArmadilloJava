@@ -24,6 +24,7 @@ using std::pair;
 #include <armadillo>
 using arma::Col;
 using arma::Mat;
+using arma::uword;
 using arma::cross;
 using arma::join_rows;
 using arma::join_horiz;
@@ -74,6 +75,7 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
+		  expectedColEquals();
         }
 
         cout << "done." << endl;
@@ -149,6 +151,19 @@ namespace armadilloJava {
         cout << "- Compute expectedArmaKron() ... ";
         save<double>("Arma.kron", kron(_genColVec, _genMat));
         cout << "done." << endl;
+      }
+	  
+	  void expectedColEquals() {
+		if(_genColVec.n_rows != _genMat.n_rows || _genColVec.n_cols != _genMat.n_cols) {
+			return;
+		}
+		  
+		cout << "- Compute expectedColEquals() ... ";
+		  
+		Col<uword> expected = _genColVec == _genMat;
+		
+		save<uword> ("Col.equals", expected);
+		cout << "done." << endl;
       }
 
   };
