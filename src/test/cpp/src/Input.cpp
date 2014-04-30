@@ -317,7 +317,7 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getNumElems() {
     return {
       pair<string, void*>("1", new int(1)),
-      pair<string, void*>("2", new int(2)),
+      pair<string, void*>("5", new int(2)),
       pair<string, void*>("25", new int(25))
     };
   }
@@ -329,7 +329,6 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getNumRows() {
     return {
       pair<string, void*>("1", new int(1)),
-      pair<string, void*>("2", new int(2)),
       pair<string, void*>("5", new int(5))
     };
   }
@@ -382,9 +381,7 @@ namespace armadilloJava {
       pair<string, void*>("0.5", new double(0.5)),
       pair<string, void*>("1.0", new double(1)),
       pair<string, void*>("euler_number", new double(datum::e)),
-      pair<string, void*>("3.0", new double(3)),
       pair<string, void*>("pi", new double(datum::pi)),
-      pair<string, void*>("4.0", new double(4)),
       pair<string, void*>("inf", new double(datum::inf))
     };
   }
@@ -600,8 +597,7 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getMonColVec() {
     return {
       pair<string, void*>("Col({0,1,...,n})", new Col<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
-      pair<string, void*>("Col({0,0.1,...,1})", new Col<double>({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})),
-      pair<string, void*>("Col({-10,-5,10})", new Col<double>({-10, -5, 10})),
+      pair<string, void*>("Col({-10,-5,0.5,10})", new Col<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Col({-inf,0,inf})", new Col<double>({datum::inf, 0, -datum::inf})),
       pair<string, void*>("Col({0})", new Col<double>({0})),
       pair<string, void*>("Col({-inf})", new Col<double>({-datum::inf})),
@@ -672,8 +668,7 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getMonRowVec() {
     return {
       pair<string, void*>("Row({0,1,...,n})", new Row<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
-      pair<string, void*>("Row({0,0.1,...,1})", new Row<double>({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})),
-      pair<string, void*>("Row({-10,-5,10})", new Row<double>({-10, -5, 10})),
+      pair<string, void*>("Row({-10,-5,0.5,10})", new Row<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Row({-inf,0,inf})", new Row<double>({datum::inf, 0, -datum::inf})),
       pair<string, void*>("Row({0})", new Row<double>({0})),
       pair<string, void*>("Row({-inf})", new Row<double>({-datum::inf})),

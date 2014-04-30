@@ -324,7 +324,7 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("1", 1));
-    input.add(new Pair<String, Object>("2", 2));
+    input.add(new Pair<String, Object>("5", 2));
     input.add(new Pair<String, Object>("25", 25));
 
     return input;
@@ -338,7 +338,6 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("1", 1));
-    input.add(new Pair<String, Object>("2", 2));
     input.add(new Pair<String, Object>("5", 5));
 
     return input;
@@ -403,9 +402,7 @@ class Input {
     input.add(new Pair<String, Object>("0.5", 0.5));
     input.add(new Pair<String, Object>("1.0", 1.0));
     input.add(new Pair<String, Object>("euler_number", Datum.e));
-    input.add(new Pair<String, Object>("3.0", 3.0));
     input.add(new Pair<String, Object>("pi", Datum.pi));
-    input.add(new Pair<String, Object>("4.0", 4.0));
     input.add(new Pair<String, Object>("inf", Datum.inf));
 
     return input;
@@ -629,8 +626,7 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})));
-    input.add(new Pair<String, Object>("Col({0,0.1,...,1})", new Col(new double[]{0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})));
-    input.add(new Pair<String, Object>("Col({-10,-5,10})", new Col(new double[]{-10, -5, 10})));
+    input.add(new Pair<String, Object>("Col({-10,-5,0.5,10})", new Col(new double[]{-10, -5, 0.5, 10})));
     input.add(new Pair<String, Object>("Col({-inf,0,inf})", new Col(new double[]{Datum.inf, 0, -Datum.inf})));
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
     input.add(new Pair<String, Object>("Col({-inf})", new Col(new double[]{-Datum.inf})));
@@ -703,8 +699,7 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})));
-    input.add(new Pair<String, Object>("Row({0,0.1,...,1})", new Row(new double[]{0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})));
-    input.add(new Pair<String, Object>("Row({-10,-5,10})", new Row(new double[]{-10, -5, 10})));
+    input.add(new Pair<String, Object>("Row({-10,-5,0.5,10})", new Row(new double[]{-10, -5, 0.5, 10})));
     input.add(new Pair<String, Object>("Row({-inf,0,inf})", new Row(new double[]{Datum.inf, 0, -Datum.inf})));
     input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
     input.add(new Pair<String, Object>("Row({-inf})", new Row(new double[]{-Datum.inf})));

@@ -18,6 +18,12 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <fstream>
+using std::ofstream;
+
+#include <streambuf>
+using std::streambuf;
+
 #include <utility>
 using std::pair;
 
@@ -174,6 +180,15 @@ namespace armadilloJava {
             expectedArmaAccu();
             expectedMatMin();
             expectedMatMax();
+            expectedMatIs_finite();
+            expectedMatT();
+            expectedMatDiag();
+            expectedMatIs_square();
+            expectedMatIs_vec();
+            expectedMatIs_colvec();
+            expectedMatIs_rowvec();
+            expectedMatPrint();
+            expectedMatRaw_print();
           }
 
           cout << "done." << endl;
@@ -596,6 +611,104 @@ namespace armadilloJava {
 
         save<double>("Mat.maxValue", Mat<double>({value}));
         save<double>("Mat.maxIndex", Mat<double>({static_cast<double>(index)}));
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatIs_finite() {
+        cout << "- Compute expectedMatIs_finite() ... ";
+
+        if(_genMat.is_finite()) {
+          save<double>("Mat.is_finite", Mat<double>({1}));
+        } else {
+          save<double>("Mat.is_finite", Mat<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatT() {
+        cout << "- Compute expectedMatT() ... ";
+        save<double>("Mat.t", _genMat.t());
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiag() {
+        cout << "- Compute expectedMatDiag() ... ";
+        save<double>("Mat.diag", _genMat.diag());
+        cout << "done." << endl;
+      }
+
+      void expectedMatIs_square() {
+        cout << "- Compute expectedMatIs_square() ... ";
+
+        if(_genMat.is_square()) {
+          save<double>("Mat.is_square", Mat<double>({1}));
+        } else {
+          save<double>("Mat.is_square", Mat<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatIs_vec() {
+        cout << "- Compute expectedMatIs_vec() ... ";
+
+        if(_genMat.is_vec()) {
+          save<double>("Mat.is_vec", Mat<double>({1}));
+        } else {
+          save<double>("Mat.is_vec", Mat<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatIs_colvec() {
+        cout << "- Compute expectedMatIs_colvec() ... ";
+
+        if(_genMat.is_vec()) {
+          save<double>("Mat.is_colvec", Mat<double>({1}));
+        } else {
+          save<double>("Mat.is_colvec", Mat<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatIs_rowvec() {
+        cout << "- Compute expectedMatIs_rowvec() ... ";
+
+        if(_genMat.is_vec()) {
+          save<double>("Mat.is_rowvec", Mat<double>({1}));
+        } else {
+          save<double>("Mat.is_rowvec", Mat<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatPrint() {
+        cout << "- Compute expectedMatPrint() ... ";
+
+        ofstream expected(_filepath + "Mat.print(" + _fileSuffix + ").txt");
+        streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+
+        _genMat.print();
+
+        cout.rdbuf(previousBuffer);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatRaw_print() {
+        cout << "- Compute expectedMatRaw_print() ... ";
+
+        ofstream expected(_filepath + "Mat.raw_print(" + _fileSuffix + ").txt");
+        streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+
+        _genMat.raw_print();
+
+        cout.rdbuf(previousBuffer);
 
         cout << "done." << endl;
       }
