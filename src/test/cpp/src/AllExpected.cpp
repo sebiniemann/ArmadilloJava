@@ -340,7 +340,7 @@ int main() {
   set_stream_err2(logfile);
 
   /**
-   * Removed all comments below, before pushing a commit
+   * Removed all comments below, before pushing a commit to avoid unnecessary conflicts!
    */
 
   ExpectedDatum();
