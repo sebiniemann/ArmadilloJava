@@ -25,6 +25,7 @@ using std::pair;
 using arma::Col;
 using arma::Row;
 using arma::Mat;
+using arma::uword;
 using arma::toeplitz;
 using arma::dot;
 using arma::norm_dot;
@@ -87,6 +88,7 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
+		  expectedColEquals();
         }
 
         cout << "done." << endl;
@@ -222,6 +224,19 @@ namespace armadilloJava {
         cout << "- Compute expectedArmaKron() ... ";
         save<double>("Arma.kron", kron(_genColVec, _genRowVec));
         cout << "done." << endl;
+      }
+	  
+	  void expectedColEquals() {
+		  if(_genColVec.n_cols != _genRowVec.n_cols || _genColVec.n_rows != _genRowVec.n_rows) {
+			  return;
+		  }
+		  
+		  cout << "- Compute expectedColEquals() ... ";
+		  
+		  Col<uword> expected = _genColVec == _genRowVec;
+		  
+		  save<uword> ("Col.equals", expected);
+		  cout << "done." << endl;
       }
 
   };
