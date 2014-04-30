@@ -128,23 +128,17 @@ class Input {
         case OORowVec:
           inputs.add(getOORowVec());
           break;
-        case ElemIndsAsColVec:
-          inputs.add(getElemIndsAsColVec());
+        case ElemInds:
+          inputs.add(getElemInds());
           break;
-        case ElemIndsAsRowVec:
-          inputs.add(getElemIndsAsRowVec());
+        case ColInds:
+          inputs.add(getColInds());
           break;
-        case ColIndsAsColVec:
-          inputs.add(getColIndsAsColVec());
+        case RowInds:
+          inputs.add(getRowInds());
           break;
-        case ColIndsAsRowVec:
-          inputs.add(getColIndsAsRowVec());
-          break;
-        case RowIndsAsColVec:
-          inputs.add(getRowIndsAsColVec());
-          break;
-        case RowIndsAsRowVec:
-          inputs.add(getRowIndsAsRowVec());
+        case Text:
+          inputs.add(getText());
           break;
         case MatNormString:
           inputs.add(getMatNormString());
@@ -266,22 +260,12 @@ class Input {
   }
 
   protected static List<Pair<String, Object>> getElemInd() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("0", 0));
-    input.add(new Pair<String, Object>("1", 1));
-    inputs.add(input);
+    input.add(new Pair<String, Object>("9", 9));
 
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (int) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>(Integer.toString(numElems - 1), numElems - 1));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getColInd() {
@@ -293,39 +277,29 @@ class Input {
   }
 
   protected static List<Pair<String, Object>> getRowInd() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("0", 0));
     input.add(new Pair<String, Object>("1", 1));
-    inputs.add(input);
 
-    for (Pair<String, Object> keyValuePair : getNumRows()) {
-      int numRows = (int) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>(Integer.toString(numRows - 1), numRows - 1));
-      inputs.add(input);
-    }
-    
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getExtRowInd() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
+    List<Pair<String, Object>> input = new ArrayList<>();
 
-    inputs.add(getRowInd());
-    inputs.add(getNumRows());
+    input.add(new Pair<String, Object>("0", 0));
+    input.add(new Pair<String, Object>("1", 1));
+    input.add(new Pair<String, Object>("2", 2));
 
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getNumElems() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("1", 1));
-    input.add(new Pair<String, Object>("5", 2));
-    input.add(new Pair<String, Object>("25", 25));
+    input.add(new Pair<String, Object>("10", 10));
 
     return input;
   }
@@ -418,23 +392,13 @@ class Input {
   }
 
   protected static List<Pair<String, Object>> getElemIndRange() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
-    inputs.add(input);
+    input.add(new Pair<String, Object>("span(0,9)", new Span(0, 9)));
+    input.add(new Pair<String, Object>("span(1,4)", new Span(1, 4)));
 
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (int) keyValuePair.getSecond();
-
-      input.clear();
-      input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
-      input.add(new Pair<String, Object>("span(0," + (numElems - 1) + ")", new Span(0, numElems - 1)));
-      input.add(new Pair<String, Object>("span(" + Math.max(numElems / 2 - 1, 0) + "," + (numElems / 2 + 1) + ")", new Span( Math.max(numElems / 2 - 1, 0), numElems / 2 + 1)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getColIndRange() {
@@ -442,38 +406,24 @@ class Input {
   }
 
   protected static List<Pair<String, Object>> getRowIndRange() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
-    inputs.add(input);
+    input.add(new Pair<String, Object>("span(0,4)", new Span(0, 4)));
+    input.add(new Pair<String, Object>("span(1,2)", new Span(1, 2)));
 
-    for (Pair<String, Object> keyValuePair : getNumRows()) {
-      int numRows = (int) keyValuePair.getSecond();
-
-      input.clear();
-      input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
-      input.add(new Pair<String, Object>("span(0," + (numRows - 1) + ")", new Span(0, numRows - 1)));
-      input.add(new Pair<String, Object>("span(" + Math.max(numRows / 2 - 1, 0) + "," + (numRows / 2 + 1) + ")", new Span(Math.max(numRows / 2 - 1, 0), numRows / 2 + 1)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getMatSize() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
-
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        input.add(new Pair<String, Object>("size(" + numRows + "," + numCols + ")", new Size(numRows, numCols)));
-        input.add(new Pair<String, Object>("size(Mat(" + numRows + "," + numCols + "))", new Size(new Mat(numRows, numCols))));
-      }
-    }
+    input.add(new Pair<String, Object>("size(1,1)", new Size(1, 1)));
+    input.add(new Pair<String, Object>("size(1,5)", new Size(1, 5)));
+    input.add(new Pair<String, Object>("size(2,5)", new Size(2, 5)));
+    input.add(new Pair<String, Object>("size(5,1)", new Size(5, 1)));
+    input.add(new Pair<String, Object>("size(5,2)", new Size(5, 2)));
+    input.add(new Pair<String, Object>("size(5,5)", new Size(5, 5)));
 
     return input;
   }
@@ -481,18 +431,14 @@ class Input {
   protected static List<Pair<String, Object>> getGenMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(eye(" + numRows + "," + numCols + "))", new Mat(Arma.eye(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(kms(" + numRows + "," + numCols + "))", new Mat(getKMSMatrix(numRows, numCols))));
-      }
+      input.add(new Pair<String, Object>("Mat(zeros(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.zeros(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(ones(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.ones(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(eye(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.eye(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(hilbert(" + size.n_rows + "," + size.n_cols + "))", new Mat(getHilbertMatrix(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(kms(" + size.n_rows + "," + size.n_cols + "))", new Mat(getKMSMatrix(size.n_rows, size.n_cols))));
     }
 
     return input;
@@ -510,16 +456,12 @@ class Input {
   protected static List<Pair<String, Object>> getInvMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        if (numRows == numCols) {
-          input.add(new Pair<String, Object>("Mat(eye(" + numRows + "," + numCols + "))", new Mat(Arma.eye(numRows, numCols))));
-          input.add(new Pair<String, Object>("Mat(kms(" + numRows + "," + numCols + "))", new Mat(getKMSMatrix(numRows, numCols))));
-        }
+      if (size.n_rows == size.n_cols) {
+        input.add(new Pair<String, Object>("Mat(eye(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.eye(size.n_rows, size.n_cols))));
+        input.add(new Pair<String, Object>("Mat(kms(" + size.n_rows + "," + size.n_cols + "))", new Mat(getKMSMatrix(size.n_rows, size.n_cols))));
       }
     }
 
@@ -530,18 +472,14 @@ class Input {
     List<List<Pair<String, Object>>> inputs = new ArrayList<>();
     inputs.add(getSymPDMat());
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        if (numRows == numCols) {
-          List<Pair<String, Object>> input = new ArrayList<>();
-          input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
-          input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
-          inputs.add(input);
-        }
+      if (size.n_rows == size.n_cols) {
+        List<Pair<String, Object>> input = new ArrayList<>();
+        input.add(new Pair<String, Object>("Mat(zeros(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.zeros(size.n_rows, size.n_cols))));
+        input.add(new Pair<String, Object>("Mat(ones(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.ones(size.n_rows, size.n_cols))));
+        inputs.add(input);
       }
     }
 
@@ -551,16 +489,12 @@ class Input {
   protected static List<Pair<String, Object>> getSymPDMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        if (numRows == numCols) {
-          input.add(new Pair<String, Object>("Mat(eye(" + numRows + "," + numCols + "))", new Mat(Arma.eye(numRows, numCols))));
-          input.add(new Pair<String, Object>("Mat(hilbert(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols))));
-        }
+      if (size.n_rows == size.n_cols) {
+        input.add(new Pair<String, Object>("Mat(eye(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.eye(size.n_rows, size.n_cols))));
+        input.add(new Pair<String, Object>("Mat(hilbert(" + size.n_rows + "," + size.n_cols + "))", new Mat(getHilbertMatrix(size.n_rows, size.n_cols))));
       }
     }
 
@@ -570,16 +504,12 @@ class Input {
   protected static List<Pair<String, Object>> getLogicMat() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        input.add(new Pair<String, Object>("Mat(zeros(" + numRows + "," + numCols + "))", new Mat(Arma.zeros(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(ones(" + numRows + "," + numCols + "))", new Mat(Arma.ones(numRows, numCols))));
-        input.add(new Pair<String, Object>("Mat(hilbertSub(" + numRows + "," + numCols + "))", new Mat(getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2)))));
-      }
+      input.add(new Pair<String, Object>("Mat(zeros(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.zeros(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(ones(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.ones(size.n_rows, size.n_cols))));
+      input.add(new Pair<String, Object>("Mat(eye(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.eye(size.n_rows, size.n_cols))));
     }
 
     return input;
@@ -600,22 +530,15 @@ class Input {
   protected static List<Pair<String, Object>> getGenColVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      input.add(new Pair<String, Object>("Col(zeros(" + numRows + ",1))", new Col(Arma.zeros(Col.class, numRows))));
-      input.add(new Pair<String, Object>("Col(ones(" + numRows + ",1))", new Col(Arma.ones(Col.class, numRows))));
-
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbert = getHilbertMatrix(numRows, numCols);
-        Mat kms = getKMSMatrix(numRows, numCols);
-
-        input.add(new Pair<String, Object>("Col(eye(" + numRows + "," + numCols + ").col(0))", new Col(identity.col(0))));
-        input.add(new Pair<String, Object>("Col(hilbert(" + numRows + "," + numCols + ").col(0))", new Col(hilbert.col(0))));
-        input.add(new Pair<String, Object>("Col(kms(" + numRows + "," + numCols + ").col(0))", new Col(kms.col(0))));
+      if (size.n_cols == 1) {
+        input.add(new Pair<String, Object>("Col(zeros(" + size.n_rows + ",1))", new Col(Arma.zeros(Col.class, size.n_rows))));
+        input.add(new Pair<String, Object>("Col(ones(" + size.n_rows + ",1))", new Col(Arma.ones(Col.class, size.n_rows))));
+        input.add(new Pair<String, Object>("Col(eye(" + size.n_rows + ",1))", new Col(Arma.eye(size.n_rows, 1))));
+        input.add(new Pair<String, Object>("Col(hilbert(" + size.n_rows + ",1))", new Col(getHilbertMatrix(size.n_rows, 1))));
+        input.add(new Pair<String, Object>("Col(kms(" + size.n_rows + ",1))", new Col(getKMSMatrix(size.n_rows, 1))));
       }
     }
 
@@ -625,7 +548,6 @@ class Input {
   protected static List<Pair<String, Object>> getMonColVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})));
     input.add(new Pair<String, Object>("Col({-10,-5,0.5,10})", new Col(new double[]{-10, -5, 0.5, 10})));
     input.add(new Pair<String, Object>("Col({-inf,0,inf})", new Col(new double[]{Datum.inf, 0, -Datum.inf})));
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
@@ -638,20 +560,13 @@ class Input {
   protected static List<Pair<String, Object>> getLogicColVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumRows()) {
-      int numRows = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      input.add(new Pair<String, Object>("Col(zeros(" + numRows + ",1))", new Col(Arma.zeros(Col.class, numRows))));
-      input.add(new Pair<String, Object>("Col(ones(" + numRows + ",1))", new Col(Arma.ones(Col.class, numRows))));
-
-      for (Pair<String, Object> keyValuePairB : getNumCols()) {
-        int numCols = (int) keyValuePairB.getSecond();
-
-        Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2));
-
-        input.add(new Pair<String, Object>("Col(eye(" + numRows + "," + numCols + ").col(0))", new Col(identity.col(0))));
-        input.add(new Pair<String, Object>("Col(hilbertSub(" + numRows + "," + numCols + ").col(0))", new Col(hilbertSub.col(0))));
+      if (size.n_cols == 1) {
+        input.add(new Pair<String, Object>("Col(zeros(" + size.n_rows + ",1))", new Col(Arma.zeros(Col.class, size.n_rows))));
+        input.add(new Pair<String, Object>("Col(ones(" + size.n_rows + ",1))", new Col(Arma.ones(Col.class, size.n_rows))));
+        input.add(new Pair<String, Object>("Col(eye(" + size.n_rows + ",1))", new Col(Arma.eye(size.n_rows, 1))));
       }
     }
 
@@ -673,22 +588,15 @@ class Input {
   protected static List<Pair<String, Object>> getGenRowVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumCols()) {
-      int numCols = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      input.add(new Pair<String, Object>("Row(zeros(1," + numCols + "))", new Row(Arma.zeros(Row.class, numCols))));
-      input.add(new Pair<String, Object>("Row(ones(1," + numCols + "))", new Row(Arma.ones(Row.class, numCols))));
-
-      for (Pair<String, Object> keyValuePairB : getNumRows()) {
-        int numRows = (int) keyValuePairB.getSecond();
-
-        Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbert = getHilbertMatrix(numRows, numCols);
-        Mat kms = getKMSMatrix(numRows, numCols);
-
-        input.add(new Pair<String, Object>("Row(eye(" + numRows + "," + numCols + ").row(0))", new Row(identity.row(0))));
-        input.add(new Pair<String, Object>("Row(hilbert(" + numRows + "," + numCols + ").row(0))", new Row(hilbert.row(0))));
-        input.add(new Pair<String, Object>("Row(kms(" + numRows + "," + numCols + ").row(0))", new Row(kms.row(0))));
+      if (size.n_rows == 1) {
+        input.add(new Pair<String, Object>("Row(zeros(1," + size.n_cols + "))", new Row(Arma.zeros(Row.class, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(ones(1," + size.n_cols + "))", new Row(Arma.ones(Row.class, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(eye(1," + size.n_cols + "))", new Row(Arma.eye(1, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(hilbert(1," + size.n_cols + "))", new Row(getHilbertMatrix(1, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(kms(1," + size.n_cols + "))", new Row(getKMSMatrix(1, size.n_cols))));
       }
     }
 
@@ -698,7 +606,6 @@ class Input {
   protected static List<Pair<String, Object>> getMonRowVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})));
     input.add(new Pair<String, Object>("Row({-10,-5,0.5,10})", new Row(new double[]{-10, -5, 0.5, 10})));
     input.add(new Pair<String, Object>("Row({-inf,0,inf})", new Row(new double[]{Datum.inf, 0, -Datum.inf})));
     input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
@@ -711,20 +618,13 @@ class Input {
   protected static List<Pair<String, Object>> getLogicRowVec() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    for (Pair<String, Object> keyValuePairA : getNumCols()) {
-      int numCols = (int) keyValuePairA.getSecond();
+    for (Pair<String, Object> keyValuePair : getMatSize()) {
+      Size size = (Size) keyValuePair.getSecond();
 
-      input.add(new Pair<String, Object>("Row(zeros(1," + numCols + "))", new Row(Arma.zeros(Row.class, numCols))));
-      input.add(new Pair<String, Object>("Row(ones(1," + numCols + "))", new Row(Arma.ones(Row.class, numCols))));
-
-      for (Pair<String, Object> keyValuePairB : getNumRows()) {
-        int numRows = (int) keyValuePairB.getSecond();
-
-        Mat identity = Arma.eye(numRows, numCols);
-        Mat hilbertSub = getHilbertMatrix(numRows, numCols).minus(2.0 / (numRows + numCols + 2));
-
-        input.add(new Pair<String, Object>("Row(eye(" + numRows + "," + numCols + ").row(0))", new Row(identity.row(0))));
-        input.add(new Pair<String, Object>("Row(hilbertSub(" + numRows + "," + numCols + ").row(0))", new Row(hilbertSub.row(0))));
+      if (size.n_rows == 1) {
+        input.add(new Pair<String, Object>("Row(zeros(1," + size.n_cols + "))", new Row(Arma.zeros(Row.class, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(ones(1," + size.n_cols + "))", new Row(Arma.ones(Row.class, size.n_cols))));
+        input.add(new Pair<String, Object>("Row(eye(1," + size.n_cols + "))", new Row(Arma.eye(1, size.n_cols))));
       }
     }
 
@@ -743,196 +643,38 @@ class Input {
     return input;
   }
 
-  protected static List<Pair<String, Object>> getElemIndsAsColVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
+  protected static List<Pair<String, Object>> getElemInds() {
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
+    input.add(new Pair<String, Object>("Col({9})", new Col(new double[]{9})));
+    input.add(new Pair<String, Object>("Col({9,0,1})", new Col(new double[]{9, 0, 1})));
+    input.add(new Pair<String, Object>("Col({1,1,1})", new Col(new double[]{1, 1, 1})));
 
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (Integer) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({" + (numElems - 1) + "})", new Col(new double[]{numElems - 1})));
-      input.add(new Pair<String, Object>("Col({" + (numElems / 2 - 1) + "," + (numElems / 2) + "," + (numElems / 2 + 1) + "})", new Col(new double[]{numElems / 2 - 1, numElems / 2, numElems / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numElems];
-      double[] sequenceB = new double[numElems];
-      for (int n = 0; n < numElems; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numElems - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
-  protected static List<Pair<String, Object>> getElemIndsAsRowVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    List<Pair<String, Object>> input = new ArrayList<>();
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
-
-    for (Pair<String, Object> keyValuePair : getNumElems()) {
-      int numElems = (Integer) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>("Row({" + (numElems - 1) + "})", new Row(new double[]{numElems - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numElems / 2 - 1) + "," + (numElems / 2) + "," + (numElems / 2 + 1) + "})", new Row(new double[]{numElems / 2 - 1, numElems / 2, numElems / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numElems];
-      double[] sequenceB = new double[numElems];
-      for (int n = 0; n < numElems; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numElems - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+  protected static List<Pair<String, Object>> getColInds() {
+    return getRowInds();
   }
 
-  protected static List<Pair<String, Object>> getColIndsAsColVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
+  protected static List<Pair<String, Object>> getRowInds() {
     List<Pair<String, Object>> input = new ArrayList<>();
+
     input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
+    input.add(new Pair<String, Object>("Col({4})", new Col(new double[]{4})));
+    input.add(new Pair<String, Object>("Col({4,0,1})", new Col(new double[]{4, 0, 1})));
+    input.add(new Pair<String, Object>("Col({1,1,1})", new Col(new double[]{1, 1, 1})));
 
-    for (Pair<String, Object> keyValuePair : getNumCols()) {
-      int numCols = (Integer) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({" + (numCols - 1) + "})", new Col(new double[]{numCols - 1})));
-      input.add(new Pair<String, Object>("Col({" + (numCols / 2 - 1) + "," + (numCols / 2) + "," + (numCols / 2 + 1) + "})", new Col(new double[]{numCols / 2 - 1, numCols / 2, numCols / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numCols];
-      double[] sequenceB = new double[numCols];
-      for (int n = 0; n < numCols; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numCols - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
-  protected static List<Pair<String, Object>> getColIndsAsRowVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
+  protected static List<Pair<String, Object>> getText() {
     List<Pair<String, Object>> input = new ArrayList<>();
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
 
-    for (Pair<String, Object> keyValuePair : getNumCols()) {
-      int numCols = (Integer) (keyValuePair.getSecond());
+    input.add(new Pair<String, Object>("'Test_string'", new String("Test string")));
 
-      input.clear();
-      input.add(new Pair<String, Object>("Row({" + (numCols - 1) + "})", new Row(new double[]{numCols - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numCols / 2 - 1) + "," + (numCols / 2) + "," + (numCols / 2 + 1) + "})", new Row(new double[]{numCols / 2 - 1, numCols / 2, numCols / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numCols];
-      double[] sequenceB = new double[numCols];
-      for (int n = 0; n < numCols; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numCols - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getRowIndsAsColVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    List<Pair<String, Object>> input = new ArrayList<>();
-    input.add(new Pair<String, Object>("Col({0})", new Col(new double[]{0})));
-    input.add(new Pair<String, Object>("Col({1,1,1,1,1})", new Col(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
-
-    for (Pair<String, Object> keyValuePair : getNumRows()) {
-      int numRows = (Integer) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({" + (numRows - 1) + "})", new Col(new double[]{numRows - 1})));
-      input.add(new Pair<String, Object>("Col({" + (numRows / 2 - 1) + "," + (numRows / 2) + "," + (numRows / 2 + 1) + "})", new Col(new double[]{numRows / 2 - 1, numRows / 2, numRows / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numRows];
-      double[] sequenceB = new double[numRows];
-      for (int n = 0; n < numRows; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numRows - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Col({0,1,...,n})", new Col(sequenceA)));
-      input.add(new Pair<String, Object>("Col({0,n,1,n-1,...})", new Col(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
-  }
-
-  protected static List<Pair<String, Object>> getRowIndsAsRowVec() {
-    List<List<Pair<String, Object>>> inputs = new ArrayList<>();
-
-    List<Pair<String, Object>> input = new ArrayList<>();
-    input.add(new Pair<String, Object>("Row({0})", new Row(new double[]{0})));
-    input.add(new Pair<String, Object>("Row({1,1,1,1,1})", new Row(new double[]{1, 1, 1, 1, 1})));
-    inputs.add(input);
-
-    for (Pair<String, Object> keyValuePair : getNumRows()) {
-      int numRows = (Integer) (keyValuePair.getSecond());
-
-      input.clear();
-      input.add(new Pair<String, Object>("Row({" + (numRows - 1) + "})", new Row(new double[]{numRows - 1})));
-      input.add(new Pair<String, Object>("Row({" + (numRows / 2 - 1) + "," + (numRows / 2) + "," + (numRows / 2 + 1) + "})", new Row(new double[]{numRows / 2 - 1, numRows / 2, numRows / 2 + 1})));
-      inputs.add(input);
-
-      double[] sequenceA = new double[numRows];
-      double[] sequenceB = new double[numRows];
-      for (int n = 0; n < numRows; n++) {
-        sequenceA[n] = n;
-        sequenceB[n] = ((n % 2 == 0) ? n : numRows - n);
-      }
-
-      input.clear();
-      input.add(new Pair<String, Object>("Row({0,1,...,n})", new Row(sequenceA)));
-      input.add(new Pair<String, Object>("Row({0,n,1,n-1,...})", new Row(sequenceB)));
-      inputs.add(input);
-    }
-
-    return vectorUnion(inputs);
+    return input;
   }
 
   protected static List<Pair<String, Object>> getMatNormString() {

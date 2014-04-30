@@ -48,11 +48,11 @@ using std::cout;
 using std::endl;
 
 namespace armadilloJava {
-  vector<vector<pair<string, void*>>> Input::getTestParameters(const vector<InputClass>& testClasses) {
+  vector<vector<pair<string, void*>>> Input::getTestParameters(const vector<InputClass>& inputClasses) {
     vector<vector<pair<string, void*>>> inputs;
 
-    for (InputClass testClass : testClasses) {
-      switch (testClass) {
+    for (InputClass inputClass : inputClasses) {
+      switch (inputClass) {
         case InputClass::ElemInd:
           inputs.push_back(getElemInd());
           break;
@@ -155,23 +155,17 @@ namespace armadilloJava {
         case InputClass::OORowVec:
           inputs.push_back(getOORowVec());
           break;
-        case InputClass::ElemIndsAsColVec:
-          inputs.push_back(getElemIndsAsColVec());
+        case InputClass::ElemInds:
+          inputs.push_back(getElemInds());
           break;
-        case InputClass::ElemIndsAsRowVec:
-          inputs.push_back(getElemIndsAsRowVec());
+        case InputClass::ColInds:
+          inputs.push_back(getColInds());
           break;
-        case InputClass::ColIndsAsColVec:
-          inputs.push_back(getColIndsAsColVec());
+        case InputClass::RowInds:
+          inputs.push_back(getRowInds());
           break;
-        case InputClass::ColIndsAsRowVec:
-          inputs.push_back(getColIndsAsRowVec());
-          break;
-        case InputClass::RowIndsAsColVec:
-          inputs.push_back(getRowIndsAsColVec());
-          break;
-        case InputClass::RowIndsAsRowVec:
-          inputs.push_back(getRowIndsAsRowVec());
+        case InputClass::Text:
+          inputs.push_back(getText());
           break;
         case InputClass::MatNormString:
           inputs.push_back(getMatNormString());
@@ -198,7 +192,7 @@ namespace armadilloJava {
           inputs.push_back(getRandom());
           break;
         default:
-          throw new runtime_error("Unsupported test class requested.");
+          throw new runtime_error("Unsupported input class requested.");
       }
     }
 
@@ -264,21 +258,10 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getElemInd() {
-    vector<vector<pair<string, void*>>> inputs = {};
-    inputs.push_back({
+    return {
       pair<string, void*>("0", new int(0)),
-      pair<string, void*>("1", new int(1))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumElems()) {
-      int numElems = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>(to_string(numElems - 1), new int(numElems - 1))
-      });
-    }
-
-    return vectorUnion(inputs);
+      pair<string, void*>("9", new int(9))
+    };
   }
 
   vector<pair<string, void*>> Input::getColInd() {
@@ -290,35 +273,24 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getRowInd() {
-    vector<vector<pair<string, void*>>> inputs = {};
-    inputs.push_back({
+    return {
       pair<string, void*>("0", new int(0)),
       pair<string, void*>("1", new int(1))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>(to_string(numRows - 1), new int(numRows - 1))
-      });
-    }
-
-    return vectorUnion(inputs);
+    };
   }
 
   vector<pair<string, void*>> Input::getExtRowInd() {
-    return vectorUnion({
-      getRowInd(),
-      getNumRows()
-    });
+    return {
+      pair<string, void*>("0", new int(0)),
+      pair<string, void*>("1", new int(1)),
+      pair<string, void*>("2", new int(2))
+    };
   }
 
   vector<pair<string, void*>> Input::getNumElems() {
     return {
       pair<string, void*>("1", new int(1)),
-      pair<string, void*>("5", new int(2)),
-      pair<string, void*>("25", new int(25))
+      pair<string, void*>("10", new int(10))
     };
   }
 
@@ -394,22 +366,11 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getElemIndRange() {
-    vector<vector<pair<string, void*>>> inputs = {};
-    inputs.push_back({
-      pair<string, void*>("span(0,0)", new span(0, 0))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumElems()) {
-      int numElems = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("span(0," + to_string(numElems - 1) + ")", new span(0, numElems - 1)),
-        pair<string, void*>("span(" + to_string(numElems - 1) + "," + to_string(numElems - 1) + ")", new span(numElems - 1, numElems - 1)),
-        pair<string, void*>("span(" + to_string(max(numElems/2 - 1, 0)) + "," + to_string(numElems/2 + 1) + ")", new span(max(numElems/2 - 1, 0), numElems/2 + 1))
-      });
-    }
-
-    return vectorUnion(inputs);
+    return {
+      pair<string, void*>("span(0,0)", new span(0, 0)),
+      pair<string, void*>("span(0,9)", new span(0, 9)),
+      pair<string, void*>("span(1,4)", new span(1, 4))
+    };
   }
 
   vector<pair<string, void*>> Input::getColIndRange() {
@@ -417,56 +378,35 @@ namespace armadilloJava {
   }
 
   vector<pair<string, void*>> Input::getRowIndRange() {
-    vector<vector<pair<string, void*>>> inputs = {};
-    inputs.push_back({
-      pair<string, void*>("span(0,0)", new span(0, 0))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("span(0," + to_string(numRows - 1) + ")", new span(0, numRows - 1)),
-        pair<string, void*>("span(" + to_string(numRows - 1) + "," + to_string(numRows - 1) + ")", new span(numRows - 1, numRows - 1)),
-        pair<string, void*>("span(" + to_string(max(numRows/2 - 1, 0)) + "," + to_string(numRows/2 + 1) + ")", new span(max(numRows/2 - 1, 0), numRows/2 + 1))
-      });
-    }
-
-    return vectorUnion(inputs);
+    return {
+      pair<string, void*>("span(0,0)", new span(0, 0)),
+      pair<string, void*>("span(0,4)", new span(0, 4)),
+      pair<string, void*>("span(1,2)", new span(1, 2))
+    };
   }
 
   vector<pair<string, void*>> Input::getMatSize() {
-    vector<pair<string, void*>> input = {};
-
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
-
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        input.push_back(pair<string, void*>("size(" + to_string(numRows) + "," + to_string(numCols) + ")", new SizeMat(numRows, numCols)));
-        input.push_back(pair<string, void*>("size(Mat(" + to_string(numRows) + "," + to_string(numCols) + "))", new SizeMat(numRows, numCols)));
-      }
-    }
-
-    return input;
+    return {
+      pair<string, void*>("size(1,1)", new SizeMat(1, 1)),
+      pair<string, void*>("size(1,5)", new SizeMat(1, 5)),
+      pair<string, void*>("size(2,5)", new SizeMat(2, 5)),
+      pair<string, void*>("size(5,1)", new SizeMat(5, 1)),
+      pair<string, void*>("size(5,2)", new SizeMat(5, 2)),
+      pair<string, void*>("size(5,5)", new SizeMat(5, 5))
+    };
   }
 
   vector<pair<string, void*>> Input::getGenMat() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        input.push_back(pair<string, void*>("Mat(zeros(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(zeros<Mat<double>>(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(ones(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(ones<Mat<double>>(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(eye(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(eye<Mat<double>>(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(hilbert(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(getHilbertMatrix(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(kms(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(getKMSMatrix(numRows, numCols))));
-      }
+      input.push_back(pair<string, void*>("Mat(zeros(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(zeros<Mat<double>>(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(ones(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(ones<Mat<double>>(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(eye(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(eye<Mat<double>>(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(hilbert(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getHilbertMatrix(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(kms(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getKMSMatrix(size.n_rows, size.n_cols))));
     }
 
     return input;
@@ -482,16 +422,12 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getInvMat() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        if(numRows == numCols) {
-          input.push_back(pair<string, void*>("Mat(eye(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(eye<Mat<double>>(numRows, numCols))));
-          input.push_back(pair<string, void*>("Mat(kms(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(getKMSMatrix(numRows, numCols))));
-        }
+      if(size.n_rows == size.n_cols) {
+        input.push_back(pair<string, void*>("Mat(eye(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(eye<Mat<double>>(size.n_rows, size.n_cols))));
+        input.push_back(pair<string, void*>("Mat(kms(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getKMSMatrix(size.n_rows, size.n_cols))));
       }
     }
 
@@ -502,18 +438,14 @@ namespace armadilloJava {
     vector<vector<pair<string, void*>>> inputs = {};
     inputs.push_back(getSymPDMat());
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        if(numRows == numCols) {
-          inputs.push_back({
-            pair<string, void*>("Mat(zeros(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(zeros<Mat<double>>(numRows, numCols))),
-            pair<string, void*>("Mat(ones(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(ones<Mat<double>>(numRows, numCols)))
-          });
-        }
+      if(size.n_rows == size.n_cols) {
+        inputs.push_back({
+          pair<string, void*>("Mat(zeros(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(zeros<Mat<double>>(size.n_rows, size.n_cols))),
+          pair<string, void*>("Mat(ones(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(ones<Mat<double>>(size.n_rows, size.n_cols)))
+        });
       }
     }
 
@@ -523,16 +455,12 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getSymPDMat() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        if(numRows == numCols) {
-          input.push_back(pair<string, void*>("Mat(eye(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(eye<Mat<double>>(numRows, numCols))));
-          input.push_back(pair<string, void*>("Mat(hilbert(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(getHilbertMatrix(numRows, numCols))));
-        }
+      if(size.n_rows == size.n_cols) {
+        input.push_back(pair<string, void*>("Mat(eye(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(eye<Mat<double>>(size.n_rows, size.n_cols))));
+        input.push_back(pair<string, void*>("Mat(hilbert(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getHilbertMatrix(size.n_rows, size.n_cols))));
       }
     }
 
@@ -542,16 +470,12 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getLogicMat() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        input.push_back(pair<string, void*>("Mat(zeros(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(zeros<Mat<double>>(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(ones(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(ones<Mat<double>>(numRows, numCols))));
-        input.push_back(pair<string, void*>("Mat(hilbertSub(" + to_string(numRows) + "," + to_string(numCols) + "))", new Mat<double>(getHilbertMatrix(numRows, numCols) - 2.0/(numRows + numCols + 2))));
-      }
+      input.push_back(pair<string, void*>("Mat(zeros(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(zeros<Mat<double>>(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(ones(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(ones<Mat<double>>(size.n_rows, size.n_cols))));
+      input.push_back(pair<string, void*>("Mat(eye(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(eye<Mat<double>>(size.n_rows, size.n_cols))));
     }
 
     return input;
@@ -572,22 +496,15 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getGenColVec() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      input.push_back(pair<string, void*>("Col(zeros(" + to_string(numRows) + ",1))", new Col<double>(zeros<Col<double>>(numRows))));
-      input.push_back(pair<string, void*>("Col(ones(" + to_string(numRows) + ",1))", new Col<double>(ones<Col<double>>(numRows))));
-
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        Mat<double> identity = eye<Mat<double>>(numRows, numCols);
-        Mat<double> hilbert = getHilbertMatrix(numRows, numCols);
-        Mat<double> kms = getKMSMatrix(numRows, numCols);
-
-        input.push_back(pair<string, void*>("Col(eye(" + to_string(numRows) + "," + to_string(numCols) + ").col(0))", new Col<double>(identity.col(0))));
-        input.push_back(pair<string, void*>("Col(hilbert(" + to_string(numRows) + "," + to_string(numCols) + ").col(0))", new Col<double>(hilbert.col(0))));
-        input.push_back(pair<string, void*>("Col(kms(" + to_string(numRows) + "," + to_string(numCols) + ").col(0))", new Col<double>(kms.col(0))));
+      if(size.n_cols == 1) {
+        input.push_back(pair<string, void*>("Col(zeros(" + to_string(size.n_rows) + ",1))", new Col<double>(zeros<Col<double>>(size.n_rows))));
+        input.push_back(pair<string, void*>("Col(ones(" + to_string(size.n_rows) + ",1))", new Col<double>(ones<Col<double>>(size.n_rows))));
+        input.push_back(pair<string, void*>("Col(eye(" + to_string(size.n_rows) + ",1))", new Col<double>(eye<Col<double>>(size.n_rows, 1))));
+        input.push_back(pair<string, void*>("Col(hilbert(" + to_string(size.n_rows) + ",1))", new Col<double>(getHilbertMatrix(size.n_rows, 1))));
+        input.push_back(pair<string, void*>("Col(kms(" + to_string(size.n_rows) + ",1))", new Col<double>(getKMSMatrix(size.n_rows, 1))));
       }
     }
 
@@ -596,7 +513,6 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getMonColVec() {
     return {
-      pair<string, void*>("Col({0,1,...,n})", new Col<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
       pair<string, void*>("Col({-10,-5,0.5,10})", new Col<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Col({-inf,0,inf})", new Col<double>({datum::inf, 0, -datum::inf})),
       pair<string, void*>("Col({0})", new Col<double>({0})),
@@ -608,20 +524,13 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getLogicColVec() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      input.push_back(pair<string, void*>("Col(zeros(" + to_string(numRows) + ",1))", new Col<double>(zeros<Col<double>>(numRows))));
-      input.push_back(pair<string, void*>("Col(ones(" + to_string(numRows) + ",1))", new Col<double>(ones<Col<double>>(numRows))));
-
-      for (pair<string, void*> keyValuePairB : getNumCols()) {
-        int numCols = *static_cast<int*>(keyValuePairB.second);
-
-        Mat<double> identity = eye<Mat<double>>(numRows, numCols);
-        Mat<double> hilbertSub = getHilbertMatrix(numRows, numCols) - 2.0/(numRows + numCols + 2);
-
-        input.push_back(pair<string, void*>("Col(eye(" + to_string(numRows) + "," + to_string(numCols) + ").col(0))", new Col<double>(identity.col(0))));
-        input.push_back(pair<string, void*>("Col(hilbertSub(" + to_string(numRows) + "," + to_string(numCols) + ").col(0))", new Col<double>(hilbertSub.col(0))));
+      if(size.n_cols == 1) {
+        input.push_back(pair<string, void*>("Col(zeros(" + to_string(size.n_rows) + ",1))", new Col<double>(zeros<Col<double>>(size.n_rows))));
+        input.push_back(pair<string, void*>("Col(ones(" + to_string(size.n_rows) + ",1))", new Col<double>(ones<Col<double>>(size.n_rows))));
+        input.push_back(pair<string, void*>("Col(eye(" + to_string(size.n_rows) + ",1))", new Col<double>(eye<Col<double>>(size.n_rows, 1))));
       }
     }
 
@@ -643,22 +552,15 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getGenRowVec() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumCols()) {
-      int numCols = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      input.push_back(pair<string, void*>("Row(zeros(1," + to_string(numCols) + "))", new Row<double>(zeros<Row<double>>(numCols))));
-      input.push_back(pair<string, void*>("Row(ones(1," + to_string(numCols) + "))", new Row<double>(ones<Row<double>>(numCols))));
-
-      for (pair<string, void*> keyValuePairB : getNumRows()) {
-        int numRows = *static_cast<int*>(keyValuePairB.second);
-
-        Mat<double> identity = eye<Mat<double>>(numRows, numCols);
-        Mat<double> hilbert = getHilbertMatrix(numRows, numCols);
-        Mat<double> kms = getKMSMatrix(numRows, numCols);
-
-        input.push_back(pair<string, void*>("Row(eye(" + to_string(numRows) + "," + to_string(numCols) + ").row(0))", new Row<double>(identity.row(0))));
-        input.push_back(pair<string, void*>("Row(hilbert(" + to_string(numRows) + "," + to_string(numCols) + ").row(0))", new Row<double>(hilbert.row(0))));
-        input.push_back(pair<string, void*>("Row(kms(" + to_string(numRows) + "," + to_string(numCols) + ").row(0))", new Row<double>(kms.row(0))));
+      if(size.n_rows == 1) {
+        input.push_back(pair<string, void*>("Row(zeros(1," + to_string(size.n_cols) + "))", new Row<double>(zeros<Row<double>>(size.n_cols))));
+        input.push_back(pair<string, void*>("Row(ones(1," + to_string(size.n_cols) + "))", new Row<double>(ones<Row<double>>(size.n_cols))));
+        input.push_back(pair<string, void*>("Row(eye(1," + to_string(size.n_cols) + "))", new Row<double>(eye<Row<double>>(1, size.n_cols))));
+        input.push_back(pair<string, void*>("Row(hilbert(1," + to_string(size.n_cols) + "))", new Row<double>(getHilbertMatrix(1, size.n_cols))));
+        input.push_back(pair<string, void*>("Row(kms(1," + to_string(size.n_cols) + "))", new Row<double>(getKMSMatrix(1, size.n_cols))));
       }
     }
 
@@ -667,7 +569,6 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getMonRowVec() {
     return {
-      pair<string, void*>("Row({0,1,...,n})", new Row<double>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})),
       pair<string, void*>("Row({-10,-5,0.5,10})", new Row<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Row({-inf,0,inf})", new Row<double>({datum::inf, 0, -datum::inf})),
       pair<string, void*>("Row({0})", new Row<double>({0})),
@@ -679,20 +580,13 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getLogicRowVec() {
     vector<pair<string, void*>> input = {};
 
-    for (pair<string, void*> keyValuePairA : getNumCols()) {
-      int numCols = *static_cast<int*>(keyValuePairA.second);
+    for (pair<string, void*> keyValuePair : getMatSize()) {
+      SizeMat size = *static_cast<SizeMat*>(keyValuePair.second);
 
-      input.push_back(pair<string, void*>("Row(zeros(1," + to_string(numCols) + "))", new Row<double>(zeros<Row<double>>(numCols))));
-      input.push_back(pair<string, void*>("Row(ones(1," + to_string(numCols) + "))", new Row<double>(ones<Row<double>>(numCols))));
-
-      for (pair<string, void*> keyValuePairB : getNumRows()) {
-        int numRows = *static_cast<int*>(keyValuePairB.second);
-
-        Mat<double> identity = eye<Mat<double>>(numRows, numCols);
-        Mat<double> hilbertSub = getHilbertMatrix(numRows, numCols) - 2.0/(numRows + numCols + 2);
-
-        input.push_back(pair<string, void*>("Row(eye(" + to_string(numRows) + "," + to_string(numCols) + ").row(0))", new Row<double>(identity.row(0))));
-        input.push_back(pair<string, void*>("Row(hilbertSub(" + to_string(numRows) + "," + to_string(numCols) + ").row(0))", new Row<double>(hilbertSub.row(0))));
+      if(size.n_rows == 1) {
+        input.push_back(pair<string, void*>("Row(zeros(1," + to_string(size.n_cols) + "))", new Row<double>(zeros<Row<double>>(size.n_cols))));
+        input.push_back(pair<string, void*>("Row(ones(1," + to_string(size.n_cols) + "))", new Row<double>(ones<Row<double>>(size.n_cols))));
+        input.push_back(pair<string, void*>("Row(eye(1," + to_string(size.n_cols) + "))", new Row<double>(eye<Row<double>>(1, size.n_cols))));
       }
     }
 
@@ -711,196 +605,32 @@ namespace armadilloJava {
     return input;
   }
 
-  vector<pair<string, void*>> Input::getElemIndsAsColVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
+  vector<pair<string, void*>> Input::getElemInds() {
+    return {
       pair<string, void*>("Col({0})", new Col<double>({0})),
-      pair<string, void*>("Col({1,1,1,1,1})", new Col<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumElems()) {
-      int numElems = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Col({" + to_string(numElems - 1) + "})", new Col<double>({static_cast<double>(numElems - 1)})),
-        pair<string, void*>("Col({" + to_string(numElems/2 - 1) + "," + to_string(numElems/2) + "," + to_string(numElems/2 + 1) + "})", new Col<double>({static_cast<double>(numElems/2 - 1), static_cast<double>(numElems/2), static_cast<double>(numElems/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numElems);
-      vector<double> sequenceB(numElems);
-      for(int n = 0; n < numElems; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numElems - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Col({0,1,...,n})", new Col<double>(sequenceA)),
-        pair<string, void*>("Col({0,n,1,n-1,...})", new Col<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
+      pair<string, void*>("Col({9})", new Col<double>({9})),
+      pair<string, void*>("Col({9,0,1})", new Col<double>({9, 0, 1})),
+      pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
+    };
   }
 
-  vector<pair<string, void*>> Input::getElemIndsAsRowVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
-      pair<string, void*>("Row({0})", new Row<double>({0})),
-      pair<string, void*>("Row({1,1,1,1,1})", new Row<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumElems()) {
-      int numElems = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Row({" + to_string(numElems - 1) + "})", new Row<double>({static_cast<double>(numElems - 1)})),
-        pair<string, void*>("Row({" + to_string(numElems/2 - 1) + "," + to_string(numElems/2) + "," + to_string(numElems/2 + 1) + "})", new Row<double>({static_cast<double>(numElems/2 - 1), static_cast<double>(numElems/2), static_cast<double>(numElems/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numElems);
-      vector<double> sequenceB(numElems);
-      for(int n = 0; n < numElems; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numElems - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Row({0,1,...,n})", new Row<double>(sequenceA)),
-        pair<string, void*>("Row({0,n,1,n-1,...})", new Row<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
+  vector<pair<string, void*>> Input::getColInds() {
+    return getRowInds();
   }
 
-  vector<pair<string, void*>> Input::getColIndsAsColVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
+  vector<pair<string, void*>> Input::getRowInds() {
+    return {
       pair<string, void*>("Col({0})", new Col<double>({0})),
-      pair<string, void*>("Col({1,1,1,1,1})", new Col<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumCols()) {
-      int numCols = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Col({" + to_string(numCols - 1) + "})", new Col<double>({static_cast<double>(numCols - 1)})),
-        pair<string, void*>("Col({" + to_string(numCols/2 - 1) + "," + to_string(numCols/2) + "," + to_string(numCols/2 + 1) + "})", new Col<double>({static_cast<double>(numCols/2 - 1), static_cast<double>(numCols/2), static_cast<double>(numCols/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numCols);
-      vector<double> sequenceB(numCols);
-      for(int n = 0; n < numCols; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numCols - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Col({0,1,...,n})", new Col<double>(sequenceA)),
-        pair<string, void*>("Col({0,n,1,n-1,...})", new Col<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
+      pair<string, void*>("Col({4})", new Col<double>({4})),
+      pair<string, void*>("Col({4,0,1})", new Col<double>({4, 0, 1})),
+      pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
+    };
   }
 
-  vector<pair<string, void*>> Input::getColIndsAsRowVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
-      pair<string, void*>("Row({0})", new Row<double>({0})),
-      pair<string, void*>("Row({1,1,1,1,1})", new Row<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumCols()) {
-      int numCols = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Row({" + to_string(numCols - 1) + "})", new Row<double>({static_cast<double>(numCols - 1)})),
-        pair<string, void*>("Row({" + to_string(numCols/2 - 1) + "," + to_string(numCols/2) + "," + to_string(numCols/2 + 1) + "})", new Row<double>({static_cast<double>(numCols/2 - 1), static_cast<double>(numCols/2), static_cast<double>(numCols/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numCols);
-      vector<double> sequenceB(numCols);
-      for(int n = 0; n < numCols; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numCols - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Row({0,1,...,n})", new Row<double>(sequenceA)),
-        pair<string, void*>("Row({0,n,1,n-1,...})", new Row<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
-  }
-
-  vector<pair<string, void*>> Input::getRowIndsAsColVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
-      pair<string, void*>("Col({0})", new Col<double>({0})),
-      pair<string, void*>("Col({1,1,1,1,1})", new Col<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Col({" + to_string(numRows - 1) + "})", new Col<double>({static_cast<double>(numRows - 1)})),
-        pair<string, void*>("Col({" + to_string(numRows/2 - 1) + "," + to_string(numRows/2) + "," + to_string(numRows/2 + 1) + "})", new Col<double>({static_cast<double>(numRows/2 - 1), static_cast<double>(numRows/2), static_cast<double>(numRows/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numRows);
-      vector<double> sequenceB(numRows);
-      for(int n = 0; n < numRows; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numRows - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Col({0,1,...,n})", new Col<double>(sequenceA)),
-        pair<string, void*>("Col({0,n,1,n-1,...})", new Col<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
-  }
-
-  vector<pair<string, void*>> Input::getRowIndsAsRowVec() {
-    vector<vector<pair<string, void*>>> inputs = {};
-
-    inputs.push_back({
-      pair<string, void*>("Row({0})", new Row<double>({0})),
-      pair<string, void*>("Row({1,1,1,1,1})", new Row<double>({1, 1, 1, 1, 1}))
-    });
-
-    for (pair<string, void*> keyValuePair : getNumRows()) {
-      int numRows = *static_cast<int*>(keyValuePair.second);
-
-      inputs.push_back({
-        pair<string, void*>("Row({" + to_string(numRows - 1) + "})", new Row<double>({static_cast<double>(numRows - 1)})),
-        pair<string, void*>("Row({" + to_string(numRows/2 - 1) + "," + to_string(numRows/2) + "," + to_string(numRows/2 + 1) + "})", new Row<double>({static_cast<double>(numRows/2 - 1), static_cast<double>(numRows/2), static_cast<double>(numRows/2 + 1)}))
-      });
-
-      vector<double> sequenceA(numRows);
-      vector<double> sequenceB(numRows);
-      for(int n = 0; n < numRows; n++) {
-        sequenceA.at(n) = n;
-        sequenceB.at(n) = ((n % 2 == 0) ? static_cast<double>(n) : static_cast<double>(numRows - n));
-      }
-
-      inputs.push_back({
-        pair<string, void*>("Row({0,1,...,n})", new Row<double>(sequenceA)),
-        pair<string, void*>("Row({0,n,1,n-1,...})", new Row<double>(sequenceB))
-      });
-    }
-
-    return vectorUnion(inputs);
+  vector<pair<string, void*>> Input::getText() {
+    return {
+      pair<string, void*>("'Test_string'", new string("Test string"))
+    };
   }
 
   vector<pair<string, void*>> Input::getMatNormString() {

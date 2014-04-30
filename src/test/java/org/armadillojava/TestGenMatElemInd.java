@@ -95,7 +95,7 @@ public class TestGenMatElemInd extends TestClass {
     if (_genMat.in_range(_elemInd)) {
       assertThat(1.0, is(expected));
     } else {
-      assertThat(0.0, is(expected));
+      assertThat(0.0, is(expected));;
     }
   }
 

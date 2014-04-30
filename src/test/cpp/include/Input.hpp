@@ -74,12 +74,10 @@ namespace armadilloJava {
       static vector<pair<string, void*>> getMonRowVec();
       static vector<pair<string, void*>> getLogicRowVec();
       static vector<pair<string, void*>> getOORowVec();
-      static vector<pair<string, void*>> getElemIndsAsColVec();
-      static vector<pair<string, void*>> getElemIndsAsRowVec();
-      static vector<pair<string, void*>> getColIndsAsColVec();
-      static vector<pair<string, void*>> getColIndsAsRowVec();
-      static vector<pair<string, void*>> getRowIndsAsColVec();
-      static vector<pair<string, void*>> getRowIndsAsRowVec();
+      static vector<pair<string, void*>> getElemInds();
+      static vector<pair<string, void*>> getColInds();
+      static vector<pair<string, void*>> getRowInds();
+      static vector<pair<string, void*>> getText();
       static vector<pair<string, void*>> getMatNormString();
       static vector<pair<string, void*>> getVecNormString();
       static vector<pair<string, void*>> getSort();

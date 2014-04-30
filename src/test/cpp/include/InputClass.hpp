@@ -50,23 +50,16 @@ namespace armadilloJava
     MonRowVec,
     LogicRowVec,
     OORowVec,
-    ElemIndsAsColVec,
-    ElemIndsAsRowVec,
-    ColIndsAsColVec,
-    ColIndsAsRowVec,
-    RowIndsAsColVec,
-    RowIndsAsRowVec,
-    // Text, Untested
+    ElemInds,
+    ColInds,
+    RowInds,
+    Text,
     // FilePath, Test specific
     MatNormString,
     VecNormString,
     Sort,
     Search,
     SinValSel,
-    // UnOp, ArmadilloJava specific
-    // ElemWiseOp, ArmadilloJava specific
-    // BinOp, ArmadilloJava specific
-    // RelOp, ArmadilloJava specific
     // OutputStream, Java specific
     // InputStream, Java specific
     // FileType, Test specific

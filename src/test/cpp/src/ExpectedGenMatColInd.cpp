@@ -79,7 +79,7 @@ namespace armadilloJava {
         }
 
         cout << "- Compute expectedArmaDiagvec() ... ";
-        save<double>("Arma.diagvec", diagvec(_genMat, _colInd));
+        save<double>("Arma.diagvecSuper", diagvec(_genMat, _colInd));
         cout << "done." << endl;
       }
 

@@ -79,7 +79,7 @@ public class TestGenMatColInd extends TestClass {
   public void testArmaDiagvec() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
     
-    assertMatEquals(Arma.diagvec(_genMat, _colInd), load("Arma.diagvec"));
+    assertMatEquals(Arma.diagvec(_genMat, _colInd), load("Arma.diagvecSuper"));
   }
 
   @Test
