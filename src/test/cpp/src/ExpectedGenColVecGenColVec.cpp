@@ -87,7 +87,7 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
-		  expectedColEquals();
+		      expectedColEquals();
         }
 
         cout << "done." << endl;
@@ -225,17 +225,17 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 	  
-	  void expectedColEquals() {
-		  if(_genColVecA.n_elem != _genColVecB.n_elem) {
-			  return;
-		  }
-		  cout << "- Compute expectedColEquals() ... ";
-		  
-		  Col<uword> expected = _genColVecA == _genColVecB;
+      void expectedColEquals() {
+        if(_genColVecA.n_elem != _genColVecB.n_elem) {
+          return;
+        }
 
-		  save<uword>("Col.equals", expected);
-		  cout << "done." << endl;
+        cout << "- Compute expectedColEquals() ... ";
+
+        Col<uword> expected = _genColVecA == _genColVecB;
+        save<uword>("Col.equals", expected);
+
+        cout << "done." << endl;
       }
-
   };
 }
