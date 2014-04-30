@@ -339,6 +339,10 @@ int main() {
   set_stream_err1(logfile);
   set_stream_err2(logfile);
 
+  /**
+   * Removed all comments below, before pushing a commit
+   */
+
   ExpectedDatum();
   ExpectedGenColVec();
   ExpectedGenColVecGenColVec();
