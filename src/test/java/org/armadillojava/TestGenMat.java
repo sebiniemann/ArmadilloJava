@@ -392,6 +392,37 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
+  public void testArmaPrincompC() throws IOException {
+    /*
+     * Only tests that no exception is thrown.
+     */
+    
+    Mat coeff = new Mat();
+    Mat score = new Mat();
+
+    Arma.princomp(coeff, score, _genMat);
+  }
+
+  @Test
+  public void testArmaPrincompD() throws IOException {
+    /*
+     * Only tests that no exception is thrown.
+     */
+    
+    Mat coeff = new Mat();
+    Arma.princomp(coeff, _genMat);
+  }
+
+  @Test
+  public void testArmaPrincompE() throws IOException {
+    /*
+     * Only tests that no exception is thrown.
+     */
+    
+    Arma.princomp(_genMat);
+  }
+
+  @Test
   public void testArmaQr() throws IOException {
     Mat Q = new Mat();
     Mat R = new Mat();
