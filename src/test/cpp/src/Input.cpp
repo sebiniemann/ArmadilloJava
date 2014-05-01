@@ -388,8 +388,10 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getMatSize() {
     return {
       pair<string, void*>("size(1,1)", new SizeMat(1, 1)),
+      pair<string, void*>("size(1,3)", new SizeMat(1, 3)),
       pair<string, void*>("size(1,5)", new SizeMat(1, 5)),
       pair<string, void*>("size(2,5)", new SizeMat(2, 5)),
+      pair<string, void*>("size(3,1)", new SizeMat(3, 1)),
       pair<string, void*>("size(5,1)", new SizeMat(5, 1)),
       pair<string, void*>("size(5,2)", new SizeMat(5, 2)),
       pair<string, void*>("size(5,5)", new SizeMat(5, 5))

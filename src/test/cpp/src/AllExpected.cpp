@@ -401,7 +401,7 @@ int main() {
 //  ExpectedGenMatSinValTol();
 //  ExpectedGenMatSort();
 //  ExpectedGenMatSortDim();
-  ExpectedGenMatVecNormInt();
+//  ExpectedGenMatVecNormInt();
 //  ExpectedGenRowVec();
 //  ExpectedGenRowVecExp();
 //  ExpectedGenRowVecGenColVec();
