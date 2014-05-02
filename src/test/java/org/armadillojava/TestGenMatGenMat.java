@@ -168,5 +168,14 @@ public class TestGenMatGenMat extends TestClass {
       assertMatEquals(X, Arma.inv(_genMatA).times(_genMatB), 1e-11);
     }
   }
+  
+  @Test
+  public void testMatTimes() throws IOException {
+    assumeThat(_genMatA.n_cols, is(_genMatB.n_rows));
+    assumeThat(_genMatA.is_finite(), is(true));
+    assumeThat(_genMatB.is_finite(), is(true));
+    
+    assertMatEquals(_genMatA.times(_genMatB), load("Mat.times"));
+  }
 
 }

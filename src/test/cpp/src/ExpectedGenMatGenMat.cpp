@@ -84,6 +84,7 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
+          expectedMatTimes();
         }
 
         cout << "done." << endl;
@@ -214,6 +215,16 @@ namespace armadilloJava {
       void expectedArmaKron() {
         cout << "- Compute expectedArmaKron() ... ";
         save<double>("Arma.kron", kron(_genMatA, _genMatB));
+        cout << "done." << endl;
+      }
+
+      void expectedMatTimes() {
+        if(_genMatA.n_cols != _genMatB.n_rows) {
+          return;
+        }
+
+        cout << "- Compute expectedMatTimes() ... ";
+        save<double>("Mat.times", _genMatA * _genMatB);
         cout << "done." << endl;
       }
 

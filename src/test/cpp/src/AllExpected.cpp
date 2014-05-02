@@ -371,7 +371,7 @@ int main() {
 //  ExpectedGenDouble();
 //  ExpectedGenDoubleGenDouble();
 //  ExpectedGenDoubleGenDoubleNumElems();
-  ExpectedGenMat();
+//  ExpectedGenMat();
 //  ExpectedGenMatColInd();
 //  ExpectedGenMatColIndRange();
 //  ExpectedGenMatDim();
@@ -380,7 +380,7 @@ int main() {
 //  ExpectedGenMatExp();
 //  ExpectedGenMatGenColVec();
 //  ExpectedGenMatGenDouble();
-//  ExpectedGenMatGenMat();
+  ExpectedGenMatGenMat();
 //  ExpectedGenMatGenMatNormal();
 //  ExpectedGenMatGenRowVec();
 //  ExpectedGenMatMatNormInt();
