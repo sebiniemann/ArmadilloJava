@@ -23,6 +23,7 @@ using std::pair;
 
 #include <armadillo>
 using arma::Mat;
+using arma::Row;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -58,7 +59,7 @@ namespace armadilloJava {
                   break;
                 case 2:
                   _fileSuffix += "," + value.first;
-                  _genRowVec = *static_cast<Mat<double>*>(value.second);
+                  _genRowVec = *static_cast<Row<double>*>(value.second);
                   break;
               }
               ++n;
@@ -103,8 +104,8 @@ namespace armadilloJava {
       int _colInd;
       int _copyOfColInd;
 
-      Mat<double> _genRowVec;
-      Mat<double> _copyOfGenRowVec;
+      Row<double> _genRowVec;
+      Row<double> _copyOfGenRowVec;
 
       void expectedMatRowEqual() {
         if(_colInd >= _genMat.n_cols) {
