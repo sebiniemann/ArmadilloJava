@@ -345,6 +345,8 @@ int main() {
   set_stream_err1(logfile);
   set_stream_err2(logfile);
 
+  arma_rng::set_seed(123456789);
+
   /**
    * Add comments to all classes below, before pushing a commit to avoid unnecessary conflicts.
    */
