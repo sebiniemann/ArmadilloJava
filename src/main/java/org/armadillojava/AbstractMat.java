@@ -655,19 +655,16 @@ abstract class AbstractMat {
 
       double[] rowDouble = new double[numberOfColumns];
       for (int j = 0; j < numberOfColumns; j++) {
-        switch (rowString[j]) {
-          case "Inf":
+        switch (rowString[j].toLowerCase()) {
           case "inf":
-            rowDouble[j] = Double.POSITIVE_INFINITY;
+            rowDouble[j] = Datum.inf;
             break;
-          case "-Inf":
           case "-inf":
-            rowDouble[j] = Double.NEGATIVE_INFINITY;
+            rowDouble[j] = -Datum.inf;
             break;
-          case "NaN":
           case "nan":
           case "-nan":
-            rowDouble[j] = Double.NaN;
+            rowDouble[j] = Datum.nan;
             break;
           default:
             rowDouble[j] = Double.valueOf(rowString[j]);
