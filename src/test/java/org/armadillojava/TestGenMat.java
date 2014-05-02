@@ -17,9 +17,16 @@ import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -579,6 +586,135 @@ public class TestGenMat extends TestClass {
     }
 
     assertThat(index[0], is(expectedIndex));
+  }
+  
+  @Test
+  public void testMatEmpty() throws IOException {
+    assertThat(_genMat.empty(), is(false));
+  }
+  
+  @Test
+  public void testMatSize() throws IOException {
+    assertThat(_genMat.size(), is((int) load("Mat.size")._data[0]));
+  }
+  
+  @Test
+  public void testMatIs_empty() throws IOException {
+    assertThat(_genMat.is_empty(), is(false));
+  }
+  
+  @Test
+  public void testMatIs_finite() throws IOException {
+    int expected = (int) load("Mat.is_finite")._data[0];
+    if (_genMat.is_finite()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testMatT() throws IOException {
+    assertMatEquals(_genMat.t(), load("Mat.t"));
+  }
+  
+  @Test
+  public void testMatDiag() throws IOException {
+    assertMatEquals(_genMat.diag(), load("Mat.diag"));
+  }
+  
+  @Test
+  public void testMatIs_square() throws IOException {
+    int expected = (int) load("Mat.is_square")._data[0];
+    if (_genMat.is_square()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testMatIs_vec() throws IOException {
+    int expected = (int) load("Mat.is_vec")._data[0];
+    if (_genMat.is_vec()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testMatIs_colvec() throws IOException {
+    int expected = (int) load("Mat.is_colvec")._data[0];
+    if (_genMat.is_colvec()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testMatIs_rowvec() throws IOException {
+    int expected = (int) load("Mat.is_rowvec")._data[0];
+    if (_genMat.is_rowvec()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testMatPrint() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genMat.print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Mat.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " ")));
+  }
+  
+  @Test
+  public void testMatToString() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    System.out.println(_genMat);
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Mat.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+  }
+  
+  @Test
+  public void testMatRaw_print() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genMat.raw_print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Mat.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+    
+  }
+  
+  @Test
+  public void testMat() throws IOException {
+    assertMatEquals(new Mat(_genMat), load("Mat"));
   }
 
 }

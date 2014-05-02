@@ -101,14 +101,14 @@ public class TestInPlaceGenMat extends TestClass {
   public void testMatReset() throws IOException {
     _genMat.reset();
 
-    assertThat(_genMat.n_elem, is(0));
+    assertThat(_genMat.is_empty(), is(true));
   }
 
   @Test
   public void testMatClear() throws IOException {
     _genMat.clear();
 
-    assertThat(_genMat.n_elem, is(0));
+    assertThat(_genMat.empty(), is(true));
   }
 
   @Test
@@ -117,5 +117,5 @@ public class TestInPlaceGenMat extends TestClass {
 
     assertMatEquals(_genMat, load("Mat.eye"));
   }
-
+  
 }

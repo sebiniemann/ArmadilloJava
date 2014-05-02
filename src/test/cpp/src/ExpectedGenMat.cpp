@@ -185,6 +185,7 @@ namespace armadilloJava {
             expectedArmaAccu();
             expectedMatMin();
             expectedMatMax();
+            expectedMatSize();
             expectedMatIs_finite();
             expectedMatT();
             expectedMatDiag();
@@ -194,6 +195,7 @@ namespace armadilloJava {
             expectedMatIs_rowvec();
             expectedMatPrint();
             expectedMatRaw_print();
+            expectedMat();
           }
 
           cout << "done." << endl;
@@ -635,6 +637,12 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
+      void expectedMatSize() {
+        cout << "- Compute expectedMatSize() ... ";
+        save<double>("Mat.size", Mat<double>({static_cast<double>(_genMat.size())}));
+        cout << "done." << endl;
+      }
+
       void expectedMatIs_finite() {
         cout << "- Compute expectedMatIs_finite() ... ";
 
@@ -686,7 +694,7 @@ namespace armadilloJava {
       void expectedMatIs_colvec() {
         cout << "- Compute expectedMatIs_colvec() ... ";
 
-        if(_genMat.is_vec()) {
+        if(_genMat.is_colvec()) {
           save<double>("Mat.is_colvec", Mat<double>({1}));
         } else {
           save<double>("Mat.is_colvec", Mat<double>({0}));
@@ -698,7 +706,7 @@ namespace armadilloJava {
       void expectedMatIs_rowvec() {
         cout << "- Compute expectedMatIs_rowvec() ... ";
 
-        if(_genMat.is_vec()) {
+        if(_genMat.is_rowvec()) {
           save<double>("Mat.is_rowvec", Mat<double>({1}));
         } else {
           save<double>("Mat.is_rowvec", Mat<double>({0}));
@@ -730,6 +738,12 @@ namespace armadilloJava {
 
         cout.rdbuf(previousBuffer);
 
+        cout << "done." << endl;
+      }
+
+      void expectedMat() {
+        cout << "- Compute expectedMat() ... ";
+        save<double>("Mat", _genMat);
         cout << "done." << endl;
       }
   };

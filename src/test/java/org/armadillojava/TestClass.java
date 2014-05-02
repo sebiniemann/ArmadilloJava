@@ -18,12 +18,14 @@ import java.io.IOException;
 public class TestClass {
   protected String _fileSuffix = "";
 
+  protected String _filepath = "./src/test/data/expected/";
+  
   protected Mat load(String filename) throws IOException {
     String completeFilepath;
     if (_fileSuffix.length() > 0) {
-      completeFilepath = "./src/test/data/expected/" + filename + "(" + _fileSuffix + ").mat";
+      completeFilepath = _filepath + filename + "(" + _fileSuffix + ").mat";
     } else {
-      completeFilepath = "./src/test/data/expected/" + filename + ".mat";
+      completeFilepath = _filepath + filename + ".mat";
     }
 
     Mat expected = new Mat();

@@ -24,7 +24,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -328,7 +331,7 @@ abstract class AbstractMat {
    * Prints the matrix to System.out.
    */
   public void print() {
-    print("");
+    System.out.println(this);
   }
 
   /**
@@ -337,7 +340,8 @@ abstract class AbstractMat {
    * @param header The header
    */
   public void print(final String header) {
-    print(System.out, header);
+    System.out.println(header);
+    System.out.println(this);
   }
 
   /**
@@ -364,11 +368,39 @@ abstract class AbstractMat {
     writer.println(this);
   }
 
+  protected String raw_toString() {
+    String output = "(" + n_rows + ", " + n_cols + ")-matrix: [" + System.lineSeparator();
+    for (int i = 0; i < n_rows; i++) {
+      output += " ";
+
+      for (int j = 0; j < n_cols; j++) {
+        double value = _data[i + j * n_rows];
+        if (Double.isInfinite(value)) {
+          String sign = "";
+          if (value < 0) {
+            sign = "-";
+          }
+          output += String.format("%5s", sign + "inf");
+        } else if(Math.floor(value) == value) {
+          output += String.format(Locale.ENGLISH, "%1.0f ", value);
+        } else {
+          DecimalFormat decimalFormat = new DecimalFormat("#.######", new DecimalFormatSymbols(Locale.ENGLISH));
+          decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+          output += decimalFormat.format(value) + " ";
+        }
+      }
+      output += System.lineSeparator();
+    }
+    output += "]";
+
+    return output;
+  }
+  
   /**
    * Prints the matrix unformatted to System.out.
    */
   public void raw_print() {
-    raw_print("");
+    System.out.println(raw_toString());
   }
 
   /**
@@ -377,7 +409,8 @@ abstract class AbstractMat {
    * @param header The header
    */
   public void raw_print(final String header) {
-    raw_print(System.out, "");
+    System.out.println(raw_toString());
+    System.out.println(this);
   }
 
   /**
@@ -402,28 +435,7 @@ abstract class AbstractMat {
       writer.println(header);
     }
 
-    writer.print("(" + n_rows + ", " + n_cols + ")-matrix: [");
-    writer.println();
-
-    for (int i = 0; i < n_rows; i++) {
-      writer.print(" ");
-
-      for (int j = 0; j < n_cols; j++) {
-        double value = _data[i + j * n_rows];
-        if (Double.isInfinite(value)) {
-          String sign = "";
-          if (value < 0) {
-            sign = "-";
-          }
-          writer.print(sign + "Inf");
-        } else {
-          writer.print(value);
-        }
-      }
-      writer.println();
-    }
-    writer.print("]");
-    writer.println();
+    writer.println(raw_toString());
   }
 
   /**
@@ -2866,9 +2878,11 @@ abstract class AbstractMat {
           if (value < 0) {
             sign = "-";
           }
-          output += String.format("%5s", sign + "Inf");
+          output += String.format("%5s", sign + "inf");
+        } else if(value == 0) {
+          output += String.format(Locale.ENGLISH, "%1$ 10.0f", value);
         } else {
-          output += String.format(Locale.ENGLISH, "%1$ 10.5f", value);
+          output += String.format(Locale.ENGLISH, "%1$ 10.4f", value);
         }
       }
       output += System.lineSeparator();
