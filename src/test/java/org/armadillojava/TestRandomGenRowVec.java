@@ -36,6 +36,8 @@ public class TestRandomGenRowVec extends TestClass {
 
   @Parameters(name = "{index}: Random = {0}, GenRowVec = {2}")
   public static Collection<Object[]> getParameters() {
+    RNG.set_seed(123456789);
+    
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);

@@ -35,6 +35,8 @@ public class TestRandomNumRowsNumColsDistrParam extends TestClass {
 
   @Parameters(name = "{index}: Random = {0}, NumRows = {2}, NumCols = {4}, DistrParam = {6}")
   public static Collection<Object[]> getParameters() {
+    RNG.set_seed(123456789);
+    
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);

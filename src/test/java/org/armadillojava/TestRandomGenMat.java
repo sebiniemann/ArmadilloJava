@@ -36,6 +36,8 @@ public class TestRandomGenMat extends TestClass {
 
   @Parameters(name = "{index}: Random = {0}, GenMat = {2}, Dim = {4}")
   public static Collection<Object[]> getParameters() {
+    RNG.set_seed(123456789);
+    
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.Random);
