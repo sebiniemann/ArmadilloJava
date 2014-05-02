@@ -165,6 +165,7 @@ namespace armadilloJava {
           expectedArmaCov();
           expectedArmaDiagmat();
           expectedArmaIs_finite();
+          expectedMat();
         }
 
         cout << "done." << endl;
@@ -514,5 +515,10 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
+      void expectedMat() {
+        cout << "- Compute expectedMat() ... ";
+        save<double>("Mat", _genColVec);
+        cout << "done." << endl;
+      }
   };
 }

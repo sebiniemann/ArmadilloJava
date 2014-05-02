@@ -389,5 +389,10 @@ public class TestGenRowVec extends TestClass {
       assertThat(0, is(expected));
     }
   }
+  
+  @Test
+  public void testMat() throws IOException {
+    assertMatEquals(new Mat(_genRowVec), load("Mat"));
+  }
 
 }

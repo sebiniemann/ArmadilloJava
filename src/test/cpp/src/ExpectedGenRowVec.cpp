@@ -165,6 +165,7 @@ namespace armadilloJava {
           expectedArmaCov();
           expectedArmaDiagmat();
           expectedArmaIs_finite();
+          expectedMat();
         }
 
         cout << "done." << endl;
@@ -511,6 +512,12 @@ namespace armadilloJava {
           save<double>("Arma.is_finite", Mat<double>({0.0}));
         }
 
+        cout << "done." << endl;
+      }
+
+      void expectedMat() {
+        cout << "- Compute expectedMat() ... ";
+        save<double>("Mat", _genRowVec);
         cout << "done." << endl;
       }
 
