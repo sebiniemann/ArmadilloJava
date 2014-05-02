@@ -6256,7 +6256,7 @@ public class Arma {
       }
       double[] work = new double[3 * Math.max(1, A.n_cols + Math.max(A.n_cols, B.n_cols))];
 
-      LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_rows, work, work.length, info);
+      LAPACK.getInstance().dgels("N", A.n_rows, A.n_cols, B.n_cols, tempA, A.n_rows, tempB, A.n_cols, work, work.length, info);
       System.arraycopy(tempB, 0, X._data, 0, X.n_elem);
     }
 

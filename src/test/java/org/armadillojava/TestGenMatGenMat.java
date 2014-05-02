@@ -148,4 +148,25 @@ public class TestGenMatGenMat extends TestClass {
     assertMatEquals(Arma.kron(_genMatA, _genMatB), load("Arma.kron"));
   }
 
+  @Test
+  public void testArmaSolveA() throws IOException {
+    assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
+
+    if(_genMatA.is_square() && Arma.rank(_genMatA) == _genMatA.n_rows) {
+      assertMatEquals(Arma.solve(_genMatA, _genMatB), Arma.inv(_genMatA).times(_genMatB), 1e-11);
+    }
+  }
+
+  @Test
+  public void testArmaSolveB() throws IOException {
+    assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
+
+    Mat X = new Mat();
+    Arma.solve(X, _genMatA, _genMatB);
+
+    if(_genMatA.is_square() && Arma.rank(_genMatA) == _genMatA.n_rows) {
+      assertMatEquals(X, Arma.inv(_genMatA).times(_genMatB), 1e-11);
+    }
+  }
+
 }
