@@ -46,15 +46,15 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatAString;
+  public String  _genMatAString;
 
   @Parameter(1)
-  public Mat    _genMatA;
+  public Mat     _genMatA;
 
-  protected Mat _copyOfGenMatA;
+  protected Mat  _copyOfGenMatA;
 
   @Parameter(2)
-  public String _colIndRangeString;
+  public String  _colIndRangeString;
 
   @Parameter(3)
   public Span    _colIndRange;
@@ -62,12 +62,12 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
   protected Span _copyOfColIndRange;
 
   @Parameter(4)
-  public String _genMatBString;
+  public String  _genMatBString;
 
   @Parameter(5)
-  public Mat    _genMatB;
+  public Mat     _genMatB;
 
-  protected Mat _copyOfGenMatB;
+  protected Mat  _copyOfGenMatB;
 
   @Before
   public void before() {
@@ -90,9 +90,9 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
-    
+
     _genMatA.cols(_colIndRange._first, _colIndRange._last, Op.EQUAL, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.colsEqual"));
   }
 
@@ -101,9 +101,9 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
-    
+
     _genMatA.cols(_colIndRange._first, _colIndRange._last, Op.PLUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.colsPlus"));
   }
 
@@ -112,9 +112,9 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
-    
+
     _genMatA.cols(_colIndRange._first, _colIndRange._last, Op.MINUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.colsMinus"));
   }
 
@@ -123,9 +123,9 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
-    
+
     _genMatA.cols(_colIndRange._first, _colIndRange._last, Op.ELEMTIMES, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.colsElemTimes"));
   }
 
@@ -134,9 +134,9 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
-    
+
     _genMatA.cols(_colIndRange._first, _colIndRange._last, Op.ELEMDIVIDE, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.colsElemDivide"));
   }
 

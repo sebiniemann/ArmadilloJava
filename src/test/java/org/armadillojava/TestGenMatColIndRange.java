@@ -46,15 +46,15 @@ public class TestGenMatColIndRange extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String  _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat     _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat  _copyOfGenMat;
 
   @Parameter(2)
-  public String _colIndRangeString;
+  public String  _colIndRangeString;
 
   @Parameter(3)
   public Span    _colIndRange;
@@ -79,7 +79,7 @@ public class TestGenMatColIndRange extends TestClass {
   @Test
   public void testMatCols() throws IOException {
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
-    
+
     assertMatEquals(_genMat.cols(_colIndRange._first, _colIndRange._last), load("Mat.cols"));
   }
 

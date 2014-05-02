@@ -835,8 +835,8 @@ public class Arma {
   protected static void log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
-      
-      if(value < 0) {
+
+      if (value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log(A[n]);
@@ -880,8 +880,8 @@ public class Arma {
   protected static void log2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
-      
-      if(value < 0) {
+
+      if (value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log(A[n]) / Math.log(2);
@@ -925,8 +925,8 @@ public class Arma {
   protected static void log10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
-      
-      if(value < 0) {
+
+      if (value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log10(A[n]);
@@ -1089,8 +1089,8 @@ public class Arma {
   protected static void sqrt(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
-      
-      if(value < 0) {
+
+      if (value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.sqrt(A[n]);
@@ -1251,8 +1251,8 @@ public class Arma {
   protected static void round(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
-      
-      if(Double.isInfinite(value)) {
+
+      if (Double.isInfinite(value)) {
         result[n] = value;
       } else {
         result[n] = Math.round(A[n]);
@@ -1380,11 +1380,11 @@ public class Arma {
   protected static void asin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
-      
-      if(value < -1 || value > 1) {
+
+      if (value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
-      result[n] = Math.asin(X[n]);
+        result[n] = Math.asin(X[n]);
       }
     }
   }
@@ -1548,11 +1548,11 @@ public class Arma {
   protected static void acos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
-      
-      if(value < -1 || value > 1) {
+
+      if (value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
-      result[n] = Math.acos(X[n]);
+        result[n] = Math.acos(X[n]);
       }
     }
   }
@@ -1632,8 +1632,8 @@ public class Arma {
   protected static void acosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
-      
-      if(value < 1) {
+
+      if (value < 1) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
@@ -1794,11 +1794,11 @@ public class Arma {
   protected static void atanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
-      
-      if(value < -1 || value > 1) {
+
+      if (value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
-      result[n] = 0.5 * Math.log((1 + value) / (1 - value));
+        result[n] = 0.5 * Math.log((1 + value) / (1 - value));
       }
     }
   }
@@ -2126,7 +2126,7 @@ public class Arma {
           norm = singularValues._data[0];
           break;
         default:
-          throw new IllegalArgumentException("For matrices in non-vector shape, the norm indicator (" + p + ") must be one of 1 or 2."); 
+          throw new IllegalArgumentException("For matrices in non-vector shape, the norm indicator (" + p + ") must be one of 1 or 2.");
       }
     }
 
@@ -2938,11 +2938,11 @@ public class Arma {
     }
 
     double mean = mean(V);
-    
-    if(Double.isNaN(mean)) {
+
+    if (Double.isNaN(mean)) {
       return Datum.inf;
     }
-    
+
     double variance = 0;
 
     V.iteratorReset();
@@ -3070,7 +3070,7 @@ public class Arma {
 
     double mean = mean(V);
 
-    if(Double.isNaN(mean)) {
+    if (Double.isNaN(mean)) {
       return Datum.inf;
     }
 
@@ -3099,10 +3099,10 @@ public class Arma {
     double mean = mean(V);
     double variance = 0;
 
-    if(Double.isNaN(mean)) {
+    if (Double.isNaN(mean)) {
       return Datum.inf;
     }
-    
+
     V.iteratorReset();
     while (V.iteratorHasNext()) {
       variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);
@@ -4556,7 +4556,7 @@ public class Arma {
   public static void inplace_trans(final Mat X) {
     int n_rows = X.n_rows;
     int n_cols = X.n_cols;
-    
+
     if (X.is_vec()) {
       X.n_rows = n_cols;
       X.n_cols = n_rows;
@@ -4565,7 +4565,7 @@ public class Arma {
       X.n_rows = n_cols;
       X.n_cols = n_rows;
       X.n_elem = X.n_rows * X.n_cols;
-      
+
       int n = 0;
       for (int i = 0; i < n_rows; i++) {
         for (int j = 0; j < n_cols; j++) {
@@ -4822,7 +4822,7 @@ public class Arma {
 
     int[] shuffeldIndicies = new int[indicies.length];
     shuffle(shuffeldIndicies, indicies);
-    
+
     switch (dim) {
       case 0:
         for (int i = 0; i < X.n_rows; i++) {

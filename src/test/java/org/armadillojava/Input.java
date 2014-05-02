@@ -168,7 +168,7 @@ class Input {
           throw new RuntimeException("Unsupported test class requested.");
       }
     }
-    
+
     return convertToJUnitTestParameters(cartesianProduct(inputs));
   }
 
@@ -208,7 +208,7 @@ class Input {
 
   protected static List<Pair<String, Object>> vectorUnion(List<List<Pair<String, Object>>> inputs) {
     List<Pair<String, Object>> vectorUnion = inputs.get(0);
-    
+
     Collections.sort(vectorUnion, new Comparator<Pair<String, Object>>() {
       @Override
       public int compare(Pair<String, Object> lhs, Pair<String, Object> rhs) {
@@ -225,8 +225,7 @@ class Input {
         }
       });
 
-      
-      if(input.size() > 0 && !vectorUnion.equals(input)) {
+      if (input.size() > 0 && !vectorUnion.equals(input)) {
         vectorUnion.removeAll(input);
         vectorUnion.addAll(input);
       }
@@ -442,7 +441,7 @@ class Input {
       input.add(new Pair<String, Object>("Mat(hilbert(" + size.n_rows + "," + size.n_cols + "))", new Mat(getHilbertMatrix(size.n_rows, size.n_cols))));
       input.add(new Pair<String, Object>("Mat(kms(" + size.n_rows + "," + size.n_cols + "))", new Mat(getKMSMatrix(size.n_rows, size.n_cols))));
     }
-    
+
     Mat infinite = new Mat(new double[]{Datum.inf, -Datum.inf, -Datum.inf, Datum.inf});
     infinite.reshape(2, 2);
     input.add(new Pair<String, Object>("Mat({{inf,-inf},{-inf,inf}})", new Mat(infinite)));
@@ -750,7 +749,7 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("1000", 1000));
-    
+
     return input;
   }
 }

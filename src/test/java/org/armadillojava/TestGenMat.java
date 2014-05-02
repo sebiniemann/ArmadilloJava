@@ -300,7 +300,7 @@ public class TestGenMat extends TestClass {
   @Test
   public void testArmaSort() throws IOException {
     assumeThat(_genMat.is_finite(), is(true));
-    
+
     assertMatEquals(Arma.sort(_genMat), load("Arma.sort"));
   }
 
@@ -338,7 +338,7 @@ public class TestGenMat extends TestClass {
     assertMatEquals(Arma.sum(Col.class, P, 0), Arma.ones(Col.class, P.n_cols));
     assertMatEquals(Arma.sum(Col.class, P, 1), Arma.ones(Col.class, P.n_rows));
 
-    if(_genMat.is_finite()) {
+    if (_genMat.is_finite()) {
       assertMatEquals((P.t()).times(L).times(U), _genMat);
     }
   }
@@ -355,8 +355,8 @@ public class TestGenMat extends TestClass {
     if (_genMat.is_square()) {
       assertMatEquals(U, Arma.trimatu(U));
     }
-    
-    if(_genMat.is_finite()) {
+
+    if (_genMat.is_finite()) {
       assertMatEquals(L.times(U), _genMat);
     }
   }
@@ -403,7 +403,7 @@ public class TestGenMat extends TestClass {
     /*
      * Only tests that no exception is thrown.
      */
-    
+
     Mat coeff = new Mat();
     Mat score = new Mat();
 
@@ -415,7 +415,7 @@ public class TestGenMat extends TestClass {
     /*
      * Only tests that no exception is thrown.
      */
-    
+
     Mat coeff = new Mat();
     Arma.princomp(coeff, _genMat);
   }
@@ -425,7 +425,7 @@ public class TestGenMat extends TestClass {
     /*
      * Only tests that no exception is thrown.
      */
-    
+
     Arma.princomp(_genMat);
   }
 
@@ -440,8 +440,8 @@ public class TestGenMat extends TestClass {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }
-    
-    if(_genMat.is_finite()) {
+
+    if (_genMat.is_finite()) {
       assertMatEquals(Q.times(R), _genMat);
     }
   }
@@ -457,8 +457,8 @@ public class TestGenMat extends TestClass {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }
-    
-    if(_genMat.is_finite()) {
+
+    if (_genMat.is_finite()) {
       assertMatEquals(Q.times(R), _genMat);
     }
   }
@@ -541,16 +541,16 @@ public class TestGenMat extends TestClass {
   public void testMatMinB() throws IOException {
     double expectedValue = load("Mat.minValue")._data[0];
     int expectedIndex = (int) load("Mat.minIndex")._data[0];
-    
+
     int[] index = new int[1];
     double value = _genMat.min(index);
-    
+
     if (Double.isInfinite(expectedValue) || Double.isNaN(expectedValue)) {
       assertThat(value, is(expectedValue));
     } else {
       assertThat(value, is(closeTo(expectedValue, Math.abs(expectedValue) * 1e-10)));
     }
-    
+
     assertThat(index[0], is(expectedIndex));
   }
 
@@ -568,16 +568,16 @@ public class TestGenMat extends TestClass {
   public void testMatMaxB() throws IOException {
     double expectedValue = load("Mat.maxValue")._data[0];
     int expectedIndex = (int) load("Mat.maxIndex")._data[0];
-    
+
     int[] index = new int[1];
     double value = _genMat.max(index);
-    
+
     if (Double.isInfinite(expectedValue) || Double.isNaN(expectedValue)) {
       assertThat(value, is(expectedValue));
     } else {
       assertThat(value, is(closeTo(expectedValue, Math.abs(expectedValue) * 1e-10)));
     }
-    
+
     assertThat(index[0], is(expectedIndex));
   }
 

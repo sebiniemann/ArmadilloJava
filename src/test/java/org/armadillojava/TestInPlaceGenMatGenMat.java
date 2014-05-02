@@ -49,7 +49,7 @@ public class TestInPlaceGenMatGenMat extends TestClass {
 
   @Parameter(1)
   public Mat    _genMatA;
-  
+
   @Parameter(2)
   public String _genMatBString;
 
@@ -58,15 +58,15 @@ public class TestInPlaceGenMatGenMat extends TestClass {
 
   protected Mat _copyOfGenMatA;
   protected Mat _copyOfGenMatB;
-  
+
   @Before
   public void before() {
     _fileSuffix = _genMatAString + "," + _genMatBString;
-    
+
     _copyOfGenMatA = new Mat(_genMatA);
     _copyOfGenMatB = new Mat(_genMatB);
   }
-  
+
   @After
   public void after() {
     _genMatA.inPlace(Op.EQUAL, _copyOfGenMatA);
@@ -74,9 +74,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   }
 
   @Test
-  public void testMatInPlaceEqual() throws IOException {  
+  public void testMatInPlaceEqual() throws IOException {
     _genMatA.inPlace(Op.EQUAL, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlaceEqual"));
   }
 
@@ -84,9 +84,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatInPlacePlus() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.inPlace(Op.PLUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlacePlus"));
   }
 
@@ -94,9 +94,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatInPlaceMinus() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.inPlace(Op.MINUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlaceMinus"));
   }
 
@@ -105,9 +105,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
     assumeThat(_genMatA.is_finite(), is(true));
     assumeThat(_genMatB.is_finite(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_rows));
-    
+
     _genMatA.inPlace(Op.TIMES, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlaceTimes"));
   }
 
@@ -115,9 +115,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatInPlaceElemTimes() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.inPlace(Op.ELEMTIMES, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlaceElemTimes"));
   }
 
@@ -125,26 +125,26 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatInPlaceElemDivide() throws IOException {
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.inPlace(Op.ELEMDIVIDE, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.inPlaceElemDivide"));
   }
 
   @Test
   public void testMatSwap() throws IOException {
     _genMatA.swap(_genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.swap"));
   }
 
   @Test
-  public void testMatEach_colEqual() throws IOException {  
+  public void testMatEach_colEqual() throws IOException {
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
+
     _genMatA.each_col(Op.EQUAL, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_colEqual"));
   }
 
@@ -152,9 +152,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_colPlus() throws IOException {
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
+
     _genMatA.each_col(Op.PLUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_colPlus"));
   }
 
@@ -162,9 +162,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_colMinus() throws IOException {
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
+
     _genMatA.each_col(Op.MINUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_colMinus"));
   }
 
@@ -172,9 +172,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_colElemTimes() throws IOException {
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
+
     _genMatA.each_col(Op.ELEMTIMES, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_colElemTimes"));
   }
 
@@ -182,19 +182,19 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_colElemDivide() throws IOException {
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatA.n_rows, is(_genMatB.n_rows));
-    
+
     _genMatA.each_col(Op.ELEMDIVIDE, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_colElemDivide"));
   }
 
   @Test
-  public void testMatEach_rowEqual() throws IOException {  
+  public void testMatEach_rowEqual() throws IOException {
     assumeThat(_genMatB.is_rowvec(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.each_row(Op.EQUAL, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_rowEqual"));
   }
 
@@ -202,9 +202,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_rowPlus() throws IOException {
     assumeThat(_genMatB.is_rowvec(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.each_row(Op.PLUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_rowPlus"));
   }
 
@@ -212,9 +212,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_rowMinus() throws IOException {
     assumeThat(_genMatB.is_rowvec(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.each_row(Op.MINUS, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_rowMinus"));
   }
 
@@ -222,9 +222,9 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_rowElemTimes() throws IOException {
     assumeThat(_genMatB.is_rowvec(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.each_row(Op.ELEMTIMES, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_rowElemTimes"));
   }
 
@@ -232,18 +232,18 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   public void testMatEach_rowElemDivide() throws IOException {
     assumeThat(_genMatB.is_rowvec(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_cols));
-    
+
     _genMatA.each_row(Op.ELEMDIVIDE, _genMatB);
-    
+
     assertMatEquals(_genMatA, load("Mat.each_rowElemDivide"));
   }
 
   @Test
   public void testMatCopy_size() throws IOException {
     _genMatA.copy_size(_genMatB);
-    
+
     Mat expected = load("Mat.copy_size");
-    
+
     assertThat(_genMatA.n_rows, is(expected.n_rows));
     assertThat(_genMatA.n_cols, is(expected.n_cols));
   }

@@ -44,15 +44,15 @@ public class TestGenMatElemIndRange extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String  _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat     _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat  _copyOfGenMat;
 
   @Parameter(2)
-  public String _elemIndRangeString;
+  public String  _elemIndRangeString;
 
   @Parameter(3)
   public Span    _elemIndRange;
@@ -77,7 +77,7 @@ public class TestGenMatElemIndRange extends TestClass {
   @Test
   public void testMatIn_range() throws IOException {
     double expected = load("Mat.in_range")._data[0];
-    
+
     if (_genMat.in_range(_elemIndRange)) {
       assertThat(1.0, is(expected));
     } else {

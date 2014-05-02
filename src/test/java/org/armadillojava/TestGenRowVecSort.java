@@ -77,21 +77,21 @@ public class TestGenRowVecSort extends TestClass {
   @Test
   public void testArmaSort() throws IOException {
     assumeThat(_genRowVec.is_finite(), is(true));
-    
+
     assertMatEquals(Arma.sort(_genRowVec, _sort), load("Arma.sort"));
   }
 
   @Test
   public void testArmaSort_index() throws IOException {
     assumeThat(_genRowVec.is_finite(), is(true));
-    
+
     assertMatEquals(Arma.sort_index(_genRowVec, _sort), load("Arma.sort_index"));
   }
 
   @Test
   public void testArmaStable_sort_index() throws IOException {
     assumeThat(_genRowVec.is_finite(), is(true));
-    
+
     assertMatEquals(Arma.stable_sort_index(_genRowVec, _sort), load("Arma.stable_sort_index"));
   }
 

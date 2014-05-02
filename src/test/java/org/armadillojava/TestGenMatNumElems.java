@@ -77,9 +77,11 @@ public class TestGenMatNumElems extends TestClass {
 
   @Test
   public void testArmaHist() throws IOException {
-    assumeThat(_fileSuffix, is(not("Mat(hilbert(2,5)),25"))); // Avoided because of differences in rounding between the Java and C++ implementation.
-    assumeThat(_fileSuffix, is(not("Mat(hilbert(5,2)),25"))); // Avoided because of differences in rounding between the Java and C++ implementation.
-    
+    assumeThat(_fileSuffix, is(not("Mat(hilbert(2,5)),25"))); // Avoided because of differences in rounding between the
+                                                              // Java and C++ implementation.
+    assumeThat(_fileSuffix, is(not("Mat(hilbert(5,2)),25"))); // Avoided because of differences in rounding between the
+                                                              // Java and C++ implementation.
+
     assertMatEquals(Arma.hist(_genMat, _numElems), load("Arma.hist"));
   }
 

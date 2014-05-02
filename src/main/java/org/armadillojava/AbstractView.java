@@ -78,24 +78,24 @@ abstract class AbstractView {
     }
   }
 
-//  protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
-//    switch (unary_operator) {
-//      case INCREMENT:
-//        iteratorReset();
-//        while (iteratorHasNext()) {
-//          _data[iteratorNext()]++;
-//        }
-//        break;
-//      case DECREMENT:
-//        iteratorReset();
-//        while (iteratorHasNext()) {
-//          _data[iteratorNext()]--;
-//        }
-//        break;
-//      default:
-//        throw new UnsupportedOperationException("Unexpected operator (" + unary_operator + ").");
-//    }
-//  }
+  // protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
+  // switch (unary_operator) {
+  // case INCREMENT:
+  // iteratorReset();
+  // while (iteratorHasNext()) {
+  // _data[iteratorNext()]++;
+  // }
+  // break;
+  // case DECREMENT:
+  // iteratorReset();
+  // while (iteratorHasNext()) {
+  // _data[iteratorNext()]--;
+  // }
+  // break;
+  // default:
+  // throw new UnsupportedOperationException("Unexpected operator (" + unary_operator + ").");
+  // }
+  // }
 
   protected void inPlace(final Op binary_operator, final double rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {

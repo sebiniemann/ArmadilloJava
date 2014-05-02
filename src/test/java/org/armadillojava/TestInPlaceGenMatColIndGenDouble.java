@@ -46,23 +46,23 @@ public class TestInPlaceGenMatColIndGenDouble extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _colIndString;
+  public String    _colIndString;
 
   @Parameter(3)
-  public int    _colInd;
+  public int       _colInd;
 
-  protected int _copyOfColInd;
+  protected int    _copyOfColInd;
 
   @Parameter(4)
-  public String _genDoubleString;
+  public String    _genDoubleString;
 
   @Parameter(5)
   public double    _genDouble;
@@ -88,36 +88,36 @@ public class TestInPlaceGenMatColIndGenDouble extends TestClass {
   @Test
   public void testMatColPlus() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.col(_colInd, Op.PLUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colPlus"));
   }
 
   @Test
   public void testMatColMinus() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.col(_colInd, Op.MINUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colMinus"));
   }
 
   @Test
   public void testMatColTimes() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.col(_colInd, Op.TIMES, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colTimes"));
   }
 
   @Test
   public void testMatColDivide() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.col(_colInd, Op.DIVIDE, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colDivide"));
   }
 

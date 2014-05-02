@@ -45,15 +45,15 @@ public class TestGenColVecNormal extends TestClass {
   }
 
   @Parameter(0)
-  public String    _genColVecString;
+  public String _genColVecString;
 
   @Parameter(1)
-  public Col       _genColVec;
+  public Col    _genColVec;
 
-  protected Col    _copyOfGenColVec;
+  protected Col _copyOfGenColVec;
 
   @Parameter(2)
-  public String    _normalString;
+  public String _normalString;
 
   @Parameter(3)
   public int    _normal;

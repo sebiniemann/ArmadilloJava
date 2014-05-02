@@ -45,15 +45,15 @@ public class TestGenRowVecNormal extends TestClass {
   }
 
   @Parameter(0)
-  public String    _genRowVecString;
+  public String _genRowVecString;
 
   @Parameter(1)
-  public Row       _genRowVec;
+  public Row    _genRowVec;
 
-  protected Row    _copyOfGenRowVec;
+  protected Row _copyOfGenRowVec;
 
   @Parameter(2)
-  public String    _normalString;
+  public String _normalString;
 
   @Parameter(3)
   public int    _normal;

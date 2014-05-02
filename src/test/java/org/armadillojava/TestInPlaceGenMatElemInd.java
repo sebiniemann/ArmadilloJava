@@ -63,11 +63,11 @@ public class TestInPlaceGenMatElemInd extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString + "," + _elemIndString;
-    
+
     _copyOfGenMat = new Mat(_genMat);
     _copyOfElemInd = new Integer(_elemInd);
   }
-  
+
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
@@ -77,18 +77,18 @@ public class TestInPlaceGenMatElemInd extends TestClass {
   @Test
   public void testMatAtIncrement() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.INCREMENT);
-    
+
     assertMatEquals(_genMat, load("Mat.atIncrement"));
   }
 
   @Test
   public void testMatAtDecrement() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.DECREMENT);
-    
+
     assertMatEquals(_genMat, load("Mat.atDecrement"));
   }
 

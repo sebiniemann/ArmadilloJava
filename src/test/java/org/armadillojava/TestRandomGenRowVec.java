@@ -77,9 +77,9 @@ public class TestRandomGenRowVec extends TestClass {
   @Test
   public void testArmaShuffle() throws IOException {
     assumeThat(_genRowVec.is_finite(), is(true));
-    
+
     Row result = Arma.shuffle(_genRowVec);
-    for(int n = 2; n <= _random; n++) {
+    for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.shuffle(_genRowVec)).divide(n + 1);
     }
     assertMatEquals(result.minus(load("Arma.shuffle")), Arma.zeros(result.n_rows, result.n_cols), 1);

@@ -47,23 +47,23 @@ public class TestGenColVecGenColVecNormal extends TestClass {
   }
 
   @Parameter(0)
-  public String    _genColVecAString;
+  public String _genColVecAString;
 
   @Parameter(1)
-  public Col       _genColVecA;
+  public Col    _genColVecA;
 
-  protected Col    _copyOfGenColVecA;
+  protected Col _copyOfGenColVecA;
 
   @Parameter(2)
-  public String    _genColVecBString;
+  public String _genColVecBString;
 
   @Parameter(3)
-  public Col       _genColVecB;
+  public Col    _genColVecB;
 
-  protected Col    _copyOfGenColVecB;
+  protected Col _copyOfGenColVecB;
 
   @Parameter(4)
-  public String    _normalString;
+  public String _normalString;
 
   @Parameter(5)
   public int    _normal;
@@ -85,11 +85,11 @@ public class TestGenColVecGenColVecNormal extends TestClass {
     assertMatEquals(_genColVecB, _copyOfGenColVecB, 0);
     assertThat(_normal, is(_copyOfNormal));
   }
-  
+
   @Test
   public void testArmaCor() throws IOException {
     assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
-    
+
     double expected = load("Arma.cor")._data[0];
     double actual = Arma.cor(_genColVecA, _genColVecB, _normal);
 
@@ -103,7 +103,7 @@ public class TestGenColVecGenColVecNormal extends TestClass {
   @Test
   public void testArmaCov() throws IOException {
     assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
-    
+
     double expected = load("Arma.cov")._data[0];
     double actual = Arma.cov(_genColVecA, _genColVecB, _normal);
 

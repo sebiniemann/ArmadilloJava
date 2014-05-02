@@ -77,7 +77,7 @@ public class TestGenMatSort extends TestClass {
   @Test
   public void testArmaSort() throws IOException {
     assumeThat(_genMat.is_finite(), is(true));
-    
+
     assertMatEquals(Arma.sort(_genMat, _sort), load("Arma.sort"));
   }
 

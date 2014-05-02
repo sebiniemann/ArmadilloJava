@@ -46,23 +46,23 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _elemIndString;
+  public String    _elemIndString;
 
   @Parameter(3)
-  public int    _elemInd;
+  public int       _elemInd;
 
-  protected int _copyOfElemInd;
+  protected int    _copyOfElemInd;
 
   @Parameter(4)
-  public String _genDoubleString;
+  public String    _genDoubleString;
 
   @Parameter(5)
   public double    _genDouble;
@@ -72,12 +72,12 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _genMatString + "," + _elemIndString + "," + _genDoubleString;
-    
+
     _copyOfGenMat = new Mat(_genMat);
     _copyOfElemInd = new Integer(_elemInd);
     _copyOfGenDouble = new Double(_genDouble);
   }
-  
+
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
@@ -88,45 +88,45 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
   @Test
   public void testMatAtEqual() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.EQUAL, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.atEqual"));
   }
 
   @Test
   public void testMatAtPlus() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.PLUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.atPlus"));
   }
 
   @Test
   public void testMatAtMinus() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.MINUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.atMinus"));
   }
 
   @Test
   public void testMatAtTimes() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.TIMES, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.atTimes"));
   }
 
   @Test
   public void testMatAtDivide() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     _genMat.at(_elemInd, Op.DIVIDE, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.atDivide"));
   }
 

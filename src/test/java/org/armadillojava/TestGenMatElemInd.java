@@ -79,7 +79,7 @@ public class TestGenMatElemInd extends TestClass {
   @Test
   public void testMatAt() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-    
+
     double expected = load("Mat.at")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(_genMat.at(_elemInd), is(expected));
@@ -91,7 +91,7 @@ public class TestGenMatElemInd extends TestClass {
   @Test
   public void testMatIn_range() throws IOException {
     double expected = load("Mat.in_range")._data[0];
-    
+
     if (_genMat.in_range(_elemInd)) {
       assertThat(1.0, is(expected));
     } else {

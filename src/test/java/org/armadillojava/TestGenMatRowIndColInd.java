@@ -87,7 +87,7 @@ public class TestGenMatRowIndColInd extends TestClass {
   @Test
   public void testMatIn_range() throws IOException {
     double expected = load("Mat.in_range")._data[0];
-    
+
     if (_genMat.in_range(_rowInd, _colInd)) {
       assertThat(1.0, is(expected));
     } else {

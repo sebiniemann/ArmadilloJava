@@ -64,7 +64,7 @@ public class TestGenDouble extends TestClass {
   @Test
   public void testArmaIs_finite() throws IOException {
     int expected = (int) load("Arma.is_finite")._data[0];
-    
+
     if (Arma.is_finite(_genDouble)) {
       assertThat(1, is(expected));
     } else {

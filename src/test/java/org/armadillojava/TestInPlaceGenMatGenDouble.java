@@ -42,15 +42,15 @@ public class TestInPlaceGenMatGenDouble extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _genDoubleString;
+  public String    _genDoubleString;
 
   @Parameter(3)
   public double    _genDouble;
@@ -74,63 +74,63 @@ public class TestInPlaceGenMatGenDouble extends TestClass {
   @Test
   public void testMatFill() throws IOException {
     _genMat.fill(_genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.fill"));
   }
 
   @Test
   public void testMatDiagPlus() throws IOException {
     _genMat.diag(Op.PLUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.diagPlus"));
   }
 
   @Test
   public void testMatDiagMinus() throws IOException {
     _genMat.diag(Op.MINUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.diagMinus"));
   }
 
   @Test
   public void testMatDiagTimes() throws IOException {
     _genMat.diag(Op.TIMES, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.diagTimes"));
   }
 
   @Test
   public void testMatDiagDivide() throws IOException {
     _genMat.diag(Op.DIVIDE, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.diagDivide"));
   }
 
   @Test
   public void testMatInPlacePlus() throws IOException {
     _genMat.inPlace(Op.PLUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlacePlus"));
   }
 
   @Test
   public void testMatInPlaceMinus() throws IOException {
     _genMat.inPlace(Op.MINUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlaceMinus"));
   }
 
   @Test
   public void testMatInPlaceTimes() throws IOException {
     _genMat.inPlace(Op.TIMES, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlaceTimes"));
   }
 
   @Test
   public void testMatInPlaceDivide() throws IOException {
     _genMat.inPlace(Op.DIVIDE, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlaceDivide"));
   }
 

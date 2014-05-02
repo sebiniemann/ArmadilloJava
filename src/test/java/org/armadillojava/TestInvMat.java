@@ -51,7 +51,7 @@ public class TestInvMat extends TestClass {
   @Before
   public void before() {
     _fileSuffix = _invMatString;
-    
+
     _copyOfInvMat = new Mat(_invMat);
   }
 

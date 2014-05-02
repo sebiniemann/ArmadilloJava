@@ -45,15 +45,15 @@ public class TestGenColVecVecNormInt extends TestClass {
   }
 
   @Parameter(0)
-  public String    _genColVecString;
+  public String _genColVecString;
 
   @Parameter(1)
-  public Col       _genColVec;
+  public Col    _genColVec;
 
-  protected Col    _copyOfGenColVec;
+  protected Col _copyOfGenColVec;
 
   @Parameter(2)
-  public String    _vecNormIntString;
+  public String _vecNormIntString;
 
   @Parameter(3)
   public int    _vecNormInt;
@@ -78,7 +78,7 @@ public class TestGenColVecVecNormInt extends TestClass {
   public void testArmaNorm() throws IOException {
     double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genColVec, _vecNormInt);
-    
+
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(actual, is(expected));
     } else {

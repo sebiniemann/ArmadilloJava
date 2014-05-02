@@ -44,15 +44,15 @@ public class TestGenMatGenDouble extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _genDoubleString;
+  public String    _genDoubleString;
 
   @Parameter(3)
   public double    _genDouble;

@@ -78,14 +78,14 @@ public class TestGenMatRowInd extends TestClass {
   @Test
   public void testArmaDiagvec() throws IOException {
     assumeThat(_rowInd, is(lessThan(_genMat.n_rows)));
-    
+
     assertMatEquals(Arma.diagvec(_genMat, -_rowInd), load("Arma.diagvecSub"));
   }
 
   @Test
   public void testMatRow() throws IOException {
     assumeThat(_rowInd, is(lessThan(_genMat.n_rows)));
-    
+
     assertMatEquals(_genMat.row(_rowInd), load("Mat.row"));
   }
 

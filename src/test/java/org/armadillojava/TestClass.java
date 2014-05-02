@@ -20,12 +20,12 @@ public class TestClass {
 
   protected Mat load(String filename) throws IOException {
     String completeFilepath;
-    if(_fileSuffix.length() > 0) {
+    if (_fileSuffix.length() > 0) {
       completeFilepath = "./src/test/data/expected/" + filename + "(" + _fileSuffix + ").mat";
     } else {
       completeFilepath = "./src/test/data/expected/" + filename + ".mat";
     }
-    
+
     Mat expected = new Mat();
     expected.load(completeFilepath, FileType.RAW_ASCII);
     return expected;

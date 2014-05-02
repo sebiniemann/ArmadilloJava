@@ -46,15 +46,15 @@ public class TestGenMatMatNormInt extends TestClass {
   }
 
   @Parameter(0)
-  public String    _genMatString;
+  public String _genMatString;
 
   @Parameter(1)
-  public Mat       _genMat;
+  public Mat    _genMat;
 
-  protected Mat    _copyOfGenMat;
+  protected Mat _copyOfGenMat;
 
   @Parameter(2)
-  public String    _matNormIntString;
+  public String _matNormIntString;
 
   @Parameter(3)
   public int    _matNormInt;
@@ -77,8 +77,8 @@ public class TestGenMatMatNormInt extends TestClass {
 
   @Test
   public void testArmaNorm() throws IOException {
-    assumeThat(_matNormInt < 2 ||_genMat.is_finite(), is(true));
-    
+    assumeThat(_matNormInt < 2 || _genMat.is_finite(), is(true));
+
     double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genMat, _matNormInt);
 

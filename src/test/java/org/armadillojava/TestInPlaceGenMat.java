@@ -49,14 +49,14 @@ public class TestInPlaceGenMat extends TestClass {
   public Mat    _genMat;
 
   protected Mat _copyOfGenMat;
-  
+
   @Before
   public void before() {
     _fileSuffix = _genMatString;
-    
+
     _copyOfGenMat = new Mat(_genMat);
   }
-  
+
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
@@ -65,56 +65,56 @@ public class TestInPlaceGenMat extends TestClass {
   @Test
   public void testArmaInplace_trans() throws IOException {
     Arma.inplace_trans(_genMat);
-    
+
     assertMatEquals(_genMat, load("Arma.inplace_trans"));
   }
 
   @Test
   public void testMatOnes() throws IOException {
     _genMat.ones();
-    
+
     assertMatEquals(_genMat, load("Mat.ones"));
   }
 
   @Test
   public void testMatZeros() throws IOException {
     _genMat.zeros();
-    
+
     assertMatEquals(_genMat, load("Mat.zeros"));
   }
 
   @Test
-  public void testMatInPlaceIncrement() throws IOException {  
+  public void testMatInPlaceIncrement() throws IOException {
     _genMat.inPlace(Op.INCREMENT);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlaceIncrement"));
   }
 
   @Test
   public void testMatInPlaceDecrement() throws IOException {
     _genMat.inPlace(Op.DECREMENT);
-    
+
     assertMatEquals(_genMat, load("Mat.inPlaceDecrement"));
   }
 
   @Test
   public void testMatReset() throws IOException {
     _genMat.reset();
-    
+
     assertThat(_genMat.n_elem, is(0));
   }
 
   @Test
   public void testMatClear() throws IOException {
     _genMat.clear();
-    
+
     assertThat(_genMat.n_elem, is(0));
   }
 
   @Test
   public void testMatEye() throws IOException {
     _genMat.eye();
-    
+
     assertMatEquals(_genMat, load("Mat.eye"));
   }
 

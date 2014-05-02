@@ -83,10 +83,10 @@ public class TestInvMatGenMat extends TestClass {
   @Test
   public void testArmaSolveB() throws IOException {
     assumeThat(_invMat.n_rows, is(_genMat.n_rows));
-    
+
     Mat X = new Mat();
     Arma.solve(X, _invMat, _genMat);
-  
+
     assertMatEquals(X, Arma.inv(_invMat).times(_genMat));
   }
 

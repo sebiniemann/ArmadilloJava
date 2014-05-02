@@ -46,23 +46,23 @@ public class TestInPlaceGenMatColIndRangeGenDouble extends TestClass {
   }
 
   @Parameter(0)
-  public String _genMatString;
+  public String    _genMatString;
 
   @Parameter(1)
-  public Mat    _genMat;
+  public Mat       _genMat;
 
-  protected Mat _copyOfGenMat;
+  protected Mat    _copyOfGenMat;
 
   @Parameter(2)
-  public String _colIndRangeString;
+  public String    _colIndRangeString;
 
   @Parameter(3)
-  public Span    _colIndRange;
+  public Span      _colIndRange;
 
-  protected Span _copyOfColIndRange;
+  protected Span   _copyOfColIndRange;
 
   @Parameter(4)
-  public String _genDoubleString;
+  public String    _genDoubleString;
 
   @Parameter(5)
   public double    _genDouble;
@@ -88,16 +88,16 @@ public class TestInPlaceGenMatColIndRangeGenDouble extends TestClass {
   @Test
   public void testMatColsPlus() throws IOException {
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.cols(_colIndRange._first, _colIndRange._last, Op.PLUS, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colsPlus"));
   }
 
   @Test
   public void testMatColsMinus() throws IOException {
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.cols(_colIndRange._first, _colIndRange._last, Op.MINUS, _genDouble);
 
     assertMatEquals(_genMat, load("Mat.colsMinus"));
@@ -106,18 +106,18 @@ public class TestInPlaceGenMatColIndRangeGenDouble extends TestClass {
   @Test
   public void testMatColsTimes() throws IOException {
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.cols(_colIndRange._first, _colIndRange._last, Op.TIMES, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colsTimes"));
   }
 
   @Test
   public void testMatColsDivide() throws IOException {
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
-    
+
     _genMat.cols(_colIndRange._first, _colIndRange._last, Op.DIVIDE, _genDouble);
-    
+
     assertMatEquals(_genMat, load("Mat.colsDivide"));
   }
 

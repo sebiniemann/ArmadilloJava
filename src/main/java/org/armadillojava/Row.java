@@ -500,7 +500,7 @@ public class Row extends AbstractVector {
         this.n_rows = 0;
         this.n_cols = 0;
       }
-      
+
       this.n_elem = this.n_cols;
       _data = new double[this.n_elem];
     }
