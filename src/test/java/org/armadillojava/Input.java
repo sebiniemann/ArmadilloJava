@@ -442,6 +442,10 @@ class Input {
       input.add(new Pair<String, Object>("Mat(hilbert(" + size.n_rows + "," + size.n_cols + "))", new Mat(getHilbertMatrix(size.n_rows, size.n_cols))));
       input.add(new Pair<String, Object>("Mat(kms(" + size.n_rows + "," + size.n_cols + "))", new Mat(getKMSMatrix(size.n_rows, size.n_cols))));
     }
+    
+    Mat infinite = new Mat(new double[]{Datum.inf, -Datum.inf, -Datum.inf, Datum.inf});
+    infinite.reshape(2, 2);
+    input.add(new Pair<String, Object>("Mat({{inf,-inf},{-inf,inf}})", new Mat(infinite)));
 
     return input;
   }
@@ -543,6 +547,7 @@ class Input {
         input.add(new Pair<String, Object>("Col(kms(" + size.n_rows + ",1))", new Col(getKMSMatrix(size.n_rows, 1))));
       }
     }
+    input.add(new Pair<String, Object>("Col({inf,-inf})", new Col(new double[]{Datum.inf, -Datum.inf})));
 
     return input;
   }
@@ -601,6 +606,7 @@ class Input {
         input.add(new Pair<String, Object>("Row(kms(1," + size.n_cols + "))", new Row(getKMSMatrix(1, size.n_cols))));
       }
     }
+    input.add(new Pair<String, Object>("Row({inf,-inf})", new Row(new double[]{Datum.inf, -Datum.inf})));
 
     return input;
   }

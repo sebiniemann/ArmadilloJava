@@ -411,6 +411,10 @@ namespace armadilloJava {
       input.push_back(pair<string, void*>("Mat(kms(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getKMSMatrix(size.n_rows, size.n_cols))));
     }
 
+    Mat<double> infinite = {datum::inf, -datum::inf, -datum::inf, datum::inf};
+    infinite.reshape(2, 2);
+    input.push_back(pair<string, void*>("Mat({{inf,-inf},{-inf,inf}})", new Mat<double>(infinite)));
+
     return input;
   }
 
@@ -509,6 +513,7 @@ namespace armadilloJava {
         input.push_back(pair<string, void*>("Col(kms(" + to_string(size.n_rows) + ",1))", new Col<double>(getKMSMatrix(size.n_rows, 1))));
       }
     }
+    input.push_back(pair<string, void*>("Col({inf,-inf})", new Col<double>({datum::inf, -datum::inf})));
 
     return input;
   }
@@ -565,6 +570,7 @@ namespace armadilloJava {
         input.push_back(pair<string, void*>("Row(kms(1," + to_string(size.n_cols) + "))", new Row<double>(getKMSMatrix(1, size.n_cols))));
       }
     }
+    input.push_back(pair<string, void*>("Row({inf,-inf})", new Row<double>({datum::inf, -datum::inf})));
 
     return input;
   }
