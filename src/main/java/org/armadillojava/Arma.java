@@ -1590,7 +1590,12 @@ public class Arma {
   protected static void acosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
-      result[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+      
+      if(value < 1) {
+        result[n] = Datum.nan;
+      } else {
+        result[n] = Math.log(value + Math.sqrt(Math.pow(value, 2) - 1));
+      }
     }
   }
 
@@ -1832,7 +1837,7 @@ public class Arma {
 
     Col singularValues = new Col();
     if (!svd(singularValues, A)) {
-      return Double.POSITIVE_INFINITY;
+      return Datum.inf;
     }
     return singularValues._data[0] / singularValues._data[singularValues.n_elem - 1];
   }
