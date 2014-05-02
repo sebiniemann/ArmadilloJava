@@ -22,10 +22,7 @@ using std::ofstream;
 #include <armadillo>
 using arma::set_stream_err1;
 using arma::set_stream_err2;
-using arma::mean;
-using arma::svd;
-using arma::Mat;
-using arma::zeros;
+using arma::arma_rng;
 
 #include <ExpectedDatum.cpp>
 using armadilloJava::ExpectedDatum;
