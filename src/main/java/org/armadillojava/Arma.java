@@ -2055,10 +2055,6 @@ public class Arma {
       }
 
     } else {
-      if (p != 1 && p != 2) {
-        throw new IllegalArgumentException("For matrices in non-vector shape, the norm indicator (" + p + ") must be one of 1 or 2.");
-      }
-
       switch (p) {
         case 1:
           norm = Double.NEGATIVE_INFINITY;
@@ -2077,6 +2073,8 @@ public class Arma {
           svd(singularValues, X);
           norm = singularValues._data[0];
           break;
+        default:
+          throw new IllegalArgumentException("For matrices in non-vector shape, the norm indicator (" + p + ") must be one of 1 or 2."); 
       }
     }
 
