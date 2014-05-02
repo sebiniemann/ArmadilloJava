@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -326,10 +326,8 @@ abstract class AbstractMat {
 
   /**
    * Prints the matrix to System.out.
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void print() throws AssertionError {
+  public void print() {
     print("");
   }
 
@@ -337,10 +335,8 @@ abstract class AbstractMat {
    * Prints the matrix unformatted to System.out, with a specified header.
    * 
    * @param header The header
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void print(final String header) throws AssertionError {
+  public void print(final String header) {
     print(System.out, header);
   }
 
@@ -348,10 +344,8 @@ abstract class AbstractMat {
    * Prints the matrix to a specified stream.
    * 
    * @param stream The stream
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void print(final OutputStream stream) throws AssertionError {
+  public void print(final OutputStream stream) {
     print(stream, "");
   }
 
@@ -360,16 +354,9 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * @param header The header
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void print(final OutputStream stream, final String header) throws AssertionError {
-    PrintWriter writer;
-    try {
-      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
-    } catch(UnsupportedEncodingException exception) {
-      throw new AssertionError("UTF-8 not supported by your JVM.");
-    }
+  public void print(final OutputStream stream, final String header) {
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8)));
 
     if (!header.isEmpty()) {
       writer.println(header);
@@ -379,10 +366,8 @@ abstract class AbstractMat {
 
   /**
    * Prints the matrix unformatted to System.out.
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void raw_print() throws AssertionError {
+  public void raw_print() {
     raw_print("");
   }
 
@@ -390,10 +375,8 @@ abstract class AbstractMat {
    * Prints the matrix unformatted to System.out, with a specified header.
    * 
    * @param header The header
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void raw_print(final String header) throws AssertionError {
+  public void raw_print(final String header) {
     raw_print(System.out, "");
   }
 
@@ -401,10 +384,8 @@ abstract class AbstractMat {
    * Prints the matrix unformatted to a specified stream.
    * 
    * @param stream The stream
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
-  public void raw_print(final OutputStream stream) throws AssertionError {
+  public void raw_print(final OutputStream stream) {
     raw_print(stream, "");
   }
 
@@ -413,16 +394,9 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * @param header The header
-   * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    */
   public void raw_print(final OutputStream stream, final String header) {
-    PrintWriter writer;
-    try {
-      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
-    } catch(UnsupportedEncodingException exception) {
-      throw new AssertionError("UTF-8 not supported by your JVM.");
-    }
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8)));
 
     if (!header.isEmpty()) {
       writer.println(header);
@@ -481,11 +455,9 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
-   * 
    * @see FileType
    */
-  public boolean save(final String name) throws AssertionError, FileNotFoundException {
+  public boolean save(final String name) throws FileNotFoundException {
     return save(name, FileType.RAW_ASCII);
   }
 
@@ -495,11 +467,9 @@ abstract class AbstractMat {
    * @param name The file path
    * @param file_type The file format
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
-   * 
    * @see FileType
    */
-  public boolean save(final String name, final FileType file_type) throws AssertionError, FileNotFoundException {
+  public boolean save(final String name, final FileType file_type) throws FileNotFoundException {
     return save(new FileOutputStream(name, false), file_type);
   }
 
@@ -510,11 +480,9 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
-   * 
    * @see FileType
    */
-  public boolean save(final OutputStream stream) throws AssertionError {
+  public boolean save(final OutputStream stream) {
     return save(stream, FileType.RAW_ASCII);
   }
 
@@ -524,21 +492,14 @@ abstract class AbstractMat {
    * @param stream The stream
    * @param file_type The file format
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
-   * 
    * @see FileType
    */
-  public boolean save(final OutputStream stream, final FileType file_type) throws AssertionError {
+  public boolean save(final OutputStream stream, final FileType file_type) {
     /*
      * file_type is ignored since only FileType.RAW_ASCII is currently supported.
      */
 
-    PrintWriter writer;
-    try {
-      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, "UTF-8")));
-    } catch(UnsupportedEncodingException exception) {
-      throw new AssertionError("UTF-8 not supported by your JVM.");
-    }
+    PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8)));
 
     for (int i = 0; i < n_rows; i++)
     {
@@ -572,12 +533,11 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    * @throws IllegalArgumentException All rows must have the same number of columns.
    * 
    * @see FileType
    */
-  public boolean load(final String name) throws AssertionError, IllegalArgumentException, FileNotFoundException, IOException {
+  public boolean load(final String name) throws IllegalArgumentException, FileNotFoundException, IOException {
     return load(name, FileType.RAW_ASCII);
   }
 
@@ -588,12 +548,11 @@ abstract class AbstractMat {
    * @param name The file path
    * @param file_type The file format
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    * @throws IllegalArgumentException All rows must have the same number of columns.
    * 
    * @see FileType
    */
-  public boolean load(final String name, final FileType file_type) throws AssertionError, IllegalArgumentException, FileNotFoundException, IOException {
+  public boolean load(final String name, final FileType file_type) throws IllegalArgumentException, FileNotFoundException, IOException {
     return load(new FileInputStream(name), file_type);
   }
 
@@ -604,12 +563,11 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    * @throws IllegalArgumentException All rows must have the same number of columns.
    * 
    * @see FileType
    */
-  public boolean load(final InputStream stream) throws AssertionError, IllegalArgumentException, IOException {
+  public boolean load(final InputStream stream) throws IllegalArgumentException, IOException {
     return load(stream, FileType.RAW_ASCII);
   }
 
@@ -620,22 +578,16 @@ abstract class AbstractMat {
    * @param stream The stream
    * @param file_type The file format
    * 
-   * @throws AssertionError UTF-8 not supported by your JVM.
    * @throws IllegalArgumentException All rows must have the same number of columns.
    * 
    * @see FileType
    */
-  public boolean load(final InputStream stream, final FileType file_type) throws AssertionError, IllegalArgumentException, IOException {
+  public boolean load(final InputStream stream, final FileType file_type) throws IllegalArgumentException, IOException {
     /*
      * file_type is ignored since only FileType.RAW_ASCII is currently supported.
      */
 
-    BufferedReader reader;
-    try {
-      reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-    } catch(UnsupportedEncodingException exception) {
-      throw new AssertionError("UTF-8 not supported by your JVM.");
-    }
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 
     String line = reader.readLine();
     if (line == null) {
