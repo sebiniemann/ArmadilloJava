@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
@@ -215,16 +216,22 @@ public class TestGenColVec extends TestClass {
 
   @Test
   public void testArmaSort() throws IOException {
+    assumeThat(_genColVec.is_finite(), is(true));
+    
     assertMatEquals(Arma.sort(_genColVec), load("Arma.sort"));
   }
 
   @Test
   public void testArmaSort_index() throws IOException {
+    assumeThat(_genColVec.is_finite(), is(true));
+    
     assertMatEquals(Arma.sort_index(_genColVec), load("Arma.sort_index"));
   }
 
   @Test
   public void testArmaStable_sort_index() throws IOException {
+    assumeThat(_genColVec.is_finite(), is(true));
+    
     assertMatEquals(Arma.stable_sort_index(_genColVec), load("Arma.stable_sort_index"));
   }
 

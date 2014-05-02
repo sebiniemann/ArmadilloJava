@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
@@ -86,6 +87,8 @@ public class TestGenMatSortDim extends TestClass {
 
   @Test
   public void testArmaSort() throws IOException {
+    assumeThat(_genMat.is_finite(), is(true));
+    
     assertMatEquals(Arma.sort(_genMat, _sort, _dim), load("Arma.sort"));
   }
 

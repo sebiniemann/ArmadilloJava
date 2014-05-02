@@ -18,6 +18,11 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <cmath>
+using std::log;
+using std::sqrt;
+using std::pow;
+
 #include <fstream>
 using std::ofstream;
 
@@ -337,7 +342,18 @@ namespace armadilloJava {
 
       void expectedArmaAcosh() {
         cout << "- Compute expectedArmaAcosh() ... ";
-        save<double>("Arma.acosh", acosh(_genMat));
+
+        /*
+         * acosh behaves buggy on some systems, with acosh(inf) = nan instead of inf
+         */
+        //save<double>("Arma.acosh", acosh(_genMat));
+
+        Mat<double> expected = _genMat;
+        expected.transform([](double value) {
+          return log(value + sqrt(pow(value, 2) - 1));
+        });
+        save<double>("Arma.acosh", expected);
+
         cout << "done." << endl;
       }
 
@@ -462,6 +478,10 @@ namespace armadilloJava {
       }
 
       void expectedArmaSort() {
+        if(!_genMat.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort() ... ";
         save<double>("Arma.sort", sort(_genMat));
         cout << "done." << endl;

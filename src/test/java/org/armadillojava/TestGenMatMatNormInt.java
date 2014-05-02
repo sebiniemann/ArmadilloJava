@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
@@ -76,6 +77,8 @@ public class TestGenMatMatNormInt extends TestClass {
 
   @Test
   public void testArmaNorm() throws IOException {
+    assumeThat(_matNormInt < 2 ||_genMat.is_finite(), is(true));
+    
     double expected = load("Arma.norm")._data[0];
     double actual = Arma.norm(_genMat, _matNormInt);
 

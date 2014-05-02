@@ -81,18 +81,30 @@ namespace armadilloJava {
       string _sort;
 
       void expectedArmaSort() {
+        if(!_genRowVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort() ... ";
         save<double>("Arma.sort", sort(_genRowVec, _sort.c_str()));
         cout << "done." << endl;
       }
 
       void expectedArmaSort_index() {
+        if(!_genRowVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort_index() ... ";
         save<uword>("Arma.sort_index", sort_index(_genRowVec, _sort.c_str()));
         cout << "done." << endl;
       }
 
       void expectedArmaStable_sort_index() {
+        if(!_genRowVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaStable_sort_index() ... ";
         save<uword>("Arma.stable_sort_index", stable_sort_index(_genRowVec, _sort.c_str()));
         cout << "done." << endl;

@@ -18,6 +18,11 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <cmath>
+using std::log;
+using std::sqrt;
+using std::pow;
+
 #include <utility>
 using std::pair;
 
@@ -308,7 +313,18 @@ namespace armadilloJava {
 
       void expectedArmaAcosh() {
         cout << "- Compute expectedArmaAcosh() ... ";
-        save<double>("Arma.acosh", acosh(_genColVec));
+
+        /*
+         * acosh behaves buggy on some systems, with acosh(inf) = nan instead of inf
+         */
+        //save<double>("Arma.acosh", acosh(_genColVec));
+
+        Mat<double> expected = _genColVec;
+        expected.transform([](double value) {
+          return log(value + sqrt(pow(value, 2) - 1));
+        });
+        save<double>("Arma.acosh", expected);
+
         cout << "done." << endl;
       }
 
@@ -349,18 +365,30 @@ namespace armadilloJava {
       }
 
       void expectedArmaSort() {
+        if(!_genColVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort() ... ";
         save<double>("Arma.sort", sort(_genColVec));
         cout << "done." << endl;
       }
 
       void expectedArmaSort_index() {
+        if(!_genColVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort_index() ... ";
         save<uword>("Arma.sort_index", sort_index(_genColVec));
         cout << "done." << endl;
       }
 
       void expectedArmaStable_sort_index() {
+        if(!_genColVec.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaStable_sort_index() ... ";
         save<uword>("Arma.stable_sort_index", stable_sort_index(_genColVec));
         cout << "done." << endl;

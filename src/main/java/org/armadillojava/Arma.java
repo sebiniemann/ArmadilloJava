@@ -836,7 +836,7 @@ public class Arma {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
       
-      if(value <= 0) {
+      if(value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log(A[n]);
@@ -881,7 +881,7 @@ public class Arma {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
       
-      if(value <= 0) {
+      if(value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log(A[n]) / Math.log(2);
@@ -926,7 +926,7 @@ public class Arma {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
       
-      if(value <= 0) {
+      if(value < 0) {
         result[n] = Datum.nan;
       } else {
         result[n] = Math.log10(A[n]);
@@ -1250,7 +1250,13 @@ public class Arma {
 
   protected static void round(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
-      result[n] = Math.round(A[n]);
+      double value = A[n];
+      
+      if(Double.isInfinite(value)) {
+        result[n] = value;
+      } else {
+        result[n] = Math.round(A[n]);
+      }
     }
   }
 
@@ -1375,7 +1381,7 @@ public class Arma {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
       
-      if(value < -1 || value > -1) {
+      if(value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
       result[n] = Math.asin(X[n]);
@@ -1543,7 +1549,7 @@ public class Arma {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
       
-      if(value < -1 || value > -1) {
+      if(value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
       result[n] = Math.acos(X[n]);
@@ -1789,7 +1795,7 @@ public class Arma {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
       
-      if(value <= -1 || value >= 1) {
+      if(value < -1 || value > 1) {
         result[n] = Datum.nan;
       } else {
       result[n] = 0.5 * Math.log((1 + value) / (1 - value));
@@ -2932,6 +2938,11 @@ public class Arma {
     }
 
     double mean = mean(V);
+    
+    if(Double.isNaN(mean)) {
+      return Datum.inf;
+    }
+    
     double variance = 0;
 
     V.iteratorReset();
@@ -3059,6 +3070,10 @@ public class Arma {
 
     double mean = mean(V);
 
+    if(Double.isNaN(mean)) {
+      return Datum.inf;
+    }
+
     double variance = 0;
     for (int n = 0; n < V.n_elem; n++) {
       variance += Math.pow(V._data[n] - mean, 2);
@@ -3084,6 +3099,10 @@ public class Arma {
     double mean = mean(V);
     double variance = 0;
 
+    if(Double.isNaN(mean)) {
+      return Datum.inf;
+    }
+    
     V.iteratorReset();
     while (V.iteratorHasNext()) {
       variance += Math.pow(V._data[V.iteratorNext()] - mean, 2);

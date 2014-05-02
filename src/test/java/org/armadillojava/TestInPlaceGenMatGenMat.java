@@ -102,6 +102,8 @@ public class TestInPlaceGenMatGenMat extends TestClass {
 
   @Test
   public void testMatInPlaceTimes() throws IOException {
+    assumeThat(_genMatA.is_finite(), is(true));
+    assumeThat(_genMatB.is_finite(), is(true));
     assumeThat(_genMatA.n_cols, is(_genMatB.n_rows));
     
     _genMatA.inPlace(Op.TIMES, _genMatB);

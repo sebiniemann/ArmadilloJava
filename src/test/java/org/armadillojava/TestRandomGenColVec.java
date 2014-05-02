@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
@@ -75,6 +76,8 @@ public class TestRandomGenColVec extends TestClass {
 
   @Test
   public void testArmaShuffle() throws IOException {
+    assumeThat(_genColVec.is_finite(), is(true));
+    
     Col result = Arma.shuffle(_genColVec);
     for (int n = 2; n <= _random; n++) {
       result = (result.times(n)).plus(Arma.shuffle(_genColVec)).divide(n + 1);

@@ -82,6 +82,10 @@ namespace armadilloJava {
       int _dim;
 
       void expectedArmaSort() {
+        if(!_genMat.is_finite()) {
+          return;
+        }
+
         cout << "- Compute expectedArmaSort() ... ";
         save<double>("Arma.sort", sort(_genMat, _sort.c_str(), _dim));
         cout << "done." << endl;

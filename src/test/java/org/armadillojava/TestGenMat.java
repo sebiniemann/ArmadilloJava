@@ -299,6 +299,8 @@ public class TestGenMat extends TestClass {
 
   @Test
   public void testArmaSort() throws IOException {
+    assumeThat(_genMat.is_finite(), is(true));
+    
     assertMatEquals(Arma.sort(_genMat), load("Arma.sort"));
   }
 
@@ -336,7 +338,9 @@ public class TestGenMat extends TestClass {
     assertMatEquals(Arma.sum(Col.class, P, 0), Arma.ones(Col.class, P.n_cols));
     assertMatEquals(Arma.sum(Col.class, P, 1), Arma.ones(Col.class, P.n_rows));
 
-    assertMatEquals((P.t()).times(L).times(U), _genMat);
+    if(_genMat.is_finite()) {
+      assertMatEquals((P.t()).times(L).times(U), _genMat);
+    }
   }
 
   @Test
@@ -351,7 +355,10 @@ public class TestGenMat extends TestClass {
     if (_genMat.is_square()) {
       assertMatEquals(U, Arma.trimatu(U));
     }
-    assertMatEquals(L.times(U), _genMat);
+    
+    if(_genMat.is_finite()) {
+      assertMatEquals(L.times(U), _genMat);
+    }
   }
 
   @Test
@@ -433,7 +440,10 @@ public class TestGenMat extends TestClass {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }
-    assertMatEquals(Q.times(R), _genMat);
+    
+    if(_genMat.is_finite()) {
+      assertMatEquals(Q.times(R), _genMat);
+    }
   }
 
   @Test
@@ -447,7 +457,10 @@ public class TestGenMat extends TestClass {
       assertMatEquals(Q.t(), Q.i());
       assertMatEquals(Arma.trimatu(R), R);
     }
-    assertMatEquals(Q.times(R), _genMat);
+    
+    if(_genMat.is_finite()) {
+      assertMatEquals(Q.times(R), _genMat);
+    }
   }
 
   @Test
@@ -474,7 +487,7 @@ public class TestGenMat extends TestClass {
 
     assertMatEquals(s, load("Arma.svd"));
 
-    if (_genMat.is_square()) {
+    if (_genMat.is_square() && _genMat.is_finite()) {
       assertMatEquals(U.times(Arma.diagmat(s)).times(V.t()), _genMat);
     }
   }
@@ -489,7 +502,7 @@ public class TestGenMat extends TestClass {
 
     assertMatEquals(s, load("Arma.svd_econ"));
 
-    if (_genMat.is_square()) {
+    if (_genMat.is_square() && _genMat.is_finite()) {
       assertMatEquals(U.times(Arma.diagmat(s)).times(V.t()), _genMat);
     }
   }
