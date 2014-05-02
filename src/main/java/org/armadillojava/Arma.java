@@ -834,7 +834,13 @@ public class Arma {
 
   protected static void log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
-      result[n] = Math.log(A[n]);
+      double value = A[n];
+      
+      if(value <= 0) {
+        result[n] = Datum.nan;
+      } else {
+        result[n] = Math.log(A[n]);
+      }
     }
   }
 
@@ -873,7 +879,13 @@ public class Arma {
 
   protected static void log2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
-      result[n] = Math.log(A[n]) / Math.log(2);
+      double value = A[n];
+      
+      if(value <= 0) {
+        result[n] = Datum.nan;
+      } else {
+        result[n] = Math.log(A[n]) / Math.log(2);
+      }
     }
   }
 
@@ -912,7 +924,13 @@ public class Arma {
 
   protected static void log10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
-      result[n] = Math.log10(A[n]);
+      double value = A[n];
+      
+      if(value <= 0) {
+        result[n] = Datum.nan;
+      } else {
+        result[n] = Math.log10(A[n]);
+      }
     }
   }
 
@@ -1070,7 +1088,13 @@ public class Arma {
 
   protected static void sqrt(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
-      result[n] = Math.sqrt(A[n]);
+      double value = A[n];
+      
+      if(value < 0) {
+        result[n] = Datum.nan;
+      } else {
+        result[n] = Math.sqrt(A[n]);
+      }
     }
   }
 
@@ -1349,7 +1373,13 @@ public class Arma {
 
   protected static void asin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
+      double value = X[n];
+      
+      if(value < -1 || value > -1) {
+        result[n] = Datum.nan;
+      } else {
       result[n] = Math.asin(X[n]);
+      }
     }
   }
 
@@ -1511,7 +1541,13 @@ public class Arma {
 
   protected static void acos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
+      double value = X[n];
+      
+      if(value < -1 || value > -1) {
+        result[n] = Datum.nan;
+      } else {
       result[n] = Math.acos(X[n]);
+      }
     }
   }
 
@@ -1752,7 +1788,12 @@ public class Arma {
   protected static void atanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
+      
+      if(value <= -1 || value >= 1) {
+        result[n] = Datum.nan;
+      } else {
       result[n] = 0.5 * Math.log((1 + value) / (1 - value));
+      }
     }
   }
 
