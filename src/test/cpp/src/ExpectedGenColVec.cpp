@@ -527,13 +527,15 @@ namespace armadilloJava {
 	  
 	  void expectedColOnes() {
 		  cout << "- Compute expectedColOnes() ... ";
-		  save<double>("Col.ones", (_genColVec.ones()));
+		  Col<double> expected = _genColVec;
+		  save<double>("Col.ones", (expected.ones()));
 		  cout << "done." << endl;
       }
 	  
 	  void expectedColZeros() {
 		  cout << "- Compute expectedColZeros() ... ";
-		  save<double>("Col.zeros", (_genColVec.zeros()));
+		  Col<double> expected = _genColVec;
+		  save<double>("Col.zeros", (expected.zeros()));
 		  cout << "done." << endl;
       }
   };
