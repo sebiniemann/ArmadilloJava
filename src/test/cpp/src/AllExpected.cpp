@@ -440,10 +440,10 @@ int main() {
 //  ExpectedInPlaceGenMatElemIndGenDouble();
 //  ExpectedInPlaceGenMatGenDouble();
 //  ExpectedInPlaceGenMatGenMat();
-  ExpectedInPlaceGenMatRowIndGenColVec();
+//  ExpectedInPlaceGenMatRowIndGenColVec();
 //  ExpectedInPlaceGenMatRowIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndGenMat();
-  ExpectedInPlaceGenMatRowIndGenRowVec();
+//  ExpectedInPlaceGenMatRowIndGenRowVec();
 //  ExpectedInPlaceGenMatRowIndRangeGenDouble();
 //  ExpectedInPlaceGenMatRowIndRangeGenMat();
 //  ExpectedInPlaceRandomGenMat();

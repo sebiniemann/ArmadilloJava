@@ -43,7 +43,7 @@ public class TestUtil {
       }
     }
   }
-
+  
   public static double globalDelta(AbstractMat A, double delta) {
     return Math.max(1, Math.abs(A.max())) * delta;
   }
