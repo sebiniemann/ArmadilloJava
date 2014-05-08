@@ -31,6 +31,9 @@ using armadilloJava::ExpectedDatum;
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;
 
+#include <ExpectedGenColVecElemInd.cpp>
+using armadilloJava::ExpectedGenColVecElemInd;
+
 #include <ExpectedGenColVecElemIndRange.cpp>
 using armadilloJava::ExpectedGenColVecElemIndRange;
 
@@ -368,7 +371,8 @@ int main() {
    */
 
 //  ExpectedDatum();
-	ExpectedGenColVecElemIndRange();
+//  ExpectedGenColVecElemIndRange();
+//	ExpectedGenColVecElemInd();
 //  ExpectedGenColVec();
 //  ExpectedGenColVecExp();
 //  ExpectedGenColVecGenColVec();
