@@ -393,7 +393,7 @@ class Input {
   protected static List<Pair<String, Object>> getElemIndRange() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
+    input.add(new Pair<String, Object>("span(0)", new Span(0)));
     input.add(new Pair<String, Object>("span(0,9)", new Span(0, 9)));
     input.add(new Pair<String, Object>("span(1,4)", new Span(1, 4)));
 
@@ -407,7 +407,8 @@ class Input {
   protected static List<Pair<String, Object>> getRowIndRange() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
-    input.add(new Pair<String, Object>("span(0,0)", new Span(0, 0)));
+    input.add(new Pair<String, Object>("span.all", Span.all()));
+    input.add(new Pair<String, Object>("span(0)", new Span(0)));
     input.add(new Pair<String, Object>("span(0,4)", new Span(0, 4)));
     input.add(new Pair<String, Object>("span(1,2)", new Span(1, 2)));
 

@@ -17,7 +17,6 @@ import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.lessThan;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,8 +74,8 @@ public class TestGenMatRowIndRangeColIndRange extends TestClass {
     _fileSuffix = _genMatString + "," + _rowIndRangeString + "," + _colIndRangeString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfRowIndRange = new Span(_rowIndRange._first, _rowIndRange._last);
-    _copyOfColIndRange = new Span(_colIndRange._first, _colIndRange._last);
+    _copyOfRowIndRange = new Span(_rowIndRange);
+    _copyOfColIndRange = new Span(_colIndRange);
   }
 
   @After
@@ -108,6 +107,8 @@ public class TestGenMatRowIndRangeColIndRange extends TestClass {
 
   @Test
   public void testMatSubmatB() throws IOException {
+    assumeThat(_rowIndRange._isEntireRange, is(false));
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_genMat.in_range(_rowIndRange, _colIndRange), is(true));
 
     assertMatEquals(_genMat.submat(_rowIndRange._first, _colIndRange._first, _rowIndRange._last, _colIndRange._last), load("Mat.submat"));

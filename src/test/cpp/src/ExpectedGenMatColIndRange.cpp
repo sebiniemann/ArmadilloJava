@@ -73,6 +73,10 @@ namespace armadilloJava {
       span _colIndRange;
 
       void expectedMatCols() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }

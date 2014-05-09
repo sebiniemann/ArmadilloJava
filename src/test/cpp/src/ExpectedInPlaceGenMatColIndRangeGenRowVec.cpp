@@ -109,6 +109,10 @@ namespace armadilloJava {
       Row<double> _copyOfGenRowVec;
 
       void expectedMatColsEqual() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -130,6 +134,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsPlus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -151,6 +159,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsMinus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -171,6 +183,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsElemTimes() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -192,6 +208,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsElemDivide() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }

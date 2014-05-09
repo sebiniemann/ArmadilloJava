@@ -74,19 +74,20 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
     _fileSuffix = _genMatString + "," + _colIndRangeString + "," + _genRowVecString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfColIndRange = new Span(_colIndRange._first, _colIndRange._last);
+    _copyOfColIndRange = new Span(_colIndRange);
     _copyOfGenRowVec = new Row(_genRowVec);
   }
 
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
-    _colIndRange = new Span(_copyOfColIndRange._first, _copyOfColIndRange._last);
+    _colIndRange = new Span(_copyOfColIndRange);
     _genRowVec.inPlace(Op.EQUAL, _copyOfGenRowVec);
   }
 
   @Test
   public void testMatColsEqual() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
     assumeThat(_genRowVec.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -98,6 +99,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
 
   @Test
   public void testMatColsPlus() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
     assumeThat(_genRowVec.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -109,6 +111,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
 
   @Test
   public void testMatColsMinus() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
     assumeThat(_genRowVec.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -120,6 +123,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
 
   @Test
   public void testMatColsTimes() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
     assumeThat(_genRowVec.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -131,6 +135,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
 
   @Test
   public void testMatColsDivide() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
     assumeThat(_genRowVec.n_cols, is(_colIndRange._last - _colIndRange._first + 1));

@@ -74,19 +74,20 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
     _fileSuffix = _genMatAString + "," + _colIndRangeString + "," + _genMatBString;
 
     _copyOfGenMatA = new Mat(_genMatA);
-    _copyOfColIndRange = new Span(_colIndRange._first, _colIndRange._last);
+    _copyOfColIndRange = new Span(_colIndRange);
     _copyOfGenMatB = new Mat(_genMatB);
   }
 
   @After
   public void after() {
     _genMatA.inPlace(Op.EQUAL, _copyOfGenMatA);
-    _colIndRange = new Span(_copyOfColIndRange._first, _copyOfColIndRange._last);
+    _colIndRange = new Span(_copyOfColIndRange);
     _genMatB.inPlace(Op.EQUAL, _copyOfGenMatB);
   }
 
   @Test
   public void testMatColsEqual() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -98,6 +99,7 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
 
   @Test
   public void testMatColsPlus() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -109,6 +111,7 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
 
   @Test
   public void testMatColsMinus() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -120,6 +123,7 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
 
   @Test
   public void testMatColsElemTimes() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));
@@ -131,6 +135,7 @@ public class TestInPlaceGenMatColIndRangeGenMat extends TestClass {
 
   @Test
   public void testMatColsElemDivide() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
     assumeThat(_genMatB.n_cols, is(_colIndRange._last - _colIndRange._first + 1));

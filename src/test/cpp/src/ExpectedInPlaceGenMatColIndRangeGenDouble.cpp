@@ -103,6 +103,10 @@ namespace armadilloJava {
       double _copyOfGenDouble;
 
       void expectedMatColsPlus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -116,6 +120,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsMinus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -129,6 +137,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsTimes() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -142,6 +154,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsDivide() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }

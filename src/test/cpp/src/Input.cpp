@@ -367,7 +367,7 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getElemIndRange() {
     return {
-      pair<string, void*>("span(0,0)", new span(0, 0)),
+      pair<string, void*>("span(0)", new span(0)),
       pair<string, void*>("span(0,9)", new span(0, 9)),
       pair<string, void*>("span(1,4)", new span(1, 4))
     };
@@ -379,7 +379,8 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getRowIndRange() {
     return {
-      pair<string, void*>("span(0,0)", new span(0, 0)),
+      pair<string, void*>("span.all", new span(span::all)),
+      pair<string, void*>("span(0)", new span(0)),
       pair<string, void*>("span(0,4)", new span(0, 4)),
       pair<string, void*>("span(1,2)", new span(1, 2))
     };
@@ -522,7 +523,7 @@ namespace armadilloJava {
     return {
       pair<string, void*>("Col({-10,-5,0.5,10})", new Col<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Col({-inf,0,inf})", new Col<double>({datum::inf, 0, -datum::inf})),
-      pair<string, void*>("Col({0})", new Col<double>({0})),
+      pair<string, void*>("Col({0})", new Col<double>({0.0})),
       pair<string, void*>("Col({-inf})", new Col<double>({-datum::inf})),
       pair<string, void*>("Col({inf})", new Col<double>({datum::inf}))
     };
@@ -579,7 +580,7 @@ namespace armadilloJava {
     return {
       pair<string, void*>("Row({-10,-5,0.5,10})", new Row<double>({-10, -5, 0.5, 10})),
       pair<string, void*>("Row({-inf,0,inf})", new Row<double>({datum::inf, 0, -datum::inf})),
-      pair<string, void*>("Row({0})", new Row<double>({0})),
+      pair<string, void*>("Row({0})", new Row<double>({0.0})),
       pair<string, void*>("Row({-inf})", new Row<double>({-datum::inf})),
       pair<string, void*>("Row({inf})", new Row<double>({datum::inf}))
     };
@@ -615,8 +616,8 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getElemInds() {
     return {
-      pair<string, void*>("Col({0})", new Col<double>({0})),
-      pair<string, void*>("Col({9})", new Col<double>({9})),
+      pair<string, void*>("Col({0})", new Col<double>({0.0})),
+      pair<string, void*>("Col({9})", new Col<double>({9.0})),
       pair<string, void*>("Col({9,0,1})", new Col<double>({9, 0, 1})),
       pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
     };
@@ -628,8 +629,8 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getRowInds() {
     return {
-      pair<string, void*>("Col({0})", new Col<double>({0})),
-      pair<string, void*>("Col({4})", new Col<double>({4})),
+      pair<string, void*>("Col({0})", new Col<double>({0.0})),
+      pair<string, void*>("Col({4})", new Col<double>({4.0})),
       pair<string, void*>("Col({4,0,1})", new Col<double>({4, 0, 1})),
       pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
     };

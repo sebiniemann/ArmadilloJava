@@ -103,6 +103,10 @@ namespace armadilloJava {
       double _copyOfGenDouble;
 
       void expectedMatRowsPlus() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMat.n_rows) {
           return;
         }
@@ -116,6 +120,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsMinus() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMat.n_rows) {
           return;
         }
@@ -129,6 +137,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsTimes() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMat.n_rows) {
           return;
         }
@@ -142,6 +154,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsDivide() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMat.n_rows) {
           return;
         }

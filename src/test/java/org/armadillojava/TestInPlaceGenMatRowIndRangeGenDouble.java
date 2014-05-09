@@ -74,19 +74,20 @@ public class TestInPlaceGenMatRowIndRangeGenDouble extends TestClass {
     _fileSuffix = _genMatString + "," + _rowIndRangeString + "," + _genDoubleString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfRowIndRange = new Span(_rowIndRange._first, _rowIndRange._last);
+    _copyOfRowIndRange = new Span(_rowIndRange);
     _copyOfGenDouble = new Double(_genDouble);
   }
 
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
-    _rowIndRange = new Span(_copyOfRowIndRange._first, _copyOfRowIndRange._last);
+    _rowIndRange = new Span(_copyOfRowIndRange);
     _genDouble = new Double(_copyOfGenDouble);
   }
 
   @Test
   public void testMatRowsPlus() throws IOException {
+    assumeThat(_rowIndRange._isEntireRange, is(false));
     assumeThat(_rowIndRange._last, is(lessThan(_genMat.n_rows)));
 
     _genMat.rows(_rowIndRange._first, _rowIndRange._last, Op.PLUS, _genDouble);
@@ -96,6 +97,7 @@ public class TestInPlaceGenMatRowIndRangeGenDouble extends TestClass {
 
   @Test
   public void testMatRowsMinus() throws IOException {
+    assumeThat(_rowIndRange._isEntireRange, is(false));
     assumeThat(_rowIndRange._last, is(lessThan(_genMat.n_rows)));
 
     _genMat.rows(_rowIndRange._first, _rowIndRange._last, Op.MINUS, _genDouble);
@@ -105,6 +107,7 @@ public class TestInPlaceGenMatRowIndRangeGenDouble extends TestClass {
 
   @Test
   public void testMatRowsTimes() throws IOException {
+    assumeThat(_rowIndRange._isEntireRange, is(false));
     assumeThat(_rowIndRange._last, is(lessThan(_genMat.n_rows)));
 
     _genMat.rows(_rowIndRange._first, _rowIndRange._last, Op.TIMES, _genDouble);
@@ -114,6 +117,7 @@ public class TestInPlaceGenMatRowIndRangeGenDouble extends TestClass {
 
   @Test
   public void testMatRowsDivide() throws IOException {
+    assumeThat(_rowIndRange._isEntireRange, is(false));
     assumeThat(_rowIndRange._last, is(lessThan(_genMat.n_rows)));
 
     _genMat.rows(_rowIndRange._first, _rowIndRange._last, Op.DIVIDE, _genDouble);

@@ -32,6 +32,13 @@ public class Span {
    */
   protected final boolean _isEntireRange;
 
+  protected Span(final Span span) {
+    _first = span._first;
+    _last = span._last;
+
+    _isEntireRange = span._isEntireRange;
+  }
+  
   /**
    * Creates a span similar to Matlab's index expression range a:b, but without creating a vector.
    * 

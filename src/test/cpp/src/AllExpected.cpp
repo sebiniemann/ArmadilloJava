@@ -386,7 +386,7 @@ int main() {
    */
 
 //  ExpectedDatum();
-//  ExpectedGenColVecElemIndRange();
+  ExpectedGenColVecElemIndRange();
 //	ExpectedGenColVecElemInd();
 //  ExpectedGenColVec();
 //  ExpectedGenColVecExp();
@@ -408,10 +408,10 @@ int main() {
 //  ExpectedGenDoubleGenDoubleNumElems();
 //  ExpectedGenMat();
 //  ExpectedGenMatColInd();
-//  ExpectedGenMatColIndRange();
+  ExpectedGenMatColIndRange();
 //  ExpectedGenMatDim();
 //  ExpectedGenMatElemInd();
-//  ExpectedGenMatElemIndRange();
+  ExpectedGenMatElemIndRange();
 //  ExpectedGenMatExp();
 //  ExpectedGenMatGenColVec();
 //  ExpectedGenMatGenDouble();
@@ -431,7 +431,7 @@ int main() {
 //  ExpectedGenMatNumRowsNumCols();
 //  ExpectedGenMatRowInd();
 //  ExpectedGenMatRowIndColInd();
-//  ExpectedGenMatRowIndRange();
+  ExpectedGenMatRowIndRange();
   ExpectedGenMatRowIndRangeColIndRange();
 //  ExpectedGenMatSinValSel();
 //  ExpectedGenMatSinValTol();
@@ -458,10 +458,10 @@ int main() {
 //  ExpectedInPlaceGenMatColIndGenDouble();
 //  ExpectedInPlaceGenMatColIndGenMat();
 //  ExpectedInPlaceGenMatColIndGenRowVec();
-//  ExpectedInPlaceGenMatColIndRangeGenColVec();
-//  ExpectedInPlaceGenMatColIndRangeGenDouble();
-//  ExpectedInPlaceGenMatColIndRangeGenMat();
-//  ExpectedInPlaceGenMatColIndRangeGenRowVec();
+  ExpectedInPlaceGenMatColIndRangeGenColVec();
+  ExpectedInPlaceGenMatColIndRangeGenDouble();
+  ExpectedInPlaceGenMatColIndRangeGenMat();
+  ExpectedInPlaceGenMatColIndRangeGenRowVec();
 //  ExpectedInPlaceGenMatElemInd();
 //  ExpectedInPlaceGenMatElemIndGenDouble();
 //  ExpectedInPlaceGenMatGenDouble();
@@ -470,10 +470,10 @@ int main() {
 //  ExpectedInPlaceGenMatRowIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndGenMat();
 //  ExpectedInPlaceGenMatRowIndGenRowVec();
-//  ExpectedInPlaceGenMatRowIndRangeGenColVec();
-//  ExpectedInPlaceGenMatRowIndRangeGenDouble();
-//  ExpectedInPlaceGenMatRowIndRangeGenMat();
-//  ExpectedInPlaceGenMatRowIndRangeGenRowVec();
+  ExpectedInPlaceGenMatRowIndRangeGenColVec();
+  ExpectedInPlaceGenMatRowIndRangeGenDouble();
+  ExpectedInPlaceGenMatRowIndRangeGenMat();
+  ExpectedInPlaceGenMatRowIndRangeGenRowVec();
 //  ExpectedInPlaceRandomGenMat();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();

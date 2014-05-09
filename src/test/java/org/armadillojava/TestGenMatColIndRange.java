@@ -66,7 +66,7 @@ public class TestGenMatColIndRange extends TestClass {
     _fileSuffix = _genMatString + "," + _colIndRangeString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfColIndRange = new Span(_colIndRange._first, _colIndRange._last);
+    _copyOfColIndRange = new Span(_colIndRange);
   }
 
   @After
@@ -78,6 +78,7 @@ public class TestGenMatColIndRange extends TestClass {
 
   @Test
   public void testMatCols() throws IOException {
+    assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
 
     assertMatEquals(_genMat.cols(_colIndRange._first, _colIndRange._last), load("Mat.cols"));

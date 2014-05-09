@@ -109,6 +109,10 @@ namespace armadilloJava {
       Col<double> _copyOfGenColVec;
 
       void expectedMatColsEqual() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -130,6 +134,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsPlus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -145,11 +153,16 @@ namespace armadilloJava {
         cout << "- Compute expectedMatColsPlus() ... ";
 
         _genMat.cols(_colIndRange.a, _colIndRange.b) += _genColVec;
+        save<double>("Mat.colsPlus", _genMat);
 
         cout << "done." << endl;
       }
 
       void expectedMatColsMinus() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -171,6 +184,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsElemTimes() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }
@@ -192,6 +209,10 @@ namespace armadilloJava {
       }
 
       void expectedMatColsElemDivide() {
+        if(_colIndRange.whole) {
+          return;
+        }
+
         if(_colIndRange.b >= _genMat.n_cols) {
           return;
         }

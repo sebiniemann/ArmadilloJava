@@ -1764,30 +1764,46 @@ abstract class AbstractMat {
     /*
      * The parameters "row_span" and "col_span" were already validated during their instantiation.
      */
-    return submat(row_span._first, col_span._first, row_span._last, col_span._last);
+    if(row_span._isEntireRange && col_span._isEntireRange) {
+      return new Mat(this);
+    } else if(row_span._isEntireRange) {
+      return cols(col_span._first, col_span._last);
+    } else if(col_span._isEntireRange) {
+      return rows(row_span._first, row_span._last);
+    } else {
+      return submat(row_span._first, col_span._first, row_span._last, col_span._last);
+    }
   }
 
-  // /**
-  // * Performs an in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
-  // * {@code col_span._first}th to {@code col_span._last} column.
-  // *
-  // * @param row_span The row span
-  // * @param col_span The column span
-  // * @param unary_operator The unary operator
-  // *
-  // * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
-  // * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
-  // * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
-  // * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
-  // * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-  // */
-  // public void submat(final Span row_span, final Span col_span, final Op unary_operator) throws
-  // IndexOutOfBoundsException, UnsupportedOperationException {
-  // /*
-  // * The parameters "row_span" and "col_span" were already validated during their instantiation.
-  // */
-  // submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
-  // }
+//   /**
+//   * Performs an in-place unary operation on the {@code row_span._first}th to {@code row_span._last} row of the
+//   * {@code col_span._first}th to {@code col_span._last} column.
+//   *
+//   * @param row_span The row span
+//   * @param col_span The column span
+//   * @param unary_operator The unary operator
+//   *
+//   * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified column ({@code last_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
+//   * @throws IndexOutOfBoundsException The last specified row ({@code last_col}) is out of bounds.
+//   * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
+//   */
+//   public void submat(final Span row_span, final Span col_span, final Op unary_operator) throws
+//   IndexOutOfBoundsException, UnsupportedOperationException {
+//   /*
+//   * The parameters "row_span" and "col_span" were already validated during their instantiation.
+//   */
+//     if(row_span._isEntireRange && col_span._isEntireRange) {
+//       inPlace(unary_operator);
+//     } else if(row_span._isEntireRange) {
+//      cols(col_span._first, col_span._last, unary_operator);
+//    } else if(col_span._isEntireRange) {
+//      rows(row_span._first, row_span._last, unary_operator);
+//     } else {
+//       submat(row_span._first, col_span._first, row_span._last, col_span._last, unary_operator);
+//     }
+//   }
 
   /**
    * Performs an in-place binary operation on the {@code row_span._first}th to {@code row_span._last} row of the
@@ -1808,7 +1824,15 @@ abstract class AbstractMat {
     /*
      * The parameters "row_span" and "col_span" were already validated during their instantiation.
      */
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    if(row_span._isEntireRange && col_span._isEntireRange) {
+      inPlace(binary_operator, operand);
+    } else if(row_span._isEntireRange) {
+      cols(col_span._first, col_span._last, binary_operator, operand);
+    } else if(col_span._isEntireRange) {
+      rows(row_span._first, row_span._last, binary_operator, operand);
+    } else {
+      submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    }
   }
 
   /**
@@ -1830,7 +1854,15 @@ abstract class AbstractMat {
     /*
      * The parameters "row_span" and "col_span" were already validated during their instantiation.
      */
-    submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    if(row_span._isEntireRange && col_span._isEntireRange) {
+      inPlace(binary_operator, operand);
+    } else if(row_span._isEntireRange) {
+      cols(col_span._first, col_span._last, binary_operator, operand);
+    } else if(col_span._isEntireRange) {
+      rows(row_span._first, row_span._last, binary_operator, operand);
+    } else {
+      submat(row_span._first, col_span._first, row_span._last, col_span._last, binary_operator, operand);
+    }
   }
 
   /**

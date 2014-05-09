@@ -108,6 +108,10 @@ namespace armadilloJava {
       Mat<double> _copyOfGenMatB;
 
       void expectedMatRowsEqual() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMatA.n_rows) {
           return;
         }
@@ -129,6 +133,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsPlus() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMatA.n_rows) {
           return;
         }
@@ -150,6 +158,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsMinus() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMatA.n_rows) {
           return;
         }
@@ -171,6 +183,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsElemTimes() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMatA.n_rows) {
           return;
         }
@@ -192,6 +208,10 @@ namespace armadilloJava {
       }
 
       void expectedMatRowsElemDivide() {
+        if(_rowIndRange.whole) {
+          return;
+        }
+
         if(_rowIndRange.b >= _genMatA.n_rows) {
           return;
         }
