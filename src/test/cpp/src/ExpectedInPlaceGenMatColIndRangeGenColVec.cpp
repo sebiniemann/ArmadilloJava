@@ -145,7 +145,6 @@ namespace armadilloJava {
         cout << "- Compute expectedMatColsPlus() ... ";
 
         _genMat.cols(_colIndRange.a, _colIndRange.b) += _genColVec;
-        save<double>("Mat.colsPlus", _genMat);
 
         cout << "done." << endl;
       }
