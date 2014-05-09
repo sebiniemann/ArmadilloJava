@@ -334,34 +334,45 @@ public class Col extends AbstractVector {
     return result;
   }
 
-  @Override
-  public Col times(final Col X) throws RuntimeException {
-    if (n_cols != X.n_rows) {
-      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-    }
+//  @Override
+//  public Col times(final Col X) throws RuntimeException {
+//    if (n_cols != X.n_rows) {
+//      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+//    }
+//
+//    /*
+//     * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
+//     */
+//    return times(X._data[0]);
+//  }
 
-    /*
-     * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
-     */
-    return times(X._data[0]);
-  }
-
-  @Override
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
   public Mat times(final Row X) {
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
   }
 
-  @Override
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
   public Mat times(final Mat X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    /*
-     * Only (1, m)-matrices can be right-hand side multiplied to column vectors.
-     */
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;

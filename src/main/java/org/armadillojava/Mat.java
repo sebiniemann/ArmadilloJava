@@ -1406,32 +1406,50 @@ public class Mat extends AbstractMat {
     }
   }
 
-  @Override
-  public Mat times(final Col X) throws RuntimeException {
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
+  public Col times(final Col X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    Mat result = new Mat(n_rows, X.n_cols);
-    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+    Col result = new Col(n_rows);
+    BLAS.getInstance().dgemv("N", n_rows, n_cols, 1, _data, n_rows, X._data, 1, 0, result._data, 1);
     return result;
   }
 
-  @Override
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
   public Mat times(final Row X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    /*
-     * Only (n, 1)-matrices can be left-hand side multiplied to row vectors.
-     */
     Mat result = new Mat(n_rows, X.n_cols);
     BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
     return result;
   }
 
-  @Override
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
   public Mat times(final Mat X) throws RuntimeException {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");

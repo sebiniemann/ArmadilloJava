@@ -15,7 +15,7 @@ package org.armadillojava;
 
 import java.util.Random;
 
-class RNG {
+public class RNG {
 
   protected static Random _rng = new Random();
 

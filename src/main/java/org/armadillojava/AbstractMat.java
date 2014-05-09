@@ -2509,35 +2509,35 @@ abstract class AbstractMat {
 
   abstract protected AbstractMat times(final AbstractMat X) throws RuntimeException;
 
-  /**
-   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
-  abstract public AbstractMat times(final Col X) throws RuntimeException;
-
-  /**
-   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
-  abstract public AbstractMat times(final Row X) throws RuntimeException;
-
-  /**
-   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-   * 
-   * @param X The multiplier
-   * 
-   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-   *           {@code X.n_rows}) in the specified multiplier.
-   */
-  abstract public AbstractMat times(final Mat X) throws RuntimeException;
+//  /**
+//   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+//   * 
+//   * @param X The multiplier
+//   * 
+//   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+//   *           {@code X.n_rows}) in the specified multiplier.
+//   */
+//  abstract public AbstractMat times(final Col X) throws RuntimeException;
+//
+//  /**
+//   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+//   * 
+//   * @param X The multiplier
+//   * 
+//   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+//   *           {@code X.n_rows}) in the specified multiplier.
+//   */
+//  abstract public AbstractMat times(final Row X) throws RuntimeException;
+//
+//  /**
+//   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+//   * 
+//   * @param X The multiplier
+//   * 
+//   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+//   *           {@code X.n_rows}) in the specified multiplier.
+//   */
+//  abstract public AbstractMat times(final Mat X) throws RuntimeException;
 
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {

@@ -334,38 +334,44 @@ public class Row extends AbstractVector {
     }
   }
 
-  @Override
-  public Row times(final Row X) throws RuntimeException {
-    if (n_cols != X.n_rows) {
-      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-    }
+//  @Override
+//  public Row times(final Row X) throws RuntimeException {
+//    if (n_cols != X.n_rows) {
+//      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+//    }
+//
+//    /*
+//     * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
+//     */
+//    return times(X._data[0]);
+//  }
 
-    /*
-     * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
-     */
-    return times(X._data[0]);
-  }
-
-  @Override
+  /**
+   * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
+   *           {@code X.n_rows}) in the specified multiplier.
+   */
   public Mat times(final Mat X) {
     if (n_cols != X.n_rows) {
       throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
     }
 
-    /*
-     * Only (n, 1)-matrices can be right-hand side multiplied to row vectors.
-     */
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+    Mat result = new Mat(n_rows, X.n_cols);
+    BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
+    return result;
   }
 
-  @Override
-  public Mat times(final Col X) {
-    if (n_cols != X.n_rows) {
-      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-    }
-
-    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
-  }
+//  @Override
+//  public Mat times(final Col X) {
+//    if (n_cols != X.n_rows) {
+//      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+//    }
+//
+//    return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
+//  }
 
   @Override
   public Row elemTimes(final AbstractMat X) throws RuntimeException {
