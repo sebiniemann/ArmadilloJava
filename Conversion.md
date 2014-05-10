@@ -77,29 +77,28 @@ Member functions
 
 #### Contiguous views
 
-Matlab                     | Armadillo C++                        | ArmadilloJava                   | Notes
----------------------------|--------------------------------------|---------------------------------|------
-A(:, :)                    | A.submat(span::all, span::all)       | A                               | 
-A(:, :)                    | A(span::all, span::all)              | A                               | 
-A(:, j)                    | A.col(j)                             | A.col(j)                        | 
-A(:, j)                    | A(span::all, j)                      | A.col(j)                        | 
-A(a:b, j)                  | A(span(a, b), j)                     | A.col(a, b, j)                  | 
-A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                    | 
-A(:, a:b)                  | A.submat(span::all, span(a, b))      | A.cols(a, b)                    | 
-A(:, a:b)                  | A(span::all, span(a, b))             | A.cols(a, b)                    | 
-                           | A.unsafe_col(j)                      |                                 | *Not suppported*
-A(i, :)                    | A.row(i)                             | A.row(i)                        | 
-A(i, :)                    | A(i, span::all)                      | A.row(i)                        | 
-A(i, a:b)                  | A(i, span(a, b))                     | A.row(a, b, i)                  | 
-A(a:b, :)                  | A.rows(a, b)                         | A.rows(a, b)                    | 
-A(a:b, :)                  | A.submat(span(a, b), span::all)      | A.rows(a, b)                    | 
-A(a:b, :)                  | A(span(a, b), span::all)             | A.rows(a, b)                    | 
-A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)        | 
-A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(ai, bi, aj, bj)        | 
-A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(ai, bi, aj, bj)        | 
-A(:)                       | A(span::all)                         | A                               | **Note:** A is a vector.
-A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                  | **Note:** A is a vector.
-A(a:b)                     | A(span(a, b))                        | A.subvec(a, b)                  | **Note:** A is a vector.
+Matlab                     | Armadillo C++                        | ArmadilloJava                                | Notes
+---------------------------|--------------------------------------|----------------------------------------------|------
+A(:, :)                    | A.submat(span::all, span::all)       | A                                            | 
+A(:, :)                    | A(span::all, span::all)              | A                                            | 
+A(:, j)                    | A.col(j)                             | A.col(j)                                     | 
+A(:, j)                    | A(span::all, j)                      | A.col(Span.all, j)                           | 
+A(a:b, j)                  | A(span(a, b), j)                     | A.col(new Span(a, b), j)                     | 
+A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                                 | 
+A(:, a:b)                  | A.submat(span::all, span(a, b))      | A.submat(Span.all, new Span(a, b))           | 
+A(:, a:b)                  | A(span::all, span(a, b))             | A.submat(Span.all, new Span(a, b))           | 
+                           | A.unsafe_col(j)                      |                                              | *Not suppported*
+A(i, :)                    | A.row(i)                             | A.row(i)                                     | 
+A(i, :)                    | A(i, span::all)                      | A.row(i, Span.all)                           | 
+A(i, a:b)                  | A(i, span(a, b))                     | A.row(i, new Span(a, b))                     | 
+A(a:b, :)                  | A.rows(a, b)                         | A.rows(a, b)                                 | 
+A(a:b, :)                  | A.submat(span(a, b), span::all)      | A.submat(new Span(a, b), Span.all)           | 
+A(a:b, :)                  | A(span(a, b), span::all)             | A.submat(new Span(a, b), Span.all)           | 
+A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)                     | 
+A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
+A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
+A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                               | **Note:** A is a vector.
+A(a:b)                     | A(span(a, b))                        | A.subvec(new Span(a, b))                     | **Note:** A is a vector.
 
                            
 #### Non-contiguous views
@@ -128,7 +127,7 @@ diag(A, [k])               | A.diag([k])                | A.diag([k])           
 Operation           | Matlab | Armadillo C++ | ArmadilloJava
 --------------------|--------|---------------|--------------
 Plus                | A + B  | A + B         | A.plus(B)
-Minus               | A - B  | A -B          | A.minus(B)
+Minus               | A - B  | A - B          | A.minus(B)
 Times               | A * B  | A * B         | A.times(B)
 Element-wise times  | A .* B | A % B         | A.elemTimes(B)
 Element-wise divide | A ./ B | A / B         | A.elemDivide(B)
