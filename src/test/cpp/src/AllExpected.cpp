@@ -166,6 +166,9 @@ using armadilloJava::ExpectedGenMatRowIndColInd;
 #include <ExpectedGenMatRowIndRange.cpp>
 using armadilloJava::ExpectedGenMatRowIndRange;
 
+#include <ExpectedGenMatRowIndRangeColInd.cpp>
+using armadilloJava::ExpectedGenMatRowIndRangeColInd;
+
 #include <ExpectedGenMatRowIndRangeColIndRange.cpp>
 using armadilloJava::ExpectedGenMatRowIndRangeColIndRange;
 
@@ -386,7 +389,7 @@ int main() {
    */
 
 //  ExpectedDatum();
-  ExpectedGenColVecElemIndRange();
+//  ExpectedGenColVecElemIndRange();
 //	ExpectedGenColVecElemInd();
 //  ExpectedGenColVec();
 //  ExpectedGenColVecExp();
@@ -408,10 +411,10 @@ int main() {
 //  ExpectedGenDoubleGenDoubleNumElems();
 //  ExpectedGenMat();
 //  ExpectedGenMatColInd();
-  ExpectedGenMatColIndRange();
+//  ExpectedGenMatColIndRange();
 //  ExpectedGenMatDim();
 //  ExpectedGenMatElemInd();
-  ExpectedGenMatElemIndRange();
+//  ExpectedGenMatElemIndRange();
 //  ExpectedGenMatExp();
 //  ExpectedGenMatGenColVec();
 //  ExpectedGenMatGenDouble();
@@ -431,8 +434,9 @@ int main() {
 //  ExpectedGenMatNumRowsNumCols();
 //  ExpectedGenMatRowInd();
 //  ExpectedGenMatRowIndColInd();
-  ExpectedGenMatRowIndRange();
-  ExpectedGenMatRowIndRangeColIndRange();
+//  ExpectedGenMatRowIndRange();
+  ExpectedGenMatRowIndRangeColInd();
+//  ExpectedGenMatRowIndRangeColIndRange();
 //  ExpectedGenMatSinValSel();
 //  ExpectedGenMatSinValTol();
 //  ExpectedGenMatSort();
@@ -458,10 +462,10 @@ int main() {
 //  ExpectedInPlaceGenMatColIndGenDouble();
 //  ExpectedInPlaceGenMatColIndGenMat();
 //  ExpectedInPlaceGenMatColIndGenRowVec();
-  ExpectedInPlaceGenMatColIndRangeGenColVec();
-  ExpectedInPlaceGenMatColIndRangeGenDouble();
-  ExpectedInPlaceGenMatColIndRangeGenMat();
-  ExpectedInPlaceGenMatColIndRangeGenRowVec();
+//  ExpectedInPlaceGenMatColIndRangeGenColVec();
+//  ExpectedInPlaceGenMatColIndRangeGenDouble();
+//  ExpectedInPlaceGenMatColIndRangeGenMat();
+//  ExpectedInPlaceGenMatColIndRangeGenRowVec();
 //  ExpectedInPlaceGenMatElemInd();
 //  ExpectedInPlaceGenMatElemIndGenDouble();
 //  ExpectedInPlaceGenMatGenDouble();
@@ -470,10 +474,10 @@ int main() {
 //  ExpectedInPlaceGenMatRowIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndGenMat();
 //  ExpectedInPlaceGenMatRowIndGenRowVec();
-  ExpectedInPlaceGenMatRowIndRangeGenColVec();
-  ExpectedInPlaceGenMatRowIndRangeGenDouble();
-  ExpectedInPlaceGenMatRowIndRangeGenMat();
-  ExpectedInPlaceGenMatRowIndRangeGenRowVec();
+//  ExpectedInPlaceGenMatRowIndRangeGenColVec();
+//  ExpectedInPlaceGenMatRowIndRangeGenDouble();
+//  ExpectedInPlaceGenMatRowIndRangeGenMat();
+//  ExpectedInPlaceGenMatRowIndRangeGenRowVec();
 //  ExpectedInPlaceRandomGenMat();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();
