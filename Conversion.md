@@ -77,28 +77,30 @@ Member functions
 
 #### Contiguous views
 
-Matlab                     | Armadillo C++                        | ArmadilloJava                                | Notes
----------------------------|--------------------------------------|----------------------------------------------|------
-A(:, :)                    | A.submat(span::all, span::all)       | A                                            | 
-A(:, :)                    | A(span::all, span::all)              | A                                            | 
-A(:, j)                    | A.col(j)                             | A.col(j)                                     | 
-A(:, j)                    | A(span::all, j)                      | A.col(Span.all, j)                           | 
-A(a:b, j)                  | A(span(a, b), j)                     | A.col(new Span(a, b), j)                     | 
-A(:, a:b)                  | A.cols(a, b)                         | A.cols(a, b)                                 | 
-A(:, a:b)                  | A.submat(span::all, span(a, b))      | A.submat(Span.all, new Span(a, b))           | 
-A(:, a:b)                  | A(span::all, span(a, b))             | A.submat(Span.all, new Span(a, b))           | 
-                           | A.unsafe_col(j)                      |                                              | *Not suppported*
-A(i, :)                    | A.row(i)                             | A.row(i)                                     | 
-A(i, :)                    | A(i, span::all)                      | A.row(i, Span.all)                           | 
-A(i, a:b)                  | A(i, span(a, b))                     | A.row(i, new Span(a, b))                     | 
-A(a:b, :)                  | A.rows(a, b)                         | A.rows(a, b)                                 | 
-A(a:b, :)                  | A.submat(span(a, b), span::all)      | A.submat(new Span(a, b), Span.all)           | 
-A(a:b, :)                  | A(span(a, b), span::all)             | A.submat(new Span(a, b), Span.all)           | 
-A(ai:bi, aj:bj)            | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)                     | 
-A(ai:bi, aj:bj)            | A.submat(span(ai, bi), span(aj, bj)) | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
-A(ai:bi, aj:bj)            | A(span(ai, bi), span(aj, bj))        | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
-A(a:b)                     | A.subvec(a, b)                       | A.subvec(a, b)                               | **Note:** A is a vector.
-A(a:b)                     | A(span(a, b))                        | A.subvec(new Span(a, b))                     | **Note:** A is a vector.
+Matlab                                | Armadillo C++                        | ArmadilloJava                                | Notes
+--------------------------------------|--------------------------------------|----------------------------------------------|------
+A(:, :)                               | A.submat(span::all, span::all)       | A                                            | 
+A(:, :)                               | A(span::all, span::all)              | A                                            | 
+A(:, j)                               | A.col(j)                             | A.col(j)                                     | 
+                                      | A.unsafe_col(j)                      |                                              | *Not suppported*
+A(:, j)                               | A(span::all, j)                      | A.col(Span.all, j)                           | 
+A(a:b, j)                             | A(span(a, b), j)                     | A.col(new Span(a, b), j)                     | 
+A(:, a:b)                             | A.cols(a, b)                         | A.cols(a, b)                                 | 
+A(:, a:b)                             | A.submat(span::all, span(a, b))      | A.submat(Span.all, new Span(a, b))           | 
+A(:, a:b)                             | A(span::all, span(a, b))             | A.submat(Span.all, new Span(a, b))           | 
+A(i, :)                               | A.row(i)                             | A.row(i)                                     | 
+A(i, :)                               | A(i, span::all)                      | A.row(i, Span.all)                           | 
+A(i, a:b)                             | A(i, span(a, b))                     | A.row(i, new Span(a, b))                     | 
+A(a:b, :)                             | A.rows(a, b)                         | A.rows(a, b)                                 | 
+A(a:b, :)                             | A.submat(span(a, b), span::all)      | A.submat(new Span(a, b), Span.all)           | 
+A(a:b, :)                             | A(span(a, b), span::all)             | A.submat(new Span(a, b), Span.all)           | 
+A(ai:bi, aj:bj)                       | A.submat(ai, bi, aj, bj)             | A.submat(ai, bi, aj, bj)                     | 
+A(ai:bi, aj:bj)                       | A.submat(span(ai, bi), span(aj, bj)) | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
+A(a:a + n_rows, b:b + n_cols)         | A(a, b, size(n_rows, n_cols))        | A.submat(a, b, new Size(n_rows, n_cols))     | 
+A(a:a + size(B, 1), b:b + size(B, 2)) | A(a, b, size(B))                     | A.submat(a, b, new Size(B))                  | **Note:** B is a matrix.
+A(ai:bi, aj:bj)                       | A(span(ai, bi), span(aj, bj))        | A.submat(new Span(ai, bi), new Span(aj, bj)) | 
+A(a:b)                                | A.subvec(a, b)                       | A.subvec(a, b)                               | **Note:** A is a vector.
+A(a:b)                                | A(span(a, b))                        | A.subvec(new Span(a, b))                     | **Note:** A is a vector.
 
                            
 #### Non-contiguous views
@@ -228,14 +230,16 @@ isrow(A)                   | A.is_rowvec()              | A.is_rowvec()         
                            
 ### Bound checks
 
-Matlab                     | Armadillo C++                          | ArmadilloJava                          | Notes
----------------------------|----------------------------------------|----------------------------------------|------
-                           | A.in_range(n)                          | A.in_range(n)                          | **Matlab:** n > 0 && numel(A) <= n
-                           | A.in_range(span(a, b))                 | A.in_range(Span(a, b))                 | **Matlab:** a > 0 && numel(A) <= b
-                           | A.in_range(i, j)                       | A.in_range(i, j)                       | **Matlab:** i > 0 && j > 0 && size(A, 1) <= i && size(A, 2) <= j
-                           | A.in_range(span::all, span(a, b))      | A.in_range(Span(), Span(a, b))         | **Matlab:** a > 0 && size(A, 2) <= b
-                           | A.in_range(span(a, b), span::all)      | A.in_range(Span(a, b), Span())         | **Matlab:** a > 0 && size(A, 1) <= b
-                           | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(Span(ai, bi), Span(aj, bj)) | **Matlab:** ai > 0 && aj > 0 && size(A, 1) <= bi && size(A, 2) <= bj
+Matlab                     | Armadillo C++                          | ArmadilloJava                              | Notes
+---------------------------|----------------------------------------|--------------------------------------------|------
+                           | A.in_range(n)                          | A.in_range(n)                              | **Matlab:** n > 0 && numel(A) <= n
+                           | A.in_range(span(a, b))                 | A.in_range(Span(a, b))                     | **Matlab:** a > 0 && numel(A) <= b
+                           | A.in_range(i, j)                       | A.in_range(i, j)                           | **Matlab:** i > 0 && j > 0 && size(A, 1) >= i && size(A, 2) >= j
+                           | A.in_range(span::all, span(a, b))      | A.in_range(Span.all, Span(a, b))           | **Matlab:** a > 0 && size(A, 2) <= b
+                           | A.in_range(span(a, b), span::all)      | A.in_range(Span(a, b), Span.all)           | **Matlab:** a > 0 && size(A, 1) <= b
+                           | A.in_range(span(ai, bi), span(aj, bj)) | A.in_range(Span(ai, bi), Span(aj, bj))     | **Matlab:** ai > 0 && aj > 0 && size(A, 1) >= bi && size(A, 2) >= bj
+                           | A.in_range(a, b, size(n_rows, n_cols)) | A.in_range(a, b, new Size(n_rows, n_cols)) | **Matlab:** a > 0 && b > 0 && size(A, 1) >= n_rows && size(A, 2) >= n_cols
+                           | A.in_range(a, b, size(B))              | A.in_range(a, b, new Size(B))              | **Note:** B is a matrix. **Matlab:** a > 0 && b > 0 && size(A, 1) >= size(B, 1) && size(A, 2) >= size(B, 2)
                            
                            
 ### Inline statistics
