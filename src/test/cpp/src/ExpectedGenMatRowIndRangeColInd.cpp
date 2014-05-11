@@ -76,7 +76,7 @@ namespace armadilloJava {
     protected:
       Mat<double> _genMat;
       span _rowIndRange;
-      int _colInd;;
+      int _colInd;
 
       void expectedMatCol() {
         if(_colInd >= _genMat.n_cols) {

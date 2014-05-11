@@ -181,7 +181,7 @@ abstract class AbstractMat {
     /*
      * The parameter "size" was already validated during its instantiation.
      */
-    return ((first_row > -1 && first_row + size.n_rows - 1 < n_rows) && (first_col > -1 && first_col + size.n_cols - 1 < n_cols));
+    return ((first_row > -1 && first_row + size.n_rows <= n_rows) && (first_col > -1 && first_col + size.n_cols <= n_cols));
   }
 
   /**

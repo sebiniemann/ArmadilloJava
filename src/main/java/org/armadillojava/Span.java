@@ -32,6 +32,14 @@ public class Span {
    */
   protected final boolean _isEntireRange;
 
+  protected Span() {
+    // Illegal values by design. Should result in an exception if used together with other provided methods/classes.
+    _first = -1;
+    _last = -1;
+
+    _isEntireRange = true;
+  }
+  
   protected Span(final Span span) {
     _first = span._first;
     _last = span._last;
@@ -74,17 +82,6 @@ public class Span {
    */
   public Span(final int position) throws IllegalArgumentException {
     this(position, position);
-  }
-
-  /**
-   * Creates a span similar to Matlab's index expression special range :, but without creating a vector.
-   */
-  public Span() {
-    // Illegal values by design. Should result in an exception if used together with other provided methods/classes.
-    _first = -1;
-    _last = -1;
-
-    _isEntireRange = true;
   }
 
   /**

@@ -422,10 +422,10 @@ class Input {
     input.add(new Pair<String, Object>("size(1,3)", new Size(1, 3)));
     input.add(new Pair<String, Object>("size(1,5)", new Size(1, 5)));
     input.add(new Pair<String, Object>("size(2,5)", new Size(2, 5)));
-    input.add(new Pair<String, Object>("size(3,1)", new Size(3, 1)));
-    input.add(new Pair<String, Object>("size(5,1)", new Size(5, 1)));
-    input.add(new Pair<String, Object>("size(5,2)", new Size(5, 2)));
-    input.add(new Pair<String, Object>("size(5,5)", new Size(5, 5)));
+    input.add(new Pair<String, Object>("size(3,1)", new Size(new Mat(3, 1))));
+    input.add(new Pair<String, Object>("size(5,1)", new Size(new Mat(5, 1))));
+    input.add(new Pair<String, Object>("size(5,2)", new Size(new Mat(5, 2))));
+    input.add(new Pair<String, Object>("size(5,5)", new Size(new Mat(5, 5))));
 
     return input;
   }
