@@ -538,9 +538,7 @@ class Input {
       if (size.n_cols == 1) {
         input.add(new Pair<String, Object>("Col(zeros(" + size.n_rows + ",1))", new Col(Arma.zeros(Col.class, size.n_rows))));
         input.add(new Pair<String, Object>("Col(ones(" + size.n_rows + ",1))", new Col(Arma.ones(Col.class, size.n_rows))));
-        input.add(new Pair<String, Object>("Col(eye(" + size.n_rows + ",1))", new Col(Arma.eye(size.n_rows, 1))));
         input.add(new Pair<String, Object>("Col(hilbert(" + size.n_rows + ",1))", new Col(getHilbertMatrix(size.n_rows, 1))));
-        input.add(new Pair<String, Object>("Col(kms(" + size.n_rows + ",1))", new Col(getKMSMatrix(size.n_rows, 1))));
       }
     }
     input.add(new Pair<String, Object>("Col({inf,-inf})", new Col(new double[]{Datum.inf, -Datum.inf})));
@@ -597,9 +595,7 @@ class Input {
       if (size.n_rows == 1) {
         input.add(new Pair<String, Object>("Row(zeros(1," + size.n_cols + "))", new Row(Arma.zeros(Row.class, size.n_cols))));
         input.add(new Pair<String, Object>("Row(ones(1," + size.n_cols + "))", new Row(Arma.ones(Row.class, size.n_cols))));
-        input.add(new Pair<String, Object>("Row(eye(1," + size.n_cols + "))", new Row(Arma.eye(1, size.n_cols))));
         input.add(new Pair<String, Object>("Row(hilbert(1," + size.n_cols + "))", new Row(getHilbertMatrix(1, size.n_cols))));
-        input.add(new Pair<String, Object>("Row(kms(1," + size.n_cols + "))", new Row(getKMSMatrix(1, size.n_cols))));
       }
     }
     input.add(new Pair<String, Object>("Row({inf,-inf})", new Row(new double[]{Datum.inf, -Datum.inf})));

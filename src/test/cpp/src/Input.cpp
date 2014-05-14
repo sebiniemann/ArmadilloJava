@@ -509,10 +509,8 @@ namespace armadilloJava {
       if(size.n_cols == 1) {
         input.push_back(pair<string, void*>("Col(zeros(" + to_string(size.n_rows) + ",1))", new Col<double>(zeros<Col<double>>(size.n_rows))));
         input.push_back(pair<string, void*>("Col(ones(" + to_string(size.n_rows) + ",1))", new Col<double>(ones<Col<double>>(size.n_rows))));
-        input.push_back(pair<string, void*>("Col(eye(" + to_string(size.n_rows) + ",1))", new Col<double>(eye<Col<double>>(size.n_rows, 1))));
         input.push_back(pair<string, void*>("Col(hilbert(" + to_string(size.n_rows) + ",1))", new Col<double>(getHilbertMatrix(size.n_rows, 1))));
-        input.push_back(pair<string, void*>("Col(kms(" + to_string(size.n_rows) + ",1))", new Col<double>(getKMSMatrix(size.n_rows, 1))));
-      }
+       }
     }
     input.push_back(pair<string, void*>("Col({inf,-inf})", new Col<double>({datum::inf, -datum::inf})));
 
@@ -566,10 +564,8 @@ namespace armadilloJava {
       if(size.n_rows == 1) {
         input.push_back(pair<string, void*>("Row(zeros(1," + to_string(size.n_cols) + "))", new Row<double>(zeros<Row<double>>(size.n_cols))));
         input.push_back(pair<string, void*>("Row(ones(1," + to_string(size.n_cols) + "))", new Row<double>(ones<Row<double>>(size.n_cols))));
-        input.push_back(pair<string, void*>("Row(eye(1," + to_string(size.n_cols) + "))", new Row<double>(eye<Row<double>>(1, size.n_cols))));
         input.push_back(pair<string, void*>("Row(hilbert(1," + to_string(size.n_cols) + "))", new Row<double>(getHilbertMatrix(1, size.n_cols))));
-        input.push_back(pair<string, void*>("Row(kms(1," + to_string(size.n_cols) + "))", new Row<double>(getKMSMatrix(1, size.n_cols))));
-      }
+       }
     }
     input.push_back(pair<string, void*>("Row({inf,-inf})", new Row<double>({datum::inf, -datum::inf})));
 
