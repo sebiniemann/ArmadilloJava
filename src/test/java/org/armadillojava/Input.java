@@ -419,13 +419,11 @@ class Input {
     List<Pair<String, Object>> input = new ArrayList<>();
 
     input.add(new Pair<String, Object>("size(1,1)", new Size(1, 1)));
-    input.add(new Pair<String, Object>("size(1,3)", new Size(1, 3)));
     input.add(new Pair<String, Object>("size(1,5)", new Size(1, 5)));
     input.add(new Pair<String, Object>("size(2,5)", new Size(2, 5)));
-    input.add(new Pair<String, Object>("size(3,1)", new Size(new Mat(3, 1))));
-    input.add(new Pair<String, Object>("size(5,1)", new Size(new Mat(5, 1))));
-    input.add(new Pair<String, Object>("size(5,2)", new Size(new Mat(5, 2))));
-    input.add(new Pair<String, Object>("size(5,5)", new Size(new Mat(5, 5))));
+    input.add(new Pair<String, Object>("size(5,1)", new Size(5, 1)));
+    input.add(new Pair<String, Object>("size(5,2)", new Size(5, 2)));
+    input.add(new Pair<String, Object>("size(5,5)", new Size(5, 5)));
 
     return input;
   }
@@ -438,10 +436,8 @@ class Input {
 
       input.add(new Pair<String, Object>("Mat(zeros(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.zeros(size.n_rows, size.n_cols))));
       input.add(new Pair<String, Object>("Mat(ones(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.ones(size.n_rows, size.n_cols))));
-      input.add(new Pair<String, Object>("Mat(eye(" + size.n_rows + "," + size.n_cols + "))", new Mat(Arma.eye(size.n_rows, size.n_cols))));
       input.add(new Pair<String, Object>("Mat(hilbert(" + size.n_rows + "," + size.n_cols + "))", new Mat(getHilbertMatrix(size.n_rows, size.n_cols))));
-      input.add(new Pair<String, Object>("Mat(kms(" + size.n_rows + "," + size.n_cols + "))", new Mat(getKMSMatrix(size.n_rows, size.n_cols))));
-    }
+   }
 
     Mat infinite = new Mat(new double[]{Datum.inf, -Datum.inf, -Datum.inf, Datum.inf});
     infinite.reshape(2, 2);

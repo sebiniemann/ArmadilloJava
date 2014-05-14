@@ -155,6 +155,7 @@ abstract class AbstractView {
         while (iteratorHasNext()) {
           _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
+        break;
       default:
         throw new UnsupportedOperationException("Unexpected operator (" + binary_operator + ").");
     }

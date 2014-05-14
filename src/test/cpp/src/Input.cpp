@@ -393,10 +393,8 @@ namespace armadilloJava {
   vector<pair<string, void*>> Input::getMatSize() {
     return {
       pair<string, void*>("size(1,1)", new pair<int, int>(1, 1)),
-      pair<string, void*>("size(1,3)", new pair<int, int>(1, 3)),
       pair<string, void*>("size(1,5)", new pair<int, int>(1, 5)),
       pair<string, void*>("size(2,5)", new pair<int, int>(2, 5)),
-      pair<string, void*>("size(3,1)", new pair<int, int>(3, 1)),
       pair<string, void*>("size(5,1)", new pair<int, int>(5, 1)),
       pair<string, void*>("size(5,2)", new pair<int, int>(5, 2)),
       pair<string, void*>("size(5,5)", new pair<int, int>(5, 5))
@@ -411,9 +409,7 @@ namespace armadilloJava {
 
       input.push_back(pair<string, void*>("Mat(zeros(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(zeros<Mat<double>>(size.n_rows, size.n_cols))));
       input.push_back(pair<string, void*>("Mat(ones(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(ones<Mat<double>>(size.n_rows, size.n_cols))));
-      input.push_back(pair<string, void*>("Mat(eye(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(eye<Mat<double>>(size.n_rows, size.n_cols))));
       input.push_back(pair<string, void*>("Mat(hilbert(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getHilbertMatrix(size.n_rows, size.n_cols))));
-      input.push_back(pair<string, void*>("Mat(kms(" + to_string(size.n_rows) + "," + to_string(size.n_cols) + "))", new Mat<double>(getKMSMatrix(size.n_rows, size.n_cols))));
     }
 
     Mat<double> infinite = {datum::inf, -datum::inf, -datum::inf, datum::inf};
