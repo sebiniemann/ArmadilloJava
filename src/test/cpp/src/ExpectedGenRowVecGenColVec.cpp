@@ -157,24 +157,15 @@ namespace armadilloJava {
       }
 
       void expectedArmaCross() {
-        if(!_genRowVec.is_vec()) {
-          return;
-        }
-
-        if(_genRowVec.n_elem != 3) {
-          return;
-        }
-
-        if(!_genColVec.is_vec()) {
-          return;
-        }
-
-        if(_genColVec.n_elem != 3) {
-          return;
-        }
-
         cout << "- Compute expectedArmaCross() ... ";
-        save<double>("Arma.cross", cross(_genRowVec, _genColVec));
+
+        Row<double> tempGenRowVec = Row<double>(_genRowVec);
+        tempGenRowVec.resize(3);
+        Col<double> tempGenColVec = Col<double>(_genColVec);
+        tempGenColVec.resize(3);
+
+        save<double>("Arma.cross", cross(tempGenRowVec, tempGenColVec));
+
         cout << "done." << endl;
       }
 

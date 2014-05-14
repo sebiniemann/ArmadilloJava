@@ -75,12 +75,12 @@ public class TestGenMatGenRowVec extends TestClass {
 
   @Test
   public void testArmaCross() throws IOException {
-    assumeThat(_genMat.is_vec(), is(true));
-    assumeThat(_genMat.n_elem, is(3));
-    assumeThat(_genRowVec.is_vec(), is(true));
-    assumeThat(_genRowVec.n_elem, is(3));
-
-    assertMatEquals(Arma.cross(_genMat, _genRowVec), load("Arma.cross"));
+    Mat tempGenMat = new Mat(_genMat);
+    tempGenMat.resize(3, 1);
+    Row tempGenRowVec = new Row(_genRowVec);
+    tempGenRowVec.resize(3);
+    
+    assertMatEquals(Arma.cross(tempGenMat, tempGenRowVec), load("Arma.cross"));
   }
 
   @Test
@@ -114,6 +114,95 @@ public class TestGenMatGenRowVec extends TestClass {
   @Test
   public void testArmaKron() throws IOException {
     assertMatEquals(Arma.kron(_genMat, _genRowVec), load("Arma.kron"));
+  }
+
+  @Test
+  public void testMatPlus() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.plus(_genRowVec), load("Mat.plus"));
+  }
+
+  @Test
+  public void testMatMinus() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.minus(_genRowVec), load("Mat.minus"));
+  }
+  
+  @Test
+  public void testMatTimes() throws IOException {
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_rows));
+    assumeThat(_genMat.is_finite(), is(true));
+    assumeThat(_genRowVec.is_finite(), is(true));
+    
+    assertMatEquals(_genMat.times(_genRowVec), load("Mat.times"));
+  }
+
+  @Test
+  public void testMatElemTimes() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.elemTimes(_genRowVec), load("Mat.elemTimes"));
+  }
+
+  @Test
+  public void testMatElemDivide() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.elemDivide(_genRowVec), load("Mat.elemDivide"));
+  }
+
+  @Test
+  public void testMatEquals() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.equals(_genRowVec), load("Mat.equals"));
+  }
+
+  @Test
+  public void testMatNonEquals() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.nonEquals(_genRowVec), load("Mat.nonEquals"));
+  }
+
+  @Test
+  public void testMatGreaterThan() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.greaterThan(_genRowVec), load("Mat.greaterThan"));
+  }
+
+  @Test
+  public void testMatLessThan() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.lessThan(_genRowVec), load("Mat.lessThan"));
+  }
+
+  @Test
+  public void testMatStrictGreaterThan() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.strictGreaterThan(_genRowVec), load("Mat.strictGreaterThan"));
+  }
+
+  @Test
+  public void testMatStrictLessThan() throws IOException {
+    assumeThat(_genMat.n_rows, is(_genRowVec.n_rows));
+    assumeThat(_genMat.n_cols, is(_genRowVec.n_cols));
+    
+    assertMatEquals(_genMat.strictLessThan(_genRowVec), load("Mat.strictLessThan"));
   }
 
 }

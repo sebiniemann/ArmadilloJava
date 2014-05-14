@@ -145,12 +145,12 @@ public class TestGenColVecGenColVec extends TestClass {
 
   @Test
   public void testArmaCross() throws IOException {
-    assumeThat(_genColVecA.is_vec(), is(true));
-    assumeThat(_genColVecA.n_elem, is(3));
-    assumeThat(_genColVecB.is_vec(), is(true));
-    assumeThat(_genColVecB.n_elem, is(3));
+    Col tempGenColVecA = new Col(_genColVecA);
+    tempGenColVecA.resize(3);
+    Col tempGenColVecB = new Col(_genColVecB);
+    tempGenColVecB.resize(3);
 
-    assertMatEquals(Arma.cross(_genColVecA, _genColVecB), load("Arma.cross"));
+    assertMatEquals(Arma.cross(tempGenColVecA, tempGenColVecB), load("Arma.cross"));
   }
 
   @Test

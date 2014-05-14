@@ -84,24 +84,15 @@ namespace armadilloJava {
       Mat<double> _genMat;
 
       void expectedArmaCross() {
-        if(!_genRowVec.is_vec()) {
-          return;
-        }
-
-        if(_genRowVec.n_elem != 3) {
-          return;
-        }
-
-        if(!_genMat.is_vec()) {
-          return;
-        }
-
-        if(_genMat.n_elem != 3) {
-          return;
-        }
-
         cout << "- Compute expectedArmaCross() ... ";
-        save<double>("Arma.cross", cross(_genRowVec, _genMat));
+
+        Row<double> tempGenRowVec = Row<double>(_genRowVec);
+        tempGenRowVec.resize(3);
+        Mat<double> tempGenMat = Mat<double>(_genMat);
+        tempGenMat.resize(3, 1);
+
+        save<double>("Arma.cross", cross(tempGenRowVec, tempGenMat));
+
         cout << "done." << endl;
       }
 

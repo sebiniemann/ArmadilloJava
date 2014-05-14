@@ -1473,7 +1473,7 @@ abstract class AbstractMat {
      * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
      */
     for (int n = 0; n < leftHandOperand.length; n++) {
-      if (leftHandOperand[n] >= rightHandOperand[n]) {
+      if (leftHandOperand[n] > rightHandOperand[n]) {
         result[n] = 1;
       }
     }

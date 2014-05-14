@@ -84,7 +84,17 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
+          expectedMatPlus();
+          expectedMatMinus();
           expectedMatTimes();
+          expectedMatElemTimes();
+          expectedMatElemDivide();
+          expectedMatEquals();
+          expectedMatNonEquals();
+          expectedMatGreaterThan();
+          expectedMatLessThan();
+          expectedMatStrictGreaterThan();
+          expectedMatStrictLessThan();
         }
 
         cout << "done." << endl;
@@ -151,24 +161,15 @@ namespace armadilloJava {
       }
 
       void expectedArmaCross() {
-        if(!_genMatA.is_vec()) {
-          return;
-        }
-
-        if(_genMatA.n_elem != 3) {
-          return;
-        }
-
-        if(!_genMatB.is_vec()) {
-          return;
-        }
-
-        if(_genMatB.n_elem != 3) {
-          return;
-        }
-
         cout << "- Compute expectedArmaCross() ... ";
-        save<double>("Arma.cross", cross(_genMatA, _genMatB));
+
+        Mat<double> tempGenMatA = Mat<double>(_genMatA);
+        tempGenMatA.resize(3, 1);
+        Mat<double> tempGenMatB = Mat<double>(_genMatB);
+        tempGenMatB.resize(3, 1);
+
+        save<double>("Arma.cross", cross(tempGenMatA, tempGenMatB));
+
         cout << "done." << endl;
       }
 
@@ -218,6 +219,34 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
+      void expectedMatPlus() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatPlus() ... ";
+        save<double>("Mat.plus", _genMatA + _genMatB);
+        cout << "done." << endl;
+      }
+
+      void expectedMatMinus() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatMinus() ... ";
+        save<double>("Mat.minus", _genMatA - _genMatB);
+        cout << "done." << endl;
+      }
+
       void expectedMatTimes() {
         if(_genMatA.n_cols != _genMatB.n_rows) {
           return;
@@ -225,6 +254,136 @@ namespace armadilloJava {
 
         cout << "- Compute expectedMatTimes() ... ";
         save<double>("Mat.times", _genMatA * _genMatB);
+        cout << "done." << endl;
+      }
+
+      void expectedMatElemTimes() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatElemTimes() ... ";
+        save<double>("Mat.elemTimes", _genMatA % _genMatB);
+        cout << "done." << endl;
+      }
+
+      void expectedMatElemDivide() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatElemDivide() ... ";
+        save<double>("Mat.elemDivide", _genMatA / _genMatB);
+        cout << "done." << endl;
+      }
+
+      void expectedMatEquals() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatEquals() ... ";
+
+        Mat<uword> expected = _genMatA == _genMatB;
+        save<uword>("Mat.equals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatNonEquals() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatNonEquals() ... ";
+
+        Mat<uword> expected = _genMatA != _genMatB;
+        save<uword>("Mat.nonEquals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatGreaterThan() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatGreaterThan() ... ";
+
+        Mat<uword> expected = _genMatA >= _genMatB;
+        save<uword>("Mat.greaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatLessThan() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatLessThan() ... ";
+
+        Mat<uword> expected = _genMatA <= _genMatB;
+        save<uword>("Mat.LessThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatStrictGreaterThan() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatStrictGreaterThan() ... ";
+
+        Mat<uword> expected = _genMatA > _genMatB;
+        save<uword>("Mat.strictGreaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatStrictLessThan() {
+        if(_genMatA.n_rows != _genMatB.n_rows) {
+          return;
+        }
+
+        if(_genMatA.n_cols != _genMatB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatElemDivide() ... ";
+
+        Mat<uword> expected = _genMatA < _genMatB;
+        save<uword>("Mat.strictLessThan", expected);
+
         cout << "done." << endl;
       }
 
