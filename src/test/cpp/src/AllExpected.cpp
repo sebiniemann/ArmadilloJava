@@ -97,6 +97,9 @@ using armadilloJava::ExpectedGenMatColInd;
 #include <ExpectedGenMatColIndRange.cpp>
 using armadilloJava::ExpectedGenMatColIndRange;
 
+#include <ExpectedGenMatColInds.cpp>
+using armadilloJava::ExpectedGenMatColInds;
+
 #include <ExpectedGenMatDim.cpp>
 using armadilloJava::ExpectedGenMatDim;
 
@@ -105,6 +108,9 @@ using armadilloJava::ExpectedGenMatElemInd;
 
 #include <ExpectedGenMatElemIndRange.cpp>
 using armadilloJava::ExpectedGenMatElemIndRange;
+
+#include <ExpectedGenMatElemInds.cpp>
+using armadilloJava::ExpectedGenMatElemInds;
 
 #include <ExpectedGenMatExp.cpp>
 using armadilloJava::ExpectedGenMatExp;
@@ -166,6 +172,9 @@ using armadilloJava::ExpectedGenMatRowIndColInd;
 #include <ExpectedGenMatRowIndColIndMatSize.cpp>
 using armadilloJava::ExpectedGenMatRowIndColIndMatSize;
 
+#include <ExpectedGenMatRowIndColIndRange.cpp>
+using armadilloJava::ExpectedGenMatRowIndColIndRange;
+
 #include <ExpectedGenMatRowIndRange.cpp>
 using armadilloJava::ExpectedGenMatRowIndRange;
 
@@ -174,6 +183,12 @@ using armadilloJava::ExpectedGenMatRowIndRangeColInd;
 
 #include <ExpectedGenMatRowIndRangeColIndRange.cpp>
 using armadilloJava::ExpectedGenMatRowIndRangeColIndRange;
+
+#include <ExpectedGenMatRowInds.cpp>
+using armadilloJava::ExpectedGenMatRowInds;
+
+#include <ExpectedGenMatRowIndsColInds.cpp>
+using armadilloJava::ExpectedGenMatRowIndsColInds;
 
 #include <ExpectedGenMatSinValSel.cpp>
 using armadilloJava::ExpectedGenMatSinValSel;
@@ -262,17 +277,77 @@ using armadilloJava::ExpectedInPlaceGenMatColIndRangeGenMat;
 #include <ExpectedInPlaceGenMatColIndRangeGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatColIndRangeGenRowVec;
 
+#include <ExpectedInPlaceGenMatColIndsGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatColIndsGenColVec;
+
+#include <ExpectedInPlaceGenMatColIndsGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatColIndsGenDouble;
+
+#include <ExpectedInPlaceGenMatColIndsGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatColIndsGenMat;
+
+#include <ExpectedInPlaceGenMatColIndsGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatColIndsGenRowVec;
+
 #include <ExpectedInPlaceGenMatElemInd.cpp>
 using armadilloJava::ExpectedInPlaceGenMatElemInd;
 
 #include <ExpectedInPlaceGenMatElemIndGenDouble.cpp>
 using armadilloJava::ExpectedInPlaceGenMatElemIndGenDouble;
 
+#include <ExpectedInPlaceGenMatElemIndsGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatElemIndsGenColVec;
+
+#include <ExpectedInPlaceGenMatElemIndsGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatElemIndsGenDouble;
+
+#include <ExpectedInPlaceGenMatElemIndsGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatElemIndsGenMat;
+
+#include <ExpectedInPlaceGenMatElemIndsGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatElemIndsGenRowVec;
+
+#include <ExpectedInPlaceGenMatGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatGenColVec;
+
 #include <ExpectedInPlaceGenMatGenDouble.cpp>
 using armadilloJava::ExpectedInPlaceGenMatGenDouble;
 
 #include <ExpectedInPlaceGenMatGenMat.cpp>
 using armadilloJava::ExpectedInPlaceGenMatGenMat;
+
+#include <ExpectedInPlaceGenMatGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatGenRowVec;
+
+#include <ExpectedInPlaceGenMatRowIndColInd.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColInd;
+
+#include <ExpectedInPlaceGenMatRowIndColIndGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndColIndMatSizeGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndMatSizeGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndColIndMatSizeGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndMatSizeGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndColIndMatSizeGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndMatSizeGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndColIndMatSizeGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndMatSizeGenRowVec;
+
+#include <ExpectedInPlaceGenMatRowIndColIndRangeGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndRangeGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndColIndRangeGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndRangeGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndColIndRangeGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndRangeGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndColIndRangeGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndColIndRangeGenRowVec;
 
 #include <ExpectedInPlaceGenMatRowIndGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatRowIndGenColVec;
@@ -286,6 +361,30 @@ using armadilloJava::ExpectedInPlaceGenMatRowIndGenMat;
 #include <ExpectedInPlaceGenMatRowIndGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatRowIndGenRowVec;
 
+#include <ExpectedInPlaceGenMatRowIndRangeColIndGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndGenRowVec;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndRangeGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndRangeGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndRangeGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndRangeGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndRangeGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndRangeGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndRangeColIndRangeGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndRangeColIndRangeGenRowVec;
+
 #include <ExpectedInPlaceGenMatRowIndRangeGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatRowIndRangeGenColVec;
 
@@ -297,6 +396,30 @@ using armadilloJava::ExpectedInPlaceGenMatRowIndRangeGenMat;
 
 #include <ExpectedInPlaceGenMatRowIndRangeGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatRowIndRangeGenRowVec;
+
+#include <ExpectedInPlaceGenMatRowIndsColIndsGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsColIndsGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndsColIndsGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsColIndsGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndsColIndsGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsColIndsGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndsColIndsGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsColIndsGenRowVec;
+
+#include <ExpectedInPlaceGenMatRowIndsGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsGenColVec;
+
+#include <ExpectedInPlaceGenMatRowIndsGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsGenDouble;
+
+#include <ExpectedInPlaceGenMatRowIndsGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsGenMat;
+
+#include <ExpectedInPlaceGenMatRowIndsGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatRowIndsGenRowVec;
 
 #include <ExpectedInPlaceRandomGenMat.cpp>
 using armadilloJava::ExpectedInPlaceRandomGenMat;
@@ -392,9 +515,9 @@ int main() {
    */
 
 //  ExpectedDatum();
-//  ExpectedGenColVecElemIndRange();
-//	ExpectedGenColVecElemInd();
 //  ExpectedGenColVec();
+//  ExpectedGenColVecElemInd();
+//  ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecExp();
 //  ExpectedGenColVecGenColVec();
 //  ExpectedGenColVecGenColVecNormal();
@@ -415,9 +538,11 @@ int main() {
 //  ExpectedGenMat();
 //  ExpectedGenMatColInd();
 //  ExpectedGenMatColIndRange();
+//  ExpectedGenMatColInds();
 //  ExpectedGenMatDim();
 //  ExpectedGenMatElemInd();
 //  ExpectedGenMatElemIndRange();
+//  ExpectedGenMatElemInds();
 //  ExpectedGenMatExp();
 //  ExpectedGenMatGenColVec();
 //  ExpectedGenMatGenDouble();
@@ -438,9 +563,12 @@ int main() {
 //  ExpectedGenMatRowInd();
 //  ExpectedGenMatRowIndColInd();
 //  ExpectedGenMatRowIndColIndMatSize();
+//  ExpectedGenMatRowIndColIndRange();
 //  ExpectedGenMatRowIndRange();
 //  ExpectedGenMatRowIndRangeColInd();
 //  ExpectedGenMatRowIndRangeColIndRange();
+//  ExpectedGenMatRowInds();
+//  ExpectedGenMatRowIndsColInds();
 //  ExpectedGenMatSinValSel();
 //  ExpectedGenMatSinValTol();
 //  ExpectedGenMatSort();
@@ -470,18 +598,54 @@ int main() {
 //  ExpectedInPlaceGenMatColIndRangeGenDouble();
 //  ExpectedInPlaceGenMatColIndRangeGenMat();
 //  ExpectedInPlaceGenMatColIndRangeGenRowVec();
+//  ExpectedInPlaceGenMatColIndsGenColVec();
+//  ExpectedInPlaceGenMatColIndsGenDouble();
+//  ExpectedInPlaceGenMatColIndsGenMat();
+//  ExpectedInPlaceGenMatColIndsGenRowVec();
 //  ExpectedInPlaceGenMatElemInd();
 //  ExpectedInPlaceGenMatElemIndGenDouble();
+//  ExpectedInPlaceGenMatElemIndsGenColVec();
+//  ExpectedInPlaceGenMatElemIndsGenDouble();
+//  ExpectedInPlaceGenMatElemIndsGenMat();
+//  ExpectedInPlaceGenMatElemIndsGenRowVec();
+//  ExpectedInPlaceGenMatGenColVec();
 //  ExpectedInPlaceGenMatGenDouble();
 //  ExpectedInPlaceGenMatGenMat();
+//  ExpectedInPlaceGenMatGenRowVec();
+//  ExpectedInPlaceGenMatRowIndColInd();
+//  ExpectedInPlaceGenMatRowIndColIndGenDouble();
+//  ExpectedInPlaceGenMatRowIndColIndMatSizeGenColVec();
+//  ExpectedInPlaceGenMatRowIndColIndMatSizeGenDouble();
+//  ExpectedInPlaceGenMatRowIndColIndMatSizeGenMat();
+//  ExpectedInPlaceGenMatRowIndColIndMatSizeGenRowVec();
+//  ExpectedInPlaceGenMatRowIndColIndRangeGenColVec();
+//  ExpectedInPlaceGenMatRowIndColIndRangeGenDouble();
+//  ExpectedInPlaceGenMatRowIndColIndRangeGenMat();
+//  ExpectedInPlaceGenMatRowIndColIndRangeGenRowVec();
 //  ExpectedInPlaceGenMatRowIndGenColVec();
 //  ExpectedInPlaceGenMatRowIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndGenMat();
 //  ExpectedInPlaceGenMatRowIndGenRowVec();
+//  ExpectedInPlaceGenMatRowIndRangeColIndGenColVec();
+//  ExpectedInPlaceGenMatRowIndRangeColIndGenDouble();
+//  ExpectedInPlaceGenMatRowIndRangeColIndGenMat();
+//  ExpectedInPlaceGenMatRowIndRangeColIndGenRowVec();
+  ExpectedInPlaceGenMatRowIndRangeColIndRangeGenColVec();
+  ExpectedInPlaceGenMatRowIndRangeColIndRangeGenDouble();
+  ExpectedInPlaceGenMatRowIndRangeColIndRangeGenMat();
+  ExpectedInPlaceGenMatRowIndRangeColIndRangeGenRowVec();
 //  ExpectedInPlaceGenMatRowIndRangeGenColVec();
 //  ExpectedInPlaceGenMatRowIndRangeGenDouble();
 //  ExpectedInPlaceGenMatRowIndRangeGenMat();
 //  ExpectedInPlaceGenMatRowIndRangeGenRowVec();
+//  ExpectedInPlaceGenMatRowIndsColIndsGenColVec();
+//  ExpectedInPlaceGenMatRowIndsColIndsGenDouble();
+//  ExpectedInPlaceGenMatRowIndsColIndsGenMat();
+//  ExpectedInPlaceGenMatRowIndsColIndsGenRowVec();
+//  ExpectedInPlaceGenMatRowIndsGenColVec();
+//  ExpectedInPlaceGenMatRowIndsGenDouble();
+//  ExpectedInPlaceGenMatRowIndsGenMat();
+//  ExpectedInPlaceGenMatRowIndsGenRowVec();
 //  ExpectedInPlaceRandomGenMat();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();

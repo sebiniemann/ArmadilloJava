@@ -18,6 +18,9 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <algorithm>
+using std::min;
+
 #include <utility>
 using std::pair;
 
@@ -71,6 +74,31 @@ namespace armadilloJava {
             _copyOfRowInd = _rowInd;
             _copyOfGenRowVec = _genRowVec;
 
+            expectedMatDiagEqual();
+
+            _genMat = _copyOfGenMat;
+            _rowInd = _copyOfRowInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatDiagPlus();
+
+            _genMat = _copyOfGenMat;
+            _rowInd = _copyOfRowInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatDiagMinus();
+
+            _genMat = _copyOfGenMat;
+            _rowInd = _copyOfRowInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatDiagElemTimes();
+
+            _genMat = _copyOfGenMat;
+            _rowInd = _copyOfRowInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatDiagElemDivide();
+
+            _genMat = _copyOfGenMat;
+            _rowInd = _copyOfRowInd;
+            _genRowVec = _copyOfGenRowVec;
             expectedMatRowEqual();
 
             _genMat = _copyOfGenMat;
@@ -106,6 +134,91 @@ namespace armadilloJava {
 
       Row<double> _genRowVec;
       Row<double> _copyOfGenRowVec;
+
+      void expectedMatDiagEqual() {
+        if(_rowInd >= _genMat.n_rows) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows - _rowInd, _genMat.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagEqual() ... ";
+
+        _genMat.diag(-_rowInd) = _genRowVec;
+        save<double>("Mat.diagSubEqual", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagPlus() {
+        if(_rowInd >= _genMat.n_rows) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows - _rowInd, _genMat.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagPlus() ... ";
+
+        _genMat.diag(-_rowInd) += _genRowVec;
+        save<double>("Mat.diagSubPlus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagMinus() {
+        if(_rowInd >= _genMat.n_rows) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows - _rowInd, _genMat.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagMinus() ... ";
+
+        _genMat.diag(-_rowInd) -= _genRowVec;
+        save<double>("Mat.diagSubMinus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemTimes() {
+        if(_rowInd >= _genMat.n_rows) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows - _rowInd, _genMat.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemTimes() ... ";
+
+        _genMat.diag(-_rowInd) %= _genRowVec;
+        save<double>("Mat.diagSubElemTimes", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemDivide() {
+        if(_rowInd >= _genMat.n_rows) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows - _rowInd, _genMat.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemDivide() ... ";
+
+        _genMat.diag(-_rowInd) /= _genRowVec;
+        save<double>("Mat.diagSubElemDivide", _genMat);
+
+        cout << "done." << endl;
+      }
 
       void expectedMatRowEqual() {
         if(_rowInd >= _genMat.n_rows) {

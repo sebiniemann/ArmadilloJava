@@ -86,6 +86,61 @@ public class TestInPlaceGenMatColIndGenMat extends TestClass {
   }
 
   @Test
+  public void testMatDiagEqual() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols - _colInd)));
+    
+    _genMatA.diag(_colInd, Op.EQUAL, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagSuperEqual"));
+  }
+
+  @Test
+  public void testMatDiagPlus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols - _colInd)));
+
+    _genMatA.diag(_colInd, Op.PLUS, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagSuperPlus"));
+  }
+
+  @Test
+  public void testMatDiagMinus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols - _colInd)));
+
+    _genMatA.diag(_colInd, Op.MINUS, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagSuperMinus"));
+  }
+
+  @Test
+  public void testMatDiagElemTimes() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols - _colInd)));
+
+    _genMatA.diag(_colInd, Op.ELEMTIMES, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagSuperElemTimes"));
+  }
+
+  @Test
+  public void testMatDiagElemDivide() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols - _colInd)));
+
+    _genMatA.diag(_colInd, Op.ELEMDIVIDE, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagSuperElemDivide"));
+  }
+
+  @Test
   public void testMatColEqual() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.is_colvec(), is(true));
@@ -119,7 +174,7 @@ public class TestInPlaceGenMatColIndGenMat extends TestClass {
   }
 
   @Test
-  public void testMatColTimes() throws IOException {
+  public void testMatColElemTimes() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));
@@ -130,7 +185,7 @@ public class TestInPlaceGenMatColIndGenMat extends TestClass {
   }
 
   @Test
-  public void testMatColDivide() throws IOException {
+  public void testMatColElemDivide() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMatA.n_cols)));
     assumeThat(_genMatB.is_colvec(), is(true));
     assumeThat(_genMatB.n_rows, is(_genMatA.n_rows));

@@ -63,6 +63,7 @@ namespace armadilloJava {
             cout << "Using input: " << _fileSuffix << endl;
 
             expectedArmaDiagvec();
+            expectedMatDiag();
             expectedMatCol();
           }
 
@@ -80,6 +81,16 @@ namespace armadilloJava {
 
         cout << "- Compute expectedArmaDiagvec() ... ";
         save<double>("Arma.diagvecSuper", diagvec(_genMat, _colInd));
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiag() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiag() ... ";
+        save<double>("Mat.diagSuper", _genMat.diag(_colInd));
         cout << "done." << endl;
       }
 

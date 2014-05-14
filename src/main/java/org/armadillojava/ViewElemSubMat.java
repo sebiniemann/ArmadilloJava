@@ -13,8 +13,6 @@
  ******************************************************************************/
 package org.armadillojava;
 
-import java.util.Arrays;
-
 /**
  * Provides shallow matrix non-contiguous sub views of {@link AbstractMat}.
  * 
@@ -65,9 +63,6 @@ class ViewElemSubMat extends AbstractView {
 
     _vector_of_row_indices = vector_of_row_indices;
     _vector_of_column_indices = vector_of_column_indices;
-
-    System.out.println(Arrays.toString(_vector_of_row_indices));
-    System.out.println(Arrays.toString(_vector_of_column_indices));
   }
 
   @Override

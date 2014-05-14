@@ -18,6 +18,9 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <algorithm>
+using std::min;
+
 #include <utility>
 using std::pair;
 
@@ -129,6 +132,26 @@ namespace armadilloJava {
             _genMatA = _copyOfGenMatA;
             _genMatB = _copyOfGenMatB;
             expectedMatEach_rowElemDivide();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatDiagEqual();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatDiagPlus();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatDiagMinus();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatDiagElemTimes();
+
+            _genMatA = _copyOfGenMatA;
+            _genMatB = _copyOfGenMatB;
+            expectedMatDiagElemDivide();
 
             _genMatA = _copyOfGenMatA;
             _genMatB = _copyOfGenMatB;
@@ -354,6 +377,71 @@ namespace armadilloJava {
 
         _genMatA.each_row() /= _genMatB;
         save<double>("Mat.each_rowElemDivide", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagEqual() {
+        if(!_genMatB.is_vec() || _genMatB.n_elem != min(_genMatA.n_rows, _genMatA.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagEqual() ... ";
+
+        _genMatA.diag() = _genMatB;
+        save<double>("Mat.diagEqual", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagPlus() {
+        if(!_genMatB.is_vec() || _genMatB.n_elem != min(_genMatA.n_rows, _genMatA.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagPlus() ... ";
+
+        _genMatA.diag() += _genMatB;
+        save<double>("Mat.diagPlus", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagMinus() {
+        if(!_genMatB.is_vec() || _genMatB.n_elem != min(_genMatA.n_rows, _genMatA.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagMinus() ... ";
+
+        _genMatA.diag() -= _genMatB;
+        save<double>("Mat.diagMinus", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemTimes() {
+        if(!_genMatB.is_vec() || _genMatB.n_elem != min(_genMatA.n_rows, _genMatA.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemTimes() ... ";
+
+        _genMatA.diag() %= _genMatB;
+        save<double>("Mat.diagElemTimes", _genMatA);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemDivide() {
+        if(!_genMatB.is_vec() || _genMatB.n_elem != min(_genMatA.n_rows, _genMatA.n_cols)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemDivide() ... ";
+
+        _genMatA.diag() /= _genMatB;
+        save<double>("Mat.diagElemDivide", _genMatA);
 
         cout << "done." << endl;
       }

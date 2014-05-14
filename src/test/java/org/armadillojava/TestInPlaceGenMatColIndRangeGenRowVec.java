@@ -122,7 +122,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
   }
 
   @Test
-  public void testMatColsTimes() throws IOException {
+  public void testMatColsElemTimes() throws IOException {
     assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));
@@ -134,7 +134,7 @@ public class TestInPlaceGenMatColIndRangeGenRowVec extends TestClass {
   }
 
   @Test
-  public void testMatColsDivide() throws IOException {
+  public void testMatColsElemDivide() throws IOException {
     assumeThat(_colIndRange._isEntireRange, is(false));
     assumeThat(_colIndRange._last, is(lessThan(_genMat.n_cols)));
     assumeThat(_genMat.n_rows, is(1));

@@ -31,10 +31,14 @@ using std::runtime_error;
 #include <vector>
 using std::vector;
 
+#include <initializer_list>
+using std::initializer_list;
+
 #include <armadillo>
 using arma::Mat;
 using arma::Col;
 using arma::Row;
+using arma::uword;
 using arma::zeros;
 using arma::ones;
 using arma::eye;
@@ -616,10 +620,10 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getElemInds() {
     return {
-      pair<string, void*>("Col({0})", new Col<double>({0.0})),
-      pair<string, void*>("Col({9})", new Col<double>({9.0})),
-      pair<string, void*>("Col({9,0,1})", new Col<double>({9, 0, 1})),
-      pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
+      pair<string, void*>("Col({0})", new Col<uword>(initializer_list<unsigned int>({0}))),
+      pair<string, void*>("Col({9})", new Col<uword>(initializer_list<unsigned int>({9}))),
+      pair<string, void*>("Col({9,0,1})", new Col<uword>({9, 0, 1})),
+      pair<string, void*>("Col({1,1,1})", new Col<uword>({1, 1, 1}))
     };
   }
 
@@ -629,10 +633,10 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getRowInds() {
     return {
-      pair<string, void*>("Col({0})", new Col<double>({0.0})),
-      pair<string, void*>("Col({4})", new Col<double>({4.0})),
-      pair<string, void*>("Col({4,0,1})", new Col<double>({4, 0, 1})),
-      pair<string, void*>("Col({1,1,1})", new Col<double>({1, 1, 1}))
+      pair<string, void*>("Col({0})", new Col<uword>(initializer_list<unsigned int>({0}))),
+      pair<string, void*>("Col({4})", new Col<uword>(initializer_list<unsigned int>({4}))),
+      pair<string, void*>("Col({4,0,1})", new Col<uword>({4, 0, 1})),
+      pair<string, void*>("Col({1,1,1})", new Col<uword>({1, 1, 1}))
     };
   }
 

@@ -2231,6 +2231,7 @@ public class Arma {
    * @param X The matrix
    * @param tolerance The tolerance
    * 
+   * @throws RuntimeException The specified tolerance must be positive.
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static int rank(final Mat X, double tolerance) throws RuntimeException {
@@ -2238,6 +2239,10 @@ public class Arma {
      * The parameter "X" is validated within svd(AbstractMat).
      */
 
+    if (tolerance < 0) {
+      throw new RuntimeException("The specified tolerance must be positive.");
+    }
+    
     Col singularValues = new Col();
     if (!svd(singularValues, X)) {
       throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
@@ -4446,19 +4451,21 @@ public class Arma {
       return result;
     }
     else {
+      Mat matrixX = new Mat(X);
+
       switch (dim) {
         case 0:
           result.set_size(centers.n_elem, X.n_cols);
 
           for (int j = 0; j < X.n_cols; j++) {
-            new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(X.col(j), centers));
+            new ViewSubCol(result, j).inPlace(Op.EQUAL, hist(matrixX.col(j), centers));
           }
           break;
         case 1:
           result.set_size(X.n_rows, centers.n_elem);
 
           for (int i = 0; i < X.n_rows; i++) {
-            new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(X.row(i), centers));
+            new ViewSubRow(result, i).inPlace(Op.EQUAL, hist(matrixX.row(i), centers));
           }
           break;
         default:
@@ -4525,19 +4532,21 @@ public class Arma {
       return result;
     }
     else {
+      Mat matrixX = new Mat(X);
+
       switch (dim) {
         case 0:
           result.set_size(edges.n_elem, X.n_cols);
 
           for (int j = 0; j < X.n_cols; j++) {
-            new ViewSubCol(result, j).inPlace(Op.EQUAL, histc(X.col(j), edges));
+            new ViewSubCol(result, j).inPlace(Op.EQUAL, histc(matrixX.col(j), edges));
           }
           break;
         case 1:
           result.set_size(X.n_rows, edges.n_elem);
 
           for (int i = 0; i < X.n_rows; i++) {
-            new ViewSubRow(result, i).inPlace(Op.EQUAL, histc(X.row(i), edges));
+            new ViewSubRow(result, i).inPlace(Op.EQUAL, histc(matrixX.row(i), edges));
           }
           break;
         default:
@@ -4853,8 +4862,10 @@ public class Arma {
    * Returns a copy of the provided vector sorted in ascending order.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col sort(final Col V) {
+  public static Col sort(final Col V) throws RuntimeException {
     return sort(V, "ascend");
   }
 
@@ -4866,10 +4877,15 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col sort(final Col V, final String sort_direction) throws IllegalArgumentException {
+  public static Col sort(final Col V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
+    if (!V.is_finite()) {
+      throw new RuntimeException("The provided vector must be finite.");
     }
 
     Col result = new Col(V.n_elem);
@@ -4881,8 +4897,10 @@ public class Arma {
    * Returns a copy of the provided vector sorted in ascending order.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row sort(final Row V) {
+  public static Row sort(final Row V) throws RuntimeException {
     return sort(V, "ascend");
   }
 
@@ -4894,10 +4912,15 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row sort(final Row V, final String sort_direction) throws IllegalArgumentException {
+  public static Row sort(final Row V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
+    if (!V.is_finite()) {
+      throw new RuntimeException("The provided vector must be finite.");
     }
 
     Row result = new Row(V.n_elem);
@@ -4909,8 +4932,10 @@ public class Arma {
    * Returns a copy of the provided vector with each column sorted in ascending order.
    * 
    * @param X The matrix
+   * 
+   * @throws RuntimeException The provided matrix must be finite.
    */
-  public static Mat sort(final Mat X) {
+  public static Mat sort(final Mat X) throws RuntimeException {
     return sort(X, "ascend");
   }
 
@@ -4922,8 +4947,9 @@ public class Arma {
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
+   * @throws RuntimeException The provided matrix must be finite.
    */
-  public static Mat sort(final Mat X, final String sort_direction) throws IllegalArgumentException {
+  public static Mat sort(final Mat X, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     return sort(X, sort_direction, 0);
   }
 
@@ -4936,13 +4962,18 @@ public class Arma {
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
+   * @throws RuntimeException The provided matrix must be finite.
    */
-  public static Mat sort(final Mat X, final String sort_direction, final int dim) throws IllegalArgumentException {
+  public static Mat sort(final Mat X, final String sort_direction, final int dim) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
     }
 
     Mat result = new Mat(X.n_rows, X.n_cols);
+
+    if (!X.is_finite()) {
+      throw new RuntimeException("The provided matrix must be finite.");
+    }
 
     switch (dim) {
       case 0:
@@ -4977,8 +5008,10 @@ public class Arma {
    * vector.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col sort_index(final Col V) {
+  public static Col sort_index(final Col V) throws RuntimeException {
     return stable_sort_index(V, "ascend");
   }
 
@@ -4987,10 +5020,18 @@ public class Arma {
    * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
    * 
    * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col sort_index(final Col V, final String sort_direction) throws IllegalArgumentException {
+  public static Col sort_index(final Col V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
+    if (!V.is_finite()) {
+      throw new RuntimeException("The provided vector must be finite.");
     }
 
     Col result = new Col(V.n_elem);
@@ -5003,8 +5044,10 @@ public class Arma {
    * vector.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row sort_index(final Row V) {
+  public static Row sort_index(final Row V) throws RuntimeException {
     return stable_sort_index(V, "ascend");
   }
 
@@ -5013,10 +5056,18 @@ public class Arma {
    * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
    * 
    * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row sort_index(final Row V, final String sort_direction) throws IllegalArgumentException {
+  public static Row sort_index(final Row V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
+    }
+
+    if (!V.is_finite()) {
+      throw new RuntimeException("The provided vector must be finite.");
     }
 
     Row result = new Row(V.n_elem);
@@ -5056,8 +5107,10 @@ public class Arma {
    * vector and preserves the relative order of elements with equal values.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col stable_sort_index(final Col V) {
+  public static Col stable_sort_index(final Col V) throws RuntimeException {
     return stable_sort_index(V, "ascend");
   }
 
@@ -5067,8 +5120,12 @@ public class Arma {
    * relative order of elements with equal values.
    * 
    * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Col stable_sort_index(final Col V, final String sort_direction) throws IllegalArgumentException {
+  public static Col stable_sort_index(final Col V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
     }
@@ -5083,8 +5140,10 @@ public class Arma {
    * vector and preserves the relative order of elements with equal values.
    * 
    * @param V The vector
+   * 
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row stable_sort_index(final Row V) {
+  public static Row stable_sort_index(final Row V) throws RuntimeException {
     return stable_sort_index(V, "ascend");
   }
 
@@ -5094,8 +5153,12 @@ public class Arma {
    * relative order of elements with equal values.
    * 
    * @param V The vector
+   * 
+   * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
+   *           'descend'.
+   * @throws RuntimeException The provided vector must be finite.
    */
-  public static Row stable_sort_index(final Row V, final String sort_direction) throws IllegalArgumentException {
+  public static Row stable_sort_index(final Row V, final String sort_direction) throws IllegalArgumentException, RuntimeException {
     if (!sort_direction.equals("ascend") && !sort_direction.equals("descend")) {
       throw new IllegalArgumentException("The specified sort direction (" + sort_direction + ") must either be 'ascend' or 'descend'.");
     }
@@ -5810,9 +5873,14 @@ public class Arma {
    * @param A The matrix
    * @param tolerance The tolerance
    * 
+   * @throws RuntimeException The specified tolerance must be positive.
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static Mat pinv(final Mat A, final double tolerance) throws RuntimeException {
+    /*
+     * The parameter "tolerance" is validated within pinv(Mat, Mat, double).
+     */
+    
     Mat B = new Mat();
     if (!pinv(B, A, tolerance)) {
       throw new RuntimeException("The calculation could not be completed. The provided matrix appears to be singular.");
@@ -5843,8 +5911,14 @@ public class Arma {
    * @param B The storage of the inverse
    * @param A The matrix
    * @param tolerance The tolerance
+   * 
+   * @throws RuntimeException The specified tolerance must be positive.
    */
-  public static boolean pinv(final Mat B, final Mat A, double tolerance) {
+  public static boolean pinv(final Mat B, final Mat A, double tolerance) throws RuntimeException {
+    if (tolerance < 0) {
+      throw new RuntimeException("The specified tolerance must be positive.");
+    }
+    
     Mat U = new Mat();
     Col s = new Col();
     Mat V = new Mat();

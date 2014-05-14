@@ -86,6 +86,56 @@ public class TestInPlaceGenMatColIndGenColVec extends TestClass {
   }
 
   @Test
+  public void testMatDiagEqual() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+    assumeThat(_genColVec.n_elem, is(Math.min(_genMat.n_rows, _genMat.n_cols - _colInd)));
+
+    _genMat.diag(_colInd, Op.EQUAL, _genColVec);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperEqual"));
+  }
+
+  @Test
+  public void testMatDiagPlus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+    assumeThat(_genColVec.n_elem, is(Math.min(_genMat.n_rows, _genMat.n_cols - _colInd)));
+
+    _genMat.diag(_colInd, Op.PLUS, _genColVec);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperPlus"));
+  }
+
+  @Test
+  public void testMatDiagMinus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+    assumeThat(_genColVec.n_elem, is(Math.min(_genMat.n_rows, _genMat.n_cols - _colInd)));
+
+    _genMat.diag(_colInd, Op.MINUS, _genColVec);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperMinus"));
+  }
+
+  @Test
+  public void testMatDiagElemTimes() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+    assumeThat(_genColVec.n_elem, is(Math.min(_genMat.n_rows, _genMat.n_cols - _colInd)));
+
+    _genMat.diag(_colInd, Op.ELEMTIMES, _genColVec);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperElemTimes"));
+  }
+
+  @Test
+  public void testMatDiagElemDivide() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+    assumeThat(_genColVec.n_elem, is(Math.min(_genMat.n_rows, _genMat.n_cols - _colInd)));
+
+    _genMat.diag(_colInd, Op.ELEMDIVIDE, _genColVec);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperElemDivide"));
+  }
+
+  @Test
   public void testMatColEqual() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
     assumeThat(_genColVec.n_rows, is(_genMat.n_rows));
@@ -116,7 +166,7 @@ public class TestInPlaceGenMatColIndGenColVec extends TestClass {
   }
 
   @Test
-  public void testMatColTimes() throws IOException {
+  public void testMatColElemTimes() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
     assumeThat(_genColVec.n_rows, is(_genMat.n_rows));
 
@@ -126,7 +176,7 @@ public class TestInPlaceGenMatColIndGenColVec extends TestClass {
   }
 
   @Test
-  public void testMatColDivide() throws IOException {
+  public void testMatColElemDivide() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
     assumeThat(_genColVec.n_rows, is(_genMat.n_rows));
 

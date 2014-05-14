@@ -78,25 +78,6 @@ abstract class AbstractView {
     }
   }
 
-  // protected void inPlace(final Op unary_operator) throws UnsupportedOperationException {
-  // switch (unary_operator) {
-  // case INCREMENT:
-  // iteratorReset();
-  // while (iteratorHasNext()) {
-  // _data[iteratorNext()]++;
-  // }
-  // break;
-  // case DECREMENT:
-  // iteratorReset();
-  // while (iteratorHasNext()) {
-  // _data[iteratorNext()]--;
-  // }
-  // break;
-  // default:
-  // throw new UnsupportedOperationException("Unexpected operator (" + unary_operator + ").");
-  // }
-  // }
-
   protected void inPlace(final Op binary_operator, final double rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case PLUS:
@@ -174,35 +155,6 @@ abstract class AbstractView {
         while (iteratorHasNext()) {
           _data[iteratorNext()] = rightHandOperand._data[rightHandOperand.iteratorNext()];
         }
-        break;
-      case PLUS:
-        iteratorReset();
-        rightHandOperand.iteratorReset();
-        while (iteratorHasNext()) {
-          _data[iteratorNext()] += rightHandOperand._data[rightHandOperand.iteratorNext()];
-        }
-        break;
-      case MINUS:
-        iteratorReset();
-        rightHandOperand.iteratorReset();
-        while (iteratorHasNext()) {
-          _data[iteratorNext()] -= rightHandOperand._data[rightHandOperand.iteratorNext()];
-        }
-        break;
-      case ELEMTIMES:
-        iteratorReset();
-        rightHandOperand.iteratorReset();
-        while (iteratorHasNext()) {
-          _data[iteratorNext()] *= rightHandOperand._data[rightHandOperand.iteratorNext()];
-        }
-        break;
-      case ELEMDIVIDE:
-        iteratorReset();
-        rightHandOperand.iteratorReset();
-        while (iteratorHasNext()) {
-          _data[iteratorNext()] /= rightHandOperand._data[rightHandOperand.iteratorNext()];
-        }
-        break;
       default:
         throw new UnsupportedOperationException("Unexpected operator (" + binary_operator + ").");
     }

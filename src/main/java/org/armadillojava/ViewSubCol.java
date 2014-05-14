@@ -45,7 +45,7 @@ class ViewSubCol extends AbstractView {
     this.n_cols = 1;
     this.n_elem = this.n_rows;
 
-    _first_position = first_row + col_number * matrix.n_cols;
+    _first_position = first_row + col_number * matrix.n_rows;
   }
 
   /**

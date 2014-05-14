@@ -15,7 +15,9 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,6 +84,18 @@ public class TestGenMatRowIndColInd extends TestClass {
     assertMatEquals(_genMat, _copyOfGenMat, 0);
     assertThat(_rowInd, is(_copyOfRowInd));
     assertThat(_colInd, is(_copyOfColInd));
+  }
+
+  @Test
+  public void testMatAt() throws IOException {
+    assumeThat(_genMat.in_range(_rowInd, _colInd), is(true));
+
+    double expected = load("Mat.at")._data[0];
+    if (Double.isInfinite(expected) || Double.isNaN(expected)) {
+      assertThat(_genMat.at(_rowInd, _colInd), is(expected));
+    } else {
+      assertThat(_genMat.at(_rowInd, _colInd), is(closeTo(expected, Math.abs(expected) * 1e-10)));
+    }
   }
 
   @Test

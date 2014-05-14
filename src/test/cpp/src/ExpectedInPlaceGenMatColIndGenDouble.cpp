@@ -70,6 +70,26 @@ namespace armadilloJava {
             _copyOfColInd = _colInd;
             _copyOfGenDouble = _genDouble;
 
+            expectedMatDiagPlus();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genDouble = _copyOfGenDouble;
+            expectedMatDiagMinus();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genDouble = _copyOfGenDouble;
+            expectedMatDiagTimes();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genDouble = _copyOfGenDouble;
+            expectedMatDiagDivide();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genDouble = _copyOfGenDouble;
             expectedMatColPlus();
 
             _genMat = _copyOfGenMat;
@@ -100,6 +120,58 @@ namespace armadilloJava {
 
       double _genDouble;
       double _copyOfGenDouble;
+
+      void expectedMatDiagPlus() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagPlus() ... ";
+
+        _genMat.diag(_colInd) += _genDouble;
+        save<double>("Mat.diagSuperPlus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagMinus() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagMinus() ... ";
+
+        _genMat.diag(_colInd) -= _genDouble;
+        save<double>("Mat.diagSuperMinus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagTimes() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagTimes() ... ";
+
+        _genMat.diag(_colInd) *= _genDouble;
+        save<double>("Mat.diagSuperTimes", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagDivide() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagDivide() ... ";
+
+        _genMat.diag(_colInd) /= _genDouble;
+        save<double>("Mat.diagSuperDivide", _genMat);
+
+        cout << "done." << endl;
+      }
 
       void expectedMatColPlus() {
         if(_colInd >= _genMat.n_cols) {

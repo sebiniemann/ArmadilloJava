@@ -31,14 +31,14 @@ class ViewElemRows extends AbstractView {
   protected int            _current_position;
 
   /**
+   * The rows to skip within the underlying matrix to move from the first column to the current one.
+   */
+  protected int            _n_rows_skip;
+
+  /**
    * Current row number within the sub view
    */
   protected int            _row_number;
-
-  /**
-   * Current column number within the sub view
-   */
-  protected int            _col_number;
 
   /**
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
@@ -61,25 +61,21 @@ class ViewElemRows extends AbstractView {
     super.iteratorReset();
 
     _row_number = 0;
-    _col_number = 0;
+    _n_rows_skip = 0;
 
-    _current_position = (int) _vector_of_row_indices[0] - n_rows;
+    _current_position = (int) _vector_of_row_indices[0] - _matrix.n_rows;
   }
 
   @Override
   protected int iteratorNext() {
     super.iteratorNext();
 
-    if (_col_number >= n_cols) {
-      _col_number = 1;
-      _current_position = (int) _vector_of_row_indices[++_row_number];
-      return _current_position;
-    } else {
-      ++_col_number;
-
-      _current_position += n_rows;
-      return _current_position;
+    if (_row_number >= n_rows) {
+      _row_number = 0;
+      _n_rows_skip += _matrix.n_rows;
     }
+
+    return (int) _vector_of_row_indices[_row_number++] + _n_rows_skip;
   }
 
 }

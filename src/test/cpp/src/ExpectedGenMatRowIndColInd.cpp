@@ -66,6 +66,7 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
+            expectedMatAt();
             expectedMatIn_range();
           }
 
@@ -76,6 +77,16 @@ namespace armadilloJava {
       Mat<double> _genMat;
       int _rowInd;
       int _colInd;
+
+      void expectedMatAt() {
+        if(!_genMat.in_range(_rowInd, _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatAt() ... ";
+        save<double>("Mat.at", Mat<double>({_genMat.at(_rowInd, _colInd)}));
+        cout << "done." << endl;
+      }
 
       void expectedMatIn_range() {
         cout << "- Compute expectedMatIn_range() ... ";

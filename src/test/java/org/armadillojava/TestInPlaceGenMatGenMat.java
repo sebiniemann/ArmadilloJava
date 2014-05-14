@@ -239,6 +239,56 @@ public class TestInPlaceGenMatGenMat extends TestClass {
   }
 
   @Test
+  public void testMatDiagEqual() throws IOException {
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols)));
+
+    _genMatA.diag(Op.EQUAL, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagEqual"));
+  }
+
+  @Test
+  public void testMatDiagPlus() throws IOException {
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols)));
+
+    _genMatA.diag(Op.PLUS, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagPlus"));
+  }
+
+  @Test
+  public void testMatDiagMinus() throws IOException {
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols)));
+
+    _genMatA.diag(Op.MINUS, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagMinus"));
+  }
+
+  @Test
+  public void testMatDiagElemTimes() throws IOException {
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols)));
+
+    _genMatA.diag(Op.ELEMTIMES, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagElemTimes"));
+  }
+
+  @Test
+  public void testMatDiagElemDivide() throws IOException {
+    assumeThat(_genMatB.is_vec(), is(true));
+    assumeThat(_genMatB.n_elem, is(Math.min(_genMatA.n_rows, _genMatA.n_cols)));
+
+    _genMatA.diag(Op.ELEMDIVIDE, _genMatB);
+
+    assertMatEquals(_genMatA, load("Mat.diagElemDivide"));
+  }
+
+  @Test
   public void testMatCopy_size() throws IOException {
     _genMatA.copy_size(_genMatB);
 

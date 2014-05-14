@@ -86,6 +86,42 @@ public class TestInPlaceGenMatColIndGenDouble extends TestClass {
   }
 
   @Test
+  public void testMatDiagPlus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+
+    _genMat.diag(_colInd, Op.PLUS, _genDouble);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperPlus"));
+  }
+
+  @Test
+  public void testMatDiagMinus() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+
+    _genMat.diag(_colInd, Op.MINUS, _genDouble);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperMinus"));
+  }
+
+  @Test
+  public void testMatDiagTimes() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+
+    _genMat.diag(_colInd, Op.TIMES, _genDouble);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperTimes"));
+  }
+
+  @Test
+  public void testMatDiagDivide() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+
+    _genMat.diag(_colInd, Op.DIVIDE, _genDouble);
+
+    assertMatEquals(_genMat, load("Mat.diagSuperDivide"));
+  }
+
+  @Test
   public void testMatColPlus() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
 

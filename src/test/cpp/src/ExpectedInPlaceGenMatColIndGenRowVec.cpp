@@ -18,6 +18,9 @@ using armadilloJava::Expected;
 using std::cout;
 using std::endl;
 
+#include <algorithm>
+using std::min;
+
 #include <utility>
 using std::pair;
 
@@ -71,27 +74,52 @@ namespace armadilloJava {
             _copyOfColInd = _colInd;
             _copyOfGenRowVec = _genRowVec;
 
-            expectedMatRowEqual();
+            expectedMatDiagEqual();
 
             _genMat = _copyOfGenMat;
             _colInd = _copyOfColInd;
             _genRowVec = _copyOfGenRowVec;
-            expectedMatRowPlus();
+            expectedMatDiagPlus();
 
             _genMat = _copyOfGenMat;
             _colInd = _copyOfColInd;
             _genRowVec = _copyOfGenRowVec;
-            expectedMatRowMinus();
+            expectedMatDiagMinus();
 
             _genMat = _copyOfGenMat;
             _colInd = _copyOfColInd;
             _genRowVec = _copyOfGenRowVec;
-            expectedMatRowElemTimes();
+            expectedMatDiagElemTimes();
 
             _genMat = _copyOfGenMat;
             _colInd = _copyOfColInd;
             _genRowVec = _copyOfGenRowVec;
-            expectedMatRowElemDivide();
+            expectedMatDiagElemDivide();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatColEqual();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatColPlus();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatColMinus();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatColElemTimes();
+
+            _genMat = _copyOfGenMat;
+            _colInd = _copyOfColInd;
+            _genRowVec = _copyOfGenRowVec;
+            expectedMatColElemDivide();
           }
 
           cout << "done." << endl;
@@ -107,7 +135,92 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       Row<double> _copyOfGenRowVec;
 
-      void expectedMatRowEqual() {
+      void expectedMatDiagEqual() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows, _genMat.n_cols - _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagEqual() ... ";
+
+        _genMat.diag(_colInd) = _genRowVec;
+        save<double>("Mat.diagSuperEqual", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagPlus() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows, _genMat.n_cols - _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagPlus() ... ";
+
+        _genMat.diag(_colInd) += _genRowVec;
+        save<double>("Mat.diagSuperPlus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagMinus() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows, _genMat.n_cols - _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagMinus() ... ";
+
+        _genMat.diag(_colInd) -= _genRowVec;
+        save<double>("Mat.diagSuperMinus", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemTimes() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows, _genMat.n_cols - _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemTimes() ... ";
+
+        _genMat.diag(_colInd) %= _genRowVec;
+        save<double>("Mat.diagSuperElemTimes", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatDiagElemDivide() {
+        if(_colInd >= _genMat.n_cols) {
+          return;
+        }
+
+        if (_genRowVec.n_elem != min(_genMat.n_rows, _genMat.n_cols - _colInd)) {
+          return;
+        }
+
+        cout << "- Compute expectedMatDiagElemDivide() ... ";
+
+        _genMat.diag(_colInd) /= _genRowVec;
+        save<double>("Mat.diagSuperElemDivide", _genMat);
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatColEqual() {
         if(_colInd >= _genMat.n_cols) {
           return;
         }
@@ -116,7 +229,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMatRowEqual() ... ";
+        cout << "- Compute expectedMatColEqual() ... ";
 
         _genMat.col(_colInd) = _genRowVec;
         save<double>("Mat.colEqual", _genMat);
@@ -124,7 +237,7 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatRowPlus() {
+      void expectedMatColPlus() {
         if(_colInd >= _genMat.n_cols) {
           return;
         }
@@ -133,7 +246,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMatRowPlus() ... ";
+        cout << "- Compute expectedMatColPlus() ... ";
 
         _genMat.col(_colInd) += _genRowVec;
         save<double>("Mat.colPlus", _genMat);
@@ -141,7 +254,7 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatRowMinus() {
+      void expectedMatColMinus() {
         if(_colInd >= _genMat.n_cols) {
           return;
         }
@@ -150,7 +263,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMatRowMinus() ... ";
+        cout << "- Compute expectedMatColMinus() ... ";
 
         _genMat.col(_colInd) -= _genRowVec;
         save<double>("Mat.colMinus", _genMat);
@@ -158,7 +271,7 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatRowElemTimes() {
+      void expectedMatColElemTimes() {
         if(_colInd >= _genMat.n_cols) {
           return;
         }
@@ -167,7 +280,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMatRowElemTimes() ... ";
+        cout << "- Compute expectedMatColElemTimes() ... ";
 
         _genMat.col(_colInd) %= _genRowVec;
         save<double>("Mat.colElemTimes", _genMat);
@@ -175,7 +288,7 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatRowElemDivide() {
+      void expectedMatColElemDivide() {
         if(_colInd >= _genMat.n_cols) {
           return;
         }
@@ -184,7 +297,7 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedMatRowElemDivide() ... ";
+        cout << "- Compute expectedMatColElemDivide() ... ";
 
         _genMat.col(_colInd) /= _genRowVec;
         save<double>("Mat.colElemDivide", _genMat);

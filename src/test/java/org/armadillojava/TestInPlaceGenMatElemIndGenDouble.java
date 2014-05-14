@@ -86,15 +86,6 @@ public class TestInPlaceGenMatElemIndGenDouble extends TestClass {
   }
 
   @Test
-  public void testMatAtEqual() throws IOException {
-    assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
-
-    _genMat.at(_elemInd, Op.EQUAL, _genDouble);
-
-    assertMatEquals(_genMat, load("Mat.atEqual"));
-  }
-
-  @Test
   public void testMatAtPlus() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genMat.n_elem)));
 

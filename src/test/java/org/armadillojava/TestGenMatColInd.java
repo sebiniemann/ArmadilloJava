@@ -83,6 +83,13 @@ public class TestGenMatColInd extends TestClass {
   }
 
   @Test
+  public void testMatDiag() throws IOException {
+    assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
+
+    assertMatEquals(_genMat.diag(_colInd), load("Mat.diagSuper"));
+  }
+
+  @Test
   public void testMatCol() throws IOException {
     assumeThat(_colInd, is(lessThan(_genMat.n_cols)));
 
