@@ -282,7 +282,7 @@ namespace armadilloJava {
         cout << "- Compute expectedMatLessThan() ... ";
 
         Mat<uword> expected = _genMat <= _genColVec;
-        save<uword>("Mat.LessThan", expected);
+        save<uword>("Mat.lessThan", expected);
 
         cout << "done." << endl;
       }
