@@ -127,4 +127,12 @@ public class TestInPlaceGenMatNumRowsNumCols extends TestClass {
     assertThat(_genMat.n_cols, is(_numCols));
   }
 
+  @Test
+  public void testMat() throws IOException {
+    _genMat = new Mat(_numRows, _numCols);
+
+    assertThat(_genMat.n_rows, is(_numRows));
+    assertThat(_genMat.n_cols, is(_numCols));
+  }
+
 }
