@@ -307,6 +307,30 @@ using armadilloJava::ExpectedInPlaceGenMatElemIndsGenMat;
 #include <ExpectedInPlaceGenMatElemIndsGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatElemIndsGenRowVec;
 
+#include <ExpectedInPlaceGenMatExtColIndGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtColIndGenColVec;
+
+#include <ExpectedInPlaceGenMatExtColIndGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtColIndGenMat;
+
+#include <ExpectedInPlaceGenMatExtColIndGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtColIndGenRowVec;
+
+#include <ExpectedInPlaceGenMatExtColIndNumCols.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtColIndNumCols;
+
+#include <ExpectedInPlaceGenMatExtRowIndGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtRowIndGenColVec;
+
+#include <ExpectedInPlaceGenMatExtRowIndGenMat.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtRowIndGenMat;
+
+#include <ExpectedInPlaceGenMatExtRowIndGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtRowIndGenRowVec;
+
+#include <ExpectedInPlaceGenMatExtRowIndNumRows.cpp>
+using armadilloJava::ExpectedInPlaceGenMatExtRowIndNumRows;
+
 #include <ExpectedInPlaceGenMatGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatGenColVec;
 
@@ -541,7 +565,7 @@ int main() {
 //  ExpectedGenDouble();
 //  ExpectedGenDoubleGenDouble();
 //  ExpectedGenDoubleGenDoubleNumElems();
-  ExpectedGenMat();
+//  ExpectedGenMat();
 //  ExpectedGenMatColInd();
 //  ExpectedGenMatColIndRange();
 //  ExpectedGenMatColInds();
@@ -614,6 +638,14 @@ int main() {
 //  ExpectedInPlaceGenMatElemIndsGenDouble();
 //  ExpectedInPlaceGenMatElemIndsGenMat();
 //  ExpectedInPlaceGenMatElemIndsGenRowVec();
+  ExpectedInPlaceGenMatExtColIndGenColVec();
+  ExpectedInPlaceGenMatExtColIndGenMat();
+  ExpectedInPlaceGenMatExtColIndGenRowVec();
+  ExpectedInPlaceGenMatExtColIndNumCols();
+  ExpectedInPlaceGenMatExtRowIndGenColVec();
+  ExpectedInPlaceGenMatExtRowIndGenMat();
+  ExpectedInPlaceGenMatExtRowIndGenRowVec();
+  ExpectedInPlaceGenMatExtRowIndNumRows();
 //  ExpectedInPlaceGenMatGenColVec();
 //  ExpectedInPlaceGenMatGenDouble();
 //  ExpectedInPlaceGenMatGenMat();

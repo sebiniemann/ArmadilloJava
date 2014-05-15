@@ -1655,7 +1655,7 @@ public class Mat extends AbstractMat {
    *           ).
    */
   public void insert_rows(final int row_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
-    if (row_number < 0 || row_number > n_elem) {
+    if (row_number < 0 || row_number > n_rows) {
       throw new IndexOutOfBoundsException("The specified row position (" + row_number + ") is out of bounds.");
     }
 
@@ -1672,12 +1672,12 @@ public class Mat extends AbstractMat {
       Mat temp = new Mat(this);
       set_size(n_rows + X.n_rows, n_cols);
 
-      new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
-      new ViewSubRows(this, row_number, row_number + X.n_rows - 1).inPlace(Op.EQUAL, X);
+      new ViewSubRows(this, 0, row_number).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number));
+      new ViewSubRows(this, row_number, X.n_rows).inPlace(Op.EQUAL, X);
       /*
        * The attribute "n_rows" has been updated by set_size(int, int).
        */
-      new ViewSubRows(this, row_number + X.n_rows, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - 1));
+      new ViewSubRows(this, row_number + X.n_rows, n_rows - (row_number + X.n_rows)).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - row_number));
     }
   }
 
@@ -1699,7 +1699,7 @@ public class Mat extends AbstractMat {
       throw new NegativeArraySizeException("The specified number of rows (" + number_of_rows + ") must be positive.");
     }
 
-    if (row_number < 0 || row_number > n_elem) {
+    if (row_number < 0 || row_number > n_rows) {
       throw new IndexOutOfBoundsException("The specified row position (" + row_number + ") is out of bounds.");
     }
 
@@ -1711,11 +1711,11 @@ public class Mat extends AbstractMat {
       Mat temp = new Mat(this);
       set_size(n_rows + number_of_rows, n_cols);
 
-      new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
+      new ViewSubRows(this, 0, row_number).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number));
       /*
        * The attribute "n_rows" has been updated by set_size(int, int).
        */
-      new ViewSubRows(this, row_number + number_of_rows, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - 1));
+      new ViewSubRows(this, row_number + number_of_rows, n_rows - (row_number + number_of_rows)).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number, temp.n_rows - row_number));
     }
   }
 
@@ -1752,13 +1752,12 @@ public class Mat extends AbstractMat {
    * @param col_number The column position
    * @param X The column vector
    * 
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
-   * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
-   *           ).
+   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
+   * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows} ).
    */
   public void insert_cols(final int col_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
-    if (col_number < 0 || col_number > n_elem) {
-      throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
+    if (col_number < 0 || col_number > n_cols) {
+      throw new IndexOutOfBoundsException("The column position (" + col_number + ") is out of bounds.");
     }
 
     if (X.is_empty()) {
@@ -1767,8 +1766,8 @@ public class Mat extends AbstractMat {
       copy_size(X);
       System.arraycopy(X._data, 0, _data, 0, X.n_elem);
     } else {
-      if (n_cols != X.n_cols) {
-        throw new RuntimeException("Both matrices must have the same number of columns (" + n_cols + " and " + X.n_cols + ").");
+      if (n_rows != X.n_rows) {
+        throw new RuntimeException("Both matrices must have the same number of columns (" + n_rows + " and " + X.n_rows + ").");
       }
 
       double[] temp = Arrays.copyOf(_data, n_elem);
@@ -1776,7 +1775,7 @@ public class Mat extends AbstractMat {
 
       System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
       System.arraycopy(X._data, 0, _data, col_number * n_rows, X.n_elem);
-      System.arraycopy(temp, (X.n_cols + col_number) * n_rows, _data, 0, n_elem - col_number * n_rows);
+      System.arraycopy(temp, col_number * n_rows, _data, col_number * n_rows + X.n_elem, temp.length - col_number * n_rows);
     }
   }
 
@@ -1787,7 +1786,7 @@ public class Mat extends AbstractMat {
    * @param number_of_cols The number of columns
    * 
    * @throws NegativeArraySizeException The specified number of columns ({@code number_of_cols}) must be positive.
-   * @throws IndexOutOfBoundsException The row position ({@code row_number}) is out of bounds.
+   * @throws IndexOutOfBoundsException The column position ({@code col_number}) is out of bounds.
    */
   public void insert_cols(final int col_number, final int number_of_cols) throws NegativeArraySizeException, IndexOutOfBoundsException {
     /*
@@ -1798,7 +1797,7 @@ public class Mat extends AbstractMat {
       throw new NegativeArraySizeException("The specified number of columns (" + number_of_cols + ") must be positive.");
     }
 
-    if (col_number < 0 || col_number > n_elem) {
+    if (col_number < 0 || col_number > n_cols) {
       throw new IndexOutOfBoundsException("The row position (" + col_number + ") is out of bounds.");
     }
 
@@ -1811,7 +1810,7 @@ public class Mat extends AbstractMat {
       set_size(n_rows, n_cols + number_of_cols);
 
       System.arraycopy(temp, 0, _data, 0, col_number * n_rows);
-      System.arraycopy(temp, (number_of_cols + col_number) * n_rows, _data, 0, n_elem - col_number * n_rows);
+      System.arraycopy(temp, col_number * n_rows, _data, (number_of_cols + col_number) * n_rows, temp.length - col_number * n_rows);
     }
   }
 
@@ -1873,7 +1872,7 @@ public class Mat extends AbstractMat {
         }
       }
     }
-    
+
     return minimum;
   }
 
