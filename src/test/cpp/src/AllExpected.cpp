@@ -541,7 +541,7 @@ int main() {
 //  ExpectedGenDouble();
 //  ExpectedGenDoubleGenDouble();
 //  ExpectedGenDoubleGenDoubleNumElems();
-//  ExpectedGenMat();
+  ExpectedGenMat();
 //  ExpectedGenMatColInd();
 //  ExpectedGenMatColIndRange();
 //  ExpectedGenMatColInds();

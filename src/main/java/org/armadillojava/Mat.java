@@ -1853,18 +1853,17 @@ public class Mat extends AbstractMat {
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
-  public double min(int[] row_of_min_val, int[] col_of_min_val) throws RuntimeException {
+  public double min(final int[] row_of_min_val, final int[] col_of_min_val) throws RuntimeException {
     if (is_empty()) {
       throw new RuntimeException("The (" + n_rows + ", " + n_cols + ")-matrix must have at least one element.");
     }
 
     double minimum = _data[0];
-    row_of_min_val = new int[1];
-    col_of_min_val = new int[1];
-
+    row_of_min_val[0] = 0;
+    col_of_min_val[0] = 0;
     int n = 0;
-    for (int j = 1; j < n_cols; j++) {
-      for (int i = 1; i < n_rows; i++) {
+    for (int j = 0; j < n_cols; j++) {
+      for (int i = 0; i < n_rows; i++) {
         double value = _data[n++];
 
         if (value < minimum) {
@@ -1874,7 +1873,7 @@ public class Mat extends AbstractMat {
         }
       }
     }
-
+    
     return minimum;
   }
 

@@ -562,6 +562,26 @@ public class TestGenMat extends TestClass {
   }
 
   @Test
+  public void testMatMinC() throws IOException {
+    double expectedValue = load("Mat.minValue")._data[0];
+    int expectedRow = (int) load("Mat.minRow")._data[0];
+    int expectedColumn = (int) load("Mat.minColumn")._data[0];
+
+    int[] row = new int[1];
+    int[] column = new int[1];
+    double value = _genMat.min(row, column);
+
+    if (Double.isInfinite(expectedValue) || Double.isNaN(expectedValue)) {
+      assertThat(value, is(expectedValue));
+    } else {
+      assertThat(value, is(closeTo(expectedValue, Math.abs(expectedValue) * 1e-10)));
+    }
+
+    assertThat(row[0], is(expectedRow));
+    assertThat(column[0], is(expectedColumn));
+  }
+
+  @Test
   public void testMatMaxA() throws IOException {
     double expected = load("Mat.maxValue")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
