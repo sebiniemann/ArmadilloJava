@@ -183,8 +183,10 @@ namespace armadilloJava {
             expectedArmaNegate();
             expectedArmaReciprocal();
             expectedArmaAccu();
-            expectedMatMin();
-            expectedMatMax();
+            expectedMatMinA();
+            expectedMatMinB();
+            expectedMatMaxA();
+            expectedMatMaxB();
             expectedMatSize();
             expectedMatIs_finite();
             expectedMatT();
@@ -609,8 +611,8 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatMin() {
-        cout << "- Compute expectedMatMin() ... ";
+      void expectedMatMinA() {
+        cout << "- Compute expectedMatMinA() ... ";
 
         double value;
         uword index;
@@ -623,8 +625,24 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedMatMax() {
-        cout << "- Compute expectedMatMax() ... ";
+      void expectedMatMinB() {
+        cout << "- Compute expectedMatMinB() ... ";
+
+        double value;
+        uword row;
+        uword column;
+
+        value = _genMat.min(row, column);
+
+        save<double>("Mat.minValue", Mat<double>({value}));
+        save<double>("Mat.minRow", Mat<double>({static_cast<double>(row)}));
+        save<double>("Mat.minColumn", Mat<double>({static_cast<double>(column)}));
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatMaxA() {
+        cout << "- Compute expectedMatMaxA() ... ";
 
         double value;
         uword index;
@@ -633,6 +651,22 @@ namespace armadilloJava {
 
         save<double>("Mat.maxValue", Mat<double>({value}));
         save<double>("Mat.maxIndex", Mat<double>({static_cast<double>(index)}));
+
+        cout << "done." << endl;
+      }
+
+      void expectedMatMaxB() {
+        cout << "- Compute expectedMatMaxB() ... ";
+
+        double value;
+        uword row;
+        uword column;
+
+        value = _genMat.max(row, column);
+
+        save<double>("Mat.maxValue", Mat<double>({value}));
+        save<double>("Mat.maxRow", Mat<double>({static_cast<double>(row)}));
+        save<double>("Mat.maxColumn", Mat<double>({static_cast<double>(column)}));
 
         cout << "done." << endl;
       }

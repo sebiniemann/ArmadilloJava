@@ -1585,13 +1585,7 @@ public class Mat extends AbstractMat {
      */
 
     set_size(n_rows, n_cols);
-
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
+    fill(0);
 
     int length = Math.min(n_rows, n_cols);
     for (int n = 0; n < length; n++) {
@@ -1997,6 +1991,7 @@ public class Mat extends AbstractMat {
      */
 
     set_size(n_rows, n_cols);
+    fill(0);
   }
 
   /**

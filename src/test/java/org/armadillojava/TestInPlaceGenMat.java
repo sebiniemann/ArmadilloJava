@@ -84,6 +84,13 @@ public class TestInPlaceGenMat extends TestClass {
   }
 
   @Test
+  public void testMatEye() throws IOException {
+    _genMat.eye();
+
+    assertMatEquals(_genMat, load("Mat.eye"));
+  }
+
+  @Test
   public void testMatInPlaceIncrement() throws IOException {
     _genMat.inPlace(Op.INCREMENT);
 
@@ -109,13 +116,6 @@ public class TestInPlaceGenMat extends TestClass {
     _genMat.clear();
 
     assertThat(_genMat.empty(), is(true));
-  }
-
-  @Test
-  public void testMatEye() throws IOException {
-    _genMat.eye();
-
-    assertMatEquals(_genMat, load("Mat.eye"));
   }
   
 }
