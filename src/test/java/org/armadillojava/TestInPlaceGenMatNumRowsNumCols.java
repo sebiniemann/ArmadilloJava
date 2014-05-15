@@ -14,6 +14,8 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,6 +117,14 @@ public class TestInPlaceGenMatNumRowsNumCols extends TestClass {
     _genMat.reshape(_numRows, _numCols);
 
     assertMatEquals(_genMat, load("Mat.reshape"));
+  }
+
+  @Test
+  public void testMatSet_size() throws IOException {
+    _genMat.set_size(_numRows, _numCols);
+
+    assertThat(_genMat.n_rows, is(_numRows));
+    assertThat(_genMat.n_cols, is(_numCols));
   }
 
 }
