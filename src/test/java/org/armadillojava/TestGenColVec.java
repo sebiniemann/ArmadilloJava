@@ -394,20 +394,5 @@ public class TestGenColVec extends TestClass {
   public void testMat() throws IOException {
     assertMatEquals(new Mat(_genColVec), load("Mat"));
   }
-  
-  @Test
-  public void testColOnes() throws IOException {
-	Col col = new Col(_genColVec);
-	col.ones();
-	assertMatEquals( col , load("Col.ones"));
-	
-  }
-  
-  @Test
-  public void testColZeros() throws IOException {
-	Col col = new Col(_genColVec);
-	col.zeros();
-    assertMatEquals( col , load("Col.zeros"));
-  }
 
 }

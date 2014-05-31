@@ -80,8 +80,6 @@ using arma::cor;
 using arma::cov;
 using arma::diagmat;
 using arma::is_finite;
-using arma::ones;
-using arma::zeros;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -168,8 +166,6 @@ namespace armadilloJava {
           expectedArmaDiagmat();
           expectedArmaIs_finite();
           expectedMat();
-		  expectedColOnes();
-		  expectedColZeros();
         }
 
         cout << "done." << endl;
@@ -524,19 +520,6 @@ namespace armadilloJava {
         save<double>("Mat", _genColVec);
         cout << "done." << endl;
       }
-	  
-	  void expectedColOnes() {
-		  cout << "- Compute expectedColOnes() ... ";
-		  Col<double> expected = _genColVec;
-		  save<double>("Col.ones", (expected.ones()));
-		  cout << "done." << endl;
-      }
-	  
-	  void expectedColZeros() {
-		  cout << "- Compute expectedColZeros() ... ";
-		  Col<double> expected = _genColVec;
-		  save<double>("Col.zeros", (expected.zeros()));
-		  cout << "done." << endl;
-      }
+
   };
 }
