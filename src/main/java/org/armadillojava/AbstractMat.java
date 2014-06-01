@@ -1112,7 +1112,27 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat plus(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat plus(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place addition with the provided right-hand side addend.
+   * 
+   * @param X The addend
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat plus(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place addition with the provided right-hand side addend.
+   * 
+   * @param X The addend
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat plus(final Row X) throws RuntimeException;
 
   protected static void minus(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
@@ -1141,7 +1161,27 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat minus(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat minus(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place subtraction with the provided right-hand side subtrahend.
+   * 
+   * @param X The subtrahend
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat minus(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place subtraction with the provided right-hand side subtrahend.
+   * 
+   * @param X The subtrahend
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat minus(final Row X) throws RuntimeException;
 
   protected static void divide(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
@@ -1170,7 +1210,27 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat elemDivide(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat elemDivide(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise division with the provided right-hand side divisor.
+   * 
+   * @param X The divisor
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat elemDivide(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise division with the provided right-hand side divisor.
+   * 
+   * @param X The divisor
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat elemDivide(final Row X) throws RuntimeException;
 
   protected static void times(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
@@ -1190,36 +1250,6 @@ abstract class AbstractMat {
 
   abstract protected AbstractMat times(final AbstractMat X) throws RuntimeException;
 
-  // /**
-  // * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-  // *
-  // * @param X The multiplier
-  // *
-  // * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-  // * {@code X.n_rows}) in the specified multiplier.
-  // */
-  // abstract public AbstractMat times(final Col X) throws RuntimeException;
-  //
-  // /**
-  // * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-  // *
-  // * @param X The multiplier
-  // *
-  // * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-  // * {@code X.n_rows}) in the specified multiplier.
-  // */
-  // abstract public AbstractMat times(final Row X) throws RuntimeException;
-  //
-  // /**
-  // * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
-  // *
-  // * @param X The multiplier
-  // *
-  // * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
-  // * {@code X.n_rows}) in the specified multiplier.
-  // */
-  // abstract public AbstractMat times(final Mat X) throws RuntimeException;
-
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] * rightHandOperand[n];
@@ -1234,7 +1264,27 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat elemTimes(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat elemTimes(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat elemTimes(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise multiplication with the provided right-hand side multiplier.
+   * 
+   * @param X The multiplier
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat elemTimes(final Row X) throws RuntimeException;
 
   protected static void equals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1285,7 +1335,33 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat equals(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat equals(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise equality evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is equal to the right-hand
+   * side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat equals(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise equality evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is equal to the right-hand
+   * side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat equals(final Row X) throws RuntimeException;
 
   protected static void nonEquals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1336,7 +1412,33 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat nonEquals(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat nonEquals(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise non-equality evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is non-equal to the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat nonEquals(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise non-equality evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is non-equal to the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat nonEquals(final Row X) throws RuntimeException;
 
   protected static void greaterThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1387,7 +1489,33 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat greaterThan(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat greaterThan(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is greater than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat greaterThan(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>greater than</em> evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is greater than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat greaterThan(final Row X) throws RuntimeException;
 
   protected static void lessThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1438,7 +1566,33 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat lessThan(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat lessThan(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>less than</em> evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is less than the right-hand
+   * side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat lessThan(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>less than</em> evaluation with the provided right-hand side operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is less than the right-hand
+   * side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat lessThan(final Row X) throws RuntimeException;
 
   protected static void strictGreaterThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1491,7 +1645,35 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat strictGreaterThan(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat strictGreaterThan(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the provided right-hand side
+   * operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict greater than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat strictGreaterThan(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict greater than</em> evaluation with the provided right-hand side
+   * operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict greater than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat strictGreaterThan(final Row X) throws RuntimeException;
 
   protected static void strictLessThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
@@ -1544,7 +1726,35 @@ abstract class AbstractMat {
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
-  abstract public AbstractMat strictLessThan(final AbstractMat X) throws RuntimeException;
+  abstract public AbstractMat strictLessThan(final Mat X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the provided right-hand side
+   * operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict less than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat strictLessThan(final Col X) throws RuntimeException;
+
+  /**
+   * Returns the out-of-place element-wise <em>strict less than</em> evaluation with the provided right-hand side
+   * operand.
+   * <p>
+   * The returned matrix will be set to 1 for each positions where the left-hand side value is strict less than the
+   * right-hand side and 0 otherwise.
+   * 
+   * @param X The operand
+   * 
+   * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
+   *           have the same shape.
+   */
+  abstract public AbstractMat strictLessThan(final Row X) throws RuntimeException;
 
   @Override
   public String toString() {

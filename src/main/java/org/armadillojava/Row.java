@@ -590,7 +590,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row plus(final AbstractMat X) throws RuntimeException {
+  public Row plus(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    plus(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row plus(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    plus(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row plus(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -608,7 +630,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row minus(final AbstractMat X) throws RuntimeException {
+  public Row minus(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    minus(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row minus(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    minus(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row minus(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -626,7 +670,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row elemDivide(final AbstractMat X) throws RuntimeException {
+  public Row elemDivide(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    elemDivide(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row elemDivide(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    elemDivide(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row elemDivide(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -674,18 +740,6 @@ public class Row extends AbstractVector {
     }
   }
 
-  // @Override
-  // public Row times(final Row X) throws RuntimeException {
-  // if (n_cols != X.n_rows) {
-  // throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" +
-  // X.n_rows + ") in the specified multiplier.");
-  // }
-  //
-  // /*
-  // * Only (1, 1)-row vectors can be left-hand side multiplied to row vectors.
-  // */
-  // return times(X._data[0]);
-  // }
 
   /**
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
@@ -705,18 +759,30 @@ public class Row extends AbstractVector {
     return result;
   }
 
-  // @Override
-  // public Mat times(final Col X) {
-  // if (n_cols != X.n_rows) {
-  // throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" +
-  // X.n_rows + ") in the specified multiplier.");
-  // }
-  //
-  // return new Mat(new double[]{BLAS.getInstance().ddot(n_elem, _data, 1, X._data, 1)});
-  // }
+  @Override
+  public Row elemTimes(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    elemTimes(result._data, _data, X._data);
+    return result;
+  }
 
   @Override
-  public Row elemTimes(final AbstractMat X) throws RuntimeException {
+  public Row elemTimes(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    elemTimes(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row elemTimes(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -734,7 +800,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row equals(final AbstractMat X) throws RuntimeException {
+  public Row equals(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    equals(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row equals(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    equals(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row equals(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -752,7 +840,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row nonEquals(final AbstractMat X) throws RuntimeException {
+  public Row nonEquals(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    nonEquals(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row nonEquals(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    nonEquals(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row nonEquals(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -770,7 +880,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row greaterThan(final AbstractMat X) throws RuntimeException {
+  public Row greaterThan(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    greaterThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row greaterThan(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    greaterThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row greaterThan(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -788,7 +920,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row lessThan(final AbstractMat X) throws RuntimeException {
+  public Row lessThan(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    lessThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row lessThan(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    lessThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row lessThan(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -806,7 +960,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row strictGreaterThan(final AbstractMat X) throws RuntimeException {
+  public Row strictGreaterThan(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    strictGreaterThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row strictGreaterThan(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    strictGreaterThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row strictGreaterThan(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
@@ -824,7 +1000,29 @@ public class Row extends AbstractVector {
   }
 
   @Override
-  public Row strictLessThan(final AbstractMat X) throws RuntimeException {
+  public Row strictLessThan(final Mat X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    strictLessThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row strictLessThan(final Col X) throws RuntimeException {
+    if (n_rows != X.n_rows || n_cols != X.n_cols) {
+      throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
+    }
+
+    Row result = new Row(n_elem);
+    strictLessThan(result._data, _data, X._data);
+    return result;
+  }
+
+  @Override
+  public Row strictLessThan(final Row X) throws RuntimeException {
     if (n_rows != X.n_rows || n_cols != X.n_cols) {
       throw new RuntimeException("Both matrices (" + n_rows + ", " + n_cols + " and " + X.n_rows + ", " + X.n_cols + ") must have the same shape.");
     }
