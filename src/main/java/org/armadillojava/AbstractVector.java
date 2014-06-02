@@ -88,13 +88,7 @@ abstract class AbstractVector extends AbstractMat {
      */
 
     set_size(n_elem);
-    /*
-     * All entries of an array are already set to 0 during creation.
-     * Therefore, fill(0) will be skipped.
-     * 
-     * See http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.3
-     * and http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.5
-     */
+    fill(0);
   }
 
   /**

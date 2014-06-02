@@ -14,6 +14,9 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,42 +75,39 @@ public class TestInPlaceGenColVecNumElems extends TestClass {
 
   @Test
   public void testColVecOnes() throws IOException {
-
-	_genColVec.ones(_numElems);
+    _genColVec.ones(_numElems);
 
     assertMatEquals(_genColVec, load("Col.ones"));
   }
 
   @Test
   public void testColVecZeros() throws IOException {
-
     _genColVec.zeros(_numElems);
-
+    
     assertMatEquals(_genColVec, load("Col.zeros"));
   }
-  
+
   @Test
   public void testColVecResize() throws IOException {
-	  
-	_genColVec.resize(_numElems);
-	
-    assertMatEquals(_genColVec,load("Col.resize"));
+    _genColVec.resize(_numElems);
+    
+    assertMatEquals(_genColVec, load("Col.resize"));
   }
-  
+
   @Test
   public void testColVecSetsize() throws IOException {
-	  
-	_genColVec.set_size(_numElems);
-	
-    assertMatEquals(_genColVec,load("Col.setSize"));
+    _genColVec.set_size(_numElems);
+    
+    assertThat(_genColVec.n_rows, is(_numElems));
+    assertThat(_genColVec.n_cols, is(1));
   }
-  
+
   @Test
   public void testColVecCol() throws IOException {
-	  
-	_genColVec = new Col(_numElems);
-	
-    assertMatEquals(_genColVec,load("Col.col"));
+    _genColVec = new Col(_numElems);
+    
+    assertThat(_genColVec.n_rows, is(_numElems));
+    assertThat(_genColVec.n_cols, is(1));
   }
 
 }
