@@ -648,9 +648,9 @@ int main() {
 //  ExpectedGenRowVecVecNormString();
 //	ExpectedInPlaceGenColVec();
 //	ExpectedInPlaceGenColVecElemInd();
-//	ExpectedInPlaceGenColVecElemIndGenDouble();
+	ExpectedInPlaceGenColVecElemIndGenDouble();
 //	ExpectedInPlaceGenColVecGenDouble();
-	ExpectedInPlaceGenColVecNumElems();
+//	ExpectedInPlaceGenColVecNumElems();
 //  ExpectedInPlaceGenMat();
 //  ExpectedInPlaceGenMatColIndGenColVec();
 //  ExpectedInPlaceGenMatColIndGenDouble();

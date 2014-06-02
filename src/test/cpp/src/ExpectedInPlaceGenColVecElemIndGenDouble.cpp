@@ -95,6 +95,30 @@ namespace armadilloJava {
             _genDouble = _copyOfGenDouble;
             
 			expectedColVecAtDivide();
+			  
+			_genColVec = _copyOfGenColVec;
+			_elemInd = _copyOfElemInd;
+			_genDouble = _copyOfGenDouble;
+			  
+			expectedColVecRowPlus();
+			  
+			_genColVec = _copyOfGenColVec;
+			_elemInd = _copyOfElemInd;
+			_genDouble = _copyOfGenDouble;
+			  
+			expectedColVecRowMinus();
+			  
+			_genColVec = _copyOfGenColVec;
+			_elemInd = _copyOfElemInd;
+			_genDouble = _copyOfGenDouble;
+			  
+			expectedColVecRowTimes();
+			  
+			_genColVec = _copyOfGenColVec;
+			_elemInd = _copyOfElemInd;
+			_genDouble = _copyOfGenDouble;
+			  
+			expectedColVecRowDivide();
           }
 
           cout << "done." << endl;
@@ -169,5 +193,54 @@ namespace armadilloJava {
         save<double>("Col.atDivide", _genColVec);
         cout << "done." << endl;
       }
+	  
+	  void expectedColVecRowPlus() {
+		  if(_elemInd >= _genColVec.n_elem) {
+			  return;
+		  }
+		  
+		  _genColVec.row(_elemInd) += _genDouble;
+		  
+		  cout << "- Compute expectedColVecRowPlus() ... ";
+		  save<double>("Col.rowPlus", _genColVec);
+		  cout << "done." << endl;
+      }
+	  
+      void expectedColVecRowMinus() {
+		  if(_elemInd >= _genColVec.n_elem) {
+			  return;
+		  }
+		  
+		  _genColVec.row(_elemInd) -= _genDouble;
+		  
+		  cout << "- Compute expectedColVecRowMinus() ... ";
+		  save<double>("Col.rowMinus", _genColVec);
+		  cout << "done." << endl;
+      }
+	  
+      void expectedColVecRowTimes() {
+		  if(_elemInd >= _genColVec.n_elem) {
+			  return;
+		  }
+		  
+		  _genColVec.row(_elemInd) *= _genDouble;
+		  
+		  cout << "- Compute expectedColVecRowTimes() ... ";
+		  save<double>("Col.rowTimes", _genColVec);
+		  cout << "done." << endl;
+      }
+	  
+      void expectedColVecRowDivide() {
+		  if(_elemInd >= _genColVec.n_elem) {
+			  return;
+		  }
+		  
+		  _genColVec.row(_elemInd) /= _genDouble;
+		  
+		  cout << "- Compute expectedColVecRowDivide() ... ";
+		  save<double>("Col.rowDivide", _genColVec);
+		  cout << "done." << endl;
+      }
+	  
   };
 }
