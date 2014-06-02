@@ -80,7 +80,7 @@ public class TestGenColVecElemInd extends TestClass {
   public void testColVecAt() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
 
-    double expected = load("ColVec.at")._data[0];
+    double expected = load("Col.at")._data[0];
     if (Double.isInfinite(expected) || Double.isNaN(expected)) {
       assertThat(_genColVec.at(_elemInd), is(expected));
     } else {
@@ -90,13 +90,20 @@ public class TestGenColVecElemInd extends TestClass {
 
   @Test
   public void testColVecIn_range() throws IOException {
-    double expected = load("ColVec.in_range")._data[0];
+    double expected = load("Col.in_range")._data[0];
 
     if (_genColVec.in_range(_elemInd)) {
       assertThat(1.0, is(expected));
     } else {
       assertThat(0.0, is(expected));;
     }
+  }
+  
+  @Test
+  public void testColVecRow() throws IOException {
+	assumeThat(_elemInd, is(lessThan(_genColVec.n_rows)));
+	
+	assertMatEquals(_genColVec.row(_elemInd),load("Col.row"));
   }
 
 }

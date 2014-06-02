@@ -70,6 +70,11 @@ namespace armadilloJava {
             _elemInd = _copyOfElemInd;
 			  
             expectedColVecAtDecrement();
+			  
+			_genColVec = _copyOfGenColVec;
+			_elemInd = _copyOfElemInd;
+			  
+			  expectedColVecShed_row();
           }
 
           cout << "done." << endl;
@@ -104,6 +109,18 @@ namespace armadilloJava {
         cout << "- Compute expectedColVecAtDecrement() ... ";
         save<double>("Col.atDecrement", _genColVec);
         cout << "done." << endl;
+      }
+	  
+	  void expectedColVecShed_row() {
+		  if(_elemInd >= _genColVec.n_rows) {
+			  return;
+		  }
+		  
+		  _genColVec.shed_row(_elemInd);
+		  
+		  cout << "- Compute expectedColVecShed_row() ... ";
+		  save<double>("Col.Shed_row", _genColVec);
+		  cout << "done." << endl;
       }
   };
 }

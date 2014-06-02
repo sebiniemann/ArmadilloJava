@@ -23,6 +23,7 @@ using std::pair;
 
 #include <armadillo>
 using arma::Col;
+using arma::Row;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -63,6 +64,7 @@ namespace armadilloJava {
 
             expectedColVecAt();
             expectedColVecIn_range();
+			  expectedColVecRow();
           }
 
           cout << "done." << endl;
@@ -78,7 +80,7 @@ namespace armadilloJava {
         }
 
         cout << "- Compute expectedColVecAt() ... ";
-        save<double>("ColVec.at", Col<double>({_genColVec.at(_elemInd)}));
+        save<double>("Col.at", Col<double>({_genColVec.at(_elemInd)}));
         cout << "done." << endl;
       }
 
@@ -86,12 +88,24 @@ namespace armadilloJava {
         cout << "- Compute expectedColVecIn_range() ... ";
 
         if(_genColVec.in_range(_elemInd)) {
-          save<double>("ColVec.in_range", Col<double>({1}));
+          save<double>("Col.in_range", Col<double>({1}));
         } else {
-          save<double>("ColVec.in_range", Col<double>({0}));
+          save<double>("Col.in_range", Col<double>({0}));
         }
 
         cout << "done." << endl;
+      }
+	  
+	  void expectedColVecRow() {
+		  if(_elemInd >= _genColVec.n_rows) {
+			  return;
+		  }
+		  Row<double> expected;
+		  expected = _genColVec.row(_elemInd);
+		  
+		  cout << "- Compute expectedColVecRow() ... ";
+		  save<double>("Col.row", Row<double>(expected));
+		  cout << "done." << endl;
       }
   };
 }

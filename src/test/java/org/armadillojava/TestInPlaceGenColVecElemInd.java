@@ -91,5 +91,13 @@ public class TestInPlaceGenColVecElemInd extends TestClass {
 
     assertMatEquals(_genColVec, load("Col.atDecrement"));
   }
+  
+  @Test
+  public void testColVecShed_row() throws IOException {
+	assumeThat(_elemInd, is(lessThan(_genColVec.n_rows)));
+	  
+	_genColVec.shed_row(_elemInd);
+    assertMatEquals(_genColVec,load("Col.shed_row"));
+  }
 
 }
