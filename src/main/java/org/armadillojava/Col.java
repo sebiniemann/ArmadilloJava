@@ -398,7 +398,7 @@ public class Col extends AbstractVector {
 
       System.arraycopy(temp, 0, _data, 0, row_number);
       System.arraycopy(X._data, row_number, _data, 0, X.n_elem);
-      System.arraycopy(temp, X.n_elem + row_number, _data, 0, n_elem - row_number);
+      System.arraycopy(temp, row_number, _data, row_number + X.n_elem, temp.length - row_number);
     }
   }
 
@@ -429,7 +429,7 @@ public class Col extends AbstractVector {
       set_size(n_elem + number_of_rows);
 
       System.arraycopy(temp, 0, _data, 0, row_number);
-      System.arraycopy(temp, number_of_rows + row_number, _data, 0, n_elem - row_number);
+      System.arraycopy(temp, row_number, _data, row_number + number_of_rows, temp.length - row_number);
     }
   }
 
