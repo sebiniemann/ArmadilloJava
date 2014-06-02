@@ -74,4 +74,31 @@ public class TestInPlaceGenColVec extends TestClass {
     assertMatEquals( _genColVec , load("Col.zeros"));
   }
   
+  @Test
+  public void testColReset() throws IOException {
+	_genColVec.reset();
+	
+    assertMatEquals( _genColVec , load("Col.reset"));
+  }
+  
+  @Test
+  public void testColClear() throws IOException {
+	_genColVec.clear();
+	
+    assertMatEquals( _genColVec , load("Col.clear"));
+  }
+  
+  @Test
+  public void testColInPlaceIncrement() throws IOException {
+	_genColVec.inPlace(Op.INCREMENT);
+	
+    assertMatEquals( _genColVec , load("Col.inPlaceIncrement"));
+  }
+  
+  @Test
+  public void testColInPlaceDecrement() throws IOException {
+	_genColVec.inPlace(Op.DECREMENT);
+	
+    assertMatEquals( _genColVec , load("Col.inPlaceDecrement"));
+  }
 }

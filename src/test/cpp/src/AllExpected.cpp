@@ -566,8 +566,8 @@ int main() {
    */
 
 //  ExpectedDatum();
-	ExpectedGenColVec();
-	ExpectedGenColVecElemInd();
+//	ExpectedGenColVec();
+//	ExpectedGenColVecElemInd();
 //  ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecExp();
 //  ExpectedGenColVecGenColVec();
@@ -643,8 +643,8 @@ int main() {
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
 //  ExpectedGenRowVecVecNormString();
-//	ExpectedInPlaceGenColVec();
-	ExpectedInPlaceGenColVecElemInd();
+	ExpectedInPlaceGenColVec();
+//	ExpectedInPlaceGenColVecElemInd();
 //	ExpectedInPlaceGenColVecElemIndGenDouble();
 //	ExpectedInPlaceGenColVecGenDouble();
 //  ExpectedInPlaceGenMat();

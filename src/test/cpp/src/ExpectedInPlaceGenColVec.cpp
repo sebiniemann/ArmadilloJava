@@ -60,6 +60,10 @@ namespace armadilloJava {
 
 				expectedColOnes();
 				expectedColZeros();
+				expectedColReset();
+				expectedColClear();
+				expectedColInPlaceIncrement();
+				expectedColInPlaceDecrement();
 			}
 			
 			cout << "done." << endl;
@@ -80,6 +84,39 @@ namespace armadilloJava {
 			save<double>("Col.zeros", (expected.zeros()));
 			cout << "done." << endl;
 		}
+		
+		void expectedColReset() {
+			cout << "- Compute expectedColReset() ... ";
+			Col<double> expected = _genColVec;
+			expected.reset();
+			save<double>("Col.reset", expected);
+			cout << "done." << endl;
+		}
+		
+		void expectedColClear() {
+			cout << "- Compute expectedColClear() ... ";
+			Col<double> expected = _genColVec;
+			expected.clear();
+			save<double>("Col.clear", expected);
+			cout << "done." << endl;
+		}
+		
+		void expectedColInPlaceIncrement() {
+			cout << "- Compute expectedColInPlaceIncrement() ... ";
+			Col<double> expected = _genColVec;
+			expected++;
+			save<double>("Col.inPlaceIncrement", expected);
+			cout << "done." << endl;
+		}
+		
+		void expectedColInPlaceDecrement() {
+			cout << "- Compute expectedColInPlaceDecrement() ... ";
+			Col<double> expected = _genColVec;
+			expected--;
+			save<double>("Col.inPlaceDecrement", expected);
+			cout << "done." << endl;
+		}
+		
 	
 	};
 }
