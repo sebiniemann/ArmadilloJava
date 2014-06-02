@@ -401,7 +401,7 @@ public class Row extends AbstractVector {
 
       System.arraycopy(temp, 0, _data, 0, col_number);
       System.arraycopy(X._data, col_number, _data, 0, X.n_elem);
-      System.arraycopy(temp, X.n_elem + col_number, _data, 0, n_elem - col_number);
+      System.arraycopy(temp, col_number, _data, col_number + X.n_elem, temp.length - col_number);
     }
   }
 
@@ -432,7 +432,7 @@ public class Row extends AbstractVector {
       set_size(n_elem + number_of_cols);
 
       System.arraycopy(temp, 0, _data, 0, col_number);
-      System.arraycopy(temp, number_of_cols + col_number, _data, 0, n_elem - col_number);
+      System.arraycopy(temp, col_number, _data, col_number + number_of_cols, temp.length - col_number);
     }
   }
 
