@@ -409,12 +409,12 @@ public class TestGenColVec extends TestClass {
   
   @Test
   public void testColVecSize() throws IOException {
-    assertThat(_genColVec.size(), is((int) load("ColVec.size")._data[0]));
+    assertThat(_genColVec.size(), is((int) load("Col.size")._data[0]));
   }
   
   @Test
   public void testColVecT() throws IOException {
-    assertMatEquals(_genColVec.t(), load("ColVec.t"));
+    assertMatEquals(_genColVec.t(), load("Col.t"));
   }
   
   @Test
@@ -430,7 +430,7 @@ public class TestGenColVec extends TestClass {
     
     System.setOut(previousStream);
     
-    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Col.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
   }
   
   @Test
@@ -446,7 +446,7 @@ public class TestGenColVec extends TestClass {
     
     System.setOut(previousStream);
     
-    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " ")));
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Col.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " ")));
   }
   
   @Test
@@ -462,7 +462,7 @@ public class TestGenColVec extends TestClass {
     
     System.setOut(previousStream);
     
-    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Col.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
     
   }
 

@@ -535,20 +535,20 @@ namespace armadilloJava {
 	  
 	  void expectedColVecSize() {
 		  cout << "- Compute expectedColVecSize() ... ";
-		  save<double>("ColVec.size", Mat<double>({static_cast<double>(_genColVec.size())}));
+		  save<double>("Col.size", Mat<double>({static_cast<double>(_genColVec.size())}));
 		  cout << "done." << endl;
       }
 	  
 	  void expectedColVecT() {
 		  cout << "- Compute expectedColVecT() ... ";
-		  save<double>("ColVec.t", _genColVec.t());
+		  save<double>("Col.t", _genColVec.t());
 		  cout << "done." << endl;
       }
 	  
 	  void expectedColVecPrint() {
 		  cout << "- Compute expectedColVecPrint() ... ";
 		  
-		  ofstream expected(_filepath + "ColVec.print(" + _fileSuffix + ").txt");
+		  ofstream expected(_filepath + "Col.print(" + _fileSuffix + ").txt");
 		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
 		  
 		  _genColVec.print();
@@ -561,7 +561,7 @@ namespace armadilloJava {
 	  void expectedColVecRaw_print() {
 		  cout << "- Compute expectedColVecRaw_print() ... ";
 		  
-		  ofstream expected(_filepath + "ColVec.raw_print(" + _fileSuffix + ").txt");
+		  ofstream expected(_filepath + "Col.raw_print(" + _fileSuffix + ").txt");
 		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
 		  
 		  _genColVec.raw_print();
