@@ -219,125 +219,6 @@ public class Row extends AbstractVector {
   }
 
   /**
-   * Returns a deep copy of the {@code span._first}th to {@code span._last} row of the {@code col_number}th column.
-   * 
-   * @param span The span
-   * @param col_number The column
-   * 
-   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code span._last}) is out of bounds.
-   */
-  public Col col(final Span span, final int col_number) throws IndexOutOfBoundsException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     */
-
-    if (span._isEntireRange) {
-      return col(col_number);
-    } else {
-      if (col_number < 0 || col_number > n_cols - 1) {
-        throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
-      }
-
-      if (span._first < 0) {
-        throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
-      }
-
-      if (span._last > n_rows - 1) {
-        throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
-      }
-
-      int n = col_number * n_rows;
-      return new Col(Arrays.copyOfRange(_data, span._first + n, span._last + 1 + n));
-    }
-  }
-
-  /**
-   * Performs an in-place binary operation on the {@code span._first}th to {@code span._last} row of the
-   * {@code col_number}th column with the specified right-hand side operand.
-   * 
-   * @param span The span
-   * @param col_number The column
-   * @param binary_operator The binary operator
-   * @param operand The operand
-   * 
-   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code span._last}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
-   */
-  public void col(final Span span, final int col_number, final Op binary_operator, final double operand) throws IndexOutOfBoundsException, UnsupportedOperationException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, double).
-     */
-
-    if (span._isEntireRange) {
-      col(col_number, binary_operator, operand);
-    } else {
-      if (col_number < 0 || col_number > n_cols - 1) {
-        throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
-      }
-
-      if (span._first < 0) {
-        throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
-      }
-
-      if (span._last > n_rows - 1) {
-        throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
-      }
-
-      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
-    }
-  }
-
-  /**
-   * Performs an in-place binary operation on the {@code span._first}th to {@code span._last} row of the
-   * {@code col_number}th column with the specified right-hand side operand.
-   * 
-   * @param span The span
-   * @param col_number The column
-   * @param binary_operator The binary operator
-   * @param operand The operand
-   * 
-   * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
-   * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
-   * @throws IndexOutOfBoundsException The last specified row ({@code span._last}) is out of bounds.
-   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
-   * @throws RuntimeException The provided ({@code operand.n_rows}, {@code operand.n_cols})-matrix must be equally in
-   *           shape to a ({@code span._last} - {@code span._first} + 1, 1)-matrix.
-   */
-  public void col(final Span span, final int col_number, final Op binary_operator, AbstractMat operand) throws IndexOutOfBoundsException, UnsupportedOperationException, RuntimeException {
-    /*
-     * The parameter "span" was already validated during its instantiation.
-     * The parameter "binary_operator" is validated within AbstractView.inPlace(Op, AbstractMat).
-     */
-
-    if (span._isEntireRange) {
-      col(col_number, binary_operator, operand);
-    } else {
-      if (col_number < 0 || col_number > n_cols - 1) {
-        throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
-      }
-
-      if (span._first < 0) {
-        throw new IndexOutOfBoundsException("The first specified row (" + span._first + ") is out of bounds.");
-      }
-
-      if (span._last > n_rows - 1) {
-        throw new IndexOutOfBoundsException("The last specified row (" + span._last + ") is out of bounds.");
-      }
-
-      if (!operand.is_colvec() || operand.n_elem != span._last - span._first + 1) {
-        throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + (span._last - span._first + 1) + ", 1)-matrix.");
-      }
-
-      new ViewSubCol(this, col_number, span._first, span._last - span._first + 1).inPlace(binary_operator, operand);
-    }
-  }
-
-  /**
    * Returns a deep copy of the {@code first_col}th to {@code last_col} column.
    * 
    * @param first_col The first column
@@ -448,8 +329,8 @@ public class Row extends AbstractVector {
    * 
    * @param vector_of_column_indices The columns
    */
-  public Mat cols(final AbstractVector vector_of_column_indices) {
-    return new Mat(new ViewElemCols(this, vector_of_column_indices._data));
+  public Row cols(final AbstractVector vector_of_column_indices) {
+    return new Row(new ViewElemMat(this, vector_of_column_indices._data));
   }
 
   /**
@@ -465,7 +346,7 @@ public class Row extends AbstractVector {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void cols(final AbstractVector vector_of_column_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemCols(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
+    new ViewElemMat(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -487,7 +368,7 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + n_rows + ", " + vector_of_column_indices.n_elem + ")-matrix.");
     }
     
-    new ViewElemCols(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
+    new ViewElemMat(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
