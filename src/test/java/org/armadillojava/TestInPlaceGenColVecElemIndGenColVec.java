@@ -93,7 +93,7 @@ public class TestInPlaceGenColVecElemIndGenColVec extends TestClass {
 
     _genColVecA.row(_elemInd, Op.EQUAL, _genColVecB);
 
-    assertMatEquals(_genColVecB, load("Col.rowEqual"));
+    assertMatEquals(_genColVecA, load("Col.rowEqual"));
   }
   
   @Test

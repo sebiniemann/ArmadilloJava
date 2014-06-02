@@ -23,7 +23,6 @@ using std::pair;
 
 #include <armadillo>
 using arma::Col;
-using arma::Mat;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
