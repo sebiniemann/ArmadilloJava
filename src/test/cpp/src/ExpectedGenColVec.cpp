@@ -23,6 +23,12 @@ using std::log;
 using std::sqrt;
 using std::pow;
 
+#include <fstream>
+using std::ofstream;
+
+#include <streambuf>
+using std::streambuf;
+
 #include <utility>
 using std::pair;
 
@@ -166,6 +172,12 @@ namespace armadilloJava {
           expectedArmaDiagmat();
           expectedArmaIs_finite();
           expectedMat();
+			expectedColVecSize();
+			expectedColVecT();
+			expectedColVecPrint();
+			expectedColVecRaw_print();
+			
+			
         }
 
         cout << "done." << endl;
@@ -519,6 +531,44 @@ namespace armadilloJava {
         cout << "- Compute expectedMat() ... ";
         save<double>("Mat", _genColVec);
         cout << "done." << endl;
+      }
+	  
+	  void expectedColVecSize() {
+		  cout << "- Compute expectedColVecSize() ... ";
+		  save<double>("ColVec.size", Mat<double>({static_cast<double>(_genColVec.size())}));
+		  cout << "done." << endl;
+      }
+	  
+	  void expectedColVecT() {
+		  cout << "- Compute expectedColVecT() ... ";
+		  save<double>("ColVec.t", _genColVec.t());
+		  cout << "done." << endl;
+      }
+	  
+	  void expectedColVecPrint() {
+		  cout << "- Compute expectedColVecPrint() ... ";
+		  
+		  ofstream expected(_filepath + "ColVec.print(" + _fileSuffix + ").txt");
+		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+		  
+		  _genColVec.print();
+		  
+		  cout.rdbuf(previousBuffer);
+		  
+		  cout << "done." << endl;
+      }
+	  
+	  void expectedColVecRaw_print() {
+		  cout << "- Compute expectedColVecRaw_print() ... ";
+		  
+		  ofstream expected(_filepath + "ColVec.raw_print(" + _fileSuffix + ").txt");
+		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+		  
+		  _genColVec.raw_print();
+		  
+		  cout.rdbuf(previousBuffer);
+		  
+		  cout << "done." << endl;
       }
 
   };

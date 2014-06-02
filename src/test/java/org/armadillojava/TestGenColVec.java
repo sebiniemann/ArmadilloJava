@@ -16,10 +16,17 @@ package org.armadillojava;
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -393,6 +400,70 @@ public class TestGenColVec extends TestClass {
   @Test
   public void testMat() throws IOException {
     assertMatEquals(new Mat(_genColVec), load("Mat"));
+  }
+  
+  @Test
+  public void testColVecEmpty() throws IOException {
+    assertThat(_genColVec.empty(), is(false));
+  }
+  
+  @Test
+  public void testColVecSize() throws IOException {
+    assertThat(_genColVec.size(), is((int) load("ColVec.size")._data[0]));
+  }
+  
+  @Test
+  public void testColVecT() throws IOException {
+    assertMatEquals(_genColVec.t(), load("ColVec.t"));
+  }
+  
+  @Test
+  public void testColVecToString() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    System.out.println(_genColVec);
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+  }
+  
+  @Test
+  public void testColVecPrint() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genColVec.print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " ")));
+  }
+  
+  @Test
+  public void testColVecRaw_print() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genColVec.raw_print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "ColVec.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+    
   }
 
 }
