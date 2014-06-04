@@ -32,117 +32,85 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedInPlaceGenColVecElemIndRangeGenDouble : public Expected {
+  class ExpectedInPlaceGenColVecElemIndRangeGenDouble: public Expected {
     public:
       ExpectedInPlaceGenColVecElemIndRangeGenDouble() {
         cout << "Compute ExpectedInPlaceGenColVecElemIndRangeGenDouble(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters( {
             InputClass::GenColVec,
             InputClass::ElemIndRange,
             InputClass::GenDouble
           });
 
-          for (vector<pair<string, void*>> input : inputs) {
-            _fileSuffix = "";
+        for (vector<pair<string, void*>> input : inputs) {
+          _fileSuffix = "";
 
-            int n = 0;
-            for (pair<string, void*> value : input) {
-              switch (n) {
-                case 0:
-                  _fileSuffix += value.first;
-                  _genColVec = *static_cast<Col<double>*>(value.second);
-                  break;
-                case 1:
-                  _fileSuffix += "," + value.first;
-                  _elemIndRange = *static_cast<span*>(value.second);
-                  break;
-                case 2:
-                  _fileSuffix += "," + value.first;
-                  _genDouble = *static_cast<double*>(value.second);
-                  break;
-              }
-              ++n;
+          int n = 0;
+          for (pair<string, void*> value : input) {
+            switch (n) {
+              case 0:
+                _fileSuffix += value.first;
+                _genColVec = *static_cast<Col<double>*>(value.second);
+                break;
+              case 1:
+                _fileSuffix += "," + value.first;
+                _elemIndRange = *static_cast<span*>(value.second);
+                break;
+              case 2:
+                _fileSuffix += "," + value.first;
+                _genDouble = *static_cast<double*>(value.second);
+                break;
             }
-
-            cout << "Using input: " << _fileSuffix << endl;
-
-            _copyOfGenColVec = _genColVec;
-            _copyOfElemIndRange = _elemIndRange;
-            _copyOfGenDouble = _genDouble;
-
-            
-			expectedColVecRowsPlus();
-
-            _genColVec = _copyOfGenColVec;
-            _elemIndRange = _copyOfElemIndRange;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecRowsMinus();
-
-            _genColVec = _copyOfGenColVec;
-            _elemIndRange = _copyOfElemIndRange;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecRowsTimes();
-
-            _genColVec = _copyOfGenColVec;
-            _elemIndRange = _copyOfElemIndRange;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecRowsDivide();
-
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-
-			expectedColVecSubvecPlus();
-
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-
-			expectedColVecSubvecMinus();
-
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-
-			expectedColVecSubvecTimes();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecSubvecDivide();
-
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-
-			expectedColVecSubvecSpanPlus();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecSubvecSpanMinus();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecSubvecSpanTimes();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemIndRange = _copyOfElemIndRange;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecSubvecSpanDivide();
+            ++n;
           }
 
-          cout << "done." << endl;
+          cout << "Using input: " << _fileSuffix << endl;
+
+          _copyOfGenColVec = _genColVec;
+          _copyOfElemIndRange = _elemIndRange;
+          _copyOfGenDouble = _genDouble;
+
+          expectedColVecRowsPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecRowsMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecRowsTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecRowsDivide();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecSubvecPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecSubvecMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecSubvecTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemIndRange = _copyOfElemIndRange;
+          _genDouble = _copyOfGenDouble;
+          expectedColVecSubvecDivide();
         }
+
+        cout << "done." << endl;
+      }
 
     protected:
       Col<double> _genColVec;
@@ -154,9 +122,8 @@ namespace armadilloJava {
       double _genDouble;
       double _copyOfGenDouble;
 
-
       void expectedColVecRowsPlus() {
-        if(!_genColVec.in_range(_elemIndRange)) {
+        if (!_genColVec.in_range(_elemIndRange)) {
           return;
         }
         cout << "- Compute expectedColVecRowsPlus() ... ";
@@ -168,19 +135,19 @@ namespace armadilloJava {
       }
 
       void expectedColVecRowsMinus() {
-        if(!_genColVec.in_range(_elemIndRange)) {
+        if (!_genColVec.in_range(_elemIndRange)) {
           return;
         }
         cout << "- Compute expectedColVecRowsMinus() ... ";
 
-        _genColVec.rows(_elemIndRange.a,_elemIndRange.b) -= _genDouble;
+        _genColVec.rows(_elemIndRange.a, _elemIndRange.b) -= _genDouble;
 
         save<double>("Col.rowsMinus", _genColVec);
         cout << "done." << endl;
       }
 
       void expectedColVecRowsTimes() {
-        if(!_genColVec.in_range(_elemIndRange)) {
+        if (!_genColVec.in_range(_elemIndRange)) {
           return;
         }
 
@@ -193,7 +160,7 @@ namespace armadilloJava {
       }
 
       void expectedColVecRowsDivide() {
-        if(!_genColVec.in_range(_elemIndRange)) {
+        if (!_genColVec.in_range(_elemIndRange)) {
           return;
         }
 
@@ -206,110 +173,56 @@ namespace armadilloJava {
       }
 
       void expectedColVecSubvecPlus() {
-		  if(!_genColVec.in_range(_elemIndRange)) {
-			  return;
-		  }
-		  
-		  cout << "- Compute expectedColVecSubvecPlus() ... ";
+        if (!_genColVec.in_range(_elemIndRange)) {
+          return;
+        }
 
-		  _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) += _genDouble;
-		  
-		  save<double>("Col.subvecPlus", _genColVec);
-		  cout << "done." << endl;
+        cout << "- Compute expectedColVecSubvecPlus() ... ";
+
+        _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) += _genDouble;
+
+        save<double>("Col.subvecPlus", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecSubvecMinus() {
-		  if(!_genColVec.in_range(_elemIndRange)) {
-			  return;
-		  }
-		  
-		  cout << "- Compute expectedColVecSubvecMinus() ... ";
+        if (!_genColVec.in_range(_elemIndRange)) {
+          return;
+        }
 
-		  _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) -= _genDouble;
-		  
+        cout << "- Compute expectedColVecSubvecMinus() ... ";
 
-		  save<double>("Col.subvecMinus", _genColVec);
-		  cout << "done." << endl;
+        _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) -= _genDouble;
+
+        save<double>("Col.subvecMinus", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecSubvecTimes() {
-		  if(!_genColVec.in_range(_elemIndRange)) {
-			  return;
-		  }
-		  
-		  cout << "- Compute expectedColVecSubvecTimes() ... ";
+        if (!_genColVec.in_range(_elemIndRange)) {
+          return;
+        }
 
-		  _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) *= _genDouble;
-		  
-		  save<double>("Col.subvecTimes", _genColVec);
-		  cout << "done." << endl;
+        cout << "- Compute expectedColVecSubvecTimes() ... ";
+
+        _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) *= _genDouble;
+
+        save<double>("Col.subvecTimes", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecSubvecDivide() {
-		  if(!_genColVec.in_range(_elemIndRange)) {
-			  return;
-		  }
-		  
-		  cout << "- Compute expectedColVecSubvecDivide() ... ";
+        if (!_genColVec.in_range(_elemIndRange)) {
+          return;
+        }
 
-		  _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) /= _genDouble;
-		  
+        cout << "- Compute expectedColVecSubvecDivide() ... ";
 
-		  save<double>("Col.subvecDivide", _genColVec);
-		  cout << "done." << endl;
+        _genColVec.subvec(_elemIndRange.a, _elemIndRange.b) /= _genDouble;
+
+        save<double>("Col.subvecDivide", _genColVec);
+        cout << "done." << endl;
       }
 
-       void expectedColVecSubvecSpanPlus() {
- 		  if(!_genColVec.in_range(_elemIndRange)) {
- 			  return;
- 		  }
-
- 		  cout << "- Compute expectedColVecSubvecSpanPlus() ... ";
-
- 		  _genColVec.subvec(_elemIndRange) += _genDouble;
-
- 		  save<double>("Col.subvecSpanPlus", _genColVec);
- 		  cout << "done." << endl;
-       }
-
-       void expectedColVecSubvecSpanMinus() {
- 		  if(!_genColVec.in_range(_elemIndRange)) {
- 			  return;
- 		  }
-
- 		  cout << "- Compute expectedColVecSubvecSpanMinus() ... ";
-
- 		  _genColVec.subvec(_elemIndRange) -= _genDouble;
-
- 		  save<double>("Col.subvecSpanMinus", _genColVec);
- 		  cout << "done." << endl;
-       }
-
-       void expectedColVecSubvecSpanTimes() {
- 		  if(!_genColVec.in_range(_elemIndRange)) {
- 			  return;
- 		  }
-
-		  cout << "- Compute expectedColVecSubvecSpanTimes() ... ";
-
- 		  _genColVec.subvec(_elemIndRange) *= _genDouble;
-
- 		  save<double>("Col.subvecSpanTimes", _genColVec);
- 		  cout << "done." << endl;
-       }
-
-       void expectedColVecSubvecSpanDivide() {
- 		  if(!_genColVec.in_range(_elemIndRange)) {
- 			  return;
- 		  }
-
- 		  cout << "- Compute expectedColVecSubvecSpanDivide() ... ";
-
- 		  _genColVec.subvec(_elemIndRange) /= _genDouble;
-
- 		  save<double>("Col.subvecSpanDivide", _genColVec);
- 		  cout << "done." << endl;
-       }
-	  
   };
 }

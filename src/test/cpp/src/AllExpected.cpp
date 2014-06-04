@@ -673,10 +673,10 @@ int main() {
 //	ExpectedInPlaceGenColVecElemIndGenDouble();
 //	ExpectedInPlaceGenColVecElemIndGenMat();
 //	ExpectedInPlaceGenColVecElemIndGenRowVec();
-//  ExpectedInPlaceGenColVecElemIndRangeGenColVec();
-// 	ExpectedInPlaceGenColVecElemIndRangeGenDouble();
-//  ExpectedInPlaceGenColVecElemIndRangeGenMat();
-  	ExpectedInPlaceGenColVecElemIndRangeGenRowVec();
+  ExpectedInPlaceGenColVecElemIndRangeGenColVec();
+ 	ExpectedInPlaceGenColVecElemIndRangeGenDouble();
+  ExpectedInPlaceGenColVecElemIndRangeGenMat();
+  ExpectedInPlaceGenColVecElemIndRangeGenRowVec();
 //	ExpectedInPlaceGenColVecGenDouble();
 //	ExpectedInPlaceGenColVecNumElems();
 //  ExpectedInPlaceGenMat();
