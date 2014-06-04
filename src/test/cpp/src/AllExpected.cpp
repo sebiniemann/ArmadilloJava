@@ -292,11 +292,17 @@ using armadilloJava::ExpectedInPlaceGenColVecElemIndRangeGenMat;
 #include <ExpectedInPlaceGenColVecElemIndRangeGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecElemIndRangeGenRowVec;
 
+#include <ExpectedInPlaceGenColVecElemIndsGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceGenColVecElemIndsGenColVec;
+
 #include <ExpectedInPlaceGenColVecElemIndsGenDouble.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecElemIndsGenDouble;
 
 #include <ExpectedInPlaceGenColVecElemIndsGenMat.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecElemIndsGenMat;
+
+#include <ExpectedInPlaceGenColVecElemIndsGenRowVec.cpp>
+using armadilloJava::ExpectedInPlaceGenColVecElemIndsGenRowVec;
 
 #include <ExpectedInPlaceGenColVecGenDouble.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecGenDouble;
@@ -502,6 +508,12 @@ using armadilloJava::ExpectedInPlaceGenMatRowIndsGenMat;
 #include <ExpectedInPlaceGenMatRowIndsGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenMatRowIndsGenRowVec;
 
+#include <ExpectedInPlaceRandomGenColVec.cpp>
+using armadilloJava::ExpectedInPlaceRandomGenColVec;
+
+#include <ExpectedInPlaceRandomGenColVecNumElems.cpp>
+using armadilloJava::ExpectedInPlaceRandomGenColVecNumElems;
+
 #include <ExpectedInPlaceRandomGenMat.cpp>
 using armadilloJava::ExpectedInPlaceRandomGenMat;
 
@@ -687,8 +699,10 @@ int main() {
 // 	ExpectedInPlaceGenColVecElemIndRangeGenDouble();
 //  ExpectedInPlaceGenColVecElemIndRangeGenMat();
 //  ExpectedInPlaceGenColVecElemIndRangeGenRowVec();
-  ExpectedInPlaceGenColVecElemIndsGenDouble();
+//  ExpectedInPlaceGenColVecElemIndsGenColVec();
+//  ExpectedInPlaceGenColVecElemIndsGenDouble();
 //  ExpectedInPlaceGenColVecElemIndsGenMat();
+//  ExpectedInPlaceGenColVecElemIndsGenRowVec();
 //	ExpectedInPlaceGenColVecGenDouble();
 //	ExpectedInPlaceGenColVecNumElems();
 //  ExpectedInPlaceGenMat();
@@ -757,6 +771,8 @@ int main() {
 //  ExpectedInPlaceGenMatRowIndsGenDouble();
 //  ExpectedInPlaceGenMatRowIndsGenMat();
 //  ExpectedInPlaceGenMatRowIndsGenRowVec();
+//  ExpectedInPlaceRandomGenColVec();
+//  ExpectedInPlaceRandomGenColVecNumElems();
 //  ExpectedInPlaceRandomGenMat();
 //  ExpectedInPlaceRandomGenMatNumRowsNumCols();
 //  ExpectedInvMat();
