@@ -32,10 +32,10 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedGenColVecElemIndsGenDouble : public Expected {
+  class ExpectedInPlaceGenColVecElemIndsGenDouble : public Expected {
     public:
-      ExpectedGenColVecElemIndsGenDouble() {
-        cout << "Compute ExpectedGenColVecElemIndsGenDouble(): " << endl;
+      ExpectedInPlaceGenColVecElemIndsGenDouble() {
+        cout << "Compute ExpectedInPlaceGenColVecElemIndsGenDouble(): " << endl;
 
         vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
           InputClass::GenColVec,
@@ -67,13 +67,44 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
+          _copyOfGenColVec = _genColVec;
+          _copyOfElemInds = _elemInds;
+          _copyOfGenDouble = _genDouble;
           expectedElemPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedElemMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedElemTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedElemDivide();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedRowsPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedRowsMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedRowsTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInds = _copyOfElemInds;
+          _genDouble = _copyOfGenDouble;
           expectedRowsDivide();
 
         }
@@ -83,8 +114,13 @@ namespace armadilloJava {
 
     protected:
       Mat<double> _genColVec;
+      Mat<double> _copyOfGenColVec;
+
       Col<uword> _elemInds;
+      Col<uword> _copyOfElemInds;
+
       double _genDouble;
+      double _copyOfGenDouble;
 
       void expectedElemPlus() {
         for(int n = 0; n < _elemInds.n_elem; n++) {

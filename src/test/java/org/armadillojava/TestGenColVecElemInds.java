@@ -34,7 +34,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestGenColVecElemInds extends TestClass {
 
-  @Parameters(name = "{index}: GenColVec = {0}, ElemInds = {2}, GenDouble = {4}")
+  @Parameters(name = "{index}: GenColVec = {0}, ElemInds = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
@@ -59,29 +59,20 @@ public class TestGenColVecElemInds extends TestClass {
   public Col    _elemInds;
 
   protected Col _copyOfElemInds;
-  
-  @Parameter(4)
-  public String _genDoubleString;
-
-  @Parameter(5)
-  public Double    _genDouble;
-
-  protected Double _copyOfGenDouble;
+ 
 
   @Before
   public void before() {
-    _fileSuffix = _genColVecString + "," + _elemIndsString + "," +_genDoubleString;
+    _fileSuffix = _genColVecString + "," + _elemIndsString ;
 
     _copyOfGenColVec = new Col(_genColVec);
     _copyOfElemInds = new Col(_elemInds);
-    _copyOfGenDouble = new Double(_genDouble);
   }
 
   @After
   public void after() {
     assertMatEquals(_genColVec, _copyOfGenColVec, 0);
     assertMatEquals(_elemInds, _copyOfElemInds, 0);
-    assertMatEquals(_genDouble, _copyOfGenDouble, 0);
   }
 
   @Test

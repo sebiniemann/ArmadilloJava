@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestGenColVecElemIndsGenDouble extends TestClass {
+public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
 
   @Parameters(name = "{index}: GenColVec = {0}, ElemInds = {2}, GenDouble = {4}")
   public static Collection<Object[]> getParameters() {
@@ -81,9 +81,9 @@ public class TestGenColVecElemIndsGenDouble extends TestClass {
 
   @After
   public void after() {
-    assertMatEquals(_genColVec, _copyOfGenColVec, 0);
-    assertMatEquals(_elemInds, _copyOfElemInds, 0);
-    assertThat(_genDouble, is(_copyOfGenDouble));
+	_genColVec.inPlace(Op.EQUAL, _copyOfGenColVec);
+	_elemInds = new Col(_copyOfElemInds);
+	_genDouble = new Double(_copyOfGenDouble);
   }
 
   @Test
