@@ -582,13 +582,13 @@ public class Col extends AbstractVector {
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+    }
+    
     if (X.n_elem == 1) {
       return times(X._data[0]);
     } else if (X.is_colvec()) {
-      if (n_cols != X.n_rows) {
-        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-      }
-
       /*
        * Only (1, 1)-column vectors can be right-hand side multiplied to column vectors.
        */
@@ -598,10 +598,6 @@ public class Col extends AbstractVector {
       BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
       return result;
     } else {
-      if (n_cols != X.n_rows) {
-        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-      }
-
       /*
        * Only (1, m)-matrices can be right-hand side multiplied to column vectors.
        */

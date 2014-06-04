@@ -229,6 +229,9 @@ using armadilloJava::ExpectedGenRowVecGenColVec;
 #include <ExpectedGenRowVecGenColVecNormal.cpp>
 using armadilloJava::ExpectedGenRowVecGenColVecNormal;
 
+#include <ExpectedGenRowVecGenDouble.cpp>
+using armadilloJava::ExpectedGenRowVecGenDouble;
+
 #include <ExpectedGenRowVecGenMat.cpp>
 using armadilloJava::ExpectedGenRowVecGenMat;
 
@@ -676,10 +679,11 @@ int main() {
 //  ExpectedGenMatVecNormInt();
 //  ExpectedGenRowVec();
 //  ExpectedGenRowVecExp();
-//  ExpectedGenRowVecGenColVec();
+  ExpectedGenRowVecGenColVec();
 //  ExpectedGenRowVecGenColVecNormal();
-//  ExpectedGenRowVecGenMat();
-//  ExpectedGenRowVecGenRowVec();
+  ExpectedGenRowVecGenDouble();
+  ExpectedGenRowVecGenMat();
+  ExpectedGenRowVecGenRowVec();
 //  ExpectedGenRowVecGenRowVecNormal();
 //  ExpectedGenRowVecMonColVec();
 //  ExpectedGenRowVecMonRowVec();

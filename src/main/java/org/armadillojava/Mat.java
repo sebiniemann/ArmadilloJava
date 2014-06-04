@@ -2376,13 +2376,13 @@ public class Mat extends AbstractMat {
 
   @Override
   protected AbstractMat times(final AbstractMat X) {
+    if (n_cols != X.n_rows) {
+      throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
+    }
+
     if (X.n_elem == 1) {
       return times(X._data[0]);
     } else {
-      if (n_cols != X.n_rows) {
-        throw new RuntimeException("The numbers of columns (" + n_cols + ") must be equal to the number of rows (" + X.n_rows + ") in the specified multiplier.");
-      }
-
       Mat result = new Mat(n_rows, X.n_cols);
       BLAS.getInstance().dgemm("N", "N", n_rows, X.n_cols, n_cols, 1, _data, n_rows, X._data, X.n_rows, 0, result._data, n_rows);
       return result;

@@ -86,6 +86,17 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
+          expectedRowPlus();
+          expectedRowMinus();
+          expectedRowTimes();
+          expectedRowElemTimes();
+          expectedRowElemDivide();
+          expectedRowEquals();
+          expectedRowNonEquals();
+          expectedRowGreaterThan();
+          expectedRowLessThan();
+          expectedRowStrictGreaterThan();
+          expectedRowStrictLessThan();
         }
 
         cout << "done." << endl;
@@ -211,6 +222,174 @@ namespace armadilloJava {
       void expectedArmaKron() {
         cout << "- Compute expectedArmaKron() ... ";
         save<double>("Arma.kron", kron(_genRowVecA, _genRowVecB));
+        cout << "done." << endl;
+      }
+
+      void expectedRowPlus() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowPlus() ... ";
+        save<double>("Row.plus", _genRowVecA + _genRowVecB);
+        cout << "done." << endl;
+      }
+
+      void expectedRowMinus() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowMinus() ... ";
+        save<double>("Row.minus", _genRowVecA - _genRowVecB);
+        cout << "done." << endl;
+      }
+
+      void expectedRowTimes() {
+        if(_genRowVecA.n_cols != _genRowVecB.n_rows) {
+          return;
+        }
+
+        cout << "- Compute expectedRowTimes() ... ";
+        save<double>("Row.times", _genRowVecA * _genRowVecB);
+        cout << "done." << endl;
+      }
+
+      void expectedRowElemTimes() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowElemTimes() ... ";
+        save<double>("Row.elemTimes", _genRowVecA % _genRowVecB);
+        cout << "done." << endl;
+      }
+
+      void expectedRowElemDivide() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowElemDivide() ... ";
+        save<double>("Row.elemDivide", _genRowVecA / _genRowVecB);
+        cout << "done." << endl;
+      }
+
+      void expectedRowEquals() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowEquals() ... ";
+
+        Mat<uword> expected = _genRowVecA == _genRowVecB;
+        save<uword>("Row.equals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowNonEquals() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowNonEquals() ... ";
+
+        Mat<uword> expected = _genRowVecA != _genRowVecB;
+        save<uword>("Row.nonEquals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowGreaterThan() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowGreaterThan() ... ";
+
+        Mat<uword> expected = _genRowVecA >= _genRowVecB;
+        save<uword>("Row.greaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowLessThan() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowLessThan() ... ";
+
+        Mat<uword> expected = _genRowVecA <= _genRowVecB;
+        save<uword>("Row.lessThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowStrictGreaterThan() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowStrictGreaterThan() ... ";
+
+        Mat<uword> expected = _genRowVecA > _genRowVecB;
+        save<uword>("Row.strictGreaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowStrictLessThan() {
+        if(_genRowVecA.n_rows != _genRowVecB.n_rows) {
+          return;
+        }
+
+        if(_genRowVecA.n_cols != _genRowVecB.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedRowStrictLessThan() ... ";
+
+        Mat<uword> expected = _genRowVecA < _genRowVecB;
+        save<uword>("Row.strictLessThan", expected);
+
         cout << "done." << endl;
       }
 
