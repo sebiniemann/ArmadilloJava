@@ -77,4 +77,33 @@ public class TestInPlaceGenColVecGenDouble extends TestClass {
 
     assertMatEquals(_genColVec, load("Col.fill"));
   }
+  
+  @Test
+  public void testColInPlacePlus() throws IOException {
+    _genColVec.inPlace(Op.PLUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.inPlacePlus"));
+  }
+
+  @Test
+  public void testColInPlaceMinus() throws IOException {
+    _genColVec.inPlace(Op.MINUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.inPlaceMinus"));
+  }
+
+  @Test
+  public void testColInPlaceTimes() throws IOException {
+    _genColVec.inPlace(Op.TIMES, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.inPlaceTimes"));
+  }
+
+  @Test
+  public void testMatInPlaceDivide() throws IOException {
+    _genColVec.inPlace(Op.DIVIDE, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.inPlaceDivide"));
+  }
+
 }
