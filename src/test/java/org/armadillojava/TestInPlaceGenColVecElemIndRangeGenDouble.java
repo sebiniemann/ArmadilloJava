@@ -56,9 +56,9 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
   public String    _elemIndRangeString;
 
   @Parameter(3)
-  public Span       _elemIndRange;
+  public Span      _elemIndRange;
 
-  protected Span    _copyOfElemIndRange;
+  protected Span   _copyOfElemIndRange;
 
   @Parameter(4)
   public String    _genDoubleString;
@@ -84,113 +84,112 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
     _genDouble = new Double(_copyOfGenDouble);
   }
 
-  
   @Test
   public void testColVecRowsPlus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.PLUS, _genDouble);
+    _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.rowsPlus"));
   }
 
   @Test
   public void testColVecRowsMinus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-	_genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.MINUS, _genDouble);
+    _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.rowsMinus"));
   }
 
   @Test
   public void testColVecRowsTimes() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.TIMES, _genDouble);
+    _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.TIMES, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.rowsTimes"));
   }
 
   @Test
   public void testColRowsDivide() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-	_genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.DIVIDE, _genDouble);
+    _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.DIVIDE, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.rowsDivide"));
   }
-  
-  @Test
-  public void testColVecSubvecPlus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
 
-    _genColVec.subvec(_elemIndRange._first,_elemIndRange._last, Op.PLUS, _genDouble);
+  @Test
+  public void testColVecSubvecPlusA() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
+
+    _genColVec.subvec(_elemIndRange, Op.PLUS, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.subvecPlus"));
   }
 
   @Test
-  public void testColVecSubvecMinus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+  public void testColVecSubvecPlusB() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.subvec(_elemIndRange._first,_elemIndRange._last, Op.MINUS, _genDouble);
+    _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.subvecPlus"));
+  }
+
+  @Test
+  public void testColVecSubvecMinusA() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
+
+    _genColVec.subvec(_elemIndRange, Op.MINUS, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.subvecMinus"));
   }
 
   @Test
-  public void testColVecSubvecTimes() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+  public void testColVecSubvecMinusB() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.subvec(_elemIndRange._first,_elemIndRange._last, Op.TIMES, _genDouble);
+    _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.subvecMinus"));
+  }
+
+  @Test
+  public void testColVecSubvecTimesA() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
+
+    _genColVec.subvec(_elemIndRange, Op.TIMES, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.subvecTimes"));
   }
 
   @Test
-  public void testColSubvecDivide() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+  public void testColVecSubvecTimesB() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.subvec(_elemIndRange._first,_elemIndRange._last, Op.DIVIDE, _genDouble);
+    _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.TIMES, _genDouble);
 
-    assertMatEquals(_genColVec, load("Col.subvecDivide"));
-  }
-  
-  @Test
-  public void testColVecSubvecSpanPlus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
-
-    _genColVec.subvec(_elemIndRange, Op.PLUS, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.subvecSpanPlus"));
+    assertMatEquals(_genColVec, load("Col.subvecTimes"));
   }
 
   @Test
-  public void testColVecSubvecSpanMinus() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
-
-    _genColVec.subvec(_elemIndRange, Op.MINUS, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.subvecSpanMinus"));
-  }
-
-  @Test
-  public void testColVecSubvecSpanTimes() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
-
-    _genColVec.subvec(_elemIndRange, Op.TIMES, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.subvecSpanTimes"));
-  }
-
-  @Test
-  public void testColSubvecSpanDivide() throws IOException {
-	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+  public void testColSubvecDivideA() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange, Op.DIVIDE, _genDouble);
 
-    assertMatEquals(_genColVec, load("Col.subvecSpanDivide"));
+    assertMatEquals(_genColVec, load("Col.subvecDivide"));
+  }
+
+  @Test
+  public void testColSubvecDivideB() throws IOException {
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
+
+    _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.DIVIDE, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.subvecDivide"));
   }
 
 }

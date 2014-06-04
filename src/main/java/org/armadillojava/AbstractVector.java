@@ -167,11 +167,7 @@ abstract class AbstractVector extends AbstractMat {
       throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
     }
 
-    if (is_colvec()) {
-      new ViewSubRows(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
-    } else {
-      new ViewSubCols(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
-    }
+    new ViewSubVec(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -206,11 +202,7 @@ abstract class AbstractVector extends AbstractMat {
       throw new IndexOutOfBoundsException("The last specified position (" + last_index + ") is out of bounds.");
     }
 
-    if (is_colvec()) {
-        new ViewSubRows(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
-      } else {
-        new ViewSubCols(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
-      }
+    new ViewSubVec(this, first_index, last_index - first_index + 1).inPlace(binary_operator, operand);
   }
 
   /**
