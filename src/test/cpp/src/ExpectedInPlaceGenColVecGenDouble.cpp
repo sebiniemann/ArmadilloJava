@@ -65,6 +65,22 @@ namespace armadilloJava {
             _copyOfGenDouble = _genDouble;
 
 			expectedColVecFill();
+
+			_genColVec = _copyOfGenColVec;
+		    _genDouble = _copyOfGenDouble;
+            expectedColInPlacePlus();
+
+            _genColVec = _copyOfGenColVec;
+            _genDouble = _copyOfGenDouble;
+            expectedColInPlaceMinus();
+
+			_genColVec = _copyOfGenColVec;
+			_genDouble = _copyOfGenDouble;
+			expectedColInPlaceTimes();
+
+			_genColVec = _copyOfGenColVec;
+            _genDouble = _copyOfGenDouble;
+            expectedColInPlaceDivide();
                     
 		  }
 
@@ -72,8 +88,8 @@ namespace armadilloJava {
         }
 
     protected:
-      Mat<double> _genColVec;
-      Mat<double> _copyOfGenColVec;
+      Col<double> _genColVec;
+      Col<double> _copyOfGenColVec;
 
       double _genDouble;
       double _copyOfGenDouble;
@@ -86,6 +102,42 @@ namespace armadilloJava {
 
         cout << "done." << endl;
       }
+
+      void expectedColInPlacePlus() {
+        cout << "- Compute expectedColInPlacePlus() ... ";
+
+        _genColVec += _genDouble;
+        save<double>("Col.inPlacePlus", _genColVec);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColInPlaceMinus() {
+        cout << "- Compute expectedColInPlaceMinus() ... ";
+
+        _genColVec -= _genDouble;
+        save<double>("Col.inPlaceMinus", _genColVec);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColInPlaceTimes() {
+        cout << "- Compute expectedColInPlaceTimes() ... ";
+
+        _genColVec *= _genDouble;
+        save<double>("Col.inPlaceTimes", _genColVec);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColInPlaceDivide() {
+        cout << "- Compute expectedColInPlaceDivide() ... ";
+
+        _genColVec /= _genDouble;
+        save<double>("Col.inPlaceDivide", _genColVec);
+
+        cout << "done." << endl;
+            }
 	  
   };
 }

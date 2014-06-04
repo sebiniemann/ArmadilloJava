@@ -14,6 +14,8 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assume.assumeThat;
+import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +31,14 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestInPlaceGenColVecGenDouble extends TestClass {
+public class TestInPlaceGenColVecIndRange extends TestClass {
 
-  @Parameters(name = "{index}: GenColVec = {0}, GenDouble = {2}")
+  @Parameters(name = "{index}: GenColVec = {0}, ColIndRange = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.GenColVec);
-    inputClasses.add(InputClass.GenDouble);
+    inputClasses.add(InputClass.ElemIndRange);
 
     return Input.getTestParameters(inputClasses);
   }
@@ -50,60 +52,35 @@ public class TestInPlaceGenColVecGenDouble extends TestClass {
   protected Col    _copyOfGenColVec;
 
   @Parameter(2)
-  public String    _genDoubleString;
+  public String    _IndRangeString;
 
   @Parameter(3)
-  public double    _genDouble;
+  public Span      _IndRange;
 
-  protected double _copyOfGenDouble;
+  protected Span   _copyOfIndRange;
 
   @Before
   public void before() {
-    _fileSuffix = _genColVecString + "," + _genDoubleString;
+    _fileSuffix = _genColVecString + "," + _IndRangeString;
 
     _copyOfGenColVec = new Col(_genColVec);
-    _copyOfGenDouble = new Double(_genDouble);
+    _copyOfIndRange = new Span(_IndRange);
   }
 
   @After
   public void after() {
     _genColVec.inPlace(Op.EQUAL, _copyOfGenColVec);
-    _genDouble = new Double(_copyOfGenDouble);
-  }
-  
-  @Test
-  public void testColFill() throws IOException {
-    _genColVec.fill(_genDouble);
-
-    assertMatEquals(_genColVec, load("Col.fill"));
-  }
-  
-  @Test
-  public void testColInPlacePlus() throws IOException {
-    _genColVec.inPlace(Op.PLUS, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.inPlacePlus"));
+    _IndRange = new Span(_copyOfIndRange);
   }
 
   @Test
-  public void testColInPlaceMinus() throws IOException {
-    _genColVec.inPlace(Op.MINUS, _genDouble);
+  public void testColSwapRows() throws IOException {
+    assumeThat(_genColVec.in_range(_IndRange), is(true));
+ 
 
-    assertMatEquals(_genColVec, load("Col.inPlaceMinus"));
-  }
+    _genColVec.swap_rows(_IndRange._first,_IndRange._last);
 
-  @Test
-  public void testColInPlaceTimes() throws IOException {
-    _genColVec.inPlace(Op.TIMES, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.inPlaceTimes"));
-  }
-
-  @Test
-  public void testMatInPlaceDivide() throws IOException {
-    _genColVec.inPlace(Op.DIVIDE, _genDouble);
-
-    assertMatEquals(_genColVec, load("Col.inPlaceDivide"));
+    assertMatEquals(_genColVec, load("Col.swapRows"));
   }
 
 }
