@@ -31,98 +31,98 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedInPlaceGenColVecElemIndGenDouble : public Expected {
+  class ExpectedInPlaceGenColVecElemIndGenDouble: public Expected {
     public:
       ExpectedInPlaceGenColVecElemIndGenDouble() {
         cout << "Compute ExpectedInPlaceGenColVecElemIndGenDouble(): " << endl;
 
-          vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
+        vector<vector<pair<string, void*>>> inputs = Input::getTestParameters( {
             InputClass::GenColVec,
             InputClass::ElemInd,
             InputClass::GenDouble
           });
 
-          for (vector<pair<string, void*>> input : inputs) {
-            _fileSuffix = "";
+        for (vector<pair<string, void*>> input : inputs) {
+          _fileSuffix = "";
 
-            int n = 0;
-            for (pair<string, void*> value : input) {
-              switch (n) {
-                case 0:
-                  _fileSuffix += value.first;
-                  _genColVec = *static_cast<Col<double>*>(value.second);
-                  break;
-                case 1:
-                  _fileSuffix += "," + value.first;
-                  _elemInd = *static_cast<int*>(value.second);
-                  break;
-                case 2:
-                  _fileSuffix += "," + value.first;
-                  _genDouble = *static_cast<double*>(value.second);
-                  break;
-              }
-              ++n;
+          int n = 0;
+          for (pair<string, void*> value : input) {
+            switch (n) {
+              case 0:
+                _fileSuffix += value.first;
+                _genColVec = *static_cast<Col<double>*>(value.second);
+                break;
+              case 1:
+                _fileSuffix += "," + value.first;
+                _elemInd = *static_cast<int*>(value.second);
+                break;
+              case 2:
+                _fileSuffix += "," + value.first;
+                _genDouble = *static_cast<double*>(value.second);
+                break;
             }
-
-            cout << "Using input: " << _fileSuffix << endl;
-
-            _copyOfGenColVec = _genColVec;
-            _copyOfElemInd = _elemInd;
-            _copyOfGenDouble = _genDouble;
-
-            expectedColVecAtEqual();
-
-            _genColVec = _copyOfGenColVec;
-            _elemInd = _copyOfElemInd;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecAtPlus();
-
-            _genColVec = _copyOfGenColVec;
-            _elemInd = _copyOfElemInd;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecAtMinus();
-
-            _genColVec = _copyOfGenColVec;
-            _elemInd = _copyOfElemInd;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecAtTimes();
-
-            _genColVec = _copyOfGenColVec;
-            _elemInd = _copyOfElemInd;
-            _genDouble = _copyOfGenDouble;
-            
-			expectedColVecAtDivide();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemInd = _copyOfElemInd;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecRowPlus();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemInd = _copyOfElemInd;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecRowMinus();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemInd = _copyOfElemInd;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecRowTimes();
-			  
-			_genColVec = _copyOfGenColVec;
-			_elemInd = _copyOfElemInd;
-			_genDouble = _copyOfGenDouble;
-			  
-			expectedColVecRowDivide();
+            ++n;
           }
 
-          cout << "done." << endl;
+          cout << "Using input: " << _fileSuffix << endl;
+
+          _copyOfGenColVec = _genColVec;
+          _copyOfElemInd = _elemInd;
+          _copyOfGenDouble = _genDouble;
+
+          expectedColVecAtEqual();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecAtPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecAtMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecAtTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecAtDivide();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecRowPlus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecRowMinus();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecRowTimes();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _genDouble = _copyOfGenDouble;
+
+          expectedColVecRowDivide();
         }
+
+        cout << "done." << endl;
+      }
 
     protected:
       Col<double> _genColVec;
@@ -135,7 +135,7 @@ namespace armadilloJava {
       double _copyOfGenDouble;
 
       void expectedColVecAtEqual() {
-        if(_elemInd >= _genColVec.n_elem) {
+        if (_elemInd >= _genColVec.n_elem) {
           return;
         }
 
@@ -147,7 +147,7 @@ namespace armadilloJava {
       }
 
       void expectedColVecAtPlus() {
-        if(_elemInd >= _genColVec.n_elem) {
+        if (_elemInd >= _genColVec.n_elem) {
           return;
         }
 
@@ -159,7 +159,7 @@ namespace armadilloJava {
       }
 
       void expectedColVecAtMinus() {
-        if(_elemInd >= _genColVec.n_elem) {
+        if (_elemInd >= _genColVec.n_elem) {
           return;
         }
 
@@ -171,7 +171,7 @@ namespace armadilloJava {
       }
 
       void expectedColVecAtTimes() {
-        if(_elemInd >= _genColVec.n_elem) {
+        if (_elemInd >= _genColVec.n_elem) {
           return;
         }
 
@@ -183,7 +183,7 @@ namespace armadilloJava {
       }
 
       void expectedColVecAtDivide() {
-        if(_elemInd >= _genColVec.n_elem) {
+        if (_elemInd >= _genColVec.n_elem) {
           return;
         }
 
@@ -193,54 +193,54 @@ namespace armadilloJava {
         save<double>("Col.atDivide", _genColVec);
         cout << "done." << endl;
       }
-	  
-	  void expectedColVecRowPlus() {
-		  if(_elemInd >= _genColVec.n_elem) {
-			  return;
-		  }
-		  
-		  _genColVec.row(_elemInd) += _genDouble;
-		  
-		  cout << "- Compute expectedColVecRowPlus() ... ";
-		  save<double>("Col.rowPlus", _genColVec);
-		  cout << "done." << endl;
+
+      void expectedColVecRowPlus() {
+        if (_elemInd >= _genColVec.n_elem) {
+          return;
+        }
+
+        _genColVec.row(_elemInd) += _genDouble;
+
+        cout << "- Compute expectedColVecRowPlus() ... ";
+        save<double>("Col.rowPlus", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecRowMinus() {
-		  if(_elemInd >= _genColVec.n_elem) {
-			  return;
-		  }
-		  
-		  _genColVec.row(_elemInd) -= _genDouble;
-		  
-		  cout << "- Compute expectedColVecRowMinus() ... ";
-		  save<double>("Col.rowMinus", _genColVec);
-		  cout << "done." << endl;
+        if (_elemInd >= _genColVec.n_elem) {
+          return;
+        }
+
+        _genColVec.row(_elemInd) -= _genDouble;
+
+        cout << "- Compute expectedColVecRowMinus() ... ";
+        save<double>("Col.rowMinus", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecRowTimes() {
-		  if(_elemInd >= _genColVec.n_elem) {
-			  return;
-		  }
-		  
-		  _genColVec.row(_elemInd) *= _genDouble;
-		  
-		  cout << "- Compute expectedColVecRowTimes() ... ";
-		  save<double>("Col.rowTimes", _genColVec);
-		  cout << "done." << endl;
+        if (_elemInd >= _genColVec.n_elem) {
+          return;
+        }
+
+        _genColVec.row(_elemInd) *= _genDouble;
+
+        cout << "- Compute expectedColVecRowTimes() ... ";
+        save<double>("Col.rowTimes", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
       void expectedColVecRowDivide() {
-		  if(_elemInd >= _genColVec.n_elem) {
-			  return;
-		  }
-		  
-		  _genColVec.row(_elemInd) /= _genDouble;
-		  
-		  cout << "- Compute expectedColVecRowDivide() ... ";
-		  save<double>("Col.rowDivide", _genColVec);
-		  cout << "done." << endl;
+        if (_elemInd >= _genColVec.n_elem) {
+          return;
+        }
+
+        _genColVec.row(_elemInd) /= _genDouble;
+
+        cout << "- Compute expectedColVecRowDivide() ... ";
+        save<double>("Col.rowDivide", _genColVec);
+        cout << "done." << endl;
       }
-	  
+
   };
 }

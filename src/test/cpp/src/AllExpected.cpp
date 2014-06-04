@@ -687,7 +687,7 @@ int main() {
 // 	ExpectedInPlaceGenColVecElemIndRangeGenDouble();
 //  ExpectedInPlaceGenColVecElemIndRangeGenMat();
 //  ExpectedInPlaceGenColVecElemIndRangeGenRowVec();
-    ExpectedInPlaceGenColVecElemIndsGenDouble();
+  ExpectedInPlaceGenColVecElemIndsGenDouble();
 //  ExpectedInPlaceGenColVecElemIndsGenMat();
 //	ExpectedInPlaceGenColVecGenDouble();
 //	ExpectedInPlaceGenColVecNumElems();

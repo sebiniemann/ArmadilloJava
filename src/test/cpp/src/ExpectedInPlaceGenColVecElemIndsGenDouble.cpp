@@ -129,7 +129,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedElemPlus() ... ";
 
         _genColVec.elem(_elemInds) += _genDouble;
 
@@ -144,7 +144,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedElemMinus() ... ";
 
         _genColVec.elem(_elemInds) -= _genDouble;
 
@@ -159,7 +159,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedElemTimes() ... ";
 
         _genColVec.elem(_elemInds) *= _genDouble;
 
@@ -174,7 +174,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedElemDivide() ... ";
 
         _genColVec.elem(_elemInds) /= _genDouble;
 
@@ -189,7 +189,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedRowsPlus() ... ";
 
         _genColVec.rows(_elemInds) += _genDouble;
 
@@ -204,7 +204,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedRowsMinus() ... ";
 
         _genColVec.rows(_elemInds) -= _genDouble;
 
@@ -219,7 +219,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedRowsTimes() ... ";
 
         _genColVec.rows(_elemInds) *= _genDouble;
 
@@ -234,7 +234,7 @@ namespace armadilloJava {
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedRowsDivide() ... ";
 
         _genColVec.rows(_elemInds) /= _genDouble;
 

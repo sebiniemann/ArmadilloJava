@@ -14,10 +14,8 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.lessThan;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,7 +87,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   @Test
   public void testMatElemPlus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.elem(_elemInds, Op.PLUS, _genDouble);
@@ -100,7 +98,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   @Test
   public void testMatElemMinus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.elem(_elemInds, Op.MINUS, _genDouble);
@@ -111,7 +109,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   @Test
   public void testMatElemTimes() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.elem(_elemInds, Op.TIMES, _genDouble);
@@ -122,7 +120,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   @Test
   public void testMatElemDivide() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.elem(_elemInds, Op.DIVIDE, _genDouble);
@@ -133,44 +131,44 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   @Test
   public void testMatRowsPlus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.rows(_elemInds, Op.PLUS, _genDouble);
     
-    assertMatEquals(_genColVec.rows(_elemInds), load("Col.rowsPlus"));
+    assertMatEquals(_genColVec, load("Col.rowsPlus"));
   }
   
   @Test
   public void testMatRowsMinus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.rows(_elemInds, Op.MINUS, _genDouble);
     
-    assertMatEquals(_genColVec.rows(_elemInds), load("Col.rowsMinus"));
+    assertMatEquals(_genColVec, load("Col.rowsMinus"));
   }
 
   @Test
   public void testMatRowsTimes() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.rows(_elemInds, Op.TIMES, _genDouble);
     
-    assertMatEquals(_genColVec.rows(_elemInds), load("Col.rowsTimes"));
+    assertMatEquals(_genColVec, load("Col.rowsTimes"));
   }
   
   @Test
   public void testMatRowsDivide() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
-      assumeThat((int) _elemInds.at(n), is(lessThan(_genColVec.n_elem)));
+      assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
 
     _genColVec.rows(_elemInds, Op.DIVIDE, _genDouble);
     
-    assertMatEquals(_genColVec.rows(_elemInds), load("Col.rowsDivide"));
+    assertMatEquals(_genColVec, load("Col.rowsDivide"));
   }
 }

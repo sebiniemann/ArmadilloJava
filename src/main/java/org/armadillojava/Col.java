@@ -327,7 +327,7 @@ public class Col extends AbstractVector {
    * @param vector_of_row_indices The rows
    */
   public Col rows(final AbstractVector vector_of_row_indices) {
-    return new Col(new ViewElemMat(this, vector_of_row_indices._data));
+    return new Col(new ViewElemVec(this, vector_of_row_indices._data));
   }
 
   /**
@@ -343,7 +343,7 @@ public class Col extends AbstractVector {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void rows(final AbstractVector vector_of_row_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
+    new ViewElemVec(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -365,7 +365,7 @@ public class Col extends AbstractVector {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + vector_of_row_indices.n_elem + ", " + n_rows + ")-matrix.");
     }
     
-    new ViewElemMat(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
+    new ViewElemVec(this, vector_of_row_indices._data).inPlace(binary_operator, operand);
   }
 
   /**

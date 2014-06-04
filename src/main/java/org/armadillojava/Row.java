@@ -229,7 +229,7 @@ public class Row extends AbstractVector {
    * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
    * @throws IndexOutOfBoundsException The last specified row ({@code last_row}) is out of bounds.
    */
-  public Mat cols(final int first_col, final int last_col) throws RuntimeException, IndexOutOfBoundsException {
+  public Row cols(final int first_col, final int last_col) throws RuntimeException, IndexOutOfBoundsException {
     if (last_col < first_col) {
       throw new RuntimeException("The first specified column (" + first_col + ") must be less than or equal the last specified column (" + last_col + ").");
     }
@@ -242,7 +242,7 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The last specified row (" + last_col + ") is out of bounds.");
     }
 
-    return new Mat(new ViewSubCols(this, first_col, last_col - first_col + 1));
+    return new Row(new ViewSubCols(this, first_col, last_col - first_col + 1));
   }
 
   /**
@@ -330,7 +330,7 @@ public class Row extends AbstractVector {
    * @param vector_of_column_indices The columns
    */
   public Row cols(final AbstractVector vector_of_column_indices) {
-    return new Row(new ViewElemMat(this, vector_of_column_indices._data));
+    return new Row(new ViewElemVec(this, vector_of_column_indices._data));
   }
 
   /**
@@ -346,7 +346,7 @@ public class Row extends AbstractVector {
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void cols(final AbstractVector vector_of_column_indices, final Op binary_operator, final double operand) throws UnsupportedOperationException {
-    new ViewElemMat(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
+    new ViewElemVec(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
@@ -368,7 +368,7 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + n_rows + ", " + vector_of_column_indices.n_elem + ")-matrix.");
     }
     
-    new ViewElemMat(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
+    new ViewElemVec(this, vector_of_column_indices._data).inPlace(binary_operator, operand);
   }
 
   /**
