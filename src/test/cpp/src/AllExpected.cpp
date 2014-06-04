@@ -679,11 +679,11 @@ int main() {
 //  ExpectedGenMatVecNormInt();
 //  ExpectedGenRowVec();
 //  ExpectedGenRowVecExp();
-  ExpectedGenRowVecGenColVec();
+//  ExpectedGenRowVecGenColVec();
 //  ExpectedGenRowVecGenColVecNormal();
-  ExpectedGenRowVecGenDouble();
-  ExpectedGenRowVecGenMat();
-  ExpectedGenRowVecGenRowVec();
+//  ExpectedGenRowVecGenDouble();
+//  ExpectedGenRowVecGenMat();
+//  ExpectedGenRowVecGenRowVec();
 //  ExpectedGenRowVecGenRowVecNormal();
 //  ExpectedGenRowVecMonColVec();
 //  ExpectedGenRowVecMonRowVec();
