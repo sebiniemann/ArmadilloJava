@@ -85,7 +85,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
 
   @Test
-  public void testMatElemPlus() throws IOException {
+  public void testColElemPlus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -96,7 +96,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatElemMinus() throws IOException {
+  public void testColElemMinus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -107,7 +107,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatElemTimes() throws IOException {
+  public void testColElemTimes() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -118,7 +118,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatElemDivide() throws IOException {
+  public void testColElemDivide() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -129,7 +129,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatRowsPlus() throws IOException {
+  public void testColRowsPlus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -140,7 +140,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatRowsMinus() throws IOException {
+  public void testColRowsMinus() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -151,7 +151,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
 
   @Test
-  public void testMatRowsTimes() throws IOException {
+  public void testColRowsTimes() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
@@ -162,7 +162,7 @@ public class TestInPlaceGenColVecElemIndsGenDouble extends TestClass {
   }
   
   @Test
-  public void testMatRowsDivide() throws IOException {
+  public void testColRowsDivide() throws IOException {
     for(int n = 0; n < _elemInds.n_elem; n++) {
       assumeThat(_genColVec.in_range((int) _elemInds.at(n)), is(true));
     }
