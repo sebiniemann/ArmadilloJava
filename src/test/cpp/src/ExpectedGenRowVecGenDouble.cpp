@@ -100,7 +100,7 @@ namespace armadilloJava {
 
       void expectedRowDivide() {
         cout << "- Compute expectedRowElemDivide() ... ";
-        save<double>("Row.Divide", _genRowVec / _genDouble);
+        save<double>("Row.divide", _genRowVec / _genDouble);
         cout << "done." << endl;
       }
 
