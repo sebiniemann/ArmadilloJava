@@ -1003,12 +1003,12 @@ public class Col extends AbstractVector {
       throw new IndexOutOfBoundsException("The first specified row (" + first_index + ") is out of bounds.");
     }
 
-    if (last_index > n_cols - 1) {
+    if (last_index > n_elem - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_index + ") is out of bounds.");
     }
 
     Col col = new Col(last_index - first_index + 1);
-    System.arraycopy(_data, first_index, col._data, 0, last_index - first_index + 1);
+    System.arraycopy(_data, first_index, col._data, 0, col.n_elem);
     return col;
   }
 

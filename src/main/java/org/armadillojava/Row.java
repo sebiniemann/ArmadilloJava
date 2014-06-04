@@ -993,12 +993,12 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The first specified column (" + first_index + ") is out of bounds.");
     }
 
-    if (last_index > n_cols - 1) {
+    if (last_index > n_elem - 1) {
       throw new IndexOutOfBoundsException("The last specified column (" + last_index + ") is out of bounds.");
     }
 
     Row row = new Row(last_index - first_index + 1);
-    System.arraycopy(_data, first_index, row._data, 0, last_index - first_index + 1);
+    System.arraycopy(_data, first_index, row._data, 0, row.n_elem);
     return row;
   }
 
