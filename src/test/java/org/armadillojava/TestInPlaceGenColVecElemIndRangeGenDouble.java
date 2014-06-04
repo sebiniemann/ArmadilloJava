@@ -107,7 +107,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
   public void testColVecRowsTimes() throws IOException {
 	assumeThat(_genColVec.in_range(_elemIndRange),is(true));
 
-    _genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.PLUS, _genDouble);
+    _genColVec.rows(_elemIndRange._first,_elemIndRange._last, Op.TIMES, _genDouble);
 
     assertMatEquals(_genColVec, load("Col.rowsTimes"));
   }
