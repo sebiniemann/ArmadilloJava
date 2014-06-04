@@ -15,6 +15,7 @@ package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
@@ -85,4 +86,24 @@ public class TestGenColVecElemIndRange extends TestClass {
     }
   }
 
+  @Test
+  public void testColrows() throws IOException {
+	  assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+
+	  assertMatEquals(_genColVec.rows(_elemIndRange._first, _elemIndRange._last), load("Col.rows"));
+  }
+  
+  @Test
+  public void testColsubvec() throws IOException {
+	  assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+
+	  assertMatEquals(_genColVec.subvec(_elemIndRange._first, _elemIndRange._last), load("Col.subvec"));
+  }
+  
+  @Test
+  public void testColsubvecSpan() throws IOException {
+	  assumeThat(_genColVec.in_range(_elemIndRange),is(true));
+
+	  assertMatEquals(_genColVec.subvec(_elemIndRange), load("Col.subvecSpan"));
+  }
 }
