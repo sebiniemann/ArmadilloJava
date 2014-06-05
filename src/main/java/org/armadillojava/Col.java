@@ -1028,7 +1028,7 @@ public class Col extends AbstractVector {
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
@@ -1037,13 +1037,17 @@ public class Col extends AbstractVector {
     if (!X.is_colvec()) {
       throw new RuntimeException("The content of column vectors can only be swapped with matrices that are equivalent in shape to a column vector.");
     }
-
+    
+    if (!is_rowvec()) {
+      throw new RuntimeException("The content of row vectors can only be swapped with matrices that are equivalent in shape to a row vector.");
+    }
+    
     Col temp = new Col(_data);
 
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
@@ -1054,7 +1058,7 @@ public class Col extends AbstractVector {
     copy_size(X);
     System.arraycopy(X._data, 0, _data, 0, X.n_elem);
 
-    copy_size(temp);
+    X.copy_size(temp);
     System.arraycopy(temp._data, 0, X._data, 0, temp.n_elem);
   }
 
