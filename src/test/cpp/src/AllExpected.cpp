@@ -625,10 +625,10 @@ int main() {
 //	ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();
 //  ExpectedGenColVecExp();
-    ExpectedGenColVecGenColVec();
+//  ExpectedGenColVecGenColVec();
 //  ExpectedGenColVecGenColVecNormal();
 //  ExpectedGenColVecGenDouble();
-//  ExpectedGenColVecGenMat();
+    ExpectedGenColVecGenMat();
 //  ExpectedGenColVecGenRowVec();
 //  ExpectedGenColVecGenRowVecNormal();
 //  ExpectedGenColVecMonColVec();

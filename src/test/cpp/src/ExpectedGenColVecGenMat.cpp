@@ -75,7 +75,17 @@ namespace armadilloJava {
           expectedArmaJoin_cols();
           expectedArmaJoin_vert();
           expectedArmaKron();
-		      expectedColEquals();
+          expectedColPlus();
+          expectedColMinus();
+          expectedColTimes();
+          expectedColElemTimes();
+          expectedColElemDivide();
+          expectedColEquals();
+          expectedColNonEquals();
+          expectedColGreaterThan();
+          expectedColLessThan();
+          expectedColStrictGreaterThan();
+          expectedColStrictLessThan();
         }
 
         cout << "done." << endl;
@@ -144,15 +154,170 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 	  
+      void expectedColPlus() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColPlus() ... ";
+        save<double>("Col.plus", _genColVec + _genMat);
+        cout << "done." << endl;
+      }
+
+      void expectedColMinus() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColMinus() ... ";
+        save<double>("Col.minus", _genColVec - _genMat);
+        cout << "done." << endl;
+      }
+
+      void expectedColTimes() {
+        if(_genMat.n_rows != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColTimes() ... ";
+        save<double>("Col.times", _genColVec * _genMat);
+        cout << "done." << endl;
+      }
+
+      void expectedColElemTimes() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColElemTimes() ... ";
+        save<double>("Col.elemTimes", _genColVec % _genMat);
+        cout << "done." << endl;
+      }
+
+      void expectedColElemDivide() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColElemDivide() ... ";
+        save<double>("Col.elemDivide", _genColVec / _genMat);
+        cout << "done." << endl;
+      }
+
       void expectedColEquals() {
-        if(_genColVec.n_rows != _genMat.n_rows || _genColVec.n_cols != _genMat.n_cols) {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
           return;
         }
 
         cout << "- Compute expectedColEquals() ... ";
 
         Col<uword> expected = _genColVec == _genMat;
-        save<uword> ("Col.equals", expected);
+        save<uword>("Col.equals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColNonEquals() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColVecNonEquals() ... ";
+
+        Col<uword> expected = _genColVec != _genMat;
+        save<uword>("Col.nonEquals", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColGreaterThan() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColGreaterThan() ... ";
+
+        Col<uword> expected = _genColVec >= _genMat;
+        save<uword>("Col.greaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColLessThan() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColLessThan() ... ";
+
+        Col<uword> expected = _genColVec <= _genMat;
+        save<uword>("Col.lessThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColStrictGreaterThan() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColStrictGreaterThan() ... ";
+
+        Col<uword> expected = _genColVec > _genMat;
+        save<uword>("Col.strictGreaterThan", expected);
+
+        cout << "done." << endl;
+      }
+
+      void expectedColStrictLessThan() {
+        if(_genMat.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        if(_genMat.n_cols != _genColVec.n_cols) {
+          return;
+        }
+
+        cout << "- Compute expectedColElemDivide() ... ";
+
+        Col<uword> expected = _genColVec < _genMat;
+        save<uword>("Col.strictLessThan", expected);
 
         cout << "done." << endl;
       }
