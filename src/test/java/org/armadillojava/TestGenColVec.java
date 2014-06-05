@@ -465,5 +465,39 @@ public class TestGenColVec extends TestClass {
     assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Col.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
     
   }
+  
+  @Test
+  public void testColIs_finite() throws IOException {
+    int expected = (int) load("Col.is_finite")._data[0];
+    if (_genColVec.is_finite()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testColMin() throws IOException {
+    double expected = load("Col.min")._data[0];
+    
+    assertThat(_genColVec.min(), is(expected));
+  }
+
+  @Test
+  public void testColMax() throws IOException {
+    double expected = load("Col.max")._data[0];
+    assertThat(_genColVec.max(), is(expected));
+
+  }
+  
+  @Test
+  public void testColIs_empty() throws IOException {
+    int expected = (int) load("Col.is_empty")._data[0];
+    if (_genColVec.is_empty()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
 
 }

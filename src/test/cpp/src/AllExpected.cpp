@@ -617,7 +617,7 @@ int main() {
    */
 
 //  ExpectedDatum();
-//	ExpectedGenColVec();
+	ExpectedGenColVec();
 //	ExpectedGenColVecElemInd();
 //	ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();

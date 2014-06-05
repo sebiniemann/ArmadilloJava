@@ -172,10 +172,14 @@ namespace armadilloJava {
           expectedArmaDiagmat();
           expectedArmaIs_finite();
           expectedMat();
-			expectedColVecSize();
-			expectedColVecT();
-			expectedColVecPrint();
-			expectedColVecRaw_print();
+		  expectedColVecSize();
+		  expectedColVecT();
+		  expectedColVecPrint();
+		  expectedColVecRaw_print();
+		  expectedColIs_finite();
+		  expectedColMin();
+		  expectedColMax();
+		  expectedColIs_empty();
 			
 			
         }
@@ -570,6 +574,47 @@ namespace armadilloJava {
 		  
 		  cout << "done." << endl;
       }
+
+      void expectedColIs_finite() {
+        cout << "- Compute expectedColIs_finite() ... ";
+
+        if(_genColVec.is_finite()) {
+          save<double>("Col.is_finite", Col<double>({1}));
+        } else {
+          save<double>("Col.is_finite", Col<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedColMin() {
+        cout << "- Compute expectedColMin() ... ";
+        double value;
+        value = _genColVec.min();
+        save<double>("Col.min", Col<double>({value}));
+        cout << "done." << endl;
+      }
+
+      void expectedColMax() {
+        cout << "- Compute expectedColMax() ... ";
+        double value;
+        value = _genColVec.max();
+        save<double>("Col.max", Col<double>({value}));
+        cout << "done." << endl;
+      }
+
+      void expectedColIs_empty() {
+        cout << "- Compute expectedColIs_empty() ... ";
+
+        if(_genColVec.is_empty()) {
+          save<double>("Col.is_empty", Col<double>({1}));
+        } else {
+          save<double>("Col.is_empty", Col<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
 
   };
 }
