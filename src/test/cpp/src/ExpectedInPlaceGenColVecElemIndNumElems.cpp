@@ -83,6 +83,12 @@ namespace armadilloJava {
           _numElems = _copyOfNumElems;
 
           expectedColVecInsertRowsFalse();
+
+          _genColVec = _copyOfGenColVec;
+          _elemInd = _copyOfElemInd;
+          _numElems = _copyOfNumElems;
+
+          expectedColVecShedRows();
         }
 
         cout << "done." << endl;
@@ -128,6 +134,21 @@ namespace armadilloJava {
         _genColVec.insert_rows(_elemInd, _numElems, false);
 
         save<double>("Col.insertRowsFalse", _genColVec);
+        cout << "done." << endl;
+      }
+
+      void expectedColVecShedRows() {
+        if (_elemInd >= _genColVec.n_elem) {
+          return;
+        }
+        if (_numElems < _elemInd || _numElems >= _genColVec.n_elem) {
+          return;
+        }
+
+        cout << "- Compute expectedColVecShedRows() ... ";
+        _genColVec.shed_rows(_elemInd, _numElems);
+
+        save<double>("Col.shedRows", _genColVec);
         cout << "done." << endl;
       }
 

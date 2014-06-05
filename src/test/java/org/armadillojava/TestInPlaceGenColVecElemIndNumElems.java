@@ -112,5 +112,16 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     assertEquals(_genColVec.n_elem, load("Col.insertRowsFalse").n_elem);
   }
+  
+  @Test
+  public void testColVecShedRows() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+    assumeThat(_numElems, is(lessThan(_elemInd)));
+    assumeThat(_numElems, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.shed_rows(_elemInd, _numElems);
+
+    assertMatEquals(_genColVec, load("Col.sheadRows"));
+  }
 
 }
