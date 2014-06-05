@@ -49,6 +49,9 @@ using armadilloJava::ExpectedGenColVecGenColVec;
 #include <ExpectedGenColVecGenColVecNormal.cpp>
 using armadilloJava::ExpectedGenColVecGenColVecNormal;
 
+#include <ExpectedGenColVecGenDouble.cpp>
+using armadilloJava::ExpectedGenColVecGenDouble;
+
 #include <ExpectedGenColVecGenMat.cpp>
 using armadilloJava::ExpectedGenColVecGenMat;
 
@@ -617,13 +620,14 @@ int main() {
    */
 
 //  ExpectedDatum();
-	ExpectedGenColVec();
+//	ExpectedGenColVec();
 //	ExpectedGenColVecElemInd();
 //	ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();
 //  ExpectedGenColVecExp();
 //  ExpectedGenColVecGenColVec();
 //  ExpectedGenColVecGenColVecNormal();
+    ExpectedGenColVecGenDouble();
 //  ExpectedGenColVecGenMat();
 //  ExpectedGenColVecGenRowVec();
 //  ExpectedGenColVecGenRowVecNormal();
