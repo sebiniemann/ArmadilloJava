@@ -477,17 +477,33 @@ public class TestGenColVec extends TestClass {
   }
   
   @Test
-  public void testColMin() throws IOException {
-    double expected = load("Col.min")._data[0];
+  public void testColMinA() throws IOException {
+    double expected = load("Col.minA")._data[0];
     
     assertThat(_genColVec.min(), is(expected));
   }
 
   @Test
-  public void testColMax() throws IOException {
-    double expected = load("Col.max")._data[0];
+  public void testColMaxA() throws IOException {
+    double expected = load("Col.maxA")._data[0];
     assertThat(_genColVec.max(), is(expected));
 
+  }
+  
+  @Test
+  public void testColMinB() throws IOException {
+    int expected = (int) load("Col.minB")._data[0];
+    int[] value = new int [1];
+    _genColVec.min(value);
+    assertThat(value[0], is(expected));
+  }
+
+  @Test
+  public void testColMaxB() throws IOException {
+    int expected = (int) load("Col.maxB")._data[0];
+	int[] value = new int[1];
+	_genColVec.max(value);
+	assertThat(value[0], is(expected));
   }
   
   @Test

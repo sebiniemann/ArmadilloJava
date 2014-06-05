@@ -177,8 +177,10 @@ namespace armadilloJava {
 		  expectedColVecPrint();
 		  expectedColVecRaw_print();
 		  expectedColIs_finite();
-		  expectedColMin();
-		  expectedColMax();
+		  expectedColMinA();
+		  expectedColMaxA();
+		  expectedColMinB();
+		  expectedColMaxB();
 		  expectedColIs_empty();
 			
 			
@@ -587,19 +589,36 @@ namespace armadilloJava {
         cout << "done." << endl;
       }
 
-      void expectedColMin() {
-        cout << "- Compute expectedColMin() ... ";
+      void expectedColMinA() {
+        cout << "- Compute expectedColMinA() ... ";
         double value;
         value = _genColVec.min();
-        save<double>("Col.min", Col<double>({value}));
+        save<double>("Col.minA", Col<double>({value}));
+
         cout << "done." << endl;
       }
 
-      void expectedColMax() {
-        cout << "- Compute expectedColMax() ... ";
+      void expectedColMaxA() {
+        cout << "- Compute expectedColMaxA() ... ";
         double value;
         value = _genColVec.max();
-        save<double>("Col.max", Col<double>({value}));
+        save<double>("Col.maxA", Col<double>({value}));
+        cout << "done." << endl;
+      }
+
+      void expectedColMinB() {
+        cout << "- Compute expectedColMinB() ... ";
+        uword value;
+        _genColVec.min(value);
+        save<double>("Col.minB", Col<double>({static_cast<double>(value)}));
+        cout << "done." << endl;
+      }
+
+      void expectedColMaxB() {
+        cout << "- Compute expectedColMaxB() ... ";
+        uword value;
+        _genColVec.max(value);
+        save<double>("Col.maxB", Col<double>({static_cast<double>(value)}));
         cout << "done." << endl;
       }
 

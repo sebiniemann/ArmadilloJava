@@ -620,7 +620,7 @@ int main() {
    */
 
 //  ExpectedDatum();
-//	ExpectedGenColVec();
+	ExpectedGenColVec();
 //	ExpectedGenColVecElemInd();
 //	ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();
@@ -629,7 +629,7 @@ int main() {
 //  ExpectedGenColVecGenColVecNormal();
 //  ExpectedGenColVecGenDouble();
 //  ExpectedGenColVecGenMat();
-    ExpectedGenColVecGenRowVec();
+//  ExpectedGenColVecGenRowVec();
 //  ExpectedGenColVecGenRowVecNormal();
 //  ExpectedGenColVecMonColVec();
 //  ExpectedGenColVecMonRowVec();
