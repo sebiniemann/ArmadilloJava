@@ -186,4 +186,74 @@ public class TestGenColVecGenColVec extends TestClass {
     assertMatEquals(Arma.kron(_genColVecA, _genColVecB), load("Arma.kron"));
   }
 
+  @Test
+  public void testColPlus() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+
+    
+    assertMatEquals(_genColVecA.plus(_genColVecB), load("Col.plus"));
+  }
+
+  @Test
+  public void testColMinus() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.minus(_genColVecB), load("Col.minus"));
+  }
+
+  @Test
+  public void testColElemTimes() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.elemTimes(_genColVecB), load("Col.elemTimes"));
+  }
+
+  @Test
+  public void testColElemDivide() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.elemDivide(_genColVecB), load("Col.elemDivide"));
+  }
+
+  @Test
+  public void testColEquals() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.equals(_genColVecB), load("Col.equals"));
+  }
+
+  @Test
+  public void testColNonEquals() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.nonEquals(_genColVecB), load("Col.nonEquals"));
+  }
+
+  @Test
+  public void testColGreaterThan() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.greaterThan(_genColVecB), load("Col.greaterThan"));
+  }
+
+  @Test
+  public void testColLessThan() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.lessThan(_genColVecB), load("Col.lessThan"));
+  }
+
+  @Test
+  public void testColStrictGreaterThan() throws IOException {
+    assumeThat(_genColVecA.n_elem, is(_genColVecB.n_elem));
+    
+    assertMatEquals(_genColVecA.strictGreaterThan(_genColVecB), load("Col.strictGreaterThan"));
+  }
+
+  @Test
+  public void testColStrictLessThan() throws IOException {
+    assumeThat(_genColVecA.n_rows, is(_genColVecB.n_rows));
+    
+    assertMatEquals(_genColVecA.strictLessThan(_genColVecB), load("Col.strictLessThan"));
+  }
 }

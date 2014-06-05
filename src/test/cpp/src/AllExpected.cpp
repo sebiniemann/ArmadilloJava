@@ -625,9 +625,9 @@ int main() {
 //	ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();
 //  ExpectedGenColVecExp();
-//  ExpectedGenColVecGenColVec();
+    ExpectedGenColVecGenColVec();
 //  ExpectedGenColVecGenColVecNormal();
-    ExpectedGenColVecGenDouble();
+//  ExpectedGenColVecGenDouble();
 //  ExpectedGenColVecGenMat();
 //  ExpectedGenColVecGenRowVec();
 //  ExpectedGenColVecGenRowVecNormal();
