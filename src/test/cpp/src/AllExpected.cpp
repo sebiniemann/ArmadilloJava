@@ -727,10 +727,10 @@ int main() {
 //  ExpectedInPlaceGenColVecElemIndsGenDouble();
 //  ExpectedInPlaceGenColVecElemIndsGenMat();
 //  ExpectedInPlaceGenColVecElemIndsGenRowVec();
-    ExpectedInPlaceGenColVecGenColVec();
+//  ExpectedInPlaceGenColVecGenColVec();
 //	ExpectedInPlaceGenColVecGenDouble();
 //	ExpectedInPlaceGenColVecGenMat();
-//  ExpectedInPlaceGenColVecGenRowVec();
+    ExpectedInPlaceGenColVecGenRowVec();
 //	ExpectedInPlaceGenColVecIndRange();
 //	ExpectedInPlaceGenColVecNumElems();
 //  ExpectedInPlaceGenMat();
