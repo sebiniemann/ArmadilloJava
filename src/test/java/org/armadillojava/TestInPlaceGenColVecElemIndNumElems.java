@@ -14,6 +14,7 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -109,7 +110,7 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     _genColVec.insert_rows(_elemInd, _numElems, false);
 
-    assertMatEquals(_genColVec, load("Col.insertRowsFalse"));
+    assertEquals(_genColVec.n_elem, load("Col.insertRowsFalse").n_elem);
   }
 
 }
