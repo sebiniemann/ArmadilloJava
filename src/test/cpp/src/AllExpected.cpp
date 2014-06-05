@@ -628,8 +628,8 @@ int main() {
 //  ExpectedGenColVecGenColVec();
 //  ExpectedGenColVecGenColVecNormal();
 //  ExpectedGenColVecGenDouble();
-    ExpectedGenColVecGenMat();
-//  ExpectedGenColVecGenRowVec();
+//  ExpectedGenColVecGenMat();
+    ExpectedGenColVecGenRowVec();
 //  ExpectedGenColVecGenRowVecNormal();
 //  ExpectedGenColVecMonColVec();
 //  ExpectedGenColVecMonRowVec();
