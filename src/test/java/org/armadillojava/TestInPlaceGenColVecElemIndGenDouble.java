@@ -32,15 +32,15 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
+public class TestInPlaceGenColVecElemIndGenDouble extends TestClass {
 
-  @Parameters(name = "{index}: GenColVec = {0}, ElemInd = {2}, NumElems = {4}")
+  @Parameters(name = "{index}: GenColVec = {0}, ElemInd = {2}, GenDouble = {4}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
     inputClasses.add(InputClass.GenColVec);
     inputClasses.add(InputClass.ElemInd);
-    inputClasses.add(InputClass.NumElems);
+    inputClasses.add(InputClass.GenDouble);
 
     return Input.getTestParameters(inputClasses);
   }
@@ -62,54 +62,108 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
   protected int    _copyOfElemInd;
 
   @Parameter(4)
-  public String    _numElemsString;
+  public String    _genDoubleString;
 
   @Parameter(5)
-  public int	_numElems;
+  public double    _genDouble;
 
-  protected int _copyOfNumElems;
+  protected double _copyOfGenDouble;
 
   @Before
   public void before() {
-    _fileSuffix = _genColVecString + "," + _elemIndString + "," + _numElemsString;
+    _fileSuffix = _genColVecString + "," + _elemIndString + "," + _genDoubleString;
 
     _copyOfGenColVec = new Col(_genColVec);
     _copyOfElemInd = new Integer(_elemInd);
-    _copyOfNumElems = _numElems;
+    _copyOfGenDouble = new Double(_genDouble);
   }
 
   @After
   public void after() {
     _genColVec.inPlace(Op.EQUAL, _copyOfGenColVec);
     _elemInd = new Integer(_copyOfElemInd);
-    _numElems = _copyOfNumElems;
+    _genDouble = new Double(_copyOfGenDouble);
   }
 
   @Test
-  public void testColVecInsertRows() throws IOException {
+  public void testColVecAtEqual() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
 
-    _genColVec.insert_rows(_elemInd, _numElems);
+    _genColVec.at(_elemInd, Op.EQUAL, _genDouble);
 
-    assertMatEquals(_genColVec, load("Col.insertRows"));
-  }
-  
-  @Test
-  public void testColVecInsertRowsTrue() throws IOException {
-    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
-
-    _genColVec.insert_rows(_elemInd, _numElems, true);
-
-    assertMatEquals(_genColVec, load("Col.insertRowsTrue"));
+    assertMatEquals(_genColVec, load("Col.atEqual"));
   }
   
   @Test
-  public void testColVecInsertRowsFalse() throws IOException {
+  public void testColVecAtPlus() throws IOException {
     assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
 
-    _genColVec.insert_rows(_elemInd, _numElems, false);
+    _genColVec.at(_elemInd, Op.PLUS, _genDouble);
 
-    assertMatEquals(_genColVec, load("Col.insertRowsFalse"));
+    assertMatEquals(_genColVec, load("Col.atPlus"));
+  }
+
+  @Test
+  public void testColVecAtMinus() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.at(_elemInd, Op.MINUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.atMinus"));
+  }
+
+  @Test
+  public void testColVecAtTimes() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.at(_elemInd, Op.TIMES, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.atTimes"));
+  }
+
+  @Test
+  public void testColAtDivide() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.at(_elemInd, Op.DIVIDE, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.atDivide"));
+  }
+  
+  @Test
+  public void testColVecRowPlus() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.row(_elemInd, Op.PLUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.rowPlus"));
+  }
+
+  @Test
+  public void testColVecRowMinus() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.row(_elemInd, Op.MINUS, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.rowMinus"));
+  }
+
+  @Test
+  public void testColVecRowTimes() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.row(_elemInd, Op.TIMES, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.rowTimes"));
+  }
+
+  @Test
+  public void testColRowDivide() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genColVec.n_elem)));
+
+    _genColVec.row(_elemInd, Op.DIVIDE, _genDouble);
+
+    assertMatEquals(_genColVec, load("Col.rowDivide"));
   }
 
 }
