@@ -5,6 +5,14 @@ ArmadilloJava 4.000.0
 
 Provides Java based interfaces similar to the [Armadillo C++ Algebra Library (Armadillo)](http://arma.sourceforge.net/) by Conrad Sanderson et al., NICTA, Australia.
 
+How to Contribute
+-----------------
+
+If you would like to contribute, please read the [guidelines for contributions](CONTRIBUTING.md).
+Following these guidelines will help make your contributions easier to bring into the next release.
+
+If you have any further questions, please do not hesitate to [contact us](mailto:niemann@sra.uni-hannover.de).
+
 API Reference for 4.000
 -----------------------
 
