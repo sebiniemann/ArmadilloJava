@@ -35,64 +35,64 @@
 
 		<h4>Matrix & Vector Classes</h4>
 			<ul>
-				<li> Mat: Dense, real-valued, double-precision matrix
-				<li> Col: Dense, real-valued, double-precision column vector
-				<li> Row: Dense, real-valued, double-precision row vector
+				<li> <code>Mat:</code> Dense, real-valued, double-precision matrix
+				<li> <code>Col:</code> Dense, real-valued, double-precision column vector
+				<li> <code>Row:</code> Dense, real-valued, double-precision row vector
 			</ul>
 			
 		<h4>Member Functions & Variables</h4>
 			<ul>
-				<li> <b>Supported:</b> attributes, copy_size, diag, each_col, each_row, element access, element initialisation, eye, fill, i (inverse), insert_rows, insert_cols, in_range, is_empty, is_finite, is_square, is_vec, memptr, min, max, ones, operators, print, raw_print, randi, randu, randn, reset, reshape, resize, save/load (matrices & cubes), save/load (fields), set_imag/real, set_size, shed_rows/cols/slices, STL container functions, submatrix views, swap, swap_rows, swap_cols, t (transpose), zeros
-				<li> <b>Unsupported:</b> colptr, eval, imbue, C++-like iterators, transform
+				<li> <strong>Supported:</strong> <code>attributes</code>, <code>copy_size</code>, <code>diag</code>, <code>each_col</code>, <code>each_row</code>, <code>element access</code>, <code>element initialisation</code>, <code>eye</code>, <code>fill</code>, <code>i (inverse)</code>, <code>insert_rows</code>, <code>insert_cols</code>, <code>in_range</code>, <code>is_empty</code>, <code>is_finite</code>, <code>is_square</code>, <code>is_vec</code>, <code>memptr</code>, <code>min</code>, <code>max</code>, <code>ones</code>, <code>operators</code>, <code>print</code>, <code>raw_print</code>, <code>randi</code>, <code>randu</code>, <code>randn</code>, <code>reset</code>, <code>reshape</code>, <code>resize</code>, <code>save/load (matrices & cubes)</code>, <code>save/load (fields)</code>, <code>set_imag/real</code>, <code>set_size</code>, <code>shed_rows/cols/slices</code>, <code>STL container functions</code>, <code>submatrix views</code>, <code>swap</code>, <code>swap_rows</code>, <code>swap_cols</code>, <code>t (transpose)</code>, <code>zeros</code>
+				<li> <strong>Unsupported:</strong> <code>colptr</code>, <code>eval</code>, <code>imbue</code>, <code>C++-like iterators</code>, <code>transform</code>
 			</ul>
 			
 		<h4>Other Classes</h4>
 			<ul>
-				<li> RunningStat
-				<li> RunningStatVec
-				<li> WallClock
+				<li> <code>RunningStat</code>
+				<li> <code>RunningStatVec</code>
+				<li> <code>WallClock</code>
 			</ul>
 			
 		<h4>Generated Vectors & Matrices</h4>
 			<ul>
-				<li> <b>Supported:</b> eye, linspace, ones, randu, randn, repmat, toeplitz, circ_toeplitz, zeros
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>eye</code>, <code>linspace</code>, <code>ones</code>, <code>randu</code>, <code>randn</code>, <code>repmat</code>, <code>toeplitz</code>, <code>circ_toeplitz</code>, <code>zeros</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 			
 		<h4>Functions Individually Applied to Each Element of a Matrix</h4>
 			<ul>
-				<li> <b>Supported:</b> abs, eps, exp, exp2, exp10, trunc_exp, log, log2, log10, trunc_log, pow, sqrt, square, floor, ceil, round, sign, sin, asin, sinh, asinh, cos, acos, cosh, acosh, tan, atan, tanh, atanh
-				<li> <b>Unsupported:</b> conv_to
+				<li> <strong>Supported:</strong> <code>abs</code>, <code>eps</code>, <code>exp</code>, <code>exp2</code>, <code>exp10</code>, <code>trunc_exp</code>, <code>log</code>, <code>log2</code>, <code>log10</code>, <code>trunc_log</code>, <code>pow</code>, <code>sqrt</code>, <code>square</code>, <code>floor</code>, <code>ceil</code>, <code>round</code>, <code>sign</code>, <code>sin</code>, <code>asin</code>, <code>sinh</code>, <code>asinh</code>, <code>cos</code>, <code>acos</code>, <code>cosh</code>, <code>acosh</code>, <code>tan</code>, <code>atan</code>, <code>tanh</code>, <code>atanh</code>
+				<li> <strong>Unsupported:</strong> <code>conv_to</code>
 			</ul>
 		
 		<h4>Scalar Valued Functions of Vectors/Matrices/Cubes</h4>
 			<ul>
-				<li> <b>Supported:</b> accu, as_scalar, cond, det, dot, norm_dot, log_det, norm, rank, trace
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>accu</code>, <code>as_scalar</code>, <code>cond</code>, <code>det</code>, <code>dot</code>, <code>norm_dot</code>, <code>log_det</code>, <code>norm</code>, <code>rank</code>, <code>trace</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 		
 		<h4>Scalar/Vector Valued Functions of Vectors/Matrices</h4>
 			<ul>
-				<li> <b>Supported:</b> diagvec, min/max, prod, sum, mean, median, stddev, var
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>diagvec</code>, <code>min/max</code>, <code>prod</code>, <code>sum</code>, <code>mean</code>, <code>median</code>, <code>stddev</code>, <code>var</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 		
 		<h4>Vector/Matrix Valued Functions of Vectors/Matrices</h4>
 			<ul>
-				<li> <b>Supported:</b> all, any, conv, cor, cov, cross, cumsum, diagmat, find, fliplr, flipud, hist, histc, inplace_trans, join_rows, join_cols, kron, reshape, resize, shuffle, sort, sort_index, symmatu, symmatl, trans, trimatu, trimatl, unique, vectorise
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>all</code>, <code>any</code>, <code>conv</code>, <code>cor</code>, <code>cov</code>, <code>cross</code>, <code>cumsum</code>, <code>diagmat</code>, <code>find</code>, <code>fliplr</code>, <code>flipud</code>, <code>hist</code>, <code>histc</code>, <code>inplace_trans</code>, <code>join_rows</code>, <code>join_cols</code>, <code>kron</code>, <code>reshape</code>, <code>resize</code>, <code>shuffle</code>, <code>sort</code>, <code>sort_index</code>, <code>symmatu</code>, <code>symmatl</code>, <code>trans</code>, <code>trimatu</code>, <code>trimatl</code>, <code>unique</code>, <code>vectorise</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 		
 		<h4>Decompositions, Factorisations, Inverses and Equation Solvers</h4>
 			<ul>
-				<li> <b>Supported:</b> chol, eig_sym, inv, lu, pinv, princomp, qr, qr_econ, solve, svd, svd_econ, syl
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>chol</code>, <code>eig_sym</code>, <code>inv</code>, <code>lu</code>, <code>pinv</code>, <code>princomp</code>, <code>qr</code>, <code>qr_econ</code>, <code>solve</code>, <code>svd</code>, <code>svd_econ</code>, <code>syl</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 		
 		<h4>Miscellaneous</h4>
 			<ul>
-				<li> <b>Supported:</b> is_finite, pre-defined constants (pi, inf, speed of light, ...)
-				<li> <b>Unsupported:</b> <i>nothing</i>
+				<li> <strong>Supported:</strong> <code>is_finite</code>, <code>pre-defined constants (pi, inf, speed of light, ...)</code>
+				<li> <strong>Unsupported:</strong> <em>nothing</em>
 			</ul>
 		
 		</section>
