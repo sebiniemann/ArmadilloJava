@@ -1,5 +1,5 @@
 # Maven
-/target
+target
 hs_err_pid*.log
 
 # Eclipse
@@ -8,15 +8,15 @@ hs_err_pid*.log
 .project
 
 # CMake
-/src/test/cpp/CMakeFiles
-/src/test/cpp/CMakeCache.txt
-/src/test/cpp/Makefile
-/src/test/cpp/cmake_install.cmake
+CMakeFiles
+CMakeCache.txt
+Makefile
+cmake_install.cmake
 
 # Eclipse CDT
-/src/test/cpp/.cproject
-/src/test/cpp/.project
+.cproject
+.project
 
 # Project specific
-/src/test/cpp/expected.log
-/src/test/cpp/bin
+expected.log
+bin
