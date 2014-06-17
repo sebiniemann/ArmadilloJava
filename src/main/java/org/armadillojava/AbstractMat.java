@@ -33,6 +33,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * TODO
+ * 
+ * @author Sebastian Niemann
+ */
 abstract class AbstractMat {
 
   /**
@@ -62,6 +67,8 @@ abstract class AbstractMat {
    * upon errors.
    * 
    * @param n The position
+   * 
+   * @return The value of the {@code n}th element.
    */
   public double at(final int n) {
     return _data[n];
@@ -129,6 +136,8 @@ abstract class AbstractMat {
    * Returns {@code true} if the position is not out of bounds.
    * 
    * @param n The position
+   * 
+   * @return {@code true} if the position is not out of bounds.
    */
   public boolean in_range(final int n) {
     return (n > -1 && n < n_elem);
@@ -138,6 +147,8 @@ abstract class AbstractMat {
    * Returns {@code true} if neither position within the span is out of bounds.
    * 
    * @param span The span
+   * 
+   * @return {@code true} if neither position within the span is out of bounds.
    */
   public boolean in_range(final Span span) {
     /*
@@ -151,6 +162,8 @@ abstract class AbstractMat {
    * 
    * @param row The row
    * @param col The column
+   * 
+   * @return {@code true} if neither the row nor the column is out of bound.
    */
   public boolean in_range(final int row, final int col) {
     return ((row > -1 && row < n_rows) && (col > -1 && col < n_cols));
@@ -161,6 +174,8 @@ abstract class AbstractMat {
    * 
    * @param row_span The row span
    * @param col_span The column span
+   * 
+   * @return TODO
    */
   public boolean in_range(final Span row_span, final Span col_span) {
     /*
@@ -176,6 +191,8 @@ abstract class AbstractMat {
    * @param first_row The first row
    * @param first_col The first column
    * @param size The size of a matrix or field
+   * 
+   * @return TODO
    */
   public boolean in_range(final int first_row, final int first_col, final Size size) {
     /*
@@ -186,6 +203,8 @@ abstract class AbstractMat {
 
   /**
    * Returns {@code true} if the matrix has no elements.
+   * 
+   * @return TODO
    */
   public boolean is_empty() {
     return (n_elem == 0);
@@ -193,6 +212,8 @@ abstract class AbstractMat {
 
   /**
    * Returns {@code true} if the matrix contains only finite values.
+   * 
+   * @return TODO
    */
   public boolean is_finite() {
     for (int n = 0; n < n_elem; n++) {
@@ -208,6 +229,8 @@ abstract class AbstractMat {
 
   /**
    * Returns a reference to the memory internally representing the matrix.
+   * 
+   * @return TODO
    */
   public double[] memptr() {
     return _data;
@@ -215,6 +238,8 @@ abstract class AbstractMat {
 
   /**
    * Returns the smallest value within the matrix.
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -236,6 +261,8 @@ abstract class AbstractMat {
    * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
    * @param index_of_min_val The storage of the position
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -261,6 +288,8 @@ abstract class AbstractMat {
   /**
    * Returns the largest value within the matrix.
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
   public double max() throws RuntimeException {
@@ -282,6 +311,8 @@ abstract class AbstractMat {
    * <b>Note:</b> Unfortunately, the storage variable must be of the mutable type int[].
    * 
    * @param index_of_max_val The storage of the position
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -368,6 +399,11 @@ abstract class AbstractMat {
     writer.println(this);
   }
 
+  /**
+   * TODO
+   * 
+   * @return TODO
+   */
   protected String raw_toString() {
     String output = "(" + n_rows + ", " + n_cols + ")-matrix: [" + System.lineSeparator();
     for (int i = 0; i < n_rows; i++) {
@@ -467,6 +503,10 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * 
+   * @return TODO
+   * 
+   * @throws FileNotFoundException TODO
+   * 
    * @see FileType
    */
   public boolean save(final String name) throws FileNotFoundException {
@@ -478,6 +518,10 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * @param file_type The file format
+   * 
+   * @return TODO
+   * 
+   * @throws FileNotFoundException TODO
    * 
    * @see FileType
    */
@@ -492,6 +536,8 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * 
+   * @return TODO
+   * 
    * @see FileType
    */
   public boolean save(final OutputStream stream) {
@@ -503,6 +549,8 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * @param file_type The file format
+   * 
+   * @return TODO
    * 
    * @see FileType
    */
@@ -545,7 +593,11 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * 
+   * @return TODO
+   * 
    * @throws IllegalArgumentException All rows must have the same number of columns.
+   * @throws FileNotFoundException TODO
+   * @throws IOException TODO
    * 
    * @see FileType
    */
@@ -560,7 +612,11 @@ abstract class AbstractMat {
    * @param name The file path
    * @param file_type The file format
    * 
+   * @return TODO
+   * 
    * @throws IllegalArgumentException All rows must have the same number of columns.
+   * @throws FileNotFoundException TODO
+   * @throws IOException TODO
    * 
    * @see FileType
    */
@@ -575,7 +631,10 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * 
+   * @return TODO
+   * 
    * @throws IllegalArgumentException All rows must have the same number of columns.
+   * @throws IOException TODO
    * 
    * @see FileType
    */
@@ -590,7 +649,10 @@ abstract class AbstractMat {
    * @param stream The stream
    * @param file_type The file format
    * 
+   * @return TODO
+   * 
    * @throws IllegalArgumentException All rows must have the same number of columns.
+   * @throws IOException TODO
    * 
    * @see FileType
    */
@@ -662,6 +724,8 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param name The file name
+   * 
+   * @return TODO
    */
   public boolean quiet_save(final String name) {
     return quiet_save(name, FileType.RAW_ASCII);
@@ -674,6 +738,8 @@ abstract class AbstractMat {
    * 
    * @param name The file name
    * @param file_type The file format
+   * 
+   * @return TODO
    */
   public boolean quiet_save(final String name, final FileType file_type) {
     try {
@@ -689,6 +755,8 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param stream The stream
+   * 
+   * @return TODO
    */
   public boolean quiet_save(final OutputStream stream) {
     return quiet_save(stream, FileType.RAW_ASCII);
@@ -702,6 +770,8 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * @param file_type The file format
+   * 
+   * @return TODO
    */
   public boolean quiet_save(final OutputStream stream, final FileType file_type) {
     try {
@@ -717,6 +787,8 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param name The file path
+   * 
+   * @return TODO
    */
   public boolean quiet_load(final String name) {
     return quiet_load(name, FileType.RAW_ASCII);
@@ -729,6 +801,8 @@ abstract class AbstractMat {
    * 
    * @param name The file path
    * @param file_type The file format
+   * 
+   * @return TODO
    */
   public boolean quiet_load(final String name, final FileType file_type) {
     try {
@@ -744,6 +818,8 @@ abstract class AbstractMat {
    * <b>Non-canonical:</b> The default file format is {@code FileType.RAW_ASCII}.
    * 
    * @param stream The stream
+   * 
+   * @return TODO
    */
   public boolean quiet_load(final InputStream stream) {
     return quiet_load(stream, FileType.RAW_ASCII);
@@ -757,6 +833,8 @@ abstract class AbstractMat {
    * 
    * @param stream The stream
    * @param file_type The file format
+   * 
+   * @return TODO
    */
   public boolean quiet_load(final InputStream stream, final FileType file_type) {
     try {
@@ -786,6 +864,8 @@ abstract class AbstractMat {
    * C++ STL-like function
    * <p>
    * Returns {@code true} if the matrix has no elements.
+   * 
+   * @return TODO
    */
   public boolean empty() {
     return is_empty();
@@ -795,6 +875,8 @@ abstract class AbstractMat {
    * C++ STL-like function
    * <p>
    * Returns the number of elements.
+   * 
+   * @return TODO
    */
   public int size() {
     return n_elem;
@@ -807,6 +889,8 @@ abstract class AbstractMat {
    * errors.
    * 
    * @param vector_of_indices The positions
+   * 
+   * @return TODO
    */
   public Col elem(final AbstractVector vector_of_indices) {
     return new Col(new ViewElemMat(this, vector_of_indices._data));
@@ -878,7 +962,7 @@ abstract class AbstractMat {
    * Performs an in-place binary operation on the whole matrix with the specified right-hand side operand.
    * 
    * @param binary_operator The binary operator
-   * @param operand The operand
+   * @param rightHandOperand The operand
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
@@ -923,7 +1007,7 @@ abstract class AbstractMat {
    * Nothing about the shape of both matrices is required if used with Op.EQUAL.
    * 
    * @param binary_operator The binary operator
-   * @param operand The operand
+   * @param rightHandOperand The operand
    * 
    * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code rightHandOperand.n_rows},
@@ -1072,6 +1156,8 @@ abstract class AbstractMat {
 
   /**
    * Returns the transpose.
+   * 
+   * @return TODO
    */
   abstract public AbstractMat t();
 
@@ -1085,6 +1171,13 @@ abstract class AbstractMat {
    */
   abstract public void copy_size(final AbstractMat A) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void plus(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] + rightHandOperand;
@@ -1095,9 +1188,18 @@ abstract class AbstractMat {
    * Returns the out-of-place addition with the specified right-hand side addend.
    * 
    * @param X The addend
+   * 
+   * @return TODO
    */
   abstract public AbstractMat plus(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void plus(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] + rightHandOperand[n];
@@ -1109,6 +1211,8 @@ abstract class AbstractMat {
    * 
    * @param X The addend
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1118,6 +1222,8 @@ abstract class AbstractMat {
    * Returns the out-of-place addition with the provided right-hand side addend.
    * 
    * @param X The addend
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1129,11 +1235,20 @@ abstract class AbstractMat {
    * 
    * @param X The addend
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat plus(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void minus(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] - rightHandOperand;
@@ -1144,9 +1259,18 @@ abstract class AbstractMat {
    * Returns the out-of-place subtraction with the specified right-hand side subtrahend.
    * 
    * @param X The subtrahend
+   * 
+   * @return TODO
    */
   abstract public AbstractMat minus(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void minus(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] - rightHandOperand[n];
@@ -1158,6 +1282,8 @@ abstract class AbstractMat {
    * 
    * @param X The subtrahend
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1167,6 +1293,8 @@ abstract class AbstractMat {
    * Returns the out-of-place subtraction with the provided right-hand side subtrahend.
    * 
    * @param X The subtrahend
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1178,11 +1306,20 @@ abstract class AbstractMat {
    * 
    * @param X The subtrahend
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat minus(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void divide(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] / rightHandOperand;
@@ -1193,9 +1330,18 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise division with the specified right-hand side divisor.
    * 
    * @param X The divisor
+   * 
+   * @return TODO
    */
   abstract public AbstractMat divide(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void elemDivide(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] / rightHandOperand[n];
@@ -1207,6 +1353,8 @@ abstract class AbstractMat {
    * 
    * @param X The divisor
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1216,6 +1364,8 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise division with the provided right-hand side divisor.
    * 
    * @param X The divisor
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1227,11 +1377,20 @@ abstract class AbstractMat {
    * 
    * @param X The divisor
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat elemDivide(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void times(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] * rightHandOperand;
@@ -1243,13 +1402,31 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
   abstract public AbstractMat times(final double X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param X TODO
+   * 
+   * @return TODO
+   * 
+   * @throws RuntimeException TODO
+   */
   abstract protected AbstractMat times(final AbstractMat X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void elemTimes(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     for (int n = 0; n < leftHandOperand.length; n++) {
       result[n] = leftHandOperand[n] * rightHandOperand[n];
@@ -1261,6 +1438,8 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1270,6 +1449,8 @@ abstract class AbstractMat {
    * Returns the out-of-place element-wise multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1281,11 +1462,20 @@ abstract class AbstractMat {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat elemTimes(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void equals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1307,9 +1497,18 @@ abstract class AbstractMat {
    * side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat equals(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void equals(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1332,6 +1531,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1344,6 +1545,8 @@ abstract class AbstractMat {
    * side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1358,11 +1561,20 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat equals(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void nonEquals(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1384,9 +1596,18 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat nonEquals(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void nonEquals(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1409,6 +1630,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1421,6 +1644,8 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1435,11 +1660,20 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat nonEquals(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void greaterThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1461,9 +1695,18 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat greaterThan(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void greaterThan(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1486,6 +1729,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1498,6 +1743,8 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1512,11 +1759,20 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat greaterThan(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void lessThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1538,9 +1794,18 @@ abstract class AbstractMat {
    * side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat lessThan(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void lessThan(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1563,6 +1828,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1575,6 +1842,8 @@ abstract class AbstractMat {
    * side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1589,11 +1858,20 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat lessThan(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void strictGreaterThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1616,9 +1894,18 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat strictGreaterThan(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void strictGreaterThan(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1642,6 +1929,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1655,6 +1944,8 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1670,11 +1961,20 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
   abstract public AbstractMat strictGreaterThan(final Row X) throws RuntimeException;
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void strictLessThan(final double[] result, final double[] leftHandOperand, final double rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1697,9 +1997,18 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    */
   abstract public AbstractMat strictLessThan(final double X);
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param leftHandOperand TODO
+   * @param rightHandOperand TODO
+   */
   protected static void strictLessThan(final double[] result, final double[] leftHandOperand, final double[] rightHandOperand) {
     /*
      * All entries of an array are already set to 0 during creation.
@@ -1723,6 +2032,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1737,6 +2048,8 @@ abstract class AbstractMat {
    * 
    * @param X The operand
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
    */
@@ -1750,6 +2063,8 @@ abstract class AbstractMat {
    * right-hand side and 0 otherwise.
    * 
    * @param X The operand
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices ({@code n_rows}, {@code n_cols} and {@code X.n_rows}, {@code X.n_cols}) must
    *           have the same shape.
@@ -1783,10 +2098,17 @@ abstract class AbstractMat {
     return output;
   }
 
+  /**
+   * TODO
+   * 
+   * @param n_elem TODO
+   */
   abstract protected void set_size(final int n_elem);
 
   /**
    * Returns {@code true} if the matrix has only one row or column.
+   * 
+   * @return TODO
    */
   protected boolean is_vec() {
     return (is_colvec() || is_rowvec());
@@ -1794,6 +2116,8 @@ abstract class AbstractMat {
 
   /**
    * Returns {@code true} if the matrix has only one column.
+   * 
+   * @return TODO
    */
   protected boolean is_colvec() {
     return (n_cols == 1);
@@ -1801,6 +2125,8 @@ abstract class AbstractMat {
 
   /**
    * Returns {@code true} if the matrix has only one row.
+   * 
+   * @return TODO
    */
   protected boolean is_rowvec() {
     return (n_rows == 1);

@@ -25,7 +25,7 @@ import com.github.fommil.netlib.BLAS;
  * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
  * Algebra Library.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  */
@@ -87,13 +87,13 @@ public class Col extends AbstractVector {
   }
 
   /**
-   * Creates a deep copy of a vector.
+   * Creates a deep copy of a column vector.
    * 
-   * @param vec The vector
+   * @param col The vector
    */
-  public Col(final Col vec) {
-    copy_size(vec);
-    System.arraycopy(vec._data, 0, _data, 0, vec.n_elem);
+  public Col(final Col col) {
+    copy_size(col);
+    System.arraycopy(col._data, 0, _data, 0, col.n_elem);
   }
 
   /**
@@ -137,6 +137,11 @@ public class Col extends AbstractVector {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param vec TODO
+   */
   protected void copy_size(final AbstractView vec) {
     set_size(vec.n_elem);
   }
@@ -154,6 +159,8 @@ public class Col extends AbstractVector {
    * Returns a deep copy of the {@code row_number}th row.
    * 
    * @param row_number The column
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
    */
@@ -220,6 +227,8 @@ public class Col extends AbstractVector {
    * 
    * @param first_row The first row
    * @param last_row The last row
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first specified row ({@code first_row}) must be less than or equal the last specified
    *           row ({@code last_row}).
@@ -325,6 +334,8 @@ public class Col extends AbstractVector {
    * exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
+   * 
+   * @return TODO
    */
   public Col rows(final AbstractVector vector_of_row_indices) {
     return new Col(new ViewElemVec(this, vector_of_row_indices._data));
@@ -619,6 +630,8 @@ public class Col extends AbstractVector {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
@@ -632,6 +645,8 @@ public class Col extends AbstractVector {
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
@@ -925,7 +940,7 @@ public class Col extends AbstractVector {
       throw new NegativeArraySizeException("The specified number of elements (" + n_elem + ") must be positive.");
     }
 
-    if (n_elem != this.n_elem) {
+    if (n_elem != this.n_elem || n_elem == 0) {
       if (n_elem > 0) {
         this.n_rows = n_elem;
         this.n_cols = 1;

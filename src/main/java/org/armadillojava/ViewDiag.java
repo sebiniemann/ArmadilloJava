@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides shallow matrix diagonal views of {@link Mat}.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class ViewDiag extends AbstractView {
 
@@ -37,11 +37,10 @@ public class ViewDiag extends AbstractView {
 
   /**
    * Creates a shallow copy of a matrix and restrict the access to its {@code k}th diagonal.
-   * <p>
    * <ul>
    * <li>For {@code k} = 0, its the main diagonal.
-   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
-   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * <li>For {@code k} &gt; 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} &lt; 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param matrix The matrix

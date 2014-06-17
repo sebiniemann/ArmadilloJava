@@ -20,7 +20,7 @@ package org.armadillojava;
  * <p>
  * Besides the covariance, each measurement is calculated per dimension.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class RunningStatVec {
   /**
@@ -69,6 +69,12 @@ public class RunningStatVec {
   public RunningStatVec(boolean calculateCovariance) {
     _calculateCovariance = calculateCovariance;
 
+    _cov = new Mat();
+    _max = new Col();
+    _min = new Col();
+    _var = new Col();
+    _mean = new Col();
+    
     reset();
   }
 

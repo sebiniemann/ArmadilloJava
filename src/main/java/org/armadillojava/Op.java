@@ -22,7 +22,7 @@ package org.armadillojava;
  * Binary arithmetic operators: <br>
  * {@link #PLUS}, {@link #MINUS}, {@link #TIMES}, {@link #ELEMTIMES} and {@link #ELEMDIVIDE}
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public enum Op {
   /**

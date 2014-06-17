@@ -15,6 +15,11 @@ package org.armadillojava;
 
 import java.util.Arrays;
 
+/**
+ * TODO
+ * 
+ * @author Sebastian Niemann
+ */
 abstract class AbstractVector extends AbstractMat {
 
   /**
@@ -128,6 +133,8 @@ abstract class AbstractVector extends AbstractMat {
    * @param first_index The first position
    * @param last_index The last position
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The first specified position ({@code first_index}) must be less than or equal the last
    *           specified position ({@code last_index}).
    * @throws IndexOutOfBoundsException The first specified position ({@code first_index}) is out of bounds.
@@ -210,29 +217,12 @@ abstract class AbstractVector extends AbstractMat {
    * 
    * @param span The span
    * 
+   * @return TODO
+   * 
    * @throws IndexOutOfBoundsException The first position ({@code span._first}) is out of bounds.
    * @throws IndexOutOfBoundsException The last position ({@code span._last}) is out of bounds.
    */
   abstract public AbstractVector subvec(final Span span) throws IndexOutOfBoundsException;
-
-  // /**
-  // * Performs a in-place unary operation on the {@code span._first}th to {@code span._last} element.
-  // *
-  // * @param span The span
-  // * @param unary_operator The unary operator
-  // *
-  // * @throws IndexOutOfBoundsException The first specified position ({@code span._first}) is out of bounds.
-  // * @throws IndexOutOfBoundsException The last specified position ({@code span._last}) is out of bounds.
-  // * @throws UnsupportedOperationException Unexpected operator ({@code unary_operator}).
-  // */
-  // public void subvec(final Span span, final Op unary_operator) throws IndexOutOfBoundsException,
-  // UnsupportedOperationException {
-  // /*
-  // * The parameter "span" was already validated during its instantiation.
-  // * The parameter "unary_operator" is validated within AbstractView.inPlace(Op).
-  // */
-  // subvec(span._first, span._last, unary_operator);
-  // }
 
   /**
    * Performs a in-place binary operation on the {@code span._first}th to {@code span._last} element with the specified

@@ -30,7 +30,7 @@ import com.github.fommil.netlib.LAPACK;
  * If not stated otherwise (marked as non-canonical), the provided interfaces are identical to Armadillo C++ (e.g. same
  * ordering of arguments, accepted values, ...).
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  */
@@ -42,6 +42,8 @@ public class Arma {
    * 
    * @param n_rows The number of rows
    * @param n_cols The number of columns
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
@@ -59,9 +61,12 @@ public class Arma {
    * <p>
    * If a non-vector type is to be returned, it will be in the shape of a column vector.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector/matrix to be returned
    * @param start The first value
    * @param end The last value
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The specified value to start with ({@code start}) must be less than or equal the specified
    *           value to end with ({@code end}).
@@ -79,11 +84,15 @@ public class Arma {
    * <p>
    * If a matrix type is specified as return type, it will be in the shape of a column vector.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector/matrix to be returned
    * @param start The value to start with
    * @param end The value to end with
    * @param N The number of elements
    * 
+   * @return TODO
+   * 
+   * @throws RuntimeException TODO
    * @throws NegativeArraySizeException The specified number of elements ({@code N}) must be positive.
    */
   public static <T extends AbstractMat> T linspace(final Class<T> return_type, final double start, final double end, final int N) throws RuntimeException, NegativeArraySizeException {
@@ -121,8 +130,11 @@ public class Arma {
   /**
    * Returns a vector of ones with the specified number of elements.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
@@ -151,6 +163,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -166,8 +180,11 @@ public class Arma {
    * Returns a vector with the specified number of elements and all values drawn from the discrete uniform distribution
    * [0, Integer.MAX_VALUE - 1].
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
@@ -183,12 +200,15 @@ public class Arma {
    * Returns a vector with the specified number of elements and values drawn from the discrete uniform distribution [
    * {@code distr_param._a}, {@code distr_param._b}].
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
    * @param distr_param The distribution parameter
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
-   * @throws The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
+   * @throws RuntimeException The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
    *           ({@code distr_param._b}).
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
@@ -230,6 +250,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -249,9 +271,11 @@ public class Arma {
    * @param n_cols The number of columns
    * @param distr_param The distribution parameter
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
-   * @throws The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
+   * @throws RuntimeException The first end point ({@code distr_param._a}) of the interval must be less than or equal the last end point
    *           ({@code distr_param._b}).
    * @throws RuntimeException The difference between the first end point ({@code distr_param._a}) and the last end point
    *           ({@code distr_param._b}) can be at most Integer.MAX_VALUE - 1.
@@ -284,8 +308,11 @@ public class Arma {
    * <p>
    * <b>Non-canonical:</b> Drawn from [0,1) instead of the closed interval [0,1].
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
@@ -317,6 +344,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -332,8 +361,11 @@ public class Arma {
    * Returns a vector with the specified number of elements and values drawn from the standard normal
    * distribution with mean 0.0 and standard deviation 1.0.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
@@ -360,8 +392,10 @@ public class Arma {
    * Returns a matrix with the specified number of rows and columns and values drawn from the standard normal
    * distribution with mean 0.0 and standard deviation 1.0.
    * 
-   * @param numberOfRows The number of rows
-   * @param numberOfColumns The number of columns
+   * @param n_rows The number of rows
+   * @param n_cols The number of columns
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
@@ -380,6 +414,8 @@ public class Arma {
    * @param A The matrix
    * @param num_copies_per_row The number of copies per row
    * @param num_copies_per_col The number of copies per column
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of copies per row ({@code num_copies_per_row}) must be
    *           positive.
@@ -423,6 +459,8 @@ public class Arma {
    * 
    * @param A The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           vector.
@@ -455,6 +493,8 @@ public class Arma {
    * 
    * @param A The first vector
    * @param B The second vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one
    *           element.
@@ -499,7 +539,9 @@ public class Arma {
   /**
    * Returns a circulant toeplitz matrix with the provided vector as the first column of the matrix.
    * 
-   * @param vector The vector
+   * @param A The vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
@@ -539,8 +581,11 @@ public class Arma {
   /**
    * Returns a null vector with the specified number of elements.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param n_elem The number of elements
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of elements ({@code n_elem}) must be positive.
    */
@@ -571,6 +616,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -583,6 +630,12 @@ public class Arma {
     return new Mat(n_rows, n_cols);
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void abs(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.abs(X[n]);
@@ -593,6 +646,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed absolute values of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col abs(final Col X) {
     Col result = new Col(X.n_elem);
@@ -604,6 +659,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed absolute values of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row abs(final Row X) {
     Row result = new Row(X.n_elem);
@@ -615,6 +672,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed absolute values of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat abs(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -622,6 +681,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void eps(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.ulp(X[n]);
@@ -633,6 +698,8 @@ public class Arma {
    * representable of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col eps(final Col X) {
     Col result = new Col(X.n_elem);
@@ -645,6 +712,8 @@ public class Arma {
    * representable of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row eps(final Row X) {
     Row result = new Row(X.n_elem);
@@ -657,6 +726,8 @@ public class Arma {
    * representable of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat eps(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -664,6 +735,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void exp(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.exp(A[n]);
@@ -674,6 +751,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-e exponential values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col exp(final Col A) {
     Col result = new Col(A.n_elem);
@@ -685,6 +764,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-e exponential values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row exp(final Row A) {
     Row result = new Row(A.n_elem);
@@ -696,6 +777,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-e exponential values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat exp(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -703,6 +786,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void exp2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(2, A[n]);
@@ -713,6 +802,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-2 exponential values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col exp2(final Col A) {
     Col result = new Col(A.n_elem);
@@ -724,6 +815,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-2 exponential values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row exp2(final Row A) {
     Row result = new Row(A.n_elem);
@@ -735,6 +828,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-2 exponential values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat exp2(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -742,6 +837,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void exp10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(10, A[n]);
@@ -752,6 +853,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-10 exponential values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col exp10(final Col A) {
     Col result = new Col(A.n_elem);
@@ -763,6 +866,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-10 exponential values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row exp10(final Row A) {
     Row result = new Row(A.n_elem);
@@ -774,6 +879,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-10 exponential values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat exp10(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -781,6 +888,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void trunc_exp(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double exp = Math.exp(A[n]);
@@ -799,6 +912,8 @@ public class Arma {
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col trunc_exp(final Col A) {
     Col result = new Col(A.n_elem);
@@ -812,6 +927,8 @@ public class Arma {
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row trunc_exp(final Row A) {
     Row result = new Row(A.n_elem);
@@ -825,6 +942,8 @@ public class Arma {
    * Elements that would return a value of infinity are truncated to the largest representable number.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat trunc_exp(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -832,6 +951,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -848,6 +973,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-e logarithmic values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col log(final Col A) {
     Col result = new Col(A.n_elem);
@@ -859,6 +986,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-e logarithmic values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row log(final Row A) {
     Row result = new Row(A.n_elem);
@@ -870,6 +999,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-e logarithmic values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat log(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -877,6 +1008,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void log2(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -893,6 +1030,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col log2(final Col A) {
     Col result = new Col(A.n_elem);
@@ -904,6 +1043,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row log2(final Row A) {
     Row result = new Row(A.n_elem);
@@ -915,6 +1056,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-2 logarithmic values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat log2(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -922,6 +1065,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void log10(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -938,6 +1087,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col log10(final Col A) {
     Col result = new Col(A.n_elem);
@@ -949,6 +1100,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row log10(final Row A) {
     Row result = new Row(A.n_elem);
@@ -960,6 +1113,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed base-10 logarithmic values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat log10(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -967,6 +1122,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void trunc_log(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -989,6 +1150,8 @@ public class Arma {
    * representable number.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col trunc_log(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1004,6 +1167,8 @@ public class Arma {
    * representable number.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row trunc_log(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1019,6 +1184,8 @@ public class Arma {
    * representable number.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat trunc_log(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1026,6 +1193,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   * @param p TODO
+   */
   protected static void pow(final double[] result, final double[] A, final double p) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(A[n], p);
@@ -1037,6 +1211,8 @@ public class Arma {
    * 
    * @param A The column vector
    * @param p The power
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
@@ -1056,6 +1232,8 @@ public class Arma {
    * @param A The row vector
    * @param p The power
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
   public static Row pow(final Row A, final double p) throws RuntimeException {
@@ -1074,6 +1252,8 @@ public class Arma {
    * @param A The matrix
    * @param p The power
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The power ({@code p}) must be positive.
    */
   public static Mat pow(final Mat A, final double p) throws RuntimeException {
@@ -1086,6 +1266,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void sqrt(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -1102,6 +1288,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed square root of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col sqrt(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1113,6 +1301,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed square root of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row sqrt(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1124,6 +1314,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed square root of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat sqrt(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1131,6 +1323,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void square(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.pow(A[n], 2);
@@ -1141,6 +1339,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed squared values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col square(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1152,6 +1352,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed squared values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row square(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1163,6 +1365,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed squared values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat square(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1170,6 +1374,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void floor(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.floor(A[n]);
@@ -1180,6 +1390,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed floored values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col floor(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1191,6 +1403,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed floored values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row floor(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1202,6 +1416,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed floored values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat floor(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1209,6 +1425,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void ceil(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.ceil(A[n]);
@@ -1219,6 +1441,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed rounded up values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col ceil(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1230,6 +1454,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed rounded up values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row ceil(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1241,6 +1467,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed rounded up values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat ceil(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1248,6 +1476,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void round(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       double value = A[n];
@@ -1264,6 +1498,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed rounded values of the provided one.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col round(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1275,6 +1511,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed rounded values of the provided one.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row round(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1286,6 +1524,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed rounded values of the provided one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat round(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1293,6 +1533,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void sign(final double[] result, final double[] A) {
     for (int n = 0; n < A.length; n++) {
       result[n] = Math.signum(A[n]);
@@ -1305,6 +1551,8 @@ public class Arma {
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
    * @param A The column vector
+   * 
+   * @return TODO
    */
   public static Col sign(final Col A) {
     Col result = new Col(A.n_elem);
@@ -1318,6 +1566,8 @@ public class Arma {
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
    * @param A The row vector
+   * 
+   * @return TODO
    */
   public static Row sign(final Row A) {
     Row result = new Row(A.n_elem);
@@ -1331,6 +1581,8 @@ public class Arma {
    * The sign value is -1 for negative, 0 for zero and 1 for non-negative values.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Mat sign(final Mat A) {
     Mat result = new Mat(A.n_rows, A.n_cols);
@@ -1338,6 +1590,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void sin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.sin(X[n]);
@@ -1348,6 +1606,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed sine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col sin(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1359,6 +1619,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed sine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row sin(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1370,6 +1632,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed sine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat sin(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1377,6 +1641,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void asin(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
@@ -1393,6 +1663,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse sine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col asin(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1404,6 +1676,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse sine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row asin(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1415,6 +1689,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse sine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat asin(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1422,6 +1698,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void sinh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.sinh(X[n]);
@@ -1432,6 +1714,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed hyperbolic sine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col sinh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1443,6 +1727,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed hyperbolic sine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row sinh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1454,6 +1740,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed hyperbolic sine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat sinh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1461,6 +1749,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void asinh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
@@ -1477,6 +1771,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse hyperbolic sine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col asinh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1488,6 +1784,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse hyperbolic sine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row asinh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1499,6 +1797,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse hyperbolic sine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat asinh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1506,6 +1806,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void cos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.cos(X[n]);
@@ -1516,6 +1822,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed cosine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col cos(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1527,6 +1835,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed cosine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row cos(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1538,6 +1848,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed cosine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat cos(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1545,6 +1857,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void acos(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
@@ -1561,6 +1879,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse cosine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col acos(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1572,6 +1892,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse cosine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row acos(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1583,6 +1905,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse cosine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat acos(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1590,6 +1914,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void cosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.cosh(X[n]);
@@ -1600,6 +1930,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed hyperbolic cosine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col cosh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1611,6 +1943,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed hyperbolic cosine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row cosh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1622,6 +1956,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed hyperbolic cosine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat cosh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1629,6 +1965,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void acosh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
@@ -1645,6 +1987,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col acosh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1656,6 +2000,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse hyperbolic cosine of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row acosh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1667,6 +2013,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse hyperbolic cosine of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat acosh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1674,6 +2022,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void tan(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.tan(X[n]);
@@ -1684,6 +2038,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed tangent of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col tan(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1695,6 +2051,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed tangent of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row tan(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1706,6 +2064,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed tangent of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat tan(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1713,6 +2073,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void atan(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.atan(X[n]);
@@ -1723,6 +2089,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse tangent of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col atan(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1734,6 +2102,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse tangent of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row atan(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1745,6 +2115,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse tangent of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat atan(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1752,6 +2124,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void tanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       result[n] = Math.tanh(X[n]);
@@ -1762,6 +2140,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed hyperbolic tangent of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col tanh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1773,6 +2153,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed hyperbolic tangent of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row tanh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1784,6 +2166,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed hyperbolic tangent of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat tanh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1791,6 +2175,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void atanh(final double[] result, final double[] X) {
     for (int n = 0; n < X.length; n++) {
       double value = X[n];
@@ -1807,6 +2197,8 @@ public class Arma {
    * Returns a column vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
    * 
    * @param X The column vector
+   * 
+   * @return TODO
    */
   public static Col atanh(final Col X) {
     Col result = new Col(X.n_elem);
@@ -1818,6 +2210,8 @@ public class Arma {
    * Returns a row vector made of the element-wise computed inverse hyperbolic tangent of the provided one.
    * 
    * @param X The row vector
+   * 
+   * @return TODO
    */
   public static Row atanh(final Row X) {
     Row result = new Row(X.n_elem);
@@ -1829,6 +2223,8 @@ public class Arma {
    * Returns a matrix made of the element-wise computed inverse hyperbolic tangent of the provided one.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat atanh(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -1840,6 +2236,8 @@ public class Arma {
    * Returns the sum of all elements of the provided matrix.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -1862,6 +2260,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have exactly one element.
    */
   public static double as_scalar(final AbstractMat X) throws RuntimeException {
@@ -1876,6 +2276,10 @@ public class Arma {
    * Returns the spectral condition number of the provided matrix.
    * 
    * @param A the matrix
+   * 
+   * @return TODO
+   * 
+   * @throws RuntimeException TODO
    */
   public static double cond(final Mat A) throws RuntimeException {
     /*
@@ -1893,6 +2297,8 @@ public class Arma {
    * Returns the determinant of the provided matrix.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
@@ -1935,6 +2341,8 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
    */
@@ -1951,6 +2359,8 @@ public class Arma {
    * 
    * @param A The first matrix
    * @param B The second matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code A.n_elem},
    *           {@code B.n_elem}).
@@ -2023,6 +2433,8 @@ public class Arma {
    * @param X The vector
    * @param p The norm
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
    * @throws IllegalArgumentException The norm indicator ({@code p}) must be strict greater than 0.
    */
@@ -2067,6 +2479,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param p The norm
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException For matrices in vector shape, the norm indicator ({@code p}) must be strict
@@ -2141,6 +2555,8 @@ public class Arma {
    * @param X The matrix
    * @param p The norm
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException For vectors, the norm indicator ({@code p}) must be one of '-inf', 'inf' or 'fro'.
    * @throws IllegalArgumentException For non-vectors, the norm indicator ({@code p}) must be one of 'inf' or 'fro'.
@@ -2213,6 +2629,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static int rank(final Mat X) throws RuntimeException {
@@ -2230,6 +2648,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param tolerance The tolerance
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The specified tolerance must be positive.
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
@@ -2265,7 +2685,9 @@ public class Arma {
   /**
    * Returns the trace of the provided square matrix.
    * 
-   * @param matrix The matrix
+   * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
@@ -2291,6 +2713,8 @@ public class Arma {
    * Returns a deep copy of the main diagonal of the provided matrix as a column vector.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static Col diagvec(final Mat A) {
     return diagvec(A, 0);
@@ -2298,15 +2722,16 @@ public class Arma {
 
   /**
    * Returns a deep copy of the {@code k}th diagonal of the provided matrix as a column vector.
-   * <p>
    * <ul>
    * <li>For {@code k} = 0, its the main diagonal.
-   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
-   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * <li>For {@code k} &gt; 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} &lt; 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param A The matrix
    * @param k The diagonal position
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The diagonal index ({@code k}) is out of bounds.
    */
@@ -2323,6 +2748,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double min(final AbstractVector V) throws RuntimeException {
@@ -2336,7 +2763,9 @@ public class Arma {
   /**
    * Returns the smallest value for each column of the provided sub view.
    * 
-   * @param X The sub view
+   * @param V The sub view
+   * 
+   * @return TODO
    */
   protected static double min(final AbstractView V) {
 
@@ -2352,8 +2781,11 @@ public class Arma {
   /**
    * Returns the smallest value for each column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2368,9 +2800,12 @@ public class Arma {
   /**
    * Returns the smallest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2416,6 +2851,8 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
@@ -2438,6 +2875,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double max(final AbstractVector V) throws RuntimeException {
@@ -2448,6 +2887,13 @@ public class Arma {
     return V.max();
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static double max(final AbstractView V) {
 
     V.iteratorReset();
@@ -2462,8 +2908,11 @@ public class Arma {
   /**
    * Returns the largest value for each column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2478,9 +2927,12 @@ public class Arma {
   /**
    * Returns the largest value for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2526,6 +2978,8 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
@@ -2548,6 +3002,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static double prod(final AbstractVector V) throws RuntimeException {
@@ -2564,6 +3020,13 @@ public class Arma {
     return prod;
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static double prod(final AbstractView V) {
     double product = 1;
 
@@ -2578,8 +3041,11 @@ public class Arma {
   /**
    * Returns the product of all elements per column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2594,9 +3060,12 @@ public class Arma {
   /**
    * Returns the product of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2641,6 +3110,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double sum(final AbstractVector V) throws RuntimeException {
@@ -2651,6 +3122,13 @@ public class Arma {
     return accu(V);
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static double sum(final AbstractView V) {
     double sum = 0;
 
@@ -2665,8 +3143,11 @@ public class Arma {
   /**
    * Returns the sum of all elements per column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector/matrix to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2681,9 +3162,12 @@ public class Arma {
   /**
    * Returns the sum of all elements per column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2728,6 +3212,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double mean(final AbstractVector V) throws RuntimeException {
@@ -2738,6 +3224,13 @@ public class Arma {
     return sum(V) / V.n_elem;
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static double mean(final AbstractView V) {
     return sum(V) / V.n_elem;
   }
@@ -2745,8 +3238,11 @@ public class Arma {
   /**
    * Returns the mean for each column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2761,9 +3257,12 @@ public class Arma {
   /**
    * Returns the mean for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2808,6 +3307,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static double median(final AbstractVector V) throws RuntimeException {
@@ -2837,8 +3338,11 @@ public class Arma {
   /**
    * Returns the median for each column of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2853,9 +3357,12 @@ public class Arma {
   /**
    * Returns the median for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -2906,6 +3413,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double stddev(final AbstractVector V) throws RuntimeException {
@@ -2923,6 +3432,8 @@ public class Arma {
    * @param V The vector
    * @param norm_type The normalisation
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    */
@@ -2934,6 +3445,14 @@ public class Arma {
     return Math.sqrt(var(V, norm_type));
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * @param norm_type TODO
+   * 
+   * @return TODO
+   */
   protected static double stddev(final AbstractView V, final int norm_type) {
     /*
      * The standard deviation of just one element is 0.
@@ -2962,8 +3481,11 @@ public class Arma {
   /**
    * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -2979,9 +3501,12 @@ public class Arma {
    * Returns the standard deviation for each column of the provided matrix normalised by {@code V.n_elem -1} (
    * {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
@@ -2998,10 +3523,13 @@ public class Arma {
    * Returns the standard deviation for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix
    * normalised by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -3048,6 +3576,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    */
   public static double var(final AbstractVector V) throws RuntimeException {
@@ -3064,6 +3594,8 @@ public class Arma {
    * 
    * @param V The vector
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
@@ -3100,6 +3632,14 @@ public class Arma {
     return variance;
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * @param norm_type TODO
+   * 
+   * @return TODO
+   */
   protected static double var(final AbstractView V, final int norm_type) {
     double mean = mean(V);
     double variance = 0;
@@ -3120,8 +3660,11 @@ public class Arma {
   /**
    * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1}.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -3137,9 +3680,12 @@ public class Arma {
    * Returns the variance for each column of the provided matrix normalised by {@code V.n_elem -1} ( {@code norm_type} =
    * 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
@@ -3156,10 +3702,13 @@ public class Arma {
    * Returns the variance for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix normalised
    * by {@code V.n_elem -1} ( {@code norm_type} = 0) or {@code V.n_elem} ({@code norm_type} = 1).
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param norm_type The normalisation
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -3206,6 +3755,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static boolean all(final AbstractVector V) throws RuntimeException {
@@ -3222,6 +3773,13 @@ public class Arma {
     return true;
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static boolean all(final AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
@@ -3236,8 +3794,11 @@ public class Arma {
   /**
    * Returns a 1 for each column of the provided matrix where all elements are non-zero and a 0 otherwise.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -3253,9 +3814,12 @@ public class Arma {
    * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where all elements
    * are non-zero and a 0 otherwise.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -3310,6 +3874,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static boolean any(final AbstractVector V) throws RuntimeException {
@@ -3326,6 +3892,13 @@ public class Arma {
     return false;
   }
 
+  /**
+   * TODO
+   * 
+   * @param V TODO
+   * 
+   * @return TODO
+   */
   protected static boolean any(final AbstractView V) {
     V.iteratorReset();
     while (V.iteratorHasNext()) {
@@ -3340,8 +3913,11 @@ public class Arma {
   /**
    * Returns a 1 for each column of the provided matrix where any element is non-zero and a 0 otherwise.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -3358,9 +3934,12 @@ public class Arma {
    * Returns a 1 for each column ({@code dim} = 0) or row ({@code dim} = 1) of the provided matrix where any element
    * is non-zero and a 0 otherwise.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -3410,6 +3989,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   * @param B TODO
+   */
   protected static void conv(final double[] result, final double[] A, final double[] B) {
     for (int n = 0; n < result.length; n++) {
       int min = Math.max(0, n - B.length + 1);
@@ -3427,6 +4013,8 @@ public class Arma {
    * 
    * @param A The first vector
    * @param B The second vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-vector must have at least one
    *           element.
@@ -3459,6 +4047,8 @@ public class Arma {
    * @param X The first vector
    * @param Y The second vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
    *           {@code Y.n_elem}).
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
@@ -3479,6 +4069,8 @@ public class Arma {
    * @param X The first vector
    * @param Y The second vector
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
    *           {@code Y.n_elem}).
@@ -3501,6 +4093,8 @@ public class Arma {
    * 
    * @param X The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static double cor(final AbstractVector X) throws RuntimeException {
@@ -3518,6 +4112,8 @@ public class Arma {
    * 
    * @param X The vector
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
@@ -3539,6 +4135,8 @@ public class Arma {
    * 
    * @param X The first matrix
    * @param Y The second matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
    *           {@code Y.n_cols}) must have the same shape.
@@ -3564,6 +4162,8 @@ public class Arma {
    * @param X The first matrix
    * @param Y The second matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
    *           {@code Y.n_cols}) must have the same shape.
@@ -3618,6 +4218,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat cor(final Mat X) throws RuntimeException {
@@ -3638,6 +4240,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -3683,6 +4287,8 @@ public class Arma {
    * @param X The first vector
    * @param Y The second vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
    *           {@code Y.n_elem}).
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
@@ -3703,6 +4309,8 @@ public class Arma {
    * @param X The first vector
    * @param Y The second vector
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices must have the same number of elements ({@code X.n_elem},
    *           {@code Y.n_elem}).
@@ -3758,9 +4366,11 @@ public class Arma {
    * 
    * @param X The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * 
-   * @see var(AbstractVector)
+   * @see #var(AbstractVector)
    */
   public static double cov(final AbstractVector X) throws RuntimeException {
     /*
@@ -3777,11 +4387,14 @@ public class Arma {
    * <b>Note:</b> This is better known as the variance of provided vector.
    * 
    * @param X The vector
+   * @param norm_type TODO
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
    * 
-   * @see var(AbstractVector, int)
+   * @see #var(AbstractVector, int)
    */
   public static double cov(final AbstractVector X, final int norm_type) throws RuntimeException, IllegalArgumentException {
     /*
@@ -3801,6 +4414,8 @@ public class Arma {
    * 
    * @param X The first matrix
    * @param Y The second matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
    *           {@code Y.n_cols}) must have the same shape.
@@ -3828,6 +4443,8 @@ public class Arma {
    * @param X The first matrix
    * @param Y The second matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both provided matrices ({@code X.n_rows}, {@code X.n_cols} and {@code Y.n_rows},
    *           {@code Y.n_cols}) must have the same shape.
@@ -3881,6 +4498,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat cov(final Mat X) throws RuntimeException {
@@ -3901,6 +4520,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param norm_type The normalisation
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified normalisation ({@code norm_type}) must either be 0 or 1.
@@ -3939,6 +4560,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   * @param B TODO
+   */
   protected static void cross(final double[] result, final double[] A, final double[] B) {
     result[0] = A[1] * B[2] - A[2] * B[1];
     result[1] = A[2] * B[0] - A[0] * B[2];
@@ -3950,6 +4578,8 @@ public class Arma {
    * 
    * @param A The first vector
    * @param B The second vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
@@ -3977,6 +4607,8 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
@@ -4003,6 +4635,8 @@ public class Arma {
    * @param A The first vector
    * @param B The second vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The first provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape
    *           to a 3-dimensional vector.
    * @throws RuntimeException The first provided ({@code B.n_rows}, {@code B.n_cols})-matrix must be equivalent in shape
@@ -4024,6 +4658,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   */
   protected static void cumsum(final double[] result, final double[] V) {
     result[0] = V[0];
     for (int n = 1; n < result.length; n++) {
@@ -4035,6 +4675,8 @@ public class Arma {
    * Returns the cumulative sum of the provided vector.
    * 
    * @param V The vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
@@ -4053,6 +4695,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code V.n_rows}, {@code V.n_cols})-vector must have at least one element.
    */
   public static Row cumsum(final Row V) throws RuntimeException {
@@ -4065,6 +4709,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   */
   protected static void cumsum(final AbstractView result, final AbstractView V) {
     V.iteratorReset();
     result.iteratorReset();
@@ -4084,6 +4734,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
@@ -4100,6 +4752,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -4134,6 +4788,8 @@ public class Arma {
    * 
    * @param X The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-vector must have at least one element.
    */
   public static Mat diagmat(final AbstractVector X) throws RuntimeException {
@@ -4150,6 +4806,8 @@ public class Arma {
    * Returns a diagonal matrix with all elements of the provided square matrix besides the main diagonal set to zero.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
@@ -4175,6 +4833,8 @@ public class Arma {
    * Returns a column vector containing the all positions of non-zero elements within the provided matrix.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Col find(final AbstractMat X) {
     /*
@@ -4185,11 +4845,13 @@ public class Arma {
   }
 
   /**
-   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} > 0) positions of the
+   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} &gt; 0) positions of the
    * first non-zero elements within the provided matrix.
    * 
    * @param X The matrix
    * @param k The number of positions
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
    */
@@ -4202,12 +4864,14 @@ public class Arma {
   }
 
   /**
-   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} > 0) positions of the
+   * Returns a column vector containing the all ({@code k} = 0) or at most {@code k} ({@code k} &gt; 0) positions of the
    * first ({@code s} = 'first') or last ({@code s} = 'last') non-zero elements within the provided matrix.
    * 
    * @param X The matrix
    * @param k The number of positions
    * @param s The search direction
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of positions ({@code k}) must be positive.
    * @throws IllegalArgumentException The norm sorting order ({@code s}) must be one of 'first' or 'last'.
@@ -4262,6 +4926,8 @@ public class Arma {
    * Returns a deep copy of the matrix with reverse order of its columns.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat fliplr(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -4277,6 +4943,8 @@ public class Arma {
    * Returns a deep copy of the matrix with reverse order of its rows.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat flipud(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -4294,6 +4962,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat hist(final AbstractMat X) throws RuntimeException {
@@ -4309,6 +4979,8 @@ public class Arma {
    * 
    * @param X The matrix
    * @param n_bins The number of bins
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
@@ -4329,6 +5001,8 @@ public class Arma {
    * @param X The matrix
    * @param n_bins The number of bins
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws NegativeArraySizeException The specified number of bins ({@code n_bins}) must be positive.
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
@@ -4375,6 +5049,13 @@ public class Arma {
     return hist(X, centers, dim);
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   * @param centers TODO
+   */
   protected static void hist(final double[] result, final double[] V, final double[] centers) {
     for (int n = 0; n < V.length; n++) {
       double value = V[n];
@@ -4415,6 +5096,8 @@ public class Arma {
    * @param X The matrix
    * @param centers The bin centers
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
   public static Mat hist(final AbstractMat X, final AbstractMat centers) throws RuntimeException {
@@ -4430,6 +5113,8 @@ public class Arma {
    * @param X The matrix
    * @param centers The bin centers
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -4476,6 +5161,13 @@ public class Arma {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   * @param edges TODO
+   */
   protected static void histc(final double[] result, final double[] V, final double[] edges) {
     for (int n = 0; n < V.length; n++) {
       double value = V[n];
@@ -4496,7 +5188,9 @@ public class Arma {
    * Returns the histogramm for each column of the provided matrix for the provided, monotonically increasing bin edges.
    * 
    * @param X The matrix
-   * @param centers The bin edges
+   * @param edges The bin edges
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    */
@@ -4509,8 +5203,10 @@ public class Arma {
    * provided, monotonically increasing bin edges.
    * 
    * @param X The matrix
-   * @param centers The bin edges
+   * @param edges The bin edges
    * @param dim The dimension
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must have at least one element.
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
@@ -4601,6 +5297,8 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
   public static Mat join_rows(final AbstractMat A, final AbstractMat B) throws RuntimeException {
@@ -4614,6 +5312,8 @@ public class Arma {
    * 
    * @param A The first matrix
    * @param B The second matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    */
@@ -4638,6 +5338,8 @@ public class Arma {
    * @param A The first matrix
    * @param B The second matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
    */
@@ -4652,6 +5354,8 @@ public class Arma {
    * 
    * @param A The first matrix
    * @param B The second matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException Both matrices must have the same number of columns ({@code A.n_cols} and {@code B.n_cols}
    *           ).
@@ -4674,6 +5378,8 @@ public class Arma {
    * 
    * @param A The left-hand matrix
    * @param B The right-hand matrix
+   * 
+   * @return TODO
    */
   public static Mat kron(final AbstractMat A, final AbstractMat B) {
     Mat result = repmat(B, A.n_rows, A.n_cols);
@@ -4702,6 +5408,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -4723,6 +5431,8 @@ public class Arma {
    * @param n_rows The number of rows
    * @param n_cols The number of columns
    * 
+   * @return TODO
+   * 
    * @throws NegativeArraySizeException The specified number of rows ({@code n_rows}) must be positive.
    * @throws NegativeArraySizeException The specified number of columns ({@code n_cols}) must be positive.
    */
@@ -4736,6 +5446,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   */
   protected static void shuffle(final double[] result, final double[] V) {
     /*
      * Performs an inside-out version of the Fisher-Yates shuffle
@@ -4753,6 +5469,12 @@ public class Arma {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   */
   protected static void shuffle(final int[] result, final int[] V) {
     /*
      * Performs an inside-out version of the Fisher-Yates shuffle
@@ -4774,6 +5496,8 @@ public class Arma {
    * Returns a shuffled copy of the provided vector.
    * 
    * @param V The vector
+   * 
+   * @return TODO
    */
   public static Col shuffle(final Col V) {
     Col result = new Col(V.n_elem);
@@ -4785,6 +5509,8 @@ public class Arma {
    * Returns a shuffled copy of the provided vector.
    * 
    * @param V The vector
+   * 
+   * @return TODO
    */
   public static Row shuffle(final Row V) {
     Row result = new Row(V.n_elem);
@@ -4796,6 +5522,8 @@ public class Arma {
    * Returns a copy of the provided matrix with shuffled columns.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat shuffle(final Mat X) {
     return shuffle(X, 0);
@@ -4807,6 +5535,9 @@ public class Arma {
    * @param X The matrix
    * @param dim The dimension
    * 
+   * @return TODO
+   * 
+   * @throws RuntimeException TODO
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
   public static Mat shuffle(final Mat X, final int dim) throws RuntimeException {
@@ -4848,6 +5579,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   * @param sort_direction TODO
+   */
   protected static void sort(final double[] result, final double[] V, final String sort_direction) {
     System.arraycopy(V, 0, result, 0, V.length);
 
@@ -4863,6 +5601,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided vector must be finite.
    */
   public static Col sort(final Col V) throws RuntimeException {
@@ -4874,6 +5614,9 @@ public class Arma {
    * {@code sort_direction} = 'descend') order.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -4898,6 +5641,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided vector must be finite.
    */
   public static Row sort(final Row V) throws RuntimeException {
@@ -4909,6 +5654,9 @@ public class Arma {
    * {@code sort_direction} = 'descend') order.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -4933,6 +5681,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided matrix must be finite.
    */
   public static Mat sort(final Mat X) throws RuntimeException {
@@ -4944,6 +5694,9 @@ public class Arma {
    * ascending ({@code sort_direction} = 'ascend') or descending ({@code sort_direction} = 'descend') order.
    * 
    * @param X The matrix
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -4958,6 +5711,10 @@ public class Arma {
    * descending ({@code sort_direction} = 'descend') order.
    * 
    * @param X The matrix
+   * @param sort_direction TODO
+   * @param dim TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -4999,6 +5756,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   * @param sort_direction TODO
+   */
   protected static void sort_index(final double[] result, final double[] V, final String sort_direction) {
     stable_sort_index(result, V, sort_direction);
   }
@@ -5008,6 +5772,8 @@ public class Arma {
    * vector.
    * 
    * @param V The vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided vector must be finite.
    */
@@ -5020,6 +5786,9 @@ public class Arma {
    * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -5045,6 +5814,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided vector must be finite.
    */
   public static Row sort_index(final Row V) throws RuntimeException {
@@ -5056,6 +5827,9 @@ public class Arma {
    * descending ({@code sort_direction} = 'descend') order of the elements of the provided vector.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -5075,6 +5849,13 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param V TODO
+   * @param sort_direction TODO
+   */
   protected static void stable_sort_index(final double[] result, final double[] V, final String sort_direction) {
     Integer[] temp = new Integer[result.length];
     for (int n = 0; n < temp.length; n++) {
@@ -5108,6 +5889,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided vector must be finite.
    */
   public static Col stable_sort_index(final Col V) throws RuntimeException {
@@ -5120,6 +5903,9 @@ public class Arma {
    * relative order of elements with equal values.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -5141,6 +5927,8 @@ public class Arma {
    * 
    * @param V The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided vector must be finite.
    */
   public static Row stable_sort_index(final Row V) throws RuntimeException {
@@ -5153,6 +5941,9 @@ public class Arma {
    * relative order of elements with equal values.
    * 
    * @param V The vector
+   * @param sort_direction TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified sort direction ({@code sort_direction}) must either be 'ascend' or
    *           'descend'.
@@ -5172,6 +5963,8 @@ public class Arma {
    * Returns a symmetric copy of the provided matrix by reflecting the upper triangle to the lower one.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
@@ -5207,6 +6000,8 @@ public class Arma {
    * 
    * @param A The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static Mat symmatl(final Mat A) throws RuntimeException {
@@ -5238,6 +6033,10 @@ public class Arma {
 
   /**
    * Returns the transpose of the provided matrix.
+   * 
+   * @param A TODO
+   * 
+   * @return TODO
    */
   public static Row trans(final Col A) {
     return A.t();
@@ -5245,6 +6044,10 @@ public class Arma {
 
   /**
    * Returns the transpose of the provided matrix.
+   * 
+   * @param A TODO
+   * 
+   * @return TODO
    */
   public static Col trans(final Row A) {
     return A.t();
@@ -5252,6 +6055,10 @@ public class Arma {
 
   /**
    * Returns the transpose of the provided matrix.
+   * 
+   * @param A TODO
+   * 
+   * @return TODO
    */
   public static Mat trans(final Mat A) {
     return A.t();
@@ -5261,6 +6068,8 @@ public class Arma {
    * Returns a upper triangular copy of the provided matrix by setting the lower triangle to zero.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
@@ -5293,6 +6102,8 @@ public class Arma {
    * 
    * @param A The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    */
   public static Mat trimatl(final Mat A) throws RuntimeException {
@@ -5319,6 +6130,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param A TODO
+   */
   protected static void unique(final AbstractMat result, final double[] A) {
     double[] sortedA = Arrays.copyOf(A, A.length);
     Arrays.sort(sortedA);
@@ -5346,6 +6163,8 @@ public class Arma {
    * 
    * @param A The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-column vector must have at least one
    *           element.
    */
@@ -5363,6 +6182,8 @@ public class Arma {
    * Returns a vector containing the unique values of the provided vector in ascending order.
    * 
    * @param A The vector
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-row vector must have at least one
    *           element.
@@ -5385,6 +6206,8 @@ public class Arma {
    * 
    * @param A The vector
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must have at least one element.
    */
   public static Mat unique(final Mat A) {
@@ -5405,8 +6228,11 @@ public class Arma {
   /**
    * Returns a vector created by column-wise concatination of the provided matrix A.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static <T extends AbstractVector> T vectorise(final Class<T> return_type, final Mat A) {
     return vectorise(return_type, A, 0);
@@ -5416,8 +6242,12 @@ public class Arma {
    * Returns a vector created by column-wise ({@code dim} = 0) or rows-wise ({@code dim} = 1) concatination of the
    * provided matrix A.
    * 
+   * @param <T> TODO
    * @param return_type The type of vector to be returned
    * @param A The matrix
+   * @param dim TODO
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified dimension ({@code dim}) must either be 0 or 1.
    */
@@ -5457,6 +6287,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric and
    *           positive-definite.
@@ -5481,6 +6313,8 @@ public class Arma {
    * 
    * @param R The storage of the output
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean chol(final Mat R, final Mat X) {
     if (!X.is_square()) {
@@ -5514,6 +6348,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code X.n_rows}, {@code X.n_cols})-matrix must be square.
    * @throws RuntimeException The decomposition could not be completed. Ensure that the provided matrix is symmetric.
    */
@@ -5536,6 +6372,8 @@ public class Arma {
    * 
    * @param eigval The storage of the eigenvalues
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean eig_sym(final AbstractVector eigval, Mat X) {
     if (!X.is_square()) {
@@ -5563,8 +6401,10 @@ public class Arma {
    * Returns {@code false} if the decomposition failed.
    * 
    * @param eigval The storage of the eigenvalues
-   * @param eigval The storage of the eigenvectors
+   * @param eigvec The storage of the eigenvectors
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean eig_sym(final AbstractVector eigval, final Mat eigvec, final Mat X) {
     if (!X.is_square()) {
@@ -5592,6 +6432,8 @@ public class Arma {
    * 
    * @param A The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
@@ -5617,6 +6459,8 @@ public class Arma {
    * 
    * @param B The storage of the inserve
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static boolean inv(final Mat B, final Mat A) {
     try {
@@ -5634,6 +6478,8 @@ public class Arma {
    * This method is faster than {@link #inv(Mat)} for matrices that are known to be symmetric and positive-definite.
    * 
    * @param A The matrix
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be square.
    * @throws RuntimeException The inverse could not be computed. Ensure that the provided matrix is symmetric,
@@ -5663,6 +6509,8 @@ public class Arma {
    * 
    * @param B The storage of the inserve
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static boolean inv_sympd(final Mat B, final Mat A) {
     if (!A.is_square()) {
@@ -5706,6 +6554,8 @@ public class Arma {
    * @param U The storage of the upper-triangular matrix
    * @param P The storage of the permutation matrix
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean lu(final Mat L, final Mat U, final Mat P, final Mat X) {
     U.inPlace(Op.EQUAL, X);
@@ -5786,6 +6636,8 @@ public class Arma {
    * @param L The storage of the permuted lower-triangular matrix
    * @param U The storage of the permuted upper-triangular matrix
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean lu(final Mat L, final Mat U, final Mat X) {
     U.inPlace(Op.EQUAL, X);
@@ -5860,6 +6712,8 @@ public class Arma {
    * 
    * @param A The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static Mat pinv(final Mat A) throws RuntimeException {
@@ -5872,6 +6726,8 @@ public class Arma {
    * 
    * @param A The matrix
    * @param tolerance The tolerance
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The specified tolerance must be positive.
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
@@ -5897,6 +6753,8 @@ public class Arma {
    * 
    * @param B The storage of the inverse
    * @param A The matrix
+   * 
+   * @return TODO
    */
   public static boolean pinv(final Mat B, final Mat A) {
     return pinv(B, A, Math.max(A.n_rows, A.n_cols) * norm(A, 2) * Datum.eps);
@@ -5911,6 +6769,8 @@ public class Arma {
    * @param B The storage of the inverse
    * @param A The matrix
    * @param tolerance The tolerance
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The specified tolerance must be positive.
    */
@@ -5985,6 +6845,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The calculation could not be completed. The provided matrix appears to be singular.
    */
   public static Mat princomp(Mat X) throws RuntimeException {
@@ -6004,6 +6866,8 @@ public class Arma {
    * 
    * @param coeff The storage of the principal component coefficients
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean princomp(final Mat coeff, final Mat X) {
     if (X.n_rows > 1) {
@@ -6032,6 +6896,8 @@ public class Arma {
    * @param coeff The storage of the principal component coefficients
    * @param score The storage of the projected data
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean princomp(final Mat coeff, final Mat score, final Mat X) {
     if (X.n_rows > 1) {
@@ -6072,6 +6938,8 @@ public class Arma {
    * @param score The storage of the projected data
    * @param latent The storage of the eigenvalues of the covariance matrix
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Mat X) {
     if (X.n_rows > 1) {
@@ -6123,6 +6991,8 @@ public class Arma {
    * @param latent The storage of the eigenvalues of the covariance matrix
    * @param tsquared The storage of the Hotteling's statistic for each sample
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean princomp(final Mat coeff, final Mat score, final Col latent, final Col tsquared, final Mat X) {
     if (X.n_rows > 1) {
@@ -6182,6 +7052,8 @@ public class Arma {
    * @param Q The storage of the orthogonal matrix
    * @param R The storage of the right-triangular matrix
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean qr(final Mat Q, final Mat R, final Mat X) {
     if (X.empty()) {
@@ -6226,6 +7098,8 @@ public class Arma {
    * @param Q The storage of the orthogonal matrix
    * @param R The storage of the right-triangular matrix
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean qr_econ(final Mat Q, final Mat R, final Mat X) {
     if (X.is_empty()) {
@@ -6271,6 +7145,8 @@ public class Arma {
    * @param A The matrix A
    * @param B The matrix B
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException Both matrices must have the same number of rows ({@code A.n_rows} and {@code B.n_rows}).
    * @throws RuntimeException No solution was found.
    */
@@ -6296,6 +7172,8 @@ public class Arma {
    * @param X The storage of the solution
    * @param A The matrix A
    * @param B The matrix B
+   * 
+   * @return TODO
    */
   public static boolean solve(final Mat X, final Mat A, final Mat B) {
     if (A.n_rows != B.n_rows) {
@@ -6342,6 +7220,8 @@ public class Arma {
    * 
    * @param X The matrix
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The decomposition could not be completed. The provided matrix appears to be singular.
    */
   public static Col svd(final Mat X) throws RuntimeException {
@@ -6360,6 +7240,8 @@ public class Arma {
    * 
    * @param s The storage of the singular values
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean svd(final Col s, final Mat X) {
     if (X.is_empty()) {
@@ -6389,6 +7271,8 @@ public class Arma {
    * @param s The storage of the singular values
    * @param V The storage of V
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean svd(final Mat U, final Col s, final Mat V, final Mat X) {
     if (X.is_empty()) {
@@ -6420,6 +7304,8 @@ public class Arma {
    * @param s The storage of the singular values
    * @param V The storage of the right-singular vectors V
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean svd_econ(final Mat U, final Col s, final Mat V, final Mat X) {
     return svd_econ(U, s, V, X, "both");
@@ -6428,7 +7314,6 @@ public class Arma {
   /**
    * Performs an economical (memory friendly) singular value decomposition of the provided matrix and stores the
    * singular values in descending order in {@code s}.
-   * <p>
    * <ul>
    * <li>For {@code side} = "left", only the left-singular vectors are calculated.
    * <li>For {@code side} = "right", only the right-singular vectors are calculated.
@@ -6442,6 +7327,8 @@ public class Arma {
    * @param V The storage of the right-singular vectors V
    * @param X The matrix
    * @param side The singular vectors to be calculated
+   * 
+   * @return TODO
    * 
    * @throws IllegalArgumentException The specified side ({@code side}) must be one of 'left', 'right' or 'both'.
    */
@@ -6491,6 +7378,8 @@ public class Arma {
    * @param B The matrix B
    * @param C The matrix C
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix A must be square.
    * @throws RuntimeException The provided ({@code B.n_rows}, {@code B.n_cols})-matrix B must be square.
    * @throws RuntimeException The matrix C must have the same number of rows ({@code C.n_rows}) as the matrix A (
@@ -6533,6 +7422,8 @@ public class Arma {
    * @param A The matrix A
    * @param B The matrix B
    * @param C The matrix C
+   * 
+   * @return TODO
    */
   public static boolean syl(final Mat X, final Mat A, final Mat B, final Mat C) {
     if (A.is_empty() || B.is_empty() || C.is_empty()) {
@@ -6576,6 +7467,8 @@ public class Arma {
    * Returns {@code true} if all values of the provided matrix are neither NaN nor +/-infinity.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static boolean is_finite(final AbstractMat X) {
     return X.is_finite();
@@ -6585,6 +7478,8 @@ public class Arma {
    * Returns {@code true} if the value is neither NaN nor +/-infinity.
    * 
    * @param X The value
+   * 
+   * @return TODO
    */
   public static boolean is_finite(final double X) {
     return (!Double.isInfinite(X) && !Double.isNaN(X));
@@ -6594,6 +7489,8 @@ public class Arma {
    * Returns a copy of the provided vector with element-wise negated elements.
    * 
    * @param X The vector
+   * 
+   * @return TODO
    */
   public static Col negate(final Col X) {
     Col result = new Col(X.n_elem);
@@ -6607,6 +7504,8 @@ public class Arma {
    * Returns a copy of the provided vector with element-wise negated elements.
    * 
    * @param X The vector
+   * 
+   * @return TODO
    */
   public static Row negate(final Row X) {
     Row result = new Row(X.n_elem);
@@ -6620,6 +7519,8 @@ public class Arma {
    * Returns a copy of the provided matrix with element-wise negated elements.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat negate(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -6633,6 +7534,8 @@ public class Arma {
    * Returns a copy of the provided vector with element-wise inversed elements.
    * 
    * @param X The vector
+   * 
+   * @return TODO
    */
   public static Col reciprocal(final Col X) {
     Col result = new Col(X.n_elem);
@@ -6646,6 +7549,8 @@ public class Arma {
    * Returns a copy of the provided vector with element-wise inversed elements.
    * 
    * @param X The vector
+   * 
+   * @return TODO
    */
   public static Row reciprocal(final Row X) {
     Row result = new Row(X.n_elem);
@@ -6659,6 +7564,8 @@ public class Arma {
    * Returns a copy of the provided matrix with element-wise inversed elements.
    * 
    * @param X The matrix
+   * 
+   * @return TODO
    */
   public static Mat reciprocal(final Mat X) {
     Mat result = new Mat(X.n_rows, X.n_cols);
@@ -6668,6 +7575,12 @@ public class Arma {
     return result;
   }
 
+  /**
+   * TODO
+   * 
+   * @param result TODO
+   * @param X TODO
+   */
   protected static void revert(final double[] result, final double[] X) {
     for (int n = 0; n < X.length / 2; n++) {
       double temp = X[n];
@@ -6676,6 +7589,15 @@ public class Arma {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param Z TODO
+   * @param T TODO
+   * @param A TODO
+   * 
+   * @return TODO
+   */
   protected static boolean schur(final Mat Z, final Mat T, final Mat A) {
     Z.set_size(A.n_rows, A.n_rows);
     T.inPlace(Op.EQUAL, A);

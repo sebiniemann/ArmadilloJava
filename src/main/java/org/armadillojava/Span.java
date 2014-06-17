@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides support for Matlab's index expression range a:b.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class Span {
   /**
@@ -32,6 +32,9 @@ public class Span {
    */
   protected final boolean _isEntireRange;
 
+  /**
+   * TODO
+   */
   protected Span() {
     // Illegal values by design. Should result in an exception if used together with other provided methods/classes.
     _first = -1;
@@ -40,6 +43,11 @@ public class Span {
     _isEntireRange = true;
   }
   
+  /**
+   * TODO
+   * 
+   * @param span TODO
+   */
   protected Span(final Span span) {
     _first = span._first;
     _last = span._last;

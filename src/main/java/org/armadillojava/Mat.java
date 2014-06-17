@@ -28,7 +28,7 @@ import com.github.fommil.netlib.LAPACK;
  * ordering of arguments, accepted values, ...). However, numeric results may slightly differ from the Armadillo C++
  * Algebra Library.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  * 
  * @see <a href="http://arma.sourceforge.net/">Armadillo C++ Algebra Library</a>
  */
@@ -69,7 +69,7 @@ public class Mat extends AbstractMat {
    * 
    * @see Fill
    */
-  public Mat(final int n_rows, final int n_cols, final Fill fill_type) throws NegativeArraySizeException, RuntimeException {
+  public Mat(final int n_rows, final int n_cols, final Fill fill_type) throws NegativeArraySizeException {
     /*
      * The parameters "n_rows" and "n_cols" are validated within zeros(int, int), ones(int, int), randu(int, int) and
      * randn(int, int).
@@ -93,6 +93,8 @@ public class Mat extends AbstractMat {
         break;
       case RANDN:
         randn(n_rows, n_cols);
+      default:
+        // TODO throw Exception
     }
   }
 
@@ -142,7 +144,7 @@ public class Mat extends AbstractMat {
   /**
    * Creates a deep copy of a matrix sub view.
    * 
-   * @param mat The sub view
+   * @param view The sub view
    */
   protected Mat(final AbstractView view) {
     copy_size(view);
@@ -153,6 +155,11 @@ public class Mat extends AbstractMat {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param A TODO
+   */
   protected void copy_size(final AbstractView A) {
     set_size(A.n_rows, A.n_cols);
   }
@@ -161,6 +168,8 @@ public class Mat extends AbstractMat {
    * Returns a deep copy of the {@code col_number}th column.
    * 
    * @param col_number The column
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
    */
@@ -230,6 +239,8 @@ public class Mat extends AbstractMat {
    * 
    * @param span The span
    * @param col_number The column
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The specified column ({@code col_number}) is out of bounds.
    * @throws IndexOutOfBoundsException The first specified row ({@code span._first}) is out of bounds.
@@ -349,6 +360,8 @@ public class Mat extends AbstractMat {
    * 
    * @param row_number The column
    * 
+   * @return TODO
+   * 
    * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
    */
   public Row row(final int row_number) throws IndexOutOfBoundsException {
@@ -414,6 +427,8 @@ public class Mat extends AbstractMat {
    * 
    * @param row_number The row
    * @param span The span
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The specified row ({@code row_number}) is out of bounds.
    * @throws IndexOutOfBoundsException The first specified column ({@code span._first}) is out of bounds.
@@ -533,6 +548,8 @@ public class Mat extends AbstractMat {
    * @param first_col The first column
    * @param last_col The last column
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The first specified column ({@code first_col}) must be less than or equal the last
    *           specified column ({@code last_col}).
    * @throws IndexOutOfBoundsException The first specified row ({@code first_col}) is out of bounds.
@@ -637,6 +654,8 @@ public class Mat extends AbstractMat {
    * exceptions upon errors.
    * 
    * @param vector_of_column_indices The columns
+   * 
+   * @return TODO
    */
   public Mat cols(final AbstractVector vector_of_column_indices) {
     return new Mat(new ViewElemCols(this, vector_of_column_indices._data));
@@ -685,6 +704,8 @@ public class Mat extends AbstractMat {
    * 
    * @param first_row The first row
    * @param last_row The last row
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first specified row ({@code first_row}) must be less than or equal the last specified
    *           row ({@code last_row}).
@@ -790,6 +811,8 @@ public class Mat extends AbstractMat {
    * exceptions upon errors.
    * 
    * @param vector_of_row_indices The rows
+   * 
+   * @return TODO
    */
   public Mat rows(final AbstractVector vector_of_row_indices) {
     return new Mat(new ViewElemRows(this, vector_of_row_indices._data));
@@ -841,6 +864,8 @@ public class Mat extends AbstractMat {
    * @param first_col The first column
    * @param last_row The last row
    * @param last_col The last column
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The first specified row ({@code first_row}) must be less than or equal the last specified
    *           row ({@code last_row}).
@@ -998,6 +1023,8 @@ public class Mat extends AbstractMat {
    * @param row_span The row span
    * @param col_span The column span
    * 
+   * @return TODO
+   * 
    * @throws IndexOutOfBoundsException The first specified row ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last specified row ({@code last_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
@@ -1088,6 +1115,8 @@ public class Mat extends AbstractMat {
    * @param first_col The first column
    * @param size The size
    * 
+   * @return TODO
+   * 
    * @throws IndexOutOfBoundsException The first specified row ({@code first_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The last specified row ({@code last_row}) is out of bounds.
    * @throws IndexOutOfBoundsException The first specified column ({@code first_col}) is out of bounds.
@@ -1156,6 +1185,8 @@ public class Mat extends AbstractMat {
    * 
    * @param vector_of_row_indices The rows
    * @param vector_of_column_indices The columns
+   * 
+   * @return TODO
    */
   public Mat submat(final AbstractVector vector_of_row_indices, final AbstractVector vector_of_column_indices) {
     return new Mat(new ViewElemSubMat(this, vector_of_row_indices._data, vector_of_column_indices._data));
@@ -1205,6 +1236,8 @@ public class Mat extends AbstractMat {
 
   /**
    * Returns a deep copy of the main diagonal.
+   * 
+   * @return TODO
    */
   public Col diag() {
     return new Col(new ViewDiag(this, 0));
@@ -1249,14 +1282,15 @@ public class Mat extends AbstractMat {
 
   /**
    * Returns a deep copy of the {@code k}th diagonal.
-   * <p>
    * <ul>
    * <li>For {@code k} = 0, its the main diagonal.
-   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
-   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * <li>For {@code k} &gt; 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} &lt; 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param k The diagonal position
+   * 
+   * @return TODO
    * 
    * @throws IndexOutOfBoundsException The specified diagonal index ({@code k}) is out of bounds.
    */
@@ -1278,11 +1312,10 @@ public class Mat extends AbstractMat {
 
   /**
    * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
-   * <p>
    * <ul>
    * <li>For {@code k} = 0, its the main diagonal.
-   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
-   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * <li>For {@code k} &gt; 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} &lt; 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param k The diagonal position
@@ -1310,11 +1343,10 @@ public class Mat extends AbstractMat {
 
   /**
    * Performs an in-place binary operation on the {@code k}th diagonal with the specified right-hand side operand.
-   * <p>
    * <ul>
    * <li>For {@code k} = 0, its the main diagonal.
-   * <li>For {@code k} > 0, its the {@code k}th super-diagonal.
-   * <li>For {@code k} < 0, its the {@code k}th sub-diagonal.
+   * <li>For {@code k} &gt; 0, its the {@code k}th super-diagonal.
+   * <li>For {@code k} &lt; 0, its the {@code k}th sub-diagonal.
    * </ul>
    * 
    * @param k The diagonal position
@@ -1425,8 +1457,7 @@ public class Mat extends AbstractMat {
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
-   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).ry operator
-   * @param operand The operand
+   * @throws UnsupportedOperationException Unexpected operator ({@code binary_operator}).
    */
   public void each_row(final Op binary_operator, final AbstractMat operand) throws UnsupportedOperationException {
     /*
@@ -1486,6 +1517,8 @@ public class Mat extends AbstractMat {
    * 
    * @param i The row position
    * @param j The column position
+   * 
+   * @return TODO
    */
   public double at(final int i, final int j) {
     return _data[i + j * n_rows];
@@ -1497,9 +1530,9 @@ public class Mat extends AbstractMat {
    * <b>Note:</b> Index checking is not enforced. However, the JVM should throw IndexOutOfBoundsException exceptions
    * upon errors.
    * 
-   * @param n The position
+   * @param i The row position
+   * @param j The column position
    * @param unary_operator The unary operator
-   * @param operand The operand
    * 
    * @throws UnsupportedOperationException Unsupported operator {@code unary_operator}.
    */
@@ -1523,7 +1556,8 @@ public class Mat extends AbstractMat {
    * <b>Note:</b> Index checking is not enforced. However, the JVM should throw IndexOutOfBoundsException exceptions
    * upon errors.
    * 
-   * @param n The position
+   * @param i The row position
+   * @param j The column position
    * @param binary_operator The binary operator
    * @param operand The operand
    * 
@@ -1596,6 +1630,8 @@ public class Mat extends AbstractMat {
   /**
    * Returns the inverse.
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must be square.
    * @throws RuntimeException The matrix appears to be singular.
    */
@@ -1624,6 +1660,8 @@ public class Mat extends AbstractMat {
 
   /**
    * Returns {@code true} if the number of rows equals the number of columns.
+   * 
+   * @return TODO
    */
   public boolean is_square() {
     return (n_rows == n_cols);
@@ -1847,8 +1885,10 @@ public class Mat extends AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
-   * @param index_of_min_val The storage of the row position
-   * @param index_of_min_val The storage of the column position
+   * @param row_of_min_val The storage of the row position
+   * @param col_of_min_val The storage of the column position
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -1882,8 +1922,10 @@ public class Mat extends AbstractMat {
    * <p>
    * <b>Note:</b> Unfortunately, the storage variables must be of the mutable type int[].
    * 
-   * @param index_of_min_val The storage of the row position
-   * @param index_of_min_val The storage of the column position
+   * @param row_of_max_val The storage of the row position
+   * @param col_of_max_val The storage of the column position
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The ({@code n_rows}, {@code n_cols})-matrix must have at least one element.
    */
@@ -2060,7 +2102,7 @@ public class Mat extends AbstractMat {
       throw new NegativeArraySizeException("The specified number of columns (" + n_cols + ") must be positive.");
     }
 
-    if (n_rows != this.n_rows || n_cols != this.n_cols) {
+    if (n_rows != this.n_rows || n_cols != this.n_cols || n_elem == 0) {
       if (n_rows > 0 && n_cols > 0) {
         this.n_rows = n_rows;
         this.n_cols = n_cols;
@@ -2394,6 +2436,8 @@ public class Mat extends AbstractMat {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
@@ -2412,6 +2456,8 @@ public class Mat extends AbstractMat {
    * 
    * @param X The multiplier
    * 
+   * @return TODO
+   * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.
    */
@@ -2429,6 +2475,8 @@ public class Mat extends AbstractMat {
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 
    * @param X The multiplier
+   * 
+   * @return TODO
    * 
    * @throws RuntimeException The number of columns ({@code n_cols}) must be equal to the number of rows (
    *           {@code X.n_rows}) in the specified multiplier.

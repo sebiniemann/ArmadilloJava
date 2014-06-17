@@ -13,6 +13,11 @@
  ******************************************************************************/
 package org.armadillojava;
 
+/**
+ * TODO
+ * 
+ * @author Sebastian Niemann
+ */
 public class Size {
 
   /**
@@ -25,18 +30,30 @@ public class Size {
    */
   public final int n_cols;
 
+  /**
+   * TODO
+   * 
+   * @param size TODO
+   */
   protected Size(Size size) {
     this(size.n_rows, size.n_cols);
   }
   
+  /**
+   * TODO
+   * 
+   * @param matrix TODO
+   */
   public Size(final Mat matrix) {
     n_rows = matrix.n_rows;
     n_cols = matrix.n_cols;
   }
   
   /**
+   * TODO
+   * 
    * @param n_rows The number of rows
-   * @param n_rows The number of columns
+   * @param n_cols The number of columns
    * 
    * @throws IllegalArgumentException The number of rows ({@code n_rows}) must be non-negative.
    * @throws IllegalArgumentException The number of columns ({@code n_cols}) must be non-negative.

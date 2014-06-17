@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides pre-defined constants.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class Datum {
 

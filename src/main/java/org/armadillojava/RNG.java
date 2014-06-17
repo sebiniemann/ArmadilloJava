@@ -15,14 +15,30 @@ package org.armadillojava;
 
 import java.util.Random;
 
+/**
+ * TODO
+ * 
+ * @author Sebastian Niemann
+ */
 public class RNG {
 
+  /**
+   * TODO
+   */
   protected static Random _rng = new Random();
 
+  /**
+   * TODO
+   * 
+   * @param seed TODO
+   */
   public static void set_seed(long seed) {
     _rng.setSeed(seed);
   }
 
+  /**
+   * TODO
+   */
   public static void set_seed_random() {
     _rng.setSeed(Double.doubleToLongBits(Math.random()));
   }

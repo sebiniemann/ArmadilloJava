@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides shallow matrix non-contiguous sub views of {@link AbstractMat}.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 class ViewElemSubMat extends AbstractView {
 
@@ -49,10 +49,8 @@ class ViewElemSubMat extends AbstractView {
    * Creates a shallow copy of the specified matrix and restrict the access to a sub view.
    * 
    * @param matrix The matrix
-   * @param first_row The first row position
-   * @param last_row The last row position
-   * @param first_col The first column position
-   * @param last_col The last column position
+   * @param vector_of_row_indices TODO
+   * @param vector_of_column_indices TODO
    */
   protected ViewElemSubMat(final AbstractMat matrix, final double[] vector_of_row_indices, final double[] vector_of_column_indices) {
     super(matrix);

@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides shallow row vector sub views of {@link AbstractMat}.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 class ViewSubRow extends AbstractView {
 

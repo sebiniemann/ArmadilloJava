@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * <b>Non-canonical:</b> The precision is bounded by {@code System.nanoTime()}
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class WallClock {
   /**

@@ -16,7 +16,7 @@ package org.armadillojava;
 /**
  * Provides shallow matrix non-contiguous sub views of {@link AbstractMat}.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 class ViewElemMat extends AbstractView {
 

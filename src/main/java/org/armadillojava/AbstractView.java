@@ -13,6 +13,11 @@
  ******************************************************************************/
 package org.armadillojava;
 
+/**
+ * TODO
+ * 
+ * @author Sebastian Niemann
+ */
 abstract class AbstractView {
 
   /**
@@ -45,6 +50,11 @@ abstract class AbstractView {
    */
   protected int         _iterator;
 
+  /**
+   * TODO
+   * 
+   * @param matrix TODO
+   */
   public AbstractView(final AbstractMat matrix) {
     _matrix = matrix;
     _data = matrix._data;
@@ -59,6 +69,8 @@ abstract class AbstractView {
 
   /**
    * Returns the next iterator
+   * 
+   * @return TODO
    */
   protected int iteratorNext() {
     return _iterator++;
@@ -66,11 +78,18 @@ abstract class AbstractView {
 
   /**
    * Returns true if iterator has yet to reach the last position.
+   * 
+   * @return TODO
    */
   protected final boolean iteratorHasNext() {
     return _iterator < n_elem;
   }
 
+  /**
+   * TODO
+   * 
+   * @param value TODO
+   */
   protected void fill(double value) {
     iteratorReset();
     while (iteratorHasNext()) {
@@ -78,6 +97,14 @@ abstract class AbstractView {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param binary_operator TODO
+   * @param rightHandOperand TODO
+   * 
+   * @throws UnsupportedOperationException TODO
+   */
   protected void inPlace(final Op binary_operator, final double rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case PLUS:
@@ -109,6 +136,14 @@ abstract class AbstractView {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param binary_operator TODO
+   * @param rightHandOperand TODO
+   * 
+   * @throws UnsupportedOperationException TODO
+   */
   protected void inPlace(final Op binary_operator, final AbstractMat rightHandOperand) throws UnsupportedOperationException {
     int n = 0;
     switch (binary_operator) {
@@ -147,6 +182,14 @@ abstract class AbstractView {
     }
   }
 
+  /**
+   * TODO
+   * 
+   * @param binary_operator TODO
+   * @param rightHandOperand TODO
+   * 
+   * @throws UnsupportedOperationException TODO
+   */
   protected void inPlace(final Op binary_operator, final AbstractView rightHandOperand) throws UnsupportedOperationException {
     switch (binary_operator) {
       case EQUAL:

@@ -18,7 +18,7 @@ package org.armadillojava;
  * <p>
  * Useful if the storage of individual samples is not possible or not required.
  * 
- * @author Sebastian Niemann <niemann@sra.uni-hannover.de>
+ * @author Sebastian Niemann
  */
 public class RunningStat {
   /**
