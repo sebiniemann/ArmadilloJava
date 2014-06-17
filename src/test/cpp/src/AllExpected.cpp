@@ -541,6 +541,9 @@ using armadilloJava::ExpectedInPlaceGenMatRowIndsGenRowVec;
 #include <ExpectedInPlaceGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenRowVec;
 
+#include <ExpectedInPlaceGenRowVecElemIndGenDouble.cpp>
+using armadilloJava::ExpectedInPlaceGenRowVecElemIndGenDouble;
+
 #include <ExpectedInPlaceGenRowVecGenDouble.cpp>
 using armadilloJava::ExpectedInPlaceGenRowVecGenDouble;
 
@@ -725,7 +728,7 @@ int main() {
 //  ExpectedGenRowVecNumElems();
 //  ExpectedGenRowVecNumRowsNumCols();
 //  ExpectedGenRowVecRowIndColInd();
-    ExpectedGenRowVecRowIndColIndMatSize();
+//  ExpectedGenRowVecRowIndColIndMatSize();
 //  ExpectedGenRowVecRowIndRangeColIndRange();
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
@@ -818,6 +821,7 @@ int main() {
 //  ExpectedInPlaceGenMatRowIndsGenMat();
 //  ExpectedInPlaceGenMatRowIndsGenRowVec();
 //  ExpectedInPlaceGenRowVec();
+    ExpectedInPlaceGenRowVecElemIndGenDouble();
 //  ExpectedInPlaceGenRowVecGenDouble();
 //  ExpectedInPlaceRandomGenColVec();
 //  ExpectedInPlaceRandomGenColVecNumElems();
