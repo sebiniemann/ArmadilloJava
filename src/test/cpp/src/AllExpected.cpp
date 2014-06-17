@@ -262,6 +262,9 @@ using armadilloJava::ExpectedGenRowVecNumRowsNumCols;
 #include <ExpectedGenRowVecRowIndColInd.cpp>
 using armadilloJava::ExpectedGenRowVecRowIndColInd;
 
+#include <ExpectedGenRowVecRowIndColIndMatSize.cpp>
+using armadilloJava::ExpectedGenRowVecRowIndColIndMatSize;
+
 #include <ExpectedGenRowVecRowIndRangeColIndRange.cpp>
 using armadilloJava::ExpectedGenRowVecRowIndRangeColIndRange;
 
@@ -721,7 +724,8 @@ int main() {
 //  ExpectedGenRowVecNormal();
 //  ExpectedGenRowVecNumElems();
 //  ExpectedGenRowVecNumRowsNumCols();
-    ExpectedGenRowVecRowIndColInd();
+//  ExpectedGenRowVecRowIndColInd();
+    ExpectedGenRowVecRowIndColIndMatSize();
 //  ExpectedGenRowVecRowIndRangeColIndRange();
 //  ExpectedGenRowVecSort();
 //  ExpectedGenRowVecVecNormInt();
