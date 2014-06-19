@@ -14,12 +14,19 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -393,6 +400,120 @@ public class TestGenRowVec extends TestClass {
   @Test
   public void testMat() throws IOException {
     assertMatEquals(new Mat(_genRowVec), load("Mat"));
+  }
+  
+  @Test
+  public void testRowVecEmpty() throws IOException {
+    assertThat(_genRowVec.empty(), is(false));
+  }
+  
+  @Test
+  public void testRowVecSize() throws IOException {
+    assertThat(_genRowVec.size(), is((int) load("Row.size")._data[0]));
+  }
+  
+  @Test
+  public void testRowVecT() throws IOException {
+    assertMatEquals(_genRowVec.t(), load("Row.t"));
+  }
+  
+  @Test
+  public void testRowVecToString() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    System.out.println(_genRowVec);
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+  }
+  
+  @Test
+  public void testRowVecPrint() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genRowVec.print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " ")));
+  }
+  
+  @Test
+  public void testRowVecRaw_print() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genRowVec.raw_print();
+    System.out.flush();
+    
+    System.setOut(previousStream);
+    
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+    
+  }
+  
+  @Test
+  public void testRowIs_finite() throws IOException {
+    int expected = (int) load("Row.is_finite")._data[0];
+    if (_genRowVec.is_finite()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
+  }
+  
+  @Test
+  public void testRowMinA() throws IOException {
+    double expected = load("Row.minA")._data[0];
+    
+    assertThat(_genRowVec.min(), is(expected));
+  }
+
+  @Test
+  public void testRowMaxA() throws IOException {
+    double expected = load("Row.maxA")._data[0];
+    assertThat(_genRowVec.max(), is(expected));
+
+  }
+  
+  @Test
+  public void testRowMinB() throws IOException {
+    int expected = (int) load("Row.minB")._data[0];
+    int[] value = new int [1];
+    _genRowVec.min(value);
+    assertThat(value[0], is(expected));
+  }
+
+  @Test
+  public void testRowMaxB() throws IOException {
+    int expected = (int) load("Row.maxB")._data[0];
+	int[] value = new int[1];
+	_genRowVec.max(value);
+	assertThat(value[0], is(expected));
+  }
+  
+  @Test
+  public void testRowIs_empty() throws IOException {
+    int expected = (int) load("Row.is_empty")._data[0];
+    if (_genRowVec.is_empty()) {
+      assertThat(1, is(expected));
+    } else {
+      assertThat(0, is(expected));
+    }
   }
 
 }

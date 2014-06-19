@@ -23,6 +23,12 @@ using std::log;
 using std::sqrt;
 using std::pow;
 
+#include <fstream>
+using std::ofstream;
+
+#include <streambuf>
+using std::streambuf;
+
 #include <utility>
 using std::pair;
 
@@ -166,6 +172,16 @@ namespace armadilloJava {
           expectedArmaDiagmat();
           expectedArmaIs_finite();
           expectedMat();
+          expectedRowVecSize();
+          expectedRowVecT();
+   		  expectedRowVecPrint();
+          expectedRowVecRaw_print();
+   		  expectedRowIs_finite();
+       	  expectedRowMinA();
+          expectedRowMaxA();
+   		  expectedRowMinB();
+   		  expectedRowMaxB();
+   		  expectedRowIs_empty();
         }
 
         cout << "done." << endl;
@@ -520,6 +536,102 @@ namespace armadilloJava {
         save<double>("Mat", _genRowVec);
         cout << "done." << endl;
       }
+
+	  void expectedRowVecSize() {
+		  cout << "- Compute expectedRowVecSize() ... ";
+		  save<double>("Row.size", Mat<double>({static_cast<double>(_genRowVec.size())}));
+		  cout << "done." << endl;
+      }
+
+	  void expectedRowVecT() {
+		  cout << "- Compute expectedRowVecT() ... ";
+		  save<double>("Row.t", _genRowVec.t());
+		  cout << "done." << endl;
+      }
+
+	  void expectedRowVecPrint() {
+		  cout << "- Compute expectedRowVecPrint() ... ";
+
+		  ofstream expected(_filepath + "Row.print(" + _fileSuffix + ").txt");
+		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+
+		  _genRowVec.print();
+
+		  cout.rdbuf(previousBuffer);
+
+		  cout << "done." << endl;
+      }
+
+	  void expectedRowVecRaw_print() {
+		  cout << "- Compute expectedRowVecRaw_print() ... ";
+
+		  ofstream expected(_filepath + "Row.raw_print(" + _fileSuffix + ").txt");
+		  streambuf* previousBuffer = cout.rdbuf(expected.rdbuf());
+
+		  _genRowVec.raw_print();
+
+		  cout.rdbuf(previousBuffer);
+
+		  cout << "done." << endl;
+      }
+
+      void expectedRowIs_finite() {
+        cout << "- Compute expectedRowIs_finite() ... ";
+
+        if(_genRowVec.is_finite()) {
+          save<double>("Row.is_finite", Row<double>({1}));
+        } else {
+          save<double>("Row.is_finite", Row<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowMinA() {
+        cout << "- Compute expectedRowMinA() ... ";
+        double value;
+        value = _genRowVec.min();
+        save<double>("Row.minA", Row<double>({value}));
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowMaxA() {
+        cout << "- Compute expectedRowMaxA() ... ";
+        double value;
+        value = _genRowVec.max();
+        save<double>("Row.maxA", Row<double>({value}));
+        cout << "done." << endl;
+      }
+
+      void expectedRowMinB() {
+        cout << "- Compute expectedRowMinB() ... ";
+        uword value;
+        _genRowVec.min(value);
+        save<double>("Row.minB", Row<double>({static_cast<double>(value)}));
+        cout << "done." << endl;
+      }
+
+      void expectedRowMaxB() {
+        cout << "- Compute expectedRowMaxB() ... ";
+        uword value;
+        _genRowVec.max(value);
+        save<double>("Row.maxB", Row<double>({static_cast<double>(value)}));
+        cout << "done." << endl;
+      }
+
+      void expectedRowIs_empty() {
+        cout << "- Compute expectedRowIs_empty() ... ";
+
+        if(_genRowVec.is_empty()) {
+          save<double>("Row.is_empty", Row<double>({1}));
+        } else {
+          save<double>("Row.is_empty", Row<double>({0}));
+        }
+
+        cout << "done." << endl;
+      }
+
 
   };
 }
