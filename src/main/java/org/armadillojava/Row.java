@@ -626,7 +626,6 @@ public class Row extends AbstractVector {
     }
   }
 
-
   /**
    * Return the out-of-place matrix multiplication with the provided right-hand side multiplier.
    * 

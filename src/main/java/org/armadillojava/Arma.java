@@ -2846,7 +2846,7 @@ public class Arma {
   }
 
   /**
-   * Returns the element-wise smallest values between the provided matrices the matrix.
+   * Returns the element-wise smallest values between the provided matrices.
    * 
    * @param A The first matrix
    * @param B The second matrix
@@ -2856,7 +2856,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
-  public static Mat min(final Mat A, final Mat B) throws RuntimeException {
+  public static Mat min(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
       throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
@@ -2973,7 +2973,7 @@ public class Arma {
   }
 
   /**
-   * Returns the element-wise largest values between the provided matrices the matrix.
+   * Returns the element-wise largest values between the provided matrices.
    * 
    * @param A The first matrix
    * @param B The second matrix
@@ -2983,7 +2983,7 @@ public class Arma {
    * @throws RuntimeException Both provided matrices ({@code A.n_rows}, {@code A.n_cols} and {@code B.n_rows},
    *           {@code B.n_cols}) must have the same shape.
    */
-  public static Mat max(final Mat A, final Mat B) throws RuntimeException {
+  public static Mat max(final AbstractMat A, final AbstractMat B) throws RuntimeException {
     if (A.n_rows != B.n_rows || A.n_cols != B.n_cols) {
       throw new RuntimeException("Both provided matrices (" + A.n_rows + ", " + A.n_cols + " and " + B.n_rows + ", " + B.n_cols + ") must have the same shape.");
     }
