@@ -607,6 +607,9 @@ using armadilloJava::ExpectedInPlaceRandomGenMatNumRowsNumCols;
 #include <ExpectedInPlaceRandomGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceRandomGenRowVec;
 
+#include <ExpectedInPlaceRandomGenRowVecNumElems.cpp>
+using armadilloJava::ExpectedInPlaceRandomGenRowVecNumElems;
+
 #include <ExpectedInvMat.cpp>
 using armadilloJava::ExpectedInvMat;
 
@@ -890,7 +893,8 @@ int main() {
 //  ExpectedInPlaceRandomGenColVecNumElems();
 //  ExpectedInPlaceRandomGenMat();
 //  ExpectedInPlaceRandomGenMatNumRowsNumCols();
-    ExpectedInPlaceRandomGenRowVec();
+//  ExpectedInPlaceRandomGenRowVec();
+    ExpectedInPlaceRandomGenRowVecNumElems();
 //  ExpectedInvMat();
 //  ExpectedLogicColVec();
 //  ExpectedLogicColVecNumElems();
