@@ -92,7 +92,7 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     _genColVec.insert_rows(_elemInd, _numElems);
 
-    assertMatEquals(_genColVec, load("Col.insertRows"));
+    assertMatEquals(_genColVec, load("Col.insert_rows"));
   }
   
   @Test
@@ -101,7 +101,7 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     _genColVec.insert_rows(_elemInd, _numElems, true);
 
-    assertMatEquals(_genColVec, load("Col.insertRowsTrue"));
+    assertMatEquals(_genColVec, load("Col.insert_rowsTrue"));
   }
   
   @Test
@@ -110,7 +110,7 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     _genColVec.insert_rows(_elemInd, _numElems, false);
 
-    assertEquals(_genColVec.n_elem, load("Col.insertRowsFalse").n_elem);
+    assertEquals(_genColVec.n_elem, load("Col.insert_rowsFalse").n_elem);
   }
   
   @Test
@@ -121,7 +121,7 @@ public class TestInPlaceGenColVecElemIndNumElems extends TestClass {
 
     _genColVec.shed_rows(_elemInd, _numElems);
 
-    assertMatEquals(_genColVec, load("Col.sheadRows"));
+    assertMatEquals(_genColVec, load("Col.shed_rows"));
   }
 
 }

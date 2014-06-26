@@ -122,7 +122,7 @@ public class TestInPlaceGenRowVecElemIndGenColVec extends TestClass {
 
     _genRowVec.insert_cols(_elemInd, _genColVec);
 
-    assertMatEquals(_genRowVec, load("Row.insertCols"));
+    assertMatEquals(_genRowVec, load("Row.insert_cols"));
   }
 
 }

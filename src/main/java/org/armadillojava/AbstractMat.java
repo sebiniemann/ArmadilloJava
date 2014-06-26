@@ -667,6 +667,9 @@ abstract class AbstractMat {
     if (line == null) {
       reset();
       return false;
+    } else if(line.isEmpty()) {
+      reset();
+  	  return true;
     }
 
     int numberOfColumns = line.trim().split("\\s+").length;

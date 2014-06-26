@@ -169,7 +169,7 @@ namespace armadilloJava {
         cout << "- Compute expectedColInsertRows() ... ";
 
         _genColVec.insert_rows(_elemInd, _genRowVec);
-        save<double>("Col.insertRows", _genColVec);
+        save<double>("Col.insert_rows", _genColVec);
 
         cout << "done." << endl;
       }

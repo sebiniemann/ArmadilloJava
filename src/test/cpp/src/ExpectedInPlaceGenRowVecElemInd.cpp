@@ -119,7 +119,7 @@ namespace armadilloJava {
 		  _genRowVec.shed_col(_elemInd);
 		  
 		  cout << "- Compute expectedRowVecShed_col() ... ";
-		  save<double>("Row.shedCol", _genRowVec);
+		  save<double>("Row.shed_col", _genRowVec);
 		  cout << "done." << endl;
       }
   };

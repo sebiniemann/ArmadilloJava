@@ -111,7 +111,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowVecInsertCols() ... ";
         _genRowVec.insert_cols(_elemInd, _numElems);
 
-        save<double>("row.insertCols", _genRowVec);
+        save<double>("row.insert_cols", _genRowVec);
         cout << "done." << endl;
       }
       
@@ -122,7 +122,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowVecInsertColsTrue() ... ";
         _genRowVec.insert_cols(_elemInd, _numElems, true);
 
-        save<double>("row.insertColsTrue", _genRowVec);
+        save<double>("row.insert_colsTrue", _genRowVec);
         cout << "done." << endl;
       }
       
@@ -133,7 +133,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowVecInsertColsFalse() ... ";
         _genRowVec.insert_cols(_elemInd, _numElems, false);
 
-        save<double>("row.insertColsFalse", _genRowVec);
+        save<double>("row.insert_colsFalse", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -148,7 +148,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowVecShedCols() ... ";
         _genRowVec.shed_cols(_elemInd, _numElems);
 
-        save<double>("row.shedCols", _genRowVec);
+        save<double>("row.shed_cols", _genRowVec);
         cout << "done." << endl;
       }
 

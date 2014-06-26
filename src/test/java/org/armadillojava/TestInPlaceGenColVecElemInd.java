@@ -97,7 +97,7 @@ public class TestInPlaceGenColVecElemInd extends TestClass {
 	assumeThat(_elemInd, is(lessThan(_genColVec.n_rows)));
 	  
 	_genColVec.shed_row(_elemInd);
-    assertMatEquals(_genColVec,load("Col.shedRow"));
+    assertMatEquals(_genColVec,load("Col.shed_row"));
   }
 
 }
