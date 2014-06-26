@@ -323,7 +323,7 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The last specified row (" + last_col + ") is out of bounds.");
     }
 
-    if (operand.n_rows != last_col - first_col + 1 || operand.n_cols != n_cols) {
+    if (operand.n_cols != last_col - first_col + 1 || operand.n_rows != n_rows) {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + (n_rows - first_col + 1) + ", " + n_cols + ")-matrix.");
     }
 
