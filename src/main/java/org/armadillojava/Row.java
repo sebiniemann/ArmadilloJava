@@ -392,7 +392,7 @@ public class Row extends AbstractVector {
    * @throws RuntimeException The provided ({@code A.n_rows}, {@code A.n_cols})-matrix must be equivalent in shape to a
    *           row vector.
    */
-  public void insert_cols(final int col_number, final Row X) throws IndexOutOfBoundsException, RuntimeException {
+  public void insert_cols(final int col_number, final AbstractMat X) throws IndexOutOfBoundsException, RuntimeException {
     if (col_number < 0 || col_number > n_elem) {
       throw new IndexOutOfBoundsException("The column (" + col_number + ") is out of bounds.");
     }
