@@ -193,7 +193,7 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The specified column (" + col_number + ") is out of bounds.");
     }
 
-    new ViewSubCol(this, col_number).inPlace(binary_operator, operand);
+    at(col_number, binary_operator, operand);
   }
 
   /**
@@ -222,7 +222,7 @@ public class Row extends AbstractVector {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (" + n_rows + ", 1)-matrix.");
     }
 
-    new ViewSubCol(this, col_number).inPlace(binary_operator, operand);
+    at(col_number, binary_operator, operand._data[0]);
   }
 
   /**
@@ -247,11 +247,11 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The first specified row (" + first_col + ") is out of bounds.");
     }
 
-    if (last_col > n_rows - 1) {
+    if (last_col > n_cols - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_col + ") is out of bounds.");
     }
 
-    return new Row(new ViewSubCols(this, first_col, last_col - first_col + 1));
+    return new Row(new ViewSubVec(this, first_col, last_col - first_col + 1));
   }
 
   /**
@@ -282,11 +282,11 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The first specified row (" + first_col + ") is out of bounds.");
     }
 
-    if (last_col > n_rows - 1) {
+    if (last_col > n_cols - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_col + ") is out of bounds.");
     }
 
-    new ViewSubCols(this, first_col, last_col - first_col + 1).inPlace(binary_operator, operand);
+    new ViewSubVec(this, first_col, last_col - first_col + 1).inPlace(binary_operator, operand);
   }
 
   /**
@@ -319,7 +319,7 @@ public class Row extends AbstractVector {
       throw new IndexOutOfBoundsException("The first specified row (" + first_col + ") is out of bounds.");
     }
 
-    if (last_col > n_rows - 1) {
+    if (last_col > n_cols - 1) {
       throw new IndexOutOfBoundsException("The last specified row (" + last_col + ") is out of bounds.");
     }
 

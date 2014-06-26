@@ -191,7 +191,7 @@ public class Col extends AbstractVector {
       throw new IndexOutOfBoundsException("The specified row (" + row_number + ") is out of bounds.");
     }
 
-    new ViewSubRow(this, row_number).inPlace(binary_operator, operand);
+    at(row_number, binary_operator, operand);
   }
 
   /**
@@ -219,7 +219,7 @@ public class Col extends AbstractVector {
       throw new RuntimeException("The provided (" + operand.n_rows + ", " + operand.n_cols + ")-matrix must be equally in shape to a (1, " + n_cols + ")-matrix.");
     }
 
-    new ViewSubRow(this, row_number).inPlace(binary_operator, operand);
+    at(row_number, binary_operator, operand._data[0]);
   }
 
   /**
