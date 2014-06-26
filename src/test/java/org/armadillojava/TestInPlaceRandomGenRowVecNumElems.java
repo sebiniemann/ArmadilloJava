@@ -92,7 +92,7 @@ public class TestInPlaceRandomGenRowVecNumElems extends TestClass {
       result = (result.times(n)).plus(_genRowVec).divide(n + 1);
     }
 
-    assertMatEquals(result.minus(load("row.randu")), Arma.zeros(result.n_rows, result.n_rows), 1);
+    assertMatEquals(result.minus(load("Row.randu")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
   @Test
@@ -105,7 +105,7 @@ public class TestInPlaceRandomGenRowVecNumElems extends TestClass {
       result = (result.times(n)).plus(_genRowVec).divide(n + 1);
     }
 
-    assertMatEquals(result.minus(load("row.randn")), Arma.zeros(result.n_rows, result.n_rows), 1);
+    assertMatEquals(result.minus(load("Row.randn")), Arma.zeros(result.n_rows, result.n_cols), 1);
   }
 
 }

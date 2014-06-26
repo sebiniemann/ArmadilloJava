@@ -103,7 +103,7 @@ namespace armadilloJava {
           result = (result * n + _genRowVec) / (n + 1);
         }
 
-        save<double>("row.randu", result);
+        save<double>("Row.randu", result);
 
         cout << "done." << endl;
       }
@@ -119,7 +119,7 @@ namespace armadilloJava {
         result = (result * n + _genRowVec) / (n + 1);
       }
 
-      save<double>("row.randn", result);
+      save<double>("Row.randn", result);
 
       cout << "done." << endl;
     }
