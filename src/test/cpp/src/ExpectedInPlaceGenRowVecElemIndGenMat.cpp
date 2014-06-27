@@ -76,19 +76,26 @@ namespace armadilloJava {
 			_genRowVec = _copyOfGenRowVec;
 			_elemInd = _copyOfElemInd;
 			_genMat = _copyOfGenMat;
-			  
 			expectedRowVecColPlus();
 			  
 			_genRowVec = _copyOfGenRowVec;
 			_elemInd = _copyOfElemInd;
 			_genMat = _copyOfGenMat;
-			  
 			expectedRowVecColMinus();
 			  
 			_genRowVec = _copyOfGenRowVec;
 			_elemInd = _copyOfElemInd;
 			_genMat = _copyOfGenMat;
+			expectedRowVecColElemTimes();
 			  
+			_genRowVec = _copyOfGenRowVec;
+			_elemInd = _copyOfElemInd;
+			_genMat = _copyOfGenMat;
+			expectedRowVecColElemDivide();
+			  
+			_genRowVec = _copyOfGenRowVec;
+			_elemInd = _copyOfElemInd;
+			_genMat = _copyOfGenMat;
 			expectedRowVecInsertCols();
 			  
           }
@@ -157,6 +164,39 @@ namespace armadilloJava {
 		  cout << "done." << endl;
       }
 	  
+      void expectedRowVecColElemTimes() {
+		  if(_elemInd >= _genRowVec.n_elem) {
+			  return;
+		  }
+		  
+		  if(!_genMat.is_colvec() || _genRowVec.n_rows != _genMat.n_rows) {
+			  return;
+		  }
+		  
+		  cout << "- Compute expectedRowVecColElemTimes() ... ";
+		  
+		  _genRowVec.col(_elemInd) %= _genMat;
+		  save<double>("Row.colElemTimes", _genRowVec);
+		  
+		  cout << "done." << endl;
+      }
+	  
+      void expectedRowVecColElemDivide() {
+		  if(_elemInd >= _genRowVec.n_elem) {
+			  return;
+		  }
+		  
+		  if(!_genMat.is_colvec() || _genRowVec.n_rows != _genMat.n_rows) {
+			  return;
+		  }
+		  
+		  cout << "- Compute expectedRowVecColElemDivide() ... ";
+		  
+		  _genRowVec.col(_elemInd) /= _genMat;
+		  save<double>("Row.colElemDivide", _genRowVec);
+		  
+		  cout << "done." << endl;
+      }
 	  
 	  void expectedRowVecInsertCols() {
 		  if(_elemInd >= _genRowVec.n_elem) {

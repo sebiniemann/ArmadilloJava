@@ -114,6 +114,26 @@ public class TestInPlaceGenRowVecElemIndGenColVec extends TestClass {
 
     assertMatEquals(_genRowVec, load("Row.colMinus"));
   }
+
+  @Test
+  public void testRowVecColElemTimes() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genRowVec.n_elem)));
+    assumeThat(_genColVec.n_rows, is(_genRowVec.n_rows));
+
+    _genRowVec.col(_elemInd, Op.ELEMTIMES, _genColVec);
+
+    assertMatEquals(_genRowVec, load("Row.colElemTimes"));
+  }
+
+  @Test
+  public void testRowVecColElemivide() throws IOException {
+    assumeThat(_elemInd, is(lessThan(_genRowVec.n_elem)));
+    assumeThat(_genColVec.n_rows, is(_genRowVec.n_rows));
+
+    _genRowVec.col(_elemInd, Op.ELEMDIVIDE, _genColVec);
+
+    assertMatEquals(_genRowVec, load("Row.colElemDivide"));
+  }
   
   @Test
   public void testRowVecInsertCols() throws IOException {

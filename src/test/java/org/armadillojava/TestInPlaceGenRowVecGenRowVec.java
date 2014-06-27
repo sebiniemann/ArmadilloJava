@@ -79,7 +79,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 	assumeThat(_genRowVecB.n_elem, is(_genRowVecA.n_elem));
 	_genRowVecA.inPlace(Op.EQUAL, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlaceEqual"));
+    assertMatEquals(_genRowVecA, load("Row.inPlaceEqual"));
   }
 
   @Test
@@ -89,7 +89,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 
     _genRowVecA.inPlace(Op.PLUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlacePlus"));
+    assertMatEquals(_genRowVecA, load("Row.inPlacePlus"));
   }
 
   @Test
@@ -99,7 +99,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 
     _genRowVecA.inPlace(Op.MINUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlaceMinus"));
+    assertMatEquals(_genRowVecA, load("Row.inPlaceMinus"));
   }
 
   @Test
@@ -111,7 +111,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 
     _genRowVecA.inPlace(Op.TIMES, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlaceTimes"));
+    assertMatEquals(_genRowVecA, load("Row.inPlaceTimes"));
   }
 
   @Test
@@ -121,7 +121,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 
     _genRowVecA.inPlace(Op.ELEMTIMES, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlaceElemTimes"));
+    assertMatEquals(_genRowVecA, load("Row.inPlaceElemTimes"));
   }
 
   @Test
@@ -131,7 +131,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 
     _genRowVecA.inPlace(Op.ELEMDIVIDE, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.inPlaceElemDivide"));
+    assertMatEquals(_genRowVecA, load("Row.inPlaceElemDivide"));
   }
 
   @Test
@@ -140,7 +140,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
     
     _genRowVecA.swap(_genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.swap"));
+    assertMatEquals(_genRowVecA, load("Row.swap"));
   }
 
   @Test
@@ -148,7 +148,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
 	assumeThat(_genRowVecB.is_rowvec(), is(true));
 	_genRowVecA.copy_size(_genRowVecB);
 
-    Mat expected = load("row.copySize");
+    Mat expected = load("Row.copy_size");
 
     assertThat(_genRowVecA.n_cols, is(expected.n_cols));
     assertThat(_genRowVecA.n_rows, is(expected.n_rows));
@@ -160,7 +160,7 @@ public class TestInPlaceGenRowVecGenRowVec extends TestClass {
     
     _genRowVecA = new Row(_genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.row"));
+    assertMatEquals(_genRowVecA, load("Row.row"));
   }
 
 }

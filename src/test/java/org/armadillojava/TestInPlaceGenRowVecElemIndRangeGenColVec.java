@@ -92,7 +92,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.cols(_elemIndRange._first, _elemIndRange._last, Op.EQUAL, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.colsEqual"));
+    assertMatEquals(_genRowVec, load("Row.colsEqual"));
   }
 
   @Test
@@ -103,7 +103,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.cols(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.colsPlus"));
+    assertMatEquals(_genRowVec, load("Row.colsPlus"));
   }
 
   @Test
@@ -114,29 +114,29 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.cols(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.colsMinus"));
+    assertMatEquals(_genRowVec, load("Row.colsMinus"));
   }
 
   @Test
-  public void testRowVecColsTimes() throws IOException {
+  public void testRowVecColsElemTimes() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.cols(_elemIndRange._first, _elemIndRange._last, Op.ELEMTIMES, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.colsElemTimes"));
+    assertMatEquals(_genRowVec, load("Row.colsElemTimes"));
   }
 
   @Test
-  public void testRowColsDivide() throws IOException {
+  public void testRowColsElemDivide() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.cols(_elemIndRange._first, _elemIndRange._last, Op.ELEMDIVIDE, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.colsElemDivide"));
+    assertMatEquals(_genRowVec, load("Row.colsElemDivide"));
   }
 
   @Test
@@ -147,7 +147,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange, Op.EQUAL, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecEqual"));
+    assertMatEquals(_genRowVec, load("Row.subvecEqual"));
   }
 
   @Test
@@ -158,7 +158,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.EQUAL, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecEqual"));
+    assertMatEquals(_genRowVec, load("Row.subvecEqual"));
   }
 
 
@@ -170,7 +170,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange, Op.PLUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecPlus"));
+    assertMatEquals(_genRowVec, load("Row.subvecPlus"));
   }
 
 
@@ -182,7 +182,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecPlus"));
+    assertMatEquals(_genRowVec, load("Row.subvecPlus"));
   }
 
   @Test
@@ -193,7 +193,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange, Op.MINUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecMinus"));
+    assertMatEquals(_genRowVec, load("Row.subvecMinus"));
   }
 
   @Test
@@ -204,51 +204,51 @@ public class TestInPlaceGenRowVecElemIndRangeGenColVec extends TestClass {
 
     _genRowVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecMinus"));
+    assertMatEquals(_genRowVec, load("Row.subvecMinus"));
   }
 
   @Test
-  public void testRowVecSubvecTimesA() throws IOException {
+  public void testRowVecSubvecElemTimesA() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.subvec(_elemIndRange, Op.ELEMTIMES, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecElemTimes"));
+    assertMatEquals(_genRowVec, load("Row.subvecElemTimes"));
   }
 
   @Test
-  public void testRowVecSubvecTimesB() throws IOException {
+  public void testRowVecSubvecElemTimesB() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.ELEMTIMES, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecElemTimes"));
+    assertMatEquals(_genRowVec, load("Row.subvecElemTimes"));
   }
 
   @Test
-  public void testRowSubvecDivideA() throws IOException {
+  public void testRowSubvecElemDivideA() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.subvec(_elemIndRange, Op.ELEMDIVIDE, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecElemDivide"));
+    assertMatEquals(_genRowVec, load("Row.subvecElemDivide"));
   }
 
   @Test
-  public void testRowSubvecDivideB() throws IOException {
+  public void testRowSubvecElemDivideB() throws IOException {
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genColVec.is_rowvec(), is(true));
     assumeThat(_genColVec.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
 
     _genRowVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.ELEMDIVIDE, _genColVec);
 
-    assertMatEquals(_genRowVec, load("row.subvecElemDivide"));
+    assertMatEquals(_genRowVec, load("Row.subvecElemDivide"));
   }
 
 }

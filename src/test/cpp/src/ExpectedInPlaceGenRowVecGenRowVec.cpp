@@ -120,7 +120,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlaceEqual() ... ";
 
         _genRowVecA = _genRowVecB;
-        save<double>("row.inPlaceEqual", _genRowVecA);
+        save<double>("Row.inPlaceEqual", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -133,7 +133,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlace() ... ";
 
         _genRowVecA += _genRowVecB;
-        save<double>("row.inPlacePlus", _genRowVecA);
+        save<double>("Row.inPlacePlus", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -146,7 +146,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlaceMinus() ... ";
 
         _genRowVecA -= _genRowVecB;
-        save<double>("row.inPlaceMinus", _genRowVecA);
+        save<double>("Row.inPlaceMinus", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -163,7 +163,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlaceTimes() ... ";
 
         _genRowVecA *= _genRowVecB;
-        save<double>("row.inPlaceTimes", _genRowVecA);
+        save<double>("Row.inPlaceTimes", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -176,7 +176,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlaceElemTimes() ... ";
 
         _genRowVecA %= _genRowVecB;
-        save<double>("row.inPlaceElemTimes", _genRowVecA);
+        save<double>("Row.inPlaceElemTimes", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -189,7 +189,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowInPlaceElemDivide() ... ";
 
         _genRowVecA /= _genRowVecB;
-        save<double>("row.inPlaceElemDivide", _genRowVecA);
+        save<double>("Row.inPlaceElemDivide", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -202,7 +202,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowSwap() ... ";
 
         _genRowVecA.swap(_genRowVecB);
-        save<double>("row.swap", _genRowVecA);
+        save<double>("Row.swap", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -214,7 +214,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowCopy_size() ... ";
 
         _genRowVecA.copy_size(_genRowVecB);
-        save<double>("row.copySize", _genRowVecA);
+        save<double>("Row.copy_size", _genRowVecA);
 
         cout << "done." << endl;
       }
@@ -227,7 +227,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowRow() ... ";
 
         _genRowVecA = rowvec(_genRowVecB);
-        save<double>("row.row", _genRowVecA);
+        save<double>("Row.row", _genRowVecA);
 
         cout << "done." << endl;
       }

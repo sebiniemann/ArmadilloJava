@@ -87,7 +87,7 @@ namespace armadilloJava {
         cout << "- Compute expectedRowSwapCols() ... ";
 
         _genRowVec.swap_cols(_indRange.a, _indRange.b);
-        save<double>("row.swapCols", _genRowVec);
+        save<double>("Row.swap_cols", _genRowVec);
 
         cout << "done." << endl;
       }

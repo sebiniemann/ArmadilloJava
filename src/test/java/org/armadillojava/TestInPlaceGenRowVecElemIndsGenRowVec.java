@@ -93,7 +93,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.elem(_elemInds, Op.EQUAL, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.elemEqual"));
+    assertMatEquals(_genRowVecA, load("Row.elemEqual"));
   }
 
   @Test
@@ -105,7 +105,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.elem(_elemInds, Op.PLUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.elemPlus"));
+    assertMatEquals(_genRowVecA, load("Row.elemPlus"));
   }
 
   @Test
@@ -117,7 +117,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.elem(_elemInds, Op.MINUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.elemMinus"));
+    assertMatEquals(_genRowVecA, load("Row.elemMinus"));
   }
 
   @Test
@@ -129,7 +129,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.elem(_elemInds, Op.ELEMTIMES, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.elemElemTimes"));
+    assertMatEquals(_genRowVecA, load("Row.elemElemTimes"));
   }
 
   @Test
@@ -141,7 +141,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.elem(_elemInds, Op.ELEMDIVIDE, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.elemElemDivide"));
+    assertMatEquals(_genRowVecA, load("Row.elemElemDivide"));
   }
 
   @Test
@@ -153,7 +153,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.cols(_elemInds, Op.EQUAL, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.colsEqual"));
+    assertMatEquals(_genRowVecA, load("Row.colsEqual"));
   }
 
   @Test
@@ -165,7 +165,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.cols(_elemInds, Op.PLUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.colsPlus"));
+    assertMatEquals(_genRowVecA, load("Row.colsPlus"));
   }
 
   @Test
@@ -177,7 +177,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.cols(_elemInds, Op.MINUS, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.colsMinus"));
+    assertMatEquals(_genRowVecA, load("Row.colsMinus"));
   }
 
   @Test
@@ -189,7 +189,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.cols(_elemInds, Op.ELEMTIMES, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.colsElemTimes"));
+    assertMatEquals(_genRowVecA, load("Row.colsElemTimes"));
   }
 
   @Test
@@ -201,7 +201,7 @@ public class TestInPlaceGenRowVecElemIndsGenRowVec extends TestClass {
 
     _genRowVecA.cols(_elemInds, Op.ELEMDIVIDE, _genRowVecB);
 
-    assertMatEquals(_genRowVecA, load("row.colsElemDivide"));
+    assertMatEquals(_genRowVecA, load("Row.colsElemDivide"));
   }
 
 }

@@ -81,7 +81,7 @@ namespace armadilloJava {
         }
 
         cout << "- Compute expectedElem() ... ";
-        save<double>("row.elem", _genRowVec.elem(_elemInds));
+        save<double>("Row.elem", _genRowVec.elem(_elemInds));
         cout << "done." << endl;
       }
 
@@ -93,7 +93,7 @@ namespace armadilloJava {
         }
 
         cout << "- Compute expectedCols() ... ";
-        save<double>("row.cols", _genRowVec.cols(_elemInds));
+        save<double>("Row.cols", _genRowVec.cols(_elemInds));
         cout << "done." << endl;
       }
 

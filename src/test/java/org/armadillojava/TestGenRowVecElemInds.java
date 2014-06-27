@@ -81,7 +81,7 @@ public class TestGenRowVecElemInds extends TestClass {
       assumeThat((int) _elemInds.at(n), is(lessThan(_genRowVec.n_elem)));
     }
     
-    assertMatEquals(_genRowVec.elem(_elemInds), load("row.elem"));
+    assertMatEquals(_genRowVec.elem(_elemInds), load("Row.elem"));
   }
   
   @Test
@@ -90,7 +90,7 @@ public class TestGenRowVecElemInds extends TestClass {
       assumeThat((int) _elemInds.at(n), is(lessThan(_genRowVec.n_elem)));
     }
     
-    assertMatEquals(_genRowVec.cols(_elemInds), load("row.cols"));
+    assertMatEquals(_genRowVec.cols(_elemInds), load("Row.cols"));
   }
 
 }

@@ -70,25 +70,32 @@ namespace armadilloJava {
           _copyOfGenRowVec = _genRowVec;
           _copyOfElemInd = _elemInd;
           _copyOfGenColVec = _genColVec;
-
+		  
           expectedRowVecColEqual();
 
           _genRowVec = _copyOfGenRowVec;
           _elemInd = _copyOfElemInd;
           _genColVec = _copyOfGenColVec;
-
           expectedRowVecColPlus();
 
           _genRowVec = _copyOfGenRowVec;
           _elemInd = _copyOfElemInd;
           _genColVec = _copyOfGenColVec;
-
           expectedRowVecColMinus();
+			  
+          _genRowVec = _copyOfGenRowVec;
+          _elemInd = _copyOfElemInd;
+          _genColVec = _copyOfGenColVec;
+          expectedRowVecColElemTimes();
+			  
+          _genRowVec = _copyOfGenRowVec;
+          _elemInd = _copyOfElemInd;
+          _genColVec = _copyOfGenColVec;
+          expectedRowVecColElemDivide();
 
           _genRowVec = _copyOfGenRowVec;
           _elemInd = _copyOfElemInd;
           _genColVec = _copyOfGenColVec;
-
           expectedRowVecInsertCols();
 
         }
@@ -153,6 +160,40 @@ namespace armadilloJava {
 
         _genRowVec.col(_elemInd) -= _genColVec;
         save<double>("Row.colMinus", _genRowVec);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowVecColElemTimes() {
+        if (_elemInd >= _genRowVec.n_elem) {
+          return;
+        }
+
+        if (_genRowVec.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        cout << "- Compute expectedRowVecColElemTimes() ... ";
+
+        _genRowVec.col(_elemInd) %= _genColVec;
+        save<double>("Row.colElemTimes", _genRowVec);
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowVecColElemDivide() {
+        if (_elemInd >= _genRowVec.n_elem) {
+          return;
+        }
+
+        if (_genRowVec.n_rows != _genColVec.n_rows) {
+          return;
+        }
+
+        cout << "- Compute expectedRowVecColElemDivide() ... ";
+
+        _genRowVec.col(_elemInd) /= _genColVec;
+        save<double>("Row.colElemDivide", _genRowVec);
 
         cout << "done." << endl;
       }

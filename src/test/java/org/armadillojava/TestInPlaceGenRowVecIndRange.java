@@ -80,7 +80,7 @@ public class TestInPlaceGenRowVecIndRange extends TestClass {
 
     _genRowVec.swap_cols(_IndRange._first,_IndRange._last);
 
-    assertMatEquals(_genRowVec, load("row.swapCols"));
+    assertMatEquals(_genRowVec, load("Row.swap_cols"));
   }
 
 }

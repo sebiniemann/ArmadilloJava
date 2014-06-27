@@ -75,19 +75,26 @@ namespace armadilloJava {
 			_genRowVecA = _copyOfGenRowVecA;
 			_elemInd = _copyOfElemInd;
 			_genRowVecB = _copyOfGenRowVecB;
-			  
 			expectedRowVecColPlus();
 			  
 			_genRowVecA = _copyOfGenRowVecA;
 			_elemInd = _copyOfElemInd;
 			_genRowVecB = _copyOfGenRowVecB;
-			  
 			expectedRowVecColMinus();
 			  
 			_genRowVecA = _copyOfGenRowVecA;
 			_elemInd = _copyOfElemInd;
 			_genRowVecB = _copyOfGenRowVecB;
+			expectedRowVecColElemTimes();
 			  
+			_genRowVecA = _copyOfGenRowVecA;
+			_elemInd = _copyOfElemInd;
+			_genRowVecB = _copyOfGenRowVecB;
+			expectedRowVecColElemDivide();
+			  
+			_genRowVecA = _copyOfGenRowVecA;
+			_elemInd = _copyOfElemInd;
+			_genRowVecB = _copyOfGenRowVecB;
 			expectedRowVecInsertCols();
 			  
           }
@@ -156,6 +163,39 @@ namespace armadilloJava {
 		  cout << "done." << endl;
       }
 	  
+      void expectedRowVecColElemTimes() {
+		  if(_elemInd >= _genRowVecA.n_elem) {
+			  return;
+		  }
+		  
+		  if(!_genRowVecB.is_colvec() || _genRowVecA.n_rows != _genRowVecB.n_rows) {
+			  return;
+		  }
+		  
+		  cout << "- Compute expectedRowVecColElemTimes() ... ";
+		  
+		  _genRowVecA.col(_elemInd) %= _genRowVecB;
+		  save<double>("Row.colElemTimes", _genRowVecA);
+		  
+		  cout << "done." << endl;
+      }
+	  
+      void expectedRowVecColElemDivide() {
+		  if(_elemInd >= _genRowVecA.n_elem) {
+			  return;
+		  }
+		  
+		  if(!_genRowVecB.is_colvec() || _genRowVecA.n_rows != _genRowVecB.n_rows) {
+			  return;
+		  }
+		  
+		  cout << "- Compute expectedRowVecColElemDivide() ... ";
+		  
+		  _genRowVecA.col(_elemInd) /= _genRowVecB;
+		  save<double>("Row.colElemDivide", _genRowVecA);
+		  
+		  cout << "done." << endl;
+      }
 	  
 	  void expectedRowVecInsertCols() {
 		  if(_elemInd >= _genRowVecA.n_elem) {

@@ -86,12 +86,12 @@ namespace armadilloJava {
           _genRowVecA = _copyOfGenRowVecA;
           _elemIndRange = _copyOfElemIndRange;
           _genRowVecB = _copyOfGenRowVecB;
-          expectedRowVecColsTimes();
+          expectedRowVecColsElemTimes();
 
           _genRowVecA = _copyOfGenRowVecA;
           _elemIndRange = _copyOfElemIndRange;
           _genRowVecB = _copyOfGenRowVecB;
-          expectedRowVecColsDivide();
+          expectedRowVecColsElemDivide();
 
           _genRowVecA = _copyOfGenRowVecA;
           _elemIndRange = _copyOfElemIndRange;
@@ -111,12 +111,12 @@ namespace armadilloJava {
           _genRowVecA = _copyOfGenRowVecA;
           _elemIndRange = _copyOfElemIndRange;
           _genRowVecB = _copyOfGenRowVecB;
-          expectedRowVecSubvecTimes();
+          expectedRowVecSubvecElemTimes();
 
           _genRowVecA = _copyOfGenRowVecA;
           _elemIndRange = _copyOfElemIndRange;
           _genRowVecB = _copyOfGenRowVecB;
-          expectedRowVecSubvecDivide();
+          expectedRowVecSubvecElemDivide();
         }
 
         cout << "done." << endl;
@@ -145,7 +145,7 @@ namespace armadilloJava {
 
         _genRowVecA.cols(_elemIndRange.a, _elemIndRange.b) = _genRowVecB;
 
-        save<double>("row.colsEqual", _genRowVecA);
+        save<double>("Row.colsEqual", _genRowVecA);
         cout << "done." << endl;
       }
 
@@ -162,7 +162,7 @@ namespace armadilloJava {
 
         _genRowVecA.cols(_elemIndRange.a, _elemIndRange.b) += _genRowVecB;
 
-        save<double>("row.colsPlus", _genRowVecA);
+        save<double>("Row.colsPlus", _genRowVecA);
         cout << "done." << endl;
       }
 
@@ -179,11 +179,11 @@ namespace armadilloJava {
 
         _genRowVecA.cols(_elemIndRange.a, _elemIndRange.b) -= _genRowVecB;
 
-        save<double>("row.colsMinus", _genRowVecA);
+        save<double>("Row.colsMinus", _genRowVecA);
         cout << "done." << endl;
       }
 
-      void expectedRowVecColsTimes() {
+      void expectedRowVecColsElemTimes() {
         if (!_genRowVecA.in_range(_elemIndRange)) {
           return;
         }
@@ -192,15 +192,15 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedRowVecColsTimes() ... ";
+        cout << "- Compute expectedRowVecColsElemTimes() ... ";
 
         _genRowVecA.cols(_elemIndRange.a, _elemIndRange.b) %= _genRowVecB;
 
-        save<double>("row.colsElemTimes", _genRowVecA);
+        save<double>("Row.colsElemTimes", _genRowVecA);
         cout << "done." << endl;
       }
 
-      void expectedRowVecColsDivide() {
+      void expectedRowVecColsElemDivide() {
         if (!_genRowVecA.in_range(_elemIndRange)) {
           return;
         }
@@ -209,11 +209,11 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedRowVecColsDivide() ... ";
+        cout << "- Compute expectedRowVecColsElemDivide() ... ";
 
         _genRowVecA.cols(_elemIndRange.a, _elemIndRange.b) /= _genRowVecB;
 
-        save<double>("row.colsElemDivide", _genRowVecA);
+        save<double>("Row.colsElemDivide", _genRowVecA);
         cout << "done." << endl;
       }
 
@@ -230,7 +230,7 @@ namespace armadilloJava {
 
         _genRowVecA.subvec(_elemIndRange.a, _elemIndRange.b) = _genRowVecB;
 
-        save<double>("row.subvecEqual", _genRowVecA);
+        save<double>("Row.subvecEqual", _genRowVecA);
         cout << "done." << endl;
       }
 
@@ -247,7 +247,7 @@ namespace armadilloJava {
 
         _genRowVecA.subvec(_elemIndRange.a, _elemIndRange.b) += _genRowVecB;
 
-        save<double>("row.subvecPlus", _genRowVecA);
+        save<double>("Row.subvecPlus", _genRowVecA);
         cout << "done." << endl;
       }
 
@@ -264,11 +264,11 @@ namespace armadilloJava {
 
         _genRowVecA.subvec(_elemIndRange.a, _elemIndRange.b) -= _genRowVecB;
 
-        save<double>("row.subvecMinus", _genRowVecA);
+        save<double>("Row.subvecMinus", _genRowVecA);
         cout << "done." << endl;
       }
 
-      void expectedRowVecSubvecTimes() {
+      void expectedRowVecSubvecElemTimes() {
         if (!_genRowVecA.in_range(_elemIndRange)) {
           return;
         }
@@ -277,24 +277,24 @@ namespace armadilloJava {
           return;
         }
 
-        cout << "- Compute expectedRowVecSubvecTimes() ... ";
+        cout << "- Compute expectedRowVecSubvecElemTimes() ... ";
 
         _genRowVecA.subvec(_elemIndRange.a, _elemIndRange.b) %= _genRowVecB;
 
-        save<double>("row.subvecElemTimes", _genRowVecA);
+        save<double>("Row.subvecElemTimes", _genRowVecA);
         cout << "done." << endl;
       }
 
-      void expectedRowVecSubvecDivide() {
+      void expectedRowVecSubvecElemDivide() {
         if (!_genRowVecA.in_range(_elemIndRange) || _genRowVecB.n_elem != (_elemIndRange.b - _elemIndRange.a) + 1) {
           return;
         }
 
-        cout << "- Compute expectedRowVecSubvecDivide() ... ";
+        cout << "- Compute expectedRowVecSubvecElemDivide() ... ";
 
         _genRowVecA.subvec(_elemIndRange.a, _elemIndRange.b) /= _genRowVecB;
 
-        save<double>("row.subvecElemDivide", _genRowVecA);
+        save<double>("Row.subvecElemDivide", _genRowVecA);
         cout << "done." << endl;
       }
 

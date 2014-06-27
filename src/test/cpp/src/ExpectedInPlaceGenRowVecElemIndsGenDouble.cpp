@@ -134,7 +134,7 @@ namespace armadilloJava {
 
         _genRowVec.elem(_elemInds) += _genDouble;
 
-        save<double>("row.elemPlus", _genRowVec);
+        save<double>("Row.elemPlus", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -149,7 +149,7 @@ namespace armadilloJava {
 
         _genRowVec.elem(_elemInds) -= _genDouble;
 
-        save<double>("row.elemMinus", _genRowVec);
+        save<double>("Row.elemMinus", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -164,7 +164,7 @@ namespace armadilloJava {
 
         _genRowVec.elem(_elemInds) *= _genDouble;
 
-        save<double>("row.elemTimes", _genRowVec);
+        save<double>("Row.elemTimes", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -179,7 +179,7 @@ namespace armadilloJava {
 
         _genRowVec.elem(_elemInds) /= _genDouble;
 
-        save<double>("row.elemDivide", _genRowVec);
+        save<double>("Row.elemDivide", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -194,7 +194,7 @@ namespace armadilloJava {
 
         _genRowVec.cols(_elemInds) += _genDouble;
 
-        save<double>("row.colsPlus", _genRowVec);
+        save<double>("Row.colsPlus", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -209,7 +209,7 @@ namespace armadilloJava {
 
         _genRowVec.cols(_elemInds) -= _genDouble;
 
-        save<double>("row.colsMinus", _genRowVec);
+        save<double>("Row.colsMinus", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -224,7 +224,7 @@ namespace armadilloJava {
 
         _genRowVec.cols(_elemInds) *= _genDouble;
 
-        save<double>("row.colsTimes", _genRowVec);
+        save<double>("Row.colsTimes", _genRowVec);
         cout << "done." << endl;
       }
 
@@ -239,7 +239,7 @@ namespace armadilloJava {
 
         _genRowVec.cols(_elemInds) /= _genDouble;
 
-        save<double>("row.colsDivide", _genRowVec);
+        save<double>("Row.colsDivide", _genRowVec);
         cout << "done." << endl;
       }
 

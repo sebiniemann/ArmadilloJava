@@ -92,7 +92,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.elem(_elemInds, Op.PLUS, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.elemPlus"));
+    assertMatEquals(_genRowVec, load("Row.elemPlus"));
   }
   
   @Test
@@ -103,7 +103,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.elem(_elemInds, Op.MINUS, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.elemMinus"));
+    assertMatEquals(_genRowVec, load("Row.elemMinus"));
   }
   
   @Test
@@ -114,7 +114,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.elem(_elemInds, Op.TIMES, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.elemTimes"));
+    assertMatEquals(_genRowVec, load("Row.elemTimes"));
   }
   
   @Test
@@ -125,7 +125,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.elem(_elemInds, Op.DIVIDE, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.elemDivide"));
+    assertMatEquals(_genRowVec, load("Row.elemDivide"));
   }
   
   @Test
@@ -136,7 +136,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.cols(_elemInds, Op.PLUS, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.colsPlus"));
+    assertMatEquals(_genRowVec, load("Row.colsPlus"));
   }
   
   @Test
@@ -147,7 +147,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.cols(_elemInds, Op.MINUS, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.colsMinus"));
+    assertMatEquals(_genRowVec, load("Row.colsMinus"));
   }
 
   @Test
@@ -158,7 +158,7 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.cols(_elemInds, Op.TIMES, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.colsTimes"));
+    assertMatEquals(_genRowVec, load("Row.colsTimes"));
   }
   
   @Test
@@ -169,6 +169,6 @@ public class TestInPlaceGenRowVecElemIndsGenDouble extends TestClass {
 
     _genRowVec.cols(_elemInds, Op.DIVIDE, _genDouble);
     
-    assertMatEquals(_genRowVec, load("row.colsDivide"));
+    assertMatEquals(_genRowVec, load("Row.colsDivide"));
   }
 }
