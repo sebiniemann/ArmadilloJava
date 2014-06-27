@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/sebastianniemann/armadillojava.png?label=ready&title=Ready)](https://waffle.io/sebastianniemann/armadillojava)
 ArmadilloJava 4.000.0
 =====================
 [![Build Status](https://travis-ci.org/SebastianNiemann/ArmadilloJava.png?branch=master)](https://travis-ci.org/SebastianNiemann/ArmadilloJava)
