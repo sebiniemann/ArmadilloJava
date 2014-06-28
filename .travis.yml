@@ -20,7 +20,7 @@ env:
     # -- END Coverity Scan ENV
 
 before_install:
-  - if [ ! -d $HOME/.state ]; mkdir -p $HOME/.state
+  - if [ ! -d $HOME/.state ]; then mkdir -p $HOME/.state; fi
   - if [ ! -f $HOME/.state/coverity ]; then echo "0" > $HOME/.state/coverity; fi
 
 cache:
