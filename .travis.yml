@@ -8,25 +8,5 @@ jdk:
   - oraclejdk7
   - openjdk7
 
-env:
-  global:
-    # -- BEGIN Coverity Scan ENV
-    - COVERITY_SCAN_BUILD_COMMAND_PREPEND=""
-    - COVERITY_SCAN_BUILD_COMMAND="mvn"
-    - COVERITY_SCAN_BRANCH_PATTERN="master"
-    - COVERITY_SCAN_PROJECT_NAME="SebastianNiemann/ArmadilloJava"
-    - COVERITY_SCAN_OWNER_EMAIL="niemann@sra.uni-hannover.de"
-    - COVERITY_SCAN_TOKEN="I3ZUg4Cvqk5vbPlCQVveLk9TQzqZS5ysE0jktgkRXhcOYICLcxq2ncx31MO/5TYt+dA95CrjsbyrHdOIBsF98OPEg99c6QTMd6m3sDdEg9GEZidDrdizylncZESTRPldX8GGVruaPat+7WCs2ZSN/LL+wTvtuHRCd55BtoTaYPU="
-    # -- END Coverity Scan ENV
-
-before_install:
-  - if [ ! -d $HOME/.state ]; then mkdir -p $HOME/.state; fi
-  - if [ ! -f $HOME/.state/coverity ]; then echo "0" > $HOME/.state/coverity; fi
-
-cache:
-  directories:
-    - $HOME/.state
-
 after_success:
   - mvn clean test jacoco:report coveralls:jacoco
-  - if [ ${TRAVIS_PULL_REQUEST} = 'false' ] && [ $((`date +%s` - 86400)) -gt `cat $HOME/.state/coverity` ]; date +%s > $HOME/.state/coverity; then curl -s https://scan.coverity.com/scripts/travisci_build_coverity_scan.sh | bash; fi
