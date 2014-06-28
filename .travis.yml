@@ -16,7 +16,7 @@ env:
     - COVERITY_SCAN_BRANCH_PATTERN="master"
     - COVERITY_SCAN_PROJECT_NAME="SebastianNiemann/ArmadilloJava"
     - COVERITY_SCAN_OWNER_EMAIL="niemann@sra.uni-hannover.de"
-    - secure: "I3ZUg4Cvqk5vbPlCQVveLk9TQzqZS5ysE0jktgkRXhcOYICLcxq2ncx31MO/5TYt+dA95CrjsbyrHdOIBsF98OPEg99c6QTMd6m3sDdEg9GEZidDrdizylncZESTRPldX8GGVruaPat+7WCs2ZSN/LL+wTvtuHRCd55BtoTaYPU="
+    - COVERITY_SCAN_TOKEN="I3ZUg4Cvqk5vbPlCQVveLk9TQzqZS5ysE0jktgkRXhcOYICLcxq2ncx31MO/5TYt+dA95CrjsbyrHdOIBsF98OPEg99c6QTMd6m3sDdEg9GEZidDrdizylncZESTRPldX8GGVruaPat+7WCs2ZSN/LL+wTvtuHRCd55BtoTaYPU="
     # -- END Coverity Scan ENV
 
 before_install:
