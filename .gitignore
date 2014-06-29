@@ -1,22 +1,26 @@
-# Maven
-target
-hs_err_pid*.log
+# Project specific
+expected.log
+bin
 
 # Eclipse
 .settings
 .classpath
 .project
 
+# Eclipse CDT
+.cproject
+.project
+
+# IntelliJ IDEA
+*.iml
+.idea
+
+# Maven
+target
+hs_err_pid*.log
+
 # CMake
 CMakeFiles
 CMakeCache.txt
 Makefile
 cmake_install.cmake
-
-# Eclipse CDT
-.cproject
-.project
-
-# Project specific
-expected.log
-bin
