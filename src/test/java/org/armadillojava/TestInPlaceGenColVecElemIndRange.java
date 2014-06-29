@@ -31,7 +31,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestInPlaceGenColVecIndRange extends TestClass {
+public class TestInPlaceGenColVecElemIndRange extends TestClass {
 
   @Parameters(name = "{index}: GenColVec = {0}, ColIndRange = {2}")
   public static Collection<Object[]> getParameters() {

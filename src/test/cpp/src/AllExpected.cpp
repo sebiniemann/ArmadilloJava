@@ -307,6 +307,9 @@ using armadilloJava::ExpectedInPlaceGenColVecElemIndGenRowVec;
 #include <ExpectedInPlaceGenColVecElemIndNumElems.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecElemIndNumElems;
 
+#include <ExpectedInPlaceGenColVecElemIndRange.cpp>
+using armadilloJava::ExpectedInPlaceGenColVecElemIndRange;
+
 #include <ExpectedInPlaceGenColVecElemIndRangeGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecElemIndRangeGenColVec;
 
@@ -342,9 +345,6 @@ using armadilloJava::ExpectedInPlaceGenColVecGenMat;
 
 #include <ExpectedInPlaceGenColVecGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecGenRowVec;
-
-#include <ExpectedInPlaceGenColVecIndRange.cpp>
-using armadilloJava::ExpectedInPlaceGenColVecIndRange;
 
 #include <ExpectedInPlaceGenColVecNumElems.cpp>
 using armadilloJava::ExpectedInPlaceGenColVecNumElems;
@@ -568,6 +568,9 @@ using armadilloJava::ExpectedInPlaceGenRowVecElemIndGenRowVec;
 #include <ExpectedInPlaceGenRowVecElemIndNumElems.cpp>
 using armadilloJava::ExpectedInPlaceGenRowVecElemIndNumElems;
 
+#include <ExpectedInPlaceGenRowVecElemIndRange.cpp>
+using armadilloJava::ExpectedInPlaceGenRowVecElemIndRange;
+
 #include <ExpectedInPlaceGenRowVecElemIndRangeGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceGenRowVecElemIndRangeGenColVec;
 
@@ -603,9 +606,6 @@ using armadilloJava::ExpectedInPlaceGenRowVecGenMat;
 
 #include <ExpectedInPlaceGenRowVecGenRowVec.cpp>
 using armadilloJava::ExpectedInPlaceGenRowVecGenRowVec;
-
-#include <ExpectedInPlaceGenRowVecIndRange.cpp>
-using armadilloJava::ExpectedInPlaceGenRowVecIndRange;
 
 #include <ExpectedInPlaceRandomGenColVec.cpp>
 using armadilloJava::ExpectedInPlaceRandomGenColVec;
@@ -809,6 +809,7 @@ int main() {
   ExpectedInPlaceGenColVecElemIndGenMat();
   ExpectedInPlaceGenColVecElemIndGenRowVec();
   ExpectedInPlaceGenColVecElemIndNumElems();
+  ExpectedInPlaceGenColVecElemIndRange();
   ExpectedInPlaceGenColVecElemIndRangeGenColVec();
   ExpectedInPlaceGenColVecElemIndRangeGenDouble();
   ExpectedInPlaceGenColVecElemIndRangeGenMat();
@@ -821,7 +822,6 @@ int main() {
   ExpectedInPlaceGenColVecGenDouble();
   ExpectedInPlaceGenColVecGenMat();
   ExpectedInPlaceGenColVecGenRowVec();
-  ExpectedInPlaceGenColVecIndRange();
   ExpectedInPlaceGenColVecNumElems();
   ExpectedInPlaceGenMat();
   ExpectedInPlaceGenMatColIndGenColVec();
@@ -896,6 +896,7 @@ int main() {
   ExpectedInPlaceGenRowVecElemIndGenMat();
   ExpectedInPlaceGenRowVecElemIndGenRowVec();
   ExpectedInPlaceGenRowVecElemIndNumElems();
+  ExpectedInPlaceGenRowVecElemIndRange();
   ExpectedInPlaceGenRowVecElemIndRangeGenColVec();
   ExpectedInPlaceGenRowVecElemIndRangeGenDouble();
   ExpectedInPlaceGenRowVecElemIndRangeGenMat();
@@ -908,7 +909,6 @@ int main() {
   ExpectedInPlaceGenRowVecGenDouble();
   ExpectedInPlaceGenRowVecGenMat();
   ExpectedInPlaceGenRowVecGenRowVec();
-  ExpectedInPlaceGenRowVecIndRange();
   ExpectedInPlaceRandomGenColVec();
   ExpectedInPlaceRandomGenColVecNumElems();
   ExpectedInPlaceRandomGenMat();

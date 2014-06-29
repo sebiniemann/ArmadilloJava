@@ -32,10 +32,10 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedInPlaceGenColVecIndRange : public Expected {
+  class ExpectedInPlaceGenColVecElemIndRange : public Expected {
     public:
-      ExpectedInPlaceGenColVecIndRange() {
-        cout << "Compute ExpectedInPlaceGenColVecIndRange(): " << endl;
+      ExpectedInPlaceGenColVecElemIndRange() {
+        cout << "Compute ExpectedInPlaceGenColVecElemIndRange(): " << endl;
 
           vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
             InputClass::GenColVec,
