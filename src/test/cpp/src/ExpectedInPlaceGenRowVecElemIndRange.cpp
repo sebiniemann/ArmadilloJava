@@ -54,7 +54,7 @@ namespace armadilloJava {
                   break;
                 case 1:
                   _fileSuffix += "," + value.first;
-                  _indRange = *static_cast<span*>(value.second);
+                  _elemIndRange = *static_cast<span*>(value.second);
                   break;
               }
               ++n;
@@ -63,7 +63,7 @@ namespace armadilloJava {
             cout << "Using input: " << _fileSuffix << endl;
 
             _copyOfGenRowVec = _genRowVec;
-            _copyOfIndRange = _indRange;
+            _copyOfElemIndRange = _elemIndRange;
 
             expectedRowSwapCols();
             
@@ -76,17 +76,17 @@ namespace armadilloJava {
       Row<double> _genRowVec;
       Row<double> _copyOfGenRowVec;
 
-      span _indRange;
-      span _copyOfIndRange;
+      span _elemIndRange;
+      span _copyOfElemIndRange;
 
       void expectedRowSwapCols() {
-        if(!_genRowVec.in_range(_indRange)) {
+        if(!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
 
         cout << "- Compute expectedRowSwapCols() ... ";
 
-        _genRowVec.swap_cols(_indRange.a, _indRange.b);
+        _genRowVec.swap_cols(_elemIndRange.a, _elemIndRange.b);
         save<double>("Row.swap_cols", _genRowVec);
 
         cout << "done." << endl;
