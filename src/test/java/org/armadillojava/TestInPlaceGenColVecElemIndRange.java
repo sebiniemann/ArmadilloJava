@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestInPlaceGenColVecElemIndRange extends TestClass {
 
-  @Parameters(name = "{index}: GenColVec = {0}, ColIndRange = {2}")
+  @Parameters(name = "{index}: GenColVec = {0}, ElemIndRange = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
@@ -52,35 +52,45 @@ public class TestInPlaceGenColVecElemIndRange extends TestClass {
   protected Col    _copyOfGenColVec;
 
   @Parameter(2)
-  public String    _IndRangeString;
+  public String    _elemIndRangeString;
 
   @Parameter(3)
-  public Span      _IndRange;
+  public Span      _elemIndRange;
 
-  protected Span   _copyOfIndRange;
+  protected Span   _copyOfElemIndRange;
 
   @Before
   public void before() {
-    _fileSuffix = _genColVecString + "," + _IndRangeString;
+    _fileSuffix = _genColVecString + "," + _elemIndRangeString;
 
     _copyOfGenColVec = new Col(_genColVec);
-    _copyOfIndRange = new Span(_IndRange);
+    _copyOfElemIndRange = new Span(_elemIndRange);
   }
 
   @After
   public void after() {
     _genColVec.inPlace(Op.EQUAL, _copyOfGenColVec);
-    _IndRange = new Span(_copyOfIndRange);
+      _elemIndRange = new Span(_copyOfElemIndRange);
   }
 
   @Test
   public void testColSwapRows() throws IOException {
-    assumeThat(_genColVec.in_range(_IndRange), is(true));
- 
+    assumeThat(_elemIndRange._isEntireRange, is(false));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
-    _genColVec.swap_rows(_IndRange._first,_IndRange._last);
+    _genColVec.swap_rows(_elemIndRange._first, _elemIndRange._last);
 
-    assertMatEquals(_genColVec, load("Col.swapRows"));
+    assertMatEquals(_genColVec, load("Col.swap_rows"));
+  }
+
+  @Test
+  public void testColVecShedRows() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
+    assumeThat(_genColVec.in_range(_elemIndRange), is(true));
+
+    _genColVec.shed_rows(_elemIndRange._first, _elemIndRange._last);
+
+    assertMatEquals(_genColVec, load("Col.shed_rows"));
   }
 
 }

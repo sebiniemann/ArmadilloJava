@@ -68,7 +68,7 @@ public class TestInPlaceGenMatExtRowIndNumRows extends TestClass {
   @Parameter(5)
   public int    _numRows;
 
-  protected int _copyOfGenNumRows;
+  protected int _copyOfNumRows;
 
   @Before
   public void before() {
@@ -76,14 +76,14 @@ public class TestInPlaceGenMatExtRowIndNumRows extends TestClass {
 
     _copyOfGenMat = new Mat(_genMat);
     _copyOfExtRowInd = new Integer(_extRowInd);
-    _copyOfGenNumRows = new Integer(_numRows);
+    _copyOfNumRows = new Integer(_numRows);
   }
 
   @After
   public void after() {
     _genMat.inPlace(Op.EQUAL, _copyOfGenMat);
     _extRowInd = new Integer(_copyOfExtRowInd);
-    _numRows = new Integer(_copyOfGenNumRows);
+    _numRows = new Integer(_copyOfNumRows);
   }
 
   @Test
@@ -101,14 +101,12 @@ public class TestInPlaceGenMatExtRowIndNumRows extends TestClass {
 
     _genMat.insert_rows(_extRowInd, _numRows, false);
 
-    Mat expected = load("Mat.insert_rowsFalse");
-    assertThat(_genMat.n_rows, is(expected.n_rows));
-    assertThat(_genMat.n_cols, is(expected.n_cols));
+    assertThat(_genMat.n_rows, is(_copyOfGenMat.n_rows + _copyOfNumRows));
+    assertThat(_genMat.n_cols, is(_copyOfGenMat.n_cols));
 
     _genMat.shed_rows(_extRowInd, _extRowInd + _numRows - 1);
-    expected.shed_rows(_extRowInd, _extRowInd + _numRows - 1);
-    
-    assertMatEquals(_genMat, expected);
+
+    assertMatEquals(_genMat, _copyOfGenMat);
   }
 
 }

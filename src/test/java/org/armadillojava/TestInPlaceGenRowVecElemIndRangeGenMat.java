@@ -86,6 +86,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecColsEqual() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -97,6 +98,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecColsPlus() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -108,6 +110,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecColsMinus() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -119,6 +122,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecColsElemTimes() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -130,6 +134,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowColsElemDivide() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -141,6 +146,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecEqualA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -152,6 +158,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecEqualB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -163,6 +170,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecPlusA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -174,6 +182,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecPlusB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -185,6 +194,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecMinusA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -196,6 +206,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecMinusB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -207,6 +218,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecElemTimesA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -218,6 +230,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowVecSubvecElemTimesB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -229,6 +242,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowSubvecElemDivideA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));
@@ -240,6 +254,7 @@ public class TestInPlaceGenRowVecElemIndRangeGenMat extends TestClass {
 
   @Test
   public void testRowSubvecElemDivideB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
     assumeThat(_genMat.is_rowvec(), is(true));
     assumeThat(_genMat.n_cols, is(_elemIndRange._last - _elemIndRange._first + 1));

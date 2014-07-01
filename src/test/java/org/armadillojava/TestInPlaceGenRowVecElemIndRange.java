@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class TestInPlaceGenRowVecElemIndRange extends TestClass {
 
-  @Parameters(name = "{index}: GenRowVec = {0}, RowIndRange = {2}")
+  @Parameters(name = "{index}: GenRowVec = {0}, ElemIndRange = {2}")
   public static Collection<Object[]> getParameters() {
     List<InputClass> inputClasses = new ArrayList<>();
 
@@ -52,35 +52,45 @@ public class TestInPlaceGenRowVecElemIndRange extends TestClass {
   protected Row    _copyOfGenRowVec;
 
   @Parameter(2)
-  public String    _IndRangeString;
+  public String    _elemIndRangeString;
 
   @Parameter(3)
-  public Span      _IndRange;
+  public Span      _elemIndRange;
 
-  protected Span   _copyOfIndRange;
+  protected Span   _copyOfElemIndRange;
 
   @Before
   public void before() {
-    _fileSuffix = _genRowVecString + "," + _IndRangeString;
+    _fileSuffix = _genRowVecString + "," + _elemIndRangeString;
 
     _copyOfGenRowVec = new Row(_genRowVec);
-    _copyOfIndRange = new Span(_IndRange);
+    _copyOfElemIndRange = new Span(_elemIndRange);
   }
 
   @After
   public void after() {
     _genRowVec.inPlace(Op.EQUAL, _copyOfGenRowVec);
-    _IndRange = new Span(_copyOfIndRange);
+    _elemIndRange = new Span(_copyOfElemIndRange);
   }
 
   @Test
   public void testRowSwapCols() throws IOException {
-    assumeThat(_genRowVec.in_range(_IndRange), is(true));
- 
+    assumeThat(_elemIndRange._isEntireRange, is(false));
+    assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
 
-    _genRowVec.swap_cols(_IndRange._first,_IndRange._last);
+    _genRowVec.swap_cols(_elemIndRange._first,_elemIndRange._last);
 
     assertMatEquals(_genRowVec, load("Row.swap_cols"));
+  }
+
+  @Test
+  public void testRowVecShedCols() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
+    assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
+
+    _genRowVec.shed_cols(_elemIndRange._first,_elemIndRange._last);
+
+    assertMatEquals(_genRowVec, load("Row.shed_cols"));
   }
 
 }

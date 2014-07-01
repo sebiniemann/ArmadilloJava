@@ -17,6 +17,7 @@ namespace armadilloJava
 {
   enum InputClass {
     ElemInd,
+    ExtElemInd,
     ColInd,
     ExtColInd,
     RowInd,

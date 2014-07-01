@@ -86,6 +86,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecRowsPlus() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genDouble);
@@ -95,6 +96,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecRowsMinus() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genDouble);
@@ -104,6 +106,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecRowsTimes() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.TIMES, _genDouble);
@@ -113,6 +116,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColRowsDivide() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.rows(_elemIndRange._first, _elemIndRange._last, Op.DIVIDE, _genDouble);
@@ -122,6 +126,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecPlusA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange, Op.PLUS, _genDouble);
@@ -131,6 +136,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecPlusB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.PLUS, _genDouble);
@@ -140,6 +146,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecMinusA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange, Op.MINUS, _genDouble);
@@ -149,6 +156,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecMinusB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.MINUS, _genDouble);
@@ -158,6 +166,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecTimesA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange, Op.TIMES, _genDouble);
@@ -167,6 +176,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColVecSubvecTimesB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.TIMES, _genDouble);
@@ -176,6 +186,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColSubvecDivideA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange, Op.DIVIDE, _genDouble);
@@ -185,6 +196,7 @@ public class TestInPlaceGenColVecElemIndRangeGenDouble extends TestClass {
 
   @Test
   public void testColSubvecDivideB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genColVec.in_range(_elemIndRange), is(true));
 
     _genColVec.subvec(_elemIndRange._first, _elemIndRange._last, Op.DIVIDE, _genDouble);

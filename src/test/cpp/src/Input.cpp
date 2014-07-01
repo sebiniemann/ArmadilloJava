@@ -60,6 +60,9 @@ namespace armadilloJava {
         case InputClass::ElemInd:
           inputs.push_back(getElemInd());
           break;
+        case InputClass::ExtElemInd:
+          inputs.push_back(getExtElemInd());
+          break;
         case InputClass::ColInd:
           inputs.push_back(getColInd());
           break;
@@ -268,6 +271,14 @@ namespace armadilloJava {
     };
   }
 
+  vector<pair<string, void*>> Input::getExtElemInd() {
+    return {
+      pair<string, void*>("0", new int(0)),
+      pair<string, void*>("9", new int(9)),
+      pair<string, void*>("10", new int(10))
+    };
+  }
+
   vector<pair<string, void*>> Input::getColInd() {
     return getRowInd();
   }
@@ -371,6 +382,7 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getElemIndRange() {
     return {
+      pair<string, void*>("span.all", new span(span::all)),
       pair<string, void*>("span(0)", new span(0)),
       pair<string, void*>("span(0,9)", new span(0, 9)),
       pair<string, void*>("span(1,4)", new span(1, 4))

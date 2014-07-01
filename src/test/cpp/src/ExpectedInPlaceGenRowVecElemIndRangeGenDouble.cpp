@@ -123,6 +123,10 @@ namespace armadilloJava {
       double _copyOfGenDouble;
 
       void expectedRowVecColsPlus() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -135,6 +139,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecColsMinus() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -147,6 +155,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecColsTimes() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -160,6 +172,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecColsDivide() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -173,6 +189,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecSubvecPlus() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -186,6 +206,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecSubvecMinus() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -199,6 +223,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecSubvecTimes() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -212,6 +240,10 @@ namespace armadilloJava {
       }
 
       void expectedRowVecSubvecDivide() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if (!_genRowVec.in_range(_elemIndRange)) {
           return;
         }

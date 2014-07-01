@@ -65,7 +65,7 @@ public class TestGenRowVecElemIndRange extends TestClass {
     _fileSuffix = _genRowString + "," + _elemIndRangeString;
 
     _copyOfGenRow = new Row(_genRowVec);
-    _copyOfElemIndRange = new Span(_elemIndRange._first, _elemIndRange._last);
+    _copyOfElemIndRange = new Span(_elemIndRange);
   }
 
   @After
@@ -88,22 +88,25 @@ public class TestGenRowVecElemIndRange extends TestClass {
 
   @Test
   public void testRowCols() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
 
     assertMatEquals(_genRowVec.cols(_elemIndRange._first, _elemIndRange._last), load("Row.cols"));
   }
 
   @Test
-  public void testRowsubvec() throws IOException {
+  public void testRowSubvecA() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
 
     assertMatEquals(_genRowVec.subvec(_elemIndRange._first, _elemIndRange._last), load("Row.subvec"));
   }
 
   @Test
-  public void testRowsubvecSpan() throws IOException {
+  public void testRowSubvecB() throws IOException {
+    assumeThat(_elemIndRange._isEntireRange, is(false));
     assumeThat(_genRowVec.in_range(_elemIndRange), is(true));
 
-    assertMatEquals(_genRowVec.subvec(_elemIndRange), load("Row.subvecSpan"));
+    assertMatEquals(_genRowVec.subvec(_elemIndRange), load("Row.subvec"));
   }
 }

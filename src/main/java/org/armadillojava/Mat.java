@@ -2133,11 +2133,11 @@ public class Mat extends AbstractMat {
 
     set_size(n_rows - 1, n_cols);
 
-    new ViewSubRows(this, 0, row_number - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number - 1));
+    new ViewSubRows(this, 0, row_number).inPlace(Op.EQUAL, new ViewSubRows(temp, 0, row_number));
     /*
      * The attribute "n_rows" has been updated by set_size(int, int).
      */
-    new ViewSubRows(this, row_number, n_rows - 1).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number + 1, temp.n_rows - 1));
+    new ViewSubRows(this, row_number, n_rows - row_number).inPlace(Op.EQUAL, new ViewSubRows(temp, row_number + 1, n_rows - row_number));
   }
 
   /**
@@ -2172,7 +2172,7 @@ public class Mat extends AbstractMat {
     /*
      * The attribute "n_rows" has been updated by set_size(int, int).
      */
-    new ViewSubRows(this, first_row, n_rows - (first_row + 1)).inPlace(Op.EQUAL, new ViewSubRows(temp, last_row + 1, temp.n_rows - (last_row + 1)));
+    new ViewSubRows(this, first_row, n_rows - first_row).inPlace(Op.EQUAL, new ViewSubRows(temp, last_row + 1, n_rows - first_row));
   }
 
   /**

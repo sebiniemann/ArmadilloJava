@@ -65,7 +65,6 @@ namespace armadilloJava {
 				expectedColVecIn_range();
 				expectedColVecRows();
 				expectedColVecSubvec();
-				expectedColVecSubvecSpan();
 			}
 			
 			cout << "done." << endl;
@@ -88,6 +87,10 @@ namespace armadilloJava {
 		}
 
 		void expectedColVecRows() {
+            if(_elemIndRange.whole) {
+              return;
+            }
+
 			cout << "- Compute expectedColRows() ... ";
 
 			if(_genColVec.in_range(_elemIndRange)) {
@@ -98,20 +101,14 @@ namespace armadilloJava {
 		}
 
 		void expectedColVecSubvec() {
+            if(_elemIndRange.whole) {
+              return;
+            }
+
 			cout << "- Compute expectedColSubvec() ... ";
 
 			if(_genColVec.in_range(_elemIndRange)) {
 				save<double>("Col.subvec", _genColVec.subvec(_elemIndRange.a, _elemIndRange.b));
-			}
-
-			cout << "done." << endl;
-		}
-
-		void expectedColVecSubvecSpan() {
-			cout << "- Compute expectedColSubvecSpan() ... ";
-
-			if(_genColVec.in_range(_elemIndRange)) {
-				save<double>("Col.subvecSpan", _genColVec.subvec(_elemIndRange));
 			}
 
 			cout << "done." << endl;

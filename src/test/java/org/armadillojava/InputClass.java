@@ -15,6 +15,7 @@ package org.armadillojava;
 
 enum InputClass {
   ElemInd,
+  ExtElemInd,
   ColInd,
   ExtColInd,
   RowInd,

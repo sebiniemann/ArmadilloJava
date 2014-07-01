@@ -41,6 +41,7 @@ namespace armadilloJava {
       static Mat<double> getKMSMatrix(int n_rows, int n_cols);
 
       static vector<pair<string, void*>> getElemInd();
+      static vector<pair<string, void*>> getExtElemInd();
       static vector<pair<string, void*>> getColInd();
       static vector<pair<string, void*>> getExtColInd();
       static vector<pair<string, void*>> getRowInd();

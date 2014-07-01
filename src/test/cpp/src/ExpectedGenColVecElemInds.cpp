@@ -62,8 +62,8 @@ namespace armadilloJava {
 
           cout << "Using input: " << _fileSuffix << endl;
 
-          expectedElem();
-          expectedRows();
+          expectedColElem();
+          expectedColElem();
         }
 
         cout << "done." << endl;
@@ -73,26 +73,26 @@ namespace armadilloJava {
       Mat<double> _genColVec;
       Col<uword> _elemInds;
 
-      void expectedElem() {
+      void expectedColElem() {
         for(int n = 0; n < _elemInds.n_elem; n++) {
           if(!_genColVec.in_range(_elemInds.at(n))) {
             return;
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedColElem() ... ";
         save<double>("Col.elem", _genColVec.elem(_elemInds));
         cout << "done." << endl;
       }
 
-      void expectedRows() {
+      void expectedColRows() {
         for(int n = 0; n < _elemInds.n_elem; n++) {
           if(!_genColVec.in_range(_elemInds.at(n))) {
             return;
           }
         }
 
-        cout << "- Compute expectedElem() ... ";
+        cout << "- Compute expectedColRows() ... ";
         save<double>("Col.rows", _genColVec.rows(_elemInds));
         cout << "done." << endl;
       }

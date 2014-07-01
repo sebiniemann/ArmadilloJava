@@ -64,7 +64,7 @@ public class TestGenMatElemIndRange extends TestClass {
     _fileSuffix = _genMatString + "," + _elemIndRangeString;
 
     _copyOfGenMat = new Mat(_genMat);
-    _copyOfElemIndRange = new Span(_elemIndRange._first, _elemIndRange._last);
+    _copyOfElemIndRange = new Span(_elemIndRange);
   }
 
   @After

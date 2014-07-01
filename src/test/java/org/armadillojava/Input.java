@@ -29,6 +29,9 @@ class Input {
         case ElemInd:
           inputs.add(getElemInd());
           break;
+        case ExtElemInd:
+          inputs.add(getExtElemInd());
+          break;
         case ColInd:
           inputs.add(getColInd());
           break;
@@ -267,6 +270,16 @@ class Input {
     return input;
   }
 
+  protected static List<Pair<String, Object>> getExtElemInd() {
+    List<Pair<String, Object>> input = new ArrayList<>();
+
+    input.add(new Pair<String, Object>("0", 0));
+    input.add(new Pair<String, Object>("9", 9));
+    input.add(new Pair<String, Object>("10", 10));
+
+    return input;
+  }
+
   protected static List<Pair<String, Object>> getColInd() {
     return getRowInd();
   }
@@ -393,6 +406,7 @@ class Input {
   protected static List<Pair<String, Object>> getElemIndRange() {
     List<Pair<String, Object>> input = new ArrayList<>();
 
+    input.add(new Pair<String, Object>("span.all", Span.all()));
     input.add(new Pair<String, Object>("span(0)", new Span(0)));
     input.add(new Pair<String, Object>("span(0,9)", new Span(0, 9)));
     input.add(new Pair<String, Object>("span(1,4)", new Span(1, 4)));

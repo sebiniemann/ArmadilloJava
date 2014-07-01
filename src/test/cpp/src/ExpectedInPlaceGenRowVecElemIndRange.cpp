@@ -66,7 +66,11 @@ namespace armadilloJava {
             _copyOfElemIndRange = _elemIndRange;
 
             expectedRowSwapCols();
-            
+
+            _genRowVec = _copyOfGenRowVec;
+            _elemIndRange = _copyOfElemIndRange;
+
+            expectedRowVecShedCols();
           }
 
           cout << "done." << endl;
@@ -80,6 +84,10 @@ namespace armadilloJava {
       span _copyOfElemIndRange;
 
       void expectedRowSwapCols() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
         if(!_genRowVec.in_range(_elemIndRange)) {
           return;
         }
@@ -91,6 +99,22 @@ namespace armadilloJava {
 
         cout << "done." << endl;
       }
-      
+
+      void expectedRowVecShedCols() {
+        if(_elemIndRange.whole) {
+          return;
+        }
+
+        if(!_genRowVec.in_range(_elemIndRange)) {
+          return;
+        }
+
+        cout << "- Compute expectedRowVecShedCols() ... ";
+
+        _genRowVec.shed_cols(_elemIndRange.a, _elemIndRange.b);
+        save<double>("Row.shed_cols", _genRowVec);
+
+        cout << "done." << endl;
+      }
   };
 }
