@@ -23,6 +23,7 @@ using std::pair;
 
 #include <armadillo>
 using arma::Row;
+using arma::Col;
 using arma::uword;
 
 #include <InputClass.hpp>

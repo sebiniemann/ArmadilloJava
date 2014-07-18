@@ -22,6 +22,7 @@ using std::endl;
 using std::pair;
 
 #include <armadillo>
+using arma::Row;
 using arma::ones;
 using arma::zeros;
 
