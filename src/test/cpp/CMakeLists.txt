@@ -13,11 +13,7 @@
 #------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-set(ARMADILLO_JAVA_MAJOR 4)
-set(ARMADILLO_JAVA_MINOR 000)
-set(ARMADILLO_JAVA_PATCH 0)
-
-message(STATUS "Configuring test input and result generators for ArmadilloJava ${ARMADILLO_JAVA_MAJOR}.${ARMADILLO_JAVA_MINOR}.${ARMADILLO_JAVA_PATCH}")
+message(STATUS "Configuring test input and result generators for ArmadilloJava")
 message(STATUS "NOTICE: This is written with the system configuration of ArmadilloJava developers in mind and might not compile on your system.")
 
 project(ArmadilloJava CXX)
