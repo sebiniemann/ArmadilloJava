@@ -829,12 +829,12 @@ int main() {
 //  ExpectedInPlaceGenColVecGenRowVec();
 //  ExpectedInPlaceGenColVecNumElems();
 //  ExpectedInPlaceGenMat();
-  ExpectedInPlaceGenMatColInd();
+//  ExpectedInPlaceGenMatColInd();
 //  ExpectedInPlaceGenMatColIndGenColVec();
 //  ExpectedInPlaceGenMatColIndGenDouble();
 //  ExpectedInPlaceGenMatColIndGenMat();
 //  ExpectedInPlaceGenMatColIndGenRowVec();
-  ExpectedInPlaceGenMatColIndRange();
+//  ExpectedInPlaceGenMatColIndRange();
 //  ExpectedInPlaceGenMatColIndRangeGenColVec();
 //  ExpectedInPlaceGenMatColIndRangeGenDouble();
 //  ExpectedInPlaceGenMatColIndRangeGenMat();
@@ -862,7 +862,7 @@ int main() {
 //  ExpectedInPlaceGenMatGenMat();
 //  ExpectedInPlaceGenMatGenRowVec();
 //  ExpectedInPlaceGenMatNumRowsNumCols();
-  ExpectedInPlaceGenMatRowInd();
+//  ExpectedInPlaceGenMatRowInd();
 //  ExpectedInPlaceGenMatRowIndColInd();
 //  ExpectedInPlaceGenMatRowIndColIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndColIndMatSizeGenColVec();
@@ -877,7 +877,7 @@ int main() {
 //  ExpectedInPlaceGenMatRowIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndGenMat();
 //  ExpectedInPlaceGenMatRowIndGenRowVec();
-  ExpectedInPlaceGenMatRowIndRange();
+//  ExpectedInPlaceGenMatRowIndRange();
 //  ExpectedInPlaceGenMatRowIndRangeColIndGenColVec();
 //  ExpectedInPlaceGenMatRowIndRangeColIndGenDouble();
 //  ExpectedInPlaceGenMatRowIndRangeColIndGenMat();

@@ -688,7 +688,7 @@ public class TestGenMat extends TestClass {
     OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     PrintStream printStream = new PrintStream(byteArrayOutputStream);
     PrintStream previousStream = System.out;
-
+ 
     System.setOut(printStream);
 
     _genMat.print();

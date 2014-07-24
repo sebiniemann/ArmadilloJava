@@ -744,6 +744,7 @@ namespace armadilloJava {
 
         cout.rdbuf(previousBuffer);
 
+
         cout << "done." << endl;
       }
 
