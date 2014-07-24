@@ -17,7 +17,6 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.both;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -64,7 +63,6 @@ public class TestGenRowVecText extends TestClass {
   
   @Before
   public void before() throws IOException {
-   
     _fileSuffix = _genRowVecString;
  
   }
@@ -101,23 +99,45 @@ public class TestGenRowVecText extends TestClass {
     OutputStream stream = new ByteArrayOutputStream() ;
 
     _genRowVec.print(stream,_text);
-
+    
     assertThat(stream.toString().replaceAll("\\s+", " "), both(containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))).and(containsString(_text))); 
   }
   
   @Test
   public void testRowRawPrintString() throws IOException {
+    OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    PrintStream previousStream = System.out;
+
+    System.setOut(printStream);
+
+    _genRowVec.raw_print(_text);
+    System.out.flush();
     
+    System.setOut(previousStream);
+
+    assertThat(byteArrayOutputStream.toString().replaceAll("\\s+", " "), both(containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))).and(containsString(_text))); 
+  
   }
   
   @Test
   public void testRowRawPrintOutputStream() throws IOException {
+    OutputStream stream = new ByteArrayOutputStream();
+
+    _genRowVec.raw_print(stream);
     
+    assertThat(stream.toString().replaceAll("\\s+", " "), containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))); 
+  
   }
   
   @Test
-  public void testRowRawPrintStringOutputStream() throws IOException {
+  public void testRowRawPrintOutputStreamString() throws IOException {
+    OutputStream stream = new ByteArrayOutputStream();
+
+    _genRowVec.raw_print(stream,_text);
     
+    assertThat(stream.toString().replaceAll("\\s+", " "), both(containsString(new String(Files.readAllBytes(Paths.get(_filepath + "Row.raw_print(" + _fileSuffix + ").txt")), StandardCharsets.UTF_8).replaceAll("\\s+", " "))).and(containsString(_text))); 
+  
   }
 
 }
