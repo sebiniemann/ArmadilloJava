@@ -23,6 +23,7 @@ using std::pair;
 
 #include <armadillo>
 using arma::Row;
+using arma::Fill;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -31,14 +32,14 @@ using armadilloJava::InputClass;
 using armadilloJava::Input;
 
 namespace armadilloJava {
-  class ExpectedGenRowVecElemInd : public Expected {
+  class ExpectedElemIndFill : public Expected {
     public:
-      ExpectedGenRowVecElemInd() {
-        cout << "Compute ExpectedGenRowVecElemInd(): " << endl;
+      ExpectedElemIndFill() {
+        cout << "Compute ExpectedElemIndFill(): " << endl;
 
           vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
-            InputClass::GenRowVec,
-            InputClass::ElemInd
+            InputClass::ElemInd,
+            InputClass::Fill
           });
 
           for (vector<pair<string, void*>> input : inputs) {
@@ -49,11 +50,11 @@ namespace armadilloJava {
               switch (n) {
                 case 0:
                   _fileSuffix += value.first;
-                  _genRowVec = *static_cast<Row<double>*>(value.second);
+                  _elemInd = *static_cast<int*>(value.second);
                   break;
                 case 1:
                   _fileSuffix += "," + value.first;
-                  _elemInd = *static_cast<int*>(value.second);
+                  _fill = *static_cast<fill*>(value.second);
                   break;
               }
               ++n;
@@ -61,50 +62,21 @@ namespace armadilloJava {
 
             cout << "Using input: " << _fileSuffix << endl;
 
-            expectedRowVecAt();
-            expectedRowVecIn_range();
-			expectedRowVecCol();
+            expectedRowVecElemIndFill();
           }
 
           cout << "done." << endl;
         }
 
     protected:
-      Row<double> _genRowVec;
       int _elemInd;
+      fill _fill;
 
-      void expectedRowVecAt() {
-        if(_elemInd >= _genRowVec.n_elem) {
-          return;
-        }
-
+      void expectedRowVecElemIndFill() {
         cout << "- Compute expectedRowVecAt() ... ";
-        save<double>("Row.at", Row<double>({_genRowVec.at(_elemInd)}));
+        Row expected(_elemInd,_fill);
+        save<double>("Row.elemIndFill", Row<double>(expected));
         cout << "done." << endl;
-      }
-
-      void expectedRowVecIn_range() {
-        cout << "- Compute expectedRowVecIn_range() ... ";
-
-        if(_genRowVec.in_range(_elemInd)) {
-          save<double>("Row.in_range", Row<double>({1}));
-        } else {
-          save<double>("Row.in_range", Row<double>({0}));
-        }
-
-        cout << "done." << endl;
-      }
-	  
-	  void expectedRowVecCol() {
-		  if(_elemInd >= _genRowVec.n_cols) {
-			  return;
-		  }
-		  Row<double> expected;
-		  expected = _genRowVec.col(_elemInd);
-		  
-		  cout << "- Compute expectedRowVecCol() ... ";
-		  save<double>("Row.col", Row<double>(expected));
-		  cout << "done." << endl;
       }
   };
 }
