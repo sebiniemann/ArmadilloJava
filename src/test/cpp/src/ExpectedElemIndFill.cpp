@@ -23,7 +23,6 @@ using std::pair;
 
 #include <armadillo>
 using arma::Row;
-using arma::Fill;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
@@ -54,7 +53,7 @@ namespace armadilloJava {
                   break;
                 case 1:
                   _fileSuffix += "," + value.first;
-                  _fill = *static_cast<fill*>(value.second);
+                  _fill = *static_cast<int*>(value.second);
                   break;
               }
               ++n;
@@ -70,12 +69,35 @@ namespace armadilloJava {
 
     protected:
       int _elemInd;
-      fill _fill;
+      int _fill;
+      Row<double> expected;
 
       void expectedRowVecElemIndFill() {
         cout << "- Compute expectedRowVecAt() ... ";
-        Row expected(_elemInd,_fill);
-        save<double>("Row.elemIndFill", Row<double>(expected));
+        switch (_fill) {
+          case 0:
+            break;
+          case 1:
+            expected = Row<double>(_elemInd, arma::fill::none);
+            save<double>("Row.elemIndFill", Row<double>(expected));
+            break;
+          case 2:
+            expected = Row<double>(_elemInd, arma::fill::ones);
+            save<double>("Row.elemIndFill", Row<double>(expected));
+            break;
+          case 3:
+            expected = Row<double>(_elemInd, arma::fill::randn);
+            save<double>("Row.elemIndFill", Row<double>(expected));
+            break;
+          case 4:
+            expected = Row<double>(_elemInd, arma::fill::randu);
+            save<double>("Row.elemIndFill", Row<double>(expected));
+            break;
+          case 5:
+            expected = Row<double>(_elemInd, arma::fill::zeros);
+            save<double>("Row.elemIndFill", Row<double>(expected));
+            break;
+        }
         cout << "done." << endl;
       }
   };

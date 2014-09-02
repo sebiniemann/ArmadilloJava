@@ -29,7 +29,7 @@ using arma::arma_rng;
 using armadilloJava::ExpectedDatum;
 
 #include <ExpectedElemIndFill.cpp>
-using armadilloJava::ExpectedGenRowVecElemInd;
+using armadilloJava::ExpectedElemIndFill;
 
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;

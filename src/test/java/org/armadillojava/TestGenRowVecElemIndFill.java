@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -52,10 +53,14 @@ public class TestGenRowVecElemIndFill extends TestClass {
   @Parameter(3)
   public Fill _fill;
 
-
-
+  @Before
+  public void before() {
+    _fileSuffix = _elemIndString + "," + _fillString;
+  }
+  
   @Test
   public void testRowElemIndFill() throws IOException {
+    if(_fill == Fill.EYE || _fill == Fill.RANDN) return;
     Row row = new Row(_elemInd,_fill);
     
     assertMatEquals(row, load("Row.elemIndFill"));
