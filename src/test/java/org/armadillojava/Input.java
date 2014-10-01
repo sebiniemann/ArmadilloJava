@@ -749,7 +749,16 @@ class Input {
   }
 
   protected static List<Pair<String, Object>> getFill() {
-    return null;
+    List<Pair<String, Object>> input = new ArrayList<>();
+
+    input.add(new Pair<String, Object>("Fill EYE", Fill.EYE));
+    input.add(new Pair<String, Object>("Fill NONE", Fill.NONE));
+    input.add(new Pair<String, Object>("Fill ONES", Fill.ONES));
+    input.add(new Pair<String, Object>("Fill RANDN", Fill.RANDN));
+    input.add(new Pair<String, Object>("Fill RANDU", Fill.RANDU));
+    input.add(new Pair<String, Object>("Fill ZEROS", Fill.ZEROS));
+
+    return input;
   }
 
   protected static List<Pair<String, Object>> getRandom() {

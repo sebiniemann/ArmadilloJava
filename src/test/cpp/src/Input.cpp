@@ -697,7 +697,12 @@ namespace armadilloJava {
 
   vector<pair<string, void*>> Input::getFill() {
     return {
-
+            pair<string, void*>("Fill EYE", new int(0)),
+            pair<string, void*>("Fill NONE", new int(1)),
+            pair<string, void*>("Fill ONES", new int(2)),
+            pair<string, void*>("Fill RANDN", new int(3)),
+            pair<string, void*>("Fill RANDU", new int(4)),
+            pair<string, void*>("Fill ZEROS", new int (5))
     };
   }
 
