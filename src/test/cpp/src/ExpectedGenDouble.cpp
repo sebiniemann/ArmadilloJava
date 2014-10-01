@@ -23,12 +23,15 @@ using std::pair;
 
 #include <armadillo>
 using arma::is_finite;
+using arma::rowvec;
 
 #include <InputClass.hpp>
 using armadilloJava::InputClass;
 
 #include <Input.hpp>
 using armadilloJava::Input;
+
+#include <vector>
 
 namespace armadilloJava {
   class ExpectedGenDouble : public Expected {
@@ -39,6 +42,8 @@ namespace armadilloJava {
         vector<vector<pair<string, void*>>> inputs = Input::getTestParameters({
           InputClass::GenDouble
         });
+
+        int i = 0;
 
         for (vector<pair<string, void*>> input : inputs) {
           _fileSuffix = "";
@@ -53,17 +58,21 @@ namespace armadilloJava {
             }
             ++n;
           }
+          _genDoubleArray.push_back(_genDouble);
+          ++i;
 
           cout << "Using input: " << _fileSuffix << endl;
 
           expectedArmaIs_finite();
         }
 
+        expectedRowVecDoubleArray();
         cout << "done." << endl;
       }
 
     protected:
       double _genDouble;
+      std::vector<double> _genDoubleArray;
 
       void expectedArmaIs_finite() {
         cout << "- Compute expectedArmaIs_finite() ... ";
@@ -73,6 +82,14 @@ namespace armadilloJava {
         } else {
           save<double>("Arma.is_finite", Mat<double>({0.0}));
         }
+
+        cout << "done." << endl;
+      }
+
+      void expectedRowVecDoubleArray() {
+        cout << "- Compute expectedRowVecDoubleArray() ... ";
+
+        save<double>("Row.doubleArray", rowvec(_genDoubleArray));
 
         cout << "done." << endl;
       }

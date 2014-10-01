@@ -14,6 +14,7 @@
 package org.armadillojava;
 
 import static org.junit.Assert.assertThat;
+import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -48,6 +50,15 @@ public class TestGenDouble extends TestClass {
   public double    _genDouble;
 
   protected double _copyOfGenDouble;
+  protected static double[] _genDoubleArray;
+  
+  @BeforeClass
+  public static void generateDoubleArray(){
+    _genDoubleArray = new double[Input.getGenDouble().size()];
+    for (int n = 0; n < Input.getGenDouble().size(); n++) {
+      _genDoubleArray[n] = (double) Input.getGenDouble().get(n).getSecond();
+    }
+  }
 
   @Before
   public void before() {
@@ -70,6 +81,13 @@ public class TestGenDouble extends TestClass {
     } else {
       assertThat(0, is(expected));
     }
+  }
+  
+  @Test
+  public void testRowVecDoubleArray() throws IOException {
+   Row expected = new Row(_genDoubleArray);
+   _fileSuffix = "";
+   assertMatEquals(expected, load("Row.doubleArray(inf)"));   
   }
 
 }
