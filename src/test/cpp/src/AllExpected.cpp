@@ -28,8 +28,8 @@ using arma::arma_rng;
 #include <ExpectedDatum.cpp>
 using armadilloJava::ExpectedDatum;
 
-//#include <ExpectedElemIndFill.cpp>
-//using armadilloJava::ExpectedElemIndFill;
+#include <ExpectedElemIndFill.cpp>
+using armadilloJava::ExpectedElemIndFill;
 
 #include <ExpectedGenColVec.cpp>
 using armadilloJava::ExpectedGenColVec;
@@ -725,8 +725,8 @@ int main() {
    */
 
 //  ExpectedDatum();
-//  ExpectedElemIndFill();
-  ExpectedGenColVec();
+  ExpectedElemIndFill();
+//  ExpectedGenColVec();
 //  ExpectedGenColVecElemInd();
 //  ExpectedGenColVecElemIndRange();
 //  ExpectedGenColVecElemInds();
