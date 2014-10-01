@@ -17,11 +17,16 @@ import static org.armadillojava.TestUtil.assertMatEquals;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +37,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -58,17 +65,32 @@ public class TestGenRowVec extends TestClass {
   public Row    _genRowVec;
 
   protected Row _copyOfGenRowVec;
+  
+  protected static File _testpath;
+  protected File _file;
+  
+  @BeforeClass
+  public static void createFile() throws IOException {
+    _testpath = new File("testFiles");
+    _testpath.mkdir();
+  }
+  @AfterClass
+  public static void deleteFile() {
+    _testpath.delete();
+}
 
   @Before
   public void before() {
     _fileSuffix = _genRowVecString;
 
     _copyOfGenRowVec = new Row(_genRowVec);
+    _file = new File(_testpath+File.separator+_fileSuffix);
   }
 
   @After
   public void after() {
     assertMatEquals(_genRowVec, _copyOfGenRowVec, 0);
+    _file.delete();
   }
 
   @Test
@@ -515,5 +537,108 @@ public class TestGenRowVec extends TestClass {
       assertThat(0, is(expected));
     }
   }
-
+  
+  @Test
+  public void testRowSaveLoadString() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    _genRowVec.save(_file.getAbsolutePath());
+    
+    Row expected = new Row();
+    expected.load(_file.getAbsolutePath());
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowSaveLoadStringFileType() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    _genRowVec.save(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    Row expected = new Row();
+    expected.load(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowSaveLoadOutputInputStream() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genRowVec.save(os);
+    
+    InputStream is = new FileInputStream(_file);
+    Row expected = new Row();
+    expected.load(is);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowSaveLoadOutputInputStreamFileType() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genRowVec.save(os,FileType.RAW_ASCII);
+    
+    InputStream is = new FileInputStream(_file);
+    Row expected = new Row();
+    expected.load(is, FileType.RAW_ASCII);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowQuietSaveLoadString() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    _genRowVec.quiet_save(_file.getAbsolutePath());
+    
+    Row expected = new Row();
+    expected.quiet_load(_file.getAbsolutePath());
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowQuietLoadStringFileType() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    _genRowVec.quiet_save(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    Row expected = new Row();
+    expected.quiet_load(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowQuietSaveLoadOutputInputStream() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genRowVec.quiet_save(os);
+    
+    InputStream is = new FileInputStream(_file);
+    Row expected = new Row();
+    expected.quiet_load(is);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
+  
+  @Test
+  public void testRowQuietSaveLoadOutputInputStreamFileType() throws IOException {
+    String _RowVecString = _genRowVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genRowVec.quiet_save(os,FileType.RAW_ASCII);
+    
+    InputStream is = new FileInputStream(_file);
+    Row expected = new Row();
+    expected.quiet_load(is, FileType.RAW_ASCII);
+    
+    assertEquals(_RowVecString, expected.toString());
+  }
 }
