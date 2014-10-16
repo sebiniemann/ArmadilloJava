@@ -14,6 +14,7 @@
 package org.armadillojava;
 
 import static org.armadillojava.TestUtil.assertMatEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -21,7 +22,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +37,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -58,17 +65,34 @@ public class TestGenColVec extends TestClass {
   public Col    _genColVec;
 
   protected Col _copyOfGenColVec;
+  
+  protected static File _testpath;
+  protected File _file;
+  
+  @BeforeClass
+  public static void createFile() throws IOException {
+    _testpath = new File("testFiles");
+    _testpath.mkdir();
+  }
+  
+  @AfterClass
+  public static void deleteFile() {
+    _testpath.delete();
+}
 
   @Before
   public void before() {
     _fileSuffix = _genColVecString;
 
     _copyOfGenColVec = new Col(_genColVec);
+    _file = new File(_testpath+File.separator+_fileSuffix);
+    
   }
 
   @After
   public void after() {
     assertMatEquals(_genColVec, _copyOfGenColVec, 0);
+    _file.delete();
   }
 
   @Test
@@ -514,6 +538,111 @@ public class TestGenColVec extends TestClass {
     } else {
       assertThat(0, is(expected));
     }
+  }
+  
+  // Anfang
+  @Test
+  public void testColSaveLoadString() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    _genColVec.save(_file.getAbsolutePath());
+    
+    Col expected = new Col();
+    expected.load(_file.getAbsolutePath());
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColSaveLoadStringFileType() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    _genColVec.save(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    Col expected = new Col();
+    expected.load(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColSaveLoadOutputInputStream() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genColVec.save(os);
+    
+    InputStream is = new FileInputStream(_file);
+    Col expected = new Col();
+    expected.load(is);
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColSaveLoadOutputInputStreamFileType() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genColVec.save(os,FileType.RAW_ASCII);
+    
+    InputStream is = new FileInputStream(_file);
+    Col expected = new Col();
+    expected.load(is, FileType.RAW_ASCII);
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColQuietSaveLoadString() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    _genColVec.quiet_save(_file.getAbsolutePath());
+    
+    Col expected = new Col();
+    expected.quiet_load(_file.getAbsolutePath());
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColQuietLoadStringFileType() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    _genColVec.quiet_save(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    Col expected = new Col();
+    expected.quiet_load(_file.getAbsolutePath(),FileType.RAW_ASCII);
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColQuietSaveLoadOutputInputStream() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genColVec.quiet_save(os);
+    
+    InputStream is = new FileInputStream(_file);
+    Col expected = new Col();
+    expected.quiet_load(is);
+    
+    assertEquals(_ColVecString, expected.toString());
+  }
+  
+  @Test
+  public void testColQuietSaveLoadOutputInputStreamFileType() throws IOException {
+    String _ColVecString = _genColVec.toString();
+    
+    OutputStream os = new FileOutputStream(_file);
+    _genColVec.quiet_save(os,FileType.RAW_ASCII);
+    
+    InputStream is = new FileInputStream(_file);
+    Col expected = new Col();
+    expected.quiet_load(is, FileType.RAW_ASCII);
+    
+    assertEquals(_ColVecString, expected.toString());
   }
 
 }
